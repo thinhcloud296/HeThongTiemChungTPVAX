@@ -37,7 +37,11 @@ button { font-family: inherit; }
 
 .cart { background: #e8f5ff; border: 1px solid #124e78; color: #124e78; border-radius: 6px; }
 .cart:hover { background: #d9efff; }
-
+.custom-hr {
+  border: 0;
+  border-top: 2px solid #e0e0e0;
+  margin: 40px 0; /* Tạo khoảng cách 40px ở trên và dưới */
+}
 /* ========== Main navigation ========== */
 .main-menu {
   display: flex; justify-content: space-between; align-items: center;
@@ -64,8 +68,11 @@ button { font-family: inherit; }
 /* Hero: image + meta */
 .vaccine-hero { display: flex; gap: 36px; align-items: flex-start; margin-bottom: 28px; }
 .vaccine-img {
-  width: 360px; max-width: 40%;
-  border-radius: 10px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 360px; /* Giữ nguyên hoặc điều chỉnh chiều rộng mong muốn */
+  align-self: stretch; /* Quan trọng: Kéo dài item này theo chiều cao của flex container */
+  object-fit: cover; /* Đảm bảo ảnh lấp đầy khung mà không bị méo */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 .vaccine-meta { flex: 1; min-width: 300px; }
 
@@ -109,7 +116,25 @@ button { font-family: inherit; }
   display: flex; justify-content: center; gap: 16px;
   padding: 16px 20px; background: #f7fbff; border-top: 1px solid #e6f2ff;
 }
+/* ========== Fixed Action Bar ========== */
+.action-row {
+  position: fixed; /* Cố định vị trí */
+  bottom: 0;       /* Luôn ở đáy màn hình */
+  left: 0;         /* Kéo dài từ cạnh trái */
+  right: 0;        /* Kéo dài đến cạnh phải */
+  
+  /* Thêm style để làm nổi bật thanh button */
+  background-color: transparent;
+  padding: 16px 0;
+  margin: 0; /* Xóa margin cũ */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng lên trên */
+  z-index: 100; /* Đảm bảo nó luôn nằm trên các nội dung khác */
+}
 
+/* Thêm khoảng đệm ở cuối trang để nội dung không bị che */
+main.vaccine-detail {
+  padding-bottom: 120px; /* Chiều cao lớn hơn chiều cao của thanh action */
+}
 /* ========== Responsive ========== */
 @media (max-width: 992px) {
   .topbar { flex-direction: column; gap: 12px; }
