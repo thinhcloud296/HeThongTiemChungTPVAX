@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
-    <link rel="stylesheet" href="mainStyle.css" />
+    <link rel="stylesheet" href="layout_style.css" />
+    <link rel="stylesheet" href="homepage_style.css" />
     <title>Home Page</title>
   </head>
   <body>
     <!-- Header -->
-    <div class="container-fluid">
+    <header class="container-fluid">
       <!-- Toolbar -->
       <div class="toolbar-section">
         <div
@@ -184,14 +185,183 @@
         </div>
       </nav>
       <!-- END Menu -->
-    </div>
+    </header>
     <!-- END Header -->
-    <div
-      class="main border border-1 border-warning py-md-2"
-      style="height: 500px"
-    >
-      <h1>Main</h1>
-    </div>
+    <main class="main border border-1 border-warning py-md-2">
+      <!-- Banner -->
+      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="Assets/Images/banner1.jpg"
+              class="d-block w-100"
+              alt="Banner viêm màng não"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="Assets/Images/banner2.jpg"
+              class="d-block w-100"
+              alt="Banner bảo vệ con yêu"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="Assets/Images/banner3.png"
+              class="d-block w-100"
+              alt="Banner ngừa ung thư HPV"
+            />
+          </div>
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#heroCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#heroCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <!-- ENDBanner -->
+      <!-- Danh mục vắc xin -->
+      <section class="container my-5">
+        <div class="d-flex justify-content-between align-items-baseline mb-4">
+          <h2 class="section-title">DANH MỤC VẮC XIN</h2>
+          <a href="#" class="view-all-link">Xem tất cả</a>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+              <a href="chitietvaccine.html" class="text-decoration-none">
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  alt="Vắc xin Hexaxim"
+                  class="img-fluid mb-3"
+                />
+                <h5 class="card-title">Vắc xin Hexaxim</h5>
+                <p class="card-subtitle">(SANOFT, Pháp)</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+              <a href="#" class="text-decoration-none">
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  alt="Vắc xin phòng RSV"
+                  class="img-fluid mb-3"
+                />
+                <h5 class="card-title">
+                  VẮC XIN PHÒNG VIRUS HỢP BÀO HÔ HẤP RSV
+                </h5>
+                <p class="card-subtitle">(Nimenrix, Bỉ)</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+              <a href="#" class="text-decoration-none">
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  alt="Vắc xin phòng RSV"
+                  class="img-fluid mb-3"
+                />
+                <h5 class="card-title">
+                  VẮC XIN PHÒNG VIRUS HỢP BÀO HÔ HẤP RSV
+                </h5>
+                <p class="card-subtitle">(Nimenrix, Bỉ)</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+              <a href="#" class="text-decoration-none">
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  alt="Vắc xin phòng RSV"
+                  class="img-fluid mb-3"
+                />
+                <h5 class="card-title">
+                  VẮC XIN PHÒNG VIRUS HỢP BÀO HÔ HẤP RSV
+                </h5>
+                <p class="card-subtitle">(Nimenrix, Bỉ)</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+              <a href="#" class="text-decoration-none">
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  alt="Vắc xin phòng RSV"
+                  class="img-fluid mb-3"
+                />
+                <h5 class="card-title">
+                  VẮC XIN PHÒNG VIRUS HỢP BÀO HÔ HẤP RSV
+                </h5>
+                <p class="card-subtitle">(Nimenrix, Bỉ)</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+              <a href="#" class="text-decoration-none">
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  alt="Vắc xin phòng RSV"
+                  class="img-fluid mb-3"
+                />
+                <h5 class="card-title">
+                  VẮC XIN PHÒNG VIRUS HỢP BÀO HÔ HẤP RSV
+                </h5>
+                <p class="card-subtitle">(Nimenrix, Bỉ)</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Danh mục vắc xin -->
+    </main>
     <!-- Footer -->
     <footer class="site-footer py-0">
       <div class="container">
