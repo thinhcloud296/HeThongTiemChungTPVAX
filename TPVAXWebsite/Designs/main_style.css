@@ -1,0 +1,520 @@
+/* --- 1. GLOBAL STYLES --- */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+/* ======================================================================================================================= */
+                                            /* LAYOUT PAGE */
+/* ======================================================================================================================= */
+/* Header */
+/* --- 2. LAYOUT SECTIONS --- */
+.toolbar-section {
+  background-color: #f1f9ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.brand-section {
+  background-color: white;
+}
+
+/* --- 3. TOOLBAR STYLES --- */
+.toolbar-link {
+  text-decoration: none;
+}
+
+.toolbar-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.toolbar-icon-small {
+  width: 20px;
+  height: 20px;
+}
+
+.search-bar-wrapper .form-control:focus {
+  box-shadow: none;
+  border-color: #86b7fe;
+}
+
+.vr {
+  display: inline-block;
+  align-self: stretch;
+  width: 1px;
+  min-height: 1em;
+  background-color: currentcolor;
+  opacity: 0.25;
+}
+
+/* --- 4. BRAND/LOGO STYLES --- */
+.brand-section .h2 {
+    font-size: calc(1.3rem + .6vw); /* Bootstrap default h2 responsive */
+    font-weight: bold;
+}
+
+.brand-section .h4 {
+    font-size: calc(1.2rem + .3vw); /* Bootstrap default h4 responsive */
+}
+
+/* Đảm bảo div màu xanh cao bằng cột chứa nó */
+.brand-section .col-md-9 > div {
+    height: 100%;
+}
+
+
+/* --- 5. BUTTON STYLES & HOVER EFFECTS --- */
+
+/* a. Đặt mua vắc xin & Link điện thoại */
+.toolbar-link span {
+  transition: font-size 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.toolbar-link:hover span {
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+}
+
+/* b. Nút Đăng nhập/Đăng ký */
+.login-btn {
+  color: #03516a;
+  border-color: #0d6efd;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-btn:hover {
+  background-color: #0077B6;
+  color: white !important; /* Dùng !important để đảm bảo ghi đè Bootstrap */
+  border-color: #0077B6;
+}
+
+/* c. Nút Giỏ hàng */
+.btn-cart-custom {
+  background-color: #bae7ff;
+  border: 1px solid #0096c7;
+  color: #03516a;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-cart-custom:hover {
+  background-color: #a3d9f7;
+  border-color: #0077b6;
+  color: #023e54;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Menu */
+/* --- 6. MAIN NAVBAR SECTION --- */
+
+/* Tùy chỉnh thanh menu chính */
+.main-navbar {
+  background-color: white;
+  border-top: 2px solid #b8ddfd;
+  border-bottom: 2px solid #b8ddfd;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Tùy chỉnh các link trong menu */
+.main-navbar .nav-link {
+  color: #0077b6; /* Màu chữ xanh */
+  font-weight: 500;
+  padding: 1rem 1.5rem; /* Tăng khoảng cách cho các mục menu */
+  transition: all 0.2s ease;
+}
+
+/* Hiệu ứng khi hover */
+.main-navbar .nav-link:hover {
+  color: #023e54; /* Đổi màu chữ đậm hơn */
+  background-color: #f1f9ff;
+}
+
+/* Style cho link đang active */
+.main-navbar .nav-link.active {
+  color: #023e54;
+  font-weight: 700;
+}
+
+/* Tùy chỉnh menu con đổ xuống */
+.dropdown-menu {
+  border-radius: 0; /* Bỏ bo góc nếu muốn */
+  border-top: 2px solid #0077b6;
+}
+
+.dropdown-item:hover {
+  background-color: #0077b6;
+  color: white;
+}
+@media (min-width: 992px) {
+  .main-navbar .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* Xóa khoảng trống nhỏ phía trên menu con */
+  }
+}
+
+/* END Header */
+
+/* Footer */
+
+.site-footer {
+  background-color: #0077b6; /* Màu nền xanh */
+  color: white; /* Màu chữ trắng */
+  height: 550px; /* Chiều cao cố định như bạn yêu cầu */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* Style cho các link trong footer */
+.site-footer a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: #a3d9f7; /* Màu nhạt hơn khi hover */
+  text-decoration: underline;
+}
+
+/* Logo và Slogan trong footer */
+.site-footer .logo-text .h2,
+.site-footer .logo-text .h4 {
+  font-size: 1.5rem; /* Giảm kích thước chữ cho phù hợp với footer */
+}
+
+/* Thông tin liên hệ */
+.footer-contact-info li {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+.footer-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 15px;
+}
+
+/* Thông tin công ty */
+.company-details p {
+  margin-bottom: 0.5rem;
+}
+
+/* Đường kẻ ngang */
+.footer-hr {
+  border-color: white;
+  opacity: 0.5;
+  margin: 2rem 0;
+}
+
+/* Link cuối footer */
+.footer-bottom-links a {
+  margin-left: 2rem;
+}
+
+/* END Footer */
+
+/* ======================================================================================================================= */
+                                            /* END LAYOUT PAGE */
+/* ======================================================================================================================= */
+
+
+
+/* ======================================================================================================================= */
+                                            /* DETAIL VACCINE PAGE */
+/* ======================================================================================================================= */
+
+
+/* ========== Reset & base ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { font-family: Tahoma, Arial, sans-serif; background: #fff; color: #0a2157; line-height: 1.6; }
+img { display: block; max-width: 100%; height: auto; }
+button { font-family: inherit; }
+
+/* ========== Header ========== */
+.site-header { background: #f1f9ff; border-bottom: 1px solid #b1ecff; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; gap: 16px; }
+
+.logo-area { display: flex; align-items: center; gap: 12px; min-width: 280px; }
+.logo-img { height: 56px; width: auto; }
+.logo-text h1 { font-size: 28px; color: #00457a; margin: 0; }
+.logo-text p { font-size: 14px; color: #4c5a6b; margin: 0; }
+
+.header-actions { display: flex; align-items: center; gap: 14px; flex-wrap: nowrap; }
+.hotline { display: flex; flex-direction: row; align-items: center; gap: 8px; }
+.phone { font-weight: 700; color: #f6b000; white-space: nowrap; }
+
+.btn { padding: 8px 14px; border: 1px solid #124e78; border-radius: 6px; background: #fff; color: #124e78; cursor: pointer; }
+.btn:hover { background: #eef6ff; }
+.btn-pill { padding: 12px 24px; border: none; border-radius: 999px; font-weight: 700; cursor: pointer; font-size: 16px; white-space: nowrap; }
+.btn-warning { background: #7bb1d3; color: #fff; }
+.btn-warning:hover { filter: brightness(0.95); }
+.btn-primary { background: #0aa889; color: #fff; }
+.btn-primary:hover { filter: brightness(0.95); }
+
+.search-box { position: relative; }
+.search-box input {
+  min-width: 240px; padding: 8px 40px 8px 14px;
+  border: 1px solid #124e78; border-radius: 24px; background: #f0f6ff;
+}
+.search-box::after {
+  content: "🔍"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #124e78;
+}
+
+.cart { background: #e8f5ff; border: 1px solid #124e78; color: #124e78; border-radius: 6px; }
+.cart:hover { background: #d9efff; }
+.custom-hr {
+  border: 0;
+  border-top: 2px solid #e0e0e0;
+  margin: 40px 0; /* Tạo khoảng cách 40px ở trên và dưới */
+}
+/* ========== Main navigation ========== */
+.main-menu {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 40px; gap: 10px;
+  border-top: 1px solid #b1ecff; border-bottom: 1px solid #b1ecff; background: #fff;
+}
+.main-menu a {
+  flex: 1; text-align: center; text-decoration: none;
+  color: #00457a; font-weight: 700; font-size: 16px;
+  padding: 8px 6px;
+}
+.main-menu a:hover { color: #f6b000; }
+
+/* ========== Vaccine detail layout ========== */
+.vaccine-detail { max-width: 1100px; margin: 32px auto 40px; padding: 0 20px; }
+
+/* Title */
+.section-title {
+  font-size: 24px; font-weight: 800; color: #00457a;
+  margin-bottom: 20px; text-transform: uppercase;
+  border-left: 4px solid #0077b6; padding-left: 10px;
+}
+
+/* Hero: image + meta */
+.vaccine-hero { display: flex; gap: 36px; align-items: flex-start; margin-bottom: 28px; }
+.vaccine-img {
+  width: 360px; /* Giữ nguyên hoặc điều chỉnh chiều rộng mong muốn */
+  align-self: stretch; /* Quan trọng: Kéo dài item này theo chiều cao của flex container */
+  object-fit: cover; /* Đảm bảo ảnh lấp đầy khung mà không bị méo */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.vaccine-meta { flex: 1; min-width: 300px; }
+
+.badge {
+  display: inline-block; background: #0d7f41; color: #fff; font-weight: 700;
+  font-size: 13px; padding: 4px 10px; border-radius: 999px; margin-bottom: 8px;
+}
+.vaccine-name { font-size: 28px; color: #003b73; margin: 0 0 6px; }
+
+.price { font-size: 26px; color: #d4a000; font-weight: 800; margin: 8px 0 12px; }
+.unit { font-size: 16px; color: #5b697a; font-weight: 600; }
+.meta-list { list-style: none; padding: 0; margin: 0; }
+.meta-list li { margin: 6px 0; color: #334b68; }
+
+/* Sections */
+.vaccine-section { margin: 18px 0; }
+.vaccine-section h3 { font-size: 20px; color: #253d76; margin-bottom: 8px; }
+.vaccine-section h4 { font-size: 18px; color: #253d76; margin-bottom: 8px; }
+.vaccine-section p { font-size: 16px; color: #3b4a5c; }
+.vaccine-section ul { padding-left: 20px; color: #3b4a5c; list-style: disc; }
+.vaccine-section li { margin-bottom: 8px; line-height: 1.5; }
+
+/* Action buttons centered (as per figma) */
+.action-row {
+  display: flex; justify-content: center; align-items: center;
+  gap: 20px; margin: 40px 0;
+}
+
+/* ========== Footer ========== */
+.footer {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
+  padding: 30px 40px; background: #00457a; color: #fff; flex-wrap: wrap;
+}
+.footer-left { display: flex; align-items: center; gap: 12px; }
+.footer-logo { height: 50px; width: auto; }
+.footer-left p { margin: 0; }
+.footer-right p { margin: 4px 0; font-size: 14px; }
+
+/* Optional: footer top action bar style (if needed above footer) */
+.footer-actions {
+  display: flex; justify-content: center; gap: 16px;
+  padding: 16px 20px; background: #f7fbff; border-top: 1px solid #e6f2ff;
+}
+/* ========== Fixed Action Bar ========== */
+.action-row {
+  position: fixed; /* Cố định vị trí */
+  bottom: 0;       /* Luôn ở đáy màn hình */
+  left: 0;         /* Kéo dài từ cạnh trái */
+  right: 0;        /* Kéo dài đến cạnh phải */
+  
+  /* Thêm style để làm nổi bật thanh button */
+  background-color: transparent;
+  padding: 16px 0;
+  margin: 0; /* Xóa margin cũ */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng lên trên */
+  z-index: 100; /* Đảm bảo nó luôn nằm trên các nội dung khác */
+}
+
+/* Thêm khoảng đệm ở cuối trang để nội dung không bị che */
+main.vaccine-detail {
+  padding-bottom: 120px; /* Chiều cao lớn hơn chiều cao của thanh action */
+}
+/* ========== Responsive ========== */
+@media (max-width: 992px) {
+  .topbar { flex-direction: column; gap: 12px; }
+  .header-actions { flex-wrap: wrap; justify-content: center; }
+  .main-menu { padding: 10px 16px; }
+  .vaccine-hero { flex-direction: column; }
+  .vaccine-img { width: 100%; max-width: 420px; }
+}
+
+@media (max-width: 600px) {
+  .main-menu a { font-size: 15px; padding: 6px 0; }
+  .search-box input { min-width: 200px; }
+  .action-row { flex-direction: column; gap: 12px; }
+  .footer { padding: 24px 20px; }
+}
+
+
+/* ======================================================================================================================= */
+                                            /* END DETAIL VACCINE PAGE */
+/* ======================================================================================================================= */
+
+
+
+/* ======================================================================================================================= */
+                                            /* HOME PAGE */
+/* ======================================================================================================================= */
+
+
+/* Banner */
+/* --- Tùy chỉnh nút Next/Prev của Carousel --- */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 3rem; 
+    height: 3rem; 
+    background-color: rgba(44, 180, 248, 0.534); 
+    border-radius: 50%; 
+    top: 50%; 
+    transform: translateY(-50%);
+}
+/* Căn chỉnh vị trí cho nút Previous */
+.carousel-control-prev {
+    left: 1rem; 
+}
+/* Căn chỉnh vị trí cho nút Next */
+.carousel-control-next {
+    right: 1rem;
+}
+
+/* Hiệu ứng khi hover */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgb(1, 31, 65); 
+}
+
+/* Danh mục vắc xin */
+/* --- 8. PRODUCT CATEGORY SECTION --- */
+
+/* Tiêu đề khu vực (VD: DANH MỤC VẮC XIN) */
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #00457a;
+  border-left: 4px solid #0077b6;
+  padding-left: 15px;
+}
+
+/* Link "Xem tất cả" */
+.view-all-link {
+  color: #f6b000;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.view-all-link:hover {
+  color: #00457a;
+}
+
+/* Khung chứa một sản phẩm */
+.product-card {
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hiệu ứng khi hover vào sản phẩm */
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: #0077b6;
+}
+
+/* Tiêu đề sản phẩm */
+.product-card .card-title {
+  color: #00457a;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+/* Chú thích sản phẩm */
+.product-card .card-subtitle {
+  color: #6c757d; /* Màu xám mờ */
+  font-size: 0.9rem;
+}
+
+
+.cac-dich-vu{
+  background-image: url("Assets/Images/bgbluegradient.jpg");
+  background-position: center;
+}
+.btn-price-custom-card{
+  background-color: #148e63;
+  color: white;
+  width: fit-content;
+  border-radius: 20px;
+}
+
+.btn-price-custom-card:hover{
+  background-color: #94ecce;
+  border-radius: 5px;
+  color: rgb(0, 45, 32);
+}
+.btn-addcart-custom-card:hover{
+  background-color: #148e63;
+  border-radius: 5px;
+  color: rgb(222, 254, 245);
+}
+.btn-addcart-custom-card{
+  border-radius: 20px;
+}
+
+.btn-price-custom-card, .btn-addcart-custom-card{
+  transition: 0.5s;
+}
+
+
+
+/* ======================================================================================================================= */
+                                            /* END HOME PAGE */
+/* ======================================================================================================================= */
+
+
+
+
+
+

@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
-    <link rel="stylesheet" href="layout_style.css" />
-    <link rel="stylesheet" href="homepage_style.css" />
+    <link rel="stylesheet" href="main_style.css" />
     <title>Home Page</title>
   </head>
   <body>
@@ -17,23 +16,19 @@
           class="container d-flex align-items-center justify-content-between py-3"
         >
           <div class="search-bar-wrapper">
-            <div class="position-relative" style="width: 300px; height: 45px">
+            <div class="position-relative" style="width: 100%; height: 100%">
               <input
                 placeholder="Tìm kiếm vắc xin"
                 type="text"
                 class="form-control h-100 rounded-pill pe-5 border border-primary"
                 style="background-color: #ffffff; text-indent: 10px"
               />
-              <button
-                class="btn position-absolute top-50 end-0 translate-middle-y"
-                style="width: 50px; height: 45px"
-              >
-                <img
-                  src="Assets/Icons/search.png"
-                  alt="Search"
-                  style="width: 30px; height: 30px"
-                />
-              </button>
+              <img
+                class="position-absolute top-50 translate-middle-y"
+                src="Assets/Icons/search.png"
+                alt="Search"
+                style="width: 30px; right: 10px"
+              />
             </div>
           </div>
 
@@ -187,7 +182,7 @@
       <!-- END Menu -->
     </header>
     <!-- END Header -->
-    <main class="main border border-1 border-warning py-md-2">
+    <main class="main border border-1 border-warning">
       <!-- Banner -->
       <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -268,14 +263,65 @@
           <div class="col-lg-4 col-md-6">
             <div class="product-card">
               <a href="chitietvaccine.html" class="text-decoration-none">
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  alt="Vắc xin Hexaxim"
-                  class="img-fluid mb-3"
-                />
-                <h5 class="card-title">Vắc xin Hexaxim</h5>
-                <p class="card-subtitle">(SANOFT, Pháp)</p>
+                <div class="position-relative">
+                  <img
+                    style="border-radius: 5px"
+                    src="Assets/Images/hexaxim.png"
+                    alt="Vắc xin Hexaxim"
+                    class="img-fluid mb-3"
+                  />
+                  <div
+                    class="d-flex align-items-center position-absolute p-0 m-0 top-0 px-1"
+                    style="
+                      background-color: rgba(0, 0, 0, 0.112);
+                      border-radius: 5px;
+                    "
+                  >
+                    <img
+                      src="Assets/Icons/flag/vietnam.png"
+                      alt=""
+                      style="width: 25px"
+                    />
+                    &nbsp;
+                    <strong style="color: gray; font-size: 10px"
+                      >Việt Nam</strong
+                    >
+                  </div>
+                </div>
+                <div class="">
+                  <div
+                    class="d-flex flex-column align-items-start justify-content-center"
+                  >
+                    <h3 class="card-subtitle">Loại bệnh</h3>
+                    <h2 class="card-title">Tên vắc xin</h2>
+                  </div>
+
+                  <h3
+                    class="d-lg-block text-center py-2 m-0"
+                    style="
+                      color: #d4a000;
+                      font-weight: 700;
+                      margin: 8px 0 12px;
+                      letter-spacing: 1px;
+                    "
+                  >
+                    1.500.000đ
+                  </h3>
+                </div>
               </a>
+              <div
+                class="d-flex align-items-center justify-content-around py-2"
+              >
+                <a
+                  class="d-block btn btn-addcart-custom-card px-lg-4"
+                  href="chitietvaccine.html"
+                  >Thêm vào giỏ</a
+                ><a
+                  class="d-block btn btn-price-custom-card px-lg-4"
+                  href="chitietvaccine.html"
+                  >Đặt lịch tiêm</a
+                >
+              </div>
             </div>
           </div>
 
@@ -361,6 +407,50 @@
         </div>
       </section>
       <!-- END Danh mục vắc xin -->
+      <section class="cac-dich-vu">
+        <div class="d-flex align-items-center justify-content-around p-4">
+          <div
+            class="dich-vu d-flex flex-column align-items-center justify-content-center py-4 px-2"
+            style="background-color: #d4f6ff; width: 15%; border-radius: 30px"
+          >
+            <img style="width: 50%" src="/Assets/Icons/injection.png" alt="" />
+
+            <h5 class="p-0 m-0 text-center p-2" style="color: #00177e">
+              <strong>Tiêm chủng tại trung tâm TPVAX</strong>
+            </h5>
+          </div>
+          <div
+            class="dich-vu d-flex flex-column align-items-center justify-content-center py-4 px-2"
+            style="background-color: #d4f6ff; width: 15%; border-radius: 30px"
+          >
+            <img style="width: 50%" src="/Assets/Icons/injection.png" alt="" />
+
+            <h5 class="p-0 m-0 text-center p-2" style="color: #00177e">
+              <strong>Tiêm chủng tại trung tâm TPVAX</strong>
+            </h5>
+          </div>
+          <div
+            class="dich-vu d-flex flex-column align-items-center justify-content-center py-4 px-2"
+            style="background-color: #d4f6ff; width: 15%; border-radius: 30px"
+          >
+            <img style="width: 50%" src="/Assets/Icons/injection.png" alt="" />
+
+            <h5 class="p-0 m-0 text-center p-2" style="color: #00177e">
+              <strong>Tiêm chủng tại trung tâm TPVAX</strong>
+            </h5>
+          </div>
+          <div
+            class="dich-vu d-flex flex-column align-items-center justify-content-center py-4 px-2"
+            style="background-color: #d4f6ff; width: 15%; border-radius: 30px"
+          >
+            <img style="width: 50%" src="/Assets/Icons/injection.png" alt="" />
+
+            <h5 class="p-0 m-0 text-center p-2" style="color: #00177e">
+              <strong>Tiêm chủng tại trung tâm TPVAX</strong>
+            </h5>
+          </div>
+        </div>
+      </section>
     </main>
     <!-- Footer -->
     <footer class="site-footer py-0">
