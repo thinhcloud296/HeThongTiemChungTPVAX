@@ -865,6 +865,204 @@ main.vaccine-detail {
   color: white;
 }
 
+/* ======================================= */
+/* CART & CHECKOUT PAGE STYLES             */
+/* ======================================= */
+
+.cart-page-main {
+  font-family: "Poppins", sans-serif;
+}
+
+.page-heading {
+  color: #00177e;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  border-left: 5px solid #0077b6;
+  padding-left: 15px;
+}
+
+/* -------------------- CỘT TRÁI: VACCINE LIST -------------------- */
+
+.person-info-card {
+  border-radius: 10px;
+  border: 1px solid #cce7f2;
+  background-color: #f7fbff;
+}
+
+.person-name-age {
+  color: #00177e;
+}
+
+.choose-person-btn {
+  font-weight: 600;
+}
+
+.vaccine-item-card {
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.vaccine-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.origin-tag {
+  background-color: #e9f0f6;
+  color: #444;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.vaccine-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.vaccine-disease {
+  color: #0077b6;
+  margin-top: 5px;
+  font-size: 17px;
+}
+
+.quantity-input {
+  border-radius: 6px;
+}
+
+.delete-btn {
+  color: #888;
+  border-color: #eee; /* Viền xám rất nhẹ */
+  background-color: transparent; /* Nền trong suốt */
+
+  /* Thiết lập căn chỉnh cho hình ảnh icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  border-radius: 6px; /* Bo góc nhẹ */
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #fcebeb; /* Nền đỏ rất nhạt */
+  color: #dc3545; /* Màu chữ/icon đỏ (nếu dùng SVG) */
+  border-color: #dc3545; /* Viền đỏ hiện ra */
+}
+
+.delete-icon-custom {
+  width: 20px;
+  height: 20px;
+  filter: grayscale(100%);
+  transition: filter 0.2s ease;
+}
+
+.delete-btn:hover .delete-icon-custom {
+  filter: none;
+}
+/* Ưu đãi nhỏ */
+.small-offer {
+  color: #28a745;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* -------------------- CỘT PHẢI: SUMMARY -------------------- */
+
+.summary-card {
+  top: 20px; /* Cố định khi cuộn */
+}
+
+.section-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #cce7f2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #00177e;
+}
+
+.location-time-card hr,
+.price-summary-card hr {
+  margin: 15px 0;
+  border-top: 1px solid #eee;
+}
+
+.selection-row {
+  padding: 10px 0;
+}
+
+.price-list li {
+  padding: 5px 0;
+  color: #555;
+  font-size: 15px;
+}
+
+.text-orange {
+  color: #d4a000; /* Màu vàng cam thương hiệu */
+}
+
+.final-price {
+  padding-top: 10px;
+}
+
+/* Nút Xác nhận Đặt hẹn */
+.btn-confirm {
+  background-color: #d4a000;
+  color: white;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.btn-confirm:hover {
+  background-color: #b38500;
+}
+
+.terms-policy-text a {
+  color: #0077b6 !important;
+}
+
+/* Điều chỉnh responsive cho màn hình nhỏ */
+@media (max-width: 992px) {
+  .summary-card {
+    margin-top: 20px;
+    position: static !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-heading {
+    font-size: 24px;
+    padding-left: 10px;
+  }
+  .person-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .person-name-age {
+    font-size: 16px;
+  }
+  .person-details span:last-child {
+    margin-left: 0 !important;
+    margin-top: 5px;
+  }
+}
 /* ======================================================================================================================= */
 /* END HOME PAGE */
 /* ====================================================================================================================== */

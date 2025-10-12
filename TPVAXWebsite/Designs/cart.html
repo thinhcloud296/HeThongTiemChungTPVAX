@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giỏ Hàng & Đặt Lịch Tiêm - TPVAX</title>
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="main_style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="cart-page-main container my-5">
+      <h1 class="page-heading">Giỏ hàng và Đặt lịch tiêm chủng</h1>
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="person-info-card card shadow-sm mb-4">
+            <div
+              class="card-body d-flex justify-content-between align-items-center"
+            >
+              <div class="person-details">
+                <span class="person-name-age fw-bold fs-5">Trần Tấn Tài</span>
+                <span class="text-muted ms-3"
+                  >Nam | 01/02/2004 (21 Tuổi 8 Tháng 11 Ngày)</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="vaccine-list">
+            <div class="vaccine-item-card card mb-3">
+              <div class="card-body">
+                <div class="d-flex align-items-start">
+                  <img
+                    src="Assets/Images/hexaxim.png"
+                    alt="Vắc xin Hexaxim"
+                    class="vaccine-thumb me-3"
+                  />
+                  <div class="flex-grow-1">
+                    <p class="vaccine-name mb-1">
+                      <span class="origin-tag">🇩🇪 Đức</span>
+                      Vắc xin Qdenga
+                    </p>
+                    <p class="vaccine-disease fw-bold">Phòng Sốt xuất huyết</p>
+                    <p class="vaccine-schedule text-muted">
+                      Phác đồ: Từ 4 tuổi trở lên (2 Liều)
+                    </p>
+
+                    <div class="small-offer mt-2">
+                      <i class="fas fa-gift text-success me-1"></i> Giảm 3% khi
+                      mua gói
+                    </div>
+                  </div>
+
+                  <div class="vaccine-actions text-end">
+                    <div
+                      class="price-old text-decoration-line-through text-muted small"
+                    >
+                      1.390.000₫
+                    </div>
+                    <div class="price-current fw-bold text-danger fs-5">
+                      1.348.300₫
+                    </div>
+                    <div
+                      class="quantity-control d-flex mt-2 justify-content-end"
+                    >
+                      <input
+                        type="number"
+                        value="1"
+                        min="1"
+                        class="form-control form-control-sm text-center quantity-input me-2"
+                        style="width: 60px"
+                      />
+                      <button class="btn btn-outline-danger btn-sm delete-btn">
+                        <img
+                          src="Assets/Icons/trash.png"
+                          alt="Xóa"
+                          class="delete-icon-custom"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="vaccine-item-card card mb-3">
+              <div class="card-body">
+                <div class="d-flex align-items-start">
+                  <img
+                    src="Assets/Images/hexaxim.png"
+                    alt="Vắc xin Hexaxim"
+                    class="vaccine-thumb me-3"
+                  />
+                  <div class="flex-grow-1">
+                    <p class="vaccine-name mb-1">
+                      <span class="origin-tag">🇺🇸 Hoa Kỳ</span>
+                      Vắc xin hexaxim 23
+                    </p>
+                    <p class="vaccine-disease fw-bold">Phòng bệnh do Phế cầu</p>
+                    <p class="vaccine-schedule text-muted">
+                      Phác đồ: Từ 2 tuổi trở lên (1 Liều)
+                    </p>
+
+                    <div class="small-offer mt-2">
+                      <i class="fas fa-gift text-success me-1"></i> Giảm 3% khi
+                      mua gói
+                    </div>
+                  </div>
+
+                  <div class="vaccine-actions text-end">
+                    <div
+                      class="price-old text-decoration-line-through text-muted small"
+                    >
+                      1.440.000₫
+                    </div>
+                    <div class="price-current fw-bold text-danger fs-5">
+                      1.396.800₫
+                    </div>
+                    <div
+                      class="quantity-control d-flex mt-2 justify-content-end"
+                    >
+                      <input
+                        type="number"
+                        value="1"
+                        min="1"
+                        class="form-control form-control-sm text-center quantity-input me-2"
+                        style="width: 60px"
+                      />
+                      <button class="btn btn-outline-danger btn-sm delete-btn">
+                        <img
+                          src="Assets/Icons/trash.png"
+                          alt="Xóa"
+                          class="delete-icon-custom"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="summary-card sticky-top">
+            <div class="section-card location-time-card mb-4">
+              <h5 class="card-title">
+                <i class="fas fa-map-marker-alt me-2 text-primary"></i> Địa điểm
+                & thời gian hẹn
+              </h5>
+              <hr />
+
+              <div class="selection-row mb-3">
+                <label class="d-block fw-bold mb-1"
+                  >Chọn trung tâm tiêm chủng</label
+                >
+                <div class="d-flex justify-content-between align-items-center">
+                  <span>Chưa chọn trung tâm</span>
+                  <button class="btn btn-link p-0 fw-bold text-decoration-none">
+                    Chọn trung tâm tiêm chủng
+                    <i class="fas fa-chevron-right small ms-1"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="selection-row">
+                <label class="d-block fw-bold mb-1"
+                  >Thời gian hẹn khám
+                  <i class="fas fa-info-circle small text-muted ms-1"></i
+                ></label>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold fs-6">Chủ Nhật, 12/10/2025</span>
+                  <button
+                    class="btn btn-link p-0 fw-bold text-primary text-decoration-none"
+                  >
+                    Chọn thời gian
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-card price-summary-card mb-4">
+              <h5 class="card-title text-success">
+                <i class="fas fa-check-circle me-2"></i> Đã áp dụng 3 ưu đãi
+              </h5>
+              <hr />
+              <ul class="price-list list-unstyled">
+                <li class="d-flex justify-content-between">
+                  <span>Tổng tiền</span>
+                  <span class="fw-bold">3.080.000₫</span>
+                </li>
+                <li class="d-flex justify-content-between text-muted small">
+                  <span>Phí quản lý <i class="fas fa-info-circle"></i></span>
+                  <span>164.000₫</span>
+                </li>
+                <li class="d-flex justify-content-between text-danger fw-bold">
+                  <span>Giảm giá trực tiếp</span>
+                  <span>- 92.400₫</span>
+                </li>
+                <li class="d-flex justify-content-between text-success">
+                  <span>Giảm giá voucher</span>
+                  <span>0₫</span>
+                </li>
+                <hr class="my-1" />
+                <li class="d-flex justify-content-between fw-bold">
+                  <span>Tiết kiệm được</span>
+                  <span class="text-danger">92.400₫</span>
+                </li>
+              </ul>
+
+              <div
+                class="final-price d-flex justify-content-between align-items-center mt-3 pt-3 border-top"
+              >
+                <div class="d-flex flex-column">
+                  <span class="text-muted small">Tạm tính</span>
+                  <span class="fw-bold text-orange fs-4">3.151.600₫</span>
+                </div>
+                <span class="text-muted small align-self-end text-end">
+                  +3,151 điểm thưởng <br />
+                  <a href="#" class="text-decoration-none fw-bold"
+                    >Xem báo giá <i class="fas fa-chevron-right small ms-1"></i
+                  ></a>
+                </span>
+              </div>
+            </div>
+
+            <div class="confirmation-section">
+              <button class="btn btn-lg btn-confirm w-100">
+                Xác nhận đặt hẹn
+              </button>
+              <p class="terms-policy-text text-muted small mt-2 text-center">
+                Bằng việc xác nhận đặt hẹn, Quý khách đồng ý với
+                <a href="#" class="text-primary text-decoration-none fw-bold"
+                  >Điều khoản dịch vụ</a
+                >
+                &
+                <a href="#" class="text-primary text-decoration-none fw-bold"
+                  >Chính sách xử lý dữ liệu cá nhân</a
+                >
+                của TPVAX.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script
+      src="https://kit.fontawesome.com/your-font-awesome-kit-id.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+  </body>
+</html>
