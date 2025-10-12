@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Nhập - TPVAX</title>
+    <link rel="stylesheet" href="main_style.css" />
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
+  </head>
+  <body>
+    <main class="auth-page">
+      <div class="auth-container">
+        <h2 class="auth-title">Đăng Nhập Tài Khoản</h2>
+        <form class="auth-form">
+          <div class="form-group">
+            <label for="login-email">Email hoặc Số điện thoại</label>
+            <input
+              type="text"
+              id="login-email"
+              placeholder="Nhập Email hoặc SĐT"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Mật khẩu</label>
+            <input
+              type="password"
+              id="login-password"
+              placeholder="Nhập Mật khẩu"
+              required
+            />
+          </div>
+          <a href="#" class="forgot-password">Quên mật khẩu?</a>
+          <button type="submit" class="auth-button primary-btn">
+            Đăng Nhập
+          </button>
+        </form>
+        <p class="auth-switch">
+          Chưa có tài khoản? <a href="register.html">Đăng Ký ngay</a>
+        </p>
+      </div>
+    </main>
+
+    <script src="Scripts/bootstrap.min.js"></script>
+  </body>
+</html>
