@@ -1298,6 +1298,45 @@ main.vaccine-detail {
   }
 }
 
+/* ======================================= */
+/* TIN TỨC           */
+/* ======================================= */
+
+
+/* --- BỐ CỤC GRID TỔNG THỂ (Giữ nguyên) --- */
+.parent_tintuc {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 30px; /* Tăng khoảng cách cho giống thiết kế */
+}
+ 
+.div1_tintuc {
+  grid-row: 1 / 4; 
+}
+
+
+/* --- CSS CHO CÁC MỤC TIN NHỎ (Thêm vào) --- */
+.tin-nho {
+  display: flex; /* Bật Flexbox để xếp item con nằm ngang */
+  align-items: center; /* Căn các item con theo chiều dọc */
+  gap: 15px; /* Tạo khoảng cách giữa hình ảnh và nội dung */
+}
+
+.tin-nho-img {
+  width: 150px; /* Giới hạn chiều rộng của hình ảnh */
+  height: auto;
+  border-radius: 8px; /* Bo góc cho đẹp */
+  object-fit: cover;
+}
+
+.tin-nho-content {
+  /* Div này giúp nhóm toàn bộ phần chữ lại với nhau */
+  flex: 1; /* Cho phép phần nội dung co giãn lấp đầy không gian còn lại */
+}
+        
+
+
+
 /* ======================================================================================================================= */
 /* END HOME PAGE */
 /* ====================================================================================================================== */

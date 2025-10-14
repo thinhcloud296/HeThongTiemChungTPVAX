@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPVAXWebsite", "TPVAXWebsite\TPVAXWebsite.csproj", "{896023F1-94B0-432E-AD6E-021238A389B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPVAXWinform", "TPVAXWinform\TPVAXWinform.csproj", "{33F00947-384C-4EE6-867E-F144EF36B5D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{896023F1-94B0-432E-AD6E-021238A389B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{896023F1-94B0-432E-AD6E-021238A389B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{896023F1-94B0-432E-AD6E-021238A389B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33F00947-384C-4EE6-867E-F144EF36B5D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33F00947-384C-4EE6-867E-F144EF36B5D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33F00947-384C-4EE6-867E-F144EF36B5D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33F00947-384C-4EE6-867E-F144EF36B5D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
