@@ -18,7 +18,7 @@
       <section class="category-cards mb-5">
         <div class="row g-3 justify-content-center">
           <div class="col-auto">
-            <a href="#" class="category-card-item">
+            <a href="#thanh-thieu-nien" class="category-card-item" data-target="thanh-thieu-nien">
               <img
                 src="Assets/Icons/teener.png"
                 alt="Thanh thiếu niên"
@@ -29,7 +29,7 @@
           </div>
 
           <div class="col-auto">
-            <a href="#" class="category-card-item">
+            <a href="#du-lich" class="category-card-item" data-target="du-lich">
               <img
                 src="Assets/Icons/travel.png"
                 alt="Du lịch"
@@ -40,7 +40,7 @@
           </div>
 
           <div class="col-auto">
-            <a href="#" class="category-card-item">
+            <a href="#tien-hon-nhan" class="category-card-item" data-target="tien-hon-nhan">
               <img
                 src="Assets/Icons/marriage.png"
                 alt="Tiền hôn nhân"
@@ -51,7 +51,7 @@
           </div>
 
           <div class="col-auto">
-            <a href="#" class="category-card-item">
+            <a href="#nguoi-truong-thanh" class="category-card-item" data-target="nguoi-truong-thanh">
               <img
                 src="Assets/Icons/adults.png"
                 alt="Người trưởng thành"
@@ -62,7 +62,7 @@
           </div>
 
           <div class="col-auto">
-            <a href="#" class="category-card-item active">
+            <a href="#nhi" class="category-card-item active" data-target="nhi">
               <img
                 src="Assets/Icons/baby-boy.png"
                 alt="Nhi"
@@ -74,19 +74,48 @@
         </div>
       </section>
 
-      <section class="article-list-section">
-        <div class="row g-4">
+      <section class="search-article-section mb-4">
+        <div class="row justify-content-center">
           <div class="col-lg-8">
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control h-100 rounded-pill pe-5 border border-primary"
+                placeholder="Tìm kiếm bài viết trong mục này (ví dụ: HPV, Cúm, Viêm gan B)"
+                id="articleSearchInput"
+                style="text-indent: 10px;"
+              />
+              <img
+                class="position-absolute top-50 translate-middle-y"
+                src="Assets/Icons/search.png"
+                alt="Search"
+                style="width: 30px; right: 10px; opacity: 0.6;"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row justify-content-center" id="noResultsMessage" style="display: none;">
+          <div class="col-lg-8 text-center py-5 bg-light rounded shadow-sm">
+              <h3 class="text-secondary">Không tìm thấy bài viết nào.</h3>
+              <p class="text-muted">Vui lòng thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác.</p>
+              <img src="Assets/Icons/no-result.png" alt="Không tìm thấy" style="width: 80px; opacity: 0.6; margin-top: 10px;">
+          </div>
+      </section>
+
+      <section class="article-list-section category-content" id="nhi">
+        <div class="row g-4 article-container">
+          <div class="col-lg-8 article-item" data-keywords="Lịch tiêm, trẻ 5 tuổi, bảo vệ, toàn diện">
             <div class="large-article-card">
               <img
                 src="Assets/Images/test1.jpg"
-                alt="Ảnh bài viết lớn"
+                alt="Lịch tiêm chủng cho trẻ em"
                 class="article-img-large"
               />
               <div class="article-overlay-content">
                 <h2 class="article-title-large">
-                  Bị viêm phụ khoa có tiêm HPV được không? Những thông tin quan
-                  trọng cần biết
+                  Lịch tiêm chủng quan trọng nhất cho trẻ dưới 5 tuổi: Đảm bảo con bạn được bảo vệ toàn diện
                 </h2>
               </div>
             </div>
@@ -94,52 +123,35 @@
 
           <div class="col-lg-4">
             <div class="small-article-list">
-              <a href="#" class="small-article-item">
-                <img src="Assets/Images/test1.jpg" alt="Sốt xuất huyết" />
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-6-trong-1" class="small-article-item article-item" data-keywords="Hexaxim, Infanrix Hexa, 6 trong 1">
+                <img src="Assets/Images/test1.jpg" alt="Vắc xin 6 trong 1" class="article-img-small"/>
                 <div class="article-text-content">
                   <p class="article-title-small">
-                    Tiêm vắc xin sốt xuất huyết ở Thanh Hóa ở đâu an toàn?
+                    Vắc xin 6 trong 1: Nên tiêm Hexaxim hay Infanrix Hexa cho bé?
                   </p>
                 </div>
               </a>
-
-              <a href="#" class="small-article-item">
-                <img
-                  src="Assets/Images/test1.jpg"
-                  alt="Đắk Lắk"
-                  class="article-img-small"
-                />
+              <a href="bai-viet-chi-tiet.html?slug=sot-xuat-huyet-tre-em" class="small-article-item article-item" data-keywords="Sốt xuất huyết, trẻ em, phòng ngừa">
+                <img src="Assets/Images/test1.jpg" alt="Sốt xuất huyết ở trẻ" class="article-img-small"/>
                 <div class="article-text-content">
                   <p class="article-title-small">
-                    Tiêm vắc xin sốt xuất huyết ở Đắk Lắk ở đâu là uy tín?
+                    Triệu chứng sốt xuất huyết ở trẻ em và cách phòng ngừa tối ưu
                   </p>
                 </div>
               </a>
-
-              <a href="#" class="small-article-item">
-                <img
-                  src="Assets/Images/test1.jpg"
-                  alt="Tiêm HPV"
-                  class="article-img-small"
-                />
+              <a href="bai-viet-chi-tiet.html?slug=lich-uong-rotavirus" class="small-article-item article-item" data-keywords="Rotavirus, uống vắc xin">
+                <img src="Assets/Images/test1.jpg" alt="Vắc xin Rotavirus" class="article-img-small"/>
                 <div class="article-text-content">
                   <p class="article-title-small">
-                    Nên tiêm vắc xin HPV ở đâu an toàn và hiệu quả? Một số
-                    loại...
+                    Lịch uống vắc xin Rotavirus và những lưu ý khi cho trẻ uống
                   </p>
                 </div>
               </a>
-
-              <a href="#" class="small-article-item">
-                <img
-                  src="Assets/Images/test1.jpg"
-                  alt="Tây Ninh"
-                  class="article-img-small"
-                />
+              <a href="bai-viet-chi-tiet.html?slug=phong-ngua-viem-mang-nao" class="small-article-item article-item" data-keywords="Viêm màng não, tiêm phòng">
+                <img src="Assets/Images/test1.jpg" alt="Viêm màng não" class="article-img-small"/>
                 <div class="article-text-content">
                   <p class="article-title-small">
-                    Tiêm vắc xin sốt xuất huyết ở Tây Ninh tại đâu? Ai nên
-                    tiêm...
+                    Phòng ngừa viêm màng não ở trẻ: Các mũi tiêm không thể bỏ qua
                   </p>
                 </div>
               </a>
@@ -147,8 +159,356 @@
           </div>
         </div>
       </section>
+
+      <section class="article-list-section category-content d-none" id="thanh-thieu-nien">
+        <div class="row g-4 article-container">
+          <div class="col-lg-8 article-item" data-keywords="HPV, nam, nữ, bảo vệ, ung thư">
+            <div class="large-article-card">
+              <img
+                src="Assets/Images/thanhthieunien.jpg"
+                alt="Tiêm HPV cho nam và nữ"
+                class="article-img-large"
+              />
+              <div class="article-overlay-content">
+                <h2 class="article-title-large">
+                  Vì sao Vắc xin HPV là "tấm khiên" bảo vệ bắt buộc cho thanh thiếu niên cả nam và nữ?
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="small-article-list">
+              <a href="bai-viet-chi-tiet.html?slug=tiem-nhac-dai-thi" class="small-article-item article-item" data-keywords="Bạch hầu, Ho gà, Uốn ván, tiêm nhắc, dậy thì">
+                <img src="Assets/Images/thanhthieunien_nho1.jpg" alt="Vắc xin uốn ván" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Hoàn thành các mũi tiêm nhắc: Bạch hầu, Ho gà, Uốn ván cho độ tuổi dậy thì
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-cum-sinh-vien" class="small-article-item article-item" data-keywords="Cúm, học sinh, sinh viên, hàng năm">
+                <img src="Assets/Images/thanhthieunien_nho2.jpg" alt="Vắc xin Cúm" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Tiêm Vắc xin Cúm hàng năm: Cần thiết cho học sinh, sinh viên mùa tựu trường
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=viem-mang-nao-ky-tuc-xa" class="small-article-item article-item" data-keywords="Viêm màng não mô cầu, ký túc xá">
+                <img src="Assets/Images/thanhthieunien_nho3.jpg" alt="Viêm màng não mô cầu" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Nguy cơ bùng phát Viêm màng não mô cầu ở ký túc xá và cách phòng ngừa
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=kiem-tra-miem-dich-truoc-ket-hon" class="small-article-item article-item" data-keywords="Sởi, Quai bị, Rubella, miễn dịch, kết hôn">
+                <img src="Assets/Images/thanhthieunien_nho4.jpg" alt="Vắc xin sởi quai bị rubella" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Kiểm tra miễn dịch Sởi - Quai bị - Rubella trước khi kết hôn (nếu có)
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="article-list-section category-content d-none" id="du-lich">
+        <div class="row g-4 article-container">
+          <div class="col-lg-8 article-item" data-keywords="Tiêm phòng, du khách, châu Á, châu Phi">
+            <div class="large-article-card">
+              <img
+                src="Assets/Images/dulich.jpg"
+                alt="Vắc xin khi đi du lịch"
+                class="article-img-large"
+              />
+              <div class="article-overlay-content">
+                <h2 class="article-title-large">
+                  Tiêm phòng trước chuyến đi: Danh sách vắc xin cần thiết cho du khách đến các nước châu Á và châu Phi
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="small-article-list">
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-thuong-han" class="small-article-item article-item" data-keywords="Thương hàn, ẩm thực đường phố">
+                <img src="Assets/Images/dulich_nho1.jpg" alt="Vắc xin Thương hàn" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Vắc xin Thương hàn: Bảo vệ hệ tiêu hóa khi khám phá ẩm thực đường phố
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=viem-gan-a-va-b-du-lich" class="small-article-item article-item" data-keywords="Viêm gan A, Viêm gan B, mối đe dọa">
+                <img src="Assets/Images/dulich_nho2.jpg" alt="Vắc xin Viêm gan A" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Lịch tiêm Viêm gan A và B: Hai mối đe dọa lớn nhất khi du lịch
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=quy-dinh-sot-vang-da" class="small-article-item article-item" data-keywords="Sốt vàng da, Nam Mỹ, châu Phi">
+                <img src="Assets/Images/dulich_nho3.jpg" alt="Vắc xin Sốt vàng" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Quy định tiêm Vắc xin Sốt vàng da: Cần thiết khi đến các nước Nam Mỹ và Phi
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-phong-dai-du-lich" class="small-article-item article-item" data-keywords="Vắc xin Dại, nông thôn">
+                <img src="Assets/Images/dulich_nho4.jpg" alt="Vắc xin Dại" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Vắc xin phòng Dại cho những chuyến đi dài ngày đến vùng nông thôn
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-list-section category-content d-none" id="tien-hon-nhan">
+        <div class="row g-4 article-container">
+          <div class="col-lg-8 article-item" data-keywords="sinh con, vợ chồng, trước cưới">
+            <div class="large-article-card">
+              <img
+                src="Assets/Images/tienhonnhan.jpg"
+                alt="Tiêm chủng tiền hôn nhân"
+                class="article-img-large"
+              />
+              <div class="article-overlay-content">
+                <h2 class="article-title-large">
+                  Lập kế hoạch sinh con khỏe mạnh: Danh sách Vắc xin bắt buộc cho cả vợ và chồng trước khi cưới
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="small-article-list">
+              <a href="bai-viet-chi-tiet.html?slug=tiem-phong-rubella" class="small-article-item article-item" data-keywords="Rubella, Dị tật thai nhi, mang thai">
+                <img src="Assets/Images/tienhonnhan_nho1.jpg" alt="Vắc xin Rubella" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Nguy cơ Dị tật thai nhi: Vì sao phụ nữ phải tiêm phòng Rubella trước khi mang thai?
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-cum-truoc-thai-ky" class="small-article-item article-item" data-keywords="Cúm, thai kỳ">
+                <img src="Assets/Images/tienhonnhan_nho2.jpg" alt="Vắc xin Cúm trước thai kỳ" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Tiêm Vắc xin Cúm trước khi mang thai giúp bảo vệ cả mẹ và bé suốt thai kỳ
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=thuy-dau-khi-mang-thai" class="small-article-item article-item" data-keywords="Thủy đậu, mang thai, lịch tiêm">
+                <img src="Assets/Images/tienhonnhan_nho3.jpg" alt="Vắc xin Thủy đậu" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Thủy đậu khi mang thai: Lời cảnh báo và lịch tiêm phòng cần thiết
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=xet-nghiem-viem-gan-b" class="small-article-item article-item" data-keywords="Viêm gan B, xét nghiệm">
+                <img src="Assets/Images/tienhonnhan_nho4.jpg" alt="Xét nghiệm Viêm gan B" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Viêm gan B: Tầm quan trọng của việc xét nghiệm và tiêm phòng cho cặp đôi
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-list-section category-content d-none" id="nguoi-truong-thanh">
+        <div class="row g-4 article-container">
+          <div class="col-lg-8 article-item" data-keywords="10 mũi, quan trọng, sức khỏe tối ưu">
+            <div class="large-article-card">
+              <img
+                src="Assets/Images/nguoitruongthanh.jpg"
+                alt="Các loại vắc xin cho người lớn"
+                class="article-img-large"
+              />
+              <div class="article-overlay-content">
+                <h2 class="article-title-large">
+                  10 mũi Vắc xin quan trọng mà người trưởng thành không nên bỏ qua để duy trì sức khỏe tối ưu
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="small-article-list">
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-phe-cau-cum-nguoi-lon" class="small-article-item article-item" data-keywords="Phế cầu, Cúm, hô hấp, 50 tuổi">
+                <img src="Assets/Images/nguoitruongthanh_nho1.jpg" alt="Vắc xin Phế cầu" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Bảo vệ hệ hô hấp: Vắc xin Phế cầu và Cúm cho người trên 50 tuổi
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-zona-than-kinh" class="small-article-item article-item" data-keywords="Zona, thần kinh, người lớn">
+                <img src="Assets/Images/nguoitruongthanh_nho2.jpg" alt="Vắc xin Zona" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Vắc xin Zona thần kinh: Khi nào người lớn cần tiêm và hiệu quả của nó
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=tam-soat-viem-gan-b" class="small-article-item article-item" data-keywords="Viêm gan B, miễn dịch, tầm soát">
+                <img src="Assets/Images/nguoitruongthanh_nho3.jpg" alt="Vắc xin Viêm gan" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Tầm soát và tiêm Vắc xin Viêm gan B cho người chưa có miễn dịch
+                  </p>
+                </div>
+              </a>
+              <a href="bai-viet-chi-tiet.html?slug=vac-xin-hpv-cho-nguoi-lon" class="small-article-item article-item" data-keywords="HPV, ung thư cổ tử cung">
+                <img src="Assets/Images/nguoitruongthanh_nho4.jpg" alt="Vắc xin Ung thư" class="article-img-small"/>
+                <div class="article-text-content">
+                  <p class="article-title-small">
+                    Vắc xin HPV cho người lớn: Ngăn ngừa ung thư cổ tử cung và các bệnh khác
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
     </main>
 
     <script src="Scripts/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryLinks = document.querySelectorAll('.category-card-item');
+            const contentSections = document.querySelectorAll('.category-content');
+            const searchInput = document.getElementById('articleSearchInput');
+            const noResultsMessage = document.getElementById('noResultsMessage');
+
+            // --- CHỨC NĂNG 1: CHUYỂN ĐỔI DANH MỤC & DEEP LINKING ---
+            function switchCategory(targetId) {
+                // 1. Cập nhật URL Hash để hỗ trợ Deep Linking
+                if (window.location.hash !== '#' + targetId) {
+                     window.location.hash = targetId;
+                }
+                
+                // 2. Cập nhật trạng thái active của thẻ danh mục
+                categoryLinks.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-target') === targetId) {
+                        item.classList.add('active');
+                    }
+                });
+
+                // 3. Ẩn/hiện khối nội dung
+                contentSections.forEach(section => {
+                    section.classList.add('d-none');
+                    if (section.id === targetId) {
+                        section.classList.remove('d-none');
+                    }
+                });
+
+                // 4. Reset thanh tìm kiếm khi chuyển danh mục và lọc lại
+                searchInput.value = '';
+                filterArticles(targetId, ''); 
+            }
+
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    switchCategory(targetId);
+                });
+            });
+
+            // --- CHỨC NĂNG 2: TÌM KIẾM/LỌC BÀI VIẾT VÀ BÁO CÁO KẾT QUẢ ---
+            function filterArticles(activeId, query) {
+                const activeContainer = document.getElementById(activeId);
+                if (!activeContainer) return;
+
+                const articles = activeContainer.querySelectorAll('.article-item');
+                const lowerCaseQuery = query.toLowerCase().trim();
+                let foundResults = 0;
+
+                articles.forEach(item => {
+                    // Lấy tiêu đề và từ khóa (giả định)
+                    const titleElement = item.querySelector('.article-title-large, .article-title-small');
+                    // Sử dụng data-keywords cho việc lọc
+                    const keywords = item.getAttribute('data-keywords') || '';
+                    const titleText = titleElement ? titleElement.textContent.toLowerCase() : '';
+                    
+                    const isVisible = 
+                        titleText.includes(lowerCaseQuery) || 
+                        keywords.toLowerCase().includes(lowerCaseQuery);
+
+                    // Xử lý ẩn/hiện dựa trên loại bài viết
+                    const parentCol = item.closest('.col-lg-8, .col-lg-4');
+
+                    if (item.closest('.small-article-list')) {
+                        // Bài viết nhỏ: Ẩn/hiện thẻ <a>
+                        item.style.display = isVisible ? 'flex' : 'none';
+                    } else {
+                        // Bài viết lớn: Ẩn/hiện cột Bootstrap chứa nó
+                        parentCol.style.display = isVisible ? 'block' : 'none';
+                    }
+
+                    // Đếm kết quả hiển thị
+                    if (isVisible) {
+                       foundResults++;
+                    }
+                });
+
+                // --- LOGIC HIỂN THỊ THÔNG BÁO KẾT QUẢ ---
+                // 1. Ẩn/hiện khối nội dung chính
+                activeContainer.style.display = (lowerCaseQuery === '' || foundResults > 0) ? 'block' : 'none';
+                
+                // 2. Hiển thị thông báo "Không tìm thấy" nếu query có và không có kết quả
+                if (lowerCaseQuery.length > 0 && foundResults === 0) {
+                    noResultsMessage.style.display = 'flex'; // Dùng flex để căn giữa
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+
+                // Chú ý: Cần thêm logic kiểm tra xem tất cả bài viết nhỏ trong col-lg-4 có bị ẩn hết không 
+                // để ẩn luôn col-lg-4 (Đã được xử lý gián tiếp bằng foundResults)
+            }
+
+            // Lắng nghe sự kiện gõ phím trên ô tìm kiếm
+            searchInput.addEventListener('keyup', function() {
+                const activeLink = document.querySelector('.category-card-item.active');
+                if (activeLink) {
+                    const activeId = activeLink.getAttribute('data-target');
+                    filterArticles(activeId, this.value);
+                }
+            });
+
+            // --- CHỨC NĂNG 3: KHỞI TẠO VÀ DEEP LINKING KHI TẢI TRANG ---
+            
+            // Xác định mục cần tải ban đầu (Ưu tiên Hash URL)
+            let initialTarget = document.querySelector('.category-card-item.active').getAttribute('data-target');
+            const urlHash = window.location.hash.substring(1); // Lấy giá trị hash (bỏ dấu #)
+            
+            if (urlHash) {
+                 // Kiểm tra xem hash có khớp với data-target nào không
+                 const hashLink = document.querySelector(`.category-card-item[data-target="${urlHash}"]`);
+                 if (hashLink) {
+                    initialTarget = urlHash;
+                 }
+            }
+
+            // Thực hiện chuyển đổi danh mục ban đầu
+            switchCategory(initialTarget);
+        });
+    </script>
   </body>
 </html>
