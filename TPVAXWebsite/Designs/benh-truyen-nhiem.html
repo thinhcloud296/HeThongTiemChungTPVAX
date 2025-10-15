@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bệnh Truyền Nhiễm: Thông tin chi tiết | TPVAX</title>
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="main_style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <header class="container-fluid">
+        <div class="toolbar-section">
+            <div class="container d-flex align-items-center justify-content-between py-3">
+                <div class="search-bar-wrapper">
+                    <div class="position-relative" style="width: 100%; height: 100%">
+                        <input placeholder="Tìm kiếm vắc xin" type="text" class="form-control h-100 rounded-pill pe-5 border border-primary" style="background-color: #ffffff; text-indent: 10px"/>
+                        <img class="position-absolute top-50 translate-middle-y" src="Assets/Icons/search.png" alt="Search" style="width: 30px; right: 10px"/>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a href="tel:0975088626" class="d-flex align-items-center me-4 toolbar-link">
+                        <img src="Assets/Icons/telephone.png" alt="Phone" class="toolbar-icon"/>
+                        <span class="fw-bold fs-5 text-warning">0975 088 626</span>
+                    </a>
+                    <a href="#" class="d-flex align-items-center toolbar-link">
+                        <img src="Assets/Icons/shopping-basket.png" alt="Order" class="toolbar-icon"/>
+                        <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
+                    </a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a href="login.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng nhập</a>
+                    <a href="register.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng ký</a>
+                    <div class="vr mx-2"></div>
+                    <div class="position-relative">
+                        <a href="cart.html" class="btn d-flex align-items-center btn-cart-custom">
+                            <img src="Assets/Icons/cart.png" alt="Cart" class="toolbar-icon-small"/>
+                            <span class="ms-2">Giỏ hàng</span>
+                        </a>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="brand-section">
+            <div class="container-fluid px-0">
+                <div class="row align-items-center">
+                    <div class="col-md-5"><img src="Assets/Images/logo.png" alt="Hệ thống tiêm chủng TPVAX" class="img-fluid"/></div>
+                    <div class="col-md-7">
+                        <div class="d-flex flex-column justify-content-center p-3" style="background-color: #0077b6; color: white">
+                            <p class="display-1 mb-1 text-nowrap"><strong>Cổng tiêm chủng vắc xin</strong></p>
+                            <p class="display-3 mb-0 text-nowrap">Chất lượng hàng đầu Việt Nam</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg main-navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
+                    <ul class="container-fluid navbar-nav mx-auto d-flex flex-row justify-content-around">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vắc xin phòng bệnh</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><img src="Assets/Icons/baby-boy.png" alt="Icon Trẻ em" class="dropdown-icon-custom"/>Vắc xin cho trẻ em</a></li>
+                                <li><a class="dropdown-item" href="#"><img src="Assets/Icons/adults.png" alt="Icon Người lớn" class="dropdown-icon-custom"/>Vắc xin cho người lớn</a></li>
+                                <li><hr class="dropdown-divider"/></li>
+                                <li><a class="dropdown-item" href="#"><img src="Assets/Icons/pregnant-woman.png" alt="Icon Phụ nữ mang thai" class="dropdown-icon-custom"/>Vắc xin cho phụ nữ mang thai</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Gói vắc xin</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Tra cứu lịch tiêm</a></li>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiến thức tiêm chủng</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="ttvctheodoituong.html"><img src="Assets/Icons/ttvacine.png" alt="Icon Thông tin Vaccine" class="dropdown-icon-custom"/>Thông tin vaccine theo đối tượng</a></li>
+                                <li><a class="dropdown-item" href="me-va-be.html"><img src="Assets/Icons/mother.png" alt="Icon Mẹ và Bé" class="dropdown-icon-custom"/>Mẹ và bé</a></li>
+                                <li><a class="dropdown-item active" href="benh-truyen-nhiem.html"><img src="Assets/Icons/virus.png" alt="Icon Bệnh truyền nhiễm" class="dropdown-icon-custom"/>Bệnh truyền nhiễm</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        </header>
+    <main class="knowledge-page-main">
+        <section class="knowledge-hero benh-truyen-nhiem-hero text-center py-5">
+            <h1 class="display-3 fw-bold hero-title">Bệnh Truyền Nhiễm</h1>
+            <p class="lead hero-subtitle">
+                Cùng TPVAX tìm hiểu các thông tin chi tiết về Bệnh truyền nhiễm và Vắc xin phòng ngừa
+            </p>
+            <div class="hero-illustration">
+                <img src="Assets/Images/hexaxim.png" alt="Minh họa Bệnh Truyền Nhiễm" class="img-fluid hero-img-custom">
+            </div>
+        </section>
+
+        <div class="container my-5">
+            <section class="filter-bar mb-4 shadow-sm rounded-3 p-3">
+                <div class="d-flex flex-wrap gap-2 filter-options">
+                    <button class="btn btn-sm btn-primary active filter-bar-item" data-filter="all">Tất cả</button>
+                    <button class="btn btn-sm btn-outline-secondary filter-bar-item" data-filter="article">
+                        <i class="fas fa-file-alt me-1"></i> Bài viết
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary filter-bar-item" data-filter="az">
+                         <i class="fas fa-book-open me-1"></i> Bệnh A-Z
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary filter-bar-item" data-filter="quiz">
+                        <i class="fas fa-question-circle me-1"></i> Quiz
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary filter-bar-item" data-filter="longform">
+                        <i class="fas fa-feather-alt me-1"></i> LongForm
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary filter-bar-item" data-filter="video">
+                        <i class="fas fa-video me-1"></i> Video
+                    </button>
+                </div>
+            </section>
+
+            <section class="article-grid">
+                <div class="row g-4 article-container">
+                    <div class="col-md-4 col-sm-6 article-item" data-tags="article az">
+                        <a href="bai-viet-chi-tiet.html?slug=not-thuy-dau-trang" class="card h-100 article-card-custom hover-lift">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Nốt thủy đậu trắng">
+                            <span class="article-tag-badge">Article</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Nốt thủy đậu màu trắng đục là hiện tượng gì? Cách điều trị đúng</p>
+                            </div>
+                        </a>
+                    </div>
+                     <div class="col-md-4 col-sm-6 article-item" data-tags="article">
+                        <a href="bai-viet-chi-tiet.html?slug=sua-rua-mat-thuy-dau" class="card h-100 article-card-custom hover-lift">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Sữa rửa mặt thủy đậu">
+                            <span class="article-tag-badge">Article</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Những người bị thủy đậu có dùng sữa rửa mặt được không?</p>
+                            </div>
+                        </a>
+                    </div>
+                     <div class="col-md-4 col-sm-6 article-item" data-tags="az virus">
+                        <a href="bai-viet-chi-tiet.html?slug=sot-zika-can-biet" class="card h-100 article-card-custom hover-lift">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Sốt Zika">
+                            <span class="article-tag-badge az-badge">Bệnh A-Z</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Sốt Zika là gì? Những vấn đề cần biết về sốt Zika</p>
+                            </div>
+                        </a>
+                    </div>
+                     <div class="col-md-4 col-sm-6 article-item" data-tags="az virus">
+                        <a href="bai-viet-chi-tiet.html?slug=benh-chikungunya" class="card h-100 article-card-custom hover-lift">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Chikungunya">
+                            <span class="article-tag-badge az-badge">Bệnh A-Z</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Bệnh Chikungunya là gì? Những vấn đề cần biết về bệnh Chikungunya</p>
+                            </div>
+                        </a>
+                    </div>
+                     <div class="col-md-4 col-sm-6 article-item" data-tags="article virus">
+                        <a href="bai-viet-chi-tiet.html?slug=3-giai-doan-rubella" class="card h-100 article-card-custom hover-lift">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Bệnh Rubella">
+                            <span class="article-tag-badge">Article</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Tìm hiểu về 3 giai đoạn phát triển của bệnh Rubella</p>
+                            </div>
+                        </a>
+                    </div>
+                     <div class="col-md-4 col-sm-6 article-item" data-tags="az vi-khuan">
+                        <a href="bai-viet-chi-tiet.html?slug=benh-than" class="card h-100 article-card-custom hover-lift">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Bệnh than">
+                            <span class="article-tag-badge az-badge">Bệnh A-Z</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Bệnh than là gì? Những vấn đề cần biết về bệnh than</p>
+                            </div>
+                        </a>
+                    </div>
+                     <div class="col-md-4 col-sm-6 article-item" data-tags="quiz vi-khuan">
+                         <a href="#" class="card h-100 article-card-custom hover-lift quiz-card">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Quiz Lao">
+                            <span class="article-tag-badge quiz-badge">Quiz</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Bạn có chắc mình đã biết hết về các thể loại của bệnh lao?</p>
+                                <span class="quiz-info">7 câu hỏi</span>
+                            </div>
+                        </a>
+                    </div>
+                     <div class="col-md-4 col-sm-6 article-item" data-tags="quiz virus">
+                         <a href="#" class="card h-100 article-card-custom hover-lift quiz-card">
+                            <img src="Assets/Images/hexaxim.png" class="card-img-top article-grid-img" alt="Quiz SXH">
+                            <span class="article-tag-badge quiz-badge">Quiz</span>
+                            <div class="card-body">
+                                <p class="card-text fw-bold article-title-small">Bạn có nhầm lẫn muỗi thường với muỗi truyền bệnh Sốt xuất huyết? Kiểm tra ngay...</p>
+                                <span class="quiz-info">7 câu hỏi</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer py-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div style="height: 130px; width: fit-content; background-color: white;">
+                            <img src="Assets/Images/logo.png" alt="Hệ thống tiêm chủng TPVAX" style="height: 100%" class="img-fluid"/>
+                        </div>
+                        <div class="logo-text ps-4">
+                            <p class="display-4 mb-1"><strong>Cổng tiêm chủng vắc xin</strong></p>
+                            <p class="display-6 mb-0">Chất lượng hàng đầu Việt Nam</p>
+                        </div>
+                    </div>
+                </div>
+                <ul class="col-lg-12 d-flex flex-row justify-content-around py-3" style="font-size: 25px">
+                    <li class="d-flex align-items-center justify-content-center text-warning">
+                        <img src="Assets/Icons/contacs.png" alt="Liên hệ" style="width: 30px"/><strong>Liên hệ</strong>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-center text-warning">
+                        <img src="Assets/Icons/receiver.png" alt="Hotline" style="width: 30px"/><strong>Hotline: 0975 088 626</strong>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-center text-warning">
+                        <img src="Assets/Icons/location_7282031.png" alt="Địa chỉ" style="width: 30px"/><strong>140 Lê Trọng Tấn, Tân Phú, TP. Hồ Chí Minh</strong>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-12 company-details">
+                    <p class="fw-bold">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+                    <p>Email: cskh@tpvax.vn</p>
+                    <p>Số điện thoại: 0975 088 626</p>
+                    <p>Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
+                    <p>Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+                </div>
+            </div>
+            <hr class="footer-hr"/>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-center footer-bottom-links">
+                    <span>Giờ mở cửa : 7:30 - 17:00</span>
+                    <div>
+                        <a href="#">Chính sách bảo mật</a>
+                        <a href="#">Khảo sát tiêm chủng</a>
+                        <a href="#">Chính sách thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-bar-item');
+            const articleItems = document.querySelectorAll('.article-item');
+
+            const filterArticles = (filter) => {
+                articleItems.forEach(item => {
+                    const tags = item.getAttribute('data-tags').split(' ');
+                    if (filter === 'all' || tags.includes(filter)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            };
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const filter = button.getAttribute('data-filter');
+
+                    // Loại bỏ trạng thái active/primary khỏi tất cả nút
+                    document.querySelectorAll('.filter-bar-item').forEach(btn => {
+                        btn.classList.remove('active', 'btn-primary');
+                        btn.classList.add('btn-outline-secondary');
+                    });
+
+                    // Thêm trạng thái active/primary cho nút được click
+                    button.classList.remove('btn-outline-secondary');
+                    button.classList.add('active', 'btn-primary');
+
+                    filterArticles(filter);
+                });
+            });
+
+            // Khởi tạo lọc mặc định
+            filterArticles('all');
+        });
+    </script>
+  </body>
+</html>
