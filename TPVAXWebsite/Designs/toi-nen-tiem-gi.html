@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tôi nên tiêm gì? - Tư vấn Vắc xin | TPVAX</title>
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="main_style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <header class="container-fluid">
+      <div class="toolbar-section">
+        <div class="container d-flex align-items-center justify-content-between py-3">
+          <div class="search-bar-wrapper">
+            <div class="position-relative" style="width: 100%; height: 100%">
+              <input placeholder="Tìm kiếm vắc xin" type="text" class="form-control h-100 rounded-pill pe-5 border border-primary" />
+              <img class="position-absolute top-50 translate-middle-y" src="Assets/Icons/search.png" alt="Search" style="width: 30px; right: 10px"/>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <a href="tel:0975088626" class="d-flex align-items-center me-4 toolbar-link">
+              <img src="Assets/Icons/telephone.png" alt="Phone" class="toolbar-icon"/>
+              <span class="fw-bold fs-5 text-warning">0975 088 626</span>
+            </a>
+            <a href="#" class="d-flex align-items-center toolbar-link">
+              <img src="Assets/Icons/shopping-basket.png" alt="Order" class="toolbar-icon"/>
+              <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
+            </a>
+          </div>
+          <div class="d-flex align-items-center">
+            <a href="login.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng nhập</a>
+            <a href="register.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng ký</a>
+            <div class="vr mx-2"></div>
+            <div class="position-relative">
+              <a href="cart.html" class="btn d-flex align-items-center btn-cart-custom">
+                <img src="Assets/Icons/cart.png" alt="Cart" class="toolbar-icon-small"/>
+                <span class="ms-2">Giỏ hàng</span>
+              </a>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="brand-section">
+        <div class="container-fluid px-0">
+          <div class="row align-items-center">
+            <div class="col-md-5"><img src="Assets/Images/logo.png" alt="Hệ thống tiêm chủng TPVAX" class="img-fluid"/></div>
+            <div class="col-md-7">
+              <div class="d-flex flex-column justify-content-center p-3 logo-slogan-bg">
+                <p class="display-1 mb-1 text-nowrap"><strong>Cổng tiêm chủng vắc xin</strong></p>
+                <p class="display-3 mb-0 text-nowrap">Chất lượng hàng đầu Việt Nam</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
+            <ul class="container-fluid navbar-nav mx-auto d-flex flex-row justify-content-around">
+              <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vắc xin phòng bệnh</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/baby-boy.png" alt="Icon Trẻ em" class="dropdown-icon-custom"/>Vắc xin cho trẻ em</a></li>
+                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/adults.png" alt="Icon Người lớn" class="dropdown-icon-custom"/>Vắc xin cho người lớn</a></li>
+                  <li><hr class="dropdown-divider"/></li>
+                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/pregnant-woman.png" alt="Icon Phụ nữ mang thai" class="dropdown-icon-custom"/>Vắc xin cho phụ nữ mang thai</a></li>
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#">Gói vắc xin</a></li>
+              <li class="nav-item"><a class="nav-link" href="khuyen-mai-hot.html">Khuyến mãi HOT</a></li>
+              <li class="nav-item active"><a class="nav-link active" href="toi-nen-tiem-gi.html">Tôi nên tiêm gì</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Tra cứu lịch tiêm</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiến thức tiêm chủng</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="ttvctheodoituong.html"><img src="Assets/Icons/ttvacine.png" alt="Icon Thông tin Vaccine" class="dropdown-icon-custom"/>Thông tin vaccine theo đối tượng</a></li>
+                  <li><a class="dropdown-item" href="me-va-be.html"><img src="Assets/Icons/mother.png" alt="Icon Mẹ và Bé" class="dropdown-icon-custom"/>Mẹ và bé</a></li>
+                  <li><a class="dropdown-item" href="benh-truyen-nhiem.html"><img src="Assets/Icons/virus.png" alt="Icon Bệnh truyền nhiễm" class="dropdown-icon-custom"/>Bệnh truyền nhiễm</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="advice-consult-hero text-start">
+        <div class="container position-relative">
+            <img src="Assets/Images/hexaxim.png" alt="Bác sĩ tư vấn" class="hero-image d-none d-lg-block"> 
+            <div class="row">
+                <div class="col-lg-6 py-5">
+                    <nav aria-label="breadcrumb" class="mb-1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html" class="text-secondary">Trang chủ</a></li>
+                            <li class="breadcrumb-item active text-primary" aria-current="page">Tôi nên tiêm gì?</li>
+                        </ol>
+                    </nav>
+                    <h1 class="fw-bold hero-title">Tôi nên tiêm gì?</h1>
+                    <p class="lead hero-subtitle">
+                        Chọn thông tin và nhận đề xuất các vắc xin cần tiêm
+                    </p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section class="container filter-block">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-5 age-select-wrapper">
+                <label for="ageSelect" class="form-label">Độ tuổi</label>
+                <select class="form-select" id="ageSelect">
+                    </select>
+            </div>
+            
+            <div class="col-md-4">
+                <label class="form-label d-block">Chọn giới tính</label>
+                <div class="d-flex gap-2 gender-options">
+                    <button class="gender-select-btn active" data-gender="Nam">
+                        <i class="fas fa-male me-1"></i> Nam
+                    </button>
+                    <button class="gender-select-btn" data-gender="Nữ">
+                         <i class="fas fa-female me-1"></i> Nữ
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <button class="btn btn-get-result w-100" id="getResultsButton">Nhận kết quả</button>
+            </div>
+        </div>
+      </section>
+
+
+      <section class="advice-section row g-4 mt-5" id="adviceResults" style="display: none;">
+        <div class="col-12">
+            <h2 class="section-title fw-bold">
+                <i class="fas fa-star section-title-icon me-2"></i> Đề xuất cho: <span id="currentSelection"></span>
+            </h2>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="advice-card-list" id="vaxLeList">
+                <h3 class="fw-bold mb-3 text-secondary">Vắc xin lẻ</h3>
+                </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="advice-card-list" id="vaxGoiList">
+                <h3 class="fw-bold mb-3 text-secondary">Gói Vắc Xin</h3>
+                </div>
+        </div>
+
+        <div class="col-12 cta-bottom-row row g-3">
+            <div class="col-md-6">
+                <button class="btn btn-cta btn-consult">
+                    <i class="fas fa-comments me-2"></i> Yêu cầu tư vấn
+                </button>
+            </div>
+            <div class="col-md-6">
+                 <button class="btn btn-cta btn-chat">
+                    <i class="fas fa-headset me-2"></i> Chat với Bác sĩ
+                </button>
+            </div>
+        </div>
+
+      </section>
+      
+    </main>
+
+    <footer class="site-footer py-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="d-flex align-items-center justify-content-center">
+              <div style="height: 130px; width: fit-content; background-color: white;">
+                <img src="Assets/Images/logo.png" alt="Hệ thống tiêm chủng TPVAX" style="height: 100%" class="img-fluid"/>
+              </div>
+              <div class="logo-text ps-4">
+                <p class="display-4 mb-1"><strong>Cổng tiêm chủng vắc xin</strong></p>
+                <p class="display-6 mb-0">Chất lượng hàng đầu Việt Nam</p>
+              </div>
+            </div>
+          </div>
+          <ul class="col-lg-12 d-flex flex-row justify-content-around py-3" style="font-size: 25px">
+            <li class="d-flex align-items-center justify-content-center text-warning">
+              <img src="Assets/Icons/contacs.png" alt="Liên hệ" style="width: 30px"/><strong>Liên hệ</strong>
+            </li>
+            <li class="d-flex align-items-center justify-content-center text-warning">
+              <img src="Assets/Icons/receiver.png" alt="Hotline" style="width: 30px"/><strong>Hotline: 0975 088 626</strong>
+            </li>
+            <li class="d-flex align-items-center justify-content-center text-warning">
+              <img src="Assets/Icons/location_7282031.png" alt="Địa chỉ" style="width: 30px"/><strong>140 Lê Trọng Tấn, Tân Phú, TP. Hồ Chí Minh</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="col-12 company-details">
+            <p class="fw-bold">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+            <p>Email: cskh@tpvax.vn</p>
+            <p>Số điện thoại: 0975 088 626</p>
+            <p>Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
+            <p>Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+          </div>
+        </div>
+        <hr class="footer-hr"/>
+        <div class="row">
+          <div class="col-12 d-flex justify-content-between align-items-center footer-bottom-links">
+            <span>Giờ mở cửa : 7:30 - 17:00</span>
+            <div>
+              <a href="#">Chính sách bảo mật</a>
+              <a href="#">Khảo sát tiêm chủng</a>
+              <a href="#">Chính sách thanh toán</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script>
+        // --- MOCK DATA (Dữ liệu Giả lập) ---
+        // Giả định minAge và maxAge tính bằng năm (vd: 0.5 = 6 tháng, 1 = 12 tháng, 2 = 24 tháng)
+        const AGE_RANGES = [
+            { id: 'age-0-6m', label: 'Từ 0 đến < 6 tháng tuổi', minAge: 0, maxAge: 0.5 },
+            { id: 'age-6m-12m', label: 'Từ 6 tháng đến < 12 tháng tuổi', minAge: 0.5, maxAge: 1 },
+            { id: 'age-1-2y', label: 'Từ 12 tháng đến < 24 tháng tuổi', minAge: 1, maxAge: 2 },
+            { id: 'age-2-9y', label: 'Từ 2 tuổi đến < 9 tuổi', minAge: 2, maxAge: 9 },
+            { id: 'age-9-45y', label: 'Từ 9 tuổi đến < 45 tuổi', minAge: 9, maxAge: 45 },
+            { id: 'age-45-plus', label: 'Từ 45 tuổi trở lên', minAge: 45, maxAge: 100 }
+        ];
+
+        const MOCK_VAX_DATA = [
+            // Vắc xin Lẻ
+            { id: 'vax-01', name: 'Vắc xin MenQuadfi', disease: 'Phòng bệnh Não mô cầu ACYW', price: '1.800.000₫', unit: 'Liều', flag: 'usa', minAge: 9, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '- 0%' },
+            { id: 'vax-02', name: 'Vắc xin Influvac Tetra', disease: 'Phòng Cúm', price: '333.000₫', unit: 'Liều', flag: 'netherlands', minAge: 0.5, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '- 0%' },
+            { id: 'vax-03', name: 'Vắc xin Gardasil 9', disease: 'Phòng ung thư do HPV 9 chủng', price: '2.965.000₫', unit: 'Liều', flag: 'usa', minAge: 9, maxAge: 45, genders: ['Nam', 'Nữ'], discount: '- 0%' },
+            { id: 'vax-04', name: 'Vắc xin 6 trong 1 (Hexaxim)', disease: 'Phòng 6 bệnh cơ bản', price: '1.300.000₫', unit: 'Liều', flag: 'france', minAge: 0.16, maxAge: 2, genders: ['Nam', 'Nữ'], discount: '- 0%' },
+            { id: 'vax-05', name: 'Vắc xin Sởi-Quai bị-Rubella (MMR)', disease: 'Phòng Sởi, Quai bị, Rubella', price: '350.000₫', unit: 'Liều', flag: 'india', minAge: 1, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '- 0%' },
+            // Gói Vắc xin
+            { id: 'pkg-01', type: 'Gói', name: 'Gói vắc xin 12 tháng', disease: 'Mũi cơ bản và nhắc lại', price: '22.867.740₫', originalPrice: '23.723.700₫', discount: '- 855.960₫', minAge: 0, maxAge: 1, genders: ['Nam', 'Nữ'] },
+            { id: 'pkg-02', type: 'Gói', name: 'Gói vắc xin 24 tháng', disease: 'Bảo vệ toàn diện đến 2 tuổi', price: '25.712.350₫', originalPrice: '26.801.500₫', discount: '- 1.089.150₫', minAge: 0.16, maxAge: 2, genders: ['Nam', 'Nữ'] },
+            { id: 'pkg-03', type: 'Gói', name: 'Gói vắc xin Phụ nữ trước mang thai', disease: 'Phòng Rubella, Thủy đậu, Cúm, v.v.', price: '6.246.660₫', originalPrice: '6.421.800₫', discount: '- 175.140₫', minAge: 18, maxAge: 45, genders: ['Nữ'] },
+            { id: 'pkg-04', type: 'Gói', name: 'Gói Vắc xin Người lớn cốt lõi', disease: 'Cúm, Tdap, Zona (50+)', price: '5.900.000₫', originalPrice: '6.000.000₫', discount: '- 100.000₫', minAge: 45, maxAge: 100, genders: ['Nam', 'Nữ'] }
+        ];
+
+        // --- CÁC HÀM XỬ LÝ CHÍNH ---
+
+        function populateAgeDropdown() {
+            const select = document.getElementById('ageSelect');
+            select.innerHTML = AGE_RANGES.map(range => 
+                `<option value="${range.id}">${range.label}</option>`
+            ).join('');
+            // Đặt tùy chọn đầu tiên (0 đến < 6 tháng tuổi) làm mặc định
+            if (select.options.length > 0) {
+                 select.options[0].selected = true;
+            }
+        }
+
+        function renderVaxItem(vax) {
+            const isPackage = vax.type === 'Gói';
+            const priceHtml = isPackage ? 
+                `<p class="item-price mb-0">${vax.price} <span class="original-price">${vax.originalPrice || ''}</span> / Gói</p>` :
+                `<p class="item-price mb-0">${vax.price} / ${vax.unit}</p>`;
+            
+            const flagHtml = vax.flag ? `<img src="Assets/Icons/flag/${vax.flag}.png" alt="Cờ ${vax.flag}" class="item-flag-icon">` : '';
+            const discountHtml = vax.discount ? `<span class="discount-badge">${vax.discount}</span>` : '';
+
+            return `
+                <div class="advice-item" data-vax-id="${vax.id}">
+                    ${discountHtml}
+                    <div class="item-image-wrapper">
+                        <img src="Assets/Images/hexaxim.png" alt="${vax.name}" class="item-image">
+                    </div>
+                    <div class="item-details flex-grow-1">
+                        <div class="d-flex align-items-center mb-1">
+                            ${flagHtml}
+                            <p class="item-name mb-0">${vax.name}</p>
+                        </div>
+                        <p class="item-disease mb-1">${vax.disease}</p>
+                        ${priceHtml}
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm btn-dat-hen">Đặt hẹn</button>
+                </div>
+            `;
+        }
+
+        function filterAndRenderResults() {
+            const ageSelect = document.getElementById('ageSelect');
+            const selectedRangeId = ageSelect.value;
+            const selectedGender = document.querySelector('.gender-options .active').getAttribute('data-gender');
+            
+            const currentRange = AGE_RANGES.find(r => r.id === selectedRangeId);
+            const selectionText = `${currentRange.label} (${selectedGender})`;
+
+            const vaxLeList = document.getElementById('vaxLeList');
+            const vaxGoiList = document.getElementById('vaxGoiList');
+            const adviceResults = document.getElementById('adviceResults');
+            const currentSelectionDisplay = document.getElementById('currentSelection');
+
+            // --- Lọc Dữ liệu ---
+            // Lọc theo độ tuổi: minAge <= range.maxAge VÀ maxAge >= range.minAge
+            const filteredVaxLe = MOCK_VAX_DATA.filter(vax => {
+                return vax.type !== 'Gói' && 
+                       vax.minAge < currentRange.maxAge && 
+                       vax.maxAge > currentRange.minAge &&
+                       vax.genders.includes(selectedGender);
+            });
+
+            const filteredVaxGoi = MOCK_VAX_DATA.filter(vax => {
+                return vax.type === 'Gói' && 
+                       vax.minAge < currentRange.maxAge && 
+                       vax.maxAge > currentRange.minAge &&
+                       vax.genders.includes(selectedGender);
+            });
+
+            // --- Render và Hiển thị ---
+            vaxLeList.innerHTML = `<h3 class="fw-bold mb-3 text-secondary">Vắc xin lẻ</h3>` + filteredVaxLe.map(renderVaxItem).join('') || `<p class="text-muted">Không có vắc xin lẻ được đề xuất.</p>`;
+            vaxGoiList.innerHTML = `<h3 class="fw-bold mb-3 text-secondary">Gói Vắc Xin</h3>` + filteredVaxGoi.map(renderVaxItem).join('') || `<p class="text-muted">Không có gói vắc xin được đề xuất.</p>`;
+
+            currentSelectionDisplay.textContent = selectionText;
+            adviceResults.style.display = 'flex'; // Hiện khối kết quả
+        }
+
+        // --- KHỞI TẠO VÀ LẮNG NGHE SỰ KIỆN ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateAgeDropdown(); // Điền danh sách độ tuổi
+
+            const genderButtons = document.querySelectorAll('.gender-select-btn');
+            const getResultsButton = document.getElementById('getResultsButton');
+
+            // Xử lý nút Giới tính
+            genderButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    genderButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+
+            // Xử lý nút Nhận Kết Quả
+            getResultsButton.addEventListener('click', filterAndRenderResults);
+
+            // Chạy lần đầu để hiển thị kết quả mặc định
+            filterAndRenderResults(); 
+        });
+
+    </script>
+  </body>
+</html>

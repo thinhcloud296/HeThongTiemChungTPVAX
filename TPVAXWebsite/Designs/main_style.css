@@ -1507,7 +1507,7 @@ main.vaccine-detail {
 }
 
 /* ================================================= */
-/* BANNER VÀ HIỆU ỨNG (Knowledge Hero) */
+/* BANNER VÀ HIỆU ỨNG (kiến thức tiêm chủng) */
 /* ================================================= */
 
 .knowledge-hero {
@@ -1726,6 +1726,472 @@ main.vaccine-detail {
     border-radius: 4px;
     font-size: 12px;
     font-weight: 600;
+}
+/* ================================================= */
+/* KHỐI VẮC XIN LẺ / GÓI (Tối ưu hóa UI) */
+/* ================================================= */
+
+/* Khối chính bao quanh danh sách Vắc xin Lẻ/Gói */
+.advice-card-list {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px; /* Giảm padding tổng thể */
+    height: 100%;
+    border: 1px solid #cce7f2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Tiêu đề Vắc xin lẻ/Gói */
+.advice-card-list h3 {
+    color: #0077b6;
+    font-size: 1.3rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 15px !important;
+}
+
+/* --- Thẻ Vắc xin Đơn (advice-item) --- */
+.advice-item {
+    /* Đảm bảo bố cục rõ ràng, sử dụng lưới nội bộ nếu cần */
+    display: grid;
+    grid-template-columns: 80px 1fr auto; /* Ảnh | Chi tiết | Nút */
+    grid-template-rows: auto;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    transition: background-color 0.1s ease;
+    cursor: default;
+}
+
+.advice-item:hover {
+    background-color: #fcfcfc;
+}
+
+.advice-item:last-child {
+    border-bottom: none;
+}
+
+/* Khối Ảnh */
+.item-image-wrapper {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3; /* Chiếm 2 hàng */
+    width: 80px;
+    height: 80px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item-image {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* Chi tiết văn bản */
+.item-details {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    align-self: flex-start;
+}
+.item-name {
+    font-weight: 700;
+    color: #003b73;
+    font-size: 1rem; /* Giảm nhẹ font size */
+    margin-bottom: 0;
+}
+.item-disease {
+    color: #555;
+    font-size: 0.85rem; /* Rất quan trọng: Giữ chữ nhỏ gọn */
+    font-style: italic;
+    margin-top: 2px;
+}
+
+/* Giá và Nút */
+.item-price-block {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    align-self: flex-start;
+    margin-top: -10px; /* Kéo giá lên sát chi tiết */
+}
+.item-price {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #d4a000;
+}
+.original-price {
+    font-size: 0.8rem;
+    color: #999;
+}
+.btn-dat-hen {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+    align-self: center; /* Căn giữa theo chiều dọc */
+    height: 40px; /* Chiều cao cố định */
+    padding: 0 15px;
+    font-weight: 600;
+    border-radius: 50px;
+    /* Loại bỏ màu xanh đậm cũ và dùng màu nền mới nếu cần */
+    background-color: #0077b6; 
+    color: white;
+    border: none;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.btn-dat-hen:hover {
+    background-color: #023e54;
+    transform: scale(1.05);
+}
+
+/* Badge (Vị trí) */
+.discount-badge {
+    top: 0;
+    left: 0;
+    font-size: 0.85rem;
+}
+.item-flag-icon {
+    width: 20px;
+    margin-right: 5px;
+}
+
+/* Responsive: Trên mobile, nút Đặt Hẹn vẫn cần ở vị trí dễ bấm */
+@media (max-width: 576px) {
+    .advice-item {
+        grid-template-columns: 80px 1fr; /* Ảnh | Chi tiết + Nút */
+        grid-template-rows: auto auto auto;
+        padding: 10px;
+    }
+    .item-details {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+    }
+    .item-price-block {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    .btn-dat-hen {
+        grid-column: 1 / 3; /* Chiếm hết chiều rộng */
+        grid-row: 3 / 4;
+        width: 100%;
+        align-self: center;
+        height: 45px;
+    }
+
+}
+/* ================================================= */
+/* TRANG: Tôi nên tiêm gì? (TOI-NEN-TIEM-GI.HTML)    */
+/* ================================================= */
+
+/* Banner Tư vấn */
+.advice-consult-hero {
+    background-color: #f1f9ff;
+    padding: 50px 0 100px; 
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid #b8ddfd;
+}
+.advice-consult-hero .hero-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #003b73;
+}
+.advice-consult-hero .hero-subtitle {
+    color: #4a5568;
+}
+
+/* Ảnh Banner (sử dụng position absolute) */
+.advice-consult-hero .hero-image {
+    max-height: 250px;
+    width: auto;
+    object-fit: contain;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.05));
+}
+
+/* KHỐI LỌC (Filter Block) - Giao diện chính */
+.filter-block {
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Đổ bóng sắc nét */
+    margin-top: -100px; 
+    position: relative;
+    z-index: 20; /* Đảm bảo khối lọc luôn nằm trên Banner và Ảnh */
+    border: 1px solid #cce7f2; 
+}
+
+.filter-block label {
+    font-weight: 600;
+    color: #023e54;
+    margin-bottom: 8px;
+}
+.age-select-wrapper .form-select {
+    height: 50px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* Nút Giới tính */
+.gender-select-btn {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: 2px solid #cce7f2;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+    color: #555;
+    flex-grow: 1;
+    width: 100%;
+}
+.gender-select-btn.active {
+    background-color: #e6f9ff;
+    border-color: #0077b6; /* Viền xanh đậm khi active */
+    color: #0077b6;
+    box-shadow: 0 2px 5px rgba(0, 119, 182, 0.3);
+}
+.gender-select-btn:hover:not(.active) {
+    border-color: #a3d9f7;
+    color: #0077b6;
+}
+
+/* Nút Nhận Kết Quả */
+.btn-get-result {
+    background-color: #0aa889; /* Màu xanh lá cây nổi bật */
+    color: white;
+    font-weight: 700;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 168, 137, 0.4);
+    font-size: 1.1rem;
+    transition: all 0.2s;
+}
+.btn-get-result:hover {
+    background-color: #088b73;
+    transform: translateY(-1px);
+}
+
+
+/* Khối Kết quả Tư vấn */
+.advice-section {
+    background-color: #f8f9fa; /* Nền xám nhạt */
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 40px !important; 
+}
+.advice-section .section-title {
+    color: #0077b6;
+}
+.advice-section .section-title-icon {
+    color: #dc3545; /* Màu đỏ nổi bật cho icon */
+    font-size: 1.2em;
+}
+.advice-card-list {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    height: 100%;
+    border: 1px solid #cce7f2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.advice-card-list h3 {
+    color: #0077b6;
+    font-size: 1.3rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 15px !important;
+}
+
+/* Chi tiết Item (Sử dụng Grid cho bố cục gọn) */
+.advice-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto; 
+    grid-template-rows: auto auto; 
+    align-items: center;
+    gap: 5px 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #e0e0e0; 
+    position: relative;
+    transition: background-color 0.1s ease;
+    cursor: default;
+}
+.advice-item:hover {
+    background-color: #fcfcfc;
+}
+.advice-item:last-child {
+    border-bottom: none;
+}
+
+.item-image-wrapper {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-details {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    align-self: flex-start;
+    margin-top: 5px;
+}
+.item-price-block {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    align-self: flex-end;
+    margin-top: -5px;
+}
+.item-name {
+    font-weight: 700;
+    color: #003b73;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+.item-disease {
+    color: #555;
+    font-size: 0.85rem; 
+    font-style: italic;
+    margin-top: 2px;
+}
+.item-price {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #d4a000;
+    display: inline-block;
+}
+.original-price {
+    font-size: 0.8rem;
+    color: #999;
+}
+.discount-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ff5722;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 5px 0 5px 0;
+    font-weight: 600;
+    z-index: 10;
+}
+.item-flag-icon {
+    width: 20px;
+    margin-right: 5px;
+}
+
+/* Nút Đặt Hẹn (Nhỏ) */
+.btn-dat-hen {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+    align-self: center;
+    height: 40px;
+    padding: 0 15px;
+    font-weight: 600;
+    border-radius: 50px;
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    min-width: 90px;
+}
+.btn-dat-hen:hover {
+    background-color: #023e54;
+    transform: scale(1.05);
+}
+
+/* Nút CTA dưới cùng */
+.cta-bottom-row .btn-cta {
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 15px 30px;
+    width: 100%;
+}
+.btn-consult {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+}
+.btn-chat {
+    background-color: white;
+    color: #0077b6;
+    border: 2px solid #0077b6;
+}
+.cta-bottom-row .btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .advice-consult-hero {
+        padding: 20px 0;
+    }
+    .advice-consult-hero .hero-image {
+        display: none !important;
+    }
+    .filter-block {
+        margin-top: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+@media (max-width: 576px) {
+    .gender-options {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .gender-select-btn {
+        width: 48%;
+    }
+    .age-select-wrapper {
+        margin-bottom: 15px;
+    }
+    
+    /* Cấu trúc Item trên Mobile */
+    .advice-item {
+        grid-template-columns: 80px 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 15px 0;
+    }
+    .item-image-wrapper {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+    }
+    .item-details {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+    }
+    .item-price-block {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        align-self: flex-start;
+        margin-top: 0;
+    }
+    .btn-dat-hen {
+        grid-column: 1 / 3;
+        grid-row: 3 / 4;
+        width: 100%;
+        margin-top: 10px;
+    }
 }
 /* ======================================================================================================================= */
 /* END HOME PAGE */
