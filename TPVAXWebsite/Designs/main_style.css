@@ -1632,6 +1632,101 @@ main.vaccine-detail {
     display: block;
     margin-top: 5px;
 }
+/* ================================================= */
+/* 1. BANNER VÀ HIỆU ỨNG (PROMO HERO) */
+/* ================================================= */
+
+.promo-hero {
+    background-color: #f1f9ff; /* Nền xanh nhạt chủ đạo */
+    padding: 50px 0 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.promo-title {
+    color: #0077b6; /* Màu xanh chủ đạo */
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.promo-subtitle {
+    color: #4a5568;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+/* Breadcrumb trong Banner */
+.promo-breadcrumb a {
+    color: #0077b6 !important;
+    font-weight: 500;
+}
+.promo-breadcrumb .active {
+    color: #023e54 !important; /* Màu đậm hơn cho trang hiện tại */
+    font-weight: 700;
+}
+
+/* Ảnh minh họa Hero */
+.hero-illustration {
+    max-width: 600px;
+    margin: 0 auto;
+    /* Hiệu ứng nhấc ảnh lên che một phần header */
+    transform: translateY(20px);
+}
+.hero-img-custom {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+/* ================================================= */
+/* 2. THẺ BÀI VIẾT KHUYẾN MÃI */
+/* ================================================= */
+
+.promo-card-custom {
+    border-radius: 12px !important;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+.promo-card-custom:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+     color: inherit;
+}
+
+.promo-grid-img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.promo-title-small {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #003b73;
+    height: 3.2em; /* Giới hạn 2 dòng */
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+/* Badge Tag */
+.promo-tag-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff5722; /* Màu cam/đỏ nổi bật cho promo */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
 /* ======================================================================================================================= */
 /* END HOME PAGE */
 /* ====================================================================================================================== */
