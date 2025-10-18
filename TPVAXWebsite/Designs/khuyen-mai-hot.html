@@ -6,187 +6,456 @@
     <title>Khuyến Mãi HOT | Trung tâm tiêm chủng TPVAX</title>
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <link rel="stylesheet" href="main_style.css" />
+    <link rel="stylesheet" href="layout_page_style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
     <header class="container-fluid">
+      <!-- Toolbar -->
       <div class="toolbar-section">
-        <div class="container d-flex align-items-center justify-content-between py-3">
+        <div
+          class="container d-flex align-items-center justify-content-between py-3"
+        >
           <div class="search-bar-wrapper">
             <div class="position-relative" style="width: 100%; height: 100%">
-              <input placeholder="Tìm kiếm vắc xin" type="text" class="form-control h-100 rounded-pill pe-5 border border-primary" />
-              <img class="position-absolute top-50 translate-middle-y" src="Assets/Icons/search.png" alt="Search" style="width: 30px; right: 10px"/>
+              <input
+                placeholder="Tìm kiếm vắc xin"
+                type="text"
+                class="form-control h-100 rounded-pill pe-5 border border-primary"
+                style="background-color: #ffffff; text-indent: 10px"
+              />
+              <img
+                class="position-absolute top-50 translate-middle-y"
+                src="Assets/Icons/search.png"
+                alt="Search"
+                style="width: 30px; right: 10px"
+              />
             </div>
           </div>
+
           <div class="d-flex align-items-center">
-            <a href="tel:0975088626" class="d-flex align-items-center me-4 toolbar-link">
-              <img src="Assets/Icons/telephone.png" alt="Phone" class="toolbar-icon"/>
+            <a
+              href="tel:0975088626"
+              class="d-flex align-items-center me-4 toolbar-link"
+            >
+              <img
+                src="Assets/Icons/telephone.png"
+                alt="Phone"
+                class="toolbar-icon"
+              />
               <span class="fw-bold fs-5 text-warning">0975 088 626</span>
             </a>
             <a href="#" class="d-flex align-items-center toolbar-link">
-              <img src="Assets/Icons/shopping-basket.png" alt="Order" class="toolbar-icon"/>
+              <img
+                src="Assets/Icons/shopping-basket.png"
+                alt="Order"
+                class="toolbar-icon"
+              />
               <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
             </a>
           </div>
+
           <div class="d-flex align-items-center">
-            <a href="login.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng nhập</a>
-            <a href="register.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng ký</a>
+            <a
+              href="login.html"
+              class="btn btn-outline-primary rounded-pill mx-1 login-btn"
+              >Đăng nhập</a
+            >
+            <a
+              href="register.html"
+              class="btn btn-outline-primary rounded-pill mx-1 login-btn"
+              >Đăng ký</a
+            >
             <div class="vr mx-2"></div>
             <div class="position-relative">
-              <a href="cart.html" class="btn d-flex align-items-center btn-cart-custom">
-                <img src="Assets/Icons/cart.png" alt="Cart" class="toolbar-icon-small"/>
+              <a
+                href="cart.html"
+                class="btn d-flex align-items-center btn-cart-custom"
+              >
+                <img
+                  src="Assets/Icons/cart.png"
+                  alt="Cart"
+                  class="toolbar-icon-small"
+                />
                 <span class="ms-2">Giỏ hàng</span>
               </a>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              >
+                3
+              </span>
             </div>
           </div>
         </div>
       </div>
+      <!-- END Toolbar -->
+
+      <!-- Logo -->
       <div class="brand-section">
         <div class="container-fluid px-0">
           <div class="row align-items-center">
-            <div class="col-md-5"><img src="Assets/Images/logo.png" alt="Hệ thống tiêm chủng TPVAX" class="img-fluid"/></div>
+            <div class="col-md-5">
+              <img
+                src="Assets/Images/logo.png"
+                alt="Hệ thống tiêm chủng TPVAX"
+                class="img-fluid"
+              />
+            </div>
             <div class="col-md-7">
-              <div class="d-flex flex-column justify-content-center p-3 logo-slogan-bg">
-                <p class="display-1 mb-1 text-nowrap"><strong>Cổng tiêm chủng vắc xin</strong></p>
-                <p class="display-3 mb-0 text-nowrap">Chất lượng hàng đầu Việt Nam</p>
+              <div
+                class="d-flex flex-column justify-content-center p-3"
+                style="background-color: #0077b6; color: white"
+              >
+                <p class="display-1 mb-1 text-nowrap">
+                  <strong>Cổng tiêm chủng vắc xin</strong>
+                </p>
+                <p class="display-3 mb-0 text-nowrap">
+                  Chất lượng hàng đầu Việt Nam
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- END Logo -->
+
+      <!-- Menu -->
       <nav class="navbar navbar-expand-lg main-navbar">
         <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbarContent"
+            aria-controls="mainNavbarContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
+
           <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
-            <ul class="container-fluid navbar-nav mx-auto d-flex flex-row justify-content-around">
-              <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vắc xin phòng bệnh</a>
+            <ul
+              class="container-fluid navbar-nav mx-auto d-flex flex-row justify-content-around"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="layout_page.html"
+                  >Trang chủ</a
+                >
+              </li>
+
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Vắc xin phòng bệnh
+                </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/baby-boy.png" alt="Icon Trẻ em" class="dropdown-icon-custom"/>Vắc xin cho trẻ em</a></li>
-                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/adults.png" alt="Icon Người lớn" class="dropdown-icon-custom"/>Vắc xin cho người lớn</a></li>
-                  <li><hr class="dropdown-divider"/></li>
-                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/pregnant-woman.png" alt="Icon Phụ nữ mang thai" class="dropdown-icon-custom"/>Vắc xin cho phụ nữ mang thai</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <img
+                        src="Assets/Icons/baby-boy.png"
+                        alt="Icon Trẻ em"
+                        class="dropdown-icon-custom"
+                      />
+                      Vắc xin cho trẻ em
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <img
+                        src="Assets/Icons/adults.png"
+                        alt="Icon Người lớn"
+                        class="dropdown-icon-custom"
+                      />
+                      Vắc xin cho người lớn
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <img
+                        src="Assets/Icons/pregnant-woman.png"
+                        alt="Icon Phụ nữ mang thai"
+                        class="dropdown-icon-custom"
+                      />
+                      Vắc xin cho phụ nữ mang thai
+                    </a>
+                  </li>
                 </ul>
               </li>
-              <li class="nav-item"><a class="nav-link" href="#">Gói vắc xin</a></li>
-              <li class="nav-item active"><a class="nav-link active" href="khuyen-mai-hot.html">Khuyến mãi HOT</a></li> <li class="nav-item"><a class="nav-link" href="#">Tra cứu lịch tiêm</a></li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#">Gói vắc xin</a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link active" href="khuyen-mai-hot.html"
+                  >Khuyến mãi HOT</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="toi-nen-tiem-gi.html"
+                  >Tôi nên tiêm gì</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#">Tra cứu lịch tiêm</a>
+              </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiến thức tiêm chủng</a>
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Kiến thức tiêm chủng
+                </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="ttvctheodoituong.html"><img src="Assets/Icons/ttvacine.png" alt="Icon Thông tin Vaccine" class="dropdown-icon-custom"/>Thông tin vaccine theo đối tượng</a></li>
-                  <li><a class="dropdown-item" href="me-va-be.html"><img src="Assets/Icons/mother.png" alt="Icon Mẹ và Bé" class="dropdown-icon-custom"/>Mẹ và bé</a></li>
-                  <li><a class="dropdown-item" href="benh-truyen-nhiem.html"><img src="Assets/Icons/virus.png" alt="Icon Bệnh truyền nhiễm" class="dropdown-icon-custom"/>Bệnh truyền nhiễm</a></li>
+                  <li>
+                    <a class="dropdown-item" href="ttvctheodoituong.html">
+                      <img
+                        src="Assets/Icons/ttvacine.png"
+                        alt="Icon Thông tin Vaccine"
+                        class="dropdown-icon-custom"
+                      />
+                      Thông tin vaccine theo đối tượng
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="me-va-be.html">
+                      <img
+                        src="Assets/Icons/mother.png"
+                        alt="Icon Mẹ và Bé"
+                        class="dropdown-icon-custom"
+                      />
+                      Mẹ và bé
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="benh-truyen-nhiem.html">
+                      <img
+                        src="Assets/Icons/virus.png"
+                        alt="Icon Bệnh truyền nhiễm"
+                        class="dropdown-icon-custom"
+                      />
+                      Bệnh truyền nhiễm
+                    </a>
+                  </li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+      <!-- END Menu -->
     </header>
     <main class="knowledge-page-main">
-        <section class="knowledge-hero promo-hero text-center py-5">
-            <div class="container">
-                <nav aria-label="breadcrumb" class="d-flex justify-content-center mb-2">
-                    <ol class="breadcrumb promo-breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html" class="text-secondary">Trang chủ</a></li>
-                        <li class="breadcrumb-item active text-primary" aria-current="page">Khuyến mãi</li>
-                    </ol>
-                </nav>
-                <h1 class="fw-bold promo-title">Khuyến mãi</h1>
-                <p class="lead promo-subtitle">
-                    Tìm hiểu các thông tin khuyến mãi tại Trung tâm tiêm chủng TPVAX
-                </p>
-                <div class="hero-illustration">
-                    <img src="Assets/Images/hexaxim.png" alt="Minh họa Khuyến Mãi" class="img-fluid hero-img-custom">
-                </div>
-            </div>
-        </section>
-
-        <div class="container my-5">
-            <section class="article-grid">
-                <div class="row g-4 promo-container">
-                    <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-doi-qua-hai-phong" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Đổi quà Hải Phòng">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">THỂ LỆ & ĐIỀU KIỆN KHOẢN GIA CHƯƠNG TRÌNH ĐI TIÊM CÙNG...</p>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-goi-duong-da" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Gối dưỡng da">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">THỂ LỆ & ĐIỀU KIỆN KHOẢN GIA CHƯƠNG TRÌNH NHẬN GỐI DƯỠNG...</p>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-fan-meeting-domic" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Fan Meeting Domic">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">THỂ LỆ & ĐIỀU KIỆN KHOẢN CƠ HỘI NHẬN VÉ FAN MEETING DOMIE HOMIE</p>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-voucher-800k" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Voucher 800k">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">THỂ LỆ CHƯƠNG TRÌNH: DÀNH TẶNG SIÊU VOUCHER 800K CHO ÔNG BÀ TỪ 60 TUỔI...</p>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-qua-tang-2-trieu" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Quà tặng 2 Triệu">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">THỂ LỆ THAM GIA CHƯƠNG TRÌNH ĐI TIÊM VÀ SĂN QUÀ ĐỘC QUYỀN CÙNG QUANG HÙNG...</p>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-pride-month" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Pride Month">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">CHÀO THÁNG TỰ HÀO, SỐNG DŨNG CẢM SẮC MÀU KHÔNG LO VƯỚNG MẮC HPV</p>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-deal-an-toan" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Deal an toàn">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">TIÊM CHỦNG AN TOÀN, DI CHUYỂN DỄ DÀNG, TIẾT KIỆM CÙNG TPVAX VÀ...</p>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-4 col-sm-6">
-                        <a href="bai-viet-chi-tiet.html?slug=km-deal-3-duoc" class="card h-100 promo-card-custom hover-lift">
-                            <img src="Assets/Images/hexaxim.png" class="card-img-top promo-grid-img" alt="Deal 3 dược">
-                            <span class="promo-tag-badge">Article</span>
-                            <div class="card-body">
-                                <p class="card-text fw-bold promo-title-small">THỂ LỆ CHƯƠNG TRÌNH "NHẬN ĐIỂM THƯỞNG" DÀNH CHO KHÁCH HÀNG TIÊM...</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
+      <section class="knowledge-hero promo-hero text-center py-5">
+        <div class="container">
+          <nav
+            aria-label="breadcrumb"
+            class="d-flex justify-content-center mb-2"
+          >
+            <ol class="breadcrumb promo-breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="index.html" class="text-secondary">Trang chủ</a>
+              </li>
+              <li
+                class="breadcrumb-item active text-primary"
+                aria-current="page"
+              >
+                Khuyến mãi
+              </li>
+            </ol>
+          </nav>
+          <h1 class="fw-bold promo-title">Khuyến mãi</h1>
+          <p class="lead promo-subtitle">
+            Tìm hiểu các thông tin khuyến mãi tại Trung tâm tiêm chủng TPVAX
+          </p>
+          <div class="hero-illustration">
+            <img
+              src="Assets/Images/hexaxim.png"
+              alt="Minh họa Khuyến Mãi"
+              class="img-fluid hero-img-custom"
+            />
+          </div>
         </div>
+      </section>
+
+      <div class="container my-5">
+        <section class="article-grid">
+          <div class="row g-4 promo-container">
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-doi-qua-hai-phong"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Đổi quà Hải Phòng"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    THỂ LỆ & ĐIỀU KIỆN KHOẢN GIA CHƯƠNG TRÌNH ĐI TIÊM CÙNG...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-goi-duong-da"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Gối dưỡng da"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    THỂ LỆ & ĐIỀU KIỆN KHOẢN GIA CHƯƠNG TRÌNH NHẬN GỐI DƯỠNG...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-fan-meeting-domic"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Fan Meeting Domic"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    THỂ LỆ & ĐIỀU KIỆN KHOẢN CƠ HỘI NHẬN VÉ FAN MEETING DOMIE
+                    HOMIE
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-voucher-800k"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Voucher 800k"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    THỂ LỆ CHƯƠNG TRÌNH: DÀNH TẶNG SIÊU VOUCHER 800K CHO ÔNG BÀ
+                    TỪ 60 TUỔI...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-qua-tang-2-trieu"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Quà tặng 2 Triệu"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    THỂ LỆ THAM GIA CHƯƠNG TRÌNH ĐI TIÊM VÀ SĂN QUÀ ĐỘC QUYỀN
+                    CÙNG QUANG HÙNG...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-pride-month"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Pride Month"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    CHÀO THÁNG TỰ HÀO, SỐNG DŨNG CẢM SẮC MÀU KHÔNG LO VƯỚNG MẮC
+                    HPV
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-deal-an-toan"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Deal an toàn"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    TIÊM CHỦNG AN TOÀN, DI CHUYỂN DỄ DÀNG, TIẾT KIỆM CÙNG TPVAX
+                    VÀ...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a
+                href="bai-viet-chi-tiet.html?slug=km-deal-3-duoc"
+                class="card h-100 promo-card-custom hover-lift"
+              >
+                <img
+                  src="Assets/Images/hexaxim.png"
+                  class="card-img-top promo-grid-img"
+                  alt="Deal 3 dược"
+                />
+                <span class="promo-tag-badge">Article</span>
+                <div class="card-body">
+                  <p class="card-text fw-bold promo-title-small">
+                    THỂ LỆ CHƯƠNG TRÌNH "NHẬN ĐIỂM THƯỞNG" DÀNH CHO KHÁCH HÀNG
+                    TIÊM...
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <footer class="site-footer py-0">
@@ -281,5 +550,5 @@
       </div>
     </footer>
     <script src="Scripts/bootstrap.min.js"></script>
-    </body>
+  </body>
 </html>
