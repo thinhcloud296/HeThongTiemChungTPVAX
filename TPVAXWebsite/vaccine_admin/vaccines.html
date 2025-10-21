@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vaccine Admin | Quản lý Vắc xin</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">3</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">3 Thông báo mới</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-calendar-plus mr-2"></i> Có lịch hẹn mới
+                        <span class="float-right text-muted text-sm">3 phút trước</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-pills mr-2"></i> Vắc xin Prevenar 13 sắp hết
+                        <span class="float-right text-muted text-sm">12 giờ trước</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">Xem tất cả thông báo</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="index.html" class="brand-link">
+            <i class="fas fa-syringe fa-2x brand-image img-circle elevation-3"></i>
+            <span class="brand-text font-weight-light">Vaccine Admin</span>
+        </a>
+
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="profile.html" class="d-block">Admin User</a>
+                </div>
+            </div>
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i><p>Bảng điều khiển</p>
+                        </a>
+                    </li>
+                    <li class="nav-header">QUẢN LÝ</li>
+                    <li class="nav-item">
+                        <a href="vaccines.html" class="nav-link active">
+                            <i class="nav-icon fas fa-capsules"></i><p>Quản lý Vắc xin</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="appointments.html" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-alt"></i><p>Danh sách Lịch tiêm</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="calendar.html" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-day"></i><p>Lịch làm việc</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="customers.html" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i><p>Quản lý Khách hàng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reports.html" class="nav-link">
+                            <i class="nav-icon fas fa-chart-bar"></i><p>Báo cáo & Thống kê</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+        </aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6"><h1>Quản lý Vắc xin</h1></div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Quản lý Vắc xin</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-tabs">
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" id="vaccine-tabs" role="tablist">
+                            <li class="nav-item"><a class="nav-link active" id="tab-vaccine-list" data-bs-toggle="pill" href="#content-vaccine-list" role="tab">Danh sách Vắc xin</a></li>
+                            <li class="nav-item"><a class="nav-link" id="tab-vaccine-lots" data-bs-toggle="pill" href="#content-vaccine-lots" role="tab">Quản lý Lô & Hạn sử dụng</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="vaccine-tabs-content">
+                            <div class="tab-pane fade show active" id="content-vaccine-list" role="tabpanel">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#vaccineModal">
+                                        <i class="fas fa-plus"></i> Thêm Vắc xin
+                                    </button>
+                                </div>
+                                <table id="vaccineTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Tên Vắc xin</th>
+                                            <th>Phòng bệnh</th>
+                                            <th>Tồn kho</th>
+                                            <th>Giá (VNĐ)</th>
+                                            <th>Trạng thái</th>
+                                            <th style="width: 100px;">Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>VC001</td><td>Vắc xin 6 trong 1</td><td>Bạch hầu, ho gà, uốn ván...</td><td>250</td><td>1.015.000</td><td><span class="badge bg-success">Đang hoạt động</span></td>
+                                            <td><button class="btn btn-info btn-sm btn-edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash"></i></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>VC002</td><td>Vắc xin Cúm Tứ Giá</td><td>Cúm mùa</td><td>1500</td><td>356.000</td><td><span class="badge bg-success">Đang hoạt động</span></td>
+                                            <td><button class="btn btn-info btn-sm btn-edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash"></i></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>VC003</td><td>Prevenar 13</td><td>Viêm phổi, viêm màng não...</td><td>80</td><td>1.280.000</td><td><span class="badge bg-warning">Sắp hết hàng</span></td>
+                                            <td><button class="btn btn-info btn-sm btn-edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash"></i></button></td>
+                                        </tr>
+                                         <tr>
+                                            <td>VC004</td><td>Gardasil 9 (Mỹ)</td><td>Ung thư cổ tử cung, sùi mào gà</td><td>310</td><td>2.950.000</td><td><span class="badge bg-success">Đang hoạt động</span></td>
+                                            <td><button class="btn btn-info btn-sm btn-edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash"></i></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>VC005</td><td>MMR II</td><td>Sởi - Quai bị - Rubella</td><td>0</td><td>280.000</td><td><span class="badge bg-danger">Hết hàng</span></td>
+                                            <td><button class="btn btn-info btn-sm btn-edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="content-vaccine-lots" role="tabpanel">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Thêm Lô vắc xin</button>
+                                </div>
+                                <table id="vaccineLotsTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Số lô</th>
+                                            <th>Tên Vắc xin</th>
+                                            <th>Số lượng</th>
+                                            <th>Ngày nhập</th>
+                                            <th>Ngày hết hạn</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="table-danger"><td>P1023</td><td>MMR II</td><td>100</td><td>2024-05-10</td><td>2025-10-15</td><td><span class="badge bg-danger">Đã hết hạn</span></td></tr>
+                                        <tr class="table-warning"><td>S5567</td><td>Prevenar 13</td><td>80</td><td>2024-08-20</td><td>2025-11-30</td><td><span class="badge bg-warning">Sắp hết hạn</span></td></tr>
+                                        <tr><td>HEX-991</td><td>Vắc xin 6 trong 1</td><td>250</td><td>2025-01-15</td><td>2027-01-15</td><td><span class="badge bg-success">Mới</span></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-inline">Version 4.0</div>
+        <strong>Copyright &copy; 2024-2025 <a href="#">Vaccine Admin</a>.</strong> All rights reserved.
+    </footer>
+</div>
+<div class="modal fade" id="vaccineModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="modalTitle">Thêm Vắc Xin Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="vaccineForm">
+                    <input type="hidden" id="vaccineId">
+                    <div class="row">
+                        <div class="col-md-6 mb-3"><label class="form-label">Tên Vắc xin</label><input type="text" id="vaccineName" class="form-control" required></div>
+                        <div class="col-md-6 mb-3"><label class="form-label">Nhà sản xuất</label><input type="text" id="vaccineManufacturer" class="form-control"></div>
+                    </div>
+                    <div class="mb-3"><label class="form-label">Phòng bệnh</label><textarea id="vaccineDisease" class="form-control" rows="2"></textarea></div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3"><label class="form-label">Số lượng</label><input type="number" id="vaccineQuantity" class="form-control" required></div>
+                        <div class="col-md-4 mb-3"><label class="form-label">Giá bán (VNĐ)</label><input type="number" id="vaccinePrice" class="form-control" required></div>
+                        <div class="col-md-4 mb-3"><label class="form-label">Trạng thái</label><select id="vaccineStatus" class="form-select"><option value="1" selected>Đang hoạt động</option><option value="2">Sắp hết hàng</option><option value="0">Hết hàng</option></select></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" form="vaccineForm" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

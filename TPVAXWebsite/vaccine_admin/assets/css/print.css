@@ -1,0 +1,40 @@
+@media print {
+    body {
+        -webkit-print-color-adjust: exact; /* For Chrome, Safari */
+        color-adjust: exact; /* For Firefox */
+    }
+
+    /* Hide unnecessary elements */
+    .no-print, 
+    .main-sidebar, 
+    .main-header, 
+    .main-footer, 
+    .content-header,
+    .breadcrumb {
+        display: none !important;
+    }
+
+    /* Reset layout for printing */
+    .content-wrapper, .invoice {
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .invoice {
+        page-break-inside: avoid;
+    }
+
+    .invoice-info {
+        font-size: 12pt;
+    }
+
+    .table {
+        font-size: 11pt;
+    }
+
+    .table th, .table td {
+        padding: 0.4rem;
+    }
+}
