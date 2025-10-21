@@ -1,0 +1,243 @@
+/* =================================================== */
+/* 1. VARIABLES & CORE STYLES
+/* Tích hợp màu sắc từ design của bạn vào AdminLTE
+/* =================================================== */
+:root {
+  --custom-primary: #0077b6;
+  --custom-secondary: #023e54;
+  --custom-warning: #d4a000;
+  --custom-success: #148e63;
+  --custom-light: #f1f9ff;
+}
+
+/* =================================================== */
+/* 2. SIDEBAR & NAVIGATION
+/* =================================================== */
+
+.main-sidebar, .main-sidebar a {
+  background-color: var(--custom-secondary);
+}
+
+.nav-sidebar .nav-item > .nav-link.active {
+  background-color: var(--custom-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(0, 119, 182, 0.5);
+}
+
+.nav-sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-panel .info a {
+    color: #f1f9ff;
+}
+
+
+/* =================================================== */
+/* 3. BUTTONS & UI ELEMENTS
+/* =================================================== */
+
+.btn-primary {
+  background-color: var(--custom-primary);
+  border-color: var(--custom-primary);
+}
+.btn-primary:hover {
+  background-color: #005f9e;
+  border-color: #005f9e;
+}
+
+.btn-warning {
+    background-color: var(--custom-warning);
+    border-color: var(--custom-warning);
+    color: #fff;
+}
+.btn-warning:hover {
+    background-color: #b38500;
+    border-color: #b38500;
+}
+
+
+/* =================================================== */
+/* 4. INFO BOXES & WIDGETS
+/* =================================================== */
+.small-box {
+    color: white !important;
+    border-radius: .5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.bg-primary { background-color: var(--custom-primary) !important; }
+.bg-success { background-color: var(--custom-success) !important; }
+.bg-warning { background-color: var(--custom-warning) !important; }
+
+.small-box .icon {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+
+/* =================================================== */
+/* 5. TABLES & PAGINATION
+/* =================================================== */
+.page-item.active .page-link {
+    background-color: var(--custom-primary);
+    border-color: var(--custom-primary);
+}
+.page-link { color: var(--custom-primary); }
+.page-link:hover { color: #005f9e; }
+
+/* Căn giữa các nút trong bảng */
+#vaccineTable td:last-child,
+#appointmentsTable td:last-child {
+    text-align: center;
+}
+
+/* =================================================== */
+/* 6. MODAL
+/* =================================================== */
+.modal-header.bg-primary { color: white; }
+.modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+/* =================================================== */
+/* 1. VARIABLES & CORE STYLES
+/* =================================================== */
+:root {
+  --custom-primary: #0077b6;
+  --custom-secondary: #023e54;
+  --custom-warning: #d4a000;
+  --custom-success: #148e63;
+  --custom-light: #f1f9ff;
+}
+
+/* =================================================== */
+/* 2. LOGIN PAGE
+/* =================================================== */
+.login-page {
+    background-color: #f4f6f9;
+}
+.login-box .card-primary.card-outline {
+    border-top: 3px solid var(--custom-primary);
+}
+.icheck-primary>input:first-child:checked+input[type=hidden]+label::before, 
+.icheck-primary>input:first-child:checked+label::before {
+    background-color: var(--custom-primary);
+    border-color: var(--custom-primary);
+}
+
+
+/* =================================================== */
+/* 3. SIDEBAR & NAVIGATION
+/* =================================================== */
+
+.main-sidebar, .main-sidebar a {
+  background-color: var(--custom-secondary);
+}
+
+.nav-sidebar .nav-item > .nav-link.active {
+  background-color: var(--custom-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(0, 119, 182, 0.5);
+}
+
+.nav-sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-panel .info a {
+    color: #f1f9ff;
+}
+
+
+/* =================================================== */
+/* 4. BUTTONS & UI ELEMENTS
+/* =================================================== */
+
+.btn-primary {
+  background-color: var(--custom-primary);
+  border-color: var(--custom-primary);
+}
+.btn-primary:hover {
+  background-color: #005f9e;
+  border-color: #005f9e;
+}
+
+.btn-warning {
+    background-color: var(--custom-warning);
+    border-color: var(--custom-warning);
+    color: #fff;
+}
+.btn-warning:hover {
+    background-color: #b38500;
+    border-color: #b38500;
+}
+
+
+/* =================================================== */
+/* 5. INFO BOXES & WIDGETS
+/* =================================================== */
+.small-box {
+    color: white !important;
+    border-radius: .5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.small-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.bg-primary { background-color: var(--custom-primary) !important; }
+.bg-success { background-color: var(--custom-success) !important; }
+.bg-warning { background-color: var(--custom-warning) !important; }
+
+.small-box .icon {
+    color: rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease-in-out;
+}
+.small-box:hover .icon {
+    transform: scale(1.1);
+}
+
+
+/* =================================================== */
+/* 6. TABLES & PAGINATION
+/* =================================================== */
+.page-item.active .page-link {
+    background-color: var(--custom-primary);
+    border-color: var(--custom-primary);
+}
+.page-link { color: var(--custom-primary); }
+.page-link:hover { color: #005f9e; }
+
+.table-hover tbody tr:hover {
+    background-color: var(--custom-light) !important;
+}
+
+.dataTables_wrapper .row:first-child, .dataTables_wrapper .row:last-child {
+    padding: 0.5rem 0;
+}
+
+
+/* =================================================== */
+/* 7. MODAL
+/* =================================================== */
+.modal-header.bg-primary { color: white; }
+.modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* =================================================== */
+/* 8. PROFILE PAGE
+/* =================================================== */
+.profile-user-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: var(--custom-primary);
+}
+.nav-pills .nav-link {
+    color: var(--custom-secondary);
+}
