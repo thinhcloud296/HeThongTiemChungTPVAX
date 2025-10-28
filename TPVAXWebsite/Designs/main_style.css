@@ -3123,3 +3123,597 @@ main.vaccine-detail {
     margin: 10px;
   }
 }
+
+/* ============================================
+   KNOWLEDGE BASE PAGES - CATEGORY CARDS & ARTICLES
+   ============================================ */
+
+/* Category Cards Modern */
+.category-card-modern {
+  display: block;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #495057;
+}
+
+.category-card-modern:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 119, 182, 0.2);
+  border-color: #0077b6;
+}
+
+.category-card-modern.active {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  border-color: #f6b000;
+  box-shadow: 0 10px 30px rgba(0, 119, 182, 0.3);
+}
+
+.category-card-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-card-modern.active .category-card-icon-wrapper {
+  background: #f6b000;
+}
+
+.category-card-icon-wrapper img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.category-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.category-card-desc {
+  font-size: 13px;
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+/* Category Filter Buttons (for me-va-be page) */
+.category-filter-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 30px;
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.category-filter-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 119, 182, 0.15);
+  border-color: #0077b6;
+}
+
+.category-filter-btn.active {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  border-color: #f6b000;
+  box-shadow: 0 8px 25px rgba(0, 119, 182, 0.3);
+}
+
+.filter-icon {
+  font-size: 32px;
+  transition: transform 0.3s ease;
+}
+
+.category-filter-btn:hover .filter-icon {
+  transform: scale(1.2);
+}
+
+.category-filter-btn span {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Search Box Modern */
+.search-box-modern input {
+  border: 2px solid #0077b6;
+  padding: 15px 25px;
+  font-size: 16px;
+}
+
+.search-box-modern input:focus {
+  border-color: #f6b000;
+  box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.25);
+}
+
+/* Article Cards */
+.large-article-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.large-article-card img {
+  transition: transform 0.3s ease;
+}
+
+.large-article-card:hover img {
+  transform: scale(1.05);
+}
+
+.article-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  padding: 30px;
+  color: white;
+}
+
+.article-title-large {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.small-article-item {
+  display: flex;
+  gap: 15px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.small-article-item:hover {
+  transform: translateX(5px);
+}
+
+.article-img-small {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.article-title-small {
+  font-size: 15px;
+  font-weight: 600;
+  color: #212529;
+  line-height: 1.4;
+}
+
+.small-article-item:hover .article-title-small {
+  color: #0077b6;
+}
+
+/* Featured Article Card */
+.featured-article {
+  margin-bottom: 3rem;
+}
+
+.article-card-featured {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.article-card-featured:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 119, 182, 0.15);
+}
+
+.featured-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 400px;
+}
+
+.featured-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.article-card-featured:hover .featured-image-wrapper img {
+  transform: scale(1.08);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #f6b000, #ff8c00);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(246, 176, 0, 0.3);
+  z-index: 2;
+}
+
+.featured-content {
+  padding: 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.article-meta .badge {
+  padding: 8px 15px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.article-title-featured {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #212529;
+  margin-bottom: 15px;
+}
+
+.article-excerpt {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #6c757d;
+  margin-bottom: 25px;
+}
+
+.btn-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 30px;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.btn-read-more:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+}
+
+/* Section Subtitle */
+.section-subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0077b6;
+  margin-bottom: 10px;
+}
+
+.subtitle-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #0077b6, transparent);
+  max-width: 200px;
+}
+
+/* Article Card */
+.article-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e9ecef;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 119, 182, 0.12);
+  border-color: #0077b6;
+}
+
+.article-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+}
+
+.article-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.article-card:hover .article-image-wrapper img {
+  transform: scale(1.1);
+}
+
+.article-category-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(0, 119, 182, 0.95);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.article-body {
+  padding: 25px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-meta-small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+}
+
+.article-meta-small i {
+  margin-right: 4px;
+}
+
+.article-title-medium {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #212529;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.article-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6c757d;
+  margin-bottom: 15px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.article-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #0077b6;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.article-link:hover {
+  color: #f6b000;
+  transform: translateX(5px);
+}
+
+/* Knowledge Base Responsive */
+@media (max-width: 768px) {
+  .category-card-title {
+    font-size: 14px;
+  }
+  
+  .category-card-desc {
+    font-size: 11px;
+  }
+  
+  .category-card-icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .category-card-icon-wrapper img {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .article-title-large {
+    font-size: 18px;
+  }
+  
+  .featured-content {
+    padding: 30px 20px;
+  }
+  
+  .article-title-featured {
+    font-size: 22px;
+  }
+  
+  .article-excerpt {
+    font-size: 14px;
+  }
+  
+  /* Category Filter Buttons Responsive */
+  .category-filter-btn {
+    min-width: 120px;
+    padding: 15px 20px;
+  }
+
+  .filter-icon {
+    font-size: 28px;
+  }
+
+  .category-filter-btn span {
+    font-size: 12px;
+  }
+
+  .article-title-medium {
+    font-size: 16px;
+  }
+}
+
+/* Print styles for Knowledge Base */
+@media print {
+  .toolbar-section, 
+  .main-navbar, 
+  .breadcrumb, 
+  .scroll-to-top-btn, 
+  .floating-contact,
+  .category-card-modern,
+  .disease-filter-bar {
+    display: none !important;
+  }
+  
+  .article-card,
+  .article-card-featured {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+}
+
+/* ============================================
+   DISEASE PAGE - FILTER BAR & BADGES
+   ============================================ */
+
+/* Disease Filter Bar */
+.disease-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.disease-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: white;
+  color: #495057;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.disease-filter-btn i {
+  font-size: 16px;
+}
+
+.disease-filter-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 119, 182, 0.15);
+  border-color: #0077b6;
+  color: #0077b6;
+}
+
+.disease-filter-btn.active {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  border-color: #f6b000;
+  box-shadow: 0 6px 20px rgba(0, 119, 182, 0.3);
+}
+
+.disease-filter-btn.active:hover {
+  transform: translateY(-3px);
+}
+
+/* Article Category Badges */
+.az-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+}
+
+.quiz-badge {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%) !important;
+  color: #212529 !important;
+}
+
+/* Quiz Card Specific Styles */
+.quiz-card .article-body {
+  background: linear-gradient(to bottom, #fff 0%, #fffbf0 100%);
+}
+
+.quiz-card .article-link {
+  color: #ffc107;
+  font-weight: 700;
+}
+
+.quiz-card .article-link:hover {
+  color: #ff9800;
+}
+
+/* Disease Filter Responsive */
+@media (max-width: 768px) {
+  .disease-filter-bar {
+    padding: 15px;
+    gap: 8px;
+  }
+  
+  .disease-filter-btn {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+  
+  .disease-filter-btn i {
+    font-size: 14px;
+  }
+  
+  .disease-filter-btn span {
+    display: none;
+  }
+  
+  .disease-filter-btn i {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .disease-filter-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}

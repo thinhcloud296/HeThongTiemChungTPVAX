@@ -756,42 +756,107 @@
     <!-- END Main Content -->
 
     <!-- Footer -->
-    <footer class="site-footer py-4">
+    <footer class="site-footer py-4" role="contentinfo">
       <div class="container">
+        <!-- Logo & Branding -->
         <div class="row mb-4">
-          <div class="col-lg-12">
+          <div class="col-12">
             <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
-              <div style="height: 130px; width: fit-content; background-color: white;">
-                <img src="Assets/Images/logo.png" alt="TPVAX" style="height: 100%" class="img-fluid" loading="lazy" />
+              <div class="footer-logo-wrapper bg-white rounded p-2">
+                <img
+                  src="Assets/Images/logo.png"
+                  alt="Logo TPVAX"
+                  class="footer-logo"
+                  style="height: 100px"
+                  loading="lazy"
+                />
               </div>
-              <div class="logo-text ps-4">
-                <p class="display-4 mb-1"><strong>Cổng tiêm chủng vắc xin</strong></p>
-                <p class="display-6 mb-0">Chất lượng hàng đầu Việt Nam</p>
+              <div class="footer-brand-text text-white">
+                <h2 class="h3 fw-bold mb-1">Cổng tiêm chủng vắc xin</h2>
+                <p class="h5 mb-0">Chất lượng hàng đầu Việt Nam</p>
               </div>
             </div>
           </div>
-
-          <ul class="col-lg-12 d-flex flex-row justify-content-around py-3 flex-wrap gap-3" style="font-size: 20px; list-style: none;">
-            <li class="d-flex align-items-center justify-content-center text-warning">
-              <img src="Assets/Icons/contacs.png" alt="Liên hệ" style="width: 30px" loading="lazy" />
-              <strong>Liên hệ</strong>
-            </li>
-            <li class="d-flex align-items-center justify-content-center text-warning">
-              <img src="Assets/Icons/receiver.png" alt="Hotline" style="width: 30px" loading="lazy" />
-              <strong>Hotline: 0975 088 626</strong>
-            </li>
-            <li class="d-flex align-items-center justify-content-center text-warning">
-              <img src="Assets/Icons/location_7282031.png" alt="Địa chỉ" style="width: 30px" loading="lazy" />
-              <strong>140 Lê Trọng Tấn, Tân Phú, TP. HCM</strong>
-            </li>
-          </ul>
         </div>
 
+        <!-- Contact Information -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <ul class="list-unstyled d-flex flex-wrap justify-content-around gap-4 mb-0">
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img
+                  src="Assets/Icons/contacs.png"
+                  alt=""
+                  aria-hidden="true"
+                  style="width: 30px"
+                  loading="lazy"
+                />
+                <strong>Liên hệ</strong>
+              </li>
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img
+                  src="Assets/Icons/receiver.png"
+                  alt=""
+                  aria-hidden="true"
+                  style="width: 30px"
+                  loading="lazy"
+                />
+                <a href="tel:0975088626" class="text-warning text-decoration-none">
+                  <strong>Hotline: 0975 088 626</strong>
+                </a>
+              </li>
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img
+                  src="Assets/Icons/location_7282031.png"
+                  alt=""
+                  aria-hidden="true"
+                  style="width: 30px"
+                  loading="lazy"
+                />
+                <strong>140 Lê Trọng Tấn, Tân Phú, TP. HCM</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Company Details -->
+        <div class="row mb-3">
+          <div class="col-12 company-details text-white">
+            <p class="fw-bold mb-2">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+            <p class="mb-1">
+              Email: <a href="mailto:cskh@tpvax.vn" class="text-white text-decoration-none">cskh@tpvax.vn</a>
+            </p>
+            <p class="mb-1">
+              Số điện thoại: <a href="tel:0975088626" class="text-white text-decoration-none">0975 088 626</a>
+            </p>
+            <p class="mb-1">Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
+            <p class="mb-0">Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+          </div>
+        </div>
+
+        <hr class="footer-hr border-white opacity-50" />
+
+        <!-- Footer Bottom Links -->
         <div class="row">
-          <div class="col-12 company-details text-center">
-            <p class="fw-bold">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
-            <p>Email: cskh@tpvax.vn | Điện thoại: 0975 088 626</p>
-            <p>Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+          <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 text-white">
+              <span class="footer-hours">
+                <i class="bi bi-clock"></i> Giờ mở cửa: 7:30 - 17:00
+              </span>
+              <nav class="footer-links" aria-label="Footer links">
+                <a href="#privacy-policy" class="text-white text-decoration-none mx-2">
+                  Chính sách bảo mật
+                </a>
+                <span class="text-white-50">|</span>
+                <a href="#survey" class="text-white text-decoration-none mx-2">
+                  Khảo sát tiêm chủng
+                </a>
+                <span class="text-white-50">|</span>
+                <a href="#payment-policy" class="text-white text-decoration-none mx-2">
+                  Chính sách thanh toán
+                </a>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
@@ -937,415 +1002,5 @@
         console.log('✅ TPVAX Knowledge Page Initialized');
       })();
     </script>
-
-    <!-- Modern CSS Styles -->
-    <style>
-      /* Category Cards Modern */
-      .category-card-modern {
-        display: block;
-        text-align: center;
-        padding: 20px;
-        border-radius: 15px;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border: 3px solid transparent;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: #495057;
-      }
-      
-      .category-card-modern:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 119, 182, 0.2);
-        border-color: #0077b6;
-      }
-      
-      .category-card-modern.active {
-        background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
-        color: white;
-        border-color: #f6b000;
-        box-shadow: 0 10px 30px rgba(0, 119, 182, 0.3);
-      }
-      
-      .category-card-icon-wrapper {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 15px;
-        border-radius: 50%;
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-      
-      .category-card-modern.active .category-card-icon-wrapper {
-        background: #f6b000;
-      }
-      
-      .category-card-icon-wrapper img {
-        width: 50px;
-        height: 50px;
-        object-fit: contain;
-      }
-      
-      .category-card-title {
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 5px;
-      }
-      
-      .category-card-desc {
-        font-size: 13px;
-        margin-bottom: 0;
-        opacity: 0.9;
-      }
-      
-      /* Search Box Modern */
-      .search-box-modern input {
-        border: 2px solid #0077b6;
-        padding: 15px 25px;
-        font-size: 16px;
-      }
-      
-      .search-box-modern input:focus {
-        border-color: #f6b000;
-        box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.25);
-      }
-      
-      /* Article Cards */
-      .large-article-card {
-        position: relative;
-        overflow: hidden;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-      
-      .large-article-card img {
-        transition: transform 0.3s ease;
-      }
-      
-      .large-article-card:hover img {
-        transform: scale(1.05);
-      }
-      
-      .article-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-        padding: 30px;
-        color: white;
-      }
-      
-      .article-title-large {
-        font-size: 24px;
-        font-weight: 700;
-        margin: 0;
-      }
-      
-      .small-article-item {
-        display: flex;
-        gap: 15px;
-        text-decoration: none;
-        color: inherit;
-        transition: all 0.3s ease;
-      }
-      
-      .small-article-item:hover {
-        transform: translateX(5px);
-      }
-      
-      .article-img-small {
-        width: 120px;
-        height: 80px;
-        object-fit: cover;
-      }
-      
-      .article-title-small {
-        font-size: 14px;
-        font-weight: 600;
-        color: #212529;
-      }
-
-      /* Featured Article Card */
-      .featured-article {
-        margin-bottom: 3rem;
-      }
-
-      .article-card-featured {
-        background: white;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-
-      .article-card-featured:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 40px rgba(0, 119, 182, 0.15);
-      }
-
-      .featured-image-wrapper {
-        position: relative;
-        overflow: hidden;
-        height: 100%;
-        min-height: 400px;
-      }
-
-      .featured-image-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-      }
-
-      .article-card-featured:hover .featured-image-wrapper img {
-        transform: scale(1.08);
-      }
-
-      .featured-badge {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #f6b000, #ff8c00);
-        color: white;
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-weight: 700;
-        font-size: 14px;
-        box-shadow: 0 4px 15px rgba(246, 176, 0, 0.3);
-        z-index: 2;
-      }
-
-      .featured-content {
-        padding: 40px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .article-meta {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .article-meta .badge {
-        padding: 8px 15px;
-        font-size: 13px;
-        font-weight: 600;
-      }
-
-      .article-title-featured {
-        font-size: 28px;
-        font-weight: 800;
-        line-height: 1.3;
-        color: #212529;
-        margin-bottom: 15px;
-      }
-
-      .article-excerpt {
-        font-size: 16px;
-        line-height: 1.6;
-        color: #6c757d;
-        margin-bottom: 25px;
-      }
-
-      .btn-read-more {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 30px;
-        font-weight: 600;
-        border-radius: 30px;
-        transition: all 0.3s ease;
-      }
-
-      .btn-read-more:hover {
-        transform: translateX(5px);
-        box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
-      }
-
-      /* Section Subtitle */
-      .section-subtitle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        font-size: 20px;
-        font-weight: 700;
-        color: #0077b6;
-        margin-bottom: 10px;
-      }
-
-      .subtitle-line {
-        flex: 1;
-        height: 2px;
-        background: linear-gradient(to right, transparent, #0077b6, transparent);
-        max-width: 200px;
-      }
-
-      /* Article Card */
-      .article-card {
-        background: white;
-        border-radius: 16px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        border: 1px solid #e9ecef;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .article-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 12px 24px rgba(0, 119, 182, 0.12);
-        border-color: #0077b6;
-      }
-
-      .article-image-wrapper {
-        position: relative;
-        overflow: hidden;
-        height: 220px;
-      }
-
-      .article-image-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s ease;
-      }
-
-      .article-card:hover .article-image-wrapper img {
-        transform: scale(1.1);
-      }
-
-      .article-category-badge {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        background: rgba(0, 119, 182, 0.95);
-        color: white;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      }
-
-      .article-body {
-        padding: 25px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .article-meta-small {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 13px;
-      }
-
-      .article-meta-small i {
-        margin-right: 4px;
-      }
-
-      .article-title-medium {
-        font-size: 18px;
-        font-weight: 700;
-        line-height: 1.4;
-        color: #212529;
-        margin-bottom: 12px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .article-description {
-        font-size: 14px;
-        line-height: 1.6;
-        color: #6c757d;
-        margin-bottom: 15px;
-        flex: 1;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .article-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        color: #0077b6;
-        font-weight: 600;
-        font-size: 14px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .article-link:hover {
-        color: #f6b000;
-        transform: translateX(5px);
-      }
-      
-      .article-img-small {
-        width: 120px;
-        height: 80px;
-        object-fit: cover;
-        flex-shrink: 0;
-      }
-      
-      .article-title-small {
-        font-size: 15px;
-        font-weight: 600;
-        color: #212529;
-        line-height: 1.4;
-      }
-      
-      .small-article-item:hover .article-title-small {
-        color: #0077b6;
-      }
-      
-      /* Responsive */
-      @media (max-width: 768px) {
-        .category-card-title {
-          font-size: 14px;
-        }
-        
-        .category-card-desc {
-          font-size: 11px;
-        }
-        
-        .category-card-icon-wrapper {
-          width: 60px;
-          height: 60px;
-        }
-        
-        .category-card-icon-wrapper img {
-          width: 35px;
-          height: 35px;
-        }
-        
-        .article-title-large {
-          font-size: 18px;
-        }
-      }
-      
-      /* Print styles */
-      @media print {
-        .toolbar-section, .main-navbar, .breadcrumb, 
-        .scroll-to-top-btn, .floating-contact {
-          display: none !important;
-        }
-      }
-    </style>
   </body>
 </html>

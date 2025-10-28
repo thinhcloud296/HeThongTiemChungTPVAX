@@ -3,95 +3,340 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tôi nên tiêm gì? - Tư vấn Vắc xin | TPVAX</title>
+    <meta name="description" content="Tư vấn vắc xin phù hợp theo độ tuổi và giới tính. Nhận đề xuất vắc xin cá nhân hóa từ chuyên gia TPVAX." />
+    <meta name="keywords" content="tư vấn vaccine, vắc xin theo tuổi, tiêm chủng, TPVAX, đề xuất vaccine" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Assets/Images/logo.png" />
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <link rel="stylesheet" href="main_style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="layout_page_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <title>Tôi nên tiêm gì? - Tư vấn Vắc xin | TPVAX</title>
   </head>
   <body>
-    <header class="container-fluid">
+    <!-- Skip to main content -->
+    <a href="#main-content" class="visually-hidden-focusable">Chuyển đến nội dung chính</a>
+    
+    <!-- Scroll to Top Button -->
+    <button 
+      id="scrollToTopBtn" 
+      class="scroll-to-top-btn" 
+      aria-label="Cuộn lên đầu trang"
+      title="Lên đầu trang"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+      </svg>
+    </button>
+
+    <!-- Floating Contact Buttons -->
+    <div class="floating-contact">
+      <a 
+        href="https://zalo.me/0975088626" 
+        target="_blank"
+        class="floating-btn floating-btn-zalo"
+        aria-label="Chat qua Zalo"
+        title="Chat Zalo"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 48 48" fill="white">
+          <path d="M24 4C13.52 4 5 11.37 5 20.5c0 5.42 3.17 10.23 8 13.33v9.17l8.54-4.55c.78.11 1.59.16 2.42.16 10.48 0 19-7.37 19-16.5S34.48 4 24 4zm-4.5 22.5l-5.5-5.88 10.76-5.74-5 6.26 5.5 5.88L14.5 21.28l5-6.26z"/>
+        </svg>
+      </a>
+      <a 
+        href="tel:0975088626" 
+        class="floating-btn floating-btn-phone"
+        aria-label="Gọi điện thoại"
+        title="Gọi ngay"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16" fill="white">
+          <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+        </svg>
+      </a>
+    </div>
+    
+    <!-- Header -->
+    <header class="container-fluid" role="banner">
+      <!-- Toolbar -->
       <div class="toolbar-section">
-        <div class="container d-flex align-items-center justify-content-between py-3">
-          <div class="search-bar-wrapper">
-            <div class="position-relative" style="width: 100%; height: 100%">
-              <input placeholder="Tìm kiếm vắc xin" type="text" class="form-control h-100 rounded-pill pe-5 border border-primary" />
-              <img class="position-absolute top-50 translate-middle-y" src="Assets/Icons/search.png" alt="Search" style="width: 30px; right: 10px"/>
-            </div>
+        <div class="container d-flex align-items-center justify-content-between py-3 flex-wrap gap-3">
+          <!-- Search Bar -->
+          <div class="search-bar-wrapper" style="flex: 1; min-width: 250px; max-width: 400px;">
+            <form role="search" aria-label="Tìm kiếm vaccine" class="position-relative h-100">
+              <label for="search-vaccine" class="visually-hidden">Tìm kiếm vắc xin</label>
+              <input
+                id="search-vaccine"
+                name="search"
+                placeholder="Tìm kiếm vắc xin..."
+                type="search"
+                class="form-control h-100 rounded-pill pe-5 border border-primary"
+                style="background-color: #ffffff; text-indent: 10px"
+                aria-label="Nhập tên vắc xin cần tìm"
+              />
+              <img
+                class="position-absolute top-50 translate-middle-y"
+                src="Assets/Icons/search.png"
+                alt=""
+                aria-hidden="true"
+                style="width: 30px; right: 10px; pointer-events: none;"
+                loading="lazy"
+              />
+            </form>
           </div>
-          <div class="d-flex align-items-center">
-            <a href="tel:0975088626" class="d-flex align-items-center me-4 toolbar-link">
-              <img src="Assets/Icons/telephone.png" alt="Phone" class="toolbar-icon"/>
+
+          <!-- Contact Links -->
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <a
+              href="tel:0975088626"
+              class="d-flex align-items-center toolbar-link"
+              aria-label="Gọi hotline 0975 088 626"
+            >
+              <img
+                src="Assets/Icons/telephone.png"
+                alt=""
+                aria-hidden="true"
+                class="toolbar-icon"
+                loading="lazy"
+              />
               <span class="fw-bold fs-5 text-warning">0975 088 626</span>
             </a>
-            <a href="#" class="d-flex align-items-center toolbar-link">
-              <img src="Assets/Icons/shopping-basket.png" alt="Order" class="toolbar-icon"/>
+            <a 
+              href="layout_page.html#vaccine-catalog" 
+              class="d-flex align-items-center toolbar-link"
+              aria-label="Xem danh sách vaccine để đặt mua"
+            >
+              <img
+                src="Assets/Icons/shopping-basket.png"
+                alt=""
+                aria-hidden="true"
+                class="toolbar-icon"
+                loading="lazy"
+              />
               <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
             </a>
           </div>
-          <div class="d-flex align-items-center">
-            <a href="login.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng nhập</a>
-            <a href="register.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng ký</a>
-            <div class="vr mx-2"></div>
+
+          <!-- Auth & Cart -->
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <a
+              href="login.html"
+              class="btn btn-outline-primary rounded-pill mx-1 login-btn"
+              aria-label="Đăng nhập tài khoản"
+            >Đăng nhập</a>
+            <a
+              href="register.html"
+              class="btn btn-outline-primary rounded-pill mx-1 login-btn"
+              aria-label="Đăng ký tài khoản mới"
+            >Đăng ký</a>
+            <div class="vr mx-2 d-none d-lg-block"></div>
             <div class="position-relative">
-              <a href="cart.html" class="btn d-flex align-items-center btn-cart-custom">
-                <img src="Assets/Icons/cart.png" alt="Cart" class="toolbar-icon-small"/>
+              <a
+                href="cart.html"
+                class="btn d-flex align-items-center btn-cart-custom"
+                aria-label="Giỏ hàng có 3 sản phẩm"
+              >
+                <img
+                  src="Assets/Icons/cart.png"
+                  alt=""
+                  aria-hidden="true"
+                  class="toolbar-icon-small"
+                  loading="lazy"
+                />
                 <span class="ms-2">Giỏ hàng</span>
               </a>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                aria-label="3 sản phẩm trong giỏ"
+              >
+                3
+              </span>
             </div>
           </div>
         </div>
       </div>
+      <!-- END Toolbar -->
+
+      <!-- Logo & Branding -->
       <div class="brand-section">
         <div class="container-fluid px-0">
-          <div class="row align-items-center">
-            <div class="col-md-5"><img src="Assets/Images/logo.png" alt="Hệ thống tiêm chủng TPVAX" class="img-fluid"/></div>
+          <div class="row align-items-center g-0">
+            <div class="col-md-5">
+              <img
+                src="Assets/Images/logo.png"
+                alt="Logo TPVAX - Hệ thống tiêm chủng vaccine"
+                class="img-fluid"
+                loading="eager"
+              />
+            </div>
             <div class="col-md-7">
-              <div class="d-flex flex-column justify-content-center p-3 logo-slogan-bg">
-                <p class="display-1 mb-1 text-nowrap"><strong>Cổng tiêm chủng vắc xin</strong></p>
-                <p class="display-3 mb-0 text-nowrap">Chất lượng hàng đầu Việt Nam</p>
+              <div
+                class="d-flex flex-column justify-content-center p-3 p-lg-4 brand-slogan"
+                style="background-color: #0077b6; color: white"
+              >
+                <h1 class="display-5 display-lg-4 mb-1 fw-bold">
+                  Cổng tiêm chủng vắc xin
+                </h1>
+                <p class="display-6 display-lg-5 mb-0">
+                  Chất lượng hàng đầu Việt Nam
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <nav class="navbar navbar-expand-lg main-navbar">
+      <!-- END Logo -->
+
+      <!-- Main Navigation -->
+      <nav class="navbar navbar-expand-lg main-navbar" role="navigation" aria-label="Menu chính">
         <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbarContent"
+            aria-controls="mainNavbarContent"
+            aria-expanded="false"
+            aria-label="Mở/Đóng menu điều hướng"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
+
           <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
-            <ul class="container-fluid navbar-nav mx-auto d-flex flex-row justify-content-around">
-              <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vắc xin phòng bệnh</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/baby-boy.png" alt="Icon Trẻ em" class="dropdown-icon-custom"/>Vắc xin cho trẻ em</a></li>
-                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/adults.png" alt="Icon Người lớn" class="dropdown-icon-custom"/>Vắc xin cho người lớn</a></li>
-                  <li><hr class="dropdown-divider"/></li>
-                  <li><a class="dropdown-item" href="#"><img src="Assets/Icons/pregnant-woman.png" alt="Icon Phụ nữ mang thai" class="dropdown-icon-custom"/>Vắc xin cho phụ nữ mang thai</a></li>
+            <ul class="container-fluid navbar-nav mx-auto d-flex flex-lg-row justify-content-around">
+              <li class="nav-item">
+                <a class="nav-link" href="layout_page.html">
+                  Trang chủ
+                </a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  Vắc xin phòng bệnh
+                </a>
+                <ul class="dropdown-menu" aria-label="Menu vắc xin phòng bệnh">
+                  <li>
+                    <a class="dropdown-item" href="layout_page.html#vaccine-children">
+                      <img
+                        src="Assets/Icons/baby-boy.png"
+                        alt=""
+                        aria-hidden="true"
+                        class="dropdown-icon-custom"
+                        loading="lazy"
+                      />
+                      Vắc xin cho trẻ em
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="layout_page.html#vaccine-adults">
+                      <img
+                        src="Assets/Icons/adults.png"
+                        alt=""
+                        aria-hidden="true"
+                        class="dropdown-icon-custom"
+                        loading="lazy"
+                      />
+                      Vắc xin cho người lớn
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="layout_page.html#vaccine-pregnant">
+                      <img
+                        src="Assets/Icons/pregnant-woman.png"
+                        alt=""
+                        aria-hidden="true"
+                        class="dropdown-icon-custom"
+                        loading="lazy"
+                      />
+                      Vắc xin cho phụ nữ mang thai
+                    </a>
+                  </li>
                 </ul>
               </li>
-              <li class="nav-item"><a class="nav-link" href="#">Gói vắc xin</a></li>
-              <li class="nav-item"><a class="nav-link" href="khuyen-mai-hot.html">Khuyến mãi HOT</a></li>
-              <li class="nav-item active"><a class="nav-link active" href="toi-nen-tiem-gi.html">Tôi nên tiêm gì</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Tra cứu lịch tiêm</a></li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="layout_page.html#vaccine-packages">Gói vắc xin</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="khuyen-mai-hot.html">Khuyến mãi HOT</a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link active" aria-current="page" href="toi-nen-tiem-gi.html">Tôi nên tiêm gì</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="layout_page.html#schedule-lookup">Tra cứu lịch tiêm</a>
+              </li>
+              
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiến thức tiêm chủng</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="ttvctheodoituong.html"><img src="Assets/Icons/ttvacine.png" alt="Icon Thông tin Vaccine" class="dropdown-icon-custom"/>Thông tin vaccine theo đối tượng</a></li>
-                  <li><a class="dropdown-item" href="me-va-be.html"><img src="Assets/Icons/mother.png" alt="Icon Mẹ và Bé" class="dropdown-icon-custom"/>Mẹ và bé</a></li>
-                  <li><a class="dropdown-item" href="benh-truyen-nhiem.html"><img src="Assets/Icons/virus.png" alt="Icon Bệnh truyền nhiễm" class="dropdown-icon-custom"/>Bệnh truyền nhiễm</a></li>
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  Kiến thức tiêm chủng
+                </a>
+                <ul class="dropdown-menu" aria-label="Menu kiến thức tiêm chủng">
+                  <li>
+                    <a class="dropdown-item" href="ttvctheodoituong.html">
+                      <img
+                        src="Assets/Icons/ttvacine.png"
+                        alt=""
+                        aria-hidden="true"
+                        class="dropdown-icon-custom"
+                        loading="lazy"
+                      />
+                      Thông tin vaccine theo đối tượng
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="me-va-be.html">
+                      <img
+                        src="Assets/Icons/mother.png"
+                        alt=""
+                        aria-hidden="true"
+                        class="dropdown-icon-custom"
+                        loading="lazy"
+                      />
+                      Mẹ và bé
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="benh-truyen-nhiem.html">
+                      <img
+                        src="Assets/Icons/virus.png"
+                        alt=""
+                        aria-hidden="true"
+                        class="dropdown-icon-custom"
+                        loading="lazy"
+                      />
+                      Bệnh truyền nhiễm
+                    </a>
+                  </li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+      <!-- END Menu -->
     </header>
+    <!-- END Header -->
     <main>
       <section class="advice-consult-hero text-start">
         <div class="container position-relative">
@@ -176,54 +421,115 @@
       
     </main>
 
-    <footer class="site-footer py-0">
+    <!-- Footer -->
+    <footer class="site-footer py-4" role="contentinfo">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="d-flex align-items-center justify-content-center">
-              <div style="height: 130px; width: fit-content; background-color: white;">
-                <img src="Assets/Images/logo.png" alt="Hệ thống tiêm chủng TPVAX" style="height: 100%" class="img-fluid"/>
+        <!-- Logo & Branding -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
+              <div class="footer-logo-wrapper bg-white rounded p-2">
+                <img
+                  src="Assets/Images/logo.png"
+                  alt="Logo TPVAX"
+                  class="footer-logo"
+                  style="height: 100px"
+                  loading="lazy"
+                />
               </div>
-              <div class="logo-text ps-4">
-                <p class="display-4 mb-1"><strong>Cổng tiêm chủng vắc xin</strong></p>
-                <p class="display-6 mb-0">Chất lượng hàng đầu Việt Nam</p>
+              <div class="footer-brand-text text-white">
+                <h2 class="h3 fw-bold mb-1">Cổng tiêm chủng vắc xin</h2>
+                <p class="h5 mb-0">Chất lượng hàng đầu Việt Nam</p>
               </div>
             </div>
           </div>
-          <ul class="col-lg-12 d-flex flex-row justify-content-around py-3" style="font-size: 25px">
-            <li class="d-flex align-items-center justify-content-center text-warning">
-              <img src="Assets/Icons/contacs.png" alt="Liên hệ" style="width: 30px"/><strong>Liên hệ</strong>
-            </li>
-            <li class="d-flex align-items-center justify-content-center text-warning">
-              <img src="Assets/Icons/receiver.png" alt="Hotline" style="width: 30px"/><strong>Hotline: 0975 088 626</strong>
-            </li>
-            <li class="d-flex align-items-center justify-content-center text-warning">
-              <img src="Assets/Icons/location_7282031.png" alt="Địa chỉ" style="width: 30px"/><strong>140 Lê Trọng Tấn, Tân Phú, TP. Hồ Chí Minh</strong>
-            </li>
-          </ul>
         </div>
-        <div class="row">
-          <div class="col-12 company-details">
-            <p class="fw-bold">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
-            <p>Email: cskh@tpvax.vn</p>
-            <p>Số điện thoại: 0975 088 626</p>
-            <p>Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
-            <p>Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+
+        <!-- Contact Information -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <ul class="list-unstyled d-flex flex-wrap justify-content-around gap-4 mb-0">
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img
+                  src="Assets/Icons/contacs.png"
+                  alt=""
+                  aria-hidden="true"
+                  style="width: 30px"
+                  loading="lazy"
+                />
+                <strong>Liên hệ</strong>
+              </li>
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img
+                  src="Assets/Icons/receiver.png"
+                  alt=""
+                  aria-hidden="true"
+                  style="width: 30px"
+                  loading="lazy"
+                />
+                <a href="tel:0975088626" class="text-warning text-decoration-none">
+                  <strong>Hotline: 0975 088 626</strong>
+                </a>
+              </li>
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img
+                  src="Assets/Icons/location_7282031.png"
+                  alt=""
+                  aria-hidden="true"
+                  style="width: 30px"
+                  loading="lazy"
+                />
+                <strong>140 Lê Trọng Tấn, Tân Phú, TP. HCM</strong>
+              </li>
+            </ul>
           </div>
         </div>
-        <hr class="footer-hr"/>
+
+        <!-- Company Details -->
+        <div class="row mb-3">
+          <div class="col-12 company-details text-white">
+            <p class="fw-bold mb-2">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+            <p class="mb-1">
+              Email: <a href="mailto:cskh@tpvax.vn" class="text-white text-decoration-none">cskh@tpvax.vn</a>
+            </p>
+            <p class="mb-1">
+              Số điện thoại: <a href="tel:0975088626" class="text-white text-decoration-none">0975 088 626</a>
+            </p>
+            <p class="mb-1">Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
+            <p class="mb-0">Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+          </div>
+        </div>
+
+        <hr class="footer-hr border-white opacity-50" />
+
+        <!-- Footer Bottom Links -->
         <div class="row">
-          <div class="col-12 d-flex justify-content-between align-items-center footer-bottom-links">
-            <span>Giờ mở cửa : 7:30 - 17:00</span>
-            <div>
-              <a href="#">Chính sách bảo mật</a>
-              <a href="#">Khảo sát tiêm chủng</a>
-              <a href="#">Chính sách thanh toán</a>
+          <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 text-white">
+              <span class="footer-hours">
+                <i class="bi bi-clock"></i> Giờ mở cửa: 7:30 - 17:00
+              </span>
+              <nav class="footer-links" aria-label="Footer links">
+                <a href="#privacy-policy" class="text-white text-decoration-none mx-2">
+                  Chính sách bảo mật
+                </a>
+                <span class="text-white-50">|</span>
+                <a href="#survey" class="text-white text-decoration-none mx-2">
+                  Khảo sát tiêm chủng
+                </a>
+                <span class="text-white-50">|</span>
+                <a href="#payment-policy" class="text-white text-decoration-none mx-2">
+                  Chính sách thanh toán
+                </a>
+              </nav>
             </div>
           </div>
         </div>
       </div>
     </footer>
+    <!-- END Footer -->
+    
+    <!-- Scripts -->
     <script src="Scripts/bootstrap.min.js"></script>
     <script>
         // --- MOCK DATA (Dữ liệu Giả lập) ---
@@ -239,16 +545,20 @@
 
         const MOCK_VAX_DATA = [
             // Vắc xin Lẻ
-            { id: 'vax-01', name: 'Vắc xin MenQuadfi', disease: 'Phòng bệnh Não mô cầu ACYW', price: '1.800.000₫', unit: 'Liều', flag: 'usa', minAge: 9, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '- 0%' },
-            { id: 'vax-02', name: 'Vắc xin Influvac Tetra', disease: 'Phòng Cúm', price: '333.000₫', unit: 'Liều', flag: 'netherlands', minAge: 0.5, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '- 0%' },
-            { id: 'vax-03', name: 'Vắc xin Gardasil 9', disease: 'Phòng ung thư do HPV 9 chủng', price: '2.965.000₫', unit: 'Liều', flag: 'usa', minAge: 9, maxAge: 45, genders: ['Nam', 'Nữ'], discount: '- 0%' },
-            { id: 'vax-04', name: 'Vắc xin 6 trong 1 (Hexaxim)', disease: 'Phòng 6 bệnh cơ bản', price: '1.300.000₫', unit: 'Liều', flag: 'france', minAge: 0.16, maxAge: 2, genders: ['Nam', 'Nữ'], discount: '- 0%' },
-            { id: 'vax-05', name: 'Vắc xin Sởi-Quai bị-Rubella (MMR)', disease: 'Phòng Sởi, Quai bị, Rubella', price: '350.000₫', unit: 'Liều', flag: 'india', minAge: 1, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '- 0%' },
+            { id: 'vax-01', name: 'Vắc xin MenQuadfi', disease: 'Phòng bệnh Não mô cầu ACYW', price: '1.800.000₫', unit: 'Liều', flag: 'united-states-of-america', minAge: 9, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '' },
+            { id: 'vax-02', name: 'Vắc xin Influvac Tetra', disease: 'Phòng Cúm', price: '333.000₫', unit: 'Liều', flag: 'halan', minAge: 0.5, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '' },
+            { id: 'vax-03', name: 'Vắc xin Gardasil 9', disease: 'Phòng ung thư do HPV 9 chủng', price: '2.965.000₫', unit: 'Liều', flag: 'united-states-of-america', minAge: 9, maxAge: 45, genders: ['Nam', 'Nữ'], discount: '- 5%' },
+            { id: 'vax-04', name: 'Vắc xin 6 trong 1 (Hexaxim)', disease: 'Phòng 6 bệnh cơ bản', price: '1.300.000₫', unit: 'Liều', flag: 'france', minAge: 0.16, maxAge: 2, genders: ['Nam', 'Nữ'], discount: '' },
+            { id: 'vax-05', name: 'Vắc xin Sởi-Quai bị-Rubella (MMR)', disease: 'Phòng Sởi, Quai bị, Rubella', price: '350.000₫', unit: 'Liều', flag: 'vietnam', minAge: 1, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '' },
+            { id: 'vax-06', name: 'Vắc xin Pentaxim 5 trong 1', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Hib', price: '950.000₫', unit: 'Liều', flag: 'france', minAge: 0.16, maxAge: 5, genders: ['Nam', 'Nữ'], discount: '' },
+            { id: 'vax-07', name: 'Vắc xin Rotateq', disease: 'Phòng Tiêu chảy do Rotavirus', price: '670.000₫', unit: 'Liều', flag: 'united-states-of-america', minAge: 0.16, maxAge: 0.67, genders: ['Nam', 'Nữ'], discount: '' },
+            { id: 'vax-08', name: 'Vắc xin Prevenar 13', disease: 'Phòng Phế cầu khuẩn 13 chủng', price: '1.580.000₫', unit: 'Liều', flag: 'united-states-of-america', minAge: 0.16, maxAge: 100, genders: ['Nam', 'Nữ'], discount: '- 3%' },
             // Gói Vắc xin
-            { id: 'pkg-01', type: 'Gói', name: 'Gói vắc xin 12 tháng', disease: 'Mũi cơ bản và nhắc lại', price: '22.867.740₫', originalPrice: '23.723.700₫', discount: '- 855.960₫', minAge: 0, maxAge: 1, genders: ['Nam', 'Nữ'] },
-            { id: 'pkg-02', type: 'Gói', name: 'Gói vắc xin 24 tháng', disease: 'Bảo vệ toàn diện đến 2 tuổi', price: '25.712.350₫', originalPrice: '26.801.500₫', discount: '- 1.089.150₫', minAge: 0.16, maxAge: 2, genders: ['Nam', 'Nữ'] },
-            { id: 'pkg-03', type: 'Gói', name: 'Gói vắc xin Phụ nữ trước mang thai', disease: 'Phòng Rubella, Thủy đậu, Cúm, v.v.', price: '6.246.660₫', originalPrice: '6.421.800₫', discount: '- 175.140₫', minAge: 18, maxAge: 45, genders: ['Nữ'] },
-            { id: 'pkg-04', type: 'Gói', name: 'Gói Vắc xin Người lớn cốt lõi', disease: 'Cúm, Tdap, Zona (50+)', price: '5.900.000₫', originalPrice: '6.000.000₫', discount: '- 100.000₫', minAge: 45, maxAge: 100, genders: ['Nam', 'Nữ'] }
+            { id: 'pkg-01', type: 'Gói', name: 'Gói vắc xin 12 tháng', disease: 'Đầy đủ mũi tiêm cơ bản và mở rộng cho trẻ đến 12 tháng tuổi', price: '22.867.740₫', originalPrice: '23.723.700₫', discount: '- 855.960₫', minAge: 0, maxAge: 1, genders: ['Nam', 'Nữ'] },
+            { id: 'pkg-02', type: 'Gói', name: 'Gói vắc xin 24 tháng', disease: 'Bảo vệ toàn diện cho trẻ đến 2 tuổi với đầy đủ vaccine quan trọng', price: '25.712.350₫', originalPrice: '26.801.500₫', discount: '- 1.089.150₫', minAge: 0.16, maxAge: 2, genders: ['Nam', 'Nữ'] },
+            { id: 'pkg-03', type: 'Gói', name: 'Gói vắc xin Phụ nữ trước mang thai', disease: 'Chuẩn bị sức khỏe tốt nhất: Rubella, Thủy đậu, Cúm, HPV', price: '6.246.660₫', originalPrice: '6.421.800₫', discount: '- 175.140₫', minAge: 18, maxAge: 45, genders: ['Nữ'] },
+            { id: 'pkg-04', type: 'Gói', name: 'Gói Vắc xin Người lớn cốt lõi', disease: 'Bảo vệ sức khỏe: Cúm, Tdap, Zona, Phế cầu khuẩn', price: '5.900.000₫', originalPrice: '6.000.000₫', discount: '- 100.000₫', minAge: 45, maxAge: 100, genders: ['Nam', 'Nữ'] },
+            { id: 'pkg-05', type: 'Gói', name: 'Gói Vắc xin Du lịch quốc tế', disease: 'An toàn khi đi du lịch: Viêm gan A, Thương hàn, Sốt vàng da', price: '4.200.000₫', originalPrice: '4.500.000₫', discount: '- 300.000₫', minAge: 18, maxAge: 100, genders: ['Nam', 'Nữ'] }
         ];
 
         // --- CÁC HÀM XỬ LÝ CHÍNH ---
@@ -270,8 +580,8 @@
                 `<p class="item-price mb-0">${vax.price} <span class="original-price">${vax.originalPrice || ''}</span> / Gói</p>` :
                 `<p class="item-price mb-0">${vax.price} / ${vax.unit}</p>`;
             
-            const flagHtml = vax.flag ? `<img src="Assets/Icons/flag/${vax.flag}.png" alt="Cờ ${vax.flag}" class="item-flag-icon">` : '';
-            const discountHtml = vax.discount ? `<span class="discount-badge">${vax.discount}</span>` : '';
+            const flagHtml = vax.flag ? `<img src="Assets/Icons/flag/${vax.flag}.png" alt="Xuất xứ ${vax.flag}" class="item-flag-icon">` : '';
+            const discountHtml = (vax.discount && vax.discount !== '' && vax.discount !== '- 0%') ? `<span class="discount-badge">${vax.discount}</span>` : '';
 
             return `
                 <div class="advice-item" data-vax-id="${vax.id}">
@@ -322,11 +632,24 @@
             });
 
             // --- Render và Hiển thị ---
-            vaxLeList.innerHTML = `<h3 class="fw-bold mb-3 text-secondary">Vắc xin lẻ</h3>` + filteredVaxLe.map(renderVaxItem).join('') || `<p class="text-muted">Không có vắc xin lẻ được đề xuất.</p>`;
-            vaxGoiList.innerHTML = `<h3 class="fw-bold mb-3 text-secondary">Gói Vắc Xin</h3>` + filteredVaxGoi.map(renderVaxItem).join('') || `<p class="text-muted">Không có gói vắc xin được đề xuất.</p>`;
+            const vaxLeHtml = filteredVaxLe.length > 0 
+                ? filteredVaxLe.map(renderVaxItem).join('') 
+                : '<p class="text-muted text-center py-4"><i class="fas fa-info-circle me-2"></i>Không có vắc xin lẻ được đề xuất cho lứa tuổi này.</p>';
+            
+            const vaxGoiHtml = filteredVaxGoi.length > 0 
+                ? filteredVaxGoi.map(renderVaxItem).join('') 
+                : '<p class="text-muted text-center py-4"><i class="fas fa-info-circle me-2"></i>Không có gói vắc xin được đề xuất cho lứa tuổi này.</p>';
+
+            vaxLeList.innerHTML = `<h3 class="fw-bold mb-3 text-secondary"><i class="fas fa-syringe me-2"></i>Vắc xin lẻ</h3>` + vaxLeHtml;
+            vaxGoiList.innerHTML = `<h3 class="fw-bold mb-3 text-secondary"><i class="fas fa-box me-2"></i>Gói Vắc Xin</h3>` + vaxGoiHtml;
 
             currentSelectionDisplay.textContent = selectionText;
             adviceResults.style.display = 'flex'; // Hiện khối kết quả
+            
+            // Smooth scroll to results
+            setTimeout(() => {
+                adviceResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
 
         // --- KHỞI TẠO VÀ LẮNG NGHE SỰ KIỆN ---
