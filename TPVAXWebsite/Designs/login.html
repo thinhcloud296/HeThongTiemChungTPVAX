@@ -3,44 +3,349 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng Nhập - TPVAX</title>
-    <link rel="stylesheet" href="main_style.css" />
+    <meta name="description" content="Đăng nhập tài khoản TPVAX để quản lý lịch tiêm chủng, xem thông tin vaccine và nhận ưu đãi đặc biệt." />
+    <meta name="keywords" content="đăng nhập, TPVAX, tài khoản, tiêm chủng, vaccine" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Assets/Images/logo.png" />
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="main_style.css" />
+    <link rel="stylesheet" href="layout_page_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <title>Đăng Nhập - TPVAX</title>
   </head>
   <body>
-    <main class="auth-page">
-      <div class="auth-container">
-        <h2 class="auth-title">Đăng Nhập Tài Khoản</h2>
-        <form class="auth-form">
-          <div class="form-group">
-            <label for="login-email">Email hoặc Số điện thoại</label>
-            <input
-              type="text"
-              id="login-email"
-              placeholder="Nhập Email hoặc SĐT"
-              required
-            />
+    <!-- Authentication Page Container -->
+    <div class="auth-page">
+      <!-- Left Side - Branding -->
+      <div class="auth-left">
+        <div class="brand-content">
+          <div class="brand-logo">
+            <i class="fas fa-syringe"></i>
           </div>
-          <div class="form-group">
-            <label for="login-password">Mật khẩu</label>
-            <input
-              type="password"
-              id="login-password"
-              placeholder="Nhập Mật khẩu"
-              required
-            />
-          </div>
-          <a href="#" class="forgot-password">Quên mật khẩu?</a>
-          <button type="submit" class="auth-button primary-btn">
-            Đăng Nhập
-          </button>
-        </form>
-        <p class="auth-switch">
-          Chưa có tài khoản? <a href="register.html">Đăng Ký ngay</a>
-        </p>
+          <h1>TPVAX</h1>
+          <p>Hệ thống tiêm chủng vaccine hàng đầu Việt Nam. An toàn - Chuyên nghiệp - Tiện lợi.</p>
+          
+          <ul class="feature-list">
+            <li>
+              <i class="fas fa-shield-alt"></i>
+              <span>Vaccine chính hãng, nguồn gốc rõ ràng</span>
+            </li>
+            <li>
+              <i class="fas fa-user-md"></i>
+              <span>Đội ngũ bác sĩ chuyên môn cao</span>
+            </li>
+            <li>
+              <i class="fas fa-calendar-check"></i>
+              <span>Đặt lịch online nhanh chóng</span>
+            </li>
+            <li>
+              <i class="fas fa-chart-line"></i>
+              <span>Theo dõi lịch sử tiêm chủng</span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </main>
 
-    <script src="Scripts/bootstrap.min.js"></script>
+      <!-- Right Side - Login Form -->
+      <div class="auth-right">
+        <!-- Back to Home -->
+        <div class="back-home">
+          <a href="layout_page.html">
+            <i class="fas fa-home"></i>
+            <span>Trang chủ</span>
+          </a>
+        </div>
+
+        <div class="auth-container">
+          <div class="auth-header">
+            <h2>Chào mừng trở lại! 👋</h2>
+            <p>Đăng nhập để tiếp tục quản lý sức khỏe của bạn</p>
+          </div>
+
+          <!-- Alert Messages -->
+          <div id="alertSuccess" class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <span id="successMessage"></span>
+          </div>
+          <div id="alertError" class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorMessage"></span>
+          </div>
+
+          <!-- Login Form -->
+          <form class="auth-form" id="loginForm">
+            <div class="form-group">
+              <label for="login-email">Email hoặc Số điện thoại</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="login-email"
+                  name="email"
+                  placeholder="VD: example@email.com hoặc 0912345678"
+                  required
+                  autocomplete="username"
+                />
+                <i class="fas fa-envelope input-icon"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="login-password">Mật khẩu</label>
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="login-password"
+                  name="password"
+                  placeholder="Nhập mật khẩu của bạn"
+                  required
+                  autocomplete="current-password"
+                />
+                <button type="button" class="password-toggle" id="togglePassword">
+                  <i class="far fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember-me">
+                <input type="checkbox" id="rememberMe" name="remember" />
+                <span>Ghi nhớ đăng nhập</span>
+              </label>
+              <a href="#" class="forgot-password" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+                Quên mật khẩu?
+              </a>
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+              <i class="fas fa-sign-in-alt"></i>
+              Đăng Nhập Ngay
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="divider">
+            <span>Hoặc tiếp tục với</span>
+          </div>
+
+          <!-- Social Login -->
+          <div class="social-login">
+            <button class="social-btn google" id="googleLogin">
+              <i class="fab fa-google"></i>
+              <span>Google</span>
+            </button>
+            <button class="social-btn facebook" id="facebookLogin">
+              <i class="fab fa-facebook-f"></i>
+              <span>Facebook</span>
+            </button>
+          </div>
+
+          <!-- Switch to Register -->
+          <p class="auth-switch">
+            Chưa có tài khoản? <a href="register.html">Đăng ký miễn phí</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border: none; border-radius: 16px;">
+          <div class="modal-header" style="border-bottom: 1px solid #e1e8ed; padding: 24px;">
+            <h5 class="modal-title" id="forgotPasswordModalLabel" style="font-weight: 700; color: #1a1a1a;">
+              <i class="fas fa-key me-2" style="color: #0077b6;"></i>Khôi phục mật khẩu
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="padding: 24px;">
+            <p class="text-muted mb-4">Nhập email hoặc số điện thoại đã đăng ký để nhận link khôi phục mật khẩu.</p>
+            <form id="forgotPasswordForm">
+              <div class="mb-4">
+                <label for="forgot-email" class="form-label" style="font-weight: 600;">Email hoặc Số điện thoại</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="forgot-email" 
+                  placeholder="Nhập email hoặc số điện thoại" 
+                  required 
+                  style="padding: 12px 16px; border-radius: 10px; border: 2px solid #e1e8ed;"
+                />
+              </div>
+              <div class="alert alert-info" style="background: #e7f3ff; border: 1px solid #b3d9ff; border-radius: 10px; padding: 12px;">
+                <i class="fas fa-info-circle me-2"></i>
+                <small>Link khôi phục sẽ được gửi đến email hoặc SMS trong vòng 5 phút.</small>
+              </div>
+              <button type="submit" class="btn w-100" style="background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%); color: white; padding: 14px; border-radius: 10px; font-weight: 600; border: none;">
+                <i class="fas fa-paper-plane me-2"></i>Gửi link khôi phục
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <script>
+      // Toggle Password Visibility
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('login-password');
+      
+      if (togglePassword) {
+        togglePassword.addEventListener('click', function() {
+          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordInput.setAttribute('type', type);
+          
+          const icon = this.querySelector('i');
+          icon.classList.toggle('fa-eye');
+          icon.classList.toggle('fa-eye-slash');
+        });
+      }
+
+      // Login Form Submission
+      const loginForm = document.getElementById('loginForm');
+      const loginBtn = document.getElementById('loginBtn');
+      const alertSuccess = document.getElementById('alertSuccess');
+      const alertError = document.getElementById('alertError');
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+
+      function showAlert(type, message) {
+        const alert = type === 'success' ? alertSuccess : alertError;
+        const messageEl = type === 'success' ? successMessage : errorMessage;
+        
+        // Hide all alerts first
+        alertSuccess.style.display = 'none';
+        alertError.style.display = 'none';
+        
+        // Show the alert
+        messageEl.textContent = message;
+        alert.style.display = 'block';
+        
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 5000);
+      }
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('login-email').value.trim();
+          const password = document.getElementById('login-password').value;
+          const remember = document.getElementById('rememberMe').checked;
+          
+          // Validate
+          if (!email || !password) {
+            showAlert('error', 'Vui lòng nhập đầy đủ thông tin!');
+            return;
+          }
+          
+          // Show loading state
+          loginBtn.classList.add('loading');
+          loginBtn.disabled = true;
+          loginBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Đang xử lý...';
+          
+          // Simulate API call (Replace with actual API)
+          setTimeout(() => {
+            // Demo: Accept any login
+            console.log('Login data:', { email, password, remember });
+            
+            loginBtn.classList.remove('loading');
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Đăng Nhập Ngay';
+            
+            showAlert('success', '✓ Đăng nhập thành công! Đang chuyển hướng...');
+            
+            // Redirect after 1.5 seconds
+            setTimeout(() => {
+              window.location.href = 'layout_page.html';
+            }, 1500);
+          }, 1500);
+        });
+      }
+
+      // Forgot Password Form
+      const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+      
+      if (forgotPasswordForm) {
+        forgotPasswordForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('forgot-email').value.trim();
+          
+          if (!email) {
+            alert('Vui lòng nhập email hoặc số điện thoại!');
+            return;
+          }
+          
+          // Simulate sending recovery link
+          console.log('Send recovery link to:', email);
+          
+          // Close modal
+          const modalEl = document.getElementById('forgotPasswordModal');
+          const modal = bootstrap.Modal.getInstance(modalEl);
+          if (modal) {
+            modal.hide();
+          }
+          
+          showAlert('success', '✓ Link khôi phục đã được gửi! Vui lòng kiểm tra email hoặc tin nhắn.');
+          
+          // Reset form
+          forgotPasswordForm.reset();
+        });
+      }
+
+      // Social Login Handlers
+      const googleLogin = document.getElementById('googleLogin');
+      const facebookLogin = document.getElementById('facebookLogin');
+      
+      if (googleLogin) {
+        googleLogin.addEventListener('click', function() {
+          showAlert('error', 'Tính năng đăng nhập Google đang được phát triển. Vui lòng quay lại sau!');
+        });
+      }
+      
+      if (facebookLogin) {
+        facebookLogin.addEventListener('click', function() {
+          showAlert('error', 'Tính năng đăng nhập Facebook đang được phát triển. Vui lòng quay lại sau!');
+        });
+      }
+
+      // Auto-focus first input
+      document.addEventListener('DOMContentLoaded', function() {
+        const emailInput = document.getElementById('login-email');
+        if (emailInput) {
+          emailInput.focus();
+        }
+      });
+
+      // Add ripple effect on button click
+      document.querySelectorAll('.btn-login, .social-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+          const ripple = document.createElement('span');
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+          
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.classList.add('ripple');
+          
+          this.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+    </script>
   </body>
 </html>
