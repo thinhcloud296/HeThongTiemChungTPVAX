@@ -530,8 +530,26 @@
     <!-- END Footer -->
     
     <!-- Scripts -->
-    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
     <script>
+        // Scroll to Top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        
+        window.addEventListener('scroll', function() {
+          if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.add('show');
+          } else {
+            scrollToTopBtn.classList.remove('show');
+          }
+        });
+        
+        scrollToTopBtn.addEventListener('click', function() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+
         // --- MOCK DATA (Dữ liệu Giả lập) ---
         // Giả định minAge và maxAge tính bằng năm (vd: 0.5 = 6 tháng, 1 = 12 tháng, 2 = 24 tháng)
         const AGE_RANGES = [
