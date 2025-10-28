@@ -3,59 +3,469 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng Ký - TPVAX</title>
-    <link rel="stylesheet" href="main_style.css" />
+    <meta name="description" content="Đăng ký tài khoản TPVAX miễn phí để quản lý lịch tiêm chủng, đặt lịch vaccine online và nhận ưu đãi đặc biệt." />
+    <meta name="keywords" content="đăng ký, TPVAX, tài khoản miễn phí, tiêm chủng, vaccine" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Assets/Images/logo.png" />
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="main_style.css" />
+    <link rel="stylesheet" href="layout_page_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <title>Đăng Ký - TPVAX</title>
   </head>
   <body>
-    <main class="auth-page">
-      <div class="auth-container">
-        <h2 class="auth-title">Tạo Tài Khoản TPVAX</h2>
-        <form class="auth-form">
-          <div class="form-group">
-            <label for="register-name">Họ và Tên</label>
-            <input
-              type="text"
-              id="register-name"
-              placeholder="Nhập Họ và Tên"
-              required
-            />
+    <!-- Authentication Page Container -->
+    <div class="auth-page">
+      <!-- Left Side - Branding -->
+      <div class="auth-left">
+        <div class="brand-content">
+          <div class="brand-logo">
+            <i class="fas fa-user-plus"></i>
           </div>
-          <div class="form-group">
-            <label for="register-phone">Số điện thoại</label>
-            <input
-              type="tel"
-              id="register-phone"
-              placeholder="Nhập Số điện thoại"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="register-email">Email (Không bắt buộc)</label>
-            <input type="email" id="register-email" placeholder="Nhập Email" />
-          </div>
-          <div class="form-group">
-            <label for="register-password">Mật khẩu</label>
-            <input
-              type="password"
-              id="register-password"
-              placeholder="Tối thiểu 6 ký tự"
-              required
-            />
-          </div>
-          <button type="submit" class="auth-button primary-btn">Đăng Ký</button>
-        </form>
-        <p class="auth-switch">
-          Đã có tài khoản? <a href="login.html">Đăng Nhập</a>
-        </p>
-        <div class="terms-policy">
-          Bằng cách đăng ký, bạn đồng ý với
-          <a href="#">Điều khoản dịch vụ</a> và
-          <a href="#">Chính sách bảo mật</a> của TPVAX.
+          <h1>TPVAX</h1>
+          <p>Tham gia cùng hàng nghìn khách hàng đã tin tưởng và sử dụng dịch vụ tiêm chủng của chúng tôi.</p>
+          
+          <ul class="benefit-list">
+            <li>
+              <i class="fas fa-gift"></i>
+              <span>Miễn phí đăng ký tài khoản</span>
+            </li>
+            <li>
+              <i class="fas fa-percent"></i>
+              <span>Ưu đãi độc quyền cho thành viên</span>
+            </li>
+            <li>
+              <i class="fas fa-bell"></i>
+              <span>Nhận thông báo lịch tiêm nhắc nhở</span>
+            </li>
+            <li>
+              <i class="fas fa-mobile-alt"></i>
+              <span>Quản lý sức khỏe mọi lúc mọi nơi</span>
+            </li>
+          </ul>
         </div>
       </div>
-    </main>
 
-    <script src="Scripts/bootstrap.min.js"></script>
+      <!-- Right Side - Register Form -->
+      <div class="auth-right">
+        <!-- Back to Home -->
+        <div class="back-home">
+          <a href="layout_page.html">
+            <i class="fas fa-home"></i>
+            <span>Trang chủ</span>
+          </a>
+        </div>
+
+        <div class="auth-container">
+          <div class="auth-header">
+            <h2>Tạo tài khoản mới 🎉</h2>
+            <p>Chỉ mất 2 phút để bắt đầu hành trình chăm sóc sức khỏe</p>
+          </div>
+
+          <!-- Alert Messages -->
+          <div id="alertSuccess" class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <span id="successMessage"></span>
+          </div>
+          <div id="alertError" class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorMessage"></span>
+          </div>
+
+          <!-- Register Form -->
+          <form class="auth-form" id="registerForm">
+            <div class="form-group">
+              <label for="register-name">
+                Họ và Tên<span class="required">*</span>
+              </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="register-name"
+                  name="fullname"
+                  placeholder="VD: Nguyễn Văn A"
+                  required
+                  autocomplete="name"
+                />
+                <i class="fas fa-user input-icon"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="register-phone">
+                Số điện thoại<span class="required">*</span>
+              </label>
+              <div class="input-group">
+                <input
+                  type="tel"
+                  id="register-phone"
+                  name="phone"
+                  placeholder="VD: 0912345678"
+                  required
+                  autocomplete="tel"
+                  pattern="[0-9]{10}"
+                />
+                <i class="fas fa-phone input-icon"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <div class="input-group">
+                <input
+                  type="email"
+                  id="register-email"
+                  name="email"
+                  placeholder="VD: example@email.com (không bắt buộc)"
+                  autocomplete="email"
+                />
+                <i class="fas fa-envelope input-icon"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="register-password">
+                Mật khẩu<span class="required">*</span>
+              </label>
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="register-password"
+                  name="password"
+                  placeholder="Tối thiểu 6 ký tự"
+                  required
+                  autocomplete="new-password"
+                  minlength="6"
+                />
+                <button type="button" class="password-toggle" id="togglePassword">
+                  <i class="far fa-eye"></i>
+                </button>
+              </div>
+              <div class="password-strength" id="passwordStrength" style="display: none;">
+                <div class="strength-bar">
+                  <div class="strength-fill"></div>
+                </div>
+                <span class="strength-text"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="register-confirm-password">
+                Xác nhận mật khẩu<span class="required">*</span>
+              </label>
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="register-confirm-password"
+                  name="confirm-password"
+                  placeholder="Nhập lại mật khẩu"
+                  required
+                  autocomplete="new-password"
+                />
+                <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                  <i class="far fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="terms-group">
+              <div class="terms-checkbox">
+                <input type="checkbox" id="agreeTerms" required />
+                <label for="agreeTerms">
+                  Tôi đồng ý với <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Điều khoản dịch vụ</a> và 
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Chính sách bảo mật</a> của TPVAX
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-register" id="registerBtn">
+              <i class="fas fa-user-plus"></i>
+              Đăng Ký Miễn Phí
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="divider">
+            <span>Hoặc đăng ký với</span>
+          </div>
+
+          <!-- Social Login -->
+          <div class="social-login">
+            <button class="social-btn google" id="googleRegister">
+              <i class="fab fa-google"></i>
+              <span>Google</span>
+            </button>
+            <button class="social-btn facebook" id="facebookRegister">
+              <i class="fab fa-facebook-f"></i>
+              <span>Facebook</span>
+            </button>
+          </div>
+
+          <!-- Switch to Login -->
+          <p class="auth-switch">
+            Đã có tài khoản? <a href="login.html">Đăng nhập ngay</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="border: none; border-radius: 16px;">
+          <div class="modal-header" style="border-bottom: 1px solid #e1e8ed; padding: 24px;">
+            <h5 class="modal-title" id="termsModalLabel" style="font-weight: 700; color: #1a1a1a;">
+              <i class="fas fa-file-contract me-2" style="color: #0077b6;"></i>Điều khoản dịch vụ
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="padding: 24px;">
+            <h6 style="color: #0077b6; font-weight: 600;">1. Điều khoản chung</h6>
+            <p>Khi sử dụng dịch vụ của TPVAX, bạn đồng ý tuân thủ các điều khoản và điều kiện sau đây...</p>
+            
+            <h6 style="color: #0077b6; font-weight: 600; margin-top: 20px;">2. Quyền và trách nhiệm</h6>
+            <p>Khách hàng có quyền được cung cấp thông tin đầy đủ về dịch vụ và sản phẩm vaccine...</p>
+            
+            <h6 style="color: #0077b6; font-weight: 600; margin-top: 20px;">3. Chính sách thanh toán</h6>
+            <p>Mọi giao dịch thanh toán đều được mã hóa và bảo mật tuyệt đối...</p>
+          </div>
+          <div class="modal-footer" style="border-top: 1px solid #e1e8ed; padding: 16px 24px;">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="border: none; border-radius: 16px;">
+          <div class="modal-header" style="border-bottom: 1px solid #e1e8ed; padding: 24px;">
+            <h5 class="modal-title" id="privacyModalLabel" style="font-weight: 700; color: #1a1a1a;">
+              <i class="fas fa-shield-alt me-2" style="color: #0077b6;"></i>Chính sách bảo mật
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="padding: 24px;">
+            <h6 style="color: #0077b6; font-weight: 600;">1. Thu thập thông tin</h6>
+            <p>Chúng tôi thu thập thông tin cá nhân cần thiết để cung cấp dịch vụ tiêm chủng tốt nhất...</p>
+            
+            <h6 style="color: #0077b6; font-weight: 600; margin-top: 20px;">2. Bảo mật thông tin</h6>
+            <p>Thông tin của bạn được mã hóa và lưu trữ an toàn trên hệ thống của chúng tôi...</p>
+            
+            <h6 style="color: #0077b6; font-weight: 600; margin-top: 20px;">3. Chia sẻ thông tin</h6>
+            <p>Chúng tôi không chia sẻ thông tin cá nhân của bạn với bên thứ ba mà không có sự đồng ý...</p>
+          </div>
+          <div class="modal-footer" style="border-top: 1px solid #e1e8ed; padding: 16px 24px;">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <script>
+      // Toggle Password Visibility
+      const togglePassword = document.getElementById('togglePassword');
+      const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+      const passwordInput = document.getElementById('register-password');
+      const confirmPasswordInput = document.getElementById('register-confirm-password');
+      
+      if (togglePassword) {
+        togglePassword.addEventListener('click', function() {
+          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordInput.setAttribute('type', type);
+          
+          const icon = this.querySelector('i');
+          icon.classList.toggle('fa-eye');
+          icon.classList.toggle('fa-eye-slash');
+        });
+      }
+
+      if (toggleConfirmPassword) {
+        toggleConfirmPassword.addEventListener('click', function() {
+          const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          confirmPasswordInput.setAttribute('type', type);
+          
+          const icon = this.querySelector('i');
+          icon.classList.toggle('fa-eye');
+          icon.classList.toggle('fa-eye-slash');
+        });
+      }
+
+      // Password Strength Checker
+      const passwordStrength = document.getElementById('passwordStrength');
+      
+      if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+          const password = this.value;
+          
+          if (password.length === 0) {
+            passwordStrength.style.display = 'none';
+            return;
+          }
+          
+          passwordStrength.style.display = 'block';
+          
+          let strength = 0;
+          if (password.length >= 6) strength++;
+          if (password.length >= 10) strength++;
+          if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+          if (/[0-9]/.test(password)) strength++;
+          if (/[^a-zA-Z0-9]/.test(password)) strength++;
+          
+          const strengthText = passwordStrength.querySelector('.strength-text');
+          passwordStrength.classList.remove('weak', 'medium', 'strong');
+          
+          if (strength <= 2) {
+            passwordStrength.classList.add('weak');
+            strengthText.textContent = 'Mật khẩu yếu';
+            strengthText.style.color = '#dc3545';
+          } else if (strength <= 3) {
+            passwordStrength.classList.add('medium');
+            strengthText.textContent = 'Mật khẩu trung bình';
+            strengthText.style.color = '#ffc107';
+          } else {
+            passwordStrength.classList.add('strong');
+            strengthText.textContent = 'Mật khẩu mạnh';
+            strengthText.style.color = '#28a745';
+          }
+        });
+      }
+
+      // Register Form Submission
+      const registerForm = document.getElementById('registerForm');
+      const registerBtn = document.getElementById('registerBtn');
+      const alertSuccess = document.getElementById('alertSuccess');
+      const alertError = document.getElementById('alertError');
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+
+      function showAlert(type, message) {
+        const alert = type === 'success' ? alertSuccess : alertError;
+        const messageEl = type === 'success' ? successMessage : errorMessage;
+        
+        // Hide all alerts first
+        alertSuccess.style.display = 'none';
+        alertError.style.display = 'none';
+        
+        // Show the alert
+        messageEl.textContent = message;
+        alert.style.display = 'block';
+        
+        // Scroll to top to see alert
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 5000);
+      }
+
+      if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const fullname = document.getElementById('register-name').value.trim();
+          const phone = document.getElementById('register-phone').value.trim();
+          const email = document.getElementById('register-email').value.trim();
+          const password = document.getElementById('register-password').value;
+          const confirmPassword = document.getElementById('register-confirm-password').value;
+          const agreeTerms = document.getElementById('agreeTerms').checked;
+          
+          // Validate
+          if (!fullname || !phone || !password || !confirmPassword) {
+            showAlert('error', 'Vui lòng điền đầy đủ thông tin bắt buộc!');
+            return;
+          }
+          
+          // Validate phone number
+          const phoneRegex = /^[0-9]{10}$/;
+          if (!phoneRegex.test(phone)) {
+            showAlert('error', 'Số điện thoại không hợp lệ! Vui lòng nhập 10 chữ số.');
+            return;
+          }
+          
+          // Validate password length
+          if (password.length < 6) {
+            showAlert('error', 'Mật khẩu phải có ít nhất 6 ký tự!');
+            return;
+          }
+          
+          // Validate password match
+          if (password !== confirmPassword) {
+            showAlert('error', 'Mật khẩu xác nhận không khớp!');
+            return;
+          }
+          
+          // Validate terms agreement
+          if (!agreeTerms) {
+            showAlert('error', 'Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật!');
+            return;
+          }
+          
+          // Show loading state
+          registerBtn.classList.add('loading');
+          registerBtn.disabled = true;
+          registerBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Đang xử lý...';
+          
+          // Simulate API call (Replace with actual API)
+          setTimeout(() => {
+            // Demo: Accept registration
+            console.log('Register data:', { fullname, phone, email, password });
+            
+            registerBtn.classList.remove('loading');
+            registerBtn.disabled = false;
+            registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Đăng Ký Miễn Phí';
+            
+            showAlert('success', '✓ Đăng ký thành công! Chào mừng bạn đến với TPVAX. Đang chuyển hướng...');
+            
+            // Redirect after 2 seconds
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 2000);
+          }, 2000);
+        });
+      }
+
+      // Social Register Handlers
+      const googleRegister = document.getElementById('googleRegister');
+      const facebookRegister = document.getElementById('facebookRegister');
+      
+      if (googleRegister) {
+        googleRegister.addEventListener('click', function() {
+          showAlert('error', 'Tính năng đăng ký Google đang được phát triển. Vui lòng quay lại sau!');
+        });
+      }
+      
+      if (facebookRegister) {
+        facebookRegister.addEventListener('click', function() {
+          showAlert('error', 'Tính năng đăng ký Facebook đang được phát triển. Vui lòng quay lại sau!');
+        });
+      }
+
+      // Auto-focus first input
+      document.addEventListener('DOMContentLoaded', function() {
+        const nameInput = document.getElementById('register-name');
+        if (nameInput) {
+          nameInput.focus();
+        }
+      });
+
+      // Phone number validation (only numbers)
+      const phoneInput = document.getElementById('register-phone');
+      if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+          this.value = this.value.replace(/[^0-9]/g, '');
+        });
+      }
+    </script>
   </body>
 </html>
