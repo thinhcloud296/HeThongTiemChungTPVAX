@@ -3,85 +3,160 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thông tin Vắc xin theo Đối tượng - TPVAX</title>
+    <meta name="description" content="Tìm hiểu thông tin vắc xin theo từng đối tượng: Nhi, Thanh thiếu niên, Du lịch, Tiền hôn nhân, Người trưởng thành. Hướng dẫn chi tiết và khoa học từ TPVAX." />
+    <meta name="keywords" content="vắc xin, tiêm chủng, nhi, thanh thiếu niên, du lịch, tiền hôn nhân, người lớn, TPVAX" />
+    <meta name="author" content="TPVAX - Hệ thống Tiêm chủng Việt Nam" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tpvax.vn/ttvctheodoituong.html" />
+    <meta property="og:title" content="Thông tin Vắc xin theo Đối tượng - TPVAX" />
+    <meta property="og:description" content="Tìm hiểu thông tin vắc xin theo từng đối tượng: Nhi, Thanh thiếu niên, Du lịch, Tiền hôn nhân, Người trưởng thành." />
+    <meta property="og:image" content="https://tpvax.vn/Assets/Images/logo.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Assets/Images/logo.png" />
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <link rel="stylesheet" href="main_style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="layout_page_style.css" />
+    
+    <title>Thông tin Vắc xin theo Đối tượng - TPVAX</title>
   </head>
   <body>
-    <header class="container-fluid">
+    <!-- Skip to main content -->
+    <a href="#main-content" class="visually-hidden-focusable">Chuyển đến nội dung chính</a>
+    
+    <!-- Scroll to Top Button -->
+    <button 
+      id="scrollToTopBtn" 
+      class="scroll-to-top-btn" 
+      aria-label="Cuộn lên đầu trang"
+      title="Lên đầu trang"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+      </svg>
+    </button>
+    
+    <!-- Floating Contact Buttons -->
+    <div class="floating-contact">
+      <a 
+        href="https://zalo.me/0975088626" 
+        target="_blank"
+        class="floating-btn floating-btn-zalo"
+        aria-label="Chat qua Zalo"
+        title="Chat Zalo"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 48 48" fill="white">
+          <path d="M24 4C13.52 4 5 11.37 5 20.5c0 5.42 3.17 10.23 8 13.33v9.17l8.54-4.55c.78.11 1.59.16 2.42.16 10.48 0 19-7.37 19-16.5S34.48 4 24 4zm-4.5 22.5l-5.5-5.88 10.76-5.74-5 6.26 5.5 5.88L14.5 21.28l5-6.26z"/>
+        </svg>
+      </a>
+      <a 
+        href="tel:0975088626" 
+        class="floating-btn floating-btn-phone"
+        aria-label="Gọi điện thoại"
+        title="Gọi ngay"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16" fill="white">
+          <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+        </svg>
+      </a>
+    </div>
+    
+    <!-- Header -->
+    <header class="container-fluid" role="banner">
+      <!-- Toolbar -->
       <div class="toolbar-section">
-        <div
-          class="container d-flex align-items-center justify-content-between py-3"
-        >
-          <div class="search-bar-wrapper">
-            <div class="position-relative" style="width: 100%; height: 100%">
+        <div class="container d-flex align-items-center justify-content-between py-3 flex-wrap gap-3">
+          <!-- Search Bar -->
+          <div class="search-bar-wrapper" style="flex: 1; min-width: 250px; max-width: 400px;">
+            <form role="search" aria-label="Tìm kiếm vaccine" class="position-relative h-100">
+              <label for="search-vaccine" class="visually-hidden">Tìm kiếm vắc xin</label>
               <input
-                placeholder="Tìm kiếm vắc xin"
-                type="text"
+                id="search-vaccine"
+                name="search"
+                placeholder="Tìm kiếm vắc xin..."
+                type="search"
                 class="form-control h-100 rounded-pill pe-5 border border-primary"
                 style="background-color: #ffffff; text-indent: 10px"
+                aria-label="Nhập tên vắc xin cần tìm"
               />
               <img
                 class="position-absolute top-50 translate-middle-y"
                 src="Assets/Icons/search.png"
-                alt="Search"
-                style="width: 30px; right: 10px"
+                alt=""
+                aria-hidden="true"
+                style="width: 30px; right: 10px; pointer-events: none;"
+                loading="lazy"
               />
-            </div>
+            </form>
           </div>
 
-          <div class="d-flex align-items-center">
+          <!-- Contact Links -->
+          <div class="d-flex align-items-center gap-3 flex-wrap">
             <a
               href="tel:0975088626"
-              class="d-flex align-items-center me-4 toolbar-link"
+              class="d-flex align-items-center toolbar-link"
+              aria-label="Gọi hotline 0975 088 626"
             >
               <img
                 src="Assets/Icons/telephone.png"
-                alt="Phone"
+                alt=""
+                aria-hidden="true"
                 class="toolbar-icon"
+                loading="lazy"
               />
               <span class="fw-bold fs-5 text-warning">0975 088 626</span>
             </a>
-            <a href="#" class="d-flex align-items-center toolbar-link">
+            <a 
+              href="layout_page.html#vaccine-catalog" 
+              class="d-flex align-items-center toolbar-link"
+              aria-label="Xem danh sách vaccine để đặt mua"
+            >
               <img
                 src="Assets/Icons/shopping-basket.png"
-                alt="Order"
+                alt=""
+                aria-hidden="true"
                 class="toolbar-icon"
+                loading="lazy"
               />
               <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
             </a>
           </div>
 
-          <div class="d-flex align-items-center">
+          <!-- Auth & Cart -->
+          <div class="d-flex align-items-center gap-2 flex-wrap">
             <a
               href="login.html"
               class="btn btn-outline-primary rounded-pill mx-1 login-btn"
-              >Đăng nhập</a
-            >
+              aria-label="Đăng nhập tài khoản"
+            >Đăng nhập</a>
             <a
               href="register.html"
               class="btn btn-outline-primary rounded-pill mx-1 login-btn"
-              >Đăng ký</a
-            >
-            <div class="vr mx-2"></div>
+              aria-label="Đăng ký tài khoản mới"
+            >Đăng ký</a>
+            <div class="vr mx-2 d-none d-lg-block"></div>
             <div class="position-relative">
               <a
                 href="cart.html"
                 class="btn d-flex align-items-center btn-cart-custom"
+                aria-label="Giỏ hàng có 3 sản phẩm"
               >
                 <img
                   src="Assets/Icons/cart.png"
-                  alt="Cart"
+                  alt=""
+                  aria-hidden="true"
                   class="toolbar-icon-small"
+                  loading="lazy"
                 />
                 <span class="ms-2">Giỏ hàng</span>
               </a>
               <span
                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                aria-label="3 sản phẩm trong giỏ"
               >
                 3
               </span>
@@ -89,25 +164,29 @@
           </div>
         </div>
       </div>
+      <!-- END Toolbar -->
+
+      <!-- Logo & Branding -->
       <div class="brand-section">
         <div class="container-fluid px-0">
-          <div class="row align-items-center">
+          <div class="row align-items-center g-0">
             <div class="col-md-5">
               <img
                 src="Assets/Images/logo.png"
-                alt="Hệ thống tiêm chủng TPVAX"
+                alt="Logo TPVAX - Hệ thống tiêm chủng vaccine"
                 class="img-fluid"
+                loading="eager"
               />
             </div>
             <div class="col-md-7">
               <div
-                class="d-flex flex-column justify-content-center p-3"
+                class="d-flex flex-column justify-content-center p-3 p-lg-4 brand-slogan"
                 style="background-color: #0077b6; color: white"
               >
-                <p class="display-1 mb-1 text-nowrap">
-                  <strong>Cổng tiêm chủng vắc xin</strong>
-                </p>
-                <p class="display-3 mb-0 text-nowrap">
+                <h1 class="display-5 display-lg-4 mb-1 fw-bold">
+                  Cổng tiêm chủng vắc xin
+                </h1>
+                <p class="display-6 display-lg-5 mb-0">
                   Chất lượng hàng đầu Việt Nam
                 </p>
               </div>
@@ -115,7 +194,10 @@
           </div>
         </div>
       </div>
-      <nav class="navbar navbar-expand-lg main-navbar">
+      <!-- END Logo -->
+
+      <!-- Main Navigation -->
+      <nav class="navbar navbar-expand-lg main-navbar" role="navigation" aria-label="Menu chính">
         <div class="container-fluid">
           <button
             class="navbar-toggler"
@@ -124,17 +206,17 @@
             data-bs-target="#mainNavbarContent"
             aria-controls="mainNavbarContent"
             aria-expanded="false"
-            aria-label="Toggle navigation"
+            aria-label="Mở/Đóng menu điều hướng"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
-            <ul
-              class="container-fluid navbar-nav mx-auto d-flex flex-row justify-content-around"
-            >
+            <ul class="container-fluid navbar-nav mx-auto d-flex flex-lg-row justify-content-around">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">Trang chủ</a>
+                <a class="nav-link" href="layout_page.html">
+                  Trang chủ
+                </a>
               </li>
 
               <li class="nav-item dropdown">
@@ -144,37 +226,44 @@
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  aria-haspopup="true"
                 >
                   Vắc xin phòng bệnh
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" aria-label="Menu vắc xin phòng bệnh">
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="layout_page.html#vaccine-children">
                       <img
                         src="Assets/Icons/baby-boy.png"
-                        alt="Icon Trẻ em"
+                        alt=""
+                        aria-hidden="true"
                         class="dropdown-icon-custom"
+                        loading="lazy"
                       />
                       Vắc xin cho trẻ em
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="layout_page.html#vaccine-adults">
                       <img
                         src="Assets/Icons/adults.png"
-                        alt="Icon Người lớn"
+                        alt=""
+                        aria-hidden="true"
                         class="dropdown-icon-custom"
+                        loading="lazy"
                       />
                       Vắc xin cho người lớn
                     </a>
                   </li>
                   <li><hr class="dropdown-divider" /></li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="layout_page.html#vaccine-pregnant">
                       <img
                         src="Assets/Icons/pregnant-woman.png"
-                        alt="Icon Phụ nữ mang thai"
+                        alt=""
+                        aria-hidden="true"
                         class="dropdown-icon-custom"
+                        loading="lazy"
                       />
                       Vắc xin cho phụ nữ mang thai
                     </a>
@@ -183,11 +272,21 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="#">Gói vắc xin</a>
+                <a class="nav-link" href="layout_page.html#vaccine-packages">Gói vắc xin</a>
               </li>
+
               <li class="nav-item">
-                <a class="nav-link" href="#">Tra cứu lịch tiêm</a>
+                <a class="nav-link" href="khuyen-mai-hot.html">Khuyến mãi HOT</a>
               </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="toi-nen-tiem-gi.html">Tôi nên tiêm gì</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="layout_page.html#schedule-lookup">Tra cứu lịch tiêm</a>
+              </li>
+              
               <li class="nav-item dropdown active">
                 <a
                   class="nav-link dropdown-toggle active"
@@ -195,16 +294,20 @@
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-current="page"
                 >
                   Kiến thức tiêm chủng
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" aria-label="Menu kiến thức tiêm chủng">
                   <li>
                     <a class="dropdown-item active" href="ttvctheodoituong.html">
                       <img
                         src="Assets/Icons/ttvacine.png"
-                        alt="Icon Thông tin Vaccine"
+                        alt=""
+                        aria-hidden="true"
                         class="dropdown-icon-custom"
+                        loading="lazy"
                       />
                       Thông tin vaccine theo đối tượng
                     </a>
@@ -213,8 +316,10 @@
                     <a class="dropdown-item" href="me-va-be.html">
                       <img
                         src="Assets/Icons/mother.png"
-                        alt="Icon Mẹ và Bé"
+                        alt=""
+                        aria-hidden="true"
                         class="dropdown-icon-custom"
+                        loading="lazy"
                       />
                       Mẹ và bé
                     </a>
@@ -223,8 +328,10 @@
                     <a class="dropdown-item" href="benh-truyen-nhiem.html">
                       <img
                         src="Assets/Icons/virus.png"
-                        alt="Icon Bệnh truyền nhiễm"
+                        alt=""
+                        aria-hidden="true"
                         class="dropdown-icon-custom"
+                        loading="lazy"
                       />
                       Bệnh truyền nhiễm
                     </a>
@@ -235,595 +342,1010 @@
           </div>
         </div>
       </nav>
-      </header>
-    <main class="knowledge-page-main container my-5">
-      <h1 class="page-title">Thông tin vắc xin theo Đối tượng</h1>
+      <!-- END Menu -->
+    </header>
+    <!-- END Header -->
+    
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="container mt-3">
+      <ol class="breadcrumb bg-light p-3 rounded">
+        <li class="breadcrumb-item"><a href="layout_page.html">🏠 Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#">📚 Kiến thức tiêm chủng</a></li>
+        <li class="breadcrumb-item active" aria-current="page">💉 Thông tin vắc xin theo đối tượng</li>
+      </ol>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container my-5" id="main-content" role="main">
+      
+      <!-- Page Header -->
+      <div class="text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary mb-3">
+          📋 THÔNG TIN VẮC XIN THEO ĐỐI TƯỢNG
+        </h2>
+        <p class="lead text-muted">
+          Tìm hiểu thông tin vắc xin phù hợp với từng lứa tuổi và đối tượng. 
+          Hướng dẫn chi tiết, khoa học và cập nhật từ chuyên gia TPVAX.
+        </p>
+      </div>
 
-      <section class="category-cards mb-5">
-        <div class="row g-3 justify-content-center">
-          <div class="col-auto">
-            <a href="#thanh-thieu-nien" class="category-card-item" data-target="thanh-thieu-nien">
-              <img
-                src="Assets/Icons/teener.png"
-                alt="Thanh thiếu niên"
-                class="category-icon"
-              />
-              <span>Thanh thiếu niên</span>
+      <!-- Category Cards - Modern Design -->
+      <section class="mb-5">
+        <div class="row g-4">
+          <div class="col-6 col-md-4 col-lg">
+            <a href="#nhi" class="category-card-modern active" data-target="nhi">
+              <div class="category-card-icon-wrapper">
+                <img src="Assets/Icons/baby-boy.png" alt="Nhi" loading="lazy" />
+              </div>
+              <h3 class="category-card-title">Nhi</h3>
+              <p class="category-card-desc">Trẻ em & Sơ sinh</p>
             </a>
           </div>
-
-          <div class="col-auto">
-            <a href="#du-lich" class="category-card-item" data-target="du-lich">
-              <img
-                src="Assets/Icons/travel.png"
-                alt="Du lịch"
-                class="category-icon"
-              />
-              <span>Du lịch</span>
+          
+          <div class="col-6 col-md-4 col-lg">
+            <a href="#thanh-thieu-nien" class="category-card-modern" data-target="thanh-thieu-nien">
+              <div class="category-card-icon-wrapper">
+                <img src="Assets/Icons/teener.png" alt="Thanh thiếu niên" loading="lazy" />
+              </div>
+              <h3 class="category-card-title">Thanh thiếu niên</h3>
+              <p class="category-card-desc">9-18 tuổi</p>
             </a>
           </div>
-
-          <div class="col-auto">
-            <a href="#tien-hon-nhan" class="category-card-item" data-target="tien-hon-nhan">
-              <img
-                src="Assets/Icons/marriage.png"
-                alt="Tiền hôn nhân"
-                class="category-icon"
-              />
-              <span>Tiền hôn nhân</span>
+          
+          <div class="col-6 col-md-4 col-lg">
+            <a href="#du-lich" class="category-card-modern" data-target="du-lich">
+              <div class="category-card-icon-wrapper">
+                <img src="Assets/Icons/travel.png" alt="Du lịch" loading="lazy" />
+              </div>
+              <h3 class="category-card-title">Du lịch</h3>
+              <p class="category-card-desc">Đi nước ngoài</p>
             </a>
           </div>
-
-          <div class="col-auto">
-            <a href="#nguoi-truong-thanh" class="category-card-item" data-target="nguoi-truong-thanh">
-              <img
-                src="Assets/Icons/adults.png"
-                alt="Người trưởng thành"
-                class="category-icon"
-              />
-              <span>Người trưởng thành</span>
+          
+          <div class="col-6 col-md-4 col-lg">
+            <a href="#tien-hon-nhan" class="category-card-modern" data-target="tien-hon-nhan">
+              <div class="category-card-icon-wrapper">
+                <img src="Assets/Icons/marriage.png" alt="Tiền hôn nhân" loading="lazy" />
+              </div>
+              <h3 class="category-card-title">Tiền hôn nhân</h3>
+              <p class="category-card-desc">Chuẩn bị kết hôn</p>
             </a>
           </div>
-
-          <div class="col-auto">
-            <a href="#nhi" class="category-card-item active" data-target="nhi">
-              <img
-                src="Assets/Icons/baby-boy.png"
-                alt="Nhi"
-                class="category-icon"
-              />
-              <span>Nhi</span>
+          
+          <div class="col-6 col-md-4 col-lg">
+            <a href="#nguoi-truong-thanh" class="category-card-modern" data-target="nguoi-truong-thanh">
+              <div class="category-card-icon-wrapper">
+                <img src="Assets/Icons/adults.png" alt="Người trưởng thành" loading="lazy" />
+              </div>
+              <h3 class="category-card-title">Người trưởng thành</h3>
+              <p class="category-card-desc">18+ tuổi</p>
             </a>
           </div>
         </div>
       </section>
 
-      <section class="search-article-section mb-4">
+      <!-- Search Section -->
+      <section class="mb-5">
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            <div class="position-relative">
+            <div class="search-box-modern position-relative">
               <input
                 type="text"
-                class="form-control h-100 rounded-pill pe-5 border border-primary"
-                placeholder="Tìm kiếm bài viết trong mục này (ví dụ: HPV, Cúm, Viêm gan B)"
+                class="form-control form-control-lg rounded-pill"
+                placeholder="🔍 Tìm kiếm bài viết (VD: HPV, Cúm, Viêm gan B, Rotavirus...)"
                 id="articleSearchInput"
-                style="text-indent: 10px;"
+                autocomplete="off"
               />
-              <img
-                class="position-absolute top-50 translate-middle-y"
-                src="Assets/Icons/search.png"
-                alt="Search"
-                style="width: 30px; right: 10px; opacity: 0.6;"
-              />
+              <div id="searchSuggestions" class="search-suggestions-modern" style="display: none;"></div>
             </div>
+            <div id="searchResultCount" class="text-center mt-3" style="font-size: 14px; color: #6c757d; display: none;"></div>
           </div>
         </div>
       </section>
 
-      <section class="row justify-content-center" id="noResultsMessage" style="display: none;">
-          <div class="col-lg-8 text-center py-5 bg-light rounded shadow-sm">
-              <h3 class="text-secondary">Không tìm thấy bài viết nào.</h3>
-              <p class="text-muted">Vui lòng thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác.</p>
-              <img src="Assets/Icons/no-result.png" alt="Không tìm thấy" style="width: 80px; opacity: 0.6; margin-top: 10px;">
-          </div>
+      <!-- No Results Message -->
+      <section id="noResultsMessage" style="display: none;">
+        <div class="alert alert-warning text-center py-5 mx-auto" style="max-width: 600px;">
+          <h3 class="mb-3">🔍 Không tìm thấy bài viết nào</h3>
+          <p class="mb-3">Vui lòng thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác.</p>
+          <button class="btn btn-primary" onclick="document.getElementById('articleSearchInput').value=''; document.getElementById('articleSearchInput').focus();">
+            Xóa tìm kiếm
+          </button>
+        </div>
       </section>
 
-      <section class="article-list-section category-content" id="nhi">
-        <div class="row g-4 article-container">
-          <div class="col-lg-8 article-item" data-keywords="Lịch tiêm, trẻ 5 tuổi, bảo vệ, toàn diện">
-            <div class="large-article-card">
-              <img
-                src="Assets/Images/test1.jpg"
-                alt="Lịch tiêm chủng cho trẻ em"
-                class="article-img-large"
-              />
-              <div class="article-overlay-content">
-                <h2 class="article-title-large">
-                  Lịch tiêm chủng quan trọng nhất cho trẻ dưới 5 tuổi: Đảm bảo con bạn được bảo vệ toàn diện
-                </h2>
+      <!-- Content for "Nhi" Category -->
+      <section class="category-content" id="nhi">
+        <!-- Featured Article -->
+        <div class="featured-article mb-5">
+          <article class="article-card-featured article-item" data-keywords="Lịch tiêm, trẻ 5 tuổi, bảo vệ, toàn diện">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <div class="featured-image-wrapper">
+                  <img
+                    src="Assets/Images/test1.jpg"
+                    alt="Lịch tiêm chủng cho trẻ em"
+                    class="img-fluid"
+                    loading="lazy"
+                  />
+                  <span class="featured-badge">📌 Bài viết nổi bật</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="featured-content">
+                  <div class="article-meta mb-3">
+                    <span class="badge bg-primary me-2">💉 Nhi</span>
+                    <span class="text-muted"><i class="bi bi-clock"></i> 5 phút đọc</span>
+                  </div>
+                  <h2 class="article-title-featured mb-3">
+                    Lịch tiêm chủng quan trọng nhất cho trẻ dưới 5 tuổi: Đảm bảo con bạn được bảo vệ toàn diện
+                  </h2>
+                  <p class="article-excerpt">
+                    Tìm hiểu chi tiết về lịch tiêm chủng đầy đủ và khoa học cho trẻ em từ sơ sinh đến 5 tuổi. 
+                    Hướng dẫn từng mũi tiêm, thời gian phù hợp và những lưu ý quan trọng mà cha mẹ cần biết.
+                  </p>
+                  <a href="bai-viet-chi-tiet.html?slug=lich-tiem-chung-tre-5-tuoi" class="btn btn-primary btn-read-more">
+                    Đọc tiếp <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
               </div>
             </div>
+          </article>
+        </div>
+
+        <!-- Related Articles Grid -->
+        <div class="row g-4">
+          <div class="col-12 mb-3">
+            <h3 class="section-subtitle">
+              <span class="subtitle-line"></span>
+              📚 Bài viết liên quan
+              <span class="subtitle-line"></span>
+            </h3>
           </div>
 
-          <div class="col-lg-4">
-            <div class="small-article-list">
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-6-trong-1" class="small-article-item article-item" data-keywords="Hexaxim, Infanrix Hexa, 6 trong 1">
-                <img src="Assets/Images/test1.jpg" alt="Vắc xin 6 trong 1" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Vắc xin 6 trong 1: Nên tiêm Hexaxim hay Infanrix Hexa cho bé?
-                  </p>
+          <div class="col-lg-4 col-md-6">
+            <article class="article-card article-item" data-keywords="Hexaxim, Infanrix Hexa, 6 trong 1">
+              <div class="article-image-wrapper">
+                <img src="Assets/Images/test1.jpg" alt="Vắc xin 6 trong 1" class="img-fluid" loading="lazy" />
+                <div class="article-category-badge">💉 Vắc xin</div>
+              </div>
+              <div class="article-body">
+                <div class="article-meta-small mb-2">
+                  <span class="text-muted"><i class="bi bi-calendar"></i> 28/10/2025</span>
+                  <span class="text-muted ms-3"><i class="bi bi-eye"></i> 1.2K lượt xem</span>
                 </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=sot-xuat-huyet-tre-em" class="small-article-item article-item" data-keywords="Sốt xuất huyết, trẻ em, phòng ngừa">
-                <img src="Assets/Images/test1.jpg" alt="Sốt xuất huyết ở trẻ" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Triệu chứng sốt xuất huyết ở trẻ em và cách phòng ngừa tối ưu
-                  </p>
+                <h3 class="article-title-medium mb-2">
+                  Vắc xin 6 trong 1: Nên tiêm Hexaxim hay Infanrix Hexa cho bé?
+                </h3>
+                <p class="article-description">
+                  So sánh chi tiết hai loại vắc xin 6 trong 1 phổ biến nhất hiện nay và tư vấn lựa chọn phù hợp...
+                </p>
+                <a href="bai-viet-chi-tiet.html?slug=vac-xin-6-trong-1" class="article-link">
+                  Xem chi tiết →
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <article class="article-card article-item" data-keywords="Sốt xuất huyết, trẻ em, phòng ngừa">
+              <div class="article-image-wrapper">
+                <img src="Assets/Images/test1.jpg" alt="Sốt xuất huyết" class="img-fluid" loading="lazy" />
+                <div class="article-category-badge">⚠️ Phòng bệnh</div>
+              </div>
+              <div class="article-body">
+                <div class="article-meta-small mb-2">
+                  <span class="text-muted"><i class="bi bi-calendar"></i> 27/10/2025</span>
+                  <span class="text-muted ms-3"><i class="bi bi-eye"></i> 856 lượt xem</span>
                 </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=lich-uong-rotavirus" class="small-article-item article-item" data-keywords="Rotavirus, uống vắc xin">
-                <img src="Assets/Images/test1.jpg" alt="Vắc xin Rotavirus" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Lịch uống vắc xin Rotavirus và những lưu ý khi cho trẻ uống
-                  </p>
+                <h3 class="article-title-medium mb-2">
+                  Triệu chứng sốt xuất huyết ở trẻ em và cách phòng ngừa tối ưu
+                </h3>
+                <p class="article-description">
+                  Nhận biết sớm các dấu hiệu sốt xuất huyết ở trẻ em và biện pháp phòng ngừa hiệu quả nhất...
+                </p>
+                <a href="bai-viet-chi-tiet.html?slug=sot-xuat-huyet-tre-em" class="article-link">
+                  Xem chi tiết →
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <article class="article-card article-item" data-keywords="Rotavirus, uống vắc xin">
+              <div class="article-image-wrapper">
+                <img src="Assets/Images/test1.jpg" alt="Vắc xin Rotavirus" class="img-fluid" loading="lazy" />
+                <div class="article-category-badge">💊 Lịch tiêm</div>
+              </div>
+              <div class="article-body">
+                <div class="article-meta-small mb-2">
+                  <span class="text-muted"><i class="bi bi-calendar"></i> 26/10/2025</span>
+                  <span class="text-muted ms-3"><i class="bi bi-eye"></i> 645 lượt xem</span>
                 </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=phong-ngua-viem-mang-nao" class="small-article-item article-item" data-keywords="Viêm màng não, tiêm phòng">
-                <img src="Assets/Images/test1.jpg" alt="Viêm màng não" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Phòng ngừa viêm màng não ở trẻ: Các mũi tiêm không thể bỏ qua
-                  </p>
+                <h3 class="article-title-medium mb-2">
+                  Lịch uống vắc xin Rotavirus và những lưu ý khi cho trẻ uống
+                </h3>
+                <p class="article-description">
+                  Hướng dẫn chi tiết về liều lượng, thời gian uống và những điều cần chú ý khi tiêm Rotavirus...
+                </p>
+                <a href="bai-viet-chi-tiet.html?slug=lich-uong-rotavirus" class="article-link">
+                  Xem chi tiết →
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <article class="article-card article-item" data-keywords="Viêm màng não, tiêm phòng">
+              <div class="article-image-wrapper">
+                <img src="Assets/Images/test1.jpg" alt="Viêm màng não" class="img-fluid" loading="lazy" />
+                <div class="article-category-badge">🛡️ Bảo vệ</div>
+              </div>
+              <div class="article-body">
+                <div class="article-meta-small mb-2">
+                  <span class="text-muted"><i class="bi bi-calendar"></i> 25/10/2025</span>
+                  <span class="text-muted ms-3"><i class="bi bi-eye"></i> 923 lượt xem</span>
                 </div>
-              </a>
-            </div>
+                <h3 class="article-title-medium mb-2">
+                  Phòng ngừa viêm màng não ở trẻ: Các mũi tiêm không thể bỏ qua
+                </h3>
+                <p class="article-description">
+                  Tầm quan trọng của việc tiêm phòng viêm màng não và lịch tiêm đầy đủ cho trẻ em...
+                </p>
+                <a href="bai-viet-chi-tiet.html?slug=phong-ngua-viem-mang-nao" class="article-link">
+                  Xem chi tiết →
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <article class="article-card article-item" data-keywords="HPV, phòng ung thư">
+              <div class="article-image-wrapper">
+                <img src="Assets/Images/test1.jpg" alt="Vắc xin HPV" class="img-fluid" loading="lazy" />
+                <div class="article-category-badge">🎗️ Ung thư</div>
+              </div>
+              <div class="article-body">
+                <div class="article-meta-small mb-2">
+                  <span class="text-muted"><i class="bi bi-calendar"></i> 24/10/2025</span>
+                  <span class="text-muted ms-3"><i class="bi bi-eye"></i> 1.5K lượt xem</span>
+                </div>
+                <h3 class="article-title-medium mb-2">
+                  Vắc xin HPV: Phòng ngừa ung thư cổ tử cung từ sớm
+                </h3>
+                <p class="article-description">
+                  Tại sao nên tiêm vắc xin HPV cho trẻ em và độ tuổi phù hợp nhất để tiêm phòng...
+                </p>
+                <a href="bai-viet-chi-tiet.html?slug=vac-xin-hpv" class="article-link">
+                  Xem chi tiết →
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <article class="article-card article-item" data-keywords="Thủy đậu, lây lan">
+              <div class="article-image-wrapper">
+                <img src="Assets/Images/test1.jpg" alt="Thủy đậu" class="img-fluid" loading="lazy" />
+                <div class="article-category-badge">🌡️ Bệnh mùa</div>
+              </div>
+              <div class="article-body">
+                <div class="article-meta-small mb-2">
+                  <span class="text-muted"><i class="bi bi-calendar"></i> 23/10/2025</span>
+                  <span class="text-muted ms-3"><i class="bi bi-eye"></i> 778 lượt xem</span>
+                </div>
+                <h3 class="article-title-medium mb-2">
+                  Thủy đậu ở trẻ em: Triệu chứng và cách điều trị hiệu quả
+                </h3>
+                <p class="article-description">
+                  Tìm hiểu về bệnh thủy đậu, cách nhận biết và điều trị đúng cách để tránh biến chứng...
+                </p>
+                <a href="bai-viet-chi-tiet.html?slug=thuy-dau-tre-em" class="article-link">
+                  Xem chi tiết →
+                </a>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="article-list-section category-content d-none" id="thanh-thieu-nien">
-        <div class="row g-4 article-container">
-          <div class="col-lg-8 article-item" data-keywords="HPV, nam, nữ, bảo vệ, ung thư">
-            <div class="large-article-card">
-              <img
-                src="Assets/Images/thanhthieunien.jpg"
-                alt="Tiêm HPV cho nam và nữ"
-                class="article-img-large"
-              />
-              <div class="article-overlay-content">
-                <h2 class="article-title-large">
-                  Vì sao Vắc xin HPV là "tấm khiên" bảo vệ bắt buộc cho thanh thiếu niên cả nam và nữ?
-                </h2>
+      <!-- Content for "Thanh thiếu niên" Category -->
+      <section class="category-content d-none" id="thanh-thieu-nien">
+        <div class="featured-article mb-5">
+          <article class="article-card-featured article-item" data-keywords="HPV, nam, nữ, bảo vệ, ung thư">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <div class="featured-image-wrapper">
+                  <img src="Assets/Images/thanhthieunien.jpg" alt="Tiêm HPV" class="img-fluid" loading="lazy" />
+                  <span class="featured-badge">📌 Bài viết nổi bật</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="featured-content">
+                  <div class="article-meta mb-3">
+                    <span class="badge bg-success me-2">👨‍🎓 Thanh thiếu niên</span>
+                    <span class="text-muted"><i class="bi bi-clock"></i> 7 phút đọc</span>
+                  </div>
+                  <h2 class="article-title-featured mb-3">
+                    Vì sao Vắc xin HPV là "tấm khiên" bảo vệ bắt buộc cho thanh thiếu niên cả nam và nữ?
+                  </h2>
+                  <p class="article-excerpt">
+                    Tìm hiểu tầm quan trọng của vaccine HPV trong việc phòng ngừa ung thư và các bệnh lý nguy hiểm. 
+                    Độ tuổi vàng để tiêm và lợi ích lâu dài cho sức khỏe.
+                  </p>
+                  <a href="bai-viet-chi-tiet.html?slug=vaccine-hpv-thanh-thieu-nien" class="btn btn-success btn-read-more">
+                    Đọc tiếp <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="small-article-list">
-              <a href="bai-viet-chi-tiet.html?slug=tiem-nhac-dai-thi" class="small-article-item article-item" data-keywords="Bạch hầu, Ho gà, Uốn ván, tiêm nhắc, dậy thì">
-                <img src="Assets/Images/thanhthieunien_nho1.jpg" alt="Vắc xin uốn ván" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Hoàn thành các mũi tiêm nhắc: Bạch hầu, Ho gà, Uốn ván cho độ tuổi dậy thì
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-cum-sinh-vien" class="small-article-item article-item" data-keywords="Cúm, học sinh, sinh viên, hàng năm">
-                <img src="Assets/Images/thanhthieunien_nho2.jpg" alt="Vắc xin Cúm" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Tiêm Vắc xin Cúm hàng năm: Cần thiết cho học sinh, sinh viên mùa tựu trường
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=viem-mang-nao-ky-tuc-xa" class="small-article-item article-item" data-keywords="Viêm màng não mô cầu, ký túc xá">
-                <img src="Assets/Images/thanhthieunien_nho3.jpg" alt="Viêm màng não mô cầu" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Nguy cơ bùng phát Viêm màng não mô cầu ở ký túc xá và cách phòng ngừa
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=kiem-tra-miem-dich-truoc-ket-hon" class="small-article-item article-item" data-keywords="Sởi, Quai bị, Rubella, miễn dịch, kết hôn">
-                <img src="Assets/Images/thanhthieunien_nho4.jpg" alt="Vắc xin sởi quai bị rubella" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Kiểm tra miễn dịch Sởi - Quai bị - Rubella trước khi kết hôn (nếu có)
-                  </p>
-                </div>
-              </a>
-            </div>
-          </div>
+          </article>
         </div>
-      </section>
-      
-      <section class="article-list-section category-content d-none" id="du-lich">
-        <div class="row g-4 article-container">
-          <div class="col-lg-8 article-item" data-keywords="Tiêm phòng, du khách, châu Á, châu Phi">
-            <div class="large-article-card">
-              <img
-                src="Assets/Images/dulich.jpg"
-                alt="Vắc xin khi đi du lịch"
-                class="article-img-large"
-              />
-              <div class="article-overlay-content">
-                <h2 class="article-title-large">
-                  Tiêm phòng trước chuyến đi: Danh sách vắc xin cần thiết cho du khách đến các nước châu Á và châu Phi
-                </h2>
+
+        <div class="row g-4">
+          <div class="col-12 mb-3">
+            <h3 class="section-subtitle">
+              <span class="subtitle-line"></span>
+              📚 Bài viết liên quan
+              <span class="subtitle-line"></span>
+            </h3>
+          </div>
+          <div class="col-lg-6">
+            <article class="article-card article-item" data-keywords="Bạch hầu, Ho gà, Uốn ván">
+              <div class="article-image-wrapper">
+                <img src="Assets/Images/thanhthieunien_nho1.jpg" alt="Vắc xin" class="img-fluid" loading="lazy" />
+                <div class="article-category-badge">💉 Tiêm nhắc</div>
               </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="small-article-list">
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-thuong-han" class="small-article-item article-item" data-keywords="Thương hàn, ẩm thực đường phố">
-                <img src="Assets/Images/dulich_nho1.jpg" alt="Vắc xin Thương hàn" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Vắc xin Thương hàn: Bảo vệ hệ tiêu hóa khi khám phá ẩm thực đường phố
-                  </p>
+              <div class="article-body">
+                <div class="article-meta-small mb-2">
+                  <span class="text-muted"><i class="bi bi-calendar"></i> 28/10/2025</span>
                 </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=viem-gan-a-va-b-du-lich" class="small-article-item article-item" data-keywords="Viêm gan A, Viêm gan B, mối đe dọa">
-                <img src="Assets/Images/dulich_nho2.jpg" alt="Vắc xin Viêm gan A" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Lịch tiêm Viêm gan A và B: Hai mối đe dọa lớn nhất khi du lịch
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=quy-dinh-sot-vang-da" class="small-article-item article-item" data-keywords="Sốt vàng da, Nam Mỹ, châu Phi">
-                <img src="Assets/Images/dulich_nho3.jpg" alt="Vắc xin Sốt vàng" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Quy định tiêm Vắc xin Sốt vàng da: Cần thiết khi đến các nước Nam Mỹ và Phi
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-phong-dai-du-lich" class="small-article-item article-item" data-keywords="Vắc xin Dại, nông thôn">
-                <img src="Assets/Images/dulich_nho4.jpg" alt="Vắc xin Dại" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Vắc xin phòng Dại cho những chuyến đi dài ngày đến vùng nông thôn
-                  </p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="article-list-section category-content d-none" id="tien-hon-nhan">
-        <div class="row g-4 article-container">
-          <div class="col-lg-8 article-item" data-keywords="sinh con, vợ chồng, trước cưới">
-            <div class="large-article-card">
-              <img
-                src="Assets/Images/tienhonnhan.jpg"
-                alt="Tiêm chủng tiền hôn nhân"
-                class="article-img-large"
-              />
-              <div class="article-overlay-content">
-                <h2 class="article-title-large">
-                  Lập kế hoạch sinh con khỏe mạnh: Danh sách Vắc xin bắt buộc cho cả vợ và chồng trước khi cưới
-                </h2>
+                <h3 class="article-title-medium mb-2">
+                  Hoàn thành các mũi tiêm nhắc: Bạch hầu, Ho gà, Uốn ván cho độ tuổi dậy thì
+                </h3>
+                <p class="article-description">
+                  Hướng dẫn về các mũi tiêm nhắc cần thiết cho thanh thiếu niên...
+                </p>
+                <a href="bai-viet-chi-tiet.html" class="article-link">Xem chi tiết →</a>
               </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="small-article-list">
-              <a href="bai-viet-chi-tiet.html?slug=tiem-phong-rubella" class="small-article-item article-item" data-keywords="Rubella, Dị tật thai nhi, mang thai">
-                <img src="Assets/Images/tienhonnhan_nho1.jpg" alt="Vắc xin Rubella" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Nguy cơ Dị tật thai nhi: Vì sao phụ nữ phải tiêm phòng Rubella trước khi mang thai?
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-cum-truoc-thai-ky" class="small-article-item article-item" data-keywords="Cúm, thai kỳ">
-                <img src="Assets/Images/tienhonnhan_nho2.jpg" alt="Vắc xin Cúm trước thai kỳ" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Tiêm Vắc xin Cúm trước khi mang thai giúp bảo vệ cả mẹ và bé suốt thai kỳ
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=thuy-dau-khi-mang-thai" class="small-article-item article-item" data-keywords="Thủy đậu, mang thai, lịch tiêm">
-                <img src="Assets/Images/tienhonnhan_nho3.jpg" alt="Vắc xin Thủy đậu" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Thủy đậu khi mang thai: Lời cảnh báo và lịch tiêm phòng cần thiết
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=xet-nghiem-viem-gan-b" class="small-article-item article-item" data-keywords="Viêm gan B, xét nghiệm">
-                <img src="Assets/Images/tienhonnhan_nho4.jpg" alt="Xét nghiệm Viêm gan B" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Viêm gan B: Tầm quan trọng của việc xét nghiệm và tiêm phòng cho cặp đôi
-                  </p>
-                </div>
-              </a>
-            </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="article-list-section category-content d-none" id="nguoi-truong-thanh">
-        <div class="row g-4 article-container">
-          <div class="col-lg-8 article-item" data-keywords="10 mũi, quan trọng, sức khỏe tối ưu">
-            <div class="large-article-card">
-              <img
-                src="Assets/Images/nguoitruongthanh.jpg"
-                alt="Các loại vắc xin cho người lớn"
-                class="article-img-large"
-              />
-              <div class="article-overlay-content">
-                <h2 class="article-title-large">
-                  10 mũi Vắc xin quan trọng mà người trưởng thành không nên bỏ qua để duy trì sức khỏe tối ưu
-                </h2>
-              </div>
-            </div>
+      <!-- Content for "Du lịch" Category -->
+      <section class="category-content d-none" id="du-lich">
+        <div class="alert alert-info text-center py-5">
+          <div class="mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </svg>
           </div>
-
-          <div class="col-lg-4">
-            <div class="small-article-list">
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-phe-cau-cum-nguoi-lon" class="small-article-item article-item" data-keywords="Phế cầu, Cúm, hô hấp, 50 tuổi">
-                <img src="Assets/Images/nguoitruongthanh_nho1.jpg" alt="Vắc xin Phế cầu" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Bảo vệ hệ hô hấp: Vắc xin Phế cầu và Cúm cho người trên 50 tuổi
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-zona-than-kinh" class="small-article-item article-item" data-keywords="Zona, thần kinh, người lớn">
-                <img src="Assets/Images/nguoitruongthanh_nho2.jpg" alt="Vắc xin Zona" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Vắc xin Zona thần kinh: Khi nào người lớn cần tiêm và hiệu quả của nó
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=tam-soat-viem-gan-b" class="small-article-item article-item" data-keywords="Viêm gan B, miễn dịch, tầm soát">
-                <img src="Assets/Images/nguoitruongthanh_nho3.jpg" alt="Vắc xin Viêm gan" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Tầm soát và tiêm Vắc xin Viêm gan B cho người chưa có miễn dịch
-                  </p>
-                </div>
-              </a>
-              <a href="bai-viet-chi-tiet.html?slug=vac-xin-hpv-cho-nguoi-lon" class="small-article-item article-item" data-keywords="HPV, ung thư cổ tử cung">
-                <img src="Assets/Images/nguoitruongthanh_nho4.jpg" alt="Vắc xin Ung thư" class="article-img-small"/>
-                <div class="article-text-content">
-                  <p class="article-title-small">
-                    Vắc xin HPV cho người lớn: Ngăn ngừa ung thư cổ tử cung và các bệnh khác
-                  </p>
-                </div>
-              </a>
-            </div>
-          </div>
+          <h4 class="mb-3">📌 Nội dung đang được cập nhật...</h4>
+          <p class="text-muted">Các bài viết về vaccine du lịch sẽ được cập nhật trong thời gian sớm nhất.</p>
         </div>
       </section>
-      
+
+      <!-- Content for "Tiền hôn nhân" Category -->
+      <section class="category-content d-none" id="tien-hon-nhan">
+        <div class="alert alert-info text-center py-5">
+          <div class="mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </svg>
+          </div>
+          <h4 class="mb-3">📌 Nội dung đang được cập nhật...</h4>
+          <p class="text-muted">Các bài viết về vaccine tiền hôn nhân sẽ được cập nhật trong thời gian sớm nhất.</p>
+        </div>
+      </section>
+
+      <!-- Content for "Người trưởng thành" Category -->
+      <section class="category-content d-none" id="nguoi-truong-thanh">
+        <div class="alert alert-info text-center py-5">
+          <div class="mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </svg>
+          </div>
+          <h4 class="mb-3">📌 Nội dung đang được cập nhật...</h4>
+          <p class="text-muted">Các bài viết về vaccine người trưởng thành sẽ được cập nhật trong thời gian sớm nhất.</p>
+        </div>
+      </section>
+
     </main>
+    <!-- END Main Content -->
 
-    <footer class="site-footer py-0">
+    <!-- Footer -->
+    <footer class="site-footer py-4">
       <div class="container">
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-lg-12">
-            <div class="d-flex align-items-center justify-content-center">
-              <div
-                style="
-                  height: 130px;
-                  width: fit-content;
-                  background-color: white;
-                "
-              >
-                <img
-                  src="Assets/Images/logo.png"
-                  alt="Hệ thống tiêm chủng TPVAX"
-                  style="height: 100%"
-                  class="img-fluid"
-                />
+            <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
+              <div style="height: 130px; width: fit-content; background-color: white;">
+                <img src="Assets/Images/logo.png" alt="TPVAX" style="height: 100%" class="img-fluid" loading="lazy" />
               </div>
               <div class="logo-text ps-4">
-                <p class="display-4 mb-1">
-                  <strong>Cổng tiêm chủng vắc xin</strong>
-                </p>
+                <p class="display-4 mb-1"><strong>Cổng tiêm chủng vắc xin</strong></p>
                 <p class="display-6 mb-0">Chất lượng hàng đầu Việt Nam</p>
               </div>
             </div>
           </div>
 
-          <ul
-            class="col-lg-12 d-flex flex-row justify-content-around py-3"
-            style="font-size: 25px"
-          >
-            <li
-              class="d-flex align-items-center justify-content-center text-warning"
-            >
-              <img
-                src="Assets/Icons/contacs.png"
-                alt="Liên hệ"
-                style="width: 30px"
-              />
+          <ul class="col-lg-12 d-flex flex-row justify-content-around py-3 flex-wrap gap-3" style="font-size: 20px; list-style: none;">
+            <li class="d-flex align-items-center justify-content-center text-warning">
+              <img src="Assets/Icons/contacs.png" alt="Liên hệ" style="width: 30px" loading="lazy" />
               <strong>Liên hệ</strong>
             </li>
-            <li
-              class="d-flex align-items-center justify-content-center text-warning"
-            >
-              <img
-                src="Assets/Icons/receiver.png"
-                alt="Hotline"
-                style="width: 30px"
-              />
+            <li class="d-flex align-items-center justify-content-center text-warning">
+              <img src="Assets/Icons/receiver.png" alt="Hotline" style="width: 30px" loading="lazy" />
               <strong>Hotline: 0975 088 626</strong>
             </li>
-            <li
-              class="d-flex align-items-center justify-content-center text-warning"
-            >
-              <img
-                src="Assets/Icons/location_7282031.png"
-                alt="Địa chỉ"
-                style="width: 30px"
-              />
-              <strong>140 Lê Trọng Tấn, Tân Phú, TP. Hồ Chí Minh</strong>
+            <li class="d-flex align-items-center justify-content-center text-warning">
+              <img src="Assets/Icons/location_7282031.png" alt="Địa chỉ" style="width: 30px" loading="lazy" />
+              <strong>140 Lê Trọng Tấn, Tân Phú, TP. HCM</strong>
             </li>
           </ul>
         </div>
 
         <div class="row">
-          <div class="col-12 company-details">
+          <div class="col-12 company-details text-center">
             <p class="fw-bold">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
-            <p>Email: cskh@tpvax.vn</p>
-            <p>Số điện thoại: 0975 088 626</p>
-            <p>Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
+            <p>Email: cskh@tpvax.vn | Điện thoại: 0975 088 626</p>
             <p>Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
-          </div>
-        </div>
-
-        <hr class="footer-hr" />
-
-        <div class="row">
-          <div
-            class="col-12 d-flex justify-content-between align-items-center footer-bottom-links"
-          >
-            <span>Giờ mở cửa : 7:30 - 17:00</span>
-            <div>
-              <a href="#">Chính sách bảo mật</a>
-              <a href="#">Khảo sát tiêm chủng</a>
-              <a href="#">Chính sách thanh toán</a>
-            </div>
           </div>
         </div>
       </div>
     </footer>
+    <!-- END Footer -->
+
+    <!-- Scripts -->
     <script src="Scripts/bootstrap.min.js"></script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const categoryLinks = document.querySelectorAll('.category-card-item');
-            const contentSections = document.querySelectorAll('.category-content');
-            const searchInput = document.getElementById('articleSearchInput');
-            const noResultsMessage = document.getElementById('noResultsMessage');
-
-            // --- CHỨC NĂNG 1: CHUYỂN ĐỔI DANH MỤC & DEEP LINKING ---
-            function switchCategory(targetId) {
-                // 1. Cập nhật URL Hash để hỗ trợ Deep Linking
-                if (window.location.hash !== '#' + targetId) {
-                     window.location.hash = targetId;
-                }
-                
-                // 2. Cập nhật trạng thái active của thẻ danh mục
-                categoryLinks.forEach(item => {
-                    item.classList.remove('active');
-                    if (item.getAttribute('data-target') === targetId) {
-                        item.classList.add('active');
-                    }
-                });
-
-                // 3. Ẩn/hiện khối nội dung
-                contentSections.forEach(section => {
-                    section.classList.add('d-none');
-                    if (section.id === targetId) {
-                        section.classList.remove('d-none');
-                    }
-                });
-
-                // 4. Reset thanh tìm kiếm khi chuyển danh mục và lọc lại
-                searchInput.value = '';
-                filterArticles(targetId, ''); 
+      // Modern Category & Search System
+      (function() {
+        'use strict';
+        
+        const elements = {
+          categoryLinks: document.querySelectorAll('.category-card-modern'),
+          contentSections: document.querySelectorAll('.category-content'),
+          searchInput: document.getElementById('articleSearchInput'),
+          searchSuggestions: document.getElementById('searchSuggestions'),
+          searchResultCount: document.getElementById('searchResultCount'),
+          noResultsMessage: document.getElementById('noResultsMessage'),
+          scrollToTopBtn: document.getElementById('scrollToTopBtn')
+        };
+        
+        let currentCategory = 'nhi';
+        let debounceTimer = null;
+        
+        // Switch category function
+        function switchCategory(targetId) {
+          currentCategory = targetId;
+          
+          // Update hash
+          if (history.pushState) {
+            history.pushState(null, null, '#' + targetId);
+          }
+          
+          // Update active category card
+          elements.categoryLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-target') === targetId) {
+              link.classList.add('active');
             }
-
-            categoryLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('data-target');
-                    switchCategory(targetId);
-                });
-            });
-
-            // --- CHỨC NĂNG 2: TÌM KIẾM/LỌC BÀI VIẾT VÀ BÁO CÁO KẾT QUẢ ---
-            function filterArticles(activeId, query) {
-                const activeContainer = document.getElementById(activeId);
-                if (!activeContainer) return;
-
-                const articles = activeContainer.querySelectorAll('.article-item');
-                const lowerCaseQuery = query.toLowerCase().trim();
-                let foundResults = 0;
-
-                articles.forEach(item => {
-                    // Lấy tiêu đề và từ khóa (giả định)
-                    const titleElement = item.querySelector('.article-title-large, .article-title-small');
-                    // Sử dụng data-keywords cho việc lọc
-                    const keywords = item.getAttribute('data-keywords') || '';
-                    const titleText = titleElement ? titleElement.textContent.toLowerCase() : '';
-                    
-                    const isVisible = 
-                        titleText.includes(lowerCaseQuery) || 
-                        keywords.toLowerCase().includes(lowerCaseQuery);
-
-                    // Xử lý ẩn/hiện dựa trên loại bài viết
-                    const parentCol = item.closest('.col-lg-8, .col-lg-4');
-
-                    if (item.closest('.small-article-list')) {
-                        // Bài viết nhỏ: Ẩn/hiện thẻ <a>
-                        item.style.display = isVisible ? 'flex' : 'none';
-                    } else {
-                        // Bài viết lớn: Ẩn/hiện cột Bootstrap chứa nó
-                        parentCol.style.display = isVisible ? 'block' : 'none';
-                    }
-
-                    // Đếm kết quả hiển thị
-                    if (isVisible) {
-                       foundResults++;
-                    }
-                });
-
-                // --- LOGIC HIỂN THỊ THÔNG BÁO KẾT QUẢ ---
-                // 1. Ẩn/hiện khối nội dung chính
-                activeContainer.style.display = (lowerCaseQuery === '' || foundResults > 0) ? 'block' : 'none';
-                
-                // 2. Hiển thị thông báo "Không tìm thấy" nếu query có và không có kết quả
-                if (lowerCaseQuery.length > 0 && foundResults === 0) {
-                    noResultsMessage.style.display = 'flex'; // Dùng flex để căn giữa
-                } else {
-                    noResultsMessage.style.display = 'none';
-                }
-
-                // Chú ý: Cần thêm logic kiểm tra xem tất cả bài viết nhỏ trong col-lg-4 có bị ẩn hết không 
-                // để ẩn luôn col-lg-4 (Đã được xử lý gián tiếp bằng foundResults)
+          });
+          
+          // Show/hide content sections
+          elements.contentSections.forEach(section => {
+            section.classList.add('d-none');
+            if (section.id === targetId) {
+              section.classList.remove('d-none');
             }
-
-            // Lắng nghe sự kiện gõ phím trên ô tìm kiếm
-            searchInput.addEventListener('keyup', function() {
-                const activeLink = document.querySelector('.category-card-item.active');
-                if (activeLink) {
-                    const activeId = activeLink.getAttribute('data-target');
-                    filterArticles(activeId, this.value);
-                }
-            });
-
-            // --- CHỨC NĂNG 3: KHỞI TẠO VÀ DEEP LINKING KHI TẢI TRANG ---
+          });
+          
+          // Reset search
+          elements.searchInput.value = '';
+          if (elements.searchSuggestions) elements.searchSuggestions.style.display = 'none';
+          if (elements.searchResultCount) elements.searchResultCount.style.display = 'none';
+          if (elements.noResultsMessage) elements.noResultsMessage.style.display = 'none';
+        }
+        
+        // Search & filter function
+        function filterArticles(query) {
+          const activeSection = document.getElementById(currentCategory);
+          if (!activeSection) return;
+          
+          const articles = activeSection.querySelectorAll('.article-item');
+          const lowerQuery = query.toLowerCase().trim();
+          let foundResults = 0;
+          
+          articles.forEach(item => {
+            const keywords = item.getAttribute('data-keywords') || '';
+            const titleEl = item.querySelector('.article-title-large, .article-title-small');
+            const title = titleEl ? titleEl.textContent.toLowerCase() : '';
             
-            // Xác định mục cần tải ban đầu (Ưu tiên Hash URL)
-            let initialTarget = document.querySelector('.category-card-item.active').getAttribute('data-target');
-            const urlHash = window.location.hash.substring(1); // Lấy giá trị hash (bỏ dấu #)
+            const isVisible = lowerQuery === '' || 
+                            title.includes(lowerQuery) || 
+                            keywords.toLowerCase().includes(lowerQuery);
             
-            if (urlHash) {
-                 // Kiểm tra xem hash có khớp với data-target nào không
-                 const hashLink = document.querySelector(`.category-card-item[data-target="${urlHash}"]`);
-                 if (hashLink) {
-                    initialTarget = urlHash;
-                 }
+            // Show/hide article
+            if (item.classList.contains('small-article-item')) {
+              item.style.display = isVisible ? 'flex' : 'none';
+            } else {
+              const parent = item.closest('.col-lg-8, .col-lg-4');
+              if (parent) parent.style.display = isVisible ? 'block' : 'none';
             }
-
-            // Thực hiện chuyển đổi danh mục ban đầu
-            switchCategory(initialTarget);
+            
+            if (isVisible) foundResults++;
+          });
+          
+          // Update result count
+          if (elements.searchResultCount && lowerQuery) {
+            elements.searchResultCount.innerHTML = `<span class="badge bg-primary">Tìm thấy ${foundResults} bài viết</span>`;
+            elements.searchResultCount.style.display = 'block';
+          } else if (elements.searchResultCount) {
+            elements.searchResultCount.style.display = 'none';
+          }
+          
+          // Show no results message
+          if (lowerQuery && foundResults === 0) {
+            activeSection.style.display = 'none';
+            if (elements.noResultsMessage) elements.noResultsMessage.style.display = 'block';
+          } else {
+            activeSection.style.display = 'block';
+            if (elements.noResultsMessage) elements.noResultsMessage.style.display = 'none';
+          }
+        }
+        
+        // Event listeners
+        elements.categoryLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            switchCategory(targetId);
+          });
         });
+        
+        if (elements.searchInput) {
+          elements.searchInput.addEventListener('keyup', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => filterArticles(this.value), 300);
+          });
+        }
+        
+        // Scroll to top
+        window.addEventListener('scroll', function() {
+          if (elements.scrollToTopBtn) {
+            elements.scrollToTopBtn.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
+          }
+        });
+        
+        if (elements.scrollToTopBtn) {
+          elements.scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+        
+        // Initialize
+        const hash = window.location.hash.substring(1);
+        if (hash && document.getElementById(hash)) {
+          switchCategory(hash);
+        } else {
+          switchCategory('nhi');
+        }
+        
+        console.log('✅ TPVAX Knowledge Page Initialized');
+      })();
     </script>
+
+    <!-- Modern CSS Styles -->
+    <style>
+      /* Category Cards Modern */
+      .category-card-modern {
+        display: block;
+        text-align: center;
+        padding: 20px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 3px solid transparent;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: #495057;
+      }
+      
+      .category-card-modern:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 119, 182, 0.2);
+        border-color: #0077b6;
+      }
+      
+      .category-card-modern.active {
+        background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+        color: white;
+        border-color: #f6b000;
+        box-shadow: 0 10px 30px rgba(0, 119, 182, 0.3);
+      }
+      
+      .category-card-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      .category-card-modern.active .category-card-icon-wrapper {
+        background: #f6b000;
+      }
+      
+      .category-card-icon-wrapper img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+      
+      .category-card-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      
+      .category-card-desc {
+        font-size: 13px;
+        margin-bottom: 0;
+        opacity: 0.9;
+      }
+      
+      /* Search Box Modern */
+      .search-box-modern input {
+        border: 2px solid #0077b6;
+        padding: 15px 25px;
+        font-size: 16px;
+      }
+      
+      .search-box-modern input:focus {
+        border-color: #f6b000;
+        box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.25);
+      }
+      
+      /* Article Cards */
+      .large-article-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      .large-article-card img {
+        transition: transform 0.3s ease;
+      }
+      
+      .large-article-card:hover img {
+        transform: scale(1.05);
+      }
+      
+      .article-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        padding: 30px;
+        color: white;
+      }
+      
+      .article-title-large {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0;
+      }
+      
+      .small-article-item {
+        display: flex;
+        gap: 15px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+      }
+      
+      .small-article-item:hover {
+        transform: translateX(5px);
+      }
+      
+      .article-img-small {
+        width: 120px;
+        height: 80px;
+        object-fit: cover;
+      }
+      
+      .article-title-small {
+        font-size: 14px;
+        font-weight: 600;
+        color: #212529;
+      }
+
+      /* Featured Article Card */
+      .featured-article {
+        margin-bottom: 3rem;
+      }
+
+      .article-card-featured {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .article-card-featured:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0, 119, 182, 0.15);
+      }
+
+      .featured-image-wrapper {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        min-height: 400px;
+      }
+
+      .featured-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .article-card-featured:hover .featured-image-wrapper img {
+        transform: scale(1.08);
+      }
+
+      .featured-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #f6b000, #ff8c00);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(246, 176, 0, 0.3);
+        z-index: 2;
+      }
+
+      .featured-content {
+        padding: 40px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .article-meta .badge {
+        padding: 8px 15px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .article-title-featured {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.3;
+        color: #212529;
+        margin-bottom: 15px;
+      }
+
+      .article-excerpt {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #6c757d;
+        margin-bottom: 25px;
+      }
+
+      .btn-read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 30px;
+        font-weight: 600;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-read-more:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+      }
+
+      /* Section Subtitle */
+      .section-subtitle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #0077b6;
+        margin-bottom: 10px;
+      }
+
+      .subtitle-line {
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(to right, transparent, #0077b6, transparent);
+        max-width: 200px;
+      }
+
+      /* Article Card */
+      .article-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e9ecef;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .article-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(0, 119, 182, 0.12);
+        border-color: #0077b6;
+      }
+
+      .article-image-wrapper {
+        position: relative;
+        overflow: hidden;
+        height: 220px;
+      }
+
+      .article-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+
+      .article-card:hover .article-image-wrapper img {
+        transform: scale(1.1);
+      }
+
+      .article-category-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(0, 119, 182, 0.95);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .article-body {
+        padding: 25px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .article-meta-small {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 13px;
+      }
+
+      .article-meta-small i {
+        margin-right: 4px;
+      }
+
+      .article-title-medium {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.4;
+        color: #212529;
+        margin-bottom: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .article-description {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #6c757d;
+        margin-bottom: 15px;
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .article-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: #0077b6;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .article-link:hover {
+        color: #f6b000;
+        transform: translateX(5px);
+      }
+      
+      .article-img-small {
+        width: 120px;
+        height: 80px;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      
+      .article-title-small {
+        font-size: 15px;
+        font-weight: 600;
+        color: #212529;
+        line-height: 1.4;
+      }
+      
+      .small-article-item:hover .article-title-small {
+        color: #0077b6;
+      }
+      
+      /* Responsive */
+      @media (max-width: 768px) {
+        .category-card-title {
+          font-size: 14px;
+        }
+        
+        .category-card-desc {
+          font-size: 11px;
+        }
+        
+        .category-card-icon-wrapper {
+          width: 60px;
+          height: 60px;
+        }
+        
+        .category-card-icon-wrapper img {
+          width: 35px;
+          height: 35px;
+        }
+        
+        .article-title-large {
+          font-size: 18px;
+        }
+      }
+      
+      /* Print styles */
+      @media print {
+        .toolbar-section, .main-navbar, .breadcrumb, 
+        .scroll-to-top-btn, .floating-contact {
+          display: none !important;
+        }
+      }
+    </style>
   </body>
 </html>
