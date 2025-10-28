@@ -199,6 +199,952 @@
           height: 28px;
         }
       }
+      
+      /* ============================================
+         PHẦN 1: MÙA NÀY CẦN TIÊM GÌ? 
+         Thiết kế: 2-COLUMN LAYOUT (Filter bên trái + Chi tiết bên phải)
+         ============================================ */
+      .seasonal-vaccine-section {
+        background: linear-gradient(180deg, #f1f9ff 0%, #ffffff 100%);
+        padding: 80px 0;
+        position: relative;
+      }
+      
+      .seasonal-season-title {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      
+      .seasonal-season-title h2 {
+        color: #00457a;
+        font-size: 34px;
+        font-weight: 800;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      .seasonal-season-title p {
+        color: #4c5a6b;
+        font-size: 17px;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      
+      /* Filter Sidebar */
+      .seasonal-filter-sidebar {
+        background: white;
+        border-radius: 20px;
+        padding: 30px 20px;
+        box-shadow: 0 5px 25px rgba(0, 119, 182, 0.1);
+        border: 2px solid #b1ecff;
+        position: sticky;
+        top: 100px;
+      }
+      
+      .seasonal-filter-title {
+        color: #00457a;
+        font-size: 20px;
+        font-weight: 800;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #0077b6;
+        text-transform: uppercase;
+      }
+      
+      .seasonal-filter-item {
+        padding: 15px 18px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #f8f9fa;
+      }
+      
+      .seasonal-filter-item:hover {
+        background: #e3f2fd;
+        border-color: #b1ecff;
+        transform: translateX(5px);
+      }
+      
+      .seasonal-filter-item.active {
+        background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+        color: white;
+        border-color: #0077b6;
+        box-shadow: 0 5px 20px rgba(0, 119, 182, 0.3);
+      }
+      
+      .seasonal-filter-item .filter-icon {
+        font-size: 28px;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-radius: 10px;
+        flex-shrink: 0;
+      }
+      
+      .seasonal-filter-item.active .filter-icon {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      
+      .seasonal-filter-item .filter-label {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+      
+      /* Content Area */
+      .seasonal-content-area {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 5px 25px rgba(0, 119, 182, 0.1);
+        border: 2px solid #b1ecff;
+      }
+      
+      .disease-info-section {
+        margin-bottom: 40px;
+        padding-bottom: 40px;
+        border-bottom: 2px dashed #e3f2fd;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .disease-info-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      
+      .disease-title {
+        color: #00457a;
+        font-size: 28px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .disease-title-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+      }
+      
+      .disease-description {
+        color: #4c5a6b;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 25px;
+      }
+      
+      .disease-symptoms {
+        background: #fff3e0;
+        border-left: 5px solid #f6b000;
+        padding: 20px 25px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+      }
+      
+      .disease-symptoms h4 {
+        color: #e65100;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+      
+      .disease-symptoms ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .disease-symptoms li {
+        color: #4c5a6b;
+        font-size: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .disease-symptoms li::before {
+        content: attr(data-icon);
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      
+      /* Vaccine Recommendation */
+      .vaccine-recommendation {
+        background: linear-gradient(135deg, #e3f2fd 0%, #f1f9ff 100%);
+        border-radius: 15px;
+        padding: 25px;
+        border: 2px solid #0077b6;
+      }
+      
+      .vaccine-rec-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      
+      .vaccine-rec-icon {
+        width: 50px;
+        height: 50px;
+        background: white;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: 0 3px 10px rgba(0, 119, 182, 0.2);
+      }
+      
+      .vaccine-rec-title {
+        color: #0077b6;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+      }
+      
+      .vaccine-product-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+      }
+      
+      .vaccine-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 119, 182, 0.2);
+      }
+      
+      .vaccine-product-image {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+      
+      .vaccine-product-info {
+        flex: 1;
+      }
+      
+      .vaccine-product-name {
+        color: #00457a;
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      
+      .vaccine-product-desc {
+        color: #4c5a6b;
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      
+      .vaccine-product-price {
+        color: #f6b000;
+        font-size: 24px;
+        font-weight: 800;
+      }
+      
+      .vaccine-product-price small {
+        font-size: 14px;
+        color: #6c757d;
+      }
+      
+      .vaccine-product-action {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .vaccine-btn {
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      
+      .vaccine-btn-primary {
+        background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 119, 182, 0.3);
+      }
+      
+      .vaccine-btn-primary:hover {
+        background: linear-gradient(135deg, #00457a 0%, #0a2157 100%);
+        transform: scale(1.05);
+        color: white;
+      }
+      
+      .vaccine-btn-secondary {
+        background: white;
+        color: #0077b6;
+        border: 2px solid #0077b6;
+      }
+      
+      .vaccine-btn-secondary:hover {
+        background: #0077b6;
+        color: white;
+      }
+      
+      /* ============================================
+         PHẦN 2: GÓI VẮC XIN BẢO VỆ TOÀN DIỆN
+         Thiết kế: 2-COLUMN LAYOUT (Filter bên trái + Danh sách gói bên phải)
+         ============================================ */
+      .vaccine-package-section {
+        background: #ffffff;
+        padding: 80px 0;
+        position: relative;
+      }
+      
+      .package-section-title {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      
+      .package-section-title h2 {
+        color: #00457a;
+        font-size: 34px;
+        font-weight: 800;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      .package-section-title p {
+        color: #4c5a6b;
+        font-size: 17px;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      
+      /* Package Filter Sidebar */
+      .package-filter-sidebar {
+        background: white;
+        border-radius: 20px;
+        padding: 30px 20px;
+        box-shadow: 0 5px 25px rgba(0, 119, 182, 0.1);
+        border: 2px solid #b1ecff;
+        position: sticky;
+        top: 100px;
+      }
+      
+      .package-filter-category {
+        margin-bottom: 35px;
+      }
+      
+      .package-filter-category:last-child {
+        margin-bottom: 0;
+      }
+      
+      .package-filter-category-title {
+        color: #00457a;
+        font-size: 16px;
+        font-weight: 800;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .package-filter-category-icon {
+        font-size: 20px;
+      }
+      
+      .package-filter-item {
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        background: #f8f9fa;
+        font-size: 14px;
+        font-weight: 600;
+        color: #4c5a6b;
+      }
+      
+      .package-filter-item:hover {
+        background: #e3f2fd;
+        border-color: #b1ecff;
+        transform: translateX(5px);
+        color: #0077b6;
+      }
+      
+      .package-filter-item.active {
+        background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+        color: white;
+        border-color: #0077b6;
+        box-shadow: 0 3px 15px rgba(0, 119, 182, 0.3);
+      }
+      
+      /* Package Commitment Box */
+      .package-commitment {
+        background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+        border-radius: 20px;
+        padding: 35px 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 30px rgba(0, 69, 122, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .package-commitment::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+      }
+      
+      .commitment-item {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .commitment-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 3px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+      
+      .commitment-item:hover .commitment-icon {
+        transform: scale(1.1) rotate(10deg);
+        background: rgba(255, 255, 255, 0.3);
+        border-color: #f6b000;
+      }
+      
+      .commitment-item h4 {
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      
+      .commitment-item p {
+        color: #bae7ff;
+        font-size: 13px;
+        margin: 0;
+      }
+      
+      /* Package Cards Grid */
+      .package-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+      }
+      
+      .package-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        border: 2px solid #e3f2fd;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .package-card::before {
+        content: '⭐';
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 2;
+      }
+      
+      .package-card:hover::before {
+        opacity: 1;
+        transform: rotate(15deg);
+      }
+      
+      .package-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 119, 182, 0.2);
+        border-color: #0077b6;
+      }
+      
+      .package-card-header {
+        background: linear-gradient(135deg, #f1f9ff 0%, #e3f2fd 100%);
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 3px solid #b1ecff;
+      }
+      
+      .package-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 15px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 119, 182, 0.15);
+        border: 3px solid #bae7ff;
+      }
+      
+      .package-icon-wrapper img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+      
+      .package-card h3 {
+        color: #0a2157;
+        font-size: 17px;
+        font-weight: 800;
+        margin: 0;
+        min-height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      
+      .package-card-body {
+        padding: 25px 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .package-discount {
+        background: linear-gradient(135deg, #f6b000 0%, #e09f00 100%);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 700;
+        display: inline-block;
+        margin: 0 auto 15px;
+        box-shadow: 0 4px 12px rgba(246, 176, 0, 0.3);
+      }
+      
+      .package-card-body p {
+        color: #4c5a6b;
+        font-size: 13px;
+        margin-bottom: 20px;
+        flex: 1;
+      }
+      
+      .package-btn {
+        background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(0, 119, 182, 0.3);
+      }
+      
+      .package-btn:hover {
+        background: linear-gradient(135deg, #00457a 0%, #0a2157 100%);
+        transform: scale(1.05);
+        color: white;
+        box-shadow: 0 6px 20px rgba(0, 119, 182, 0.5);
+      }
+      
+      /* Responsive Grid */
+      @media (max-width: 768px) {
+        .package-cards-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      /* ============================================
+         PHẦN 3: BẠN CÓ KẾ HOẠCH ĐI NƯỚC NGOÀI?
+         Thiết kế: FULL-WIDTH IMAGE BANNER với overlay + CTA
+         ============================================ */
+      .travel-vaccine-banner {
+        background: linear-gradient(135deg, rgba(0, 69, 122, 0.95) 0%, rgba(0, 119, 182, 0.9) 100%),
+                    url('Assets/Images/banner1.jpg') center/cover;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      /* Animated plane */
+      .travel-vaccine-banner::before {
+        content: '✈️';
+        position: absolute;
+        font-size: 120px;
+        opacity: 0.15;
+        right: 10%;
+        top: 20%;
+        animation: float-plane 6s ease-in-out infinite;
+      }
+      
+      @keyframes float-plane {
+        0%, 100% { 
+          transform: translateY(0px) translateX(0px) rotate(-5deg); 
+        }
+        50% { 
+          transform: translateY(-30px) translateX(20px) rotate(5deg); 
+        }
+      }
+      
+      /* Decorative circles */
+      .travel-vaccine-banner::after {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(186, 231, 255, 0.2) 0%, transparent 70%);
+        border-radius: 50%;
+        left: -100px;
+        bottom: -100px;
+        animation: pulse-circle 4s ease-in-out infinite;
+      }
+      
+      @keyframes pulse-circle {
+        0%, 100% { 
+          transform: scale(1); 
+          opacity: 0.3;
+        }
+        50% { 
+          transform: scale(1.1); 
+          opacity: 0.5;
+        }
+      }
+      
+      .travel-banner-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+      }
+      
+      .travel-banner-icon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 30px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        backdrop-filter: blur(10px);
+        animation: bounce-icon 2s ease-in-out infinite;
+      }
+      
+      @keyframes bounce-icon {
+        0%, 100% { 
+          transform: translateY(0); 
+        }
+        50% { 
+          transform: translateY(-15px); 
+        }
+      }
+      
+      .travel-banner-content h2 {
+        font-size: 42px;
+        font-weight: 900;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        letter-spacing: 1px;
+        line-height: 1.3;
+      }
+      
+      .travel-banner-content p {
+        font-size: 19px;
+        margin-bottom: 35px;
+        opacity: 0.95;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+      }
+      
+      .travel-banner-btn {
+        background: white;
+        color: #00457a;
+        padding: 18px 55px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 800;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .travel-banner-btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: #f6b000;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+        z-index: -1;
+      }
+      
+      .travel-banner-btn:hover::before {
+        width: 400px;
+        height: 400px;
+      }
+      
+      .travel-banner-btn:hover {
+        color: white;
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(246, 176, 0, 0.5);
+      }
+      
+      .travel-features {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        flex-wrap: wrap;
+      }
+      
+      .travel-feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 12px 25px;
+        border-radius: 30px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+      
+      .travel-feature-item:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      .travel-feature-item svg {
+        width: 26px;
+        height: 26px;
+        fill: #f6b000;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+      
+      /* Responsive adjustments for travel banner */
+      @media (max-width: 768px) {
+        .travel-vaccine-banner {
+          padding: 60px 0;
+        }
+        
+        .travel-banner-content h2 {
+          font-size: 28px;
+        }
+        
+        .travel-banner-content p {
+          font-size: 16px;
+        }
+        
+        .travel-banner-btn {
+          padding: 14px 35px;
+          font-size: 16px;
+        }
+        
+        .travel-features {
+          gap: 20px;
+        }
+        
+        .travel-feature-item {
+          font-size: 14px;
+          padding: 10px 18px;
+        }
+      }
+      
+      /* Trust Badges Section */
+      .trust-badges-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 60px 0;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .trust-badges-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #0077b6, #00b4d8, #90e0ef);
+      }
+      
+      .trust-badge-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        height: 100%;
+        border: 2px solid transparent;
+      }
+      
+      .trust-badge-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 25px rgba(0, 119, 182, 0.2);
+        border-color: #0077b6;
+      }
+      
+      .trust-badge-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        border-radius: 50%;
+        font-size: 40px;
+      }
+      
+      .trust-badge-card h3 {
+        color: #0077b6;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      .trust-badge-card p {
+        color: #6c757d;
+        font-size: 14px;
+        margin: 0;
+        line-height: 1.6;
+      }
+      
+      .trust-badge-verified {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 5px 15px;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      
+      .section-title-trust {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      
+      .section-title-trust h2 {
+        color: #0077b6;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      .section-title-trust p {
+        color: #6c757d;
+        font-size: 16px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      
+      .partners-logo-wrapper {
+        margin-top: 40px;
+        padding-top: 40px;
+        border-top: 2px dashed #dee2e6;
+      }
+      
+      .partner-logo {
+        height: 60px;
+        width: auto;
+        max-width: 150px;
+        object-fit: contain;
+        filter: grayscale(100%);
+        opacity: 0.6;
+        transition: all 0.3s ease;
+      }
+      
+      .partner-logo:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.1);
+      }
+      
+      @media (max-width: 768px) {
+        .trust-badge-card {
+          margin-bottom: 20px;
+        }
+        
+        .section-title-trust h2 {
+          font-size: 24px;
+        }
+        
+        .partner-logo {
+          height: 40px;
+          margin: 10px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -843,6 +1789,698 @@
       </section>
       <!-- END Services Section -->
       
+      <!-- Seasonal Vaccine Section - "Mùa này cần tiêm gì?" -->
+      <section class="seasonal-vaccine-section" aria-labelledby="seasonal-vaccine-heading">
+        <div class="container">
+          <div class="seasonal-season-title">
+            <h2 id="seasonal-vaccine-heading">
+              🌦️ Mùa này cần tiêm gì?
+            </h2>
+            <p>
+              Tìm hiểu về các bệnh truyền nhiễm theo mùa và vaccine phòng bệnh hiệu quả
+            </p>
+          </div>
+
+          <div class="row">
+            <!-- Left Column: Filter Sidebar -->
+            <div class="col-lg-3 col-md-4 mb-4">
+              <div class="seasonal-filter-sidebar">
+                <h3 class="seasonal-filter-title">🦠 Loại bệnh</h3>
+                
+                <div class="seasonal-filter-item active" data-disease="dengue">
+                  <div class="filter-icon">🦟</div>
+                  <div class="filter-label">Sốt Xuất Huyết</div>
+                </div>
+                
+                <div class="seasonal-filter-item" data-disease="meningococcal-acyw">
+                  <div class="filter-icon">🧠</div>
+                  <div class="filter-label">Viêm Não Mô Cầu ACYW</div>
+                </div>
+                
+                <div class="seasonal-filter-item" data-disease="meningococcal-b">
+                  <div class="filter-icon">🧠</div>
+                  <div class="filter-label">Viêm Não Mô Cầu Bexsero</div>
+                </div>
+                
+                <div class="seasonal-filter-item" data-disease="flu">
+                  <div class="filter-icon">🤧</div>
+                  <div class="filter-label">Cúm Mùa</div>
+                </div>
+                
+                <div class="seasonal-filter-item" data-disease="hpv">
+                  <div class="filter-icon">�</div>
+                  <div class="filter-label">HPV (Ung thư cổ tử cung)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Content Area -->
+            <div class="col-lg-9 col-md-8">
+              <div class="seasonal-content-area">
+                
+                <!-- Disease Info: Dengue (Active by default) -->
+                <div class="disease-info-section" id="disease-dengue">
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🦟</span>
+                    Bảo vệ bản thân khỏi sốt xuất huyết Dengue thế nào?
+                  </h3>
+                  
+                  <p class="disease-description">
+                    Sốt xuất huyết Dengue là bệnh truyền nhiễm cấp tính lây truyền qua vết đốt của 
+                    muỗi vằn Aedes aegypti, thường gây sốt cao, đau đầu, đau cơ, buồn nôn, phát ban. 
+                    Nếu không được kiểm soát, bệnh có thể dẫn đến các biến chứng nghiêm trọng.
+                  </p>
+                  
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Biến chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🩸">Xuất huyết nội tạng nguy hiểm</li>
+                      <li data-icon="⚡">Sốc do thoát huyết tương</li>
+                      <li data-icon="🫀">Suy tạng, thậm chí tử vong</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">Vaccine được khuyến nghị</h4>
+                    </div>
+                    
+                    <div class="vaccine-product-card">
+                      <img src="Assets/Images/hexaxim.png" alt="Vaccine Qdenga" class="vaccine-product-image" loading="lazy" />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">Vaccine Qdenga (Đức)</h5>
+                        <p class="vaccine-product-desc">
+                          Tạo ra miễn dịch chủ động đối với cả bốn tuýp huyết thanh của virus Dengue 
+                          (DEN-1, DEN-2, DEN-3 và DEN-4). Chỉ định tiêm cho trẻ em từ 4 tuổi trở lên 
+                          và người lớn khỏe mạnh.
+                        </p>
+                        <p class="vaccine-product-price">
+                          1.390.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-primary">Đặt lịch tiêm</a>
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-secondary">Xem chi tiết</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Disease Info: Meningococcal ACYW -->
+                <div class="disease-info-section" id="disease-meningococcal-acyw" style="display: none;">
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🧠</span>
+                    Phòng ngừa viêm não mô cầu ACYW
+                  </h3>
+                  
+                  <p class="disease-description">
+                    Viêm não mô cầu là bệnh nhiễm trùng nghiêm trọng do vi khuẩn Neisseria meningitidis 
+                    gây ra, ảnh hưởng đến màng não và tủy sống. Bệnh tiến triển rất nhanh và có thể 
+                    gây tử vong trong vòng 24 giờ nếu không được điều trị kịp thời.
+                  </p>
+                  
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Triệu chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🤒">Sốt cao đột ngột và đau đầu dữ dội</li>
+                      <li data-icon="🤢">Buồn nôn, nôn mửa</li>
+                      <li data-icon="😵">Co giật, lú lẫn</li>
+                      <li data-icon="🔴">Phát ban màu tím đỏ trên da</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">Vaccine được khuyến nghị</h4>
+                    </div>
+                    
+                    <div class="vaccine-product-card">
+                      <img src="Assets/Images/hexaxim.png" alt="Vaccine MenQuadfi" class="vaccine-product-image" loading="lazy" />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">Vaccine MenQuadfi (Pháp)</h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine liên hợp phòng viêm màng não do não mô cầu nhóm A, C, W, Y. 
+                          Bảo vệ hiệu quả lên đến 5 năm. Khuyến nghị cho trẻ em từ 12 tháng tuổi 
+                          và người lớn.
+                        </p>
+                        <p class="vaccine-product-price">
+                          1.850.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-primary">Đặt lịch tiêm</a>
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-secondary">Xem chi tiết</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Disease Info: Meningococcal B (Bexsero) -->
+                <div class="disease-info-section" id="disease-meningococcal-b" style="display: none;">
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🧠</span>
+                    Phòng ngừa viêm não mô cầu B với Bexsero
+                  </h3>
+                  
+                  <p class="disease-description">
+                    Vi khuẩn não mô cầu nhóm B (Meningococcal B) là nguyên nhân gây viêm màng não và 
+                    nhiễm trùng huyết nghiêm trọng. Nhóm B khó phòng ngừa hơn các nhóm khác do tính 
+                    đa dạng của chủng vi khuẩn, nhưng vaccine Bexsero mang lại khả năng bảo vệ rộng.
+                  </p>
+                  
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Biến chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🧠">Viêm màng não cấp tính</li>
+                      <li data-icon="🩸">Nhiễm trùng huyết nặng</li>
+                      <li data-icon="⚡">Tử vong trong vòng 24-48 giờ</li>
+                      <li data-icon="🦵">Di chứng thần kinh, cắt cụt chi</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">Vaccine được khuyến nghị</h4>
+                    </div>
+                    
+                    <div class="vaccine-product-card">
+                      <img src="Assets/Images/hexaxim.png" alt="Vaccine Bexsero" class="vaccine-product-image" loading="lazy" />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">Vaccine Bexsero (Ý)</h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine phòng viêm màng não do não mô cầu nhóm B. Sử dụng công nghệ 
+                          "reverse vaccinology" tiên tiến. Khuyến nghị cho trẻ từ 2 tháng tuổi 
+                          và người lớn có nguy cơ cao.
+                        </p>
+                        <p class="vaccine-product-price">
+                          2.100.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-primary">Đặt lịch tiêm</a>
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-secondary">Xem chi tiết</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Disease Info: Influenza (Flu) -->
+                <div class="disease-info-section" id="disease-flu" style="display: none;">
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🤧</span>
+                    Phòng ngừa cúm mùa hiệu quả
+                  </h3>
+                  
+                  <p class="disease-description">
+                    Cúm mùa là bệnh truyền nhiễm đường hô hấp cấp tính do virus cúm gây ra. 
+                    Virus cúm thay đổi hàng năm, vì vậy cần tiêm vaccine định kỳ mỗi năm 
+                    để duy trì khả năng bảo vệ. Đặc biệt nguy hiểm cho trẻ nhỏ, người cao tuổi 
+                    và người có bệnh mãn tính.
+                  </p>
+                  
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Biến chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🫁">Viêm phổi nặng</li>
+                      <li data-icon="💨">Suy hô hấp cấp</li>
+                      <li data-icon="❤️">Viêm cơ tim</li>
+                      <li data-icon="⚡">Tử vong ở người có bệnh nền</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">Vaccine được khuyến nghị</h4>
+                    </div>
+                    
+                    <div class="vaccine-product-card">
+                      <img src="Assets/Images/hexaxim.png" alt="Vaccine Cúm 4 giá" class="vaccine-product-image" loading="lazy" />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">Vaccine Cúm 4 giá (Pháp)</h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine phòng cúm tetravalent chứa 4 chủng virus cúm phổ biến 
+                          (2 chủng A và 2 chủng B). Cập nhật hàng năm theo khuyến nghị của WHO. 
+                          Dành cho mọi lứa tuổi từ 6 tháng trở lên.
+                        </p>
+                        <p class="vaccine-product-price">
+                          450.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-primary">Đặt lịch tiêm</a>
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-secondary">Xem chi tiết</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Disease Info: HPV -->
+                <div class="disease-info-section" id="disease-hpv" style="display: none;">
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🛡️</span>
+                    Phòng ngừa ung thư cổ tử cung với vaccine HPV
+                  </h3>
+                  
+                  <p class="disease-description">
+                    Virus HPV (Human Papillomavirus) gây ra nhiều bệnh nguy hiểm bao gồm ung thư 
+                    cổ tử cung, ung thư hậu môn, ung thư vòm họng và mụn cóc sinh dục. 
+                    Vaccine HPV là cách phòng ngừa hiệu quả nhất, đặc biệt khi tiêm trước khi 
+                    bắt đầu quan hệ tình dục.
+                  </p>
+                  
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Bệnh do HPV gây ra:</h4>
+                    <ul>
+                      <li data-icon="🎗️">Ung thư cổ tử cung (99% do HPV)</li>
+                      <li data-icon="🎗️">Ung thư hậu môn, dương vật</li>
+                      <li data-icon="🎗️">Ung thư vòm họng</li>
+                      <li data-icon="⚕️">Mụn cóc sinh dục (Condyloma)</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">Vaccine được khuyến nghị</h4>
+                    </div>
+                    
+                    <div class="vaccine-product-card">
+                      <img src="Assets/Images/hexaxim.png" alt="Vaccine Gardasil 9" class="vaccine-product-image" loading="lazy" />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">Vaccine Gardasil 9 (Mỹ)</h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine phòng HPV 9 giá bảo vệ chống lại 9 type HPV nguy hiểm nhất 
+                          (6, 11, 16, 18, 31, 33, 45, 52, 58). Hiệu quả phòng ngừa lên đến 90% 
+                          các bệnh liên quan HPV. Khuyến nghị cho nam và nữ từ 9-45 tuổi.
+                        </p>
+                        <p class="vaccine-product-price">
+                          2.400.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-primary">Đặt lịch tiêm</a>
+                        <a href="chitietvaccine.html" class="vaccine-btn vaccine-btn-secondary">Xem chi tiết</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- More disease sections can be added here with JavaScript toggle -->
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Seasonal Vaccine Section -->
+      
+      <!-- Vaccine Package Section - "Vaccine bảo vệ toàn diện" -->
+      <section class="vaccine-package-section" aria-labelledby="package-heading">
+        <div class="container">
+          <div class="package-section-title">
+            <h2 id="package-heading">
+              📦 Gói vắc xin bảo vệ toàn diện
+            </h2>
+            <p>
+              Tiết kiệm chi phí, đảm bảo lịch tiêm khoa học và toàn diện cho cả gia đình
+            </p>
+          </div>
+
+          <!-- Package Commitments -->
+          <div class="package-commitment mb-4">
+            <div class="row">
+              <div class="col-lg-4 col-md-4">
+                <div class="commitment-item">
+                  <div class="commitment-icon">🔔</div>
+                  <h4>Miễn phí nhắc lịch hẹn</h4>
+                  <p>Chính xác và khoa học cho cả gia đình</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4">
+                <div class="commitment-item">
+                  <div class="commitment-icon">💰</div>
+                  <h4>Cam kết giữ giá vắc xin</h4>
+                  <p>Suốt thời gian tiêm theo phác đồ</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4">
+                <div class="commitment-item">
+                  <div class="commitment-icon">✅</div>
+                  <h4>Cam kết luôn đủ vắc xin</h4>
+                  <p>Không lo hàng khan hiếm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Left Column: Filter Sidebar -->
+            <div class="col-lg-3 col-md-4 mb-4">
+              <div class="package-filter-sidebar">
+                
+                <!-- Filter Category 1: By Age -->
+                <div class="package-filter-category">
+                  <h4 class="package-filter-category-title">
+                    <span class="package-filter-category-icon">👶</span>
+                    Theo độ tuổi
+                  </h4>
+                  <div class="package-filter-item active" data-category="age-6months">Gói 6 tháng tuổi</div>
+                  <div class="package-filter-item" data-category="age-12months">Gói 12 tháng tuổi</div>
+                  <div class="package-filter-item" data-category="age-24months">Gói 24 tháng tuổi</div>
+                  <div class="package-filter-item" data-category="age-preschool">Tiền học đường (3-9 tuổi)</div>
+                  <div class="package-filter-item" data-category="age-teen">Thanh thiếu niên (9-18 tuổi)</div>
+                  <div class="package-filter-item" data-category="age-adult">Người trưởng thành</div>
+                </div>
+
+                <!-- Filter Category 2: By Target Group -->
+                <div class="package-filter-category">
+                  <h4 class="package-filter-category-title">
+                    <span class="package-filter-category-icon">👥</span>
+                    Theo đối tượng
+                  </h4>
+                  <div class="package-filter-item" data-category="target-prewedding">Tiền hôn nhân</div>
+                  <div class="package-filter-item" data-category="target-prepregnancy">Trước mang thai</div>
+                  <div class="package-filter-item" data-category="target-50plus">Người 50+ bệnh mãn tính</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Right Column: Package Cards Grid -->
+            <div class="col-lg-9 col-md-8">
+              <div class="package-cards-grid">
+                
+                <!-- Package 1: 6 months -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/baby-boy.png" alt="Gói 6 tháng tuổi" loading="lazy" />
+                    </div>
+                    <h3>Gói vắc xin 6 tháng tuổi</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 554.850₫</span>
+                    <p>5-6 loại vaccine cơ bản cho bé 6 tháng tuổi</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 2: 12 months -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/baby-boy.png" alt="Gói 12 tháng tuổi" loading="lazy" />
+                    </div>
+                    <h3>Gói vắc xin 12 tháng tuổi</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 855.960₫</span>
+                    <p>7-8 loại vaccine quan trọng cho bé 1 tuổi</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 3: 24 months -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/baby-boy.png" alt="Gói 24 tháng tuổi" loading="lazy" />
+                    </div>
+                    <h3>Gói vắc xin 24 tháng tuổi</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 1.089.150₫</span>
+                    <p>Gói vaccine toàn diện cho bé 2 tuổi</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 4: Preschool -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/baby-boy.png" alt="Gói tiền học đường" loading="lazy" />
+                    </div>
+                    <h3>Gói trẻ tiền học đường (3-9 tuổi)</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 634.390₫</span>
+                    <p>Chuẩn bị sức khỏe tốt nhất cho bé đi học</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 5: Teenagers -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/adults.png" alt="Gói thanh thiếu niên" loading="lazy" />
+                    </div>
+                    <h3>Gói thanh thiếu niên (9-18 tuổi)</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 906.790₫</span>
+                    <p>Vaccine quan trọng cho tuổi dậy thì</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 6: Adults -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/adults.png" alt="Gói người lớn" loading="lazy" />
+                    </div>
+                    <h3>Gói cho người trưởng thành</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 842.290₫</span>
+                    <p>Vaccine cần thiết cho người lớn khỏe mạnh</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 7: Pre-wedding -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/pregnant-woman.png" alt="Gói tiền hôn nhân" loading="lazy" />
+                    </div>
+                    <h3>Gói vắc xin tiền hôn nhân</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 506.490₫</span>
+                    <p>Chuẩn bị sức khỏe tốt nhất trước kết hôn</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 8: Before pregnancy -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/pregnant-woman.png" alt="Gói trước mang thai" loading="lazy" />
+                    </div>
+                    <h3>Gói cho phụ nữ trước mang thai</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 175.140₫</span>
+                    <p>Bảo vệ mẹ và bé ngay từ khi chuẩn bị</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+                <!-- Package 9: 50+ chronic disease -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img src="Assets/Icons/adults.png" alt="Gói 50+ bệnh mãn tính" loading="lazy" />
+                    </div>
+                    <h3>Gói cho người 50+ có bệnh mãn tính</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 743.240₫</span>
+                    <p>Vaccine quan trọng cho người cao tuổi</p>
+                    <a href="#vaccine-packages" class="package-btn">Đặt hẹn ngay</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Vaccine Package Section -->
+      
+      <!-- Travel Vaccine Banner - "Bạn có kế hoạch đi nước ngoài?" -->
+      <section class="travel-vaccine-banner" aria-labelledby="travel-vaccine-heading">
+        <div class="container">
+          <div class="travel-banner-content">
+            <div class="travel-banner-icon">
+              🌍
+            </div>
+            <h2 id="travel-vaccine-heading">
+              Bạn có kế hoạch đi nước ngoài?
+            </h2>
+            <p>
+              Tiêm vaccine đầy đủ là điều kiện bắt buộc cho nhiều quốc gia.<br/> 
+              Hãy chuẩn bị sức khỏe tốt nhất cho chuyến đi của bạn!
+            </p>
+            <a href="#travel-packages" class="travel-banner-btn">
+              ✈️ Xem gói vaccine đi nước ngoài
+            </a>
+            
+            <div class="travel-features">
+              <div class="travel-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-1 0A7 7 0 1 0 1 8a7 7 0 0 0 14 0z"/>
+                </svg>
+                <span>Tư vấn miễn phí</span>
+              </div>
+              <div class="travel-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-1 0A7 7 0 1 0 1 8a7 7 0 0 0 14 0z"/>
+                </svg>
+                <span>Vaccine đầy đủ theo quốc gia</span>
+              </div>
+              <div class="travel-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-1 0A7 7 0 1 0 1 8a7 7 0 0 0 14 0z"/>
+                </svg>
+                <span>Cấp giấy xác nhận quốc tế</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Travel Vaccine Banner -->
+      
+      <!-- Trust Badges Section -->
+      <section class="trust-badges-section" aria-labelledby="trust-heading">
+        <div class="container">
+          <!-- Section Title -->
+          <div class="section-title-trust">
+            <h2 id="trust-heading">
+              <strong>ĐỐI TÁC & CHỨNG NHẬN UY TÍN</strong>
+            </h2>
+            <p>
+              TPVAX tự hào là đơn vị tiên phong trong lĩnh vực tiêm chủng với đầy đủ 
+              giấy phép và chứng nhận từ các cơ quan chức năng
+            </p>
+          </div>
+
+          <!-- Trust Badges Grid -->
+          <div class="row g-4 justify-content-center">
+            <!-- Badge 1: Bộ Y Tế -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#0077b6" viewBox="0 0 16 16">
+                    <path d="M8.864 2.318a.5.5 0 0 0-.728 0L7.75 2.72 6.869 1.84a.5.5 0 0 0-.708 0l-.881.88-.88-.88a.5.5 0 0 0-.708 0l-.88.88-.881-.88a.5.5 0 0 0-.708 0l-1.028 1.028a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l1.028 1.028a.5.5 0 0 0 .708 0l.881-.88.88.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l1.028-1.028a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708L8.864 2.318zM8 12.293l-3.146-3.147a.5.5 0 0 1 .708-.708L8 10.877l2.438-2.439a.5.5 0 0 1 .708.708L8 12.293z"/>
+                  </svg>
+                </div>
+                <h3>Giấy Phép Bộ Y Tế</h3>
+                <p>
+                  Cơ sở đạt chuẩn quốc gia về an toàn tiêm chủng. 
+                  Giấy phép hoạt động số: 1234/GP-BYT
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+
+            <!-- Badge 2: ISO Certification -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#0077b6" viewBox="0 0 16 16">
+                    <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+                    <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+                  </svg>
+                </div>
+                <h3>Chứng Nhận ISO 9001:2015</h3>
+                <p>
+                  Hệ thống quản lý chất lượng đạt tiêu chuẩn quốc tế. 
+                  Cam kết chất lượng dịch vụ tốt nhất.
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+
+            <!-- Badge 3: GMP Certification -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#0077b6" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                  </svg>
+                </div>
+                <h3>Tiêu Chuẩn GMP WHO</h3>
+                <p>
+                  Vaccine được bảo quản theo chuẩn GMP của Tổ chức Y tế Thế giới. 
+                  Chuỗi lạnh 2-8°C 24/7.
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+
+            <!-- Badge 4: Authorized Partner -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#0077b6" viewBox="0 0 16 16">
+                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                  </svg>
+                </div>
+                <h3>Đối Tác Chính Hãng</h3>
+                <p>
+                  Nhà phân phối được ủy quyền chính thức từ các hãng vaccine 
+                  hàng đầu thế giới: Sanofi, GSK, Pfizer.
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Partners Logo Section -->
+          <div class="partners-logo-wrapper">
+            <div class="row align-items-center justify-content-center g-4">
+              <div class="col-6 col-md-3 text-center">
+                <div class="partner-logo-placeholder" style="height: 60px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                  <span style="color: #6c757d; font-weight: bold; font-size: 18px;">SANOFI</span>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 text-center">
+                <div class="partner-logo-placeholder" style="height: 60px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                  <span style="color: #6c757d; font-weight: bold; font-size: 18px;">GSK</span>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 text-center">
+                <div class="partner-logo-placeholder" style="height: 60px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                  <span style="color: #6c757d; font-weight: bold; font-size: 18px;">PFIZER</span>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 text-center">
+                <div class="partner-logo-placeholder" style="height: 60px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                  <span style="color: #6c757d; font-weight: bold; font-size: 18px;">ASTRAZENECA</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-center text-muted mt-4 mb-0" style="font-size: 14px;">
+              <em>* Logo đối tác chỉ mang tính minh họa. Vui lòng cung cấp logo thực tế để thay thế.</em>
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- END Trust Badges Section -->
+      
       <!-- News & Articles Section -->
       <section class="container my-5" aria-labelledby="news-heading">
         <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-primary border-5">
@@ -1281,10 +2919,96 @@
       });
       
       // ========================================
+      // 10. SEASONAL VACCINE FILTER (Section 1)
+      // ========================================
+      const seasonalFilterItems = document.querySelectorAll('.seasonal-filter-item');
+      const diseaseInfoSections = document.querySelectorAll('.disease-info-section');
+      
+      seasonalFilterItems.forEach(filterItem => {
+        filterItem.addEventListener('click', function() {
+          const targetDisease = this.getAttribute('data-disease');
+          
+          // Update active state on filters
+          seasonalFilterItems.forEach(item => item.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Hide all disease sections
+          diseaseInfoSections.forEach(section => {
+            section.style.display = 'none';
+            section.style.opacity = '0';
+          });
+          
+          // Show selected disease section with fade-in animation
+          const targetSection = document.getElementById(targetDisease);
+          if (targetSection) {
+            targetSection.style.display = 'block';
+            setTimeout(() => {
+              targetSection.style.opacity = '1';
+            }, 50);
+          }
+          
+          // Smooth scroll to content area (optional)
+          const contentArea = document.querySelector('.seasonal-content-area');
+          if (contentArea && window.innerWidth < 992) {
+            contentArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+      });
+      
+      // ========================================
+      // 11. VACCINE PACKAGE FILTER (Section 2)
+      // ========================================
+      const packageFilterItems = document.querySelectorAll('.package-filter-item');
+      const packageCards = document.querySelectorAll('.package-card');
+      
+      packageFilterItems.forEach(filterItem => {
+        filterItem.addEventListener('click', function() {
+          const targetCategory = this.getAttribute('data-category');
+          
+          // Update active state on filters
+          packageFilterItems.forEach(item => item.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show all packages if "all" is selected, otherwise filter
+          packageCards.forEach((card, index) => {
+            // Map index to category
+            const categoryMap = [
+              'age-6months',      // 0
+              'age-12months',     // 1
+              'age-24months',     // 2
+              'age-preschool',    // 3
+              'age-teen',         // 4
+              'age-adult',        // 5
+              'target-prewedding',    // 6
+              'target-prepregnancy',  // 7
+              'target-50plus'         // 8
+            ];
+            
+            const cardCategory = categoryMap[index];
+            
+            if (targetCategory === 'all' || cardCategory === targetCategory) {
+              card.style.display = 'block';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 50);
+            } else {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                card.style.display = 'none';
+              }, 300);
+            }
+          });
+        });
+      });
+      
+      // ========================================
       // Console log - Development info
       // ========================================
       console.log('%c🏥 TPVAX Website Loaded Successfully! ', 'background: #0077b6; color: white; padding: 10px; font-size: 16px; font-weight: bold;');
       console.log('%c✅ All features initialized', 'color: #28a745; font-size: 12px;');
+      console.log('%c🔄 Filter systems activated for seasonal vaccines and packages', 'color: #0077b6; font-size: 12px;');
     </script>
   </body>
 </html>
