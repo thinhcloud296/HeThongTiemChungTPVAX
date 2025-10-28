@@ -1,32 +1,34 @@
-/* --- 1. GLOBAL STYLES --- */
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-a {
-  text-decoration: none;
-}
-
 /* ======================================================================================================================= */
-/* LAYOUT PAGE */
-/* ======================================================================================================================= */
-/* Header */
-/* --- 2. LAYOUT SECTIONS --- */
+/* LAYOUT PAGE SPECIFIC STYLES
+/* Chỉ chứa CSS riêng cho layout_page.html, không trùng lặp với main_style.css
+/* ====================================================================================================================== */
+
+/* ============================================
+   1. HEADER COMPONENTS
+   ============================================ */
+
+/* --- Toolbar Section --- */
 .toolbar-section {
   background-color: #f1f9ff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.brand-section {
-  background-color: white;
-}
-
-/* --- 3. TOOLBAR STYLES --- */
 .toolbar-link {
   text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.toolbar-link:hover {
+  transform: scale(1.05);
+}
+
+.toolbar-link span {
+  transition: font-size 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.toolbar-link:hover span {
+  font-size: 1.3rem;
+  letter-spacing: 1px;
 }
 
 .toolbar-icon {
@@ -40,10 +42,294 @@ a {
   height: 20px;
 }
 
+/* --- Search Bar --- */
+.search-bar-wrapper {
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
 .search-bar-wrapper .form-control:focus {
   box-shadow: none;
-  border-color: #86b7fe;
+  border-color: #0077b6;
+  outline: none;
 }
+
+/* --- Auth Buttons --- */
+.login-btn {
+  color: #03516a;
+  border-color: #0d6efd;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.login-btn:hover {
+  background-color: #0077b6;
+  color: white !important;
+  border-color: #0077b6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 119, 182, 0.3);
+}
+
+/* --- Cart Button --- */
+.btn-cart-custom {
+  background-color: #bae7ff;
+  border: 1px solid #0096c7;
+  color: #03516a;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.btn-cart-custom:hover {
+  background-color: #90e0ef;
+  border-color: #0077b6;
+  color: #023e54;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Brand Section --- */
+.brand-section {
+  background-color: white;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.brand-section .col-md-7 > div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   2. NAVIGATION
+   ============================================ */
+
+/* --- Main Navbar --- */
+.main-navbar {
+  background-color: white;
+  border-top: 2px solid #b8ddfd;
+  border-bottom: 2px solid #b8ddfd;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.main-navbar .nav-link {
+  color: #0077b6;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.main-navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: #f6b000;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.main-navbar .nav-link:hover::after,
+.main-navbar .nav-link.active::after {
+  width: 80%;
+}
+
+.main-navbar .nav-link:hover {
+  color: #00457a;
+  background-color: #f1f9ff;
+}
+
+.main-navbar .nav-link.active {
+  color: #00457a;
+  font-weight: 700;
+}
+
+/* --- Dropdown Menu --- */
+.dropdown-menu {
+  border-radius: 8px;
+  border: 2px solid #0077b6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 0;
+}
+
+.dropdown-item {
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #0077b6;
+  color: white;
+  transform: translateX(5px);
+}
+
+/* Desktop hover for dropdown */
+@media (min-width: 992px) {
+  .main-navbar .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+}
+
+/* ============================================
+   3. FOOTER
+   ============================================ */
+
+.site-footer {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  min-height: 450px;
+  padding: 3rem 0 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.site-footer a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.site-footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #f6b000;
+  transition: width 0.3s ease;
+}
+
+.site-footer a:hover::after {
+  width: 100%;
+}
+
+.site-footer a:hover {
+  color: #bae7ff;
+}
+
+.footer-logo-wrapper {
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.footer-logo {
+  height: 100px;
+  width: auto;
+}
+
+.footer-icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 12px;
+  filter: brightness(0) invert(1);
+}
+
+.company-details p {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+.footer-hr {
+  border-color: rgba(255, 255, 255, 0.3);
+  margin: 2rem 0;
+}
+
+.footer-hours {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================
+   4. RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 992px) {
+  .toolbar-section {
+    padding: 1rem 0;
+  }
+  
+  .search-bar-wrapper {
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .main-navbar .nav-link {
+    padding: 0.75rem 1rem;
+  }
+  
+  .brand-section .col-md-7 > div {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbar-link span {
+    font-size: 0.9rem;
+  }
+  
+  .toolbar-link:hover span {
+    font-size: 1rem;
+  }
+  
+  .login-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .site-footer {
+    min-height: auto;
+    padding: 2rem 0 1rem;
+  }
+  
+  .footer-logo {
+    height: 70px;
+  }
+}
+
+@media (max-width: 576px) {
+  .toolbar-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .main-navbar .nav-link {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .footer-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ============================================
+   5. UTILITY CLASSES
+   ============================================ */
 
 .vr {
   display: inline-block;
@@ -54,173 +340,50 @@ a {
   opacity: 0.25;
 }
 
-/* --- 4. BRAND/LOGO STYLES --- */
-.brand-section .h2 {
-  font-size: calc(1.3rem + 0.6vw); /* Bootstrap default h2 responsive */
-  font-weight: bold;
+/* Visually hidden but accessible */
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
-.brand-section .h4 {
-  font-size: calc(1.2rem + 0.3vw); /* Bootstrap default h4 responsive */
-}
+/* ============================================
+   6. ANIMATIONS & TRANSITIONS
+   ============================================ */
 
-/* Đảm bảo div màu xanh cao bằng cột chứa nó */
-.brand-section .col-md-9 > div {
-  height: 100%;
-}
-
-/* --- 5. BUTTON STYLES & HOVER EFFECTS --- */
-
-/* a. Đặt mua vắc xin & Link điện thoại */
-.toolbar-link span {
-  transition: font-size 0.3s ease, letter-spacing 0.3s ease;
-}
-
-.toolbar-link:hover span {
-  font-size: 1.3rem;
-  letter-spacing: 1px;
-}
-
-/* b. Nút Đăng nhập/Đăng ký */
-.login-btn {
-  color: #03516a;
-  border-color: #0d6efd;
-  transition: all 0.2s ease-in-out;
-}
-
-.login-btn:hover {
-  background-color: #0077b6;
-  color: white !important; /* Dùng !important để đảm bảo ghi đè Bootstrap */
-  border-color: #0077b6;
-}
-
-/* c. Nút Giỏ hàng */
-.btn-cart-custom {
-  background-color: #bae7ff;
-  border: 1px solid #0096c7;
-  color: #03516a;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
-}
-
-.btn-cart-custom:hover {
-  background-color: #a3d9f7;
-  border-color: #0077b6;
-  color: #023e54;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Menu */
-/* --- 6. MAIN NAVBAR SECTION --- */
-
-/* Tùy chỉnh thanh menu chính */
-.main-navbar {
-  background-color: white;
-  border-top: 2px solid #b8ddfd;
-  border-bottom: 2px solid #b8ddfd;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-/* Tùy chỉnh các link trong menu */
-.main-navbar .nav-link {
-  color: #0077b6; /* Màu chữ xanh */
-  font-weight: 500;
-  padding: 1rem 1.5rem; /* Tăng khoảng cách cho các mục menu */
-  transition: all 0.2s ease;
-}
-
-/* Hiệu ứng khi hover */
-.main-navbar .nav-link:hover {
-  color: #023e54; /* Đổi màu chữ đậm hơn */
-  background-color: #f1f9ff;
-}
-
-/* Style cho link đang active */
-.main-navbar .nav-link.active {
-  color: #023e54;
-  font-weight: 700;
-}
-
-/* Tùy chỉnh menu con đổ xuống */
-.dropdown-menu {
-  border-radius: 0; /* Bỏ bo góc nếu muốn */
-  border-top: 2px solid #0077b6;
-}
-
-.dropdown-item:hover {
-  background-color: #0077b6;
-  color: white;
-}
-@media (min-width: 992px) {
-  .main-navbar .dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0; /* Xóa khoảng trống nhỏ phía trên menu con */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* END Header */
-
-/* Footer */
-
-.site-footer {
-  background-color: #0077b6; /* Màu nền xanh */
-  color: white; /* Màu chữ trắng */
-  height: 550px; /* Chiều cao cố định như bạn yêu cầu */
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  font-size: 1rem;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Style cho các link trong footer */
-.site-footer a {
-  color: white;
-  text-decoration: none;
-  transition: all 0.2s ease;
+/* Apply smooth animations to page load */
+.toolbar-section,
+.brand-section,
+.main-navbar {
+  animation: slideInFromTop 0.6s ease-out;
 }
-
-.site-footer a:hover {
-  color: #a3d9f7; /* Màu nhạt hơn khi hover */
-  text-decoration: underline;
-}
-
-/* Logo và Slogan trong footer */
-.site-footer .logo-text .h2,
-.site-footer .logo-text .h4 {
-  font-size: 1.5rem; /* Giảm kích thước chữ cho phù hợp với footer */
-}
-
-/* Thông tin liên hệ */
-.footer-contact-info li {
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-}
-.footer-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 15px;
-}
-
-/* Thông tin công ty */
-.company-details p {
-  margin-bottom: 0.5rem;
-}
-
-/* Đường kẻ ngang */
-.footer-hr {
-  border-color: white;
-  opacity: 0.5;
-  margin: 2rem 0;
-}
-
-/* Link cuối footer */
-.footer-bottom-links a {
-  margin-left: 2rem;
-}
-
-/* END Footer */
 
 /* ======================================================================================================================= */
-/* END LAYOUT PAGE */
+/* END LAYOUT PAGE SPECIFIC STYLES */
 /* ======================================================================================================================= */

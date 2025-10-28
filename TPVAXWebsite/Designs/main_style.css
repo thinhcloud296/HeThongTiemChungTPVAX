@@ -1,46 +1,63 @@
-/* --- 1. GLOBAL STYLES --- */
-* {
-  padding: 0;
+/* ======================================================================================================================= */
+/* TPVAX - VACCINE BOOKING SYSTEM STYLESHEET
+/* Hệ thống tiêm chủng vaccine chất lượng hàng đầu Việt Nam
+/* ======================================================================================================================= */
+
+/* ============================================
+   GLOBAL RESET & BASE STYLES
+   ============================================ */
+*,
+*::before,
+*::after {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  height: 100%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  color: #0a2157;
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 a {
   text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 
 /* ======================================================================================================================= */
 /* DETAIL VACCINE PAGE */
 /* ======================================================================================================================= */
-
-/* ========== Reset & base ========== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html,
-body {
-  height: 100%;
-}
-body {
-  font-family: Tahoma, Arial, sans-serif;
-  background: #fff;
-  color: #0a2157;
-  line-height: 1.6;
-}
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-button {
-  font-family: inherit;
-}
-
-/* ========== Header ========== */
 .site-header {
   background: #f1f9ff;
   border-bottom: 1px solid #b1ecff;
@@ -1982,3 +1999,1127 @@ main.vaccine-detail {
 /* ======================================================================================================================= */
 /* END HOME PAGE */
 /* ====================================================================================================================== */
+
+
+/* ======================================================================================================================= */
+/* LAYOUT PAGE - NEW FEATURES (Competitive Analysis from Long Châu)
+/* ====================================================================================================================== */
+
+/* ============================================
+   SCROLL TO TOP & FLOATING BUTTONS
+   ============================================ */
+/* Scroll to Top Button */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 119, 182, 0.4);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.scroll-to-top-btn:hover {
+  background: linear-gradient(135deg, #005f8f 0%, #0096b8 100%);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 119, 182, 0.6);
+}
+
+.scroll-to-top-btn.show {
+  display: flex;
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Floating Contact Buttons */
+.floating-contact {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.floating-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  animation: pulse 2s infinite;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.floating-btn-zalo {
+  background: linear-gradient(135deg, #0068ff 0%, #0180ff 100%);
+}
+
+.floating-btn-phone {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+}
+
+.floating-btn img {
+  width: 35px;
+  height: 35px;
+  filter: brightness(0) invert(1);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Social Share Buttons */
+.social-share-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.social-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 25px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.social-share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.social-share-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.share-facebook {
+  background: linear-gradient(135deg, #1877f2 0%, #0d65d9 100%);
+}
+
+.share-zalo {
+  background: linear-gradient(135deg, #0068ff 0%, #0052cc 100%);
+}
+
+.share-twitter {
+  background: linear-gradient(135deg, #1da1f2 0%, #0c85d0 100%);
+}
+
+.share-copy {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+}
+
+/* ============================================
+   SECTION 1: MÙA NÀY CẦN TIÊM GÌ? 
+   Thiết kế: 2-COLUMN LAYOUT (Filter bên trái + Chi tiết bên phải)
+   ============================================ */
+.seasonal-vaccine-section {
+  background: linear-gradient(180deg, #f1f9ff 0%, #ffffff 100%);
+  padding: 80px 0;
+  position: relative;
+}
+
+.seasonal-season-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.seasonal-season-title h2 {
+  color: #00457a;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.seasonal-season-title p {
+  color: #4c5a6b;
+  font-size: 17px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Filter Sidebar */
+.seasonal-filter-sidebar {
+  background: white;
+  border-radius: 20px;
+  padding: 30px 20px;
+  box-shadow: 0 5px 25px rgba(0, 119, 182, 0.1);
+  border: 2px solid #b1ecff;
+  position: sticky;
+  top: 100px;
+}
+
+.seasonal-filter-title {
+  color: #00457a;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #0077b6;
+  text-transform: uppercase;
+}
+
+.seasonal-filter-item {
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8f9fa;
+}
+
+.seasonal-filter-item:hover {
+  background: #e3f2fd;
+  border-color: #b1ecff;
+  transform: translateX(5px);
+}
+
+.seasonal-filter-item.active {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  border-color: #0077b6;
+  box-shadow: 0 5px 20px rgba(0, 119, 182, 0.3);
+}
+
+.seasonal-filter-item .filter-icon {
+  font-size: 28px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.seasonal-filter-item.active .filter-icon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.seasonal-filter-item .filter-label {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Content Area */
+.seasonal-content-area {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 5px 25px rgba(0, 119, 182, 0.1);
+  border: 2px solid #b1ecff;
+}
+
+.disease-info-section {
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 2px dashed #e3f2fd;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.disease-info-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.disease-title {
+  color: #00457a;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.disease-title-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+}
+
+.disease-description {
+  color: #4c5a6b;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.disease-symptoms {
+  background: #fff3e0;
+  border-left: 5px solid #f6b000;
+  padding: 20px 25px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.disease-symptoms h4 {
+  color: #e65100;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.disease-symptoms ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.disease-symptoms li {
+  color: #4c5a6b;
+  font-size: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.disease-symptoms li::before {
+  content: attr(data-icon);
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* Vaccine Recommendation */
+.vaccine-recommendation {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f1f9ff 100%);
+  border-radius: 15px;
+  padding: 25px;
+  border: 2px solid #0077b6;
+}
+
+.vaccine-rec-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.vaccine-rec-icon {
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 3px 10px rgba(0, 119, 182, 0.2);
+}
+
+.vaccine-rec-title {
+  color: #0077b6;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.vaccine-product-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.vaccine-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 119, 182, 0.2);
+}
+
+.vaccine-product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.vaccine-product-info {
+  flex: 1;
+}
+
+.vaccine-product-name {
+  color: #00457a;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.vaccine-product-desc {
+  color: #4c5a6b;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.vaccine-product-price {
+  color: #f6b000;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.vaccine-product-price small {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.vaccine-product-action {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vaccine-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.vaccine-btn-primary {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 119, 182, 0.3);
+}
+
+.vaccine-btn-primary:hover {
+  background: linear-gradient(135deg, #00457a 0%, #0a2157 100%);
+  transform: scale(1.05);
+  color: white;
+}
+
+.vaccine-btn-secondary {
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+}
+
+.vaccine-btn-secondary:hover {
+  background: #0077b6;
+  color: white;
+}
+
+/* ============================================
+   SECTION 2: GÓI VẮC XIN BẢO VỆ TOÀN DIỆN
+   Thiết kế: 2-COLUMN LAYOUT (Filter bên trái + Danh sách gói bên phải)
+   ============================================ */
+.vaccine-package-section {
+  background: #ffffff;
+  padding: 80px 0;
+  position: relative;
+}
+
+.package-section-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.package-section-title h2 {
+  color: #00457a;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.package-section-title p {
+  color: #4c5a6b;
+  font-size: 17px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Package Filter Sidebar */
+.package-filter-sidebar {
+  background: white;
+  border-radius: 20px;
+  padding: 30px 20px;
+  box-shadow: 0 5px 25px rgba(0, 119, 182, 0.1);
+  border: 2px solid #b1ecff;
+  position: sticky;
+  top: 100px;
+}
+
+.package-filter-category {
+  margin-bottom: 35px;
+}
+
+.package-filter-category:last-child {
+  margin-bottom: 0;
+}
+
+.package-filter-category-title {
+  color: #00457a;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.package-filter-category-icon {
+  font-size: 20px;
+}
+
+.package-filter-item {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: #f8f9fa;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4c5a6b;
+}
+
+.package-filter-item:hover {
+  background: #e3f2fd;
+  border-color: #b1ecff;
+  transform: translateX(5px);
+  color: #0077b6;
+}
+
+.package-filter-item.active {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  border-color: #0077b6;
+  box-shadow: 0 3px 15px rgba(0, 119, 182, 0.3);
+}
+
+/* Package Commitment Box */
+.package-commitment {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  border-radius: 20px;
+  padding: 35px 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 30px rgba(0, 69, 122, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.package-commitment::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.commitment-item {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.commitment-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.commitment-item:hover .commitment-icon {
+  transform: scale(1.1) rotate(10deg);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #f6b000;
+}
+
+.commitment-item h4 {
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.commitment-item p {
+  color: #bae7ff;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Package Cards Grid */
+.package-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.package-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 2px solid #e3f2fd;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.package-card::before {
+  content: '⭐';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.package-card:hover::before {
+  opacity: 1;
+  transform: rotate(15deg);
+}
+
+.package-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 119, 182, 0.2);
+  border-color: #0077b6;
+}
+
+.package-card-header {
+  background: linear-gradient(135deg, #f1f9ff 0%, #e3f2fd 100%);
+  padding: 30px 20px;
+  text-align: center;
+  border-bottom: 3px solid #b1ecff;
+}
+
+.package-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 119, 182, 0.15);
+  border: 3px solid #bae7ff;
+}
+
+.package-icon-wrapper img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.package-card h3 {
+  color: #0a2157;
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.package-card-body {
+  padding: 25px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.package-discount {
+  background: linear-gradient(135deg, #f6b000 0%, #e09f00 100%);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-block;
+  margin: 0 auto 15px;
+  box-shadow: 0 4px 12px rgba(246, 176, 0, 0.3);
+}
+
+.package-card-body p {
+  color: #4c5a6b;
+  font-size: 13px;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.package-btn {
+  background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0, 119, 182, 0.3);
+}
+
+.package-btn:hover {
+  background: linear-gradient(135deg, #00457a 0%, #0a2157 100%);
+  transform: scale(1.05);
+  color: white;
+  box-shadow: 0 6px 20px rgba(0, 119, 182, 0.5);
+}
+
+/* ============================================
+   SECTION 3: BẠN CÓ KẾ HOẠCH ĐI NƯỚC NGOÀI?
+   Thiết kế: FULL-WIDTH IMAGE BANNER với overlay + CTA
+   ============================================ */
+.travel-vaccine-banner {
+  background: linear-gradient(135deg, rgba(0, 69, 122, 0.95) 0%, rgba(0, 119, 182, 0.9) 100%),
+              url('Assets/Images/banner1.jpg') center/cover;
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated plane */
+.travel-vaccine-banner::before {
+  content: '✈️';
+  position: absolute;
+  font-size: 120px;
+  opacity: 0.15;
+  right: 10%;
+  top: 20%;
+  animation: float-plane 6s ease-in-out infinite;
+}
+
+@keyframes float-plane {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px) rotate(-5deg); 
+  }
+  50% { 
+    transform: translateY(-30px) translateX(20px) rotate(5deg); 
+  }
+}
+
+/* Decorative circles */
+.travel-vaccine-banner::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(186, 231, 255, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  left: -100px;
+  bottom: -100px;
+  animation: pulse-circle 4s ease-in-out infinite;
+}
+
+@keyframes pulse-circle {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.3;
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 0.5;
+  }
+}
+
+.travel-banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+}
+
+.travel-banner-icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 30px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  backdrop-filter: blur(10px);
+  animation: bounce-icon 2s ease-in-out infinite;
+}
+
+@keyframes bounce-icon {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-15px); 
+  }
+}
+
+.travel-banner-content h2 {
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+  line-height: 1.3;
+}
+
+.travel-banner-content p {
+  font-size: 19px;
+  margin-bottom: 35px;
+  opacity: 0.95;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.travel-banner-btn {
+  background: white;
+  color: #00457a;
+  padding: 18px 55px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.travel-banner-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: #f6b000;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  z-index: -1;
+}
+
+.travel-banner-btn:hover::before {
+  width: 400px;
+  height: 400px;
+}
+
+.travel-banner-btn:hover {
+  color: white;
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(246, 176, 0, 0.5);
+}
+
+.travel-features {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.travel-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px 25px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.travel-feature-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.travel-feature-item svg {
+  width: 26px;
+  height: 26px;
+  fill: #f6b000;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* ============================================
+   TRUST BADGES SECTION
+   ============================================ */
+.trust-badges-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.trust-badges-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0077b6, #00b4d8, #90e0ef);
+}
+
+.trust-badge-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  border: 2px solid transparent;
+}
+
+.trust-badge-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(0, 119, 182, 0.2);
+  border-color: #0077b6;
+}
+
+.trust-badge-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-radius: 50%;
+  font-size: 40px;
+}
+
+.trust-badge-card h3 {
+  color: #0077b6;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.trust-badge-card p {
+  color: #6c757d;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.trust-badge-verified {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 5px 15px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.section-title-trust {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title-trust h2 {
+  color: #0077b6;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.section-title-trust p {
+  color: #6c757d;
+  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.partners-logo-wrapper {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 2px dashed #dee2e6;
+}
+
+.partner-logo {
+  height: 60px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 768px) {
+  /* Scroll & Floating buttons */
+  .scroll-to-top-btn {
+    width: 45px;
+    height: 45px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .floating-contact {
+    bottom: 80px;
+    right: 20px;
+  }
+  
+  .floating-btn {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .floating-btn img {
+    width: 28px;
+    height: 28px;
+  }
+  
+  /* Package grid */
+  .package-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Travel banner */
+  .travel-vaccine-banner {
+    padding: 60px 0;
+  }
+  
+  .travel-banner-content h2 {
+    font-size: 28px;
+  }
+  
+  .travel-banner-content p {
+    font-size: 16px;
+  }
+  
+  .travel-banner-btn {
+    padding: 14px 35px;
+    font-size: 16px;
+  }
+  
+  .travel-features {
+    gap: 20px;
+  }
+  
+  .travel-feature-item {
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+  
+  /* Trust badges */
+  .trust-badge-card {
+    margin-bottom: 20px;
+  }
+  
+  .section-title-trust h2 {
+    font-size: 24px;
+  }
+  
+  .partner-logo {
+    height: 40px;
+    margin: 10px;
+  }
+}
