@@ -3,21 +3,168 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Vắc xin HPV là tấm khiên bảo vệ bắt buộc cho thanh thiếu niên cả nam và nữ. Tìm hiểu lợi ích và lịch tiêm tại TPVAX." />
+    <meta name="keywords" content="vắc xin HPV, Gardasil 9, tiêm phòng HPV, ung thư cổ tử cung, thanh thiếu niên" />
     <title>Vắc xin HPV là "tấm khiên" bảo vệ bắt buộc | TPVAX</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Assets/Images/logo.png" />
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <link rel="stylesheet" href="main_style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="layout_page_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <main class="article-detail-page container my-5">
+    <!-- Skip to main content -->
+    <a href="#main-content" class="visually-hidden-focusable">Chuyển đến nội dung chính</a>
+    
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" aria-label="Cuộn lên đầu trang" title="Lên đầu trang">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+      </svg>
+    </button>
+
+    <!-- Floating Contact Buttons -->
+    <div class="floating-contact">
+      <a href="https://zalo.me/0975088626" target="_blank" class="floating-btn floating-btn-zalo" aria-label="Chat qua Zalo" title="Chat Zalo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 48 48" fill="white">
+          <path d="M24 4C13.52 4 5 11.37 5 20.5c0 5.42 3.17 10.23 8 13.33v9.17l8.54-4.55c.78.11 1.59.16 2.42.16 10.48 0 19-7.37 19-16.5S34.48 4 24 4zm-4.5 22.5l-5.5-5.88 10.76-5.74-5 6.26 5.5 5.88L14.5 21.28l5-6.26z"/>
+        </svg>
+      </a>
+      <a href="tel:0975088626" class="floating-btn floating-btn-phone" aria-label="Gọi điện thoại" title="Gọi ngay">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16" fill="white">
+          <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Header từ layout_page -->
+    <header class="container-fluid" role="banner">
+      <!-- Toolbar -->
+      <div class="toolbar-section">
+        <div class="container d-flex align-items-center justify-content-between py-3 flex-wrap gap-3">
+          <!-- Search Bar -->
+          <div class="search-bar-wrapper" style="flex: 1; min-width: 250px; max-width: 400px;">
+            <form role="search" aria-label="Tìm kiếm vaccine" class="position-relative h-100">
+              <label for="search-vaccine" class="visually-hidden">Tìm kiếm vắc xin</label>
+              <input id="search-vaccine" name="search" placeholder="Tìm kiếm vắc xin..." type="search" class="form-control h-100 rounded-pill pe-5 border border-primary" style="background-color: #ffffff; text-indent: 10px" aria-label="Nhập tên vắc xin cần tìm" />
+              <img class="position-absolute top-50 translate-middle-y" src="Assets/Icons/search.png" alt="" aria-hidden="true" style="width: 30px; right: 10px; pointer-events: none;" loading="lazy" />
+            </form>
+          </div>
+
+          <!-- Contact Links -->
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <a href="tel:0975088626" class="d-flex align-items-center toolbar-link" aria-label="Gọi hotline 0975 088 626">
+              <img src="Assets/Icons/telephone.png" alt="" aria-hidden="true" class="toolbar-icon" loading="lazy" />
+              <span class="fw-bold fs-5 text-warning">0975 088 626</span>
+            </a>
+            <a href="#vaccine-catalog" class="d-flex align-items-center toolbar-link" aria-label="Xem danh sách vaccine để đặt mua">
+              <img src="Assets/Icons/shopping-basket.png" alt="" aria-hidden="true" class="toolbar-icon" loading="lazy" />
+              <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
+            </a>
+          </div>
+
+          <!-- Auth & Cart -->
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <a href="login.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn" aria-label="Đăng nhập tài khoản">Đăng nhập</a>
+            <a href="register.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn" aria-label="Đăng ký tài khoản mới">Đăng ký</a>
+            <div class="vr mx-2 d-none d-lg-block"></div>
+            <div class="position-relative">
+              <a href="cart.html" class="btn d-flex align-items-center btn-cart-custom" aria-label="Giỏ hàng có 3 sản phẩm">
+                <img src="Assets/Icons/cart.png" alt="" aria-hidden="true" class="toolbar-icon-small" loading="lazy" />
+                <span class="ms-2">Giỏ hàng</span>
+              </a>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" aria-label="3 sản phẩm trong giỏ">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Toolbar -->
+
+      <!-- Logo & Branding -->
+      <div class="brand-section">
+        <div class="container-fluid px-0">
+          <div class="row align-items-center g-0">
+            <div class="col-md-5">
+              <img src="Assets/Images/logo.png" alt="Logo TPVAX - Hệ thống tiêm chủng vaccine" class="img-fluid" loading="eager" />
+            </div>
+            <div class="col-md-7">
+              <div class="d-flex flex-column justify-content-center p-3 p-lg-4 brand-slogan" style="background-color: #0077b6; color: white">
+                <h1 class="display-5 display-lg-4 mb-1 fw-bold">Cổng tiêm chủng vắc xin</h1>
+                <p class="display-6 display-lg-5 mb-0">Chất lượng hàng đầu Việt Nam</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Logo -->
+
+      <!-- Main Navigation -->
+      <nav class="navbar navbar-expand-lg main-navbar" role="navigation" aria-label="Menu chính">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Mở/Đóng menu điều hướng">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
+            <ul class="container-fluid navbar-nav mx-auto d-flex flex-lg-row justify-content-around">
+              <li class="nav-item">
+                <a class="nav-link" href="layout_page.html">Trang chủ</a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vắc xin phòng bệnh</a>
+                <ul class="dropdown-menu" aria-label="Menu vắc xin phòng bệnh">
+                  <li><a class="dropdown-item" href="#vaccine-children"><img src="Assets/Icons/baby-boy.png" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />Vắc xin cho trẻ em</a></li>
+                  <li><a class="dropdown-item" href="#vaccine-adults"><img src="Assets/Icons/adults.png" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />Vắc xin cho người lớn</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#vaccine-pregnant"><img src="Assets/Icons/pregnant-woman.png" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />Vắc xin cho phụ nữ mang thai</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#vaccine-packages">Gói vắc xin</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="khuyen-mai-hot.html">Khuyến mãi HOT</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="toi-nen-tiem-gi.html">Tôi nên tiêm gì</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#schedule-lookup">Tra cứu lịch tiêm</a>
+              </li>
+              
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Kiến thức tiêm chủng</a>
+                <ul class="dropdown-menu" aria-label="Menu kiến thức tiêm chủng">
+                  <li><a class="dropdown-item" href="ttvctheodoituong.html"><img src="Assets/Icons/ttvacine.png" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />Thông tin vaccine theo đối tượng</a></li>
+                  <li><a class="dropdown-item" href="me-va-be.html"><img src="Assets/Icons/mother.png" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />Mẹ và bé</a></li>
+                  <li><a class="dropdown-item" href="benh-truyen-nhiem.html"><img src="Assets/Icons/virus.png" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />Bệnh truyền nhiễm</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- END Menu -->
+    </header>
+    <!-- END Header -->
+
+    <!-- Main Content -->
+    <main id="main-content" class="article-detail-page container my-5">
       <div class="row justify-content-center">
         <div class="col-lg-8">
           <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="layout_page.html"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
               <li class="breadcrumb-item">
                 <a href="ttvctheodoituong.html">Kiến thức tiêm chủng</a>
               </li>
@@ -34,19 +181,23 @@
           <div class="article-meta d-flex align-items-center justify-content-between mb-4 text-muted small">
             <div class="d-flex align-items-center article-meta-info">
                 <span class="me-3">
-                  <img src="Assets/Icons/calendar.png" alt="Ngày đăng" class="me-1 meta-icon">
+                  <i class="far fa-calendar-alt me-1"></i>
                   Ngày đăng: 14/10/2025
                 </span>
                 <span class="me-3">
-                  <img src="Assets/Icons/author.png" alt="Tác giả" class="me-1 meta-icon">
+                  <i class="fas fa-user-md me-1"></i>
                   Tác giả: BS. Nguyễn Văn A
                 </span>
             </div>
             
             <div class="d-flex align-items-center social-share-bar">
                 <span class="me-2 fw-bold text-dark share-text">Chia sẻ:</span>
-                <a href="#" class="share-btn me-2 facebook-share" title="Chia sẻ Facebook"><img src="Assets/Images/hexaxim.png" alt="Facebook" class="share-icon"></a>
-                <a href="#" class="share-btn zalo-share" title="Chia sẻ Zalo"><img src="Assets/Images/hexaxim.png" alt="Zalo" class="share-icon"></a>
+                <a href="#" class="share-btn me-2 facebook-share" title="Chia sẻ Facebook">
+                  <i class="fab fa-facebook fs-5 text-primary"></i>
+                </a>
+                <a href="#" class="share-btn zalo-share" title="Chia sẻ Zalo">
+                  <i class="fas fa-share-alt fs-5 text-info"></i>
+                </a>
             </div>
           </div>
 
@@ -125,10 +276,10 @@
               <h4 class="mb-3 text-white">Bạn cần tiêm Vắc xin HPV?</h4>
               <p class="lead text-white-50">Đừng bỏ lỡ thời điểm vàng. Đặt lịch tiêm ngay tại TPVAX để được tư vấn phác đồ phù hợp nhất.</p>
               <button class="btn btn-warning btn-lg me-3 fw-bold shadow-lg cta-button" data-bs-toggle="modal" data-bs-target="#appointmentModal">
-                <img src="Assets/Images/hexaxim.png" alt="Lịch" style="width:20px;" class="me-2 share-icon"> ĐẶT LỊCH TIÊM
+                <i class="far fa-calendar-check me-2"></i> ĐẶT LỊCH TIÊM
               </button>
               <a href="chitietvaccine.html" class="btn btn-outline-light btn-lg fw-bold cta-button">
-                XEM CHI TIẾT VẮC XIN
+                <i class="fas fa-info-circle me-2"></i> XEM CHI TIẾT VẮC XIN
               </a>
           </div>
 
@@ -194,7 +345,79 @@
       </section>
 
     </main>
+    <!-- END Main Content -->
 
+    <!-- Footer từ layout_page -->
+    <footer class="site-footer py-4" role="contentinfo">
+      <div class="container">
+        <!-- Logo & Branding -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
+              <div class="footer-logo-wrapper bg-white rounded p-2">
+                <img src="Assets/Images/logo.png" alt="Logo TPVAX" class="footer-logo" style="height: 100px" loading="lazy" />
+              </div>
+              <div class="footer-brand-text text-white">
+                <h2 class="h3 fw-bold mb-1">Cổng tiêm chủng vắc xin</h2>
+                <p class="h5 mb-0">Chất lượng hàng đầu Việt Nam</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <ul class="list-unstyled d-flex flex-wrap justify-content-around gap-4 mb-0">
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img src="Assets/Icons/contacs.png" alt="" aria-hidden="true" style="width: 30px" loading="lazy" />
+                <strong>Liên hệ</strong>
+              </li>
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img src="Assets/Icons/receiver.png" alt="" aria-hidden="true" style="width: 30px" loading="lazy" />
+                <a href="tel:0975088626" class="text-warning text-decoration-none"><strong>Hotline: 0975 088 626</strong></a>
+              </li>
+              <li class="d-flex align-items-center gap-2 text-warning">
+                <img src="Assets/Icons/location_7282031.png" alt="" aria-hidden="true" style="width: 30px" loading="lazy" />
+                <strong>140 Lê Trọng Tấn, Tân Phú, TP. HCM</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Company Details -->
+        <div class="row mb-3">
+          <div class="col-12 company-details text-white">
+            <p class="fw-bold mb-2">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+            <p class="mb-1">Email: <a href="mailto:cskh@tpvax.vn" class="text-white text-decoration-none">cskh@tpvax.vn</a></p>
+            <p class="mb-1">Số điện thoại: <a href="tel:0975088626" class="text-white text-decoration-none">0975 088 626</a></p>
+            <p class="mb-1">Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
+            <p class="mb-0">Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+          </div>
+        </div>
+
+        <hr class="footer-hr border-white opacity-50" />
+
+        <!-- Footer Bottom Links -->
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 text-white">
+              <span class="footer-hours"><i class="bi bi-clock"></i> Giờ mở cửa: 7:30 - 17:00</span>
+              <nav class="footer-links" aria-label="Footer links">
+                <a href="#privacy-policy" class="text-white text-decoration-none mx-2">Chính sách bảo mật</a>
+                <span class="text-white-50">|</span>
+                <a href="#survey" class="text-white text-decoration-none mx-2">Khảo sát tiêm chủng</a>
+                <span class="text-white-50">|</span>
+                <a href="#payment-policy" class="text-white text-decoration-none mx-2">Chính sách thanh toán</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- END Footer -->
+
+    <!-- Modal Đặt lịch -->
     <div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -203,14 +426,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="appointmentForm">
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" id="fullName" required>
+                            <input type="text" class="form-control" id="fullName" placeholder="Nguyễn Văn A" required>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" id="phoneNumber" required>
+                            <input type="tel" class="form-control" id="phoneNumber" placeholder="0975088626" required>
                         </div>
                         <div class="mb-3">
                             <label for="vaccineName" class="form-label">Vắc xin quan tâm</label>
@@ -220,14 +443,40 @@
                             <label for="appointmentDate" class="form-label">Ngày hẹn mong muốn</label>
                             <input type="date" class="form-control" id="appointmentDate" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Xác nhận Đặt lịch</button>
+                        <div class="alert alert-info small mb-3">
+                            <i class="fas fa-info-circle me-1"></i> <strong>Lưu ý:</strong> Đây là demo frontend - dữ liệu không được lưu thực tế.
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-paper-plane me-2"></i> Xác nhận Đặt lịch
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Scripts -->
     <script src="Scripts/bootstrap.min.js"></script>
     <script>
+        // Scroll to top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        
+        window.addEventListener('scroll', function() {
+          if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.add('show');
+          } else {
+            scrollToTopBtn.classList.remove('show');
+          }
+        });
+        
+        scrollToTopBtn.addEventListener('click', function() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+
+        // Article page functionality
         document.addEventListener('DOMContentLoaded', function() {
             const articleContent = document.querySelector('.article-content');
             const tocList = document.getElementById('toc-list');
@@ -302,6 +551,52 @@
                     const vaccineMatch = ctaTitle.match(/Vắc xin (.*?)\?/);
                     const vaccineName = vaccineMatch ? vaccineMatch[1].trim() : 'Tư vấn tiêm chủng chung';
                     document.getElementById('vaccineName').value = vaccineName;
+                });
+            }
+
+            // Xử lý submit form (Frontend-only - Static data)
+            const appointmentForm = document.getElementById('appointmentForm');
+            if (appointmentForm) {
+                appointmentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const fullName = document.getElementById('fullName').value;
+                    const phoneNumber = document.getElementById('phoneNumber').value;
+                    const vaccineName = document.getElementById('vaccineName').value;
+                    const appointmentDate = document.getElementById('appointmentDate').value;
+                    
+                    // Format ngày theo dd/mm/yyyy
+                    const dateObj = new Date(appointmentDate);
+                    const formattedDate = dateObj.toLocaleDateString('vi-VN');
+                    
+                    // Hiển thị thông báo thành công
+                    const modalBody = appointmentForm.closest('.modal-body');
+                    modalBody.innerHTML = `
+                        <div class="text-center py-4">
+                            <div class="mb-4">
+                                <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                            </div>
+                            <h4 class="text-success mb-3">Đặt lịch thành công!</h4>
+                            <div class="alert alert-light text-start">
+                                <p class="mb-2"><strong>Họ tên:</strong> ${fullName}</p>
+                                <p class="mb-2"><strong>Số điện thoại:</strong> ${phoneNumber}</p>
+                                <p class="mb-2"><strong>Vắc xin:</strong> ${vaccineName}</p>
+                                <p class="mb-0"><strong>Ngày hẹn:</strong> ${formattedDate}</p>
+                            </div>
+                            <p class="text-muted small mb-3">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Chúng tôi sẽ liên hệ qua số <strong>${phoneNumber}</strong> để xác nhận lịch hẹn.
+                            </p>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-2"></i> Đóng
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Reset form khi đóng modal
+                    appointmentModal.addEventListener('hidden.bs.modal', function () {
+                        location.reload(); // Reload để reset form
+                    }, { once: true });
                 });
             }
         });

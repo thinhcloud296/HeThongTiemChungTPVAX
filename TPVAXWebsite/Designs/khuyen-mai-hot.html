@@ -1,554 +1,422 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Khuyến Mãi HOT | Trung tâm tiêm chủng TPVAX</title>
-    <link rel="stylesheet" href="Content/bootstrap.min.css" />
-    <link rel="stylesheet" href="main_style.css" />
-    <link rel="stylesheet" href="layout_page_style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-  </head>
-  <body>
-    <header class="container-fluid">
-      <!-- Toolbar -->
-      <div class="toolbar-section">
-        <div
-          class="container d-flex align-items-center justify-content-between py-3"
-        >
-          <div class="search-bar-wrapper">
-            <div class="position-relative" style="width: 100%; height: 100%">
-              <input
-                placeholder="Tìm kiếm vắc xin"
-                type="text"
-                class="form-control h-100 rounded-pill pe-5 border border-primary"
-                style="background-color: #ffffff; text-indent: 10px"
-              />
-              <img
-                class="position-absolute top-50 translate-middle-y"
-                src="Assets/Icons/search.png"
-                alt="Search"
-                style="width: 30px; right: 10px"
-              />
-            </div>
-          </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Khuyến mãi HOT - TPVAX">
+  <title>Khuyến Mãi HOT | TPVAX</title>
+  <link rel="icon" type="image/png" href="Assets/Images/logo.png">
+  <link rel="stylesheet" href="Content/bootstrap.min.css">
+  <link rel="stylesheet" href="main_style.css">
+  <link rel="stylesheet" href="layout_page_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- Scroll Button -->
+  <button id="scrollToTopBtn" class="scroll-to-top-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+    </svg>
+  </button>
 
-          <div class="d-flex align-items-center">
-            <a
-              href="tel:0975088626"
-              class="d-flex align-items-center me-4 toolbar-link"
-            >
-              <img
-                src="Assets/Icons/telephone.png"
-                alt="Phone"
-                class="toolbar-icon"
-              />
-              <span class="fw-bold fs-5 text-warning">0975 088 626</span>
+  <!-- Floating Buttons -->
+  <div class="floating-contact">
+    <a href="https://zalo.me/0975088626" target="_blank" class="floating-btn floating-btn-zalo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 48 48" fill="white">
+        <path d="M24 4C13.52 4 5 11.37 5 20.5c0 5.42 3.17 10.23 8 13.33v9.17l8.54-4.55c.78.11 1.59.16 2.42.16 10.48 0 19-7.37 19-16.5S34.48 4 24 4zm-4.5 22.5l-5.5-5.88 10.76-5.74-5 6.26 5.5 5.88L14.5 21.28l5-6.26z"/>
+      </svg>
+    </a>
+    <a href="tel:0975088626" class="floating-btn floating-btn-phone">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16" fill="white">
+        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Header từ layout_page -->
+  <header class="container-fluid">
+    <div class="toolbar-section">
+      <div class="container d-flex align-items-center justify-content-between py-3 flex-wrap gap-3">
+        <div class="search-bar-wrapper" style="flex: 1; min-width: 250px; max-width: 400px;">
+          <form role="search" class="position-relative h-100">
+            <input id="search-vaccine" placeholder="Tìm kiếm vắc xin..." type="search" class="form-control h-100 rounded-pill pe-5 border border-primary" style="background-color: #ffffff; text-indent: 10px">
+            <img class="position-absolute top-50 translate-middle-y" src="Assets/Icons/search.png" alt="" style="width: 30px; right: 10px; pointer-events: none;">
+          </form>
+        </div>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <a href="tel:0975088626" class="d-flex align-items-center toolbar-link">
+            <img src="Assets/Icons/telephone.png" alt="" class="toolbar-icon">
+            <span class="fw-bold fs-5 text-warning">0975 088 626</span>
+          </a>
+          <a href="#vaccine-catalog" class="d-flex align-items-center toolbar-link">
+            <img src="Assets/Icons/shopping-basket.png" alt="" class="toolbar-icon">
+            <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
+          </a>
+        </div>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <a href="login.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng nhập</a>
+          <a href="register.html" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng ký</a>
+          <div class="vr mx-2 d-none d-lg-block"></div>
+          <div class="position-relative">
+            <a href="cart.html" class="btn d-flex align-items-center btn-cart-custom">
+              <img src="Assets/Icons/cart.png" alt="" class="toolbar-icon-small">
+              <span class="ms-2">Giỏ hàng</span>
             </a>
-            <a href="#" class="d-flex align-items-center toolbar-link">
-              <img
-                src="Assets/Icons/shopping-basket.png"
-                alt="Order"
-                class="toolbar-icon"
-              />
-              <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
-            </a>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <div class="d-flex align-items-center">
-            <a
-              href="login.html"
-              class="btn btn-outline-primary rounded-pill mx-1 login-btn"
-              >Đăng nhập</a
-            >
-            <a
-              href="register.html"
-              class="btn btn-outline-primary rounded-pill mx-1 login-btn"
-              >Đăng ký</a
-            >
-            <div class="vr mx-2"></div>
-            <div class="position-relative">
-              <a
-                href="cart.html"
-                class="btn d-flex align-items-center btn-cart-custom"
-              >
-                <img
-                  src="Assets/Icons/cart.png"
-                  alt="Cart"
-                  class="toolbar-icon-small"
-                />
-                <span class="ms-2">Giỏ hàng</span>
-              </a>
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              >
-                3
-              </span>
+    <div class="brand-section">
+      <div class="container-fluid px-0">
+        <div class="row align-items-center g-0">
+          <div class="col-md-5">
+            <img src="Assets/Images/logo.png" alt="Logo TPVAX" class="img-fluid">
+          </div>
+          <div class="col-md-7">
+            <div class="d-flex flex-column justify-content-center p-3 p-lg-4 brand-slogan" style="background-color: #0077b6; color: white">
+              <h1 class="display-5 display-lg-4 mb-1 fw-bold">Cổng tiêm chủng vắc xin</h1>
+              <p class="display-6 display-lg-5 mb-0">Chất lượng hàng đầu Việt Nam</p>
             </div>
           </div>
         </div>
       </div>
-      <!-- END Toolbar -->
+    </div>
 
-      <!-- Logo -->
-      <div class="brand-section">
-        <div class="container-fluid px-0">
-          <div class="row align-items-center">
-            <div class="col-md-5">
-              <img
-                src="Assets/Images/logo.png"
-                alt="Hệ thống tiêm chủng TPVAX"
-                class="img-fluid"
-              />
-            </div>
-            <div class="col-md-7">
-              <div
-                class="d-flex flex-column justify-content-center p-3"
-                style="background-color: #0077b6; color: white"
-              >
-                <p class="display-1 mb-1 text-nowrap">
-                  <strong>Cổng tiêm chủng vắc xin</strong>
-                </p>
-                <p class="display-3 mb-0 text-nowrap">
-                  Chất lượng hàng đầu Việt Nam
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- END Logo -->
-
-      <!-- Menu -->
-      <nav class="navbar navbar-expand-lg main-navbar">
-        <div class="container-fluid">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainNavbarContent"
-            aria-controls="mainNavbarContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
-            <ul
-              class="container-fluid navbar-nav mx-auto d-flex flex-row justify-content-around"
-            >
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  aria-current="page"
-                  href="layout_page.html"
-                  >Trang chủ</a
-                >
-              </li>
-
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Vắc xin phòng bệnh
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <img
-                        src="Assets/Icons/baby-boy.png"
-                        alt="Icon Trẻ em"
-                        class="dropdown-icon-custom"
-                      />
-                      Vắc xin cho trẻ em
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <img
-                        src="Assets/Icons/adults.png"
-                        alt="Icon Người lớn"
-                        class="dropdown-icon-custom"
-                      />
-                      Vắc xin cho người lớn
-                    </a>
-                  </li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <img
-                        src="Assets/Icons/pregnant-woman.png"
-                        alt="Icon Phụ nữ mang thai"
-                        class="dropdown-icon-custom"
-                      />
-                      Vắc xin cho phụ nữ mang thai
-                    </a>
-                  </li>
-                </ul>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="#">Gói vắc xin</a>
-              </li>
-
-              <li class="nav-item active">
-                <a class="nav-link active" href="khuyen-mai-hot.html"
-                  >Khuyến mãi HOT</a
-                >
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="toi-nen-tiem-gi.html"
-                  >Tôi nên tiêm gì</a
-                >
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="#">Tra cứu lịch tiêm</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Kiến thức tiêm chủng
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="ttvctheodoituong.html">
-                      <img
-                        src="Assets/Icons/ttvacine.png"
-                        alt="Icon Thông tin Vaccine"
-                        class="dropdown-icon-custom"
-                      />
-                      Thông tin vaccine theo đối tượng
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="me-va-be.html">
-                      <img
-                        src="Assets/Icons/mother.png"
-                        alt="Icon Mẹ và Bé"
-                        class="dropdown-icon-custom"
-                      />
-                      Mẹ và bé
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="benh-truyen-nhiem.html">
-                      <img
-                        src="Assets/Icons/virus.png"
-                        alt="Icon Bệnh truyền nhiễm"
-                        class="dropdown-icon-custom"
-                      />
-                      Bệnh truyền nhiễm
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- END Menu -->
-    </header>
-    <main class="knowledge-page-main">
-      <section class="knowledge-hero promo-hero text-center py-5">
-        <div class="container">
-          <nav
-            aria-label="breadcrumb"
-            class="d-flex justify-content-center mb-2"
-          >
-            <ol class="breadcrumb promo-breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="index.html" class="text-secondary">Trang chủ</a>
-              </li>
-              <li
-                class="breadcrumb-item active text-primary"
-                aria-current="page"
-              >
-                Khuyến mãi
-              </li>
-            </ol>
-          </nav>
-          <h1 class="fw-bold promo-title">Khuyến mãi</h1>
-          <p class="lead promo-subtitle">
-            Tìm hiểu các thông tin khuyến mãi tại Trung tâm tiêm chủng TPVAX
-          </p>
-          <div class="hero-illustration">
-            <img
-              src="Assets/Images/hexaxim.png"
-              alt="Minh họa Khuyến Mãi"
-              class="img-fluid hero-img-custom"
-            />
-          </div>
-        </div>
-      </section>
-
-      <div class="container my-5">
-        <section class="article-grid">
-          <div class="row g-4 promo-container">
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-doi-qua-hai-phong"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Đổi quà Hải Phòng"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    THỂ LỆ & ĐIỀU KIỆN KHOẢN GIA CHƯƠNG TRÌNH ĐI TIÊM CÙNG...
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-goi-duong-da"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Gối dưỡng da"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    THỂ LỆ & ĐIỀU KIỆN KHOẢN GIA CHƯƠNG TRÌNH NHẬN GỐI DƯỠNG...
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-fan-meeting-domic"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Fan Meeting Domic"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    THỂ LỆ & ĐIỀU KIỆN KHOẢN CƠ HỘI NHẬN VÉ FAN MEETING DOMIE
-                    HOMIE
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-voucher-800k"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Voucher 800k"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    THỂ LỆ CHƯƠNG TRÌNH: DÀNH TẶNG SIÊU VOUCHER 800K CHO ÔNG BÀ
-                    TỪ 60 TUỔI...
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-qua-tang-2-trieu"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Quà tặng 2 Triệu"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    THỂ LỆ THAM GIA CHƯƠNG TRÌNH ĐI TIÊM VÀ SĂN QUÀ ĐỘC QUYỀN
-                    CÙNG QUANG HÙNG...
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-pride-month"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Pride Month"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    CHÀO THÁNG TỰ HÀO, SỐNG DŨNG CẢM SẮC MÀU KHÔNG LO VƯỚNG MẮC
-                    HPV
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-deal-an-toan"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Deal an toàn"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    TIÊM CHỦNG AN TOÀN, DI CHUYỂN DỄ DÀNG, TIẾT KIỆM CÙNG TPVAX
-                    VÀ...
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <a
-                href="bai-viet-chi-tiet.html?slug=km-deal-3-duoc"
-                class="card h-100 promo-card-custom hover-lift"
-              >
-                <img
-                  src="Assets/Images/hexaxim.png"
-                  class="card-img-top promo-grid-img"
-                  alt="Deal 3 dược"
-                />
-                <span class="promo-tag-badge">Article</span>
-                <div class="card-body">
-                  <p class="card-text fw-bold promo-title-small">
-                    THỂ LỆ CHƯƠNG TRÌNH "NHẬN ĐIỂM THƯỞNG" DÀNH CHO KHÁCH HÀNG
-                    TIÊM...
-                  </p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-
-    <footer class="site-footer py-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="d-flex align-items-center justify-content-center">
-              <div
-                style="
-                  height: 130px;
-                  width: fit-content;
-                  background-color: white;
-                "
-              >
-                <img
-                  src="Assets/Images/logo.png"
-                  alt="Hệ thống tiêm chủng TPVAX"
-                  style="height: 100%"
-                  class="img-fluid"
-                />
-              </div>
-              <div class="logo-text ps-4">
-                <p class="display-4 mb-1">
-                  <strong>Cổng tiêm chủng vắc xin</strong>
-                </p>
-                <p class="display-6 mb-0">Chất lượng hàng đầu Việt Nam</p>
-              </div>
-            </div>
-          </div>
-
-          <ul
-            class="col-lg-12 d-flex flex-row justify-content-around py-3"
-            style="font-size: 25px"
-          >
-            <li
-              class="d-flex align-items-center justify-content-center text-warning"
-            >
-              <img
-                src="Assets/Icons/contacs.png"
-                alt="Liên hệ"
-                style="width: 30px"
-              />
-              <strong>Liên hệ</strong>
+    <nav class="navbar navbar-expand-lg main-navbar">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
+          <ul class="container-fluid navbar-nav mx-auto d-flex flex-lg-row justify-content-around">
+            <li class="nav-item"><a class="nav-link" href="layout_page.html">Trang chủ</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Vắc xin phòng bệnh</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#vaccine-children"><img src="Assets/Icons/baby-boy.png" alt="" class="dropdown-icon-custom">Vắc xin cho trẻ em</a></li>
+                <li><a class="dropdown-item" href="#vaccine-adults"><img src="Assets/Icons/adults.png" alt="" class="dropdown-icon-custom">Vắc xin cho người lớn</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#vaccine-pregnant"><img src="Assets/Icons/pregnant-woman.png" alt="" class="dropdown-icon-custom">Vắc xin cho phụ nữ mang thai</a></li>
+              </ul>
             </li>
-            <li
-              class="d-flex align-items-center justify-content-center text-warning"
-            >
-              <img
-                src="Assets/Icons/receiver.png"
-                alt="Hotline"
-                style="width: 30px"
-              />
-              <strong>Hotline: 0975 088 626</strong>
-            </li>
-            <li
-              class="d-flex align-items-center justify-content-center text-warning"
-            >
-              <img
-                src="Assets/Icons/location_7282031.png"
-                alt="Địa chỉ"
-                style="width: 30px"
-              />
-              <strong>140 Lê Trọng Tấn, Tân Phú, TP. Hồ Chí Minh</strong>
+            <li class="nav-item"><a class="nav-link" href="#vaccine-packages">Gói vắc xin</a></li>
+            <li class="nav-item"><a class="nav-link active" href="khuyen-mai-hot.html">Khuyến mãi HOT</a></li>
+            <li class="nav-item"><a class="nav-link" href="toi-nen-tiem-gi.html">Tôi nên tiêm gì</a></li>
+            <li class="nav-item"><a class="nav-link" href="#schedule-lookup">Tra cứu lịch tiêm</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Kiến thức tiêm chủng</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="ttvctheodoituong.html"><img src="Assets/Icons/ttvacine.png" alt="" class="dropdown-icon-custom">Thông tin vaccine theo đối tượng</a></li>
+                <li><a class="dropdown-item" href="me-va-be.html"><img src="Assets/Icons/mother.png" alt="" class="dropdown-icon-custom">Mẹ và bé</a></li>
+                <li><a class="dropdown-item" href="benh-truyen-nhiem.html"><img src="Assets/Icons/virus.png" alt="" class="dropdown-icon-custom">Bệnh truyền nhiễm</a></li>
+              </ul>
             </li>
           </ul>
         </div>
+      </div>
+    </nav>
+  </header>
 
-        <div class="row">
-          <div class="col-12 company-details">
-            <p class="fw-bold">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
-            <p>Email: cskh@tpvax.vn</p>
-            <p>Số điện thoại: 0975 088 626</p>
-            <p>Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
-            <p>Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="promo-hero-modern">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <nav aria-label="breadcrumb" class="mb-3">
+              <ol class="breadcrumb breadcrumb-modern">
+                <li class="breadcrumb-item"><a href="layout_page.html"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
+                <li class="breadcrumb-item active">Khuyến mãi HOT</li>
+              </ol>
+            </nav>
+            <h1 class="hero-title"><i class="fas fa-gift me-3"></i>Khuyến Mãi HOT</h1>
+            <p class="hero-subtitle">Nhận ngay các ưu đãi hấp dẫn khi tiêm chủng tại TPVAX. Tiết kiệm chi phí, bảo vệ sức khỏe toàn diện!</p>
+            <div class="stats-row">
+              <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-tags"></i></div>
+                <div><div class="stat-num">8+</div><div class="stat-label">Chương trình</div></div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-percent"></i></div>
+                <div><div class="stat-num">40%</div><div class="stat-label">Giảm tối đa</div></div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div><div class="stat-num">Hàng tuần</div><div class="stat-label">Cập nhật</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 d-none d-lg-block">
+            <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi" class="img-fluid hero-img-float">
           </div>
         </div>
+      </div>
+    </section>
 
-        <hr class="footer-hr" />
+    <!-- Promo Cards Section -->
+    <section class="promo-cards-section">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="section-title-modern">Chương Trình Ưu Đãi</h2>
+          <p class="section-subtitle-modern">Khám phá các khuyến mãi đặc biệt dành cho bạn</p>
+        </div>
 
-        <div class="row">
-          <div
-            class="col-12 d-flex justify-content-between align-items-center footer-bottom-links"
-          >
-            <span>Giờ mở cửa : 7:30 - 17:00</span>
-            <div>
-              <a href="#">Chính sách bảo mật</a>
-              <a href="#">Khảo sát tiêm chủng</a>
-              <a href="#">Chính sách thanh toán</a>
+        <div class="row g-4">
+          <!-- Card 1 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 1">
+                <span class="badge-hot-new">HOT</span>
+                <span class="badge-discount-new">-30%</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag"><i class="fas fa-gift me-2"></i>Sự kiện</span>
+                <h3 class="card-title-new">Mừng khai trương chi nhánh Hải Phòng</h3>
+                <p class="card-desc-new">Nhân dịp khai trương chi nhánh mới tại Hải Phòng, TPVAX triển khai chương trình ưu đãi đặc biệt với mức giảm giá lên đến 30%.</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/12/2025</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-doi-qua-hai-phong" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 2">
+                <span class="badge-new-label">MỚI</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag card-tag-green"><i class="fas fa-gift me-2"></i>Quà tặng</span>
+                <h3 class="card-title-new">Gối dưỡng da cao cấp khi tiêm vaccine</h3>
+                <p class="card-desc-new">Tặng ngay gối dưỡng da cao cấp trị giá 500.000đ cho khách hàng tiêm từ 2 mũi vaccine trở lên. Số lượng có hạn!</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 30/11/2025</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-goi-duong-da" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 3">
+                <span class="badge-hot-new">HOT</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag card-tag-purple"><i class="fas fa-users me-2"></i>Sự kiện</span>
+                <h3 class="card-title-new">Fan Meeting - Gặp gỡ chuyên gia</h3>
+                <p class="card-desc-new">Đặc quyền fan meeting độc quyền dành cho khách hàng tiêm vaccine HPV Gardasil 9 tại TPVAX.</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 15/12/2025</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-fan-meeting-domic" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 4">
+                <span class="badge-new-label">MỚI</span>
+                <span class="badge-discount-new">800K</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag card-tag-orange"><i class="fas fa-ticket-alt me-2"></i>Voucher</span>
+                <h3 class="card-title-new">Voucher 800K cho người cao tuổi</h3>
+                <p class="card-desc-new">Chương trình chăm sóc sức khỏe người cao tuổi với ưu đãi đặc biệt giảm 800.000đ khi tiêm gói vaccine toàn diện.</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/01/2026</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-voucher-800k" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 5">
+                <span class="badge-hot-new">HOT</span>
+                <span class="badge-discount-new">2TR</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag card-tag-red"><i class="fas fa-gift me-2"></i>Ưu đãi lớn</span>
+                <h3 class="card-title-new">Quà tặng trị giá 2 triệu đồng</h3>
+                <p class="card-desc-new">Cơ hội nhận quà tặng trị giá lên đến 2 triệu đồng khi tham gia chương trình tiêm vaccine đặc biệt dành cho gia đình.</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/12/2025</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-qua-tang-2-trieu" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 6">
+                <span class="badge-new-label">MỚI</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag card-tag-rainbow"><i class="fas fa-rainbow me-2"></i>Chiến dịch</span>
+                <h3 class="card-title-new">Pride Month - Sống dũng cảm</h3>
+                <p class="card-desc-new">Ưu đãi đặc biệt nhân tháng Pride Month cho cộng đồng LGBTQ+ khi tiêm vaccine phòng HPV.</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Tháng 6/2025</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-pride-month" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 7">
+                <span class="badge-hot-new">HOT</span>
+                <span class="badge-discount-new">-40%</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag card-tag-blue"><i class="fas fa-car me-2"></i>Đối tác</span>
+                <h3 class="card-title-new">Deal di chuyển an toàn</h3>
+                <p class="card-desc-new">Hợp tác với các đối tác vận chuyển uy tín, giảm giá đến 40% phí di chuyển khi đặt lịch tiêm.</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/03/2026</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-deal-an-toan" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 8 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="promo-card-new">
+              <div class="card-img-wrapper">
+                <img src="Assets/Images/hexaxim.png" alt="Khuyến mãi 8">
+                <span class="badge-new-label">MỚI</span>
+              </div>
+              <div class="card-body-new">
+                <span class="card-tag card-tag-gold"><i class="fas fa-star me-2"></i>Tích điểm</span>
+                <h3 class="card-title-new">Nhận điểm thưởng tích lũy</h3>
+                <p class="card-desc-new">Chương trình khách hàng thân thiết - Tích điểm đổi quà và nhận ưu đãi đặc biệt cho lần tiêm tiếp theo.</p>
+                <div class="card-footer-new">
+                  <span class="card-date"><i class="far fa-calendar me-2"></i>Không giới hạn</span>
+                  <a href="bai-viet-chi-tiet.html?slug=km-deal-3-duoc" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </footer>
-    <script src="Scripts/bootstrap.min.js"></script>
-  </body>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section-modern">
+      <div class="container">
+        <div class="cta-box-modern">
+          <div class="row align-items-center">
+            <div class="col-lg-8">
+              <div class="cta-icon-large"><i class="fas fa-bell"></i></div>
+              <h2 class="cta-title-large">Đăng ký nhận thông báo khuyến mãi</h2>
+              <p class="cta-desc-large">Đừng bỏ lỡ các chương trình ưu đãi hấp dẫn! Đăng ký ngay để nhận thông báo sớm nhất về các khuyến mãi HOT từ TPVAX.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="register.html" class="btn-cta-large-new"><i class="fas fa-user-plus me-2"></i>Đăng ký ngay</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer từ layout_page -->
+  <footer class="site-footer py-4">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
+            <div class="footer-logo-wrapper bg-white rounded p-2">
+              <img src="Assets/Images/logo.png" alt="Logo TPVAX" class="footer-logo" style="height: 100px">
+            </div>
+            <div class="footer-brand-text text-white">
+              <h2 class="h3 fw-bold mb-1">Cổng tiêm chủng vắc xin</h2>
+              <p class="h5 mb-0">Chất lượng hàng đầu Việt Nam</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-12">
+          <ul class="list-unstyled d-flex flex-wrap justify-content-around gap-4 mb-0">
+            <li class="d-flex align-items-center gap-2 text-warning">
+              <img src="Assets/Icons/contacs.png" alt="" style="width: 30px">
+              <strong>Liên hệ</strong>
+            </li>
+            <li class="d-flex align-items-center gap-2 text-warning">
+              <img src="Assets/Icons/receiver.png" alt="" style="width: 30px">
+              <a href="tel:0975088626" class="text-warning text-decoration-none"><strong>Hotline: 0975 088 626</strong></a>
+            </li>
+            <li class="d-flex align-items-center gap-2 text-warning">
+              <img src="Assets/Icons/location_7282031.png" alt="" style="width: 30px">
+              <strong>140 Lê Trọng Tấn, Tân Phú, TP. HCM</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 company-details text-white">
+          <p class="fw-bold mb-2">CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+          <p class="mb-1">Email: <a href="mailto:cskh@tpvax.vn" class="text-white text-decoration-none">cskh@tpvax.vn</a></p>
+          <p class="mb-1">Số điện thoại: <a href="tel:0975088626" class="text-white text-decoration-none">0975 088 626</a></p>
+          <p class="mb-1">Người tạo nội dung: Nguyễn Hoàng Thịnh</p>
+          <p class="mb-0">Bản quyền ©2025 thuộc về CÔNG TY CỔ PHẦN TIÊM PHÒNG VIỆT NAM</p>
+        </div>
+      </div>
+      <hr class="footer-hr border-white opacity-50">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 text-white">
+            <span class="footer-hours">Giờ mở cửa: 7:30 - 17:00</span>
+            <nav class="footer-links">
+              <a href="#privacy-policy" class="text-white text-decoration-none mx-2">Chính sách bảo mật</a>
+              <span class="text-white-50">|</span>
+              <a href="#survey" class="text-white text-decoration-none mx-2">Khảo sát tiêm chủng</a>
+              <span class="text-white-50">|</span>
+              <a href="#payment-policy" class="text-white text-decoration-none mx-2">Chính sách thanh toán</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="Scripts/bootstrap.min.js"></script>
+  <script>
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
+    });
+    scrollToTopBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
 </html>
