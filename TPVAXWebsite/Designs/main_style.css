@@ -6864,3 +6864,700 @@ main.vaccine-detail {
     margin-bottom: 20px;
   }
 }
+
+
+/* ============================================
+   CART PAGE (SHOPPING CART & BOOKING)
+   ============================================ */
+
+/* Back to Home Button */
+.back-home-cart {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.back-home-cart a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: white;
+  color: #0077b6;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 2px solid #0077b6;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 119, 182, 0.15);
+}
+
+.back-home-cart a:hover {
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+  color: white;
+  transform: translateX(-5px);
+  box-shadow: 0 6px 20px rgba(0, 119, 182, 0.3);
+}
+
+/* Cart Page Main */
+.cart-page-main {
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+/* Cart Header */
+.cart-header .page-heading {
+  font-size: 36px;
+  font-weight: 800;
+  color: #0a2157;
+  margin-bottom: 10px;
+}
+
+.cart-header .page-heading i {
+  color: #0077b6;
+}
+
+/* Empty Cart */
+.empty-cart-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-cart-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.empty-cart-icon {
+  font-size: 120px;
+  color: #e1e8ed;
+  margin-bottom: 30px;
+}
+
+.empty-cart-content h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0a2157;
+  margin-bottom: 15px;
+}
+
+.empty-cart-content p {
+  color: #6c757d;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+/* Person Info Card */
+.person-info-card {
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.person-info-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.person-header {
+  display: flex;
+  align-items: center;
+}
+
+.person-info-details {
+  font-size: 14px;
+  margin-left: 32px;
+}
+
+/* Vaccine List Header */
+.vaccine-list-header {
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 10px;
+}
+
+.vaccine-list-header h5 {
+  color: #0a2157;
+  font-weight: 700;
+}
+
+.vaccine-list-header #clearCartBtn {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Vaccine Item Card */
+.vaccine-item-card {
+  border: 2px solid #e1e8ed;
+  border-radius: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.vaccine-item-card:hover {
+  border-color: #0077b6;
+  box-shadow: 0 8px 25px rgba(0, 119, 182, 0.15);
+  transform: translateY(-3px);
+}
+
+.vaccine-item-layout {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Vaccine Image */
+.vaccine-image-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.vaccine-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f8f9fa;
+  padding: 10px;
+}
+
+.vaccine-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  background: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.vaccine-badge i {
+  color: #28a745;
+  font-size: 18px;
+}
+
+/* Vaccine Info */
+.vaccine-info-section {
+  min-width: 0;
+}
+
+.vaccine-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a2157;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.origin-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.bg-success-soft {
+  background: #d4edda !important;
+}
+
+.vaccine-disease {
+  font-size: 15px;
+  color: #495057;
+  margin: 0;
+}
+
+.vaccine-schedule {
+  font-size: 14px;
+  margin: 0;
+}
+
+.vaccine-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.small-offer {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  background: #fff3cd;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #856404;
+}
+
+/* Vaccine Actions */
+.vaccine-actions {
+  text-align: right;
+  min-width: 200px;
+}
+
+.price-section {
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.price-old {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.price-current {
+  font-size: 24px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.price-per-dose {
+  font-size: 12px;
+}
+
+/* Quantity Control */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.qty-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #0077b6;
+  background: white;
+  color: #0077b6;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.qty-btn:hover {
+  background: #0077b6;
+  color: white;
+  transform: scale(1.05);
+}
+
+.qty-btn:active {
+  transform: scale(0.95);
+}
+
+.quantity-input {
+  width: 60px;
+  height: 36px;
+  text-align: center;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #0a2157;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: #0077b6;
+}
+
+.delete-btn {
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.delete-btn:hover {
+  background: #dc3545 !important;
+  color: white !important;
+  border-color: #dc3545 !important;
+  transform: translateY(-2px);
+}
+
+/* Promo Code Section */
+.promo-code-section {
+  border: 2px dashed #0077b6;
+  border-radius: 15px;
+}
+
+.promo-code-section h6 {
+  color: #0a2157;
+  font-weight: 700;
+}
+
+.promo-code-section .input-group input {
+  border: 2px solid #e1e8ed;
+  border-radius: 10px 0 0 10px;
+  padding: 12px 16px;
+  font-weight: 500;
+}
+
+.promo-code-section .input-group input:focus {
+  border-color: #0077b6;
+  box-shadow: none;
+}
+
+.promo-code-section .input-group button {
+  border-radius: 0 10px 10px 0;
+  padding: 12px 20px;
+  font-weight: 600;
+}
+
+/* Available Vouchers */
+.voucher-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.voucher-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+  border: 1px solid #ffc107;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #856404;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.voucher-badge:hover {
+  background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+}
+
+/* Summary Card */
+.summary-card {
+  top: 100px;
+}
+
+.section-card {
+  background: white;
+  border-radius: 15px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.section-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.section-card .card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a2157;
+  margin-bottom: 15px;
+}
+
+/* Selection Button */
+.selection-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: 2px solid #e1e8ed;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.selection-btn:hover {
+  border-color: #0077b6;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 119, 182, 0.1);
+}
+
+.selection-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected-value {
+  color: #0a2157;
+  font-size: 14px;
+}
+
+.selection-btn i.fa-chevron-right {
+  color: #0077b6;
+  font-size: 12px;
+}
+
+/* Price Summary */
+.price-list li {
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+.price-list li:not(:last-child) {
+  border-bottom: 1px dashed #e1e8ed;
+}
+
+.final-price-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* Confirmation Button */
+.btn-confirm {
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 24px rgba(0, 119, 182, 0.35);
+}
+
+.btn-confirm:hover {
+  background: linear-gradient(135deg, #005f8f 0%, #0096c7 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 119, 182, 0.45);
+  color: white;
+}
+
+.btn-confirm:active {
+  transform: translateY(-1px);
+}
+
+/* Security Badges */
+.security-badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.security-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #6c757d;
+}
+
+.security-item i {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+/* Terms Policy Text */
+.terms-policy-text {
+  line-height: 1.6;
+}
+
+/* Modal Styles */
+.location-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.location-item:hover {
+  border-color: #0077b6;
+  background: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.location-info h6 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0a2157;
+  margin-bottom: 8px;
+}
+
+/* Time Slots */
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.time-slot-btn {
+  padding: 12px 16px;
+  background: white;
+  border: 2px solid #e1e8ed;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  color: #495057;
+}
+
+.time-slot-btn:hover {
+  border-color: #0077b6;
+  background: #f8f9fa;
+}
+
+.time-slot-btn.active {
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+  border-color: #0077b6;
+  color: white;
+}
+
+/* Success Modal */
+.success-icon {
+  font-size: 80px;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .cart-page-main {
+    padding-top: 60px;
+  }
+
+  .back-home-cart {
+    top: 10px;
+    left: 10px;
+  }
+
+  .back-home-cart a span {
+    display: none;
+  }
+
+  .vaccine-item-layout {
+    grid-template-columns: auto 1fr;
+    gap: 15px;
+  }
+
+  .vaccine-actions {
+    grid-column: 1 / -1;
+    text-align: left;
+    min-width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e1e8ed;
+  }
+
+  .price-section {
+    order: 1;
+    flex: 1;
+  }
+
+  .quantity-section {
+    order: 2;
+  }
+
+  .delete-btn {
+    order: 3;
+    width: auto;
+  }
+
+  .summary-card {
+    position: static !important;
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cart-header .page-heading {
+    font-size: 28px;
+  }
+
+  .vaccine-image-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  .vaccine-name {
+    font-size: 16px;
+  }
+
+  .price-current {
+    font-size: 20px;
+  }
+
+  .time-slots {
+    grid-template-columns: 1fr;
+  }
+
+  .security-badges {
+    grid-template-columns: 1fr;
+  }
+
+  .person-info-details {
+    font-size: 12px;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .person-info-card .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .person-info-card button {
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .vaccine-item-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .vaccine-image-wrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    max-width: 150px;
+    margin: 0 auto;
+  }
+
+  .vaccine-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .price-section,
+  .quantity-section,
+  .delete-btn {
+    width: 100%;
+  }
+
+  .quantity-control {
+    justify-content: center;
+  }
+}
+

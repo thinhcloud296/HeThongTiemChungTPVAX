@@ -3,255 +3,778 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Giỏ hàng đặt lịch tiêm chủng - Quản lý vaccine, chọn địa điểm và thời gian tiêm phòng tại TPVAX" />
+    <meta name="keywords" content="giỏ hàng, đặt lịch tiêm, vaccine, TPVAX, tiêm chủng" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Assets/Images/logo.png" />
+    
     <title>Giỏ Hàng & Đặt Lịch Tiêm - TPVAX</title>
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <link rel="stylesheet" href="main_style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="layout_page_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Back to Home Button -->
+    <div class="back-home-cart">
+      <a href="layout_page.html">
+        <i class="fas fa-arrow-left"></i>
+        <span>Tiếp tục mua sắm</span>
+      </a>
+    </div>
+
     <main class="cart-page-main container my-5">
-      <h1 class="page-heading">Giỏ hàng và Đặt lịch tiêm chủng</h1>
-      <div class="row g-4">
-        <div class="col-lg-8">
-          <div class="person-info-card card shadow-sm mb-4">
-            <div
-              class="card-body d-flex justify-content-between align-items-center"
-            >
-              <div class="person-details">
-                <span class="person-name-age fw-bold fs-5">Trần Tấn Tài</span>
-                <span class="text-muted ms-3"
-                  >Nam | 01/02/2004 (21 Tuổi 8 Tháng 11 Ngày)</span
-                >
-              </div>
-            </div>
+      <!-- Page Header -->
+      <div class="cart-header mb-4">
+        <h1 class="page-heading">
+          <i class="fas fa-shopping-cart me-3"></i>
+          Giỏ hàng và Đặt lịch tiêm chủng
+        </h1>
+        <p class="text-muted">Hoàn tất đơn hàng và chọn thời gian tiêm phòng phù hợp</p>
+      </div>
+
+      <!-- Empty Cart Message (Hidden by default) -->
+      <div class="empty-cart-container" id="emptyCart" style="display: none;">
+        <div class="empty-cart-content">
+          <div class="empty-cart-icon">
+            <i class="fas fa-shopping-cart"></i>
           </div>
-
-          <div class="vaccine-list">
-            <div class="vaccine-item-card card mb-3">
-              <div class="card-body">
-                <div class="d-flex align-items-start">
-                  <img
-                    src="Assets/Images/hexaxim.png"
-                    alt="Vắc xin Hexaxim"
-                    class="vaccine-thumb me-3"
-                  />
-                  <div class="flex-grow-1">
-                    <p class="vaccine-name mb-1">
-                      <span class="origin-tag">🇩🇪 Đức</span>
-                      Vắc xin Qdenga
-                    </p>
-                    <p class="vaccine-disease fw-bold">Phòng Sốt xuất huyết</p>
-                    <p class="vaccine-schedule text-muted">
-                      Phác đồ: Từ 4 tuổi trở lên (2 Liều)
-                    </p>
-
-                    <div class="small-offer mt-2">
-                      <i class="fas fa-gift text-success me-1"></i> Giảm 3% khi
-                      mua gói
-                    </div>
-                  </div>
-
-                  <div class="vaccine-actions text-end">
-                    <div
-                      class="price-old text-decoration-line-through text-muted small"
-                    >
-                      1.390.000₫
-                    </div>
-                    <div class="price-current fw-bold text-danger fs-5">
-                      1.348.300₫
-                    </div>
-                    <div
-                      class="quantity-control d-flex mt-2 justify-content-end"
-                    >
-                      <input
-                        type="number"
-                        value="1"
-                        min="1"
-                        class="form-control form-control-sm text-center quantity-input me-2"
-                        style="width: 60px"
-                      />
-                      <button class="btn btn-outline-danger btn-sm delete-btn">
-                        <img
-                          src="Assets/Icons/trash.png"
-                          alt="Xóa"
-                          class="delete-icon-custom"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="vaccine-item-card card mb-3">
-              <div class="card-body">
-                <div class="d-flex align-items-start">
-                  <img
-                    src="Assets/Images/hexaxim.png"
-                    alt="Vắc xin Hexaxim"
-                    class="vaccine-thumb me-3"
-                  />
-                  <div class="flex-grow-1">
-                    <p class="vaccine-name mb-1">
-                      <span class="origin-tag">🇺🇸 Hoa Kỳ</span>
-                      Vắc xin hexaxim 23
-                    </p>
-                    <p class="vaccine-disease fw-bold">Phòng bệnh do Phế cầu</p>
-                    <p class="vaccine-schedule text-muted">
-                      Phác đồ: Từ 2 tuổi trở lên (1 Liều)
-                    </p>
-
-                    <div class="small-offer mt-2">
-                      <i class="fas fa-gift text-success me-1"></i> Giảm 3% khi
-                      mua gói
-                    </div>
-                  </div>
-
-                  <div class="vaccine-actions text-end">
-                    <div
-                      class="price-old text-decoration-line-through text-muted small"
-                    >
-                      1.440.000₫
-                    </div>
-                    <div class="price-current fw-bold text-danger fs-5">
-                      1.396.800₫
-                    </div>
-                    <div
-                      class="quantity-control d-flex mt-2 justify-content-end"
-                    >
-                      <input
-                        type="number"
-                        value="1"
-                        min="1"
-                        class="form-control form-control-sm text-center quantity-input me-2"
-                        style="width: 60px"
-                      />
-                      <button class="btn btn-outline-danger btn-sm delete-btn">
-                        <img
-                          src="Assets/Icons/trash.png"
-                          alt="Xóa"
-                          class="delete-icon-custom"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h3>Giỏ hàng trống</h3>
+          <p>Bạn chưa thêm vaccine nào vào giỏ hàng</p>
+          <a href="layout_page.html" class="btn btn-primary btn-lg">
+            <i class="fas fa-search me-2"></i>
+            Khám phá vaccine
+          </a>
         </div>
+      </div>
 
-        <div class="col-lg-4">
-          <div class="summary-card sticky-top">
-            <div class="section-card location-time-card mb-4">
-              <h5 class="card-title">
-                <i class="fas fa-map-marker-alt me-2 text-primary"></i> Địa điểm
-                & thời gian hẹn
-              </h5>
-              <hr />
-
-              <div class="selection-row mb-3">
-                <label class="d-block fw-bold mb-1"
-                  >Chọn trung tâm tiêm chủng</label
-                >
-                <div class="d-flex justify-content-between align-items-center">
-                  <span>Chưa chọn trung tâm</span>
-                  <button class="btn btn-link p-0 fw-bold text-decoration-none">
-                    Chọn trung tâm tiêm chủng
-                    <i class="fas fa-chevron-right small ms-1"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div class="selection-row">
-                <label class="d-block fw-bold mb-1"
-                  >Thời gian hẹn khám
-                  <i class="fas fa-info-circle small text-muted ms-1"></i
-                ></label>
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold fs-6">Chủ Nhật, 12/10/2025</span>
-                  <button
-                    class="btn btn-link p-0 fw-bold text-primary text-decoration-none"
-                  >
-                    Chọn thời gian
+      <!-- Cart Content -->
+      <div class="cart-content-wrapper" id="cartContent">
+        <div class="row g-4">
+          <!-- Left Column - Person Info & Vaccine List -->
+          <div class="col-lg-8">
+            <!-- Person Info Card -->
+            <div class="person-info-card card shadow-sm mb-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                  <div class="person-details">
+                    <div class="person-header mb-2">
+                      <i class="fas fa-user-circle text-primary me-2 fs-5"></i>
+                      <span class="person-name-age fw-bold fs-5">Trần Tấn Tài</span>
+                      <span class="badge bg-primary ms-2">Người được tiêm</span>
+                    </div>
+                    <div class="person-info-details">
+                      <span class="text-muted">
+                        <i class="fas fa-venus-mars me-1"></i>Nam
+                      </span>
+                      <span class="text-muted mx-2">|</span>
+                      <span class="text-muted">
+                        <i class="fas fa-birthday-cake me-1"></i>01/02/2004
+                      </span>
+                      <span class="text-muted mx-2">|</span>
+                      <span class="text-muted">
+                        <i class="fas fa-calendar-alt me-1"></i>21 Tuổi 8 Tháng
+                      </span>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-edit me-1"></i>
+                    Thay đổi
                   </button>
                 </div>
               </div>
             </div>
 
-            <div class="section-card price-summary-card mb-4">
-              <h5 class="card-title text-success">
-                <i class="fas fa-check-circle me-2"></i> Đã áp dụng 3 ưu đãi
+            <!-- Vaccine List Header -->
+            <div class="vaccine-list-header mb-3 d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="fas fa-syringe me-2 text-success"></i>
+                Danh sách vaccine (<span id="vaccineCount">2</span>)
               </h5>
-              <hr />
-              <ul class="price-list list-unstyled">
-                <li class="d-flex justify-content-between">
-                  <span>Tổng tiền</span>
-                  <span class="fw-bold">3.080.000₫</span>
-                </li>
-                <li class="d-flex justify-content-between text-muted small">
-                  <span>Phí quản lý <i class="fas fa-info-circle"></i></span>
-                  <span>164.000₫</span>
-                </li>
-                <li class="d-flex justify-content-between text-danger fw-bold">
-                  <span>Giảm giá trực tiếp</span>
-                  <span>- 92.400₫</span>
-                </li>
-                <li class="d-flex justify-content-between text-success">
-                  <span>Giảm giá voucher</span>
-                  <span>0₫</span>
-                </li>
-                <hr class="my-1" />
-                <li class="d-flex justify-content-between fw-bold">
-                  <span>Tiết kiệm được</span>
-                  <span class="text-danger">92.400₫</span>
-                </li>
-              </ul>
-
-              <div
-                class="final-price d-flex justify-content-between align-items-center mt-3 pt-3 border-top"
-              >
-                <div class="d-flex flex-column">
-                  <span class="text-muted small">Tạm tính</span>
-                  <span class="fw-bold text-orange fs-4">3.151.600₫</span>
-                </div>
-                <span class="text-muted small align-self-end text-end">
-                  +3,151 điểm thưởng <br />
-                  <a href="#" class="text-decoration-none fw-bold"
-                    >Xem báo giá <i class="fas fa-chevron-right small ms-1"></i
-                  ></a>
-                </span>
-              </div>
-            </div>
-
-            <div class="confirmation-section">
-              <button class="btn btn-lg btn-confirm w-100">
-                Xác nhận đặt hẹn
+              <button class="btn btn-link text-danger" id="clearCartBtn">
+                <i class="fas fa-trash me-1"></i>
+                Xóa tất cả
               </button>
-              <p class="terms-policy-text text-muted small mt-2 text-center">
-                Bằng việc xác nhận đặt hẹn, Quý khách đồng ý với
-                <a href="#" class="text-primary text-decoration-none fw-bold"
-                  >Điều khoản dịch vụ</a
-                >
-                &
-                <a href="#" class="text-primary text-decoration-none fw-bold"
-                  >Chính sách xử lý dữ liệu cá nhân</a
-                >
-                của TPVAX.
-              </p>
+            </div>
+
+            <!-- Vaccine Items -->
+            <div class="vaccine-list" id="vaccineList">
+              <!-- Vaccine Item 1 -->
+              <div class="vaccine-item-card card mb-3" data-id="1" data-price="1348300">
+                <div class="card-body">
+                  <div class="vaccine-item-layout">
+                    <!-- Vaccine Image -->
+                    <div class="vaccine-image-wrapper">
+                      <img
+                        src="Assets/Images/hexaxim.png"
+                        alt="Vắc xin Qdenga"
+                        class="vaccine-thumb"
+                        onerror="this.src='Assets/Images/logo.png'"
+                      />
+                      <div class="vaccine-badge">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Info -->
+                    <div class="vaccine-info-section">
+                      <div class="vaccine-header mb-2">
+                        <h6 class="vaccine-name mb-1">
+                          <span class="origin-tag">🇩🇪 Đức</span>
+                          Vắc xin Qdenga
+                        </h6>
+                        <span class="badge bg-success-soft text-success">
+                          <i class="fas fa-shield-alt me-1"></i>
+                          Chính hãng
+                        </span>
+                      </div>
+                      
+                      <p class="vaccine-disease mb-2">
+                        <i class="fas fa-virus me-1 text-danger"></i>
+                        <strong>Phòng:</strong> Sốt xuất huyết
+                      </p>
+                      
+                      <p class="vaccine-schedule text-muted mb-2">
+                        <i class="fas fa-calendar-check me-1"></i>
+                        <strong>Phác đồ:</strong> Từ 4 tuổi trở lên (2 Liều)
+                      </p>
+
+                      <div class="vaccine-benefits">
+                        <div class="small-offer">
+                          <i class="fas fa-gift text-success me-1"></i>
+                          Giảm 3% khi mua gói
+                        </div>
+                        <div class="small-offer">
+                          <i class="fas fa-award text-warning me-1"></i>
+                          Tích lũy +1,348 điểm
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Actions -->
+                    <div class="vaccine-actions">
+                      <div class="price-section mb-3">
+                        <div class="price-old text-decoration-line-through text-muted small">
+                          1.390.000₫
+                        </div>
+                        <div class="price-current fw-bold text-danger fs-5">
+                          1.348.300₫
+                        </div>
+                        <div class="price-per-dose text-muted small">
+                          (674.150₫/liều)
+                        </div>
+                      </div>
+                      
+                      <div class="quantity-section mb-2">
+                        <label class="small text-muted mb-1 d-block">Số lượng:</label>
+                        <div class="quantity-control">
+                          <button class="qty-btn qty-minus" data-id="1">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <input
+                            type="number"
+                            value="1"
+                            min="1"
+                            max="10"
+                            class="quantity-input"
+                            data-id="1"
+                            readonly
+                          />
+                          <button class="qty-btn qty-plus" data-id="1">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <button class="btn btn-outline-danger btn-sm w-100 delete-btn" data-id="1">
+                        <i class="fas fa-trash-alt me-1"></i>
+                        Xóa
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Item 2 -->
+              <div class="vaccine-item-card card mb-3" data-id="2" data-price="1396800">
+                <div class="card-body">
+                  <div class="vaccine-item-layout">
+                    <!-- Vaccine Image -->
+                    <div class="vaccine-image-wrapper">
+                      <img
+                        src="Assets/Images/hexaxim.png"
+                        alt="Vắc xin Hexaxim 23"
+                        class="vaccine-thumb"
+                        onerror="this.src='Assets/Images/logo.png'"
+                      />
+                      <div class="vaccine-badge">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Info -->
+                    <div class="vaccine-info-section">
+                      <div class="vaccine-header mb-2">
+                        <h6 class="vaccine-name mb-1">
+                          <span class="origin-tag">🇺🇸 Hoa Kỳ</span>
+                          Vắc xin Hexaxim 23
+                        </h6>
+                        <span class="badge bg-success-soft text-success">
+                          <i class="fas fa-shield-alt me-1"></i>
+                          Chính hãng
+                        </span>
+                      </div>
+                      
+                      <p class="vaccine-disease mb-2">
+                        <i class="fas fa-virus me-1 text-danger"></i>
+                        <strong>Phòng:</strong> Bệnh do Phế cầu
+                      </p>
+                      
+                      <p class="vaccine-schedule text-muted mb-2">
+                        <i class="fas fa-calendar-check me-1"></i>
+                        <strong>Phác đồ:</strong> Từ 2 tuổi trở lên (1 Liều)
+                      </p>
+
+                      <div class="vaccine-benefits">
+                        <div class="small-offer">
+                          <i class="fas fa-gift text-success me-1"></i>
+                          Giảm 3% khi mua gói
+                        </div>
+                        <div class="small-offer">
+                          <i class="fas fa-award text-warning me-1"></i>
+                          Tích lũy +1,397 điểm
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Actions -->
+                    <div class="vaccine-actions">
+                      <div class="price-section mb-3">
+                        <div class="price-old text-decoration-line-through text-muted small">
+                          1.440.000₫
+                        </div>
+                        <div class="price-current fw-bold text-danger fs-5">
+                          1.396.800₫
+                        </div>
+                        <div class="price-per-dose text-muted small">
+                          (1.396.800₫/liều)
+                        </div>
+                      </div>
+                      
+                      <div class="quantity-section mb-2">
+                        <label class="small text-muted mb-1 d-block">Số lượng:</label>
+                        <div class="quantity-control">
+                          <button class="qty-btn qty-minus" data-id="2">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <input
+                            type="number"
+                            value="1"
+                            min="1"
+                            max="10"
+                            class="quantity-input"
+                            data-id="2"
+                            readonly
+                          />
+                          <button class="qty-btn qty-plus" data-id="2">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <button class="btn btn-outline-danger btn-sm w-100 delete-btn" data-id="2">
+                        <i class="fas fa-trash-alt me-1"></i>
+                        Xóa
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Promo Code Section -->
+            <div class="promo-code-section card shadow-sm mt-4">
+              <div class="card-body">
+                <h6 class="mb-3">
+                  <i class="fas fa-ticket-alt me-2 text-warning"></i>
+                  Mã giảm giá / Voucher
+                </h6>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nhập mã giảm giá (VD: TPVAX2024)"
+                    id="promoCodeInput"
+                  />
+                  <button class="btn btn-primary" id="applyPromoBtn">
+                    <i class="fas fa-check me-1"></i>
+                    Áp dụng
+                  </button>
+                </div>
+                <div class="promo-message mt-2" id="promoMessage" style="display: none;"></div>
+                
+                <!-- Available Vouchers -->
+                <div class="available-vouchers mt-3">
+                  <p class="small text-muted mb-2">Mã giảm giá khả dụng:</p>
+                  <div class="voucher-list">
+                    <button class="voucher-badge" data-code="TPVAX10">
+                      <i class="fas fa-tag me-1"></i>
+                      TPVAX10 - Giảm 10%
+                    </button>
+                    <button class="voucher-badge" data-code="WELCOME50">
+                      <i class="fas fa-tag me-1"></i>
+                      WELCOME50 - Giảm 50K
+                    </button>
+                    <button class="voucher-badge" data-code="FIRSTTIME">
+                      <i class="fas fa-tag me-1"></i>
+                      FIRSTTIME - Miễn phí quản lý
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Summary & Booking -->
+          <div class="col-lg-4">
+            <div class="summary-card sticky-top">
+              <!-- Location & Time Selection -->
+              <div class="section-card location-time-card mb-4">
+                <h5 class="card-title">
+                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                  Địa điểm & thời gian
+                </h5>
+                <hr />
+
+                <div class="selection-row mb-3">
+                  <label class="d-block fw-bold mb-2">
+                    <i class="fas fa-hospital me-1"></i>
+                    Trung tâm tiêm chủng
+                  </label>
+                  <button class="selection-btn w-100" data-bs-toggle="modal" data-bs-target="#locationModal">
+                    <div class="selection-content">
+                      <span class="selected-value" id="selectedLocation">Chưa chọn trung tâm</span>
+                      <i class="fas fa-chevron-right"></i>
+                    </div>
+                  </button>
+                </div>
+
+                <div class="selection-row">
+                  <label class="d-block fw-bold mb-2">
+                    <i class="fas fa-clock me-1"></i>
+                    Thời gian hẹn khám
+                    <i class="fas fa-info-circle small text-muted ms-1" title="Chọn thời gian phù hợp với lịch của bạn"></i>
+                  </label>
+                  <button class="selection-btn w-100" data-bs-toggle="modal" data-bs-target="#timeModal">
+                    <div class="selection-content">
+                      <span class="selected-value fw-bold" id="selectedTime">Chủ Nhật, 12/10/2025</span>
+                      <i class="fas fa-chevron-right"></i>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Price Summary -->
+              <div class="section-card price-summary-card mb-4">
+                <h5 class="card-title text-success">
+                  <i class="fas fa-check-circle me-2"></i>
+                  Đã áp dụng <span id="promoCount">2</span> ưu đãi
+                </h5>
+                <hr />
+                
+                <ul class="price-list list-unstyled">
+                  <li class="d-flex justify-content-between">
+                    <span>Tổng tiền hàng</span>
+                    <span class="fw-bold" id="subtotalPrice">2.745.100₫</span>
+                  </li>
+                  <li class="d-flex justify-content-between text-muted small">
+                    <span>
+                      Phí quản lý
+                      <i class="fas fa-info-circle" title="Phí dịch vụ và quản lý hồ sơ"></i>
+                    </span>
+                    <span id="managementFee">164.000₫</span>
+                  </li>
+                  <li class="d-flex justify-content-between text-danger fw-bold">
+                    <span>Giảm giá trực tiếp</span>
+                    <span id="directDiscount">- 82.353₫</span>
+                  </li>
+                  <li class="d-flex justify-content-between text-success">
+                    <span>Giảm giá voucher</span>
+                    <span id="voucherDiscount">0₫</span>
+                  </li>
+                  <hr class="my-2" />
+                  <li class="d-flex justify-content-between fw-bold text-success">
+                    <span>
+                      <i class="fas fa-piggy-bank me-1"></i>
+                      Tiết kiệm được
+                    </span>
+                    <span id="totalSavings">82.353₫</span>
+                  </li>
+                </ul>
+
+                <div class="final-price-section mt-3 pt-3 border-top">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                      <span class="text-muted small d-block">Tạm tính</span>
+                      <span class="fw-bold text-primary fs-3" id="finalPrice">2.826.747₫</span>
+                    </div>
+                    <div class="text-end">
+                      <span class="text-muted small d-block">Điểm thưởng</span>
+                      <span class="text-warning fw-bold" id="rewardPoints">+2,827 điểm</span>
+                    </div>
+                  </div>
+                  <a href="#" class="text-primary small text-decoration-none fw-bold">
+                    <i class="fas fa-file-invoice me-1"></i>
+                    Xem chi tiết báo giá
+                    <i class="fas fa-chevron-right small ms-1"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Confirmation Section -->
+              <div class="confirmation-section">
+                <button class="btn btn-lg btn-confirm w-100 mb-3" id="confirmBookingBtn">
+                  <i class="fas fa-calendar-check me-2"></i>
+                  Xác nhận đặt hẹn
+                </button>
+                
+                <div class="security-badges mb-3">
+                  <div class="security-item">
+                    <i class="fas fa-shield-alt text-success"></i>
+                    <span>Thanh toán an toàn</span>
+                  </div>
+                  <div class="security-item">
+                    <i class="fas fa-award text-warning"></i>
+                    <span>Vaccine chính hãng</span>
+                  </div>
+                  <div class="security-item">
+                    <i class="fas fa-headset text-info"></i>
+                    <span>Hỗ trợ 24/7</span>
+                  </div>
+                </div>
+
+                <p class="terms-policy-text text-muted small text-center mb-0">
+                  Bằng việc xác nhận đặt hẹn, bạn đồng ý với
+                  <a href="#" class="text-primary text-decoration-none fw-bold">Điều khoản dịch vụ</a>
+                  &
+                  <a href="#" class="text-primary text-decoration-none fw-bold">Chính sách bảo mật</a>
+                  của TPVAX.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </main>
 
-    <script
-      src="https://kit.fontawesome.com/your-font-awesome-kit-id.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="Scripts/bootstrap.min.js"></script>
+    <!-- Location Selection Modal -->
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="locationModalLabel">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              Chọn trung tâm tiêm chủng
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="location-search mb-3">
+              <input type="text" class="form-control" placeholder="Tìm kiếm theo tên, địa chỉ...">
+            </div>
+            <div class="location-list">
+              <div class="location-item" data-location="TPVAX - Quận 1">
+                <div class="location-info">
+                  <h6>TPVAX - Chi nhánh Quận 1</h6>
+                  <p class="text-muted small mb-1">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP.HCM
+                  </p>
+                  <p class="text-muted small mb-0">
+                    <i class="fas fa-clock me-1"></i>
+                    Thứ 2 - CN: 7:00 - 19:00
+                  </p>
+                </div>
+                <button class="btn btn-outline-primary btn-sm">Chọn</button>
+              </div>
+              <div class="location-item" data-location="TPVAX - Quận 3">
+                <div class="location-info">
+                  <h6>TPVAX - Chi nhánh Quận 3</h6>
+                  <p class="text-muted small mb-1">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    456 Võ Văn Tần, Phường 5, Quận 3, TP.HCM
+                  </p>
+                  <p class="text-muted small mb-0">
+                    <i class="fas fa-clock me-1"></i>
+                    Thứ 2 - CN: 7:30 - 18:30
+                  </p>
+                </div>
+                <button class="btn btn-outline-primary btn-sm">Chọn</button>
+              </div>
+              <div class="location-item" data-location="TPVAX - Bình Thạnh">
+                <div class="location-info">
+                  <h6>TPVAX - Chi nhánh Bình Thạnh</h6>
+                  <p class="text-muted small mb-1">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    789 Điện Biên Phủ, Phường 15, Bình Thạnh, TP.HCM
+                  </p>
+                  <p class="text-muted small mb-0">
+                    <i class="fas fa-clock me-1"></i>
+                    Thứ 2 - CN: 8:00 - 20:00
+                  </p>
+                </div>
+                <button class="btn btn-outline-primary btn-sm">Chọn</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time Selection Modal -->
+    <div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="timeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="timeModalLabel">
+              <i class="fas fa-calendar-alt me-2"></i>
+              Chọn thời gian hẹn khám
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Chọn ngày</label>
+              <input type="date" class="form-control" id="dateInput" min="2024-10-30">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Chọn khung giờ</label>
+              <div class="time-slots">
+                <button class="time-slot-btn" data-time="08:00">08:00 - 09:00</button>
+                <button class="time-slot-btn" data-time="09:00">09:00 - 10:00</button>
+                <button class="time-slot-btn" data-time="10:00">10:00 - 11:00</button>
+                <button class="time-slot-btn" data-time="11:00">11:00 - 12:00</button>
+                <button class="time-slot-btn" data-time="14:00">14:00 - 15:00</button>
+                <button class="time-slot-btn" data-time="15:00">15:00 - 16:00</button>
+                <button class="time-slot-btn" data-time="16:00">16:00 - 17:00</button>
+                <button class="time-slot-btn" data-time="17:00">17:00 - 18:00</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-primary" id="confirmTimeBtn">Xác nhận</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center py-5">
+            <div class="success-icon mb-3">
+              <i class="fas fa-check-circle text-success"></i>
+            </div>
+            <h4 class="mb-3">Đặt hẹn thành công!</h4>
+            <p class="text-muted mb-4">
+              Mã đặt hẹn của bạn: <strong class="text-primary">#TPV2024103001</strong>
+            </p>
+            <p class="text-muted mb-4">
+              Chúng tôi đã gửi thông tin chi tiết đến email và số điện thoại của bạn.
+            </p>
+            <div class="d-grid gap-2">
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-file-invoice me-2"></i>
+                Xem chi tiết đơn hàng
+              </a>
+              <a href="layout_page.html" class="btn btn-outline-secondary">
+                Về trang chủ
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <script>
+      // Cart functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize
+        updateCartCount();
+        updatePrices();
+
+        // Quantity controls
+        document.querySelectorAll('.qty-minus').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
+            if (parseInt(input.value) > 1) {
+              input.value = parseInt(input.value) - 1;
+              updatePrices();
+            }
+          });
+        });
+
+        document.querySelectorAll('.qty-plus').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
+            if (parseInt(input.value) < 10) {
+              input.value = parseInt(input.value) + 1;
+              updatePrices();
+            }
+          });
+        });
+
+        // Delete buttons
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            if (confirm('Bạn có chắc muốn xóa vaccine này khỏi giỏ hàng?')) {
+              document.querySelector(`.vaccine-item-card[data-id="${id}"]`).remove();
+              updateCartCount();
+              updatePrices();
+              checkEmptyCart();
+            }
+          });
+        });
+
+        // Clear cart button
+        document.getElementById('clearCartBtn')?.addEventListener('click', function() {
+          if (confirm('Bạn có chắc muốn xóa tất cả vaccine khỏi giỏ hàng?')) {
+            document.getElementById('vaccineList').innerHTML = '';
+            checkEmptyCart();
+          }
+        });
+
+        // Promo code
+        document.getElementById('applyPromoBtn')?.addEventListener('click', function() {
+          const code = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+          applyPromoCode(code);
+        });
+
+        // Voucher badges
+        document.querySelectorAll('.voucher-badge').forEach(badge => {
+          badge.addEventListener('click', function() {
+            const code = this.dataset.code;
+            document.getElementById('promoCodeInput').value = code;
+            applyPromoCode(code);
+          });
+        });
+
+        // Location selection
+        document.querySelectorAll('.location-item button').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const locationName = this.closest('.location-item').dataset.location;
+            document.getElementById('selectedLocation').textContent = locationName;
+            bootstrap.Modal.getInstance(document.getElementById('locationModal')).hide();
+          });
+        });
+
+        // Time selection
+        document.querySelectorAll('.time-slot-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+          });
+        });
+
+        document.getElementById('confirmTimeBtn')?.addEventListener('click', function() {
+          const date = document.getElementById('dateInput').value;
+          const timeSlot = document.querySelector('.time-slot-btn.active');
+          if (date && timeSlot) {
+            const formattedDate = formatDate(date);
+            document.getElementById('selectedTime').textContent = `${formattedDate}, ${timeSlot.textContent}`;
+            bootstrap.Modal.getInstance(document.getElementById('timeModal')).hide();
+          } else {
+            alert('Vui lòng chọn ngày và giờ');
+          }
+        });
+
+        // Confirm booking
+        document.getElementById('confirmBookingBtn')?.addEventListener('click', function() {
+          const location = document.getElementById('selectedLocation').textContent;
+          if (location === 'Chưa chọn trung tâm') {
+            alert('Vui lòng chọn trung tâm tiêm chủng');
+            return;
+          }
+          new bootstrap.Modal(document.getElementById('successModal')).show();
+        });
+      });
+
+      function updateCartCount() {
+        const count = document.querySelectorAll('.vaccine-item-card').length;
+        document.getElementById('vaccineCount').textContent = count;
+      }
+
+      function updatePrices() {
+        let subtotal = 0;
+        document.querySelectorAll('.vaccine-item-card').forEach(item => {
+          const price = parseInt(item.dataset.price);
+          const qty = parseInt(item.querySelector('.quantity-input').value);
+          subtotal += price * qty;
+        });
+
+        const managementFee = 164000;
+        const directDiscount = Math.round(subtotal * 0.03);
+        const voucherDiscount = 0;
+        const total = subtotal + managementFee - directDiscount - voucherDiscount;
+        const savings = directDiscount + voucherDiscount;
+        const rewardPoints = Math.round(total / 1000);
+
+        document.getElementById('subtotalPrice').textContent = formatCurrency(subtotal);
+        document.getElementById('managementFee').textContent = formatCurrency(managementFee);
+        document.getElementById('directDiscount').textContent = `- ${formatCurrency(directDiscount)}`;
+        document.getElementById('voucherDiscount').textContent = formatCurrency(voucherDiscount);
+        document.getElementById('totalSavings').textContent = formatCurrency(savings);
+        document.getElementById('finalPrice').textContent = formatCurrency(total);
+        document.getElementById('rewardPoints').textContent = `+${rewardPoints.toLocaleString('vi-VN')} điểm`;
+      }
+
+      function applyPromoCode(code) {
+        const validCodes = {
+          'TPVAX10': { type: 'percent', value: 10, desc: 'Giảm 10% tổng đơn hàng' },
+          'WELCOME50': { type: 'fixed', value: 50000, desc: 'Giảm 50.000₫' },
+          'FIRSTTIME': { type: 'free_fee', value: 0, desc: 'Miễn phí quản lý' }
+        };
+
+        const messageEl = document.getElementById('promoMessage');
+        if (validCodes[code]) {
+          messageEl.innerHTML = `<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>${validCodes[code].desc}</div>`;
+          messageEl.style.display = 'block';
+        } else if (code) {
+          messageEl.innerHTML = `<div class="alert alert-danger"><i class="fas fa-times-circle me-2"></i>Mã giảm giá không hợp lệ</div>`;
+          messageEl.style.display = 'block';
+        }
+      }
+
+      function checkEmptyCart() {
+        const hasItems = document.querySelectorAll('.vaccine-item-card').length > 0;
+        document.getElementById('emptyCart').style.display = hasItems ? 'none' : 'block';
+        document.getElementById('cartContent').style.display = hasItems ? 'block' : 'none';
+      }
+
+      function formatCurrency(amount) {
+        return amount.toLocaleString('vi-VN') + '₫';
+      }
+
+      function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+        return `${days[date.getDay()]}, ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      }
+
+      // Set min date for date input to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dateInput')?.setAttribute('min', today);
+    </script>
   </body>
 </html>
