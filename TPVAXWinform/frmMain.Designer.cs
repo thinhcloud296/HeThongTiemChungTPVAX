@@ -28,22 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -68,29 +52,8 @@
             this.lbChucVuNVDangNhap = new System.Windows.Forms.Label();
             this.logo = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.btnResetPatient = new System.Windows.Forms.Button();
-            this.btnSearchPatient = new System.Windows.Forms.Button();
-            this.txtSearchPatient = new System.Windows.Forms.TextBox();
-            this.panelChartFilter = new System.Windows.Forms.Panel();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.btnFilter = new System.Windows.Forms.Button();
-            this.txtSearchVaccine = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.bangDieuKhienControl1 = new TPVAXWinform.UserControls.BangDieuKhienControl();
+            this.hoSoTiemChungControl1 = new TPVAXWinform.UserControls.HoSoTiemChungControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -101,13 +64,6 @@
             this.panel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.panelChartFilter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -547,7 +503,8 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.Controls.Add(this.tableLayoutPanel2);
+            this.panel3.Controls.Add(this.bangDieuKhienControl1);
+            this.panel3.Controls.Add(this.hoSoTiemChungControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -555,310 +512,23 @@
             this.panel3.Size = new System.Drawing.Size(1428, 838);
             this.panel3.TabIndex = 0;
             // 
-            // tableLayoutPanel2
+            // bangDieuKhienControl1
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.panel4, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel5, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel6, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.panelChartFilter, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.chart1, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.chart2, 1, 2);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(10, 10);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1408, 818);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.bangDieuKhienControl1.BackColor = System.Drawing.Color.White;
+            this.bangDieuKhienControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bangDieuKhienControl1.Location = new System.Drawing.Point(10, 10);
+            this.bangDieuKhienControl1.Name = "bangDieuKhienControl1";
+            this.bangDieuKhienControl1.Size = new System.Drawing.Size(1408, 818);
+            this.bangDieuKhienControl1.TabIndex = 0;
             // 
-            // panel4
+            // hoSoTiemChungControl1
             // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.panel4.Controls.Add(this.label8);
-            this.panel4.Controls.Add(this.label7);
-            this.panel4.Controls.Add(this.label6);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(698, 144);
-            this.panel4.TabIndex = 0;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(23, 103);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(250, 25);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "Tăng 5% so với tháng trước";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(18, 57);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(124, 46);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "1,257";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(21, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(224, 29);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Lượt tiêm hôm nay";
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(162)))), ((int)(((byte)(235)))));
-            this.panel5.Controls.Add(this.label9);
-            this.panel5.Controls.Add(this.label10);
-            this.panel5.Controls.Add(this.label11);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(707, 3);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(698, 144);
-            this.panel5.TabIndex = 1;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(23, 103);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(239, 25);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "Tăng 2% so với tuần trước";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(18, 57);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(89, 46);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "542";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(21, 19);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(272, 29);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Khách hàng trong tuần";
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.White;
-            this.panel6.Controls.Add(this.btnResetPatient);
-            this.panel6.Controls.Add(this.btnSearchPatient);
-            this.panel6.Controls.Add(this.txtSearchPatient);
-            this.panel6.Controls.Add(this.label14);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(3, 153);
-            this.panel6.Name = "panel6";
-            this.panel6.Padding = new System.Windows.Forms.Padding(10);
-            this.panel6.Size = new System.Drawing.Size(698, 74);
-            this.panel6.TabIndex = 2;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(570, 20);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(100, 35);
-            this.label12.TabIndex = 3;
-            this.label12.Text = "🔄 Reset";
-            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.label12.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(450, 20);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(100, 35);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "🔍 Tìm";
-            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.label13.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.label14.Location = new System.Drawing.Point(15, 26);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(169, 28);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "👤 Tìm bệnh nhân:";
-            // 
-            // txtSearchPatient
-            // 
-            this.txtSearchPatient.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSearchPatient.Location = new System.Drawing.Point(200, 22);
-            this.txtSearchPatient.Name = "txtSearchPatient";
-            this.txtSearchPatient.Size = new System.Drawing.Size(230, 34);
-            this.txtSearchPatient.TabIndex = 1;
-            // 
-            // btnSearchPatient
-            // 
-            this.btnSearchPatient.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnSearchPatient.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSearchPatient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchPatient.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnSearchPatient.ForeColor = System.Drawing.Color.White;
-            this.btnSearchPatient.Location = new System.Drawing.Point(450, 20);
-            this.btnSearchPatient.Name = "btnSearchPatient";
-            this.btnSearchPatient.Size = new System.Drawing.Size(100, 35);
-            this.btnSearchPatient.TabIndex = 2;
-            this.btnSearchPatient.Text = "🔍 Tìm";
-            this.btnSearchPatient.UseVisualStyleBackColor = false;
-            // 
-            // btnResetPatient
-            // 
-            this.btnResetPatient.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnResetPatient.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnResetPatient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnResetPatient.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnResetPatient.ForeColor = System.Drawing.Color.White;
-            this.btnResetPatient.Location = new System.Drawing.Point(570, 20);
-            this.btnResetPatient.Name = "btnResetPatient";
-            this.btnResetPatient.Size = new System.Drawing.Size(100, 35);
-            this.btnResetPatient.TabIndex = 3;
-            this.btnResetPatient.Text = "🔄 Reset";
-            this.btnResetPatient.UseVisualStyleBackColor = false;
-            // 
-            // panelChartFilter
-            // 
-            this.panelChartFilter.BackColor = System.Drawing.Color.White;
-            this.panelChartFilter.Controls.Add(this.btnReset);
-            this.panelChartFilter.Controls.Add(this.btnFilter);
-            this.panelChartFilter.Controls.Add(this.txtSearchVaccine);
-            this.panelChartFilter.Controls.Add(this.label17);
-            this.panelChartFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelChartFilter.Location = new System.Drawing.Point(707, 153);
-            this.panelChartFilter.Name = "panelChartFilter";
-            this.panelChartFilter.Padding = new System.Windows.Forms.Padding(10);
-            this.panelChartFilter.Size = new System.Drawing.Size(698, 74);
-            this.panelChartFilter.TabIndex = 5;
-            // 
-            // btnReset
-            // 
-            this.btnReset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnReset.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(570, 20);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(100, 35);
-            this.btnReset.TabIndex = 3;
-            this.btnReset.Text = "🔄 Reset";
-            this.btnReset.UseVisualStyleBackColor = false;
-            // 
-            // btnFilter
-            // 
-            this.btnFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnFilter.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnFilter.ForeColor = System.Drawing.Color.White;
-            this.btnFilter.Location = new System.Drawing.Point(450, 20);
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(100, 35);
-            this.btnFilter.TabIndex = 2;
-            this.btnFilter.Text = "🔍 Tìm";
-            this.btnFilter.UseVisualStyleBackColor = false;
-            // 
-            // txtSearchVaccine
-            // 
-            this.txtSearchVaccine.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSearchVaccine.Location = new System.Drawing.Point(170, 22);
-            this.txtSearchVaccine.Name = "txtSearchVaccine";
-            this.txtSearchVaccine.Size = new System.Drawing.Size(260, 34);
-            this.txtSearchVaccine.TabIndex = 1;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.label17.Location = new System.Drawing.Point(15, 26);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(145, 28);
-            this.label17.TabIndex = 0;
-            this.label17.Text = "💉 Tìm vaccine:";
-            // 
-            // chart1
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
-            this.chart1.Location = new System.Drawing.Point(3, 233);
-            this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
-            this.chart1.Size = new System.Drawing.Size(698, 582);
-            this.chart1.TabIndex = 6;
-            this.chart1.Text = "chart1";
-            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            title3.Name = "Title1";
-            title3.Text = "Lượt tiêm chủng hàng tháng";
-            this.chart1.Titles.Add(title3);
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
-            // 
-            // chart2
-            // 
-            chartArea4.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea4);
-            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chart2.Legends.Add(legend4);
-            this.chart2.Location = new System.Drawing.Point(707, 233);
-            this.chart2.Name = "chart2";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart2.Series.Add(series4);
-            this.chart2.Size = new System.Drawing.Size(698, 582);
-            this.chart2.TabIndex = 7;
-            this.chart2.Text = "chart2";
-            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            title4.Name = "Title1";
-            title4.Text = "Tỷ lệ các loại Vaccine";
-            this.chart2.Titles.Add(title4);
+            this.hoSoTiemChungControl1.BackColor = System.Drawing.Color.White;
+            this.hoSoTiemChungControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hoSoTiemChungControl1.Location = new System.Drawing.Point(10, 10);
+            this.hoSoTiemChungControl1.Name = "hoSoTiemChungControl1";
+            this.hoSoTiemChungControl1.Size = new System.Drawing.Size(1408, 818);
+            this.hoSoTiemChungControl1.TabIndex = 1;
             // 
             // frmMain
             // 
@@ -881,17 +551,6 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
-            this.panelChartFilter.ResumeLayout(false);
-            this.panelChartFilter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -922,29 +581,8 @@
         private System.Windows.Forms.Label label5;
         private CustomControls.MenuButton button1;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button btnResetPatient;
-        private System.Windows.Forms.Button btnSearchPatient;
-        private System.Windows.Forms.TextBox txtSearchPatient;
-        private System.Windows.Forms.Panel panelChartFilter;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtSearchVaccine;
-        private System.Windows.Forms.Button btnFilter;
-        private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private UserControls.BangDieuKhienControl bangDieuKhienControl1;
+        private UserControls.HoSoTiemChungControl hoSoTiemChungControl1;
     }
 }
 
