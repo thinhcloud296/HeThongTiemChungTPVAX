@@ -36,6 +36,21 @@ namespace TPVAXWinform.UserControls
             btnSearch.Click += BtnSearch_Click;
             btnReset.Click += BtnReset_Click;
             dgvRecords.CellContentClick += DgvRecords_CellContentClick;
+
+            // Add hover effects for buttons
+            btnSearch.MouseEnter += (s, e) => {
+                btnSearch.BackColor = System.Drawing.Color.FromArgb(52, 152, 219);
+            };
+            btnSearch.MouseLeave += (s, e) => {
+                btnSearch.BackColor = System.Drawing.Color.FromArgb(41, 128, 185);
+            };
+
+            btnReset.MouseEnter += (s, e) => {
+                btnReset.BackColor = System.Drawing.Color.FromArgb(127, 140, 141);
+            };
+            btnReset.MouseLeave += (s, e) => {
+                btnReset.BackColor = System.Drawing.Color.FromArgb(149, 165, 166);
+            };
         }
 
         private void LoadSampleData()
@@ -148,6 +163,39 @@ namespace TPVAXWinform.UserControls
                     match = false;
                 }
 
+                // Filter by customer name (Họ tên)
+                if (!string.IsNullOrWhiteSpace(txtSearchName.Text))
+                {
+                    string searchName = txtSearchName.Text.Trim().ToLower();
+                    string customerName = row["CustomerName"].ToString().ToLower();
+                    if (!customerName.Contains(searchName))
+                    {
+                        match = false;
+                    }
+                }
+
+                // Filter by record ID (Mã HS)
+                if (!string.IsNullOrWhiteSpace(txtSearchRecordId.Text))
+                {
+                    string searchRecordId = txtSearchRecordId.Text.Trim().ToLower();
+                    string recordId = row["RecordId"].ToString().ToLower();
+                    if (!recordId.Contains(searchRecordId))
+                    {
+                        match = false;
+                    }
+                }
+
+                // Filter by customer ID (Mã KH)
+                if (!string.IsNullOrWhiteSpace(txtSearchCustomerId.Text))
+                {
+                    string searchCustomerId = txtSearchCustomerId.Text.Trim().ToLower();
+                    string customerId = row["CustomerId"].ToString().ToLower();
+                    if (!customerId.Contains(searchCustomerId))
+                    {
+                        match = false;
+                    }
+                }
+
                 if (match)
                 {
                     filteredData.ImportRow(row);
@@ -167,6 +215,11 @@ namespace TPVAXWinform.UserControls
         {
             // Reset filters
             InitializeFilters();
+        
+            // Clear text search boxes
+            txtSearchName.Clear();
+            txtSearchRecordId.Clear();
+            txtSearchCustomerId.Clear();
 
             // Reload all data
             BindDataToGrid(dtRecords);
@@ -207,6 +260,11 @@ namespace TPVAXWinform.UserControls
         public void RefreshData()
         {
             LoadSampleData();
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
