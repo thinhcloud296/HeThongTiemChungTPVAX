@@ -110,7 +110,7 @@ namespace TPVAXWinform.UserControls
         {
             // Tạo DataTable với dữ liệu mẫu
             dtRecords = new DataTable();
-            dtRecords = _bll.GetData();
+            dtRecords = _bll.GetHSTC_KHHG();
 
             BindDataToGrid(dtRecords);
         }
@@ -124,7 +124,8 @@ namespace TPVAXWinform.UserControls
             colHoTen.DataPropertyName = "HoTen";
             colGioiTinh.DataPropertyName = "GioiTinh";
             colNgaySinh.DataPropertyName = "NgaySinh";
-
+            colHoTenKHHG.DataPropertyName = "TenKhachHang";
+            colQuanHe.DataPropertyName = "VaiTro";
             xo.DataSource = dt;
 
             xo.Columns["colNgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";

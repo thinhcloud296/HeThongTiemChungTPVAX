@@ -8,16 +8,12 @@ using TPVAXWinform_DAL;
 
 namespace TPVAXWinform_BLL
 {
-    public class HoSoTiemChungBLL
+    public class KhachHangBLL
     {
-        private readonly HoSoTiemChungDAL _dal = new HoSoTiemChungDAL();
+        KhachHangDAL dal = new KhachHangDAL();
         public DataTable GetData()
         {
-            return _dal.GetData();
+            return dal.GetData();
         }
-        public DataTable GetHSTC_KHHG()
-        {
-            return _dal.GetHSTC_KHHG();
-        }   
     }
 }

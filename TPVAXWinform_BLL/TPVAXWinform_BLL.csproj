@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HoSoTiemChungBLL.cs" />
+    <Compile Include="KhachHangBLL.cs" />
+    <Compile Include="LienKetHoSoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

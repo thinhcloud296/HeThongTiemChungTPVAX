@@ -14,5 +14,12 @@ namespace TPVAXWinform_DAL
             const string sql = "SELECT * FROM dbo.HoSoTiemChung";
             return DBConnect.ExecuteQuery(sql);
         }
+        public DataTable GetHSTC_KHHG()
+        {
+            return DBConnect.ExecuteQuery(
+                    "dbo.usp_HoSoTiemChung_GetAllWithKhachHang",
+                    CommandType.StoredProcedure
+                );
+        }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TPVAXWinform_DTO
 {
-    public class HoSoTiemChung
+    public class HoSoTiemChungDTO
     {
-        public HoSoTiemChung(string maHSTC, string hoTen, string gioiTinh, DateTime ngaySinh, string quanHeKH, string cCCD, string ghiChu, bool trangThai)
+        public HoSoTiemChungDTO(string maHSTC, string hoTen, string gioiTinh, DateTime ngaySinh, string quanHeKH, string cCCD, string ghiChu, bool trangThai)
         {
             MaHSTC = maHSTC;
             HoTen = hoTen;
@@ -19,7 +19,7 @@ namespace TPVAXWinform_DTO
             GhiChu = ghiChu;
             TrangThai = trangThai;
         }
-        public HoSoTiemChung()
+        public HoSoTiemChungDTO()
         {
         }
         public string MaHSTC { get; set; } = string.Empty;   // CHAR(10) PK – ví dụ: HSTM123456
