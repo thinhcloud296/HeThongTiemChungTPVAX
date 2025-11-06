@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using TPVAXWinform_BLL;
 
 namespace TPVAXWinform.UserControls
 {
     public partial class HoSoTiemChungControl : UserControl
     {
         private DataTable dtRecords;
+        private HoSoTiemChungBLL _bll = new HoSoTiemChungBLL();
 
         public HoSoTiemChungControl()
         {
@@ -16,64 +18,61 @@ namespace TPVAXWinform.UserControls
 
         private void InitializeActionButtons()
         {
-            // Cấu hình styling cho DataGridView
             ConfigureDataGridViewStyling();
-
-            // Thêm Context Menu cho chuột phải
             SetupContextMenu();
 
-            // Thêm cột button "Sửa"
-            DataGridViewButtonColumn btnEditColumn = new DataGridViewButtonColumn();
-            btnEditColumn.Name = "colEdit";
-            btnEditColumn.HeaderText = "Sửa";
-            btnEditColumn.Text = "✏️ Sửa";
-            btnEditColumn.UseColumnTextForButtonValue = true;
-            btnEditColumn.Width = 80;
-            btnEditColumn.FlatStyle = FlatStyle.Flat;
-            xo.Columns.Add(btnEditColumn);
+            if (xo.Columns["colEdit"] == null) // tránh add trùng
+            {
+                var btnEditColumn = new DataGridViewButtonColumn
+                {
+                    Name = "colEdit",
+                    HeaderText = "Sửa",
+                    Text = "✏️ Sửa",
+                    UseColumnTextForButtonValue = true,
+                    Width = 80,
+                    FlatStyle = FlatStyle.Flat
+                };
+                xo.Columns.Add(btnEditColumn);
+            }
         }
+
 
         private void ConfigureDataGridViewStyling()
         {
-            // Căn giữa cho column headers
-            DataGridViewCellStyle headerStyle = new DataGridViewCellStyle();
-            headerStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            headerStyle.BackColor = System.Drawing.Color.FromArgb(41, 128, 185);
-            headerStyle.ForeColor = System.Drawing.Color.White;
-            headerStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            headerStyle.Padding = new System.Windows.Forms.Padding(5);
-
+            var headerStyle = new DataGridViewCellStyle
+            {
+                Alignment = DataGridViewContentAlignment.MiddleCenter,
+                BackColor = System.Drawing.Color.FromArgb(41, 128, 185),
+                ForeColor = System.Drawing.Color.White,
+                Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold),
+                Padding = new Padding(5)
+            };
             xo.ColumnHeadersDefaultCellStyle = headerStyle;
             xo.ColumnHeadersHeight = 45;
             xo.EnableHeadersVisualStyles = false;
 
-            // Căn giữa cho các cột cụ thể
-            string[] centerAlignColumns = { "colRecordId", "colCustomerId", "colGender",
-       "colBirthDate"};
+            // căn giữa các cột ID/ngày
+            string[] center = { "colMaHSTC", "colMaKH", "colGioiTinh", "colNgaySinh" };
+            foreach (var name in center)
+                if (xo.Columns[name] != null)
+                    xo.Columns[name].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            foreach (string colName in centerAlignColumns)
-            {
-                if (xo.Columns[colName] != null)
-                {
-                    xo.Columns[colName].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                }
-            }
-
-            // Style cho toàn bộ grid
             xo.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             xo.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(52, 152, 219);
             xo.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
-            xo.RowTemplate.Height = 40; // Tăng từ 35 lên 40
-            xo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            xo.RowTemplate.Height = 40;
+            xo.BorderStyle = BorderStyle.None;
             xo.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             xo.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);
             xo.RowHeadersVisible = false;
         }
 
+
         private void HoSoTiemChungControl_Load(object sender, EventArgs e)
         {
+            
             InitializeFilters();
-            LoadSampleData();
+            LoadDSHSTC();
             SetupEventHandlers();
         }
         private void InitializeFilters()
@@ -107,119 +106,74 @@ namespace TPVAXWinform.UserControls
             };
         }
 
-        private void LoadSampleData()
+        private void LoadDSHSTC()
         {
             // Tạo DataTable với dữ liệu mẫu
             dtRecords = new DataTable();
-            dtRecords.Columns.Add("RecordId", typeof(string));
-            dtRecords.Columns.Add("CustomerId", typeof(string));
-            dtRecords.Columns.Add("CustomerName", typeof(string));
-            dtRecords.Columns.Add("Gender", typeof(string));
-            dtRecords.Columns.Add("BirthDate", typeof(DateTime));
-            dtRecords.Columns.Add("Status", typeof(string));
-
-            // Thêm 20 bản ghi mẫu
-            Random rnd = new Random();
-            string[] statuses = { "Đã tiêm", "Chưa tiêm", "Đã hủy", "Đã tiêm", "Chưa tiêm" };
-            string[] genders = { "Nam", "Nữ" };
-
-            for (int i = 1; i <= 20; i++)
-            {
-                dtRecords.Rows.Add(
-             $"HS{i:D4}",
-                   $"KH{i:D4}",
-                $"Nguyễn Văn {(char)(64 + i)}",
-                   genders[rnd.Next(genders.Length)],
-                        DateTime.Now.AddYears(-rnd.Next(18, 65)).AddDays(-rnd.Next(1, 365)),
-            statuses[rnd.Next(statuses.Length)]
-                      );
-            }
+            dtRecords = _bll.GetData();
 
             BindDataToGrid(dtRecords);
         }
 
         private void BindDataToGrid(DataTable dt)
         {
-            xo.Rows.Clear();
+            xo.AutoGenerateColumns = false;
 
-            foreach (DataRow row in dt.Rows)
-            {
-                int rowIndex = xo.Rows.Add();
-                DataGridViewRow dgvRow = xo.Rows[rowIndex];
+            colMaHSTC.DataPropertyName = "MaHSTC";
+            colMaKH.DataPropertyName = "MaKH";
+            colHoTen.DataPropertyName = "HoTen";
+            colGioiTinh.DataPropertyName = "GioiTinh";
+            colNgaySinh.DataPropertyName = "NgaySinh";
 
-                dgvRow.Cells["colRecordId"].Value = row["RecordId"];
-                dgvRow.Cells["colCustomerId"].Value = row["CustomerId"];
-                dgvRow.Cells["colCustomerName"].Value = row["CustomerName"];
-                dgvRow.Cells["colGender"].Value = row["Gender"];
-                dgvRow.Cells["colBirthDate"].Value = ((DateTime)row["BirthDate"]).ToString("dd/MM/yyyy");
+            xo.DataSource = dt;
 
-
-
-
-                // Alternating row colors
-                if (rowIndex % 2 == 0)
-                {
-                    dgvRow.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
-                }
-            }
+            xo.Columns["colNgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            xo.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
+            xo.RowTemplate.Height = 36;
         }
+
+
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            // Lọc dữ liệu
-            DataTable filteredData = dtRecords.Clone();
+            var filtered = dtRecords.Clone(); // giữ schema
+
+            string kwName = txtSearchName.Text.Trim().ToLower();
+            string kwMaHS = txtSearchRecordId.Text.Trim().ToLower();   // MaHSTC
+            string kwMaKH = txtSearchCustomerId.Text.Trim().ToLower(); // MaKH
 
             foreach (DataRow row in dtRecords.Rows)
             {
                 bool match = true;
 
-                // Filter by customer name (Họ tên)
-                if (!string.IsNullOrWhiteSpace(txtSearchName.Text))
+                if (!string.IsNullOrEmpty(kwName))
                 {
-                    string searchName = txtSearchName.Text.Trim().ToLower();
-                    string customerName = row["CustomerName"].ToString().ToLower();
-                    if (!customerName.Contains(searchName))
-                    {
-                        match = false;
-                    }
+                    string hoTen = (row["HoTen"]?.ToString() ?? "").ToLower();
+                    if (!hoTen.Contains(kwName)) match = false;
                 }
 
-                // Filter by record ID (Mã HS)
-                if (!string.IsNullOrWhiteSpace(txtSearchRecordId.Text))
+                if (!string.IsNullOrEmpty(kwMaHS))
                 {
-                    string searchRecordId = txtSearchRecordId.Text.Trim().ToLower();
-                    string recordId = row["RecordId"].ToString().ToLower();
-                    if (!recordId.Contains(searchRecordId))
-                    {
-                        match = false;
-                    }
+                    string maHSTC = (row["MaHSTC"]?.ToString() ?? "").ToLower();
+                    if (!maHSTC.Contains(kwMaHS)) match = false;
                 }
 
-                // Filter by customer ID (Mã KH)
-                if (!string.IsNullOrWhiteSpace(txtSearchCustomerId.Text))
+                if (!string.IsNullOrEmpty(kwMaKH))
                 {
-                    string searchCustomerId = txtSearchCustomerId.Text.Trim().ToLower();
-                    string customerId = row["CustomerId"].ToString().ToLower();
-                    if (!customerId.Contains(searchCustomerId))
-                    {
-                        match = false;
-                    }
+                    string maKH = (row["MaKH"]?.ToString() ?? "").ToLower();
+                    if (!maKH.Contains(kwMaKH)) match = false;
                 }
 
-                if (match)
-                {
-                    filteredData.ImportRow(row);
-                }
+                if (match) filtered.ImportRow(row);
             }
 
-            BindDataToGrid(filteredData);
+            BindDataToGrid(filtered);
 
-            if (filteredData.Rows.Count == 0)
-            {
-                MessageBox.Show("Không tìm thấy kết quả phù hợp!",
-                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            if (filtered.Rows.Count == 0)
+                MessageBox.Show("Không tìm thấy kết quả phù hợp!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private void BtnReset_Click(object sender, EventArgs e)
         {
@@ -237,29 +191,27 @@ namespace TPVAXWinform.UserControls
 
         private void DgvRecords_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Bỏ qua nếu click vào header
             if (e.RowIndex < 0) return;
 
-            string recordId = xo.Rows[e.RowIndex].Cells["colRecordId"].Value.ToString();
-            string customerName = xo.Rows[e.RowIndex].Cells["colCustomerName"].Value.ToString();
+            string maHSTC = xo.Rows[e.RowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+            string hoTen = xo.Rows[e.RowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
 
-            // Xử lý click vào button "Sửa"
             if (e.ColumnIndex == xo.Columns["colEdit"].Index)
-            {
-                EditRecord(recordId, customerName);
-            }
+                EditRecord(maHSTC, hoTen);
         }
 
-        private void EditRecord(string recordId, string customerName)
+        private void EditRecord(string maHSTC, string hoTen)
         {
-            MessageBox.Show($"Chỉnh sửa hồ sơ:\nMã HS: {recordId}\nKhách hàng: {customerName}\n\n(Chức năng sẽ được phát triển sau)",
-       "Chỉnh sửa hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                $"Chỉnh sửa hồ sơ:\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
+                "Chỉnh sửa hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         // Public method để refresh data từ bên ngoài
         public void RefreshData()
         {
-            LoadSampleData();
+            LoadDSHSTC();   
         }
 
         private void dgvRecords_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -323,20 +275,20 @@ namespace TPVAXWinform.UserControls
         {
             if (selectedRowIndex >= 0 && selectedRowIndex < xo.Rows.Count)
             {
-                string recordId = xo.Rows[selectedRowIndex].Cells["colRecordId"].Value?.ToString() ?? "";
-                string customerId = xo.Rows[selectedRowIndex].Cells["colCustomerId"].Value?.ToString() ?? "";
-                string customerName = xo.Rows[selectedRowIndex].Cells["colCustomerName"].Value?.ToString() ?? "";
-                string gender = xo.Rows[selectedRowIndex].Cells["colGender"].Value?.ToString() ?? "";
-                string birthDate = xo.Rows[selectedRowIndex].Cells["colBirthDate"].Value?.ToString() ?? "";
+                string maHSTC = xo.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string maKH = xo.Rows[selectedRowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
+                string hoTen = xo.Rows[selectedRowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
+                string gt = xo.Rows[selectedRowIndex].Cells["colGioiTinh"].Value?.ToString() ?? "";
+                string ns = xo.Rows[selectedRowIndex].Cells["colNgaySinh"].Value?.ToString() ?? "";
 
-                string info = $"📋 THÔNG TIN HỒ SƠ TIÊM CHỦNG\n\n" +
-                   $"Mã hồ sơ: {recordId}\n" +
-                $"Mã khách hàng: {customerId}\n" +
-               $"Họ tên: {customerName}\n" +
-                    $"Giới tính: {gender}\n" +
-           $"Ngày sinh: {birthDate}\n";
-
-                MessageBox.Show(info, "Thông tin hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "📋 THÔNG TIN HỒ SƠ TIÊM CHỦNG\n\n" +
+                    $"Mã hồ sơ: {maHSTC}\n" +
+                    $"Mã khách hàng: {maKH}\n" +
+                    $"Họ tên: {hoTen}\n" +
+                    $"Giới tính: {gt}\n" +
+                    $"Ngày sinh: {ns}\n",
+                    "Thông tin hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -344,11 +296,11 @@ namespace TPVAXWinform.UserControls
         {
             if (selectedRowIndex >= 0 && selectedRowIndex < xo.Rows.Count)
             {
-                string recordId = xo.Rows[selectedRowIndex].Cells["colRecordId"].Value?.ToString() ?? "";
-                string customerName = xo.Rows[selectedRowIndex].Cells["colCustomerName"].Value?.ToString() ?? "";
-
-                MessageBox.Show($"Chỉnh sửa thông tin hồ sơ:\n\nMã HS: {recordId}\nKhách hàng: {customerName}\n\n(Chức năng sẽ được phát triển sau)",
-               "Sửa thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string maHSTC = xo.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string hoTen = xo.Rows[selectedRowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
+                MessageBox.Show(
+                    $"Chỉnh sửa thông tin hồ sơ:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
+                    "Sửa thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -356,12 +308,13 @@ namespace TPVAXWinform.UserControls
         {
             if (selectedRowIndex >= 0 && selectedRowIndex < xo.Rows.Count)
             {
-                string recordId = xo.Rows[selectedRowIndex].Cells["colRecordId"].Value?.ToString() ?? "";
-                string customerName = xo.Rows[selectedRowIndex].Cells["colCustomerName"].Value?.ToString() ?? "";
-
-                MessageBox.Show($"Thêm mũi tiêm cho:\n\nMã HS: {recordId}\nKhách hàng: {customerName}\n\n(Chức năng sẽ được phát triển sau)",
-                      "Thêm mũi tiêm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string maHSTC = xo.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string hoTen = xo.Rows[selectedRowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
+                MessageBox.Show(
+                    $"Thêm mũi tiêm cho:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
+                    "Thêm mũi tiêm", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
 }
+    

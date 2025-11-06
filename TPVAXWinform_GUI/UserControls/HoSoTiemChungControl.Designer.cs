@@ -47,11 +47,11 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.colRecordId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCustomerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGender = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHoTen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGioiTinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNgaySinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabList.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -217,11 +217,11 @@
             this.xo.BackgroundColor = System.Drawing.Color.White;
             this.xo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.xo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colRecordId,
-            this.colCustomerId,
-            this.colCustomerName,
-            this.colGender,
-            this.colBirthDate});
+            this.colMaHSTC,
+            this.colMaKH,
+            this.colHoTen,
+            this.colGioiTinh,
+            this.colNgaySinh});
             this.xo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xo.Location = new System.Drawing.Point(3, 89);
             this.xo.Name = "xo";
@@ -294,40 +294,40 @@
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "📋 QUẢN LÝ HỒ SƠ TIÊM CHỦNG";
             // 
-            // colRecordId
+            // colMaHSTC
             // 
-            this.colRecordId.HeaderText = "Mã HS";
-            this.colRecordId.MinimumWidth = 8;
-            this.colRecordId.Name = "colRecordId";
-            this.colRecordId.ReadOnly = true;
+            this.colMaHSTC.HeaderText = "Mã HS";
+            this.colMaHSTC.MinimumWidth = 8;
+            this.colMaHSTC.Name = "colMaHSTC";
+            this.colMaHSTC.ReadOnly = true;
             // 
-            // colCustomerId
+            // colMaKH
             // 
-            this.colCustomerId.HeaderText = "Mã KH";
-            this.colCustomerId.MinimumWidth = 8;
-            this.colCustomerId.Name = "colCustomerId";
-            this.colCustomerId.ReadOnly = true;
+            this.colMaKH.HeaderText = "Mã KH";
+            this.colMaKH.MinimumWidth = 8;
+            this.colMaKH.Name = "colMaKH";
+            this.colMaKH.ReadOnly = true;
             // 
-            // colCustomerName
+            // colHoTen
             // 
-            this.colCustomerName.HeaderText = "Họ tên";
-            this.colCustomerName.MinimumWidth = 8;
-            this.colCustomerName.Name = "colCustomerName";
-            this.colCustomerName.ReadOnly = true;
+            this.colHoTen.HeaderText = "Họ tên";
+            this.colHoTen.MinimumWidth = 8;
+            this.colHoTen.Name = "colHoTen";
+            this.colHoTen.ReadOnly = true;
             // 
-            // colGender
+            // colGioiTinh
             // 
-            this.colGender.HeaderText = "Giới tính";
-            this.colGender.MinimumWidth = 8;
-            this.colGender.Name = "colGender";
-            this.colGender.ReadOnly = true;
+            this.colGioiTinh.HeaderText = "Giới tính";
+            this.colGioiTinh.MinimumWidth = 8;
+            this.colGioiTinh.Name = "colGioiTinh";
+            this.colGioiTinh.ReadOnly = true;
             // 
-            // colBirthDate
+            // colNgaySinh
             // 
-            this.colBirthDate.HeaderText = "Ngày sinh";
-            this.colBirthDate.MinimumWidth = 8;
-            this.colBirthDate.Name = "colBirthDate";
-            this.colBirthDate.ReadOnly = true;
+            this.colNgaySinh.HeaderText = "Ngày sinh";
+            this.colNgaySinh.MinimumWidth = 8;
+            this.colNgaySinh.Name = "colNgaySinh";
+            this.colNgaySinh.ReadOnly = true;
             // 
             // HoSoTiemChungControl
             // 
@@ -374,10 +374,10 @@ private System.Windows.Forms.Panel panelHeader;
      private System.Windows.Forms.Button btnEdit;
   private System.Windows.Forms.Button button2;
       private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRecordId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCustomerId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCustomerName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colGender;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBirthDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMaHSTC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMaKH;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHoTen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGioiTinh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNgaySinh;
     }
 }
