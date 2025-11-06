@@ -143,7 +143,7 @@
             // 
             this.txtSearchName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearchName.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSearchName.Location = new System.Drawing.Point(330, 25);
+            this.txtSearchName.Location = new System.Drawing.Point(421, 25);
             this.txtSearchName.Name = "txtSearchName";
             this.txtSearchName.Size = new System.Drawing.Size(200, 34);
             this.txtSearchName.TabIndex = 17;
@@ -153,7 +153,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.label5.Location = new System.Drawing.Point(215, 30);
+            this.label5.Location = new System.Drawing.Point(310, 30);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(105, 25);
             this.label5.TabIndex = 16;
@@ -163,7 +163,7 @@
             // 
             this.txtSearchCustomerId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearchCustomerId.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSearchCustomerId.Location = new System.Drawing.Point(130, 25);
+            this.txtSearchCustomerId.Location = new System.Drawing.Point(125, 25);
             this.txtSearchCustomerId.Name = "txtSearchCustomerId";
             this.txtSearchCustomerId.Size = new System.Drawing.Size(150, 34);
             this.txtSearchCustomerId.TabIndex = 13;

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using TPVAXWinform_BLL;
+using TPVAXWinform_GUI;
 
 namespace TPVAXWinform.UserControls
 {
@@ -34,8 +35,19 @@ namespace TPVAXWinform.UserControls
                 };
                 xo.Columns.Add(btnEditColumn);
             }
+
+            // Thêm sự kiện cho button "Thêm hồ sơ"
+            button1.Click += Button1_Click;
         }
 
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            frmThemHSTC frmThem = new frmThemHSTC();
+            frmThem.ShowDialog();
+
+            // Refresh data sau khi đóng form
+            RefreshData();
+        }
 
         private void ConfigureDataGridViewStyling()
         {
