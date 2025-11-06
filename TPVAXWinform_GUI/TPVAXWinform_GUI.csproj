@@ -189,5 +189,15 @@
     <Folder Include="Dashboard\Repositories\" />
     <Folder Include="Dashboard\Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TPVAXWinform_BLL\TPVAXWinform_BLL.csproj">
+      <Project>{986393f8-56a2-4ce6-b749-d3b90705827c}</Project>
+      <Name>TPVAXWinform_BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TPVAXWinform_DTO\TPVAXWinform_DTO.csproj">
+      <Project>{52a587bf-ae47-470c-bc3d-0aac9fc3b785}</Project>
+      <Name>TPVAXWinform_DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
