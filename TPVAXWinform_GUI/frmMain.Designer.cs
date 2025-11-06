@@ -492,7 +492,7 @@
             // 
             // logo
             // 
-            this.logo.BackgroundImage = global::TPVAXWinform.Properties.Resources.logo;
+            this.logo.BackgroundImage = global::TPVAXWinform_GUI.Properties.Resources.logo;
             this.logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.logo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logo.Location = new System.Drawing.Point(3, 3);

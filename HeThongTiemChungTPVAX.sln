@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPVAXWebsite", "TPVAXWebsite\TPVAXWebsite.csproj", "{896023F1-94B0-432E-AD6E-021238A389B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPVAXWinform", "TPVAXWinform\TPVAXWinform.csproj", "{33F00947-384C-4EE6-867E-F144EF36B5D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPVAXWinform_GUI", "TPVAXWinform_GUI\TPVAXWinform_GUI.csproj", "{33F00947-384C-4EE6-867E-F144EF36B5D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
