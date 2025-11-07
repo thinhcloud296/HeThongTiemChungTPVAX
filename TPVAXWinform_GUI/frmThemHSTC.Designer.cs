@@ -30,6 +30,9 @@
         {
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlHoSo = new System.Windows.Forms.Panel();
+            this.cboDSHSTCLienKet = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cboQuanHe = new System.Windows.Forms.ComboBox();
             this.btnThemHoSo = new System.Windows.Forms.Button();
             this.txtGhiChu = new System.Windows.Forms.TextBox();
             this.lblGhiChu = new System.Windows.Forms.Label();
@@ -38,12 +41,17 @@
             this.lblQuanHeKH = new System.Windows.Forms.Label();
             this.dtpNgaySinhHoSo = new System.Windows.Forms.DateTimePicker();
             this.lblNgaySinhHoSo = new System.Windows.Forms.Label();
-            this.cboGioiTinh = new System.Windows.Forms.ComboBox();
+            this.cboGioiTinhHSTC = new System.Windows.Forms.ComboBox();
             this.lblGioiTinh = new System.Windows.Forms.Label();
             this.txtHoTenHoSo = new System.Windows.Forms.TextBox();
             this.lblHoTenHoSo = new System.Windows.Forms.Label();
             this.lblTitleHoSo = new System.Windows.Forms.Label();
             this.pnlKhachHang = new System.Windows.Forms.Panel();
+            this.txtCCCDKH = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.cboGioiTinhKH = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnThemKhachHang = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.lblEmail = new System.Windows.Forms.Label();
@@ -59,7 +67,6 @@
             this.txtTimCCCD = new System.Windows.Forms.TextBox();
             this.lblTimCCCD = new System.Windows.Forms.Label();
             this.lblTitleKH = new System.Windows.Forms.Label();
-            this.cboQuanHe = new System.Windows.Forms.ComboBox();
             this.pnlMain.SuspendLayout();
             this.pnlHoSo.SuspendLayout();
             this.pnlKhachHang.SuspendLayout();
@@ -67,21 +74,22 @@
             // 
             // pnlMain
             // 
-            this.pnlMain.AutoScroll = false;
             this.pnlMain.Controls.Add(this.pnlHoSo);
             this.pnlMain.Controls.Add(this.pnlKhachHang);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
-            this.pnlMain.Size = new System.Drawing.Size(1320, 770);
+            this.pnlMain.Padding = new System.Windows.Forms.Padding(15);
+            this.pnlMain.Size = new System.Drawing.Size(1320, 907);
             this.pnlMain.TabIndex = 0;
             // 
             // pnlHoSo
             // 
             this.pnlHoSo.BackColor = System.Drawing.Color.White;
             this.pnlHoSo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHoSo.Controls.Add(this.cboDSHSTCLienKet);
+            this.pnlHoSo.Controls.Add(this.label3);
             this.pnlHoSo.Controls.Add(this.cboQuanHe);
             this.pnlHoSo.Controls.Add(this.btnThemHoSo);
             this.pnlHoSo.Controls.Add(this.txtGhiChu);
@@ -91,7 +99,7 @@
             this.pnlHoSo.Controls.Add(this.lblQuanHeKH);
             this.pnlHoSo.Controls.Add(this.dtpNgaySinhHoSo);
             this.pnlHoSo.Controls.Add(this.lblNgaySinhHoSo);
-            this.pnlHoSo.Controls.Add(this.cboGioiTinh);
+            this.pnlHoSo.Controls.Add(this.cboGioiTinhHSTC);
             this.pnlHoSo.Controls.Add(this.lblGioiTinh);
             this.pnlHoSo.Controls.Add(this.txtHoTenHoSo);
             this.pnlHoSo.Controls.Add(this.lblHoTenHoSo);
@@ -100,8 +108,47 @@
             this.pnlHoSo.Location = new System.Drawing.Point(15, 385);
             this.pnlHoSo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlHoSo.Name = "pnlHoSo";
-            this.pnlHoSo.Size = new System.Drawing.Size(1290, 370);
+            this.pnlHoSo.Size = new System.Drawing.Size(1290, 522);
             this.pnlHoSo.TabIndex = 1;
+            // 
+            // cboDSHSTCLienKet
+            // 
+            this.cboDSHSTCLienKet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDSHSTCLienKet.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboDSHSTCLienKet.FormattingEnabled = true;
+            this.cboDSHSTCLienKet.Location = new System.Drawing.Point(411, 87);
+            this.cboDSHSTCLienKet.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboDSHSTCLienKet.Name = "cboDSHSTCLienKet";
+            this.cboDSHSTCLienKet.Size = new System.Drawing.Size(780, 36);
+            this.cboDSHSTCLienKet.TabIndex = 16;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.LightCyan;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(88, 81);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(10);
+            this.label3.Size = new System.Drawing.Size(295, 48);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Danh sách hồ sơ đã liên kết";
+            // 
+            // cboQuanHe
+            // 
+            this.cboQuanHe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboQuanHe.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboQuanHe.FormattingEnabled = true;
+            this.cboQuanHe.Items.AddRange(new object[] {
+            "Nam",
+            "Nữ",
+            "Khác"});
+            this.cboQuanHe.Location = new System.Drawing.Point(270, 246);
+            this.cboQuanHe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboQuanHe.Name = "cboQuanHe";
+            this.cboQuanHe.Size = new System.Drawing.Size(448, 36);
+            this.cboQuanHe.TabIndex = 14;
             // 
             // btnThemHoSo
             // 
@@ -110,7 +157,7 @@
             this.btnThemHoSo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnThemHoSo.ForeColor = System.Drawing.Color.White;
-            this.btnThemHoSo.Location = new System.Drawing.Point(960, 315);
+            this.btnThemHoSo.Location = new System.Drawing.Point(960, 454);
             this.btnThemHoSo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnThemHoSo.Name = "btnThemHoSo";
             this.btnThemHoSo.Size = new System.Drawing.Size(280, 45);
@@ -121,18 +168,18 @@
             // txtGhiChu
             // 
             this.txtGhiChu.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtGhiChu.Location = new System.Drawing.Point(270, 260);
+            this.txtGhiChu.Location = new System.Drawing.Point(270, 338);
             this.txtGhiChu.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtGhiChu.Multiline = true;
             this.txtGhiChu.Name = "txtGhiChu";
-            this.txtGhiChu.Size = new System.Drawing.Size(970, 45);
+            this.txtGhiChu.Size = new System.Drawing.Size(970, 106);
             this.txtGhiChu.TabIndex = 12;
             // 
             // lblGhiChu
             // 
             this.lblGhiChu.AutoSize = true;
             this.lblGhiChu.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblGhiChu.Location = new System.Drawing.Point(45, 263);
+            this.lblGhiChu.Location = new System.Drawing.Point(45, 341);
             this.lblGhiChu.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGhiChu.Name = "lblGhiChu";
             this.lblGhiChu.Size = new System.Drawing.Size(89, 28);
@@ -142,7 +189,7 @@
             // txtCCCDHoSo
             // 
             this.txtCCCDHoSo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtCCCDHoSo.Location = new System.Drawing.Point(270, 215);
+            this.txtCCCDHoSo.Location = new System.Drawing.Point(270, 293);
             this.txtCCCDHoSo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtCCCDHoSo.Name = "txtCCCDHoSo";
             this.txtCCCDHoSo.Size = new System.Drawing.Size(448, 34);
@@ -152,7 +199,7 @@
             // 
             this.lblCCCDHoSo.AutoSize = true;
             this.lblCCCDHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblCCCDHoSo.Location = new System.Drawing.Point(45, 220);
+            this.lblCCCDHoSo.Location = new System.Drawing.Point(45, 298);
             this.lblCCCDHoSo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCCCDHoSo.Name = "lblCCCDHoSo";
             this.lblCCCDHoSo.Size = new System.Drawing.Size(66, 28);
@@ -163,7 +210,7 @@
             // 
             this.lblQuanHeKH.AutoSize = true;
             this.lblQuanHeKH.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblQuanHeKH.Location = new System.Drawing.Point(45, 172);
+            this.lblQuanHeKH.Location = new System.Drawing.Point(45, 250);
             this.lblQuanHeKH.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblQuanHeKH.Name = "lblQuanHeKH";
             this.lblQuanHeKH.Size = new System.Drawing.Size(211, 28);
@@ -175,7 +222,7 @@
             this.dtpNgaySinhHoSo.CustomFormat = "dd/MM/yyyy";
             this.dtpNgaySinhHoSo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dtpNgaySinhHoSo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpNgaySinhHoSo.Location = new System.Drawing.Point(960, 123);
+            this.dtpNgaySinhHoSo.Location = new System.Drawing.Point(960, 201);
             this.dtpNgaySinhHoSo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpNgaySinhHoSo.Name = "dtpNgaySinhHoSo";
             this.dtpNgaySinhHoSo.Size = new System.Drawing.Size(280, 34);
@@ -185,33 +232,33 @@
             // 
             this.lblNgaySinhHoSo.AutoSize = true;
             this.lblNgaySinhHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblNgaySinhHoSo.Location = new System.Drawing.Point(820, 128);
+            this.lblNgaySinhHoSo.Location = new System.Drawing.Point(820, 206);
             this.lblNgaySinhHoSo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNgaySinhHoSo.Name = "lblNgaySinhHoSo";
             this.lblNgaySinhHoSo.Size = new System.Drawing.Size(112, 28);
             this.lblNgaySinhHoSo.TabIndex = 5;
             this.lblNgaySinhHoSo.Text = "Ngày sinh:";
             // 
-            // cboGioiTinh
+            // cboGioiTinhHSTC
             // 
-            this.cboGioiTinh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboGioiTinh.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cboGioiTinh.FormattingEnabled = true;
-            this.cboGioiTinh.Items.AddRange(new object[] {
+            this.cboGioiTinhHSTC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboGioiTinhHSTC.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboGioiTinhHSTC.FormattingEnabled = true;
+            this.cboGioiTinhHSTC.Items.AddRange(new object[] {
             "Nam",
             "Nữ",
             "Khác"});
-            this.cboGioiTinh.Location = new System.Drawing.Point(270, 123);
-            this.cboGioiTinh.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cboGioiTinh.Name = "cboGioiTinh";
-            this.cboGioiTinh.Size = new System.Drawing.Size(448, 36);
-            this.cboGioiTinh.TabIndex = 4;
+            this.cboGioiTinhHSTC.Location = new System.Drawing.Point(270, 201);
+            this.cboGioiTinhHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboGioiTinhHSTC.Name = "cboGioiTinhHSTC";
+            this.cboGioiTinhHSTC.Size = new System.Drawing.Size(448, 36);
+            this.cboGioiTinhHSTC.TabIndex = 4;
             // 
             // lblGioiTinh
             // 
             this.lblGioiTinh.AutoSize = true;
             this.lblGioiTinh.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblGioiTinh.Location = new System.Drawing.Point(45, 128);
+            this.lblGioiTinh.Location = new System.Drawing.Point(45, 206);
             this.lblGioiTinh.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGioiTinh.Name = "lblGioiTinh";
             this.lblGioiTinh.Size = new System.Drawing.Size(100, 28);
@@ -221,7 +268,7 @@
             // txtHoTenHoSo
             // 
             this.txtHoTenHoSo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtHoTenHoSo.Location = new System.Drawing.Point(270, 77);
+            this.txtHoTenHoSo.Location = new System.Drawing.Point(270, 155);
             this.txtHoTenHoSo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtHoTenHoSo.Name = "txtHoTenHoSo";
             this.txtHoTenHoSo.Size = new System.Drawing.Size(970, 34);
@@ -231,7 +278,7 @@
             // 
             this.lblHoTenHoSo.AutoSize = true;
             this.lblHoTenHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblHoTenHoSo.Location = new System.Drawing.Point(45, 82);
+            this.lblHoTenHoSo.Location = new System.Drawing.Point(45, 160);
             this.lblHoTenHoSo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHoTenHoSo.Name = "lblHoTenHoSo";
             this.lblHoTenHoSo.Size = new System.Drawing.Size(192, 28);
@@ -257,6 +304,11 @@
             // 
             this.pnlKhachHang.BackColor = System.Drawing.Color.White;
             this.pnlKhachHang.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKhachHang.Controls.Add(this.txtCCCDKH);
+            this.pnlKhachHang.Controls.Add(this.label2);
+            this.pnlKhachHang.Controls.Add(this.btnReset);
+            this.pnlKhachHang.Controls.Add(this.cboGioiTinhKH);
+            this.pnlKhachHang.Controls.Add(this.label1);
             this.pnlKhachHang.Controls.Add(this.btnThemKhachHang);
             this.pnlKhachHang.Controls.Add(this.txtEmail);
             this.pnlKhachHang.Controls.Add(this.lblEmail);
@@ -278,6 +330,68 @@
             this.pnlKhachHang.Name = "pnlKhachHang";
             this.pnlKhachHang.Size = new System.Drawing.Size(1290, 370);
             this.pnlKhachHang.TabIndex = 0;
+            // 
+            // txtCCCDKH
+            // 
+            this.txtCCCDKH.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtCCCDKH.Location = new System.Drawing.Point(790, 219);
+            this.txtCCCDKH.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtCCCDKH.Name = "txtCCCDKH";
+            this.txtCCCDKH.Size = new System.Drawing.Size(450, 34);
+            this.txtCCCDKH.TabIndex = 16;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(710, 222);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 28);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "CCCD:";
+            // 
+            // btnReset
+            // 
+            this.btnReset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
+            this.btnReset.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnReset.FlatAppearance.BorderSize = 0;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnReset.ForeColor = System.Drawing.Color.White;
+            this.btnReset.Location = new System.Drawing.Point(999, 77);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(180, 40);
+            this.btnReset.TabIndex = 16;
+            this.btnReset.Text = "🔄 Đặt lại";
+            this.btnReset.UseVisualStyleBackColor = false;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // cboGioiTinhKH
+            // 
+            this.cboGioiTinhKH.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboGioiTinhKH.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboGioiTinhKH.FormattingEnabled = true;
+            this.cboGioiTinhKH.Items.AddRange(new object[] {
+            "Nam",
+            "Nữ",
+            "Khác"});
+            this.cboGioiTinhKH.Location = new System.Drawing.Point(673, 126);
+            this.cboGioiTinhKH.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboGioiTinhKH.Name = "cboGioiTinhKH";
+            this.cboGioiTinhKH.Size = new System.Drawing.Size(120, 36);
+            this.cboGioiTinhKH.TabIndex = 15;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(565, 130);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 28);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Giới tính:";
             // 
             // btnThemKhachHang
             // 
@@ -317,10 +431,10 @@
             // txtSoDT
             // 
             this.txtSoDT.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSoDT.Location = new System.Drawing.Point(270, 217);
+            this.txtSoDT.Location = new System.Drawing.Point(270, 219);
             this.txtSoDT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSoDT.Name = "txtSoDT";
-            this.txtSoDT.Size = new System.Drawing.Size(448, 34);
+            this.txtSoDT.Size = new System.Drawing.Size(418, 34);
             this.txtSoDT.TabIndex = 11;
             // 
             // lblSoDT
@@ -379,10 +493,10 @@
             // txtHoTenKH
             // 
             this.txtHoTenKH.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtHoTenKH.Location = new System.Drawing.Point(270, 125);
+            this.txtHoTenKH.Location = new System.Drawing.Point(270, 127);
             this.txtHoTenKH.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtHoTenKH.Name = "txtHoTenKH";
-            this.txtHoTenKH.Size = new System.Drawing.Size(448, 34);
+            this.txtHoTenKH.Size = new System.Drawing.Size(287, 34);
             this.txtHoTenKH.TabIndex = 5;
             // 
             // lblHoTenKH
@@ -410,6 +524,7 @@
             this.btnTimKiem.TabIndex = 3;
             this.btnTimKiem.Text = "🔍 Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = false;
+            this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // txtTimCCCD
             // 
@@ -446,27 +561,12 @@
             this.lblTitleKH.Text = "👤 TẠO KHÁCH HÀNG";
             this.lblTitleKH.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cboQuanHe
-            // 
-            this.cboQuanHe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboQuanHe.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cboQuanHe.FormattingEnabled = true;
-            this.cboQuanHe.Items.AddRange(new object[] {
-            "Nam",
-            "Nữ",
-            "Khác"});
-            this.cboQuanHe.Location = new System.Drawing.Point(270, 168);
-            this.cboQuanHe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cboQuanHe.Name = "cboQuanHe";
-            this.cboQuanHe.Size = new System.Drawing.Size(448, 36);
-            this.cboQuanHe.TabIndex = 14;
-            // 
             // frmThemHSTC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.ClientSize = new System.Drawing.Size(1320, 770);
+            this.ClientSize = new System.Drawing.Size(1320, 907);
             this.Controls.Add(this.pnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -507,7 +607,7 @@
         private System.Windows.Forms.Label lblTitleHoSo;
         private System.Windows.Forms.TextBox txtHoTenHoSo;
         private System.Windows.Forms.Label lblHoTenHoSo;
-        private System.Windows.Forms.ComboBox cboGioiTinh;
+        private System.Windows.Forms.ComboBox cboGioiTinhHSTC;
         private System.Windows.Forms.Label lblGioiTinh;
         private System.Windows.Forms.DateTimePicker dtpNgaySinhHoSo;
         private System.Windows.Forms.Label lblNgaySinhHoSo;
@@ -518,5 +618,12 @@
         private System.Windows.Forms.Label lblGhiChu;
         private System.Windows.Forms.Button btnThemHoSo;
         private System.Windows.Forms.ComboBox cboQuanHe;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cboGioiTinhKH;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.TextBox txtCCCDKH;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cboDSHSTCLienKet;
+        private System.Windows.Forms.Label label3;
     }
 }

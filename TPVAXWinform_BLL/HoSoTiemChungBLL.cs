@@ -19,5 +19,9 @@ namespace TPVAXWinform_BLL
         {
             return _dal.GetHSTC_KHHG();
         }   
+        public DataTable GetHSTC_QuanHe_KH(string MaKH)
+        {
+            return _dal.GetHSTC_QuanHe_KH(MaKH);
+        }   
     }
 }

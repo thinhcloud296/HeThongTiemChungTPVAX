@@ -48,7 +48,6 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMaKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHoTen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGioiTinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgaySinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -220,7 +219,6 @@
             this.xo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.xo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colMaHSTC,
-            this.colMaKH,
             this.colHoTen,
             this.colGioiTinh,
             this.colNgaySinh,
@@ -311,13 +309,6 @@
             this.colMaHSTC.Name = "colMaHSTC";
             this.colMaHSTC.ReadOnly = true;
             // 
-            // colMaKH
-            // 
-            this.colMaKH.HeaderText = "Mã KH";
-            this.colMaKH.MinimumWidth = 8;
-            this.colMaKH.Name = "colMaKH";
-            this.colMaKH.ReadOnly = true;
-            // 
             // colHoTen
             // 
             this.colHoTen.HeaderText = "Họ tên";
@@ -399,7 +390,6 @@ private System.Windows.Forms.Panel panelHeader;
   private System.Windows.Forms.Button button2;
       private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaHSTC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colMaKH;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHoTen;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGioiTinh;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNgaySinh;

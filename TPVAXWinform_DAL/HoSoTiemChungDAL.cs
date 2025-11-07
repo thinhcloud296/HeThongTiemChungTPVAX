@@ -21,5 +21,12 @@ namespace TPVAXWinform_DAL
                     CommandType.StoredProcedure
                 );
         }
+        public DataTable GetHSTC_QuanHe_KH(string MaKH)
+        {             return DBConnect.ExecuteQuery(
+                    "dbo.usp_HoSoTiemChung_GetQuanHeVoiKH",
+                    CommandType.StoredProcedure,
+                    DBConnect.Param("@MaKH", MaKH, SqlDbType.Char, 10)
+                );
+        }
     }
 }

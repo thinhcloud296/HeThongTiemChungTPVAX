@@ -64,7 +64,7 @@ namespace TPVAXWinform.UserControls
             xo.EnableHeadersVisualStyles = false;
 
             // căn giữa các cột ID/ngày
-            string[] center = { "colMaHSTC", "colMaKH", "colGioiTinh", "colNgaySinh" };
+            string[] center = { "colMaHSTC", "colGioiTinh", "colNgaySinh" };
             foreach (var name in center)
                 if (xo.Columns[name] != null)
                     xo.Columns[name].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -82,7 +82,7 @@ namespace TPVAXWinform.UserControls
 
         private void HoSoTiemChungControl_Load(object sender, EventArgs e)
         {
-            
+
             InitializeFilters();
             LoadDSHSTC();
             SetupEventHandlers();
@@ -132,7 +132,6 @@ namespace TPVAXWinform.UserControls
             xo.AutoGenerateColumns = false;
 
             colMaHSTC.DataPropertyName = "MaHSTC";
-            colMaKH.DataPropertyName = "MaKH";
             colHoTen.DataPropertyName = "HoTen";
             colGioiTinh.DataPropertyName = "GioiTinh";
             colNgaySinh.DataPropertyName = "NgaySinh";
@@ -224,7 +223,7 @@ namespace TPVAXWinform.UserControls
         // Public method để refresh data từ bên ngoài
         public void RefreshData()
         {
-            LoadDSHSTC();   
+            LoadDSHSTC();
         }
 
         private void dgvRecords_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -289,18 +288,24 @@ namespace TPVAXWinform.UserControls
             if (selectedRowIndex >= 0 && selectedRowIndex < xo.Rows.Count)
             {
                 string maHSTC = xo.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-                string maKH = xo.Rows[selectedRowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
                 string hoTen = xo.Rows[selectedRowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
                 string gt = xo.Rows[selectedRowIndex].Cells["colGioiTinh"].Value?.ToString() ?? "";
-                string ns = xo.Rows[selectedRowIndex].Cells["colNgaySinh"].Value?.ToString() ?? "";
+                var valNgaySinh = xo.Rows[selectedRowIndex].Cells["colNgaySinh"].Value;
+                string ns =
+                    valNgaySinh is DateTime dt ? dt.ToString("dd-MM-yyyy") :
+                    DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd-MM-yyyy") :
+                    "";
+                string quanhe = xo.Rows[selectedRowIndex].Cells["colQuanHe"].Value?.ToString() ?? "";
+                string tenKH = xo.Rows[selectedRowIndex].Cells["colHoTenKHHG"].Value?.ToString() ?? "";
 
                 MessageBox.Show(
                     "📋 THÔNG TIN HỒ SƠ TIÊM CHỦNG\n\n" +
                     $"Mã hồ sơ: {maHSTC}\n" +
-                    $"Mã khách hàng: {maKH}\n" +
                     $"Họ tên: {hoTen}\n" +
                     $"Giới tính: {gt}\n" +
-                    $"Ngày sinh: {ns}\n",
+                    $"Ngày sinh: {ns}\n" +
+                    $"Họ tên khách hàng : {tenKH}\n" +
+                    $"Quan hệ với khách hàng: {quanhe}\n",
                     "Thông tin hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -330,4 +335,4 @@ namespace TPVAXWinform.UserControls
         }
     }
 }
-    
+
