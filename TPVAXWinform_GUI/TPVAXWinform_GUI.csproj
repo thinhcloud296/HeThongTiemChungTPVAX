@@ -125,12 +125,6 @@
     <Compile Include="UserControls\HoSoTiemChungControl.Designer.cs">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\KhachHangControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\KhachHangControl.Designer.cs">
-      <DependentUpon>KhachHangControl.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,19 +150,7 @@
     <EmbeddedResource Include="UserControls\HoSoTiemChungControl.resx">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\KhachHangControl.resx">
-      <DependentUpon>KhachHangControl.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="ChartFilter_Guide.md" />
-    <None Include="CREATE_GUI_CLASSLIBRARY_GUIDE.md" />
-    <None Include="CustomControls\MenuButton_Guide.md" />
-    <None Include="ENCODING_FIX_GUIDE.md" />
-    <None Include="FOLDER_REORGANIZATION_GUIDE.md" />
-    <None Include="HighDPI_Guide.md" />
-    <None Include="HOW_I_FIXED_ENCODING.md" />
-    <None Include="LiveCharts_Migration_Guide.md" />
-    <None Include="LiveCharts_Usage_Guide.md" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -179,8 +161,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SearchPanels_Guide.md" />
-    <None Include="UserControls\UserControl_Architecture_Guide.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

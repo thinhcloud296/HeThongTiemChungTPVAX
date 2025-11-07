@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TPVAXWinform_GUI.UserControls;
+using TPVAXWinform_GUI;
 
 namespace TPVAXWinform
 {
@@ -84,7 +84,6 @@ namespace TPVAXWinform
             // Hide all user controls
             bangDieuKhienControl1.Visible = true;
             hoSoTiemChungControl1.Visible = false;
-            khachHangControl1.Visible = false;
 
             // Bring dashboard to front
             bangDieuKhienControl1.BringToFront();
@@ -99,7 +98,6 @@ namespace TPVAXWinform
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = true;
-            khachHangControl1.Visible = false;
 
             // Bring immunization record to front
             hoSoTiemChungControl1.BringToFront();
@@ -116,10 +114,6 @@ namespace TPVAXWinform
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
-            khachHangControl1.Visible = true;
-
-            // Bring customer control to front
-            khachHangControl1.BringToFront();
 
             // Reset button styles
             ResetMenuButtons();
