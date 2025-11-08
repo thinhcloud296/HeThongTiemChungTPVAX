@@ -32,6 +32,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>vaccine.ico</ApplicationIcon>
+  </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
@@ -92,17 +96,23 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Dashboard\Controls\KpiCard.Designer.cs" />
+    <Compile Include="frmEditKH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditKH.Designer.cs">
+      <DependentUpon>frmEditKH.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmThemHSTC.cs">
+    <Compile Include="frmThemHSTC_KH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmThemHSTC.Designer.cs">
-      <DependentUpon>frmThemHSTC.cs</DependentUpon>
+    <Compile Include="frmThemHSTC_KH.Designer.cs">
+      <DependentUpon>frmThemHSTC_KH.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,11 +135,14 @@
     <Compile Include="UserControls\HoSoTiemChungControl.Designer.cs">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="frmEditKH.resx">
+      <DependentUpon>frmEditKH.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmThemHSTC.resx">
-      <DependentUpon>frmThemHSTC.cs</DependentUpon>
+    <EmbeddedResource Include="frmThemHSTC_KH.resx">
+      <DependentUpon>frmThemHSTC_KH.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -180,6 +193,7 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="vaccine.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dashboard\Forms\" />

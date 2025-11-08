@@ -30,9 +30,7 @@
   {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnThemMoi = new System.Windows.Forms.Button();
             this.dgvKhachHang = new System.Windows.Forms.DataGridView();
             this.colMaKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHoTenKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,7 +52,15 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvHSTC = new System.Windows.Forms.DataGridView();
+            this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHoTenHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGioiTinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNgaySinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCCCDHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHoTenKHHGHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuanHeHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilter = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.txtSearchName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtSearchRecordId = new System.Windows.Forms.TextBox();
@@ -65,13 +71,6 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHoTenHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGioiTinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNgaySinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCCCDHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHoTenKHHGHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuanHeHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).BeginInit();
@@ -110,51 +109,25 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Controls.Add(this.btnEdit);
+            this.flowLayoutPanel1.Controls.Add(this.btnThemMoi);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 1215);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1533, 69);
             this.flowLayoutPanel1.TabIndex = 13;
             // 
-            // button1
+            // btnThemMoi
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(203, 63);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Thêm hồ sơ";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(212, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(206, 63);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Thêm mũi tiêm";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.btnEdit.Enabled = false;
-            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.ForeColor = System.Drawing.Color.White;
-            this.btnEdit.Location = new System.Drawing.Point(424, 3);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(251, 63);
-            this.btnEdit.TabIndex = 10;
-            this.btnEdit.Text = "Chỉnh sửa thông tin";
-            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnThemMoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnThemMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.btnThemMoi.ForeColor = System.Drawing.Color.White;
+            this.btnThemMoi.Location = new System.Drawing.Point(3, 3);
+            this.btnThemMoi.Name = "btnThemMoi";
+            this.btnThemMoi.Size = new System.Drawing.Size(203, 63);
+            this.btnThemMoi.TabIndex = 9;
+            this.btnThemMoi.Text = "Thêm mới";
+            this.btnThemMoi.UseVisualStyleBackColor = false;
+            this.btnThemMoi.Click += new System.EventHandler(this.btnThemMoi_Click);
             // 
             // dgvKhachHang
             // 
@@ -335,7 +308,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(120, 38);
             this.button3.TabIndex = 10;
-            this.button3.Text = "🔄 Đặt lại";
+            this.button3.Text = "Đặt lại";
             this.button3.UseVisualStyleBackColor = false;
             // 
             // button4
@@ -350,7 +323,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(120, 38);
             this.button4.TabIndex = 9;
-            this.button4.Text = "🔍 Tìm kiếm";
+            this.button4.Text = "Tìm kiếm";
             this.button4.UseVisualStyleBackColor = false;
             // 
             // panel1
@@ -399,9 +372,59 @@
             this.dgvHSTC.Size = new System.Drawing.Size(1533, 414);
             this.dgvHSTC.TabIndex = 8;
             // 
+            // colMaHSTC
+            // 
+            this.colMaHSTC.HeaderText = "Mã HS";
+            this.colMaHSTC.MinimumWidth = 8;
+            this.colMaHSTC.Name = "colMaHSTC";
+            this.colMaHSTC.ReadOnly = true;
+            // 
+            // colHoTenHS
+            // 
+            this.colHoTenHS.HeaderText = "Họ tên";
+            this.colHoTenHS.MinimumWidth = 8;
+            this.colHoTenHS.Name = "colHoTenHS";
+            this.colHoTenHS.ReadOnly = true;
+            // 
+            // colGioiTinhHS
+            // 
+            this.colGioiTinhHS.HeaderText = "Giới tính";
+            this.colGioiTinhHS.MinimumWidth = 8;
+            this.colGioiTinhHS.Name = "colGioiTinhHS";
+            this.colGioiTinhHS.ReadOnly = true;
+            // 
+            // colNgaySinhHS
+            // 
+            this.colNgaySinhHS.HeaderText = "Ngày sinh";
+            this.colNgaySinhHS.MinimumWidth = 8;
+            this.colNgaySinhHS.Name = "colNgaySinhHS";
+            this.colNgaySinhHS.ReadOnly = true;
+            // 
+            // colCCCDHS
+            // 
+            this.colCCCDHS.HeaderText = "CCCD";
+            this.colCCCDHS.MinimumWidth = 8;
+            this.colCCCDHS.Name = "colCCCDHS";
+            this.colCCCDHS.ReadOnly = true;
+            // 
+            // colHoTenKHHGHS
+            // 
+            this.colHoTenKHHGHS.HeaderText = "Họ tên KH";
+            this.colHoTenKHHGHS.MinimumWidth = 8;
+            this.colHoTenKHHGHS.Name = "colHoTenKHHGHS";
+            this.colHoTenKHHGHS.ReadOnly = true;
+            // 
+            // colQuanHeHS
+            // 
+            this.colQuanHeHS.HeaderText = "Quan hệ";
+            this.colQuanHeHS.MinimumWidth = 8;
+            this.colQuanHeHS.Name = "colQuanHeHS";
+            this.colQuanHeHS.ReadOnly = true;
+            // 
             // panelFilter
             // 
             this.panelFilter.BackColor = System.Drawing.Color.White;
+            this.panelFilter.Controls.Add(this.button2);
             this.panelFilter.Controls.Add(this.txtSearchName);
             this.panelFilter.Controls.Add(this.label5);
             this.panelFilter.Controls.Add(this.txtSearchRecordId);
@@ -416,6 +439,18 @@
             this.panelFilter.Padding = new System.Windows.Forms.Padding(15);
             this.panelFilter.Size = new System.Drawing.Size(1533, 80);
             this.panelFilter.TabIndex = 7;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(1168, 23);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(191, 39);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "Thêm mũi tiêm";
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // txtSearchName
             // 
@@ -489,7 +524,7 @@
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(120, 38);
             this.btnReset.TabIndex = 10;
-            this.btnReset.Text = "🔄 Đặt lại";
+            this.btnReset.Text = "Đặt lại";
             this.btnReset.UseVisualStyleBackColor = false;
             // 
             // btnSearch
@@ -504,7 +539,7 @@
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(120, 38);
             this.btnSearch.TabIndex = 9;
-            this.btnSearch.Text = "🔍 Tìm kiếm";
+            this.btnSearch.Text = "Tìm kiếm";
             this.btnSearch.UseVisualStyleBackColor = false;
             // 
             // panelHeader
@@ -527,55 +562,6 @@
             this.lblTitle.Size = new System.Drawing.Size(593, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "QUẢN LÝ HỒ SƠ TIÊM CHỦNG";
-            // 
-            // colMaHSTC
-            // 
-            this.colMaHSTC.HeaderText = "Mã HS";
-            this.colMaHSTC.MinimumWidth = 8;
-            this.colMaHSTC.Name = "colMaHSTC";
-            this.colMaHSTC.ReadOnly = true;
-            // 
-            // colHoTenHS
-            // 
-            this.colHoTenHS.HeaderText = "Họ tên";
-            this.colHoTenHS.MinimumWidth = 8;
-            this.colHoTenHS.Name = "colHoTenHS";
-            this.colHoTenHS.ReadOnly = true;
-            // 
-            // colGioiTinhHS
-            // 
-            this.colGioiTinhHS.HeaderText = "Giới tính";
-            this.colGioiTinhHS.MinimumWidth = 8;
-            this.colGioiTinhHS.Name = "colGioiTinhHS";
-            this.colGioiTinhHS.ReadOnly = true;
-            // 
-            // colNgaySinhHS
-            // 
-            this.colNgaySinhHS.HeaderText = "Ngày sinh";
-            this.colNgaySinhHS.MinimumWidth = 8;
-            this.colNgaySinhHS.Name = "colNgaySinhHS";
-            this.colNgaySinhHS.ReadOnly = true;
-            // 
-            // colCCCDHS
-            // 
-            this.colCCCDHS.HeaderText = "CCCD";
-            this.colCCCDHS.MinimumWidth = 8;
-            this.colCCCDHS.Name = "colCCCDHS";
-            this.colCCCDHS.ReadOnly = true;
-            // 
-            // colHoTenKHHGHS
-            // 
-            this.colHoTenKHHGHS.HeaderText = "Họ tên KH";
-            this.colHoTenKHHGHS.MinimumWidth = 8;
-            this.colHoTenKHHGHS.Name = "colHoTenKHHGHS";
-            this.colHoTenKHHGHS.ReadOnly = true;
-            // 
-            // colQuanHeHS
-            // 
-            this.colQuanHeHS.HeaderText = "Quan hệ";
-            this.colQuanHeHS.MinimumWidth = 8;
-            this.colQuanHeHS.Name = "colQuanHeHS";
-            this.colQuanHeHS.ReadOnly = true;
             // 
             // HoSoTiemChungControl
             // 
@@ -630,9 +616,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.DataGridView dgvKhachHang;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnThemMoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaKH;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHoTenKH;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNgaySinhKH;
@@ -648,5 +632,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCCCDHS;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHoTenKHHGHS;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQuanHeHS;
+        private System.Windows.Forms.Button button2;
     }
 }

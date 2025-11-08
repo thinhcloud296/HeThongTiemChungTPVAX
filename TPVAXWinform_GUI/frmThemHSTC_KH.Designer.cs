@@ -1,6 +1,6 @@
 ﻿namespace TPVAXWinform_GUI
 {
-    partial class frmThemHSTC
+    partial class frmThemHSTC_KH
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,6 @@
         {
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlHoSo = new System.Windows.Forms.Panel();
-            this.cboDSHSTCLienKet = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.cboQuanHe = new System.Windows.Forms.ComboBox();
             this.btnThemHoSo = new System.Windows.Forms.Button();
             this.txtGhiChu = new System.Windows.Forms.TextBox();
@@ -47,7 +45,9 @@
             this.lblHoTenHoSo = new System.Windows.Forms.Label();
             this.lblTitleHoSo = new System.Windows.Forms.Label();
             this.pnlKhachHang = new System.Windows.Forms.Panel();
+            this.cboDSHSTCLienKet = new System.Windows.Forms.ComboBox();
             this.txtCCCDKH = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.cboGioiTinhKH = new System.Windows.Forms.ComboBox();
@@ -88,8 +88,6 @@
             // 
             this.pnlHoSo.BackColor = System.Drawing.Color.White;
             this.pnlHoSo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHoSo.Controls.Add(this.cboDSHSTCLienKet);
-            this.pnlHoSo.Controls.Add(this.label3);
             this.pnlHoSo.Controls.Add(this.cboQuanHe);
             this.pnlHoSo.Controls.Add(this.btnThemHoSo);
             this.pnlHoSo.Controls.Add(this.txtGhiChu);
@@ -110,30 +108,6 @@
             this.pnlHoSo.Name = "pnlHoSo";
             this.pnlHoSo.Size = new System.Drawing.Size(1290, 522);
             this.pnlHoSo.TabIndex = 1;
-            // 
-            // cboDSHSTCLienKet
-            // 
-            this.cboDSHSTCLienKet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboDSHSTCLienKet.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cboDSHSTCLienKet.FormattingEnabled = true;
-            this.cboDSHSTCLienKet.Location = new System.Drawing.Point(411, 87);
-            this.cboDSHSTCLienKet.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cboDSHSTCLienKet.Name = "cboDSHSTCLienKet";
-            this.cboDSHSTCLienKet.Size = new System.Drawing.Size(780, 36);
-            this.cboDSHSTCLienKet.TabIndex = 16;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.LightCyan;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(88, 81);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(10);
-            this.label3.Size = new System.Drawing.Size(295, 48);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Danh sách hồ sơ đã liên kết";
             // 
             // cboQuanHe
             // 
@@ -304,7 +278,9 @@
             // 
             this.pnlKhachHang.BackColor = System.Drawing.Color.White;
             this.pnlKhachHang.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKhachHang.Controls.Add(this.cboDSHSTCLienKet);
             this.pnlKhachHang.Controls.Add(this.txtCCCDKH);
+            this.pnlKhachHang.Controls.Add(this.label3);
             this.pnlKhachHang.Controls.Add(this.label2);
             this.pnlKhachHang.Controls.Add(this.btnReset);
             this.pnlKhachHang.Controls.Add(this.cboGioiTinhKH);
@@ -331,6 +307,17 @@
             this.pnlKhachHang.Size = new System.Drawing.Size(1290, 370);
             this.pnlKhachHang.TabIndex = 0;
             // 
+            // cboDSHSTCLienKet
+            // 
+            this.cboDSHSTCLienKet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDSHSTCLienKet.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboDSHSTCLienKet.FormattingEnabled = true;
+            this.cboDSHSTCLienKet.Location = new System.Drawing.Point(307, 320);
+            this.cboDSHSTCLienKet.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboDSHSTCLienKet.Name = "cboDSHSTCLienKet";
+            this.cboDSHSTCLienKet.Size = new System.Drawing.Size(645, 36);
+            this.cboDSHSTCLienKet.TabIndex = 16;
+            // 
             // txtCCCDKH
             // 
             this.txtCCCDKH.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -339,6 +326,19 @@
             this.txtCCCDKH.Name = "txtCCCDKH";
             this.txtCCCDKH.Size = new System.Drawing.Size(450, 34);
             this.txtCCCDKH.TabIndex = 16;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.LightCyan;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(4, 312);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(10);
+            this.label3.Size = new System.Drawing.Size(295, 48);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Danh sách hồ sơ đã liên kết";
             // 
             // label2
             // 
@@ -407,6 +407,7 @@
             this.btnThemKhachHang.TabIndex = 14;
             this.btnThemKhachHang.Text = "➕ Thêm Khách Hàng";
             this.btnThemKhachHang.UseVisualStyleBackColor = false;
+            this.btnThemKhachHang.Click += new System.EventHandler(this.btnThemKhachHang_Click);
             // 
             // txtEmail
             // 

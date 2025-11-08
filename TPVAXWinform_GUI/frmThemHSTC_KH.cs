@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TPVAXWinform.UserControls;
 using TPVAXWinform_BLL;
+using TPVAXWinform_DTO;
 
 namespace TPVAXWinform_GUI
 {
-    public partial class frmThemHSTC : Form
+    public partial class frmThemHSTC_KH : Form
     {
         KhachHangBLL khachHangBLL = new KhachHangBLL();
         HoSoTiemChungBLL hoSoTiemChungBLL = new HoSoTiemChungBLL();
@@ -24,7 +26,7 @@ namespace TPVAXWinform_GUI
         "Khác"
         };
         string[] gioiTinhOptions = { "Nam", "Nữ", "Khác" };
-        public frmThemHSTC()
+        public frmThemHSTC_KH()
         {
             InitializeComponent();
             cboQuanHe.DataSource = quanHeOptions;
@@ -53,7 +55,7 @@ namespace TPVAXWinform_GUI
                 string HoTenKH = row["HoTenKH"]?.ToString() ?? "";
                 string HoTenHS = row["HoTenHS"]?.ToString() ?? "";
                 string quanHe = row["VaiTro"]?.ToString() ?? "Khác";
-                
+
                 string tmp = $"HS: {HoTenHS} - KH: {HoTenKH} - ({quanHe})";
                 if (quanHe == "Bản thân")
                     tmp = $"{HoTenKH} - {quanHe}";
@@ -62,7 +64,7 @@ namespace TPVAXWinform_GUI
             cboDSHSTCLienKet.DataSource = null;
             if (DSHSTCLienKet.Count > 0)
             {
-                cboDSHSTCLienKet.DataSource = DSHSTCLienKet;    
+                cboDSHSTCLienKet.DataSource = DSHSTCLienKet;
             }
 
             txtHoTenKH.Text = dr["HoTen"]?.ToString() ?? "";
@@ -85,5 +87,28 @@ namespace TPVAXWinform_GUI
             btnThemKhachHang.Visible = true;
         }
 
+        private void btnThemKhachHang_Click(object sender, EventArgs e)
+        {
+            KhachHangDTO newKH = new KhachHangDTO();
+            newKH.CCCD = txtCCCDKH.Text.Trim();
+            newKH.MaKH = khachHangBLL.CreateMaKH(newKH.CCCD);
+
+            newKH.HoTen = txtHoTenKH.Text.Trim();
+            newKH.DiaChi = txtDiaChi.Text.Trim();
+            newKH.SoDT = txtSoDT.Text.Trim();
+            newKH.NgaySinh = dtpNgaySinhKH.Value;
+            newKH.Email = txtEmail.Text.Trim();
+            newKH.GioiTinh = cboGioiTinhKH.SelectedItem.ToString();
+            try
+            {
+                khachHangBLL.Insert(newKH);
+                Close();
+                MessageBox.Show("Thêm khách hàng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm khách hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

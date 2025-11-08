@@ -51,6 +51,10 @@
       <Project>{d581b3d8-3c0d-4e9e-bc77-5b896ef5800d}</Project>
       <Name>TPVAXWinform_DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TPVAXWinform_DTO\TPVAXWinform_DTO.csproj">
+      <Project>{52a587bf-ae47-470c-bc3d-0aac9fc3b785}</Project>
+      <Name>TPVAXWinform_DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

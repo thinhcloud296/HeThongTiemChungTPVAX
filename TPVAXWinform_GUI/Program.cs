@@ -29,5 +29,6 @@ namespace TPVAXWinform
         // Import hàm từ user32.dll để bật DPI awareness
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
+
     }
 }

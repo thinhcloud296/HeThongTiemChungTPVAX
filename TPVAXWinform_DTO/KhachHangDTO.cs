@@ -8,12 +8,13 @@ namespace TPVAXWinform_DTO
 {
     public class KhachHangDTO
     {
-        public KhachHangDTO(string maKH, string hoTen, string cCCD, DateTime? ngaySinh, string diaChi, string soDT, string email, string maTK)
+        public KhachHangDTO(string maKH, string hoTen, string cCCD, DateTime? ngaySinh,string gioiTinh, string diaChi, string soDT, string email, string maTK)
         {
             MaKH = maKH;
             HoTen = hoTen;
             CCCD = cCCD;
             NgaySinh = ngaySinh;
+            GioiTinh = gioiTinh;
             DiaChi = diaChi;
             SoDT = soDT;
             Email = email;
@@ -30,5 +31,6 @@ namespace TPVAXWinform_DTO
         public string SoDT { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string MaTK { get; set; } = string.Empty;
+        public string GioiTinh { get; set; } = string.Empty;
     }
 }

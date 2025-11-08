@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using TPVAXWinform_BLL;
+using TPVAXWinform_DTO;
 using TPVAXWinform_GUI;
 
 namespace TPVAXWinform.UserControls
@@ -13,7 +14,8 @@ namespace TPVAXWinform.UserControls
         private DataTable dtKH;
         private HoSoTiemChungBLL HSCT_bll = new HoSoTiemChungBLL();
         private KhachHangBLL KH_bll = new KhachHangBLL();
-
+        private int selectedHSTCRowIndex = -1;
+        private int selectedKHRowIndex = -1;
         public HoSoTiemChungControl()
         {
             InitializeComponent();
@@ -52,22 +54,10 @@ namespace TPVAXWinform.UserControls
                 dgvKhachHang.Columns.Add(btnEditColumn);
             }
             // Thêm sự kiện cho button "Thêm hồ sơ"
-            button1.Click += Button1_Click;
 
             ConfigureDataGridViewKHStyling();
             SetupContextMenuKH();
-
         }
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            frmThemHSTC frmThem = new frmThemHSTC();
-            frmThem.ShowDialog();
-
-            // Refresh data sau khi đóng form
-            RefreshData();
-        }
-
         private void ConfigureDataGridViewHSTCStyling()
         {
             var headerStyle = new DataGridViewCellStyle
@@ -268,33 +258,18 @@ namespace TPVAXWinform.UserControls
 
         private void DgvRecords_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
 
-            string maHSTC = dgvHSTC.Rows[e.RowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-            string hoTen = dgvHSTC.Rows[e.RowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
-
-            if (e.ColumnIndex == dgvHSTC.Columns["colEditHS"].Index)
-                EditRecordHS(maHSTC, hoTen);
         }
 
-        private void EditRecordHS(string maHSTC, string hoTen)
-        {
-            MessageBox.Show(
-              $"Chỉnh sửa hồ sơ:\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
-            "Chỉnh sửa hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
 
         // Public method để refresh data từ bên ngoài
         public void RefreshData()
         {
             LoadDSHSTC();
+            LoadDSKHHG();
         }
 
-        private void dgvRecords_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            btnEdit.Enabled = true;
-        }
 
         private void SetupContextMenuHSTC()
         {
@@ -339,18 +314,18 @@ namespace TPVAXWinform.UserControls
                     // Chọn dòng được click chuột phải
                     dgvHSTC.ClearSelection();
                     dgvHSTC.Rows[hitTest.RowIndex].Selected = true;
-                    selectedRowIndex = hitTest.RowIndex;
+                    selectedHSTCRowIndex = hitTest.RowIndex;
                 }
                 else
                 {
-                    selectedRowIndex = -1;
+                    selectedHSTCRowIndex = -1;
                 }
             }
         }
 
         private void ViewInfo_Click_HSTC(object sender, EventArgs e)
         {
-            if (selectedRowIndex >= 0 && selectedRowIndex < dgvHSTC.Rows.Count)
+            if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
             {
                 string maHSTC = dgvHSTC.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
                 string hoTen = dgvHSTC.Rows[selectedRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
@@ -377,10 +352,10 @@ namespace TPVAXWinform.UserControls
 
         private void EditInfo_Click_HSTC(object sender, EventArgs e)
         {
-            if (selectedRowIndex >= 0 && selectedRowIndex < dgvHSTC.Rows.Count)
+            if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
             {
-                string maHSTC = dgvHSTC.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-                string hoTen = dgvHSTC.Rows[selectedRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
+                string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
                 MessageBox.Show(
                    $"Chỉnh sửa thông tin hồ sơ:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
                 "Sửa thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -466,11 +441,11 @@ namespace TPVAXWinform.UserControls
                     // Chọn dòng được click chuột phải
                     dgvKhachHang.ClearSelection();
                     dgvKhachHang.Rows[hitTest.RowIndex].Selected = true;
-                    selectedRowIndex = hitTest.RowIndex;
+                    selectedKHRowIndex = hitTest.RowIndex;
                 }
                 else
                 {
-                    selectedRowIndex = -1;
+                    selectedKHRowIndex = -1;
                 }
             }
         }
@@ -508,14 +483,23 @@ namespace TPVAXWinform.UserControls
 
         private void EditInfo_Click_KH(object sender, EventArgs e)
         {
-            if (selectedRowIndex >= 0 && selectedRowIndex < dgvKhachHang.Rows.Count)
+            if (selectedKHRowIndex >= 0 && selectedKHRowIndex < dgvKhachHang.Rows.Count)
             {
-                string maKH = dgvKhachHang.Rows[selectedRowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
-                string hoTen = dgvKhachHang.Rows[selectedRowIndex].Cells["colHoTenKH"].Value?.ToString() ?? "";
+                string maKH = dgvKhachHang.Rows[selectedKHRowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
 
-                MessageBox.Show(
-             $"Chỉnh sửa thông tin khách hàng:\n\nMã KH: {maKH}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
-              "Sửa thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (string.IsNullOrEmpty(maKH))
+                {
+                    MessageBox.Show("Không tìm thấy mã khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                frmEditKH frmEdit = new frmEditKH();
+                frmEdit.LoadKhachHangData(maKH);
+
+                if (frmEdit.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDSKHHG();
+                }
             }
         }
 
@@ -594,19 +578,41 @@ namespace TPVAXWinform.UserControls
         {
             if (e.RowIndex < 0) return;
 
-            string maKH = dgvKhachHang.Rows[e.RowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
-            string hoTen = dgvKhachHang.Rows[e.RowIndex].Cells["colHoTenKH"].Value?.ToString() ?? "";
-
+            // Chỉ chạy khi click vào cột "colEditKH"
             if (e.ColumnIndex == dgvKhachHang.Columns["colEditKH"].Index)
-                EditRecordKH(maKH, hoTen);
+            {
+                // Lấy MaKH từ dòng được click
+                string maKH = dgvKhachHang.Rows[e.RowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
+                if (string.IsNullOrEmpty(maKH))
+                {
+                    MessageBox.Show("Không tìm thấy mã khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                frmEditKH frmEdit = new frmEditKH();
+                frmEdit.LoadKhachHangData(maKH); // Giả sử frmEditKH có hàm này
+
+                if (frmEdit.ShowDialog() == DialogResult.OK)
+                {
+                    // Refresh data sau khi cập nhật thành công
+                    RefreshData();
+                }
+            }
+
         }
 
-        private void EditRecordKH(string maKH, string hoTen)
+
+        private void btnThemMoi_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                       $"Chỉnh sửa hồ sơ:\nMã KH: {maKH}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
-               "Chỉnh sửa hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            frmThemHSTC_KH frmThem = new frmThemHSTC_KH();
+            frmThem.ShowDialog();
+            if(frmThem.DialogResult == DialogResult.OK)
+            {
+                RefreshData();
+            }
+            // Refresh data sau khi đóng form
+            
         }
+
     }
 }
 
