@@ -19,6 +19,9 @@ namespace TPVAXWinform_GUI
     {
         KhachHangBLL khachHangBLL = new KhachHangBLL();
         HoSoTiemChungBLL hoSoTiemChungBLL = new HoSoTiemChungBLL();
+        LienKetHoSoBLL lienKetHoSoBLL = new LienKetHoSoBLL();
+
+
         string[] quanHeOptions = {
             "Bản thân", "Cha", "Mẹ", "Con",
             "Anh ruột", "Chị ruột", "Em ruột",
@@ -252,6 +255,75 @@ namespace TPVAXWinform_GUI
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi thêm hồ sơ tiêm chủng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLienKet_Click(object sender, EventArgs e)
+        {
+            txtHoTenHSTC.Text = txtHoTenKH.Text;
+            txtCCCDHSTC.Text = txtCCCDKH.Text;
+            cboGioiTinhHSTC.SelectedItem = cboGioiTinhKH.SelectedItem;
+            dtpNgaySinhHSTC.Value = dtpNgaySinhKH.Value;
+            cboQuanHe.SelectedIndex = 0;
+
+
+            bool flag = true;
+            flag = CheckValidationBeforeAddHSTC();
+            flag = CheckValidationBeforeAddKH();
+
+            if (!flag)
+                return;
+
+            btnThemTatCa.Enabled = true;
+        }
+
+        private void btnThemTatCa_Click(object sender, EventArgs e)
+        {
+            string maKH = khachHangBLL.CreateMaKH(txtCCCDKH.Text.Trim());
+            string maHSTC = hoSoTiemChungBLL.CreateMaHSTC(txtCCCDHSTC.Text.Trim());
+            string maLK = lienKetHoSoBLL.CreateMaLK(txtCCCDHSTC.Text.Trim());
+
+
+            // KhachHang
+            KhachHangDTO newKH = new KhachHangDTO();
+            newKH.CCCD = txtCCCDKH.Text.Trim();
+            newKH.MaKH = maKH;
+
+            newKH.HoTen = txtHoTenKH.Text.Trim();
+            newKH.DiaChi = txtDiaChi.Text.Trim();
+            newKH.SoDT = txtSoDT.Text.Trim();
+            newKH.NgaySinh = dtpNgaySinhKH.Value;
+            newKH.Email = txtEmail.Text.Trim();
+            newKH.GioiTinh = cboGioiTinhKH.SelectedItem.ToString();
+
+            // HoSoTiemChung
+            HoSoTiemChungDTO hso = new HoSoTiemChungDTO();
+            hso.MaHSTC = maHSTC;
+            hso.HoTen = txtHoTenHSTC.Text.Trim();
+            hso.GioiTinh = cboGioiTinhHSTC.SelectedItem.ToString();
+            hso.NgaySinh = dtpNgaySinhHSTC.Value;
+            hso.CCCD = txtCCCDHSTC.Text.Trim();
+            hso.GhiChu = txtGhiChuHSTC.Text.Trim();
+
+            // LienKet
+            LienKetHoSoDTO lkhs = new LienKetHoSoDTO();
+            lkhs.MaLK = maLK;
+            lkhs.NgayLienKet = DateTime.Now;
+            lkhs.MaKH = maKH;
+            lkhs.MaHSTC = maHSTC;
+            lkhs.VaiTro = cboQuanHe.SelectedItem.ToString();
+            try
+            {
+                khachHangBLL.Insert(newKH);
+                hoSoTiemChungBLL.Insert(hso);
+                lienKetHoSoBLL.Insert(lkhs);
+                MessageBox.Show("Thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

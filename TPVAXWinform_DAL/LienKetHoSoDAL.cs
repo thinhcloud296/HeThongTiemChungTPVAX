@@ -10,9 +10,12 @@ namespace TPVAXWinform_DAL
 {
     public class LienKetHoSoDAL
     {
-        /// <summary>
-        /// Thêm một liên kết hồ sơ mới (Khách hàng <-> Hồ sơ)
-        /// </summary>
+
+        public string CreateMaLK(string CCCD)
+        {
+            string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;
+            return string.Equals(cccdSuffix, string.Empty) ? string.Empty : "LKHS" + cccdSuffix;
+        }
         public void Insert(LienKetHoSoDTO newLienKet)
         {
             try

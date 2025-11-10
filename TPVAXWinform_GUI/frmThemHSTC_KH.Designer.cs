@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlHoSo = new System.Windows.Forms.Panel();
+            this.btnThemTatCa = new System.Windows.Forms.Button();
+            this.btnLienKet = new System.Windows.Forms.Button();
             this.cboQuanHe = new System.Windows.Forms.ComboBox();
             this.btnThemHoSo = new System.Windows.Forms.Button();
             this.txtGhiChuHSTC = new System.Windows.Forms.TextBox();
@@ -91,6 +93,8 @@
             // 
             this.pnlHoSo.BackColor = System.Drawing.Color.White;
             this.pnlHoSo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHoSo.Controls.Add(this.btnThemTatCa);
+            this.pnlHoSo.Controls.Add(this.btnLienKet);
             this.pnlHoSo.Controls.Add(this.cboQuanHe);
             this.pnlHoSo.Controls.Add(this.btnThemHoSo);
             this.pnlHoSo.Controls.Add(this.txtGhiChuHSTC);
@@ -111,6 +115,39 @@
             this.pnlHoSo.Name = "pnlHoSo";
             this.pnlHoSo.Size = new System.Drawing.Size(1290, 522);
             this.pnlHoSo.TabIndex = 1;
+            // 
+            // btnThemTatCa
+            // 
+            this.btnThemTatCa.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.btnThemTatCa.Enabled = false;
+            this.btnThemTatCa.FlatAppearance.BorderSize = 0;
+            this.btnThemTatCa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemTatCa.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemTatCa.ForeColor = System.Drawing.Color.White;
+            this.btnThemTatCa.Location = new System.Drawing.Point(338, 454);
+            this.btnThemTatCa.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnThemTatCa.Name = "btnThemTatCa";
+            this.btnThemTatCa.Size = new System.Drawing.Size(280, 45);
+            this.btnThemTatCa.TabIndex = 16;
+            this.btnThemTatCa.Text = "Thêm tất cả";
+            this.btnThemTatCa.UseVisualStyleBackColor = false;
+            this.btnThemTatCa.Click += new System.EventHandler(this.btnThemTatCa_Click);
+            // 
+            // btnLienKet
+            // 
+            this.btnLienKet.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.btnLienKet.FlatAppearance.BorderSize = 0;
+            this.btnLienKet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLienKet.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnLienKet.ForeColor = System.Drawing.Color.White;
+            this.btnLienKet.Location = new System.Drawing.Point(50, 454);
+            this.btnLienKet.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnLienKet.Name = "btnLienKet";
+            this.btnLienKet.Size = new System.Drawing.Size(280, 45);
+            this.btnLienKet.TabIndex = 15;
+            this.btnLienKet.Text = "Liên kết";
+            this.btnLienKet.UseVisualStyleBackColor = false;
+            this.btnLienKet.Click += new System.EventHandler(this.btnLienKet_Click);
             // 
             // cboQuanHe
             // 
@@ -139,7 +176,7 @@
             this.btnThemHoSo.Name = "btnThemHoSo";
             this.btnThemHoSo.Size = new System.Drawing.Size(280, 45);
             this.btnThemHoSo.TabIndex = 13;
-            this.btnThemHoSo.Text = "➕ Thêm Hồ Sơ";
+            this.btnThemHoSo.Text = "Thêm Hồ Sơ";
             this.btnThemHoSo.UseVisualStyleBackColor = false;
             this.btnThemHoSo.Click += new System.EventHandler(this.btnThemHoSo_Click);
             // 
@@ -367,7 +404,7 @@
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(180, 40);
             this.btnReset.TabIndex = 16;
-            this.btnReset.Text = "🔄 Đặt lại";
+            this.btnReset.Text = "Đặt lại";
             this.btnReset.UseVisualStyleBackColor = false;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
@@ -527,7 +564,7 @@
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(180, 40);
             this.btnTimKiem.TabIndex = 3;
-            this.btnTimKiem.Text = "🔍 Tìm kiếm";
+            this.btnTimKiem.Text = "Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = false;
             this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
@@ -636,5 +673,7 @@
         private System.Windows.Forms.ComboBox cboDSHSTCLienKet;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btnLienKet;
+        private System.Windows.Forms.Button btnThemTatCa;
     }
 }
