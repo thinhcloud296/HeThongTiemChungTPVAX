@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+// --- 1. THÊM THƯ VIỆN REGEX ---
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TPVAXWinform.UserControls;
@@ -18,28 +20,49 @@ namespace TPVAXWinform_GUI
         KhachHangBLL khachHangBLL = new KhachHangBLL();
         HoSoTiemChungBLL hoSoTiemChungBLL = new HoSoTiemChungBLL();
         string[] quanHeOptions = {
-        "Bản thân", "Cha", "Mẹ", "Con",
-        "Anh ruột", "Chị ruột", "Em ruột",
-        "Ông nội", "Bà nội", "Ông ngoại", "Bà ngoại",
-        "Vợ", "Chồng",
-        "Người giám hộ", "Người chăm sóc", "Đại diện theo pháp luật",
-        "Khác"
+            "Bản thân", "Cha", "Mẹ", "Con",
+            "Anh ruột", "Chị ruột", "Em ruột",
+            "Ông nội", "Bà nội", "Ông ngoại", "Bà ngoại",
+            "Vợ", "Chồng",
+            "Người giám hộ", "Người chăm sóc", "Đại diện theo pháp luật",
+            "Khác"
         };
         string[] gioiTinhOptions = { "Nam", "Nữ", "Khác" };
+
+        // --- 2. THÊM CÁC CHUỖI REGEX LÀM HẰNG SỐ ---
+        private const string REGEX_HOTEN = @"^[\p{L}\s']+$"; // Cho phép cả dấu nháy đơn '
+        private const string REGEX_SODT = @"^0\d{9}$";
+        private const string REGEX_CCCD = @"^\d{12}$";
+        private const string REGEX_EMAIL = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
+        private const string REGEX_DIACHI = @"^[\p{L}\d\s.,/-]+$";
+
+
         public frmThemHSTC_KH()
         {
             InitializeComponent();
             cboQuanHe.DataSource = quanHeOptions;
             cboGioiTinhHSTC.DataSource = gioiTinhOptions;
-            cboGioiTinhHSTC.DataSource = gioiTinhOptions;
+            cboGioiTinhKH.DataSource = gioiTinhOptions.Clone();
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
+            string cccd = txtTimCCCD.Text.Trim();
+
+            // --- 3. THÊM VALIDATION CHO TÌM KIẾM ---
+            if (string.IsNullOrWhiteSpace(cccd) || !Regex.IsMatch(cccd, REGEX_CCCD))
+            {
+                MessageBox.Show("CCCD tìm kiếm không hợp lệ. Phải là 12 số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTimCCCD.Focus();
+                return; // Thoát hàm
+            }
+            // --- KẾT THÚC VALIDATION ---
+
+
             DataTable dt = khachHangBLL.GetData();
             if (dt.PrimaryKey == null || dt.PrimaryKey.Length == 0)
                 dt.PrimaryKey = new[] { dt.Columns["CCCD"] };
-            string cccd = txtTimCCCD.Text.Trim();
+
             DataRow dr = dt.Rows.Find(cccd);
             if (dr == null)
             {
@@ -86,9 +109,100 @@ namespace TPVAXWinform_GUI
             txtCCCDKH.Clear();
             btnThemKhachHang.Visible = true;
         }
+        // Kiểm tra Validation
+        public bool CheckValidationBeforeAddKH()
+        {
+            bool flag = true;
+            // Xóa tất cả các icon lỗi cũ trước khi kiểm tra
+            errorProvider1.Clear();
 
+            // Kiểm tra Họ tên
+            if (string.IsNullOrWhiteSpace(txtHoTenKH.Text) || !Regex.IsMatch(txtHoTenKH.Text.Trim(), REGEX_HOTEN))
+            {
+                // Gán lỗi cho txtHoTenKH
+                errorProvider1.SetError(txtHoTenKH, "Họ tên không hợp lệ. Chỉ được chứa chữ cái và khoảng trắng.");
+                flag = false; // Đánh dấu là có lỗi
+            }
+
+            // Kiểm tra CCCD
+            if (string.IsNullOrWhiteSpace(txtCCCDKH.Text) || !Regex.IsMatch(txtCCCDKH.Text.Trim(), REGEX_CCCD))
+            {
+                // Gán lỗi cho txtCCCDKH
+                errorProvider1.SetError(txtCCCDKH, "CCCD không hợp lệ. Phải là 12 số.");
+                flag = false;
+            }
+
+            // Kiểm tra Số điện thoại
+            if (string.IsNullOrWhiteSpace(txtSoDT.Text) || !Regex.IsMatch(txtSoDT.Text.Trim(), REGEX_SODT))
+            {
+                // Gán lỗi cho txtSoDT
+                errorProvider1.SetError(txtSoDT, "Số điện thoại không hợp lệ. Phải là 10 số, bắt đầu bằng 0.");
+                flag = false;
+            }
+
+            // Kiểm tra Email
+            if (!string.IsNullOrWhiteSpace(txtEmail.Text) && !Regex.IsMatch(txtEmail.Text.Trim(), REGEX_EMAIL))
+            {
+                errorProvider1.SetError(txtEmail, "Email không hợp lệ. Vui lòng nhập đúng định dạng (ví dụ: a@b.com).");
+                flag = false;
+            }
+
+            // Kiểm tra Địa chỉ
+            if (!string.IsNullOrWhiteSpace(txtDiaChi.Text) && !Regex.IsMatch(txtDiaChi.Text.Trim(), REGEX_DIACHI))
+            {
+                errorProvider1.SetError(txtDiaChi, "Địa chỉ chứa ký tự không hợp lệ.");
+                flag = false;
+            }
+
+            // Kiểm tra ComboBox Giới tính
+            if (cboGioiTinhKH.SelectedItem == null)
+            {
+                errorProvider1.SetError(cboGioiTinhKH, "Vui lòng chọn giới tính khách hàng.");
+                flag = false;
+            }
+            return flag;
+
+        }
+        public bool CheckValidationBeforeAddHSTC()
+        {
+            bool flag = true;
+            // Xóa tất cả các icon lỗi cũ trước khi kiểm tra
+            errorProvider1.Clear();
+
+            // Kiểm tra Họ tên
+            if (string.IsNullOrWhiteSpace(txtHoTenHSTC.Text) || !Regex.IsMatch(txtHoTenHSTC.Text.Trim(), REGEX_HOTEN))
+            {
+                // Gán lỗi cho txtHoTenKH
+                errorProvider1.SetError(txtHoTenHSTC, "Họ tên không hợp lệ. Chỉ được chứa chữ cái và khoảng trắng.");
+                flag = false; // Đánh dấu là có lỗi
+            }
+
+            // Kiểm tra CCCD
+            if (string.IsNullOrWhiteSpace(txtCCCDHSTC.Text) || !Regex.IsMatch(txtCCCDHSTC.Text.Trim(), REGEX_CCCD))
+            {
+                // Gán lỗi cho txtCCCDKH
+                errorProvider1.SetError(txtCCCDHSTC, "CCCD không hợp lệ. Phải là 12 số.");
+                flag = false;
+            }
+            // Kiểm tra ComboBox Giới tính
+            if (cboGioiTinhHSTC.SelectedItem == null)
+            {
+                errorProvider1.SetError(cboGioiTinhHSTC, "Vui lòng chọn giới tính khách hàng.");
+                flag = false;
+            }
+            return flag;
+
+        }
         private void btnThemKhachHang_Click(object sender, EventArgs e)
         {
+            // Validation
+            bool hopLe = CheckValidationBeforeAddKH(); // Flag
+            if (!hopLe)
+            {
+                return;
+            }
+
+            // Add
             KhachHangDTO newKH = new KhachHangDTO();
             newKH.CCCD = txtCCCDKH.Text.Trim();
             newKH.MaKH = khachHangBLL.CreateMaKH(newKH.CCCD);
@@ -102,12 +216,42 @@ namespace TPVAXWinform_GUI
             try
             {
                 khachHangBLL.Insert(newKH);
-                Close();
+
                 MessageBox.Show("Thêm khách hàng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi thêm khách hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnThemHoSo_Click(object sender, EventArgs e)
+        {
+            // Validation
+            bool hopLe = CheckValidationBeforeAddHSTC(); // Flag
+            if (!hopLe)
+                return;
+
+            //ADD
+            HoSoTiemChungDTO hso = new HoSoTiemChungDTO();
+            hso.MaHSTC = hoSoTiemChungBLL.CreateMaHSTC(txtCCCDHSTC.Text.Trim());
+            hso.HoTen = txtHoTenHSTC.Text.Trim();
+            hso.GioiTinh = cboGioiTinhHSTC.SelectedItem.ToString();
+            hso.NgaySinh = dtpNgaySinhHSTC.Value;
+            hso.CCCD = txtCCCDHSTC.Text.Trim();
+            hso.GhiChu = txtGhiChuHSTC.Text.Trim();
+            try
+            {
+                hoSoTiemChungBLL.Insert(hso);
+                MessageBox.Show("Thêm hồ sơ tiêm chủng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm hồ sơ tiêm chủng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

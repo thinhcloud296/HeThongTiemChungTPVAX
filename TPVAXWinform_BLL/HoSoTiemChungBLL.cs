@@ -23,5 +23,17 @@ namespace TPVAXWinform_BLL
         {
             return _dal.GetHSTC_QuanHe_KH(MaKH);
         }   
+        public string CreateMaHSTC(string CCCD)
+        {
+            return _dal.CreateMaHSTC(CCCD);
+        }
+        public void Insert(TPVAXWinform_DTO.HoSoTiemChungDTO newHSTC)
+        {
+            _dal.Insert(newHSTC);
+        }
+        public void Edit(TPVAXWinform_DTO.HoSoTiemChungDTO hSTC)
+        {
+            _dal.Edit(hSTC);
+        }
     }
 }

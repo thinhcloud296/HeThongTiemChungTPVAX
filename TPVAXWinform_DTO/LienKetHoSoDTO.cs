@@ -13,14 +13,13 @@ namespace TPVAXWinform_DTO
         {
         }
 
-        public LienKetHoSoDTO(string maLK, string vaiTro, DateTime ngayLienKet, string maKH, string maHSTC, DateTime createdAt)
+        public LienKetHoSoDTO(string maLK, string vaiTro, DateTime ngayLienKet, string maKH, string maHSTC)
         {
             MaLK = maLK;
             VaiTro = vaiTro;
             NgayLienKet = ngayLienKet;
             MaKH = maKH;
             MaHSTC = maHSTC;
-            CreatedAt = createdAt;
         }
 
         public string MaLK { get; set; } = string.Empty; 
@@ -28,7 +27,6 @@ namespace TPVAXWinform_DTO
         public DateTime NgayLienKet { get; set; }        
         public string MaKH { get; set; } = string.Empty;  
         public string MaHSTC { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
 
     }
 }

@@ -167,10 +167,6 @@ namespace TPVAXWinform.UserControls
         {
             // Lấy dữ liệu từ stored procedure để hiển thị
             dtHSTC = HSCT_bll.GetHSTC_KHHG();
-
-            // Lấy dữ liệu đầy đủ từ bảng HoSoTiemChung để có CCCD cho việc tìm kiếm
-            dtHSTCFull = HSCT_bll.GetData();
-
             BindDataToGridHSTC(dtHSTC);
         }
 
@@ -212,23 +208,8 @@ namespace TPVAXWinform.UserControls
               !(row["MaHSTC"]?.ToString() ?? "").ToLower().Contains(kwMaHS)) match = false;
 
                 // Tìm kiếm CCCD từ dtHSTCFull
-                if (!string.IsNullOrEmpty(kwCCCD))
-                {
-                    string maHSTC = row["MaHSTC"]?.ToString() ?? "";
-                    if (dtHSTCFull.PrimaryKey == null || dtHSTCFull.PrimaryKey.Length == 0)
-                        dtHSTCFull.PrimaryKey = new[] { dtHSTCFull.Columns["MaHSTC"] };
-
-                    DataRow fullRow = dtHSTCFull.Rows.Find(maHSTC);
-                    if (fullRow != null)
-                    {
-                        string cccd = fullRow["CCCD"]?.ToString() ?? "";
-                        if (!cccd.ToLower().Contains(kwCCCD)) match = false;
-                    }
-                    else
-                    {
-                        match = false;
-                    }
-                }
+                if (!string.IsNullOrEmpty(kwCCCD) &&
+              !(row["CCCDHS"]?.ToString() ?? "").ToLower().Contains(kwCCCD)) match = false;
 
                 if (match) filtered.ImportRow(row);
             }
@@ -239,8 +220,6 @@ namespace TPVAXWinform.UserControls
                 MessageBox.Show("Không tìm thấy kết quả phù hợp!",
                 "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-
 
         private void BtnReset_Click(object sender, EventArgs e)
         {
@@ -327,16 +306,16 @@ namespace TPVAXWinform.UserControls
         {
             if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
             {
-                string maHSTC = dgvHSTC.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-                string hoTen = dgvHSTC.Rows[selectedRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
-                string gt = dgvHSTC.Rows[selectedRowIndex].Cells["colGioiTinhHS"].Value?.ToString() ?? "";
-                var valNgaySinh = dgvHSTC.Rows[selectedRowIndex].Cells["colNgaySinhHS"].Value;
+                string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
+                string gt = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colGioiTinhHS"].Value?.ToString() ?? "";
+                var valNgaySinh = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colNgaySinhHS"].Value;
                 string ns =
           valNgaySinh is DateTime dt ? dt.ToString("dd-MM-yyyy") :
            DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd-MM-yyyy") :
             "";
-                string quanhe = dgvHSTC.Rows[selectedRowIndex].Cells["colQuanHeHS"].Value?.ToString() ?? "";
-                string tenKH = dgvHSTC.Rows[selectedRowIndex].Cells["colHoTenKHHGHS"].Value?.ToString() ?? "";
+                string quanhe = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colQuanHeHS"].Value?.ToString() ?? "";
+                string tenKH = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenKHHGHS"].Value?.ToString() ?? "";
 
                 MessageBox.Show(
                      "📋 THÔNG TIN HỒ SƠ TIÊM CHỦNG\n\n" +
@@ -354,21 +333,31 @@ namespace TPVAXWinform.UserControls
         {
             if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
             {
-                string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-                string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
-                MessageBox.Show(
-                   $"Chỉnh sửa thông tin hồ sơ:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
-                "Sửa thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+       string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+
+          if (string.IsNullOrEmpty(maHSTC))
+   {
+            MessageBox.Show("Không tìm thấy mã hồ sơ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+       return;
+}
+
+        frmEditHSTC frmEdit = new frmEditHSTC();
+frmEdit.LoadHoSoTiemChungData(maHSTC);
+
+ if (frmEdit.ShowDialog() == DialogResult.OK)
+      {
+      LoadDSHSTC();
+    }
+       }
         }
 
         private void AddDose_Click(object sender, EventArgs e)
         {
-            if (selectedRowIndex >= 0 && selectedRowIndex < dgvHSTC.Rows.Count)
+            if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
             {
-                string maHSTC = dgvHSTC.Rows[selectedRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-                string hoTen = dgvHSTC.Rows[selectedRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
-                MessageBox.Show(
+string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+     string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
+  MessageBox.Show(
            $"Thêm mũi tiêm cho:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
          "Thêm mũi tiêm", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -452,9 +441,9 @@ namespace TPVAXWinform.UserControls
 
         private void ViewInfo_Click_KH(object sender, EventArgs e)
         {
-            if (selectedRowIndex >= 0 && selectedRowIndex < dgvKhachHang.Rows.Count)
+            if (selectedKHRowIndex >= 0 && selectedKHRowIndex < dgvKhachHang.Rows.Count)
             {
-                string maKH = dgvKhachHang.Rows[selectedRowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
+                string maKH = dgvKhachHang.Rows[selectedKHRowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
                 if (dtKH.PrimaryKey == null || dtKH.PrimaryKey.Length == 0)
                     dtKH.PrimaryKey = new[] { dtKH.Columns["MaKH"] };
                 DataRow dr = dtKH.Rows.Find(maKH);
@@ -467,7 +456,7 @@ namespace TPVAXWinform.UserControls
                DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd/MM/yyyy") :
             "";
 
-                string soDT = dgvKhachHang.Rows[selectedRowIndex].Cells["colSoDTKH"].Value?.ToString() ?? "";
+                string soDT = dgvKhachHang.Rows[selectedKHRowIndex].Cells["colSoDTKH"].Value?.ToString() ?? "";
 
                 MessageBox.Show(
                  "📋 THÔNG TIN KHÁCH HÀNG\n\n" +
