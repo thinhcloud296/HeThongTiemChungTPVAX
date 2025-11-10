@@ -48,20 +48,59 @@ namespace TPVAXWinform_GUI
             cboQuanHe.DataSource = quanHeOptions;
             cboGioiTinhHSTC.DataSource = gioiTinhOptions;
             cboGioiTinhKH.DataSource = gioiTinhOptions.Clone();
+            DisableAllInputsHSTC();
+        }
+        private void DisableAllInputsHSTC()
+        {
+            txtHoTenHSTC.Enabled = false;
+            txtCCCDHSTC.Enabled = false;
+            cboGioiTinhHSTC.Enabled = false;
+            dtpNgaySinhHSTC.Enabled = false;
+            cboQuanHe.Enabled = false;
+            txtGhiChuHSTC.Enabled = false;
+        }
+        private void EnableAllInputsHSTC()
+        {
+            txtHoTenHSTC.Enabled = true;
+            txtCCCDHSTC.Enabled = true;
+            cboGioiTinhHSTC.Enabled = true;
+            dtpNgaySinhHSTC.Enabled = true;
+            cboQuanHe.Enabled = true;
+            txtGhiChuHSTC.Enabled = true;
+        }
+        private void DisableAllInpusKH()
+        {
+            txtHoTenKH.Enabled = false;
+            txtDiaChi.Enabled = false;
+            txtSoDT.Enabled = false;
+            dtpNgaySinhKH.Enabled = false;
+            txtEmail.Enabled = false;
+            txtCCCDKH.Enabled = false;
+            cboGioiTinhKH.Enabled = false;
+            dtpNgaySinhKH.Enabled = false;
+        }
+        private void EnableAllInpusKH()
+        {
+            txtHoTenKH.Enabled = true;
+            txtDiaChi.Enabled = true;
+            txtSoDT.Enabled = true;
+            dtpNgaySinhKH.Enabled = true;
+            txtEmail.Enabled = true;
+            txtCCCDKH.Enabled = true;
+            cboGioiTinhKH.Enabled = true;
+            dtpNgaySinhKH.Enabled = true;
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
 
             string cccd = txtTimCCCD.Text.Trim();
-            // --- 3. THÊM VALIDATION CHO TÌM KIẾM ---
             if (string.IsNullOrWhiteSpace(cccd) || !Regex.IsMatch(cccd, REGEX_CCCD))
             {
                 MessageBox.Show("CCCD tìm kiếm không hợp lệ. Phải là 12 số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTimCCCD.Focus();
-                return; // Thoát hàm
+                return; 
             }
-            // --- KẾT THÚC VALIDATION ---
 
 
             DataTable dt = khachHangBLL.GetData();
@@ -108,24 +147,34 @@ namespace TPVAXWinform_GUI
             btnThemTatCa.Visible = false;
             btnLienKet.Visible = false;
 
-            txtHoTenKH.Enabled = false;
-            txtDiaChi.Enabled = false;
-            txtSoDT.Enabled = false;
-            dtpNgaySinhKH.Enabled = false;
-            txtEmail.Enabled = false;
-            txtCCCDKH.Enabled = false;
-            cboGioiTinhKH.Enabled = false;
-            dtpNgaySinhKH.Enabled = false;
+            DisableAllInpusKH();
+            EnableAllInputsHSTC();
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            EnableAllInpusKH();
+            DisableAllInputsHSTC();
+
+            cboDSHSTCLienKet.DataSource = null;
+
             txtTimCCCD.Clear();
             txtHoTenKH.Clear();
             txtDiaChi.Clear();
             txtSoDT.Clear();
             txtEmail.Clear();
             txtCCCDKH.Clear();
+
+            txtHoTenHSTC.Clear();
+            txtCCCDHSTC.Clear();
+            cboGioiTinhHSTC.SelectedIndex = 0;
+            cboQuanHe.SelectedIndex = 0;
+            txtGhiChuHSTC.Clear();
+
+            btnThemTatCa.Visible = true;
+            btnLienKet.Visible = true;
+
+            btnThemTatCa.Enabled = false;
         }
         // Kiểm tra Validation
         public bool CheckValidationBeforeAddKH()
@@ -278,11 +327,26 @@ namespace TPVAXWinform_GUI
 
         private void btnThemHoSo_Click(object sender, EventArgs e)
         {
-            if(txtCCCDKH.Text.Trim()==string.Empty)
+            string cccdKH = txtCCCDKH.Text.Trim();
+            string cccdHSTC = txtCCCDHSTC.Text.Trim();
+            bool isChonBanThan = (cboQuanHe.SelectedIndex == 0); 
+            bool isTrungCCCD = cccdKH.Equals(cccdHSTC); 
+
+            bool isTryingToAddBanThan = isChonBanThan || isTrungCCCD;
+            if (isTryingToAddBanThan)
             {
-                MessageBox.Show("Vui lòng tìm khách hàng ở ô tìm kiếm.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (khachHangBLL.IsLinkedHSTCBanThan(cccdKH))
+                {
+                    MessageBox.Show("Khách hàng đã có hồ sơ tiêm chủng cho bản thân.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            if (khachHangBLL.IsLinkedHSTCBanThan(txtCCCDKH.Text.Trim())&& txtCCCDKH.Text.Trim().Equals(txtCCCDHSTC.Text.Trim())&&cboQuanHe.SelectedIndex==0)
+            {
+                MessageBox.Show("Khách hàng đã có hồ sơ tiêm chủng cho bản thân.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            }    
+            }
             // Validation
             bool hopLe = CheckValidationBeforeAddHSTC(); // Flag
             if (!hopLe)
@@ -342,11 +406,7 @@ namespace TPVAXWinform_GUI
             if (!flag)
                 return;
 
-            txtHoTenHSTC.Enabled = false;
-            txtCCCDHSTC.Enabled = false;
-            cboGioiTinhHSTC.Enabled = false;
-            dtpNgaySinhHSTC.Enabled = false;
-            cboQuanHe.Enabled= false;
+            txtGhiChuHSTC.Enabled = true;
             btnThemTatCa.Enabled = true;
         }
 
