@@ -45,10 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChiTietPhieuNhapDTO.cs" />
     <Compile Include="HoSoTiemChungDTO.cs" />
     <Compile Include="KhachHangDTO.cs" />
     <Compile Include="LienKetHoSoDTO.cs" />
+    <Compile Include="LoaiBenhDTO.cs" />
+    <Compile Include="LoaiVaccineDTO.cs" />
+    <Compile Include="NhaCungCapDTO.cs" />
+    <Compile Include="PhieuNhapVaccineDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VaccineDTO.cs" />
+    <Compile Include="VaccinePhongBenhDTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
