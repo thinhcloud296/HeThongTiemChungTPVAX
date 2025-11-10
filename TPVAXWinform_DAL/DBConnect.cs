@@ -113,5 +113,25 @@ namespace TPVAXWinform_DAL
         /// </summary>
         public static EditableBuffer CreateBuffer(string selectSql)
             => new EditableBuffer(selectSql);
+
+        public static object ExecuteScalar(string sqlOrSp,
+                                         CommandType cmdType = CommandType.Text,
+                                         params SqlParameter[] parameters)
+        {
+            object result = null;
+
+            using (var conn = GetConnection())
+            using (var cmd = new SqlCommand(sqlOrSp, conn) { CommandType = cmdType, CommandTimeout = DefaultTimeout })
+            {
+                if (parameters != null && parameters.Length > 0)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                conn.Open();
+                result = cmd.ExecuteScalar(); // Gọi hàm thực thi
+            }
+            return result; // Trả về kết quả (có thể là null)
+        }
     }
 }

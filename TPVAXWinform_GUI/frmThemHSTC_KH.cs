@@ -38,8 +38,10 @@ namespace TPVAXWinform_GUI
         private const string REGEX_CCCD = @"^\d{12}$";
         private const string REGEX_EMAIL = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
         private const string REGEX_DIACHI = @"^[\p{L}\d\s.,/-]+$";
-
-
+        // Flag
+        bool isKHEsists = false;
+        // Temp
+        string tempMaKH = "";
         public frmThemHSTC_KH()
         {
             InitializeComponent();
@@ -50,8 +52,8 @@ namespace TPVAXWinform_GUI
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            string cccd = txtTimCCCD.Text.Trim();
 
+            string cccd = txtTimCCCD.Text.Trim();
             // --- 3. THÊM VALIDATION CHO TÌM KIẾM ---
             if (string.IsNullOrWhiteSpace(cccd) || !Regex.IsMatch(cccd, REGEX_CCCD))
             {
@@ -72,6 +74,9 @@ namespace TPVAXWinform_GUI
                 MessageBox.Show("Không tìm thấy khách hàng với CCCD đã nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            // Maked đã tìm thấy KH thông qua Flag và thêm vào mã kh tmp
+            isKHEsists = true;
+            tempMaKH = dr["MaKH"]?.ToString() ?? "";
 
             List<String> DSHSTCLienKet = new List<String>();
             string makh = dr["MaKH"]?.ToString() ?? "";
@@ -99,7 +104,18 @@ namespace TPVAXWinform_GUI
             dtpNgaySinhKH.Value = dr["NgaySinh"] is DateTime dte ? dte : DateTime.Now;
             txtEmail.Text = dr["Email"]?.ToString() ?? "";
             txtCCCDKH.Text = dr["CCCD"]?.ToString() ?? "";
-            btnThemKhachHang.Visible = false;
+
+            btnThemTatCa.Visible = false;
+            btnLienKet.Visible = false;
+
+            txtHoTenKH.Enabled = false;
+            txtDiaChi.Enabled = false;
+            txtSoDT.Enabled = false;
+            dtpNgaySinhKH.Enabled = false;
+            txtEmail.Enabled = false;
+            txtCCCDKH.Enabled = false;
+            cboGioiTinhKH.Enabled = false;
+            dtpNgaySinhKH.Enabled = false;
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -110,7 +126,6 @@ namespace TPVAXWinform_GUI
             txtSoDT.Clear();
             txtEmail.Clear();
             txtCCCDKH.Clear();
-            btnThemKhachHang.Visible = true;
         }
         // Kiểm tra Validation
         public bool CheckValidationBeforeAddKH()
@@ -196,6 +211,37 @@ namespace TPVAXWinform_GUI
             return flag;
 
         }
+        public bool CheckValidationWhileLinking()
+        {
+            bool flag = true;
+            // Xóa tất cả các icon lỗi cũ trước khi kiểm tra
+            errorProvider1.Clear();
+
+            // Kiểm tra Họ tên
+            if (string.IsNullOrWhiteSpace(txtHoTenKH.Text) || !Regex.IsMatch(txtHoTenKH.Text.Trim(), REGEX_HOTEN))
+            {
+                // Gán lỗi cho txtHoTenKH
+                errorProvider1.SetError(txtHoTenKH, "Họ tên không hợp lệ. Chỉ được chứa chữ cái và khoảng trắng.");
+                flag = false; // Đánh dấu là có lỗi
+            }
+
+            // Kiểm tra CCCD
+            if (string.IsNullOrWhiteSpace(txtCCCDKH.Text) || !Regex.IsMatch(txtCCCDKH.Text.Trim(), REGEX_CCCD))
+            {
+                // Gán lỗi cho txtCCCDKH
+                errorProvider1.SetError(txtCCCDKH, "CCCD không hợp lệ. Phải là 12 số.");
+                flag = false;
+            } 
+
+            // Kiểm tra ComboBox Giới tính
+            if (cboGioiTinhKH.SelectedItem == null)
+            {
+                errorProvider1.SetError(cboGioiTinhKH, "Vui lòng chọn giới tính khách hàng.");
+                flag = false;
+            }
+            return flag;
+
+        }
         private void btnThemKhachHang_Click(object sender, EventArgs e)
         {
             // Validation
@@ -232,6 +278,11 @@ namespace TPVAXWinform_GUI
 
         private void btnThemHoSo_Click(object sender, EventArgs e)
         {
+            if(txtCCCDKH.Text.Trim()==string.Empty)
+            {
+                MessageBox.Show("Vui lòng tìm khách hàng ở ô tìm kiếm.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }    
             // Validation
             bool hopLe = CheckValidationBeforeAddHSTC(); // Flag
             if (!hopLe)
@@ -247,7 +298,20 @@ namespace TPVAXWinform_GUI
             hso.GhiChu = txtGhiChuHSTC.Text.Trim();
             try
             {
+                if (hoSoTiemChungBLL.IsHSTCExists(txtCCCDHSTC.Text.Trim()))
+                {
+                    MessageBox.Show("Hồ sơ tiêm chủng với CCCD này đã tồn tại cho khách hàng đã chọn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 hoSoTiemChungBLL.Insert(hso);
+                lienKetHoSoBLL.Insert(new LienKetHoSoDTO
+                {
+                    MaLK = lienKetHoSoBLL.CreateMaLK(hso.CCCD),
+                    MaKH = tempMaKH,
+                    MaHSTC = hso.MaHSTC,
+                    VaiTro = cboQuanHe.SelectedItem.ToString(),
+                    NgayLienKet = DateTime.Now
+                });
                 MessageBox.Show("Thêm hồ sơ tiêm chủng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 Close();
@@ -260,6 +324,11 @@ namespace TPVAXWinform_GUI
 
         private void btnLienKet_Click(object sender, EventArgs e)
         {
+            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
+            {
+                MessageBox.Show("Khách hàng đã tồn tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             txtHoTenHSTC.Text = txtHoTenKH.Text;
             txtCCCDHSTC.Text = txtCCCDKH.Text;
             cboGioiTinhHSTC.SelectedItem = cboGioiTinhKH.SelectedItem;
@@ -268,17 +337,25 @@ namespace TPVAXWinform_GUI
 
 
             bool flag = true;
-            flag = CheckValidationBeforeAddHSTC();
-            flag = CheckValidationBeforeAddKH();
+            flag = CheckValidationWhileLinking();
 
             if (!flag)
                 return;
 
+            txtHoTenHSTC.Enabled = false;
+            txtCCCDHSTC.Enabled = false;
+            cboGioiTinhHSTC.Enabled = false;
+            dtpNgaySinhHSTC.Enabled = false;
+            cboQuanHe.Enabled= false;
             btnThemTatCa.Enabled = true;
         }
 
         private void btnThemTatCa_Click(object sender, EventArgs e)
         {
+            bool flag = true;
+            flag = CheckValidationBeforeAddHSTC();
+            if (!flag)
+                return;
             string maKH = khachHangBLL.CreateMaKH(txtCCCDKH.Text.Trim());
             string maHSTC = hoSoTiemChungBLL.CreateMaHSTC(txtCCCDHSTC.Text.Trim());
             string maLK = lienKetHoSoBLL.CreateMaLK(txtCCCDHSTC.Text.Trim());

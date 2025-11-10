@@ -55,7 +55,6 @@
             this.btnReset = new System.Windows.Forms.Button();
             this.cboGioiTinhKH = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnThemKhachHang = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.lblEmail = new System.Windows.Forms.Label();
             this.txtSoDT = new System.Windows.Forms.TextBox();
@@ -326,7 +325,6 @@
             this.pnlKhachHang.Controls.Add(this.btnReset);
             this.pnlKhachHang.Controls.Add(this.cboGioiTinhKH);
             this.pnlKhachHang.Controls.Add(this.label1);
-            this.pnlKhachHang.Controls.Add(this.btnThemKhachHang);
             this.pnlKhachHang.Controls.Add(this.txtEmail);
             this.pnlKhachHang.Controls.Add(this.lblEmail);
             this.pnlKhachHang.Controls.Add(this.txtSoDT);
@@ -353,7 +351,7 @@
             this.cboDSHSTCLienKet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDSHSTCLienKet.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboDSHSTCLienKet.FormattingEnabled = true;
-            this.cboDSHSTCLienKet.Location = new System.Drawing.Point(307, 320);
+            this.cboDSHSTCLienKet.Location = new System.Drawing.Point(467, 322);
             this.cboDSHSTCLienKet.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboDSHSTCLienKet.Name = "cboDSHSTCLienKet";
             this.cboDSHSTCLienKet.Size = new System.Drawing.Size(645, 36);
@@ -373,7 +371,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.LightCyan;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(4, 312);
+            this.label3.Location = new System.Drawing.Point(164, 314);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Padding = new System.Windows.Forms.Padding(10);
@@ -433,22 +431,6 @@
             this.label1.Size = new System.Drawing.Size(100, 28);
             this.label1.TabIndex = 15;
             this.label1.Text = "Giới tính:";
-            // 
-            // btnThemKhachHang
-            // 
-            this.btnThemKhachHang.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnThemKhachHang.FlatAppearance.BorderSize = 0;
-            this.btnThemKhachHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThemKhachHang.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnThemKhachHang.ForeColor = System.Drawing.Color.White;
-            this.btnThemKhachHang.Location = new System.Drawing.Point(960, 315);
-            this.btnThemKhachHang.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnThemKhachHang.Name = "btnThemKhachHang";
-            this.btnThemKhachHang.Size = new System.Drawing.Size(280, 45);
-            this.btnThemKhachHang.TabIndex = 14;
-            this.btnThemKhachHang.Text = "➕ Thêm Khách Hàng";
-            this.btnThemKhachHang.UseVisualStyleBackColor = false;
-            this.btnThemKhachHang.Click += new System.EventHandler(this.btnThemKhachHang_Click);
             // 
             // txtEmail
             // 
@@ -649,7 +631,6 @@
         private System.Windows.Forms.Label lblSoDT;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label lblEmail;
-        private System.Windows.Forms.Button btnThemKhachHang;
         private System.Windows.Forms.Panel pnlHoSo;
         private System.Windows.Forms.Label lblTitleHoSo;
         private System.Windows.Forms.TextBox txtHoTenHSTC;

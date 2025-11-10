@@ -18,8 +18,45 @@ namespace TPVAXWinform_DAL
         }
         public string CreateMaKH(string CCCD)
         {
-            string cccdSuffix = CCCD.Length == 12? CCCD.Substring(6, 6) : string.Empty;
+            string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;
             return string.Equals(cccdSuffix, string.Empty) ? string.Empty : "KHHG" + cccdSuffix;
+        }
+        public bool IsKHExists(string CCCD)
+        {
+            const string sql = "SELECT COUNT(*) FROM dbo.KhachHang WHERE CCCD = @CCCD";
+
+            int count = Convert.ToInt32(DBConnect.ExecuteScalar(
+                sql,
+                CommandType.Text,
+                DBConnect.Param("@CCCD", CCCD, SqlDbType.Char, 12)
+            ));
+
+            return count > 0;
+        }
+        public bool IsLinkedHSTCBanThan(string CCCD)
+        {
+            const string sql = @"
+                SELECT COUNT(*)
+                FROM dbo.LienKetHoSo lk
+                INNER JOIN dbo.KhachHang kh ON lk.MaKH = kh.MaKH
+                WHERE kh.CCCD = @CCCD AND lk.VaiTro = N'Bản thân'";
+
+            try
+            {
+                var param = DBConnect.Param("@CCCD", CCCD, SqlDbType.Char, 12);
+
+                int count = Convert.ToInt32(DBConnect.ExecuteScalar(
+                    sql,
+                    CommandType.Text,
+                    param
+                ));
+
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi kiểm tra hồ sơ bản thân bằng CCCD: " + ex.Message);
+            }
         }
         public void Insert(KhachHangDTO newKH)
         {
@@ -53,7 +90,7 @@ namespace TPVAXWinform_DAL
                 using (var buffer = new DBConnect.EditableBuffer("SELECT * FROM dbo.KhachHang"))
                 {
                     DataRow rowUpdate = buffer.Table.Rows.Find(khachHang.MaKH);
-                    if (rowUpdate==null)
+                    if (rowUpdate == null)
                         throw new Exception("Không tìm thấy khách hàng cần sửa.");
                     rowUpdate["HoTen"] = khachHang.HoTen;
                     rowUpdate["CCCD"] = khachHang.CCCD;

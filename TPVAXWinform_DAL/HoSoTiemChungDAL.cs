@@ -29,6 +29,18 @@ namespace TPVAXWinform_DAL
                     DBConnect.Param("@MaKH", MaKH, SqlDbType.Char, 10)
                 );
         }
+        public bool IsHSTCExists(string CCCD)
+        {
+            const string sql = "SELECT COUNT(*) FROM dbo.HoSoTiemChung WHERE CCCD = @CCCD";
+
+            int count = Convert.ToInt32(DBConnect.ExecuteScalar(
+                sql,
+                CommandType.Text,
+                DBConnect.Param("@CCCD", CCCD, SqlDbType.Char, 12)
+            ));
+
+            return count > 0;
+        }
         public string CreateMaHSTC(string CCCD)
         {
             string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;

@@ -16,6 +16,14 @@ namespace TPVAXWinform_BLL
         {
             return dal.GetData();
         }
+        public bool IsKHExists(string CCCD)
+        {
+            return dal.IsKHExists(CCCD);
+        }
+        public bool IsLinkedHSTCBanThan(string CCCD)
+        {
+            return dal.IsLinkedHSTCBanThan(CCCD);
+        }
         public void Insert(KhachHangDTO newKH)
         {
             dal.Insert(newKH);

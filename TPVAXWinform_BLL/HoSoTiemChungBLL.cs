@@ -35,5 +35,9 @@ namespace TPVAXWinform_BLL
         {
             _dal.Edit(hSTC);
         }
+        public bool IsHSTCExists(string CCCD)
+        {
+            return _dal.IsHSTCExists(CCCD);
+        }
     }
 }
