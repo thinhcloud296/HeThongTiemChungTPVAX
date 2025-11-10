@@ -371,6 +371,7 @@
             this.dgvHSTC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHSTC.Size = new System.Drawing.Size(1533, 414);
             this.dgvHSTC.TabIndex = 8;
+            this.dgvHSTC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHSTC_CellContentClick);
             // 
             // colMaHSTC
             // 

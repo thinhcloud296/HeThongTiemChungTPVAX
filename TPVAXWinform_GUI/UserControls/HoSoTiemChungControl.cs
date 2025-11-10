@@ -53,8 +53,6 @@ namespace TPVAXWinform.UserControls
                 };
                 dgvKhachHang.Columns.Add(btnEditColumn);
             }
-            // Thêm sự kiện cho button "Thêm hồ sơ"
-
             ConfigureDataGridViewKHStyling();
             SetupContextMenuKH();
         }
@@ -165,7 +163,6 @@ namespace TPVAXWinform.UserControls
 
         private void LoadDSHSTC()
         {
-            // Lấy dữ liệu từ stored procedure để hiển thị
             dtHSTC = HSCT_bll.GetHSTC_KHHG();
             BindDataToGridHSTC(dtHSTC);
         }
@@ -333,33 +330,33 @@ namespace TPVAXWinform.UserControls
         {
             if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
             {
-       string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
 
-          if (string.IsNullOrEmpty(maHSTC))
-   {
-            MessageBox.Show("Không tìm thấy mã hồ sơ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-       return;
-}
+                if (string.IsNullOrEmpty(maHSTC))
+                {
+                    MessageBox.Show("Không tìm thấy mã hồ sơ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-        frmEditHSTC frmEdit = new frmEditHSTC();
-frmEdit.LoadHoSoTiemChungData(maHSTC);
+                frmEditHSTC frmEdit = new frmEditHSTC();
+                frmEdit.LoadHoSoTiemChungData(maHSTC);
 
- if (frmEdit.ShowDialog() == DialogResult.OK)
-      {
-      LoadDSHSTC();
-    }
-       }
+                if (frmEdit.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDSHSTC();
+                }
+            }
         }
 
         private void AddDose_Click(object sender, EventArgs e)
         {
             if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
             {
-string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-     string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
-  MessageBox.Show(
-           $"Thêm mũi tiêm cho:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
-         "Thêm mũi tiêm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
+                MessageBox.Show(
+                         $"Thêm mũi tiêm cho:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
+                       "Thêm mũi tiêm", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         // ============================================================================== Khách hàng
@@ -594,14 +591,37 @@ string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToS
         {
             frmThemHSTC_KH frmThem = new frmThemHSTC_KH();
             frmThem.ShowDialog();
-            if(frmThem.DialogResult == DialogResult.OK)
+            if (frmThem.DialogResult == DialogResult.OK)
             {
                 RefreshData();
             }
             // Refresh data sau khi đóng form
-            
+
         }
 
+        private void dgvHSTC_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            // Chỉ chạy khi click vào cột "colEditKH"
+            if (e.ColumnIndex == dgvHSTC.Columns["colEditHS"].Index)
+            {
+                // Lấy MaHSTC từ dòng được click
+                string maHSTC = dgvHSTC.Rows[e.RowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                if (string.IsNullOrEmpty(maHSTC))
+                {
+                    MessageBox.Show("Không tìm thấy mã khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                frmEditHSTC frmEdit = new frmEditHSTC();
+                frmEdit.LoadHoSoTiemChungData(maHSTC);
+
+                if (frmEdit.ShowDialog() == DialogResult.OK)
+                {
+                    RefreshData();
+                }
+            }
+        }
     }
 }
 

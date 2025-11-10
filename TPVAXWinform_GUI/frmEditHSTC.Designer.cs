@@ -68,9 +68,9 @@
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(150, 20);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(313, 48);
+            this.lblTitle.Size = new System.Drawing.Size(343, 48);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "CH?NH S?A H? S?";
+            this.lblTitle.Text = "CHỈNH SỬA HỒ SƠ";
             // 
             // panelContent
             // 
@@ -100,9 +100,9 @@
             this.chkTrangThai.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.chkTrangThai.Location = new System.Drawing.Point(170, 330);
             this.chkTrangThai.Name = "chkTrangThai";
-            this.chkTrangThai.Size = new System.Drawing.Size(126, 32);
+            this.chkTrangThai.Size = new System.Drawing.Size(133, 32);
             this.chkTrangThai.TabIndex = 13;
-            this.chkTrangThai.Text = "Ho?t ??ng";
+            this.chkTrangThai.Text = "Hoạt động";
             this.chkTrangThai.UseVisualStyleBackColor = true;
             // 
             // lblTrangThai
@@ -162,7 +162,7 @@
             this.cboGioiTinh.FormattingEnabled = true;
             this.cboGioiTinh.Items.AddRange(new object[] {
             "Nam",
-            "N?",
+            "Nử",
             "Khác"});
             this.cboGioiTinh.Location = new System.Drawing.Point(170, 120);
             this.cboGioiTinh.Name = "cboGioiTinh";

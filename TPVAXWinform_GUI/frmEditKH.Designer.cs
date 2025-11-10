@@ -322,10 +322,10 @@ base.Dispose(disposing);
             this.flowButtons.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.flowButtons.Controls.Add(this.btnUpdate);
             this.flowButtons.Controls.Add(this.btnCancel);
-            this.flowButtons.Location = new System.Drawing.Point(250, 450);
+            this.flowButtons.Location = new System.Drawing.Point(248, 450);
             this.flowButtons.Name = "flowButtons";
             this.flowButtons.Padding = new System.Windows.Forms.Padding(8);
-            this.flowButtons.Size = new System.Drawing.Size(300, 60);
+            this.flowButtons.Size = new System.Drawing.Size(304, 60);
             this.flowButtons.TabIndex = 1;
             // 
             // btnUpdate
@@ -351,12 +351,12 @@ base.Dispose(disposing);
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(11, 55);
+            this.btnCancel.Location = new System.Drawing.Point(154, 11);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(130, 38);
             this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "H?y";
+            this.btnCancel.Text = "Hủy";
             this.btnCancel.UseVisualStyleBackColor = false;
             // 
             // frmEditKH
