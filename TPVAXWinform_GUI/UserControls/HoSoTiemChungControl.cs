@@ -10,7 +10,6 @@ namespace TPVAXWinform.UserControls
     public partial class HoSoTiemChungControl : UserControl
     {
         private DataTable dtHSTC;
-        private DataTable dtHSTCFull;
         private DataTable dtKH;
         private HoSoTiemChungBLL HSCT_bll = new HoSoTiemChungBLL();
         private KhachHangBLL KH_bll = new KhachHangBLL();

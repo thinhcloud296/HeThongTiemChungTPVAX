@@ -48,7 +48,10 @@
     <Compile Include="HoSoTiemChungBLL.cs" />
     <Compile Include="KhachHangBLL.cs" />
     <Compile Include="LienKetHoSoBLL.cs" />
+    <Compile Include="LoaiBenhBLL.cs" />
+    <Compile Include="LoaiVaccineBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VaccineBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TPVAXWinform_DAL\TPVAXWinform_DAL.csproj">
