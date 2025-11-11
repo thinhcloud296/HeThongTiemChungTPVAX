@@ -331,7 +331,7 @@
             this.button2.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(97)))), ((int)(((byte)(141)))));
             this.button2.Size = new System.Drawing.Size(302, 63);
             this.button2.TabIndex = 2;
-            this.button2.Text = "KHÁCH HÀNG";
+            this.button2.Text = "LỊCH TIÊM";
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.TextColor = System.Drawing.Color.White;
             this.button2.UseVisualStyleBackColor = true;
