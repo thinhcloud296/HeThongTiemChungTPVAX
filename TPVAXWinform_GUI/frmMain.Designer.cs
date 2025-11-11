@@ -54,6 +54,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.bangDieuKhienControl1 = new TPVAXWinform.UserControls.BangDieuKhienControl();
             this.hoSoTiemChungControl1 = new TPVAXWinform.UserControls.HoSoTiemChungControl();
+            this.lichTiemControl1 = new TPVAXWinform_GUI.UserControls.LichTiemControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -505,6 +506,7 @@
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.Controls.Add(this.bangDieuKhienControl1);
             this.panel3.Controls.Add(this.hoSoTiemChungControl1);
+            this.panel3.Controls.Add(this.lichTiemControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -529,6 +531,15 @@
             this.hoSoTiemChungControl1.Name = "hoSoTiemChungControl1";
             this.hoSoTiemChungControl1.Size = new System.Drawing.Size(1408, 818);
             this.hoSoTiemChungControl1.TabIndex = 1;
+            // 
+            // lichTiemControl1
+            // 
+            this.lichTiemControl1.BackColor = System.Drawing.Color.White;
+            this.lichTiemControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lichTiemControl1.Location = new System.Drawing.Point(10, 10);
+            this.lichTiemControl1.Name = "lichTiemControl1";
+            this.lichTiemControl1.Size = new System.Drawing.Size(1408, 818);
+            this.lichTiemControl1.TabIndex = 2;
             // 
             // frmMain
             // 
@@ -583,6 +594,7 @@
         private System.Windows.Forms.Panel panel3;
         private UserControls.BangDieuKhienControl bangDieuKhienControl1;
         private UserControls.HoSoTiemChungControl hoSoTiemChungControl1;
+        private TPVAXWinform_GUI.UserControls.LichTiemControl lichTiemControl1;
     }
 }
 

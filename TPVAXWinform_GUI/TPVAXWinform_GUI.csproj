@@ -147,6 +147,12 @@
     <Compile Include="UserControls\HoSoTiemChungControl.Designer.cs">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\LichTiemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\LichTiemControl.Designer.cs">
+      <DependentUpon>LichTiemControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="frmEditHSTC.resx">
       <DependentUpon>frmEditHSTC.cs</DependentUpon>
     </EmbeddedResource>
@@ -180,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\HoSoTiemChungControl.resx">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\LichTiemControl.resx">
+      <DependentUpon>LichTiemControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />

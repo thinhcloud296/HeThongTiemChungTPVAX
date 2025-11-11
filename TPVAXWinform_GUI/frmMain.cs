@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TPVAXWinform_GUI;
+using TPVAXWinform_GUI.UserControls;
 
 namespace TPVAXWinform
 {
@@ -67,7 +68,7 @@ namespace TPVAXWinform
         {
             // Wire up button clicks
             button1.Click += (s, e) => ShowHoSoTiemChungControl();
-            button2.Click += (s, e) => ShowKhachHangControl();
+            button2.Click += (s, e) => ShowLichTiemControl();
             button3.Click += (s, e) => MessageBox.Show("Vaccine - Đang phát triển", "Thông báo");
             button4.Click += (s, e) => MessageBox.Show("Nhà cung cấp - Đang phát triển", "Thông báo");
             button5.Click += (s, e) => MessageBox.Show("Nhân viên - Đang phát triển", "Thông báo");
@@ -84,6 +85,7 @@ namespace TPVAXWinform
             // Hide all user controls
             bangDieuKhienControl1.Visible = true;
             hoSoTiemChungControl1.Visible = false;
+            lichTiemControl1.Visible = false;
 
             // Bring dashboard to front
             bangDieuKhienControl1.BringToFront();
@@ -98,6 +100,7 @@ namespace TPVAXWinform
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = true;
+            lichTiemControl1.Visible = false;
 
             // Bring immunization record to front
             hoSoTiemChungControl1.BringToFront();
@@ -109,11 +112,15 @@ namespace TPVAXWinform
             ResetMenuButtons();
             button1.BackColor = Color.FromArgb(52, 152, 219); // Highlight
         }
-        private void ShowKhachHangControl()
+        private void ShowLichTiemControl()
         {
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
+            lichTiemControl1.Visible = true;
+
+            // Bring Lich Tiem control to front
+            lichTiemControl1.BringToFront();
 
             // Reset button styles
             ResetMenuButtons();
