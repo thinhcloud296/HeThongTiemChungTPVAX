@@ -289,7 +289,7 @@
             this.MinimizeBox = false;
             this.Name = "frmEditHSTC";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ch?nh s?a h? s? tiêm ch?ng";
+            this.Text = "Chỉnh sửa thông tin hồ sơ";
             this.Load += new System.EventHandler(this.frmEditHSTC_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

@@ -16,5 +16,23 @@ namespace TPVAXWinform_GUI
         {
             InitializeComponent();
         }
+        public frmThemMuiTiem(string maHSTC, string hoTen, string gioiTinh, string ngaySinh, string tenKH, string quanHe,string soDTKH)
+        {
+            InitializeComponent();
+
+            lblMaHSTC.Text = maHSTC; 
+            lblTenNguoiTiemValue.Text = hoTen;
+            lblGioiTinhValue.Text = gioiTinh;
+            lblNgaySinhValue.Text = ngaySinh;
+
+            lblTenKhachHangValue.Text = tenKH;
+            lblQuanHeValue.Text = quanHe; 
+            lblSoDTValue.Text = soDTKH;
+        }
+
+        private void lblTenNguoiTiemValue_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

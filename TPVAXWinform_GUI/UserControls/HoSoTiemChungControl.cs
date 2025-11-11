@@ -10,7 +10,7 @@ namespace TPVAXWinform.UserControls
     public partial class HoSoTiemChungControl : UserControl
     {
         private DataTable dtHSTC;
-        private DataTable dtHSTCFull; // DataTable chứa đầy đủ thông tin bao gồm CCCD
+        private DataTable dtHSTCFull;
         private DataTable dtKH;
         private HoSoTiemChungBLL HSCT_bll = new HoSoTiemChungBLL();
         private KhachHangBLL KH_bll = new KhachHangBLL();
@@ -116,12 +116,10 @@ namespace TPVAXWinform.UserControls
         {
             btnSearch.Click += BtnSearch_Click;
             btnReset.Click += BtnReset_Click;
-            dgvHSTC.CellContentClick += DgvRecords_CellContentClick;
 
             // Thêm event handlers cho phần Khách hàng
             button4.Click += BtnSearchKH_Click;
             button3.Click += BtnResetKH_Click;
-
             // Add hover effects for buttons
             btnSearch.MouseEnter += (s, e) =>
             {
@@ -178,6 +176,7 @@ namespace TPVAXWinform.UserControls
             colHoTenKHHGHS.DataPropertyName = "TenKhachHang";
             colQuanHeHS.DataPropertyName = "VaiTro";
             colCCCDHS.DataPropertyName = "CCCDHS";
+            colSoDTKhHSTC.DataPropertyName = "SoDT";
             dgvHSTC.DataSource = dt;
 
             dgvHSTC.Columns["colNgaySinhHS"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -232,13 +231,6 @@ namespace TPVAXWinform.UserControls
             BindDataToGridHSTC(dtHSTC);
         }
 
-        private void DgvRecords_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-
-
         // Public method để refresh data từ bên ngoài
         public void RefreshData()
         {
@@ -268,7 +260,7 @@ namespace TPVAXWinform.UserControls
 
             // Menu item: Thêm mũi tiêm
             ToolStripMenuItem addDoseItem = new ToolStripMenuItem("💉 Thêm mũi tiêm");
-            addDoseItem.Click += AddDose_Click;
+            addDoseItem.Click += btnThemMuiTiem_Click;
             contextMenu.Items.Add(addDoseItem);
 
             // Gán context menu cho DataGridView
@@ -282,7 +274,7 @@ namespace TPVAXWinform.UserControls
 
         private void Xo_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Left)
             {
                 var hitTest = dgvHSTC.HitTest(e.X, e.Y);
                 if (hitTest.RowIndex >= 0)
@@ -348,17 +340,6 @@ namespace TPVAXWinform.UserControls
             }
         }
 
-        private void AddDose_Click(object sender, EventArgs e)
-        {
-            if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
-            {
-                string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
-                string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
-                MessageBox.Show(
-                         $"Thêm mũi tiêm cho:\n\nMã HS: {maHSTC}\nKhách hàng: {hoTen}\n\n(Chức năng sẽ được phát triển sau)",
-                       "Thêm mũi tiêm", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
         // ============================================================================== Khách hàng
         private void ConfigureDataGridViewKHStyling()
         {
@@ -618,8 +599,29 @@ namespace TPVAXWinform.UserControls
 
                 if (frmEdit.ShowDialog() == DialogResult.OK)
                 {
-                    RefreshData();
+                    LoadDSHSTC();
                 }
+            }
+        }
+
+        private void btnThemMuiTiem_Click(object sender, EventArgs e)
+        {
+            if (selectedHSTCRowIndex >= 0 && selectedHSTCRowIndex < dgvHSTC.Rows.Count)
+            {
+                string maHSTC = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaHSTC"].Value?.ToString() ?? "";
+                string hoTen = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenHS"].Value?.ToString() ?? "";
+                string gt = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colGioiTinhHS"].Value?.ToString() ?? "";
+                string soDTKH = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colSoDTKhHSTC"].Value?.ToString() ?? "";
+                var valNgaySinh = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colNgaySinhHS"].Value;
+                string ns =
+                  valNgaySinh is DateTime dt ? dt.ToString("dd-MM-yyyy") :
+                   DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd-MM-yyyy") :
+                    "";
+                string quanhe = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colQuanHeHS"].Value?.ToString() ?? "";
+                string tenKH = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenKHHGHS"].Value?.ToString() ?? "";
+
+                frmThemMuiTiem formTiem = new frmThemMuiTiem(maHSTC, hoTen, gt, ns, tenKH, quanhe,soDTKH);
+                formTiem.ShowDialog();
             }
         }
     }

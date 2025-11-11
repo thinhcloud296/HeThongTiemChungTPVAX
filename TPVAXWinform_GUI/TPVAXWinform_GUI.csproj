@@ -159,6 +159,9 @@
     <EmbeddedResource Include="frmThemHSTC_KH.resx">
       <DependentUpon>frmThemHSTC_KH.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmThemMuiTiem.resx">
+      <DependentUpon>frmThemMuiTiem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

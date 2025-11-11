@@ -52,15 +52,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvHSTC = new System.Windows.Forms.DataGridView();
-            this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHoTenHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGioiTinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNgaySinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCCCDHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHoTenKHHGHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuanHeHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilter = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnThemMuiTiem = new System.Windows.Forms.Button();
             this.txtSearchName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtSearchRecordId = new System.Windows.Forms.TextBox();
@@ -71,6 +64,14 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHoTenHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGioiTinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNgaySinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCCCDHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHoTenKHHGHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuanHeHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSoDTKhHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).BeginInit();
@@ -361,7 +362,8 @@
             this.colNgaySinhHS,
             this.colCCCDHS,
             this.colHoTenKHHGHS,
-            this.colQuanHeHS});
+            this.colQuanHeHS,
+            this.colSoDTKhHSTC});
             this.dgvHSTC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvHSTC.Location = new System.Drawing.Point(3, 189);
             this.dgvHSTC.Name = "dgvHSTC";
@@ -373,59 +375,10 @@
             this.dgvHSTC.TabIndex = 8;
             this.dgvHSTC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHSTC_CellContentClick);
             // 
-            // colMaHSTC
-            // 
-            this.colMaHSTC.HeaderText = "Mã HS";
-            this.colMaHSTC.MinimumWidth = 8;
-            this.colMaHSTC.Name = "colMaHSTC";
-            this.colMaHSTC.ReadOnly = true;
-            // 
-            // colHoTenHS
-            // 
-            this.colHoTenHS.HeaderText = "Họ tên";
-            this.colHoTenHS.MinimumWidth = 8;
-            this.colHoTenHS.Name = "colHoTenHS";
-            this.colHoTenHS.ReadOnly = true;
-            // 
-            // colGioiTinhHS
-            // 
-            this.colGioiTinhHS.HeaderText = "Giới tính";
-            this.colGioiTinhHS.MinimumWidth = 8;
-            this.colGioiTinhHS.Name = "colGioiTinhHS";
-            this.colGioiTinhHS.ReadOnly = true;
-            // 
-            // colNgaySinhHS
-            // 
-            this.colNgaySinhHS.HeaderText = "Ngày sinh";
-            this.colNgaySinhHS.MinimumWidth = 8;
-            this.colNgaySinhHS.Name = "colNgaySinhHS";
-            this.colNgaySinhHS.ReadOnly = true;
-            // 
-            // colCCCDHS
-            // 
-            this.colCCCDHS.HeaderText = "CCCD";
-            this.colCCCDHS.MinimumWidth = 8;
-            this.colCCCDHS.Name = "colCCCDHS";
-            this.colCCCDHS.ReadOnly = true;
-            // 
-            // colHoTenKHHGHS
-            // 
-            this.colHoTenKHHGHS.HeaderText = "Họ tên KH";
-            this.colHoTenKHHGHS.MinimumWidth = 8;
-            this.colHoTenKHHGHS.Name = "colHoTenKHHGHS";
-            this.colHoTenKHHGHS.ReadOnly = true;
-            // 
-            // colQuanHeHS
-            // 
-            this.colQuanHeHS.HeaderText = "Quan hệ";
-            this.colQuanHeHS.MinimumWidth = 8;
-            this.colQuanHeHS.Name = "colQuanHeHS";
-            this.colQuanHeHS.ReadOnly = true;
-            // 
             // panelFilter
             // 
             this.panelFilter.BackColor = System.Drawing.Color.White;
-            this.panelFilter.Controls.Add(this.button2);
+            this.panelFilter.Controls.Add(this.btnThemMuiTiem);
             this.panelFilter.Controls.Add(this.txtSearchName);
             this.panelFilter.Controls.Add(this.label5);
             this.panelFilter.Controls.Add(this.txtSearchRecordId);
@@ -441,17 +394,18 @@
             this.panelFilter.Size = new System.Drawing.Size(1533, 80);
             this.panelFilter.TabIndex = 7;
             // 
-            // button2
+            // btnThemMuiTiem
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(1168, 23);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(191, 39);
-            this.button2.TabIndex = 18;
-            this.button2.Text = "Thêm mũi tiêm";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnThemMuiTiem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.btnThemMuiTiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemMuiTiem.ForeColor = System.Drawing.Color.White;
+            this.btnThemMuiTiem.Location = new System.Drawing.Point(1168, 23);
+            this.btnThemMuiTiem.Name = "btnThemMuiTiem";
+            this.btnThemMuiTiem.Size = new System.Drawing.Size(191, 39);
+            this.btnThemMuiTiem.TabIndex = 18;
+            this.btnThemMuiTiem.Text = "Thêm mũi tiêm";
+            this.btnThemMuiTiem.UseVisualStyleBackColor = false;
+            this.btnThemMuiTiem.Click += new System.EventHandler(this.btnThemMuiTiem_Click);
             // 
             // txtSearchName
             // 
@@ -564,6 +518,63 @@
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "QUẢN LÝ HỒ SƠ TIÊM CHỦNG";
             // 
+            // colMaHSTC
+            // 
+            this.colMaHSTC.HeaderText = "Mã HS";
+            this.colMaHSTC.MinimumWidth = 8;
+            this.colMaHSTC.Name = "colMaHSTC";
+            this.colMaHSTC.ReadOnly = true;
+            // 
+            // colHoTenHS
+            // 
+            this.colHoTenHS.HeaderText = "Họ tên";
+            this.colHoTenHS.MinimumWidth = 8;
+            this.colHoTenHS.Name = "colHoTenHS";
+            this.colHoTenHS.ReadOnly = true;
+            // 
+            // colGioiTinhHS
+            // 
+            this.colGioiTinhHS.HeaderText = "Giới tính";
+            this.colGioiTinhHS.MinimumWidth = 8;
+            this.colGioiTinhHS.Name = "colGioiTinhHS";
+            this.colGioiTinhHS.ReadOnly = true;
+            // 
+            // colNgaySinhHS
+            // 
+            this.colNgaySinhHS.HeaderText = "Ngày sinh";
+            this.colNgaySinhHS.MinimumWidth = 8;
+            this.colNgaySinhHS.Name = "colNgaySinhHS";
+            this.colNgaySinhHS.ReadOnly = true;
+            // 
+            // colCCCDHS
+            // 
+            this.colCCCDHS.HeaderText = "CCCD";
+            this.colCCCDHS.MinimumWidth = 8;
+            this.colCCCDHS.Name = "colCCCDHS";
+            this.colCCCDHS.ReadOnly = true;
+            // 
+            // colHoTenKHHGHS
+            // 
+            this.colHoTenKHHGHS.HeaderText = "Họ tên KH";
+            this.colHoTenKHHGHS.MinimumWidth = 8;
+            this.colHoTenKHHGHS.Name = "colHoTenKHHGHS";
+            this.colHoTenKHHGHS.ReadOnly = true;
+            // 
+            // colQuanHeHS
+            // 
+            this.colQuanHeHS.HeaderText = "Quan hệ";
+            this.colQuanHeHS.MinimumWidth = 8;
+            this.colQuanHeHS.Name = "colQuanHeHS";
+            this.colQuanHeHS.ReadOnly = true;
+            // 
+            // colSoDTKhHSTC
+            // 
+            this.colSoDTKhHSTC.HeaderText = "Column1";
+            this.colSoDTKhHSTC.MinimumWidth = 8;
+            this.colSoDTKhHSTC.Name = "colSoDTKhHSTC";
+            this.colSoDTKhHSTC.ReadOnly = true;
+            this.colSoDTKhHSTC.Visible = false;
+            // 
             // HoSoTiemChungControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -626,6 +637,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoDTKH;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtCCCDKH;
+        private System.Windows.Forms.Button btnThemMuiTiem;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaHSTC;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHoTenHS;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGioiTinhHS;
@@ -633,6 +645,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCCCDHS;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHoTenKHHGHS;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQuanHeHS;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSoDTKhHSTC;
     }
 }
