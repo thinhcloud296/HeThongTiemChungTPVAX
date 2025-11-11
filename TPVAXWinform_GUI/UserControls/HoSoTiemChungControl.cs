@@ -269,8 +269,6 @@ namespace TPVAXWinform.UserControls
             dgvHSTC.MouseDown += Xo_MouseDown;
         }
 
-        private int selectedRowIndex = -1;
-
         private void Xo_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)

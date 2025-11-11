@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="HoSoTiemChungBLL.cs" />
     <Compile Include="KhachHangBLL.cs" />
+    <Compile Include="LichTiemBLL.cs" />
     <Compile Include="LienKetHoSoBLL.cs" />
     <Compile Include="LoaiBenhBLL.cs" />
     <Compile Include="LoaiVaccineBLL.cs" />

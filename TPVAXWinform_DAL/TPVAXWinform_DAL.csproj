@@ -48,6 +48,7 @@
     <Compile Include="DBConnect.cs" />
     <Compile Include="HoSoTiemChungDAL.cs" />
     <Compile Include="KhachHangDAL.cs" />
+    <Compile Include="LichTiemDAL.cs" />
     <Compile Include="LienKetHoSoDAL.cs" />
     <Compile Include="LoaiBenhDAL.cs" />
     <Compile Include="LoaiVaccineDAL.cs" />

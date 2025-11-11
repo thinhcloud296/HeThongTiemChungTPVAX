@@ -56,8 +56,8 @@ namespace TPVAXWinform_GUI
             cboLoaiBenh.DataSource = new LoaiBenhBLL().GetData();
             cboLoaiVaccine.DataSource = new LoaiVaccineBLL().GetData();
 
-            cboLoaiBenh.DisplayMember = "TenLoai";
-            cboLoaiBenh.ValueMember = "MaLoai";
+            cboLoaiBenh.DisplayMember = "TenBenh";
+            cboLoaiBenh.ValueMember = "MaLoaiBenh";
             cboLoaiVaccine.DisplayMember = "TenLoai";
             cboLoaiVaccine.ValueMember = "MaLoai";
         }

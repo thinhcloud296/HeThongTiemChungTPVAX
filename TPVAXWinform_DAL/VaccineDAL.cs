@@ -9,6 +9,11 @@ namespace TPVAXWinform_DAL
 {
     public class VaccineDAL
     {
+        public DataTable GetData()
+        {
+            const string sql = "SELECT * FROM dbo.Vaccine";
+            return DBConnect.ExecuteQuery(sql);
+        }
         public DataTable GetDataVaccineDetail()
         {
             return DBConnect.ExecuteQuery(
@@ -16,5 +21,6 @@ namespace TPVAXWinform_DAL
                     CommandType.StoredProcedure
                 );
         }
+
     }
 }

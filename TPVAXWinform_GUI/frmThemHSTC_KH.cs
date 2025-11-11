@@ -38,8 +38,6 @@ namespace TPVAXWinform_GUI
         private const string REGEX_CCCD = @"^\d{12}$";
         private const string REGEX_EMAIL = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
         private const string REGEX_DIACHI = @"^[\p{L}\d\s.,/-]+$";
-        // Flag
-        bool isKHEsists = false;
         // Temp
         string tempMaKH = "";
         public frmThemHSTC_KH()
@@ -114,7 +112,6 @@ namespace TPVAXWinform_GUI
                 return;
             }
             // Maked đã tìm thấy KH thông qua Flag và thêm vào mã kh tmp
-            isKHEsists = true;
             tempMaKH = dr["MaKH"]?.ToString() ?? "";
 
             List<String> DSHSTCLienKet = new List<String>();
