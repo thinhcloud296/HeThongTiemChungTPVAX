@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlHoSo = new System.Windows.Forms.Panel();
-            this.btnThemTatCa = new System.Windows.Forms.Button();
             this.btnLienKet = new System.Windows.Forms.Button();
             this.cboQuanHe = new System.Windows.Forms.ComboBox();
             this.btnThemHoSo = new System.Windows.Forms.Button();
@@ -70,6 +69,7 @@
             this.lblTimCCCD = new System.Windows.Forms.Label();
             this.lblTitleKH = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnDangKyKHAndHSTC = new System.Windows.Forms.Button();
             this.pnlMain.SuspendLayout();
             this.pnlHoSo.SuspendLayout();
             this.pnlKhachHang.SuspendLayout();
@@ -92,7 +92,6 @@
             // 
             this.pnlHoSo.BackColor = System.Drawing.Color.White;
             this.pnlHoSo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHoSo.Controls.Add(this.btnThemTatCa);
             this.pnlHoSo.Controls.Add(this.btnLienKet);
             this.pnlHoSo.Controls.Add(this.cboQuanHe);
             this.pnlHoSo.Controls.Add(this.btnThemHoSo);
@@ -114,23 +113,6 @@
             this.pnlHoSo.Name = "pnlHoSo";
             this.pnlHoSo.Size = new System.Drawing.Size(1290, 522);
             this.pnlHoSo.TabIndex = 1;
-            // 
-            // btnThemTatCa
-            // 
-            this.btnThemTatCa.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.btnThemTatCa.Enabled = false;
-            this.btnThemTatCa.FlatAppearance.BorderSize = 0;
-            this.btnThemTatCa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThemTatCa.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnThemTatCa.ForeColor = System.Drawing.Color.White;
-            this.btnThemTatCa.Location = new System.Drawing.Point(338, 454);
-            this.btnThemTatCa.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnThemTatCa.Name = "btnThemTatCa";
-            this.btnThemTatCa.Size = new System.Drawing.Size(280, 45);
-            this.btnThemTatCa.TabIndex = 16;
-            this.btnThemTatCa.Text = "Thêm tất cả";
-            this.btnThemTatCa.UseVisualStyleBackColor = false;
-            this.btnThemTatCa.Click += new System.EventHandler(this.btnThemTatCa_Click);
             // 
             // btnLienKet
             // 
@@ -166,6 +148,7 @@
             // btnThemHoSo
             // 
             this.btnThemHoSo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnThemHoSo.Enabled = false;
             this.btnThemHoSo.FlatAppearance.BorderSize = 0;
             this.btnThemHoSo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
@@ -318,6 +301,7 @@
             // 
             this.pnlKhachHang.BackColor = System.Drawing.Color.White;
             this.pnlKhachHang.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKhachHang.Controls.Add(this.btnDangKyKHAndHSTC);
             this.pnlKhachHang.Controls.Add(this.cboDSHSTCLienKet);
             this.pnlKhachHang.Controls.Add(this.txtCCCDKH);
             this.pnlKhachHang.Controls.Add(this.label3);
@@ -351,10 +335,10 @@
             this.cboDSHSTCLienKet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDSHSTCLienKet.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboDSHSTCLienKet.FormattingEnabled = true;
-            this.cboDSHSTCLienKet.Location = new System.Drawing.Point(467, 322);
+            this.cboDSHSTCLienKet.Location = new System.Drawing.Point(338, 323);
             this.cboDSHSTCLienKet.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboDSHSTCLienKet.Name = "cboDSHSTCLienKet";
-            this.cboDSHSTCLienKet.Size = new System.Drawing.Size(645, 36);
+            this.cboDSHSTCLienKet.Size = new System.Drawing.Size(583, 36);
             this.cboDSHSTCLienKet.TabIndex = 16;
             // 
             // txtCCCDKH
@@ -371,7 +355,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.LightCyan;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(164, 314);
+            this.label3.Location = new System.Drawing.Point(35, 315);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Padding = new System.Windows.Forms.Padding(10);
@@ -589,6 +573,22 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // btnDangKyKHAndHSTC
+            // 
+            this.btnDangKyKHAndHSTC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnDangKyKHAndHSTC.FlatAppearance.BorderSize = 0;
+            this.btnDangKyKHAndHSTC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDangKyKHAndHSTC.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnDangKyKHAndHSTC.ForeColor = System.Drawing.Color.White;
+            this.btnDangKyKHAndHSTC.Location = new System.Drawing.Point(929, 318);
+            this.btnDangKyKHAndHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDangKyKHAndHSTC.Name = "btnDangKyKHAndHSTC";
+            this.btnDangKyKHAndHSTC.Size = new System.Drawing.Size(311, 45);
+            this.btnDangKyKHAndHSTC.TabIndex = 17;
+            this.btnDangKyKHAndHSTC.Text = "Đăng ký Hồ sơ khách hàng";
+            this.btnDangKyKHAndHSTC.UseVisualStyleBackColor = false;
+            this.btnDangKyKHAndHSTC.Click += new System.EventHandler(this.btnDangKyKHAndHSTC_Click);
+            // 
             // frmThemHSTC_KH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -655,6 +655,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button btnLienKet;
-        private System.Windows.Forms.Button btnThemTatCa;
+        private System.Windows.Forms.Button btnDangKyKHAndHSTC;
     }
 }

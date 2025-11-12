@@ -31,6 +31,15 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.grpDanhSachCho = new System.Windows.Forms.GroupBox();
             this.dgvVaccineWait = new System.Windows.Forms.DataGridView();
+            this.colMaVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTenVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLoaiBenhW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLoaiVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNgayTiemW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSoLuongW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNuocSXW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGiaBanW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGhiChuW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpNhapLieu = new System.Windows.Forms.GroupBox();
             this.dgvVaccine = new System.Windows.Forms.DataGridView();
             this.colMaVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,15 +90,8 @@
             this.colSoLuongWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayTiemWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMaVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTenVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLoaiBenhW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLoaiVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNgayTiemW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSoLuongW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNuocSXW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGiaBanW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGhiChuW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtSoLuong = new System.Windows.Forms.TextBox();
             this.pnlMain.SuspendLayout();
             this.grpDanhSachCho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
@@ -160,6 +162,81 @@
             this.dgvVaccineWait.TabIndex = 3;
             this.dgvVaccineWait.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvVaccineWait_RowsAdded);
             this.dgvVaccineWait.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvVaccineWait_RowsRemoved);
+            // 
+            // colMaVCW
+            // 
+            this.colMaVCW.DataPropertyName = "MaVC";
+            this.colMaVCW.FillWeight = 60F;
+            this.colMaVCW.HeaderText = "Mã Vaccine";
+            this.colMaVCW.MinimumWidth = 8;
+            this.colMaVCW.Name = "colMaVCW";
+            this.colMaVCW.ReadOnly = true;
+            // 
+            // colTenVCW
+            // 
+            this.colTenVCW.DataPropertyName = "TenVC";
+            this.colTenVCW.FillWeight = 120F;
+            this.colTenVCW.HeaderText = "Tên Vaccine";
+            this.colTenVCW.MinimumWidth = 8;
+            this.colTenVCW.Name = "colTenVCW";
+            this.colTenVCW.ReadOnly = true;
+            // 
+            // colLoaiBenhW
+            // 
+            this.colLoaiBenhW.DataPropertyName = "LoaiBenh";
+            this.colLoaiBenhW.FillWeight = 80F;
+            this.colLoaiBenhW.HeaderText = "Loại bệnh";
+            this.colLoaiBenhW.MinimumWidth = 8;
+            this.colLoaiBenhW.Name = "colLoaiBenhW";
+            this.colLoaiBenhW.ReadOnly = true;
+            // 
+            // colLoaiVCW
+            // 
+            this.colLoaiVCW.DataPropertyName = "LoaiVC";
+            this.colLoaiVCW.FillWeight = 80F;
+            this.colLoaiVCW.HeaderText = "Loại Vaccine";
+            this.colLoaiVCW.MinimumWidth = 8;
+            this.colLoaiVCW.Name = "colLoaiVCW";
+            this.colLoaiVCW.ReadOnly = true;
+            // 
+            // colNgayTiemW
+            // 
+            this.colNgayTiemW.HeaderText = "Ngày tiêm";
+            this.colNgayTiemW.MinimumWidth = 8;
+            this.colNgayTiemW.Name = "colNgayTiemW";
+            this.colNgayTiemW.ReadOnly = true;
+            // 
+            // colSoLuongW
+            // 
+            this.colSoLuongW.HeaderText = "Số Lượng";
+            this.colSoLuongW.MinimumWidth = 8;
+            this.colSoLuongW.Name = "colSoLuongW";
+            this.colSoLuongW.ReadOnly = true;
+            // 
+            // colNuocSXW
+            // 
+            this.colNuocSXW.DataPropertyName = "NuocSX";
+            this.colNuocSXW.FillWeight = 70F;
+            this.colNuocSXW.HeaderText = "Nước sản xuất";
+            this.colNuocSXW.MinimumWidth = 8;
+            this.colNuocSXW.Name = "colNuocSXW";
+            this.colNuocSXW.ReadOnly = true;
+            // 
+            // colGiaBanW
+            // 
+            this.colGiaBanW.DataPropertyName = "GiaBan";
+            this.colGiaBanW.FillWeight = 70F;
+            this.colGiaBanW.HeaderText = "Giá bán";
+            this.colGiaBanW.MinimumWidth = 8;
+            this.colGiaBanW.Name = "colGiaBanW";
+            this.colGiaBanW.ReadOnly = true;
+            // 
+            // colGhiChuW
+            // 
+            this.colGhiChuW.HeaderText = "Ghi Chú";
+            this.colGhiChuW.MinimumWidth = 8;
+            this.colGhiChuW.Name = "colGhiChuW";
+            this.colGhiChuW.ReadOnly = true;
             // 
             // grpNhapLieu
             // 
@@ -261,6 +338,8 @@
             // pnlVaccineFilter
             // 
             this.pnlVaccineFilter.BackColor = System.Drawing.Color.White;
+            this.pnlVaccineFilter.Controls.Add(this.txtSoLuong);
+            this.pnlVaccineFilter.Controls.Add(this.label5);
             this.pnlVaccineFilter.Controls.Add(this.btnThemMuiTiem);
             this.pnlVaccineFilter.Controls.Add(this.label2);
             this.pnlVaccineFilter.Controls.Add(this.txtGhiChu);
@@ -282,7 +361,7 @@
             this.btnThemMuiTiem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemMuiTiem.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnThemMuiTiem.ForeColor = System.Drawing.Color.White;
-            this.btnThemMuiTiem.Location = new System.Drawing.Point(1767, 12);
+            this.btnThemMuiTiem.Location = new System.Drawing.Point(1767, 13);
             this.btnThemMuiTiem.Name = "btnThemMuiTiem";
             this.btnThemMuiTiem.Size = new System.Drawing.Size(184, 38);
             this.btnThemMuiTiem.TabIndex = 15;
@@ -304,9 +383,9 @@
             // txtGhiChu
             // 
             this.txtGhiChu.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtGhiChu.Location = new System.Drawing.Point(1172, 14);
+            this.txtGhiChu.Location = new System.Drawing.Point(795, 15);
             this.txtGhiChu.Name = "txtGhiChu";
-            this.txtGhiChu.Size = new System.Drawing.Size(572, 34);
+            this.txtGhiChu.Size = new System.Drawing.Size(677, 34);
             this.txtGhiChu.TabIndex = 5;
             // 
             // lblGhiChu
@@ -314,7 +393,7 @@
             this.lblGhiChu.AutoSize = true;
             this.lblGhiChu.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblGhiChu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblGhiChu.Location = new System.Drawing.Point(1062, 19);
+            this.lblGhiChu.Location = new System.Drawing.Point(705, 20);
             this.lblGhiChu.Name = "lblGhiChu";
             this.lblGhiChu.Size = new System.Drawing.Size(84, 25);
             this.lblGhiChu.TabIndex = 4;
@@ -325,7 +404,7 @@
             this.lblNgayTiem.AutoSize = true;
             this.lblNgayTiem.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblNgayTiem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblNgayTiem.Location = new System.Drawing.Point(597, 19);
+            this.lblNgayTiem.Location = new System.Drawing.Point(319, 20);
             this.lblNgayTiem.Name = "lblNgayTiem";
             this.lblNgayTiem.Size = new System.Drawing.Size(108, 25);
             this.lblNgayTiem.TabIndex = 0;
@@ -336,9 +415,9 @@
             this.dtpNgayTiem.CustomFormat = "dd/MM/yyyy";
             this.dtpNgayTiem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dtpNgayTiem.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpNgayTiem.Location = new System.Drawing.Point(734, 14);
+            this.dtpNgayTiem.Location = new System.Drawing.Point(433, 15);
             this.dtpNgayTiem.Name = "dtpNgayTiem";
-            this.dtpNgayTiem.Size = new System.Drawing.Size(270, 34);
+            this.dtpNgayTiem.Size = new System.Drawing.Size(161, 34);
             this.dtpNgayTiem.TabIndex = 1;
             // 
             // pnlThongTinTiem
@@ -741,80 +820,24 @@
             this.colNuocSXWait.ReadOnly = true;
             this.colNuocSXWait.Width = 150;
             // 
-            // colMaVCW
+            // label5
             // 
-            this.colMaVCW.DataPropertyName = "MaVC";
-            this.colMaVCW.FillWeight = 60F;
-            this.colMaVCW.HeaderText = "Mã Vaccine";
-            this.colMaVCW.MinimumWidth = 8;
-            this.colMaVCW.Name = "colMaVCW";
-            this.colMaVCW.ReadOnly = true;
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.label5.Location = new System.Drawing.Point(1519, 20);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(99, 25);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Số lượng:";
             // 
-            // colTenVCW
+            // txtSoLuong
             // 
-            this.colTenVCW.DataPropertyName = "TenVC";
-            this.colTenVCW.FillWeight = 120F;
-            this.colTenVCW.HeaderText = "Tên Vaccine";
-            this.colTenVCW.MinimumWidth = 8;
-            this.colTenVCW.Name = "colTenVCW";
-            this.colTenVCW.ReadOnly = true;
-            // 
-            // colLoaiBenhW
-            // 
-            this.colLoaiBenhW.DataPropertyName = "LoaiBenh";
-            this.colLoaiBenhW.FillWeight = 80F;
-            this.colLoaiBenhW.HeaderText = "Loại bệnh";
-            this.colLoaiBenhW.MinimumWidth = 8;
-            this.colLoaiBenhW.Name = "colLoaiBenhW";
-            this.colLoaiBenhW.ReadOnly = true;
-            // 
-            // colLoaiVCW
-            // 
-            this.colLoaiVCW.DataPropertyName = "LoaiVC";
-            this.colLoaiVCW.FillWeight = 80F;
-            this.colLoaiVCW.HeaderText = "Loại Vaccine";
-            this.colLoaiVCW.MinimumWidth = 8;
-            this.colLoaiVCW.Name = "colLoaiVCW";
-            this.colLoaiVCW.ReadOnly = true;
-            // 
-            // colNgayTiemW
-            // 
-            this.colNgayTiemW.HeaderText = "Ngày tiêm";
-            this.colNgayTiemW.MinimumWidth = 8;
-            this.colNgayTiemW.Name = "colNgayTiemW";
-            this.colNgayTiemW.ReadOnly = true;
-            // 
-            // colSoLuongW
-            // 
-            this.colSoLuongW.HeaderText = "Số Lượng";
-            this.colSoLuongW.MinimumWidth = 8;
-            this.colSoLuongW.Name = "colSoLuongW";
-            this.colSoLuongW.ReadOnly = true;
-            // 
-            // colNuocSXW
-            // 
-            this.colNuocSXW.DataPropertyName = "NuocSX";
-            this.colNuocSXW.FillWeight = 70F;
-            this.colNuocSXW.HeaderText = "Nước sản xuất";
-            this.colNuocSXW.MinimumWidth = 8;
-            this.colNuocSXW.Name = "colNuocSXW";
-            this.colNuocSXW.ReadOnly = true;
-            // 
-            // colGiaBanW
-            // 
-            this.colGiaBanW.DataPropertyName = "GiaBan";
-            this.colGiaBanW.FillWeight = 70F;
-            this.colGiaBanW.HeaderText = "Giá bán";
-            this.colGiaBanW.MinimumWidth = 8;
-            this.colGiaBanW.Name = "colGiaBanW";
-            this.colGiaBanW.ReadOnly = true;
-            // 
-            // colGhiChuW
-            // 
-            this.colGhiChuW.HeaderText = "Ghi Chú";
-            this.colGhiChuW.MinimumWidth = 8;
-            this.colGhiChuW.Name = "colGhiChuW";
-            this.colGhiChuW.ReadOnly = true;
+            this.txtSoLuong.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtSoLuong.Location = new System.Drawing.Point(1624, 15);
+            this.txtSoLuong.Name = "txtSoLuong";
+            this.txtSoLuong.Size = new System.Drawing.Size(43, 34);
+            this.txtSoLuong.TabIndex = 16;
             // 
             // frmThemMuiTiem
             // 
@@ -910,5 +933,7 @@ private System.Windows.Forms.GroupBox grpThongTinHoSo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNuocSXW;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaBanW;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGhiChuW;
+        private System.Windows.Forms.TextBox txtSoLuong;
+        private System.Windows.Forms.Label label5;
     }
 }

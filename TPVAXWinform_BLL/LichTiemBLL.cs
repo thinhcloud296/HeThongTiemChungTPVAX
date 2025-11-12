@@ -10,7 +10,7 @@ namespace TPVAXWinform_BLL
     public class LichTiemBLL
     {
         private readonly TPVAXWinform_DAL.LichTiemDAL lichTiemDAL = new TPVAXWinform_DAL.LichTiemDAL();
-        public System.Data.DataTable GetData()
+        public DataTable GetData()
         {
             return lichTiemDAL.GetData();
         }
@@ -30,6 +30,13 @@ namespace TPVAXWinform_BLL
         {
             lichTiemDAL.Edit(lichTiem);
         }
-
+        public int SoMuiDaTiem(string maHSTC, string maVC)
+        {
+            return lichTiemDAL.SoMuiDaTiem(maHSTC,maVC);
+        }
+        public int SoMuiDangChoTiem(string maHSTC, string maVC)
+        {
+            return lichTiemDAL.SoMuiDangChoTiem(maHSTC, maVC);
+        }
     }
 }

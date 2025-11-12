@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media.Media3D;
 using TPVAXWinform_BLL;
 using TPVAXWinform_DTO;
 
@@ -16,6 +17,7 @@ namespace TPVAXWinform_GUI
     public partial class frmThemMuiTiem : Form
     {
         private DataTable dtVC;
+        private DataTable dtLT;
         private VaccineBLL vaccineBLL = new VaccineBLL();
         private LichTiemBLL lichTiemBLL = new LichTiemBLL();
         private string MaHSTC;
@@ -285,61 +287,122 @@ namespace TPVAXWinform_GUI
 
         private void AddSelectedVaccineToWaitList(int rowIndex)
         {
-            // 1. Lấy dòng đã chọn từ dgvVaccine
-            DataGridViewRow selectedRow = dgvVaccine.Rows[rowIndex];
+            // --- BƯỚC 1: LẤY DỮ LIỆU TỪ NGUỒN (dgvVaccine) ---
+            DataRowView drv;
+            string maVC, tenVC, nuocSX, loaiBenh, loaiVC;
+            decimal giaBan;
+            int soMuiToiDa;
 
-            // 2. Đọc dữ liệu từ các cell của dgvVaccine
-            //    Chúng ta đọc theo TÊN CỘT (colMaVC, colTenVC...)
-            string maVC = selectedRow.Cells["colMaVC"].Value?.ToString();
-            string tenVC = selectedRow.Cells["colTenVC"].Value?.ToString();
-            string nuocSX = selectedRow.Cells["colNuocSX"].Value?.ToString();
-            string loaiBenh = selectedRow.Cells["colLoaiBenh"].Value?.ToString();
-            string loaiVC = selectedRow.Cells["colLoaiVC"].Value?.ToString();
-            string giaBan = selectedRow.Cells["colGiaBan"].Value?.ToString();
-            string soluong = "1";
-            string ngaytiem = dtpNgayTiem.Value.ToString("dd-MM-yyyy");
-            string ghichu = txtGhiChu.Text;
-            // 3. Kiểm tra trùng lặp trong dgvVaccineWait
-
-            //foreach (DataGridViewRow row in dgvVaccineWait.Rows)
-            //{
-            //    if (row.IsNewRow) continue;
-
-            //    if (row.Cells["colMaVaccineW"].Value != null && row.Cells["colMaVaccineW"].Value.ToString() == maVC)
-            //    {
-            //        MessageBox.Show($"Vaccine '{tenVC}' đã có trong danh sách chờ.", "Đã tồn tại", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        return; // Dừng lại vì đã tồn tại
-            //    }
-            //}
-
-            // Thêm dữ liệu vào dgvVaccineWait
             try
             {
+                // Lấy DataRowView (dòng dữ liệu gốc) từ hàng được chọn
+                drv = (DataRowView)dgvVaccine.Rows[rowIndex].DataBoundItem;
+
+                // Đọc dữ liệu bằng tên cột (Alias) của Stored Procedure
+                maVC = drv["Mã Vaccine"].ToString();
+                tenVC = drv["Tên Vaccine"].ToString();
+                nuocSX = drv["Nước sản xuất"].ToString();
+                loaiBenh = drv["Loại bệnh"].ToString();
+                loaiVC = drv["Loại Vaccine"].ToString();
+                giaBan = Convert.ToDecimal(drv["Giá bán"]);
+
+                // Lấy SoMuiToiDa trực tiếp (chúng ta đã thêm cột này vào Proc)
+                soMuiToiDa = Convert.ToInt32(drv["SoMuiToiDa"]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi đọc dữ liệu hàng được chọn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // --- BƯỚC 2: LẤY DỮ LIỆU NHẬP LIỆU ---
+            string ngayTiem = dtpNgayTiem.Value.ToString("dd/MM/yyyy");
+            string ghiChu = txtGhiChu.Text.Trim();
+            int soLuongMoi; // Số lượng mũi người dùng muốn thêm (từ textbox)
+
+            if (!int.TryParse(txtSoLuong.Text, out soLuongMoi) || soLuongMoi <= 0)
+            {
+                soLuongMoi = 1; // Mặc định là 1 nếu nhập sai hoặc rỗng
+            }
+
+            // --- BƯỚC 3: KIỂM TRA TRÙNG LẶP TRONG BẢNG CHỜ ---
+            foreach (DataGridViewRow row in dgvVaccineWait.Rows)
+            {
+                if (row.IsNewRow) continue;
+                // (Giả sử cột mã VC trong bảng chờ là "colMaVCW")
+                if (row.Cells["colMaVCW"].Value != null && row.Cells["colMaVCW"].Value.ToString() == maVC)
+                {
+                    MessageBox.Show($"Vaccine '{tenVC}' đã có trong danh sách chờ.", "Đã tồn tại", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+
+            // --- BƯỚC 4: VALIDATION PHÁC ĐỒ TIÊM (Logic đúng) ---
+
+            // Bỏ qua nếu là loại tiêm nhắc lại (99)
+            if (soMuiToiDa != 99)
+            {
+                // Đếm số mũi ĐÃ TIÊM (từ CSDL)
+                // (Bạn cần có hàm DemSoMuiDaTiem trong LichTiemBLL)
+                int soMuiDaTiem = lichTiemBLL.SoMuiDaTiem(MaHSTC, maVC); // Giả sử MaHSTC lưu ở Label
+
+                // Đếm số mũi ĐANG CHỜ (trong Grid dgvVaccineWait)
+                int soMuiDangCho = lichTiemBLL.SoMuiDangChoTiem(MaHSTC,maVC);
+                
+                // So sánh tổng
+                int tongMuiSeTiem = soMuiDaTiem + soMuiDangCho + soLuongMoi;
+
+                if (tongMuiSeTiem > soMuiToiDa)
+                {
+                    MessageBox.Show(
+                        $"Số lượng mũi tiêm vượt quá phác đồ!\n\n" +
+                        $"- Vaccine: {tenVC}\n" +
+                        $"- Phác đồ tối đa: {soMuiToiDa} mũi\n" +
+                        $"- Đã tiêm (CSDL): {soMuiDaTiem} mũi\n" +
+                        $"- Đang chờ (Grid): {soMuiDangCho} mũi\n" +
+                        $"-> Bạn chỉ có thể thêm tối đa: {soMuiToiDa - soMuiDaTiem - soMuiDangCho} mũi.",
+                        "Lỗi Phác Đồ Tiêm",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            // --- BƯỚC 5: THÊM VÀO BẢNG CHỜ (dgvVaccineWait) ---
+            try
+            {
+                // (Đảm bảo dgvVaccineWait có đúng 9 cột và đúng thứ tự)
                 dgvVaccineWait.Rows.Add(
                     maVC,
                     tenVC,
                     loaiBenh,
                     loaiVC,
-                    ngaytiem,
-                    soluong,
+                    ngayTiem,
+                    soLuongMoi,
                     nuocSX,
-                    giaBan,
-                    ghichu
+                    giaBan.ToString("N0"), // Format giá
+                    ghiChu
                 );
+
+                // CapNhatTongGia(); // Gọi hàm tính tổng giá
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm mũi tiêm: " + ex.Message +
-                    "\nHãy đảm bảo thứ tự cột và tên cột trong dgvVaccineWait đã chính xác.",
+                MessageBox.Show("Lỗi khi thêm vào danh sách chờ: " + ex.Message +
+                    "\nHãy đảm bảo số lượng cột trong dgvVaccineWait (Designer) khớp với 9 cột đang thêm.",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        // HÀM CLICK ĐÃ SỬA LẠI (GỌN HƠN)
         private void btnThemMuiTiem_Click(object sender, EventArgs e)
         {
             if (dgvVaccine.SelectedRows.Count > 0)
             {
                 // Lấy index của dòng đang được chọn
                 int rowIndex = dgvVaccine.SelectedRows[0].Index;
+
+                // Gọi hàm chính (Không cần load lại dtVC, dtLT)
                 AddSelectedVaccineToWaitList(rowIndex);
             }
             else
@@ -431,58 +494,80 @@ namespace TPVAXWinform_GUI
         private void btnLuuTatCa_Click(object sender, EventArgs e)
         {
             if (dgvVaccineWait.Rows.Count <= 0)
+            {
+                MessageBox.Show("Không có mũi tiêm nào trong danh sách chờ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
 
-            LichTiemDTO lichTiem = new LichTiemDTO();
-            int count = 0;
+            int countSuccess = 0;
+            int countFailed = 0;
+
             foreach (DataGridViewRow row in dgvVaccineWait.Rows)
             {
-                int soMui = Convert.ToInt32(row.Cells["colSoLuongW"].Value); // SÔ LƯỢNG MŨI TIÊM
-                if (soMui > 1)
-                {
-                    for (int i = 0; i < soMui; i++)
-                    {
-                        lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
-                        lichTiem.NgayHenTiem = Convert.ToDateTime(row.Cells["colNgayTiemW"].Value);
-                        lichTiem.NgayTiemThucTe = null;
-                        lichTiem.SoMui = i++; // Số thứ tự mũi chứ không phải số lượng mũi
-                        lichTiem.TrangThai = "0";
-                        lichTiem.GhiChu = row.Cells["colGhiChuW"].Value.ToString();
-                        lichTiem.MaHSTC = MaHSTC;
-                        lichTiem.MaVC = row.Cells["colMaVCW"].Value.ToString();
+                // Lấy thông tin chung từ hàng
+                int soMui = Convert.ToInt32(row.Cells["colSoLuongW"].Value);
+                DateTime ngayHen = Convert.ToDateTime(row.Cells["colNgayTiemW"].Value);
+                string ghiChu = row.Cells["colGhiChuW"].Value.ToString();
+                string maVC = row.Cells["colMaVCW"].Value.ToString();
+                string maHSTC_HienTai = MaHSTC;
 
-                        try
-                        {
-                            lichTiemBLL.Insert(lichTiem);
-                            count++;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Lỗi khi thêm khách hàng với số lượng {soMui} Mũi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-                lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
-                lichTiem.NgayHenTiem = Convert.ToDateTime(row.Cells["colNgayTiemW"].Value);
-                lichTiem.NgayTiemThucTe = null;
-                lichTiem.SoMui = 1;
-                lichTiem.TrangThai = "0";
-                lichTiem.GhiChu = row.Cells["colGhiChuW"].Value.ToString();
-                lichTiem.MaHSTC = MaHSTC;
-                lichTiem.MaVC = row.Cells["colMaVCW"].Value.ToString();
                 try
                 {
-                    lichTiemBLL.Insert(lichTiem);
-                    count++;
+                    if (soMui > 1) // LỖI 2: Dùng if-else
+                    {
+                        // Xử lý phác đồ nhiều mũi (nhưng cùng 1 ngày hẹn)
+                        for (int i = 0; i < soMui; i++)
+                        {
+                            // LỖI 1: Tạo DTO MỚI bên trong vòng lặp
+                            LichTiemDTO lichTiem = new LichTiemDTO();
+                            lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
+                            lichTiem.NgayHenTiem = ngayHen;
+                            lichTiem.NgayTiemThucTe = null;
+                            lichTiem.SoMui = i + 1; // LỖI 3: Sửa thành i + 1
+                            lichTiem.TrangThai = "0"; // 0 = Chưa tiêm
+                            lichTiem.GhiChu = ghiChu;
+                            lichTiem.MaHSTC = maHSTC_HienTai;
+                            lichTiem.MaVC = maVC;
+
+                            lichTiemBLL.Insert(lichTiem);
+                            countSuccess++;
+                        }
+                    }
+                    else // LỖI 2: Dùng if-else
+                    {
+                        // Xử lý 1 mũi
+                        // LỖI 1: Tạo DTO MỚI
+                        LichTiemDTO lichTiem = new LichTiemDTO();
+                        lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
+                        lichTiem.NgayHenTiem = ngayHen;
+                        lichTiem.NgayTiemThucTe = null;
+                        lichTiem.SoMui = 1;
+                        lichTiem.TrangThai = "0";
+                        lichTiem.GhiChu = ghiChu;
+                        lichTiem.MaHSTC = maHSTC_HienTai;
+                        lichTiem.MaVC = maVC;
+
+                        lichTiemBLL.Insert(lichTiem);
+                        countSuccess++;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi thêm khách hàng với số lượng {soMui} Mũi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    countFailed++;
+                    MessageBox.Show($"Lỗi khi thêm vaccine {maVC}: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            if (count == 0)
+            } // Hết vòng lặp foreach
+
+            // Thông báo kết quả
+            if (countSuccess > 0)
             {
-                MessageBox.Show($"Thêm thất bại, count = {count}", "Thông báo", MessageBoxButtons.OK);
+                MessageBox.Show($"Đã thêm thành công {countSuccess} lịch hẹn.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK; // Báo cho form cha biết
+                this.Close(); // Đóng form
+            }
+            else if (countFailed > 0)
+            {
+                MessageBox.Show($"Thêm thất bại {countFailed} lịch hẹn.", "Thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

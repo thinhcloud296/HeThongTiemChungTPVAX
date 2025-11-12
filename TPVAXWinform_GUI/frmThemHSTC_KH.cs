@@ -23,7 +23,7 @@ namespace TPVAXWinform_GUI
 
 
         string[] quanHeOptions = {
-            "Bản thân", "Cha", "Mẹ", "Con",
+             "Cha", "Mẹ", "Con",
             "Anh ruột", "Chị ruột", "Em ruột",
             "Ông nội", "Bà nội", "Ông ngoại", "Bà ngoại",
             "Vợ", "Chồng",
@@ -141,11 +141,7 @@ namespace TPVAXWinform_GUI
             txtEmail.Text = dr["Email"]?.ToString() ?? "";
             txtCCCDKH.Text = dr["CCCD"]?.ToString() ?? "";
 
-            btnThemTatCa.Visible = false;
-            btnLienKet.Visible = false;
-
             DisableAllInpusKH();
-            EnableAllInputsHSTC();
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -168,10 +164,7 @@ namespace TPVAXWinform_GUI
             cboQuanHe.SelectedIndex = 0;
             txtGhiChuHSTC.Clear();
 
-            btnThemTatCa.Visible = true;
             btnLienKet.Visible = true;
-
-            btnThemTatCa.Enabled = false;
         }
         // Kiểm tra Validation
         public bool CheckValidationBeforeAddKH()
@@ -324,24 +317,9 @@ namespace TPVAXWinform_GUI
 
         private void btnThemHoSo_Click(object sender, EventArgs e)
         {
-            string cccdKH = txtCCCDKH.Text.Trim();
-            string cccdHSTC = txtCCCDHSTC.Text.Trim();
-            bool isChonBanThan = (cboQuanHe.SelectedIndex == 0); 
-            bool isTrungCCCD = cccdKH.Equals(cccdHSTC); 
-
-            bool isTryingToAddBanThan = isChonBanThan || isTrungCCCD;
-            if (isTryingToAddBanThan)
+            if (hoSoTiemChungBLL.IsHSTCExists(txtCCCDHSTC.Text.Trim()))
             {
-                if (khachHangBLL.IsLinkedHSTCBanThan(cccdKH))
-                {
-                    MessageBox.Show("Khách hàng đã có hồ sơ tiêm chủng cho bản thân.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-
-            if (khachHangBLL.IsLinkedHSTCBanThan(txtCCCDKH.Text.Trim())&& txtCCCDKH.Text.Trim().Equals(txtCCCDHSTC.Text.Trim())&&cboQuanHe.SelectedIndex==0)
-            {
-                MessageBox.Show("Khách hàng đã có hồ sơ tiêm chủng cho bản thân.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Hồ sơ tiêm chủng với CCCD này đã tồn tại cho khách hàng đã chọn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             // Validation
@@ -358,12 +336,7 @@ namespace TPVAXWinform_GUI
             hso.CCCD = txtCCCDHSTC.Text.Trim();
             hso.GhiChu = txtGhiChuHSTC.Text.Trim();
             try
-            {
-                if (hoSoTiemChungBLL.IsHSTCExists(txtCCCDHSTC.Text.Trim()))
-                {
-                    MessageBox.Show("Hồ sơ tiêm chủng với CCCD này đã tồn tại cho khách hàng đã chọn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+            { 
                 hoSoTiemChungBLL.Insert(hso);
                 lienKetHoSoBLL.Insert(new LienKetHoSoDTO
                 {
@@ -385,40 +358,26 @@ namespace TPVAXWinform_GUI
 
         private void btnLienKet_Click(object sender, EventArgs e)
         {
+            EnableAllInputsHSTC();
+            btnThemHoSo.Enabled = true;
+        }
+        private void btnDangKyKHAndHSTC_Click(object sender, EventArgs e)
+        {
             if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
             {
                 MessageBox.Show("Khách hàng đã tồn tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            txtHoTenHSTC.Text = txtHoTenKH.Text;
-            txtCCCDHSTC.Text = txtCCCDKH.Text;
-            cboGioiTinhHSTC.SelectedItem = cboGioiTinhKH.SelectedItem;
-            dtpNgaySinhHSTC.Value = dtpNgaySinhKH.Value;
-            cboQuanHe.SelectedIndex = 0;
-
-
-            bool flag = true;
-            flag = CheckValidationWhileLinking();
-
-            if (!flag)
+            // Validation
+            bool hopLe = CheckValidationBeforeAddKH(); // Flag
+            if (!hopLe)
+            {
                 return;
-
-            txtGhiChuHSTC.Enabled = true;
-            btnThemTatCa.Enabled = true;
-        }
-
-        private void btnThemTatCa_Click(object sender, EventArgs e)
-        {
-            bool flag = true;
-            flag = CheckValidationBeforeAddHSTC();
-            if (!flag)
-                return;
+            }
             string maKH = khachHangBLL.CreateMaKH(txtCCCDKH.Text.Trim());
-            string maHSTC = hoSoTiemChungBLL.CreateMaHSTC(txtCCCDHSTC.Text.Trim());
-            string maLK = lienKetHoSoBLL.CreateMaLK(txtCCCDHSTC.Text.Trim());
-
-
-            // KhachHang
+            string maHSTC = hoSoTiemChungBLL.CreateMaHSTC(txtCCCDKH.Text.Trim());
+            string maLK = lienKetHoSoBLL.CreateMaLK(txtCCCDKH.Text.Trim());
+            // Add
             KhachHangDTO newKH = new KhachHangDTO();
             newKH.CCCD = txtCCCDKH.Text.Trim();
             newKH.MaKH = maKH;
@@ -429,15 +388,14 @@ namespace TPVAXWinform_GUI
             newKH.NgaySinh = dtpNgaySinhKH.Value;
             newKH.Email = txtEmail.Text.Trim();
             newKH.GioiTinh = cboGioiTinhKH.SelectedItem.ToString();
-
             // HoSoTiemChung
             HoSoTiemChungDTO hso = new HoSoTiemChungDTO();
             hso.MaHSTC = maHSTC;
-            hso.HoTen = txtHoTenHSTC.Text.Trim();
-            hso.GioiTinh = cboGioiTinhHSTC.SelectedItem.ToString();
-            hso.NgaySinh = dtpNgaySinhHSTC.Value;
-            hso.CCCD = txtCCCDHSTC.Text.Trim();
-            hso.GhiChu = txtGhiChuHSTC.Text.Trim();
+            hso.HoTen = txtHoTenKH.Text.Trim();
+            hso.GioiTinh = cboGioiTinhKH.SelectedItem.ToString();
+            hso.NgaySinh = dtpNgaySinhKH.Value;
+            hso.CCCD = txtCCCDKH.Text.Trim();
+            hso.GhiChu = "";
 
             // LienKet
             LienKetHoSoDTO lkhs = new LienKetHoSoDTO();
@@ -445,19 +403,19 @@ namespace TPVAXWinform_GUI
             lkhs.NgayLienKet = DateTime.Now;
             lkhs.MaKH = maKH;
             lkhs.MaHSTC = maHSTC;
-            lkhs.VaiTro = cboQuanHe.SelectedItem.ToString();
+            lkhs.VaiTro = "Bản thân";
             try
             {
                 khachHangBLL.Insert(newKH);
                 hoSoTiemChungBLL.Insert(hso);
                 lienKetHoSoBLL.Insert(lkhs);
-                MessageBox.Show("Thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Thêm khách hàng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi thêm khách hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

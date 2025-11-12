@@ -116,5 +116,17 @@ namespace TPVAXWinform_DAL
                 throw new Exception("Lỗi khi sửa lịch tiêm: " + ex.Message);
             }
         }
+        public int SoMuiDaTiem(string maHSTC,string maVC)
+        {
+            string sql = $"SELECT COUNT(*) FROM dbo.LichTiem WHERE MaHSTC = '{maHSTC}' AND MaVC = '{maVC}'  AND NgayTiemThucTe IS NOT NULL";
+            object result = DBConnect.ExecuteScalar(sql);
+            return Convert.ToInt32(result);
+        }
+        public int SoMuiDangChoTiem(string maHSTC,string maVC)
+        {
+            string sql = $"SELECT COUNT(*) FROM dbo.LichTiem WHERE MaHSTC = '{maHSTC}'AND MaVC = '{maVC}'   AND NgayTiemThucTe IS NULL";
+            object result = DBConnect.ExecuteScalar(sql);
+            return Convert.ToInt32(result);
+        }
     }
 }
