@@ -45,7 +45,7 @@ namespace TPVAXWinform_GUI.UserControls
             dtpTuThang.Value = DateTime.Now.AddYears(-5);
 
             // Gán giá trị cho tháng hiện tại
-            dtpDenThang.Value = DateTime.Now;
+            dtpDenThang.Value = DateTime.Now.AddYears(1);
 
             // Mặc định check cả 2 checkbox
             chkDaTiem.Checked = true;

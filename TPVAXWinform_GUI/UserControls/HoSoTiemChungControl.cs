@@ -563,8 +563,6 @@ namespace TPVAXWinform.UserControls
             }
 
         }
-
-
         private void btnThemMoi_Click(object sender, EventArgs e)
         {
             frmThemHSTC_KH frmThem = new frmThemHSTC_KH();

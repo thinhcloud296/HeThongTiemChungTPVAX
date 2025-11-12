@@ -78,7 +78,6 @@ namespace TPVAXWinform_DAL
                     row["GhiChu"] = lichTiem.GhiChu;
                     row["MaHSTC"] = lichTiem.MaHSTC;
                     row["MaVC"] = (object)lichTiem.MaVC ?? DBNull.Value;
-                    row["MaNV"] = (object)lichTiem.MaNV ?? DBNull.Value;
 
                     buffer.Table.Rows.Add(row);
                     buffer.Save();

@@ -30,6 +30,7 @@
         {
             this.pnlMain = new System.Windows.Forms.Panel();
             this.grpDanhSachCho = new System.Windows.Forms.GroupBox();
+            this.dgvVaccineWait = new System.Windows.Forms.DataGridView();
             this.grpNhapLieu = new System.Windows.Forms.GroupBox();
             this.dgvVaccine = new System.Windows.Forms.DataGridView();
             this.colMaVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,6 +40,7 @@
             this.colNuocSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlVaccineFilter = new System.Windows.Forms.Panel();
+            this.btnThemMuiTiem = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtGhiChu = new System.Windows.Forms.TextBox();
             this.lblGhiChu = new System.Windows.Forms.Label();
@@ -67,13 +69,18 @@
             this.lblNgaySinh = new System.Windows.Forms.Label();
             this.lblTenNguoiTiemValue = new System.Windows.Forms.Label();
             this.lblTenNguoiTiem = new System.Windows.Forms.Label();
+            this.pnlActions = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lbTongSoMui = new System.Windows.Forms.Label();
+            this.lbTongGia = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnDong = new System.Windows.Forms.Button();
+            this.btnLuuTatCa = new System.Windows.Forms.Button();
             this.colMaVaccineWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenVaccineWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoLuongWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayTiemWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvVaccineWait = new System.Windows.Forms.DataGridView();
-            this.btnThemMuiTiem = new System.Windows.Forms.Button();
             this.colMaVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenVCW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLoaiBenhW = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,21 +89,15 @@
             this.colSoLuongW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaBanW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnLuuTatCa = new System.Windows.Forms.Button();
-            this.btnDong = new System.Windows.Forms.Button();
-            this.pnlActions = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lbTongGia = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.colGhiChuW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlMain.SuspendLayout();
             this.grpDanhSachCho.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
             this.grpNhapLieu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccine)).BeginInit();
             this.pnlVaccineFilter.SuspendLayout();
             this.pnlThongTinTiem.SuspendLayout();
             this.grpThongTinHoSo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
             this.pnlActions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,6 +127,39 @@
             this.grpDanhSachCho.TabIndex = 3;
             this.grpDanhSachCho.TabStop = false;
             this.grpDanhSachCho.Text = "Danh sách mũi tiêm chờ lưu";
+            // 
+            // dgvVaccineWait
+            // 
+            this.dgvVaccineWait.AllowUserToAddRows = false;
+            this.dgvVaccineWait.AllowUserToDeleteRows = false;
+            this.dgvVaccineWait.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvVaccineWait.BackgroundColor = System.Drawing.Color.White;
+            this.dgvVaccineWait.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvVaccineWait.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvVaccineWait.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVaccineWait.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colMaVCW,
+            this.colTenVCW,
+            this.colLoaiBenhW,
+            this.colLoaiVCW,
+            this.colNgayTiemW,
+            this.colSoLuongW,
+            this.colNuocSXW,
+            this.colGiaBanW,
+            this.colGhiChuW});
+            this.dgvVaccineWait.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvVaccineWait.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvVaccineWait.Location = new System.Drawing.Point(10, 37);
+            this.dgvVaccineWait.Name = "dgvVaccineWait";
+            this.dgvVaccineWait.ReadOnly = true;
+            this.dgvVaccineWait.RowHeadersVisible = false;
+            this.dgvVaccineWait.RowHeadersWidth = 62;
+            this.dgvVaccineWait.RowTemplate.Height = 40;
+            this.dgvVaccineWait.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvVaccineWait.Size = new System.Drawing.Size(1964, 581);
+            this.dgvVaccineWait.TabIndex = 3;
+            this.dgvVaccineWait.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvVaccineWait_RowsAdded);
+            this.dgvVaccineWait.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvVaccineWait_RowsRemoved);
             // 
             // grpNhapLieu
             // 
@@ -239,6 +273,22 @@
             this.pnlVaccineFilter.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             this.pnlVaccineFilter.Size = new System.Drawing.Size(1964, 60);
             this.pnlVaccineFilter.TabIndex = 1;
+            // 
+            // btnThemMuiTiem
+            // 
+            this.btnThemMuiTiem.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnThemMuiTiem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnThemMuiTiem.FlatAppearance.BorderSize = 0;
+            this.btnThemMuiTiem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemMuiTiem.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemMuiTiem.ForeColor = System.Drawing.Color.White;
+            this.btnThemMuiTiem.Location = new System.Drawing.Point(1767, 12);
+            this.btnThemMuiTiem.Name = "btnThemMuiTiem";
+            this.btnThemMuiTiem.Size = new System.Drawing.Size(184, 38);
+            this.btnThemMuiTiem.TabIndex = 15;
+            this.btnThemMuiTiem.Text = "Thêm mũi tiêm";
+            this.btnThemMuiTiem.UseVisualStyleBackColor = false;
+            this.btnThemMuiTiem.Click += new System.EventHandler(this.btnThemMuiTiem_Click);
             // 
             // label2
             // 
@@ -557,6 +607,96 @@
             this.lblTenNguoiTiem.TabIndex = 0;
             this.lblTenNguoiTiem.Text = "Họ tên người tiêm:";
             // 
+            // pnlActions
+            // 
+            this.pnlActions.Controls.Add(this.label6);
+            this.pnlActions.Controls.Add(this.lbTongSoMui);
+            this.pnlActions.Controls.Add(this.lbTongGia);
+            this.pnlActions.Controls.Add(this.label4);
+            this.pnlActions.Controls.Add(this.btnDong);
+            this.pnlActions.Controls.Add(this.btnLuuTatCa);
+            this.pnlActions.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlActions.Location = new System.Drawing.Point(15, 1303);
+            this.pnlActions.Name = "pnlActions";
+            this.pnlActions.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.pnlActions.Size = new System.Drawing.Size(1984, 92);
+            this.pnlActions.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(1683, 29);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(133, 37);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Số mũi:";
+            // 
+            // lbTongSoMui
+            // 
+            this.lbTongSoMui.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lbTongSoMui.AutoSize = true;
+            this.lbTongSoMui.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lbTongSoMui.Location = new System.Drawing.Point(1810, 31);
+            this.lbTongSoMui.Name = "lbTongSoMui";
+            this.lbTongSoMui.Size = new System.Drawing.Size(99, 32);
+            this.lbTongSoMui.TabIndex = 4;
+            this.lbTongSoMui.Text = "25 Mũi";
+            // 
+            // lbTongGia
+            // 
+            this.lbTongGia.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lbTongGia.AutoSize = true;
+            this.lbTongGia.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lbTongGia.Location = new System.Drawing.Point(1427, 31);
+            this.lbTongGia.Name = "lbTongGia";
+            this.lbTongGia.Size = new System.Drawing.Size(224, 32);
+            this.lbTongGia.TabIndex = 3;
+            this.lbTongGia.Text = "15.000.000 VNĐ";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(1275, 29);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(161, 37);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Tổng giá:";
+            // 
+            // btnDong
+            // 
+            this.btnDong.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnDong.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
+            this.btnDong.FlatAppearance.BorderSize = 0;
+            this.btnDong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnDong.ForeColor = System.Drawing.Color.White;
+            this.btnDong.Location = new System.Drawing.Point(675, 13);
+            this.btnDong.Name = "btnDong";
+            this.btnDong.Size = new System.Drawing.Size(223, 73);
+            this.btnDong.TabIndex = 1;
+            this.btnDong.Text = "Đóng";
+            this.btnDong.UseVisualStyleBackColor = false;
+            // 
+            // btnLuuTatCa
+            // 
+            this.btnLuuTatCa.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnLuuTatCa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.btnLuuTatCa.FlatAppearance.BorderSize = 0;
+            this.btnLuuTatCa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuuTatCa.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnLuuTatCa.ForeColor = System.Drawing.Color.White;
+            this.btnLuuTatCa.Location = new System.Drawing.Point(1022, 13);
+            this.btnLuuTatCa.Name = "btnLuuTatCa";
+            this.btnLuuTatCa.Size = new System.Drawing.Size(223, 73);
+            this.btnLuuTatCa.TabIndex = 0;
+            this.btnLuuTatCa.Text = "Lưu tất cả";
+            this.btnLuuTatCa.UseVisualStyleBackColor = false;
+            this.btnLuuTatCa.Click += new System.EventHandler(this.btnLuuTatCa_Click);
+            // 
             // colMaVaccineWait
             // 
             this.colMaVaccineWait.DataPropertyName = "MaVC";
@@ -600,52 +740,6 @@
             this.colNuocSXWait.Name = "colNuocSXWait";
             this.colNuocSXWait.ReadOnly = true;
             this.colNuocSXWait.Width = 150;
-            // 
-            // dgvVaccineWait
-            // 
-            this.dgvVaccineWait.AllowUserToAddRows = false;
-            this.dgvVaccineWait.AllowUserToDeleteRows = false;
-            this.dgvVaccineWait.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvVaccineWait.BackgroundColor = System.Drawing.Color.White;
-            this.dgvVaccineWait.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvVaccineWait.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvVaccineWait.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVaccineWait.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colMaVCW,
-            this.colTenVCW,
-            this.colLoaiBenhW,
-            this.colLoaiVCW,
-            this.colNgayTiemW,
-            this.colSoLuongW,
-            this.colNuocSXW,
-            this.colGiaBanW});
-            this.dgvVaccineWait.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvVaccineWait.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvVaccineWait.Location = new System.Drawing.Point(10, 37);
-            this.dgvVaccineWait.Name = "dgvVaccineWait";
-            this.dgvVaccineWait.ReadOnly = true;
-            this.dgvVaccineWait.RowHeadersVisible = false;
-            this.dgvVaccineWait.RowHeadersWidth = 62;
-            this.dgvVaccineWait.RowTemplate.Height = 40;
-            this.dgvVaccineWait.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVaccineWait.Size = new System.Drawing.Size(1964, 581);
-            this.dgvVaccineWait.TabIndex = 3;
-            // 
-            // btnThemMuiTiem
-            // 
-            this.btnThemMuiTiem.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnThemMuiTiem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnThemMuiTiem.FlatAppearance.BorderSize = 0;
-            this.btnThemMuiTiem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThemMuiTiem.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnThemMuiTiem.ForeColor = System.Drawing.Color.White;
-            this.btnThemMuiTiem.Location = new System.Drawing.Point(1767, 12);
-            this.btnThemMuiTiem.Name = "btnThemMuiTiem";
-            this.btnThemMuiTiem.Size = new System.Drawing.Size(184, 38);
-            this.btnThemMuiTiem.TabIndex = 15;
-            this.btnThemMuiTiem.Text = "Thêm mũi tiêm";
-            this.btnThemMuiTiem.UseVisualStyleBackColor = false;
-            this.btnThemMuiTiem.Click += new System.EventHandler(this.btnThemMuiTiem_Click);
             // 
             // colMaVCW
             // 
@@ -715,94 +809,12 @@
             this.colGiaBanW.Name = "colGiaBanW";
             this.colGiaBanW.ReadOnly = true;
             // 
-            // btnLuuTatCa
+            // colGhiChuW
             // 
-            this.btnLuuTatCa.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnLuuTatCa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnLuuTatCa.FlatAppearance.BorderSize = 0;
-            this.btnLuuTatCa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLuuTatCa.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnLuuTatCa.ForeColor = System.Drawing.Color.White;
-            this.btnLuuTatCa.Location = new System.Drawing.Point(1022, 13);
-            this.btnLuuTatCa.Name = "btnLuuTatCa";
-            this.btnLuuTatCa.Size = new System.Drawing.Size(223, 73);
-            this.btnLuuTatCa.TabIndex = 0;
-            this.btnLuuTatCa.Text = "Lưu tất cả";
-            this.btnLuuTatCa.UseVisualStyleBackColor = false;
-            // 
-            // btnDong
-            // 
-            this.btnDong.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnDong.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnDong.FlatAppearance.BorderSize = 0;
-            this.btnDong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnDong.ForeColor = System.Drawing.Color.White;
-            this.btnDong.Location = new System.Drawing.Point(675, 13);
-            this.btnDong.Name = "btnDong";
-            this.btnDong.Size = new System.Drawing.Size(223, 73);
-            this.btnDong.TabIndex = 1;
-            this.btnDong.Text = "Đóng";
-            this.btnDong.UseVisualStyleBackColor = false;
-            // 
-            // pnlActions
-            // 
-            this.pnlActions.Controls.Add(this.label6);
-            this.pnlActions.Controls.Add(this.label5);
-            this.pnlActions.Controls.Add(this.lbTongGia);
-            this.pnlActions.Controls.Add(this.label4);
-            this.pnlActions.Controls.Add(this.btnDong);
-            this.pnlActions.Controls.Add(this.btnLuuTatCa);
-            this.pnlActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlActions.Location = new System.Drawing.Point(15, 1303);
-            this.pnlActions.Name = "pnlActions";
-            this.pnlActions.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.pnlActions.Size = new System.Drawing.Size(1984, 92);
-            this.pnlActions.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(1275, 29);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 37);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Tổng giá:";
-            // 
-            // lbTongGia
-            // 
-            this.lbTongGia.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lbTongGia.AutoSize = true;
-            this.lbTongGia.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.lbTongGia.Location = new System.Drawing.Point(1427, 31);
-            this.lbTongGia.Name = "lbTongGia";
-            this.lbTongGia.Size = new System.Drawing.Size(224, 32);
-            this.lbTongGia.TabIndex = 3;
-            this.lbTongGia.Text = "15.000.000 VNĐ";
-            // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label5.Location = new System.Drawing.Point(1810, 31);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(99, 32);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "25 Mũi";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(1683, 29);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(133, 37);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Số mũi:";
+            this.colGhiChuW.HeaderText = "Ghi Chú";
+            this.colGhiChuW.MinimumWidth = 8;
+            this.colGhiChuW.Name = "colGhiChuW";
+            this.colGhiChuW.ReadOnly = true;
             // 
             // frmThemMuiTiem
             // 
@@ -819,6 +831,7 @@
             this.Load += new System.EventHandler(this.frmThemMuiTiem_Load);
             this.pnlMain.ResumeLayout(false);
             this.grpDanhSachCho.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).EndInit();
             this.grpNhapLieu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccine)).EndInit();
             this.pnlVaccineFilter.ResumeLayout(false);
@@ -827,7 +840,6 @@
             this.pnlThongTinTiem.PerformLayout();
             this.grpThongTinHoSo.ResumeLayout(false);
             this.grpThongTinHoSo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).EndInit();
             this.pnlActions.ResumeLayout(false);
             this.pnlActions.PerformLayout();
             this.ResumeLayout(false);
@@ -882,6 +894,13 @@ private System.Windows.Forms.GroupBox grpThongTinHoSo;
         private System.Windows.Forms.Label lbMaHSTC;
         private System.Windows.Forms.DataGridView dgvVaccineWait;
         private System.Windows.Forms.Button btnThemMuiTiem;
+        private System.Windows.Forms.Panel pnlActions;
+        private System.Windows.Forms.Button btnDong;
+        private System.Windows.Forms.Button btnLuuTatCa;
+        private System.Windows.Forms.Label lbTongGia;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbTongSoMui;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaVCW;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenVCW;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLoaiBenhW;
@@ -890,12 +909,6 @@ private System.Windows.Forms.GroupBox grpThongTinHoSo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuongW;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNuocSXW;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaBanW;
-        private System.Windows.Forms.Panel pnlActions;
-        private System.Windows.Forms.Button btnDong;
-        private System.Windows.Forms.Button btnLuuTatCa;
-        private System.Windows.Forms.Label lbTongGia;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGhiChuW;
     }
 }
