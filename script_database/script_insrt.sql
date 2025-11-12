@@ -66,7 +66,6 @@ GO
 -- =================================================================================
 
 -- 2.1. Bảng Vaccine (CHAR(8))
-ALTER TABLE Vaccine ADD HinhAnh VARCHAR(255);
 INSERT INTO Vaccine (MaVC, TenVC, GiaBan, SoLuongTon, MaLoai) VALUES
 ('VC000001', N'Infanrix Hexa (6 trong 1)', 1098000, 100, 'LVC00001'),
 ('VC000002', N'Hexaxim (6 trong 1)', 1098000, 100, 'LVC00001'),
@@ -381,4 +380,20 @@ PRINT '-> Đã thêm phiếu nhập kho mới do nhân viên Phi thực hiện.'
 GO
 
 PRINT 'Hoàn tất việc chèn dữ liệu nâng cao (ĐÃ SỬA LỖI ĐỘ DÀI KHÓA)!';
+GO
+
+-- =================================================================================
+-- GÁN ĐƯỜNG DẪN HÌNH ẢNH SAU KHI INSERT DỮ LIỆU
+-- =================================================================================
+
+-- 1. Cập nhật ảnh cho 35 Vaccine
+UPDATE Vaccine SET HinhAnh = RTRIM(MaVC) + '.jpg';
+
+-- 2. Cập nhật ảnh cho 4 Gói Vaccine
+UPDATE GoiVaccine SET HinhAnh = RTRIM(MaGoi) + '.jpg';
+
+-- 3. Cập nhật ảnh cho 2 Khuyến Mãi
+UPDATE KhuyenMai SET HinhAnhBanner = RTRIM(MaKM) + '.jpg';
+
+PRINT '-> Đã gán đường dẫn ảnh cho 41 bản ghi (Vaccine, GoiVaccine, KhuyenMai).';
 GO

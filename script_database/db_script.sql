@@ -87,7 +87,8 @@ CREATE TABLE KhuyenMai (
     GiaTriGiam DECIMAL(18, 2) NOT NULL,
     NgayBatDau DATETIME NOT NULL,
     NgayKetThuc DATETIME NOT NULL,
-    TrangThai BIT DEFAULT (0)
+    TrangThai BIT DEFAULT (0),
+    HinhAnhBanner VARCHAR(255) 
 );
 
 -- 5. Bảng LoaiVaccine
@@ -114,7 +115,8 @@ CREATE TABLE GoiVaccine (
     GiaGoi DECIMAL(18, 0) NOT NULL,
     NgayBatDau DATE,
     NgayKetThuc DATE,
-    TrangThai NVARCHAR(50)
+    TrangThai NVARCHAR(50),
+    HinhAnh VARCHAR(255) 
 );
 
 -- =================================================================================
@@ -127,6 +129,7 @@ CREATE TABLE Vaccine (
     TenVC NVARCHAR(255) NOT NULL,
     GiaBan DECIMAL(18, 0) NOT NULL,
     SoLuongTon INT NOT NULL DEFAULT 0,
+    HinhAnh VARCHAR(255), 
     MaLoai CHAR(8),
     CONSTRAINT FK_Vaccine_LoaiVaccine FOREIGN KEY (MaLoai) REFERENCES LoaiVaccine(MaLoai)
 );
