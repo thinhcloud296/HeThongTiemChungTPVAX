@@ -42,6 +42,10 @@
             this.colGhiChuW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpNhapLieu = new System.Windows.Forms.GroupBox();
             this.dgvGoiVaccine = new System.Windows.Forms.DataGridView();
+            this.colMaGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTenGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDoiTuongApDung = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGiaGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvVaccine = new System.Windows.Forms.DataGridView();
             this.colMaVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,6 +54,7 @@
             this.colNuocSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlVaccineFilter = new System.Windows.Forms.Panel();
+            this.btnThemGoiVaccine = new System.Windows.Forms.Button();
             this.txtSoLuong = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnThemMuiTiem = new System.Windows.Forms.Button();
@@ -95,10 +100,6 @@
             this.colSoLuongWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayTiemWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMaGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTenGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDoiTuongApDung = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGiaGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlMain.SuspendLayout();
             this.grpDanhSachCho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
@@ -288,6 +289,44 @@
             this.dgvGoiVaccine.Size = new System.Drawing.Size(1964, 326);
             this.dgvGoiVaccine.TabIndex = 3;
             // 
+            // colMaGoi
+            // 
+            this.colMaGoi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMaGoi.DataPropertyName = "MaGoi";
+            this.colMaGoi.FillWeight = 60F;
+            this.colMaGoi.HeaderText = "Mã gói";
+            this.colMaGoi.MinimumWidth = 8;
+            this.colMaGoi.Name = "colMaGoi";
+            this.colMaGoi.ReadOnly = true;
+            this.colMaGoi.Width = 246;
+            // 
+            // colTenGoi
+            // 
+            this.colTenGoi.DataPropertyName = "TenGoi";
+            this.colTenGoi.FillWeight = 120F;
+            this.colTenGoi.HeaderText = "Tên gói";
+            this.colTenGoi.MinimumWidth = 8;
+            this.colTenGoi.Name = "colTenGoi";
+            this.colTenGoi.ReadOnly = true;
+            // 
+            // colDoiTuongApDung
+            // 
+            this.colDoiTuongApDung.DataPropertyName = "DoiTuongApDung";
+            this.colDoiTuongApDung.FillWeight = 80F;
+            this.colDoiTuongApDung.HeaderText = "Đối tượng áp dụng";
+            this.colDoiTuongApDung.MinimumWidth = 8;
+            this.colDoiTuongApDung.Name = "colDoiTuongApDung";
+            this.colDoiTuongApDung.ReadOnly = true;
+            // 
+            // colGiaGoi
+            // 
+            this.colGiaGoi.DataPropertyName = "GiaGoi";
+            this.colGiaGoi.FillWeight = 80F;
+            this.colGiaGoi.HeaderText = "Giá gói";
+            this.colGiaGoi.MinimumWidth = 8;
+            this.colGiaGoi.Name = "colGiaGoi";
+            this.colGiaGoi.ReadOnly = true;
+            // 
             // dgvVaccine
             // 
             this.dgvVaccine.AllowUserToAddRows = false;
@@ -373,6 +412,7 @@
             // pnlVaccineFilter
             // 
             this.pnlVaccineFilter.BackColor = System.Drawing.Color.White;
+            this.pnlVaccineFilter.Controls.Add(this.btnThemGoiVaccine);
             this.pnlVaccineFilter.Controls.Add(this.txtSoLuong);
             this.pnlVaccineFilter.Controls.Add(this.label5);
             this.pnlVaccineFilter.Controls.Add(this.btnThemMuiTiem);
@@ -387,6 +427,22 @@
             this.pnlVaccineFilter.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             this.pnlVaccineFilter.Size = new System.Drawing.Size(1964, 60);
             this.pnlVaccineFilter.TabIndex = 1;
+            // 
+            // btnThemGoiVaccine
+            // 
+            this.btnThemGoiVaccine.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnThemGoiVaccine.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnThemGoiVaccine.FlatAppearance.BorderSize = 0;
+            this.btnThemGoiVaccine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemGoiVaccine.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemGoiVaccine.ForeColor = System.Drawing.Color.White;
+            this.btnThemGoiVaccine.Location = new System.Drawing.Point(1767, 12);
+            this.btnThemGoiVaccine.Name = "btnThemGoiVaccine";
+            this.btnThemGoiVaccine.Size = new System.Drawing.Size(184, 38);
+            this.btnThemGoiVaccine.TabIndex = 17;
+            this.btnThemGoiVaccine.Text = "Thêm gói";
+            this.btnThemGoiVaccine.UseVisualStyleBackColor = false;
+            this.btnThemGoiVaccine.Click += new System.EventHandler(this.btnThemGoiVaccine_Click);
             // 
             // txtSoLuong
             // 
@@ -542,6 +598,7 @@
             this.btnResetFilter.TabIndex = 12;
             this.btnResetFilter.Text = "Đặt lại";
             this.btnResetFilter.UseVisualStyleBackColor = false;
+            this.btnResetFilter.Click += new System.EventHandler(this.btnResetFilter_Click);
             // 
             // btnTimKiemVaccine
             // 
@@ -799,9 +856,9 @@
             this.lbTongSoMui.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.lbTongSoMui.Location = new System.Drawing.Point(1810, 31);
             this.lbTongSoMui.Name = "lbTongSoMui";
-            this.lbTongSoMui.Size = new System.Drawing.Size(99, 32);
+            this.lbTongSoMui.Size = new System.Drawing.Size(83, 32);
             this.lbTongSoMui.TabIndex = 4;
-            this.lbTongSoMui.Text = "25 Mũi";
+            this.lbTongSoMui.Text = "0 Mũi";
             // 
             // lbTongGia
             // 
@@ -810,9 +867,9 @@
             this.lbTongGia.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.lbTongGia.Location = new System.Drawing.Point(1427, 31);
             this.lbTongGia.Name = "lbTongGia";
-            this.lbTongGia.Size = new System.Drawing.Size(224, 32);
+            this.lbTongGia.Size = new System.Drawing.Size(53, 32);
             this.lbTongGia.TabIndex = 3;
-            this.lbTongGia.Text = "15.000.000 VNĐ";
+            this.lbTongGia.Text = "0 đ";
             // 
             // label4
             // 
@@ -899,44 +956,6 @@
             this.colNuocSXWait.Name = "colNuocSXWait";
             this.colNuocSXWait.ReadOnly = true;
             this.colNuocSXWait.Width = 150;
-            // 
-            // colMaGoi
-            // 
-            this.colMaGoi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colMaGoi.DataPropertyName = "MaGoi";
-            this.colMaGoi.FillWeight = 60F;
-            this.colMaGoi.HeaderText = "Mã gói";
-            this.colMaGoi.MinimumWidth = 8;
-            this.colMaGoi.Name = "colMaGoi";
-            this.colMaGoi.ReadOnly = true;
-            this.colMaGoi.Width = 246;
-            // 
-            // colTenGoi
-            // 
-            this.colTenGoi.DataPropertyName = "TenGoi";
-            this.colTenGoi.FillWeight = 120F;
-            this.colTenGoi.HeaderText = "Tên gói";
-            this.colTenGoi.MinimumWidth = 8;
-            this.colTenGoi.Name = "colTenGoi";
-            this.colTenGoi.ReadOnly = true;
-            // 
-            // colDoiTuongApDung
-            // 
-            this.colDoiTuongApDung.DataPropertyName = "DoiTuongApDung";
-            this.colDoiTuongApDung.FillWeight = 80F;
-            this.colDoiTuongApDung.HeaderText = "Đối tượng áp dụng";
-            this.colDoiTuongApDung.MinimumWidth = 8;
-            this.colDoiTuongApDung.Name = "colDoiTuongApDung";
-            this.colDoiTuongApDung.ReadOnly = true;
-            // 
-            // colGiaGoi
-            // 
-            this.colGiaGoi.DataPropertyName = "GiaGoi";
-            this.colGiaGoi.FillWeight = 80F;
-            this.colGiaGoi.HeaderText = "Giá gói";
-            this.colGiaGoi.MinimumWidth = 8;
-            this.colGiaGoi.Name = "colGiaGoi";
-            this.colGiaGoi.ReadOnly = true;
             // 
             // frmThemMuiTiem
             // 
@@ -1042,5 +1061,6 @@ private System.Windows.Forms.GroupBox grpThongTinHoSo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenGoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDoiTuongApDung;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaGoi;
+        private System.Windows.Forms.Button btnThemGoiVaccine;
     }
 }

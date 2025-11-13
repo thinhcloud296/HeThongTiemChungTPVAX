@@ -15,13 +15,19 @@ namespace TPVAXWinform_BLL
         {
             return _dal.GetData();
         }
-        public void Insert(ChiTietGoiVaccineDTO ct)
+
+        public DataTable GetVaccinesByGoiVaccine(string maGoi)
         {
-            _dal.Insert(ct);
+return _dal.GetVaccinesByGoiVaccine(maGoi);
         }
-        public void Edit(ChiTietGoiVaccineDTO ct)
+      
+        public void Insert(ChiTietGoiVaccineDTO ct)
+    {
+            _dal.Insert(ct);
+      }
+ public void Edit(ChiTietGoiVaccineDTO ct)
         {
-            _dal.Edit(ct);
+   _dal.Edit(ct);
         }
     }
 }

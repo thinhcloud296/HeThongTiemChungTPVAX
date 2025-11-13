@@ -20,6 +20,7 @@ namespace TPVAXWinform_GUI
         private VaccineBLL vaccineBLL = new VaccineBLL();
         private LichTiemBLL lichTiemBLL = new LichTiemBLL();
         private GoiVaccineBLL goiVaccineBLL = new GoiVaccineBLL();
+        private ChiTietGoiVaccineBLL chiTietGoiVaccineBLL = new ChiTietGoiVaccineBLL();
         private string MaHSTC;
         public frmThemMuiTiem()
         {
@@ -62,6 +63,9 @@ namespace TPVAXWinform_GUI
             // Ẩn dgvGoiVaccine mặc định (hiển thị dgvVaccine)
             dgvGoiVaccine.Visible = false;
             dgvVaccine.Visible = true;
+
+            btnThemGoiVaccine.Visible = false;
+            btnThemMuiTiem.Visible = true;
         }
 
         private void cboLoaiThem_SelectedIndexChanged(object sender, EventArgs e)
@@ -70,11 +74,17 @@ namespace TPVAXWinform_GUI
             {
                 dgvVaccine.Visible = true;
                 dgvGoiVaccine.Visible = false;
+
+                btnThemGoiVaccine.Visible = false;
+                btnThemMuiTiem.Visible = true;
             }
             else if (cboLoaiThem.SelectedIndex == 1) // Gói Vaccine
             {
                 dgvVaccine.Visible = false;
                 dgvGoiVaccine.Visible = true;
+
+                btnThemGoiVaccine.Visible = true;
+                btnThemMuiTiem.Visible = false;
             }
         }
 
@@ -84,6 +94,34 @@ namespace TPVAXWinform_GUI
             LoadDSVC();
             LoadCboTimKiem();
             dgvVaccineWait.CellContentClick += dgvVaccineWait_CellContentClick;
+        }
+        private void btnResetFilter_Click(object sender, EventArgs e)
+        {
+            dgvVaccineWait.Rows.Clear();
+            LoadDSGoiVC();
+            LoadDSVC();
+
+            // Reset các combobox bộ lọc
+            if (cboLoaiBenh.Items.Count > 0)
+            {
+                cboLoaiBenh.SelectedIndex = 0;
+            }
+
+            if (cboLoaiVaccine.Items.Count > 0)
+            {
+                cboLoaiVaccine.SelectedIndex = 0;
+            }
+
+            txtGhiChu.Clear();
+            txtSoLuong.Text = "1";
+            dtpNgayTiem.Value = DateTime.Now;
+
+            if (cboLoaiThem.SelectedIndex != 0)
+            {
+                cboLoaiThem.SelectedIndex = 0;
+            }
+
+            CapNhatTongGiaVaTongSoMui();
         }
         private void LoadCboTimKiem()
         {
@@ -194,7 +232,7 @@ namespace TPVAXWinform_GUI
             dgvGoiVaccine.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
             dgvGoiVaccine.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
-        
+
         private void ConfigureDataGridViewMuiTiemChoStyling()
         {
             // Header style
@@ -600,5 +638,116 @@ namespace TPVAXWinform_GUI
             dgvGoiVaccine.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
             dgvGoiVaccine.RowTemplate.Height = 36;
         }
+
+        private void btnThemGoiVaccine_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem có gói nào được chọn không
+            if (dgvGoiVaccine.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một gói vaccine từ danh sách.", "Chưa chọn gói", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Lấy thông tin gói được chọn
+                int selectedRowIndex = dgvGoiVaccine.SelectedRows[0].Index;
+                string maGoi = dgvGoiVaccine.Rows[selectedRowIndex].Cells["colMaGoi"].Value?.ToString()?.Trim() ?? "";
+                string tenGoi = dgvGoiVaccine.Rows[selectedRowIndex].Cells["colTenGoi"].Value?.ToString() ?? "";
+
+                if (string.IsNullOrEmpty(maGoi))
+                {
+                    MessageBox.Show("Không thể lấy mã gói vaccine.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Lấy danh sách vaccine trong gói
+                DataTable dtVaccinesInPackage = chiTietGoiVaccineBLL.GetVaccinesByGoiVaccine(maGoi);
+
+                if (dtVaccinesInPackage.Rows.Count == 0)
+                {
+                    MessageBox.Show($"Gói '{tenGoi}' không có vaccine nào.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Lấy thông tin nhập liệu
+                string ngayTiem = dtpNgayTiem.Value.ToString();
+                string ghiChuChung = txtGhiChu.Text.Trim();
+
+                int countAdded = 0;
+                int countSkipped = 0;
+
+                // Thêm từng vaccine vào dgvVaccineWait
+                foreach (DataRow row in dtVaccinesInPackage.Rows)
+                {
+                    string maVC = row["Mã Vaccine"].ToString();
+                    string tenVC = row["Tên Vaccine"].ToString();
+                    string loaiBenh = row["Loại bệnh"].ToString();
+                    string loaiVC = row["Loại Vaccine"].ToString();
+                    string nuocSX = row["Nước sản xuất"].ToString();
+                    decimal giaBan = Convert.ToDecimal(row["Giá bán"]);
+                    int soMui = row["Số mũi"] != DBNull.Value ? Convert.ToInt32(row["Số mũi"]) : 1;
+                    string ghiChuVaccine = row["Ghi chú"] != DBNull.Value ? row["Ghi chú"].ToString() : "";
+
+                    // Kết hợp ghi chú của gói và ghi chú vaccine
+                    string ghiChuFinal = string.IsNullOrEmpty(ghiChuVaccine) ? ghiChuChung :
+             (string.IsNullOrEmpty(ghiChuChung) ? ghiChuVaccine : $"{ghiChuChung} - {ghiChuVaccine}");
+
+                    // Kiểm tra trùng lặp
+                    bool isDuplicate = false;
+                    foreach (DataGridViewRow waitRow in dgvVaccineWait.Rows)
+                    {
+                        if (waitRow.IsNewRow) continue;
+                        if (waitRow.Cells["colMaVCW"].Value != null &&
+   waitRow.Cells["colMaVCW"].Value.ToString() == maVC)
+                        {
+                            isDuplicate = true;
+                            countSkipped++;
+                            break;
+                        }
+                    }
+
+                    if (!isDuplicate)
+                    {
+                        // Thêm vào danh sách chờ
+                        dgvVaccineWait.Rows.Add(
+                            maVC,
+                            tenVC,
+                            loaiBenh,
+                            loaiVC,
+                            ngayTiem,
+                            soMui,
+                            nuocSX,
+                            giaBan.ToString("N0"),
+                            ghiChuFinal
+                        );
+                        countAdded++;
+                    }
+                }
+
+                // Xóa tất cả các hàng khác trong dgvGoiVaccine, chỉ giữ lại hàng đã chọn
+                for (int i = dgvGoiVaccine.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (i != selectedRowIndex && !dgvGoiVaccine.Rows[i].IsNewRow)
+                    {
+                        dgvGoiVaccine.Rows.RemoveAt(i);
+                    }
+                }
+
+                // Thông báo kết quả
+                string message = $"Đã thêm {countAdded} vaccine từ gói '{tenGoi}' vào danh sách chờ.";
+                if (countSkipped > 0)
+                {
+                    message += $"\n{countSkipped} vaccine đã tồn tại trong danh sách.";
+                }
+                MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm gói vaccine: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
     }
 }
