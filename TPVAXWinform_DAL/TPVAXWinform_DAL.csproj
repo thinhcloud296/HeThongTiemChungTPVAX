@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChiTietGoiVaccineDAL.cs" />
     <Compile Include="DBConnect.cs" />
+    <Compile Include="GoiVaccineDAL.cs" />
     <Compile Include="HoSoTiemChungDAL.cs" />
     <Compile Include="KhachHangDAL.cs" />
     <Compile Include="LichTiemDAL.cs" />

@@ -16,9 +16,10 @@ namespace TPVAXWinform_GUI
     public partial class frmThemMuiTiem : Form
     {
         private DataTable dtVC;
-        private DataTable dtLT;
+        private DataTable dtGoiVC;
         private VaccineBLL vaccineBLL = new VaccineBLL();
         private LichTiemBLL lichTiemBLL = new LichTiemBLL();
+        private GoiVaccineBLL goiVaccineBLL = new GoiVaccineBLL();
         private string MaHSTC;
         public frmThemMuiTiem()
         {
@@ -27,6 +28,7 @@ namespace TPVAXWinform_GUI
             InitializeDataGridViewStyling();
             SetupContextMenuVaccine();
             InitializeActionButtons();
+            InitializeLoaiThem();
         }
 
 
@@ -37,6 +39,7 @@ namespace TPVAXWinform_GUI
             InitializeDataGridViewStyling();
             SetupContextMenuVaccine();
             InitializeActionButtons();
+            InitializeLoaiThem();
             lbMaHSTC.Text = maHSTC;
             lblTenNguoiTiemValue.Text = hoTen;
             lblGioiTinhValue.Text = gioiTinh;
@@ -47,8 +50,37 @@ namespace TPVAXWinform_GUI
             lblSoDTValue.Text = soDTKH;
             MaHSTC = maHSTC;
         }
+
+        private void InitializeLoaiThem()
+        {
+            // Đặt giá trị mặc định là "Vaccine"
+            cboLoaiThem.SelectedIndex = 0;
+
+            // Gán event handler cho sự kiện SelectedIndexChanged
+            cboLoaiThem.SelectedIndexChanged += cboLoaiThem_SelectedIndexChanged;
+
+            // Ẩn dgvGoiVaccine mặc định (hiển thị dgvVaccine)
+            dgvGoiVaccine.Visible = false;
+            dgvVaccine.Visible = true;
+        }
+
+        private void cboLoaiThem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboLoaiThem.SelectedIndex == 0) // Vaccine
+            {
+                dgvVaccine.Visible = true;
+                dgvGoiVaccine.Visible = false;
+            }
+            else if (cboLoaiThem.SelectedIndex == 1) // Gói Vaccine
+            {
+                dgvVaccine.Visible = false;
+                dgvGoiVaccine.Visible = true;
+            }
+        }
+
         private void frmThemMuiTiem_Load(object sender, EventArgs e)
         {
+            LoadDSGoiVC();
             LoadDSVC();
             LoadCboTimKiem();
             dgvVaccineWait.CellContentClick += dgvVaccineWait_CellContentClick;
@@ -120,6 +152,10 @@ namespace TPVAXWinform_GUI
             dgvVaccine.ColumnHeadersHeight = 45;
             dgvVaccine.EnableHeadersVisualStyles = false;
 
+            dgvGoiVaccine.ColumnHeadersDefaultCellStyle = headerStyle;
+            dgvGoiVaccine.ColumnHeadersHeight = 45;
+            dgvGoiVaccine.EnableHeadersVisualStyles = false;
+
             // Căn giữa các cột: Mã Vaccine, Nước sản xuất, Giá bán
             string[] centerColumns = { "colMaVC", "colNuocSX", "colGiaBan" };
             foreach (var name in centerColumns)
@@ -127,7 +163,8 @@ namespace TPVAXWinform_GUI
                 if (dgvVaccine.Columns[name] != null)
                     dgvVaccine.Columns[name].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
-
+            if (dgvGoiVaccine.Columns["MaGoi"] != null)
+                dgvGoiVaccine.Columns["MaGoi"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             // Cột Tên Vaccine cho phép xuống dòng (Word Wrap)
             if (dgvVaccine.Columns["colTenVC"] != null)
             {
@@ -145,8 +182,19 @@ namespace TPVAXWinform_GUI
             dgvVaccine.RowHeadersVisible = false;
             dgvVaccine.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
             dgvVaccine.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-        }
 
+            dgvGoiVaccine.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
+            dgvGoiVaccine.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvGoiVaccine.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvGoiVaccine.RowTemplate.Height = 40;
+            dgvGoiVaccine.BorderStyle = BorderStyle.None;
+            dgvGoiVaccine.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvGoiVaccine.GridColor = Color.FromArgb(224, 224, 224);
+            dgvGoiVaccine.RowHeadersVisible = false;
+            dgvGoiVaccine.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            dgvGoiVaccine.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        }
+        
         private void ConfigureDataGridViewMuiTiemChoStyling()
         {
             // Header style
@@ -531,6 +579,26 @@ namespace TPVAXWinform_GUI
             {
                 MessageBox.Show($"Thêm thất bại {countFailed} lịch hẹn.", "Thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        // ========================================================== Gói Vaccine
+        private void LoadDSGoiVC()
+        {
+            dtGoiVC = goiVaccineBLL.GetData();
+            BindDataToGridGoiVaccine(dtGoiVC);
+        }
+
+        private void BindDataToGridGoiVaccine(DataTable dt)
+        {
+            dgvGoiVaccine.AutoGenerateColumns = false;
+            colMaGoi.DataPropertyName = "MaGoi";
+            colTenGoi.DataPropertyName = "TenGoi";
+            colDoiTuongApDung.DataPropertyName = "DoiTuongApDung";
+            colGiaGoi.DataPropertyName = "GiaGoi";
+
+            dgvGoiVaccine.DataSource = dt;
+
+            dgvGoiVaccine.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
+            dgvGoiVaccine.RowTemplate.Height = 36;
         }
     }
 }

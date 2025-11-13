@@ -41,6 +41,7 @@
             this.colGiaBanW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGhiChuW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpNhapLieu = new System.Windows.Forms.GroupBox();
+            this.dgvGoiVaccine = new System.Windows.Forms.DataGridView();
             this.dgvVaccine = new System.Windows.Forms.DataGridView();
             this.colMaVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +59,8 @@
             this.lblNgayTiem = new System.Windows.Forms.Label();
             this.dtpNgayTiem = new System.Windows.Forms.DateTimePicker();
             this.pnlThongTinTiem = new System.Windows.Forms.Panel();
+            this.cboLoaiThem = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnResetFilter = new System.Windows.Forms.Button();
             this.btnTimKiemVaccine = new System.Windows.Forms.Button();
@@ -92,10 +95,15 @@
             this.colSoLuongWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayTiemWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTenGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDoiTuongApDung = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGiaGoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlMain.SuspendLayout();
             this.grpDanhSachCho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
             this.grpNhapLieu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGoiVaccine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccine)).BeginInit();
             this.pnlVaccineFilter.SuspendLayout();
             this.pnlThongTinTiem.SuspendLayout();
@@ -240,6 +248,7 @@
             // 
             // grpNhapLieu
             // 
+            this.grpNhapLieu.Controls.Add(this.dgvGoiVaccine);
             this.grpNhapLieu.Controls.Add(this.dgvVaccine);
             this.grpNhapLieu.Controls.Add(this.pnlVaccineFilter);
             this.grpNhapLieu.Controls.Add(this.pnlThongTinTiem);
@@ -252,6 +261,32 @@
             this.grpNhapLieu.TabIndex = 2;
             this.grpNhapLieu.TabStop = false;
             this.grpNhapLieu.Text = "Thêm Mũi tiêm";
+            // 
+            // dgvGoiVaccine
+            // 
+            this.dgvGoiVaccine.AllowUserToAddRows = false;
+            this.dgvGoiVaccine.AllowUserToDeleteRows = false;
+            this.dgvGoiVaccine.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvGoiVaccine.BackgroundColor = System.Drawing.Color.White;
+            this.dgvGoiVaccine.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvGoiVaccine.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvGoiVaccine.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvGoiVaccine.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colMaGoi,
+            this.colTenGoi,
+            this.colDoiTuongApDung,
+            this.colGiaGoi});
+            this.dgvGoiVaccine.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvGoiVaccine.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvGoiVaccine.Location = new System.Drawing.Point(10, 149);
+            this.dgvGoiVaccine.Name = "dgvGoiVaccine";
+            this.dgvGoiVaccine.ReadOnly = true;
+            this.dgvGoiVaccine.RowHeadersVisible = false;
+            this.dgvGoiVaccine.RowHeadersWidth = 62;
+            this.dgvGoiVaccine.RowTemplate.Height = 40;
+            this.dgvGoiVaccine.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvGoiVaccine.Size = new System.Drawing.Size(1964, 326);
+            this.dgvGoiVaccine.TabIndex = 3;
             // 
             // dgvVaccine
             // 
@@ -442,6 +477,8 @@
             // pnlThongTinTiem
             // 
             this.pnlThongTinTiem.BackColor = System.Drawing.Color.White;
+            this.pnlThongTinTiem.Controls.Add(this.cboLoaiThem);
+            this.pnlThongTinTiem.Controls.Add(this.label7);
             this.pnlThongTinTiem.Controls.Add(this.label1);
             this.pnlThongTinTiem.Controls.Add(this.btnResetFilter);
             this.pnlThongTinTiem.Controls.Add(this.btnTimKiemVaccine);
@@ -455,6 +492,30 @@
             this.pnlThongTinTiem.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             this.pnlThongTinTiem.Size = new System.Drawing.Size(1964, 52);
             this.pnlThongTinTiem.TabIndex = 0;
+            // 
+            // cboLoaiThem
+            // 
+            this.cboLoaiThem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLoaiThem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboLoaiThem.FormattingEnabled = true;
+            this.cboLoaiThem.Items.AddRange(new object[] {
+            "Vaccine",
+            "Gói Vaccine"});
+            this.cboLoaiThem.Location = new System.Drawing.Point(459, 9);
+            this.cboLoaiThem.Name = "cboLoaiThem";
+            this.cboLoaiThem.Size = new System.Drawing.Size(270, 36);
+            this.cboLoaiThem.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.label7.Location = new System.Drawing.Point(253, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(200, 25);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Vaccine / Gói Vaccine";
             // 
             // label1
             // 
@@ -475,7 +536,7 @@
             this.btnResetFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResetFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnResetFilter.ForeColor = System.Drawing.Color.White;
-            this.btnResetFilter.Location = new System.Drawing.Point(1624, 8);
+            this.btnResetFilter.Location = new System.Drawing.Point(1745, 8);
             this.btnResetFilter.Name = "btnResetFilter";
             this.btnResetFilter.Size = new System.Drawing.Size(120, 38);
             this.btnResetFilter.TabIndex = 12;
@@ -490,7 +551,7 @@
             this.btnTimKiemVaccine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTimKiemVaccine.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnTimKiemVaccine.ForeColor = System.Drawing.Color.White;
-            this.btnTimKiemVaccine.Location = new System.Drawing.Point(1494, 8);
+            this.btnTimKiemVaccine.Location = new System.Drawing.Point(1619, 8);
             this.btnTimKiemVaccine.Name = "btnTimKiemVaccine";
             this.btnTimKiemVaccine.Size = new System.Drawing.Size(120, 38);
             this.btnTimKiemVaccine.TabIndex = 11;
@@ -502,7 +563,7 @@
             this.cboLoaiBenh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLoaiBenh.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboLoaiBenh.FormattingEnabled = true;
-            this.cboLoaiBenh.Location = new System.Drawing.Point(1172, 9);
+            this.cboLoaiBenh.Location = new System.Drawing.Point(1298, 9);
             this.cboLoaiBenh.Name = "cboLoaiBenh";
             this.cboLoaiBenh.Size = new System.Drawing.Size(300, 36);
             this.cboLoaiBenh.TabIndex = 10;
@@ -512,7 +573,7 @@
             this.lblLoaiBenh.AutoSize = true;
             this.lblLoaiBenh.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblLoaiBenh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblLoaiBenh.Location = new System.Drawing.Point(1062, 15);
+            this.lblLoaiBenh.Location = new System.Drawing.Point(1188, 15);
             this.lblLoaiBenh.Name = "lblLoaiBenh";
             this.lblLoaiBenh.Size = new System.Drawing.Size(104, 25);
             this.lblLoaiBenh.TabIndex = 9;
@@ -523,7 +584,7 @@
             this.cboLoaiVaccine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLoaiVaccine.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboLoaiVaccine.FormattingEnabled = true;
-            this.cboLoaiVaccine.Location = new System.Drawing.Point(734, 9);
+            this.cboLoaiVaccine.Location = new System.Drawing.Point(874, 9);
             this.cboLoaiVaccine.Name = "cboLoaiVaccine";
             this.cboLoaiVaccine.Size = new System.Drawing.Size(270, 36);
             this.cboLoaiVaccine.TabIndex = 8;
@@ -533,7 +594,7 @@
             this.lblLoaiVaccine.AutoSize = true;
             this.lblLoaiVaccine.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblLoaiVaccine.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblLoaiVaccine.Location = new System.Drawing.Point(597, 15);
+            this.lblLoaiVaccine.Location = new System.Drawing.Point(744, 15);
             this.lblLoaiVaccine.Name = "lblLoaiVaccine";
             this.lblLoaiVaccine.Size = new System.Drawing.Size(124, 25);
             this.lblLoaiVaccine.TabIndex = 7;
@@ -839,6 +900,44 @@
             this.colNuocSXWait.ReadOnly = true;
             this.colNuocSXWait.Width = 150;
             // 
+            // colMaGoi
+            // 
+            this.colMaGoi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMaGoi.DataPropertyName = "MaGoi";
+            this.colMaGoi.FillWeight = 60F;
+            this.colMaGoi.HeaderText = "Mã gói";
+            this.colMaGoi.MinimumWidth = 8;
+            this.colMaGoi.Name = "colMaGoi";
+            this.colMaGoi.ReadOnly = true;
+            this.colMaGoi.Width = 246;
+            // 
+            // colTenGoi
+            // 
+            this.colTenGoi.DataPropertyName = "TenGoi";
+            this.colTenGoi.FillWeight = 120F;
+            this.colTenGoi.HeaderText = "Tên gói";
+            this.colTenGoi.MinimumWidth = 8;
+            this.colTenGoi.Name = "colTenGoi";
+            this.colTenGoi.ReadOnly = true;
+            // 
+            // colDoiTuongApDung
+            // 
+            this.colDoiTuongApDung.DataPropertyName = "DoiTuongApDung";
+            this.colDoiTuongApDung.FillWeight = 80F;
+            this.colDoiTuongApDung.HeaderText = "Đối tượng áp dụng";
+            this.colDoiTuongApDung.MinimumWidth = 8;
+            this.colDoiTuongApDung.Name = "colDoiTuongApDung";
+            this.colDoiTuongApDung.ReadOnly = true;
+            // 
+            // colGiaGoi
+            // 
+            this.colGiaGoi.DataPropertyName = "GiaGoi";
+            this.colGiaGoi.FillWeight = 80F;
+            this.colGiaGoi.HeaderText = "Giá gói";
+            this.colGiaGoi.MinimumWidth = 8;
+            this.colGiaGoi.Name = "colGiaGoi";
+            this.colGiaGoi.ReadOnly = true;
+            // 
             // frmThemMuiTiem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -856,6 +955,7 @@
             this.grpDanhSachCho.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).EndInit();
             this.grpNhapLieu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGoiVaccine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccine)).EndInit();
             this.pnlVaccineFilter.ResumeLayout(false);
             this.pnlVaccineFilter.PerformLayout();
@@ -935,5 +1035,12 @@ private System.Windows.Forms.GroupBox grpThongTinHoSo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGhiChuW;
         private System.Windows.Forms.TextBox txtSoLuong;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cboLoaiThem;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView dgvGoiVaccine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMaGoi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTenGoi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDoiTuongApDung;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGiaGoi;
     }
 }

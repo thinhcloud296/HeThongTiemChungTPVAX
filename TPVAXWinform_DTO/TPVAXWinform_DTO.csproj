@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChiTietGoiVaccineDTO.cs" />
     <Compile Include="ChiTietPhieuNhapDTO.cs" />
+    <Compile Include="GoiVaccineDTO.cs" />
     <Compile Include="HoSoTiemChungDTO.cs" />
     <Compile Include="KhachHangDTO.cs" />
     <Compile Include="LichTiemDTO.cs" />
