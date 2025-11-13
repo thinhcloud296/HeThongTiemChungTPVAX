@@ -100,6 +100,7 @@
             this.colSoLuongWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayTiemWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnLuuGoi = new System.Windows.Forms.Button();
             this.pnlMain.SuspendLayout();
             this.grpDanhSachCho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
@@ -825,6 +826,7 @@
             // 
             // pnlActions
             // 
+            this.pnlActions.Controls.Add(this.btnLuuGoi);
             this.pnlActions.Controls.Add(this.label6);
             this.pnlActions.Controls.Add(this.lbTongSoMui);
             this.pnlActions.Controls.Add(this.lbTongGia);
@@ -896,6 +898,7 @@
             this.btnDong.TabIndex = 1;
             this.btnDong.Text = "Đóng";
             this.btnDong.UseVisualStyleBackColor = false;
+            this.btnDong.Click += new System.EventHandler(this.btnDong_Click);
             // 
             // btnLuuTatCa
             // 
@@ -909,7 +912,7 @@
             this.btnLuuTatCa.Name = "btnLuuTatCa";
             this.btnLuuTatCa.Size = new System.Drawing.Size(223, 73);
             this.btnLuuTatCa.TabIndex = 0;
-            this.btnLuuTatCa.Text = "Lưu tất cả";
+            this.btnLuuTatCa.Text = "Lưu Vaccine";
             this.btnLuuTatCa.UseVisualStyleBackColor = false;
             this.btnLuuTatCa.Click += new System.EventHandler(this.btnLuuTatCa_Click);
             // 
@@ -956,6 +959,21 @@
             this.colNuocSXWait.Name = "colNuocSXWait";
             this.colNuocSXWait.ReadOnly = true;
             this.colNuocSXWait.Width = 150;
+            // 
+            // btnLuuGoi
+            // 
+            this.btnLuuGoi.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnLuuGoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.btnLuuGoi.FlatAppearance.BorderSize = 0;
+            this.btnLuuGoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuuGoi.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnLuuGoi.ForeColor = System.Drawing.Color.White;
+            this.btnLuuGoi.Location = new System.Drawing.Point(1022, 12);
+            this.btnLuuGoi.Name = "btnLuuGoi";
+            this.btnLuuGoi.Size = new System.Drawing.Size(223, 73);
+            this.btnLuuGoi.TabIndex = 6;
+            this.btnLuuGoi.Text = "Lưu gói";
+            this.btnLuuGoi.UseVisualStyleBackColor = false;
             // 
             // frmThemMuiTiem
             // 
@@ -1062,5 +1080,6 @@ private System.Windows.Forms.GroupBox grpThongTinHoSo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDoiTuongApDung;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaGoi;
         private System.Windows.Forms.Button btnThemGoiVaccine;
+        private System.Windows.Forms.Button btnLuuGoi;
     }
 }

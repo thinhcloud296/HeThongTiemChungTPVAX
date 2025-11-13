@@ -66,6 +66,7 @@ namespace TPVAXWinform_GUI
 
             btnThemGoiVaccine.Visible = false;
             btnThemMuiTiem.Visible = true;
+            btnLuuGoi.Visible = false;
         }
 
         private void cboLoaiThem_SelectedIndexChanged(object sender, EventArgs e)
@@ -77,6 +78,7 @@ namespace TPVAXWinform_GUI
 
                 btnThemGoiVaccine.Visible = false;
                 btnThemMuiTiem.Visible = true;
+                btnLuuGoi.Visible = false;
             }
             else if (cboLoaiThem.SelectedIndex == 1) // Gói Vaccine
             {
@@ -85,6 +87,8 @@ namespace TPVAXWinform_GUI
 
                 btnThemGoiVaccine.Visible = true;
                 btnThemMuiTiem.Visible = false;
+                btnLuuGoi.Visible = true;
+
             }
         }
 
@@ -100,7 +104,8 @@ namespace TPVAXWinform_GUI
             dgvVaccineWait.Rows.Clear();
             LoadDSGoiVC();
             LoadDSVC();
-
+            btnLuuGoi.Visible = false; 
+            btnLuuTatCa.Visible = true;  
             // Reset các combobox bộ lọc
             if (cboLoaiBenh.Items.Count > 0)
             {
@@ -748,6 +753,9 @@ namespace TPVAXWinform_GUI
             }
         }
 
-
+        private void btnDong_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -11,10 +11,10 @@ namespace TPVAXWinform_DAL
     public class LichTiemDAL
     {
         private string lastMaLT = "";
+        private string selectSql = "SELECT * FROM dbo.Vaccine";
         public DataTable GetData()
         {
-            const string sql = "SELECT * FROM dbo.LichTiem";
-            return DBConnect.ExecuteQuery(sql);
+            return DBConnect.ExecuteQuery(selectSql);
         }
         public DataTable GetLichTiemWithHSTC()
         {
@@ -64,7 +64,7 @@ namespace TPVAXWinform_DAL
         {
             try
             {
-                using (var buffer = DBConnect.CreateBuffer("SELECT * FROM dbo.LichTiem"))
+                using (var buffer = DBConnect.CreateBuffer(selectSql))
                 {
                     DataRow row = buffer.Table.NewRow();
 
@@ -93,7 +93,7 @@ namespace TPVAXWinform_DAL
         {
             try
             {
-                using (var buffer = DBConnect.CreateBuffer("SELECT * FROM dbo.LichTiem"))
+                using (var buffer = DBConnect.CreateBuffer(selectSql))
                 {
                     DataRow row = buffer.Table.Rows.Find(lichTiem.MaLT);
                     if (row != null)
@@ -127,6 +127,89 @@ namespace TPVAXWinform_DAL
             string sql = $"SELECT COUNT(*) FROM dbo.LichTiem WHERE MaHSTC = '{maHSTC}'AND MaVC = '{maVC}'   AND NgayTiemThucTe IS NULL";
             object result = DBConnect.ExecuteScalar(sql);
             return Convert.ToInt32(result);
+        }
+        public VaccineDTO GetDataByMaVC(string maVC)
+        {
+            try
+            {
+                // 1. Tải toàn bộ bảng Vaccine vào buffer (Rows.Find yêu cầu PK)
+                using (var buffer = DBConnect.CreateBuffer(selectSql))
+                {
+                    // 2. Tìm vaccine bằng Primary Key
+                    DataRow row = buffer.Table.Rows.Find(maVC);
+
+                    if (row != null)
+                    {
+                        // 3. Ánh xạ (map) dữ liệu từ DataRow sang DTO
+                        VaccineDTO vaccine = new VaccineDTO();
+                        vaccine.MaVC = row["MaVC"].ToString();
+                        vaccine.TenVC = row["TenVC"].ToString();
+                        vaccine.GiaBan = Convert.ToDecimal(row["GiaBan"]);
+                        vaccine.SoLuongTon = Convert.ToInt32(row["SoLuongTon"]);
+                        vaccine.MaLoai = row["MaLoai"].ToString();
+                        vaccine.MoTa = row["MoTa"].ToString();
+                        vaccine.HinhAnh = row["HinhAnh"].ToString();
+
+                        // Lấy 2 cột phác đồ (xử lý DBNull.Value nếu có thể)
+                        vaccine.SoMuiToiDa = (row["SoMuiToiDa"] == DBNull.Value) ? 0 : Convert.ToInt32(row["SoMuiToiDa"]);
+                        vaccine.SoThangCho = (row["SoThangCho"] == DBNull.Value) ? 0 : Convert.ToInt32(row["SoThangCho"]);
+
+                        return vaccine;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy thông tin vaccine: " + ex.Message);
+            }
+
+            // 4. Trả về null nếu không tìm thấy
+            return null;
+        }
+        public void TaoLichHenKeTiep(string maHSTC, string maVCDaTiem)
+        {
+            // (Bạn cần tạo hàm GetDataByMaVC trong VaccineBLL)
+            VaccineDTO vaccine = GetDataByMaVC(maVCDaTiem);
+
+            if (vaccine == null)
+                throw new Exception("Không tìm thấy thông tin vaccine.");
+
+            // 2. Lấy số phác đồ
+            int soMuiToiDa = vaccine.SoMuiToiDa;
+            int soThangCho = vaccine.SoThangCho;
+
+            // 3. Bỏ qua nếu là vaccine nhắc lại (99) hoặc 1 mũi (1)
+            if (soMuiToiDa == 99 || soMuiToiDa <= 1)
+            {
+                return; // Không tạo lịch hẹn kế tiếp
+            }
+
+            // 4. Đếm số mũi đã tiêm (từ CSDL, bao gồm mũi vừa tiêm xong)
+            int soMuiDaTiem = this.SoMuiDaTiem(maHSTC, maVCDaTiem);
+
+            // 5. Kiểm tra xem đã đủ phác đồ chưa
+            if (soMuiDaTiem >= soMuiToiDa)
+            {
+                return; // Đã tiêm đủ, không tạo lịch hẹn nữa
+            }
+
+            // 6. Nếu chưa đủ -> TẠO LỊCH HẸN MỚI
+
+            // Tính ngày hẹn mới = Ngày hôm nay + Số tháng chờ
+            DateTime ngayHenMoi = DateTime.Now.AddMonths(soThangCho);
+            int soMuiKeTiep = soMuiDaTiem + 1;
+
+            LichTiemDTO lichHenMoi = new LichTiemDTO();
+            lichHenMoi.MaLT = this.CreateNewMaLT(); // Dùng hàm tạo mã mới của bạn
+            lichHenMoi.MaHSTC = maHSTC;
+            lichHenMoi.MaVC = maVCDaTiem;
+            lichHenMoi.NgayHenTiem = ngayHenMoi;
+            lichHenMoi.SoMui = soMuiKeTiep;
+            lichHenMoi.TrangThai = "Chưa tiêm"; // (Vì bạn đã đổi sang NVARCHAR)
+            lichHenMoi.GhiChu = $"Hẹn nhắc lại mũi {soMuiKeTiep} cho {vaccine.TenVC}";
+
+            // Thêm vào CSDL
+            this.Insert(lichHenMoi);
         }
     }
 }
