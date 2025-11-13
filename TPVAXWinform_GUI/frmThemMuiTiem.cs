@@ -6,9 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Media.Media3D;
 using System.Globalization;
 using TPVAXWinform_BLL;
 using TPVAXWinform_DTO;
@@ -289,24 +287,20 @@ namespace TPVAXWinform_GUI
         private void AddSelectedVaccineToWaitList(int rowIndex)
         {
             // --- BƯỚC 1: LẤY DỮ LIỆU TỪ NGUỒN (dgvVaccine) ---
+            // (Giả sử bạn đã sửa proc để trả về SoMuiToiDa)
             DataRowView drv;
             string maVC, tenVC, nuocSX, loaiBenh, loaiVC;
             decimal giaBan;
-            int soMuiToiDa;
 
             try
             {
-                // Lấy DataRowView (dòng dữ liệu gốc) từ hàng được chọn
                 drv = (DataRowView)dgvVaccine.Rows[rowIndex].DataBoundItem;
-
-                // Đọc dữ liệu bằng tên cột (Alias) của Stored Procedure
                 maVC = drv["Mã Vaccine"].ToString();
                 tenVC = drv["Tên Vaccine"].ToString();
                 nuocSX = drv["Nước sản xuất"].ToString();
                 loaiBenh = drv["Loại bệnh"].ToString();
                 loaiVC = drv["Loại Vaccine"].ToString();
                 giaBan = Convert.ToDecimal(drv["Giá bán"]);
-                soMuiToiDa = Convert.ToInt32(drv["SoMuiToiDa"]);
             }
             catch (Exception ex)
             {
@@ -317,18 +311,16 @@ namespace TPVAXWinform_GUI
             // --- BƯỚC 2: LẤY DỮ LIỆU NHẬP LIỆU ---
             string ngayTiem = dtpNgayTiem.Value.ToString();
             string ghiChu = txtGhiChu.Text.Trim();
-            int soLuongMoi; // Số lượng mũi người dùng muốn thêm (từ textbox)
-
+            int soLuongMoi;
             if (!int.TryParse(txtSoLuong.Text, out soLuongMoi) || soLuongMoi <= 0)
             {
-                soLuongMoi = 1; // Mặc định là 1 nếu nhập sai hoặc rỗng
+                soLuongMoi = 1;
             }
 
             // --- BƯỚC 3: KIỂM TRA TRÙNG LẶP TRONG BẢNG CHỜ ---
             foreach (DataGridViewRow row in dgvVaccineWait.Rows)
             {
                 if (row.IsNewRow) continue;
-                // (Giả sử cột mã VC trong bảng chờ là "colMaVCW")
                 if (row.Cells["colMaVCW"].Value != null && row.Cells["colMaVCW"].Value.ToString() == maVC)
                 {
                     MessageBox.Show($"Vaccine '{tenVC}' đã có trong danh sách chờ.", "Đã tồn tại", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -336,36 +328,8 @@ namespace TPVAXWinform_GUI
                 }
             }
 
-            // --- BƯỚC 4: VALIDATION PHÁC ĐỒ TIÊM (Logic đúng) ---
-
-            // Bỏ qua nếu là loại tiêm nhắc lại (99)
-            if (soMuiToiDa != 99)
-            {
-                // Đếm số mũi ĐÃ TIÊM (từ CSDL)
-                // (Bạn cần có hàm DemSoMuiDaTiem trong LichTiemBLL)
-                int soMuiDaTiem = lichTiemBLL.SoMuiDaTiem(MaHSTC, maVC); // Giả sử MaHSTC lưu ở Label
-
-                // Đếm số mũi ĐANG CHỜ (trong Grid dgvVaccineWait)
-                int soMuiDangCho = lichTiemBLL.SoMuiDangChoTiem(MaHSTC,maVC);
-                
-                // So sánh tổng
-                int tongMuiSeTiem = soMuiDaTiem + soMuiDangCho + soLuongMoi;
-
-                if (tongMuiSeTiem > soMuiToiDa)
-                {
-                    MessageBox.Show(
-                        $"Số lượng mũi tiêm vượt quá phác đồ!\n\n" +
-                        $"- Vaccine: {tenVC}\n" +
-                        $"- Phác đồ tối đa: {soMuiToiDa} mũi\n" +
-                        $"- Đã tiêm (CSDL): {soMuiDaTiem} mũi\n" +
-                        $"- Đang chờ (Grid): {soMuiDangCho} mũi\n" +
-                        $"-> Bạn chỉ có thể thêm tối đa: {soMuiToiDa - soMuiDaTiem - soMuiDangCho} mũi.",
-                        "Lỗi Phác Đồ Tiêm",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
-                }
-            }
+            // --- BƯỚC 4: (LOGIC VALIDATION ĐÃ BỊ XÓA THEO YÊU CẦU CỦA BẠN) ---
+            // Khối code kiểm tra soMuiToiDa đã được xóa.
 
             // --- BƯỚC 5: THÊM VÀO BẢNG CHỜ (dgvVaccineWait) ---
             try
@@ -382,8 +346,6 @@ namespace TPVAXWinform_GUI
                     giaBan.ToString("N0"), // Format giá
                     ghiChu
                 );
-
-                // CapNhatTongGia(); // Gọi hàm tính tổng giá
             }
             catch (Exception ex)
             {
@@ -392,6 +354,7 @@ namespace TPVAXWinform_GUI
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // HÀM CLICK ĐÃ SỬA LẠI (GỌN HƠN)
         private void btnThemMuiTiem_Click(object sender, EventArgs e)

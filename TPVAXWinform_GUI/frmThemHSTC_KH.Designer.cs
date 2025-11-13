@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlHoSo = new System.Windows.Forms.Panel();
+            this.btnThemTatCa = new System.Windows.Forms.Button();
             this.btnLienKet = new System.Windows.Forms.Button();
             this.cboQuanHe = new System.Windows.Forms.ComboBox();
             this.btnThemHoSo = new System.Windows.Forms.Button();
@@ -47,6 +48,7 @@
             this.lblHoTenHoSo = new System.Windows.Forms.Label();
             this.lblTitleHoSo = new System.Windows.Forms.Label();
             this.pnlKhachHang = new System.Windows.Forms.Panel();
+            this.cboDSKHHG = new System.Windows.Forms.ComboBox();
             this.btnDangKyKHAndHSTC = new System.Windows.Forms.Button();
             this.cboDSHSTCLienKet = new System.Windows.Forms.ComboBox();
             this.txtCCCDKH = new System.Windows.Forms.TextBox();
@@ -69,7 +71,6 @@
             this.lblTimCCCD = new System.Windows.Forms.Label();
             this.lblTitleKH = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.cboDSKHHG = new System.Windows.Forms.ComboBox();
             this.pnlMain.SuspendLayout();
             this.pnlHoSo.SuspendLayout();
             this.pnlKhachHang.SuspendLayout();
@@ -92,6 +93,7 @@
             // 
             this.pnlHoSo.BackColor = System.Drawing.Color.White;
             this.pnlHoSo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHoSo.Controls.Add(this.btnThemTatCa);
             this.pnlHoSo.Controls.Add(this.btnLienKet);
             this.pnlHoSo.Controls.Add(this.cboQuanHe);
             this.pnlHoSo.Controls.Add(this.btnThemHoSo);
@@ -113,6 +115,22 @@
             this.pnlHoSo.Name = "pnlHoSo";
             this.pnlHoSo.Size = new System.Drawing.Size(1290, 522);
             this.pnlHoSo.TabIndex = 1;
+            // 
+            // btnThemTatCa
+            // 
+            this.btnThemTatCa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnThemTatCa.FlatAppearance.BorderSize = 0;
+            this.btnThemTatCa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemTatCa.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemTatCa.ForeColor = System.Drawing.Color.White;
+            this.btnThemTatCa.Location = new System.Drawing.Point(338, 454);
+            this.btnThemTatCa.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnThemTatCa.Name = "btnThemTatCa";
+            this.btnThemTatCa.Size = new System.Drawing.Size(280, 45);
+            this.btnThemTatCa.TabIndex = 16;
+            this.btnThemTatCa.Text = "Thêm tất cả";
+            this.btnThemTatCa.UseVisualStyleBackColor = false;
+            this.btnThemTatCa.Click += new System.EventHandler(this.btnThemTatCa_Click);
             // 
             // btnLienKet
             // 
@@ -148,7 +166,6 @@
             // btnThemHoSo
             // 
             this.btnThemHoSo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnThemHoSo.Enabled = false;
             this.btnThemHoSo.FlatAppearance.BorderSize = 0;
             this.btnThemHoSo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
@@ -329,6 +346,22 @@
             this.pnlKhachHang.Name = "pnlKhachHang";
             this.pnlKhachHang.Size = new System.Drawing.Size(1290, 370);
             this.pnlKhachHang.TabIndex = 0;
+            // 
+            // cboDSKHHG
+            // 
+            this.cboDSKHHG.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cboDSKHHG.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboDSKHHG.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboDSKHHG.FormattingEnabled = true;
+            this.cboDSKHHG.Items.AddRange(new object[] {
+            "Nam",
+            "Nữ",
+            "Khác"});
+            this.cboDSKHHG.Location = new System.Drawing.Point(270, 81);
+            this.cboDSKHHG.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboDSKHHG.Name = "cboDSKHHG";
+            this.cboDSKHHG.Size = new System.Drawing.Size(482, 36);
+            this.cboDSKHHG.TabIndex = 16;
             // 
             // btnDangKyKHAndHSTC
             // 
@@ -580,22 +613,6 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // cboDSKHHG
-            // 
-            this.cboDSKHHG.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cboDSKHHG.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cboDSKHHG.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cboDSKHHG.FormattingEnabled = true;
-            this.cboDSKHHG.Items.AddRange(new object[] {
-            "Nam",
-            "Nữ",
-            "Khác"});
-            this.cboDSKHHG.Location = new System.Drawing.Point(270, 81);
-            this.cboDSKHHG.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cboDSKHHG.Name = "cboDSKHHG";
-            this.cboDSKHHG.Size = new System.Drawing.Size(482, 36);
-            this.cboDSKHHG.TabIndex = 16;
-            // 
             // frmThemHSTC_KH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -663,5 +680,6 @@
         private System.Windows.Forms.Button btnLienKet;
         private System.Windows.Forms.Button btnDangKyKHAndHSTC;
         private System.Windows.Forms.ComboBox cboDSKHHG;
+        private System.Windows.Forms.Button btnThemTatCa;
     }
 }

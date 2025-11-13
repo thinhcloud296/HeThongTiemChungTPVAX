@@ -102,6 +102,7 @@ namespace TPVAXWinform_GUI.UserControls
             colNgayTiemThucTe.DataPropertyName = "Ngày tiêm thực tế";
             dgvLichTiem.DataSource = dt;
 
+            dgvLichTiem.Columns["colNgayHen"].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvLichTiem.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
             dgvLichTiem.RowTemplate.Height = 36;
         }
@@ -218,7 +219,7 @@ namespace TPVAXWinform_GUI.UserControls
         {
             // Reset các control về mặc định
             dtpTuThang.Value = DateTime.Now.AddYears(-5);
-            dtpDenThang.Value = DateTime.Now;
+            dtpDenThang.Value = DateTime.Now.AddYears(1);
             chkDaTiem.Checked = true;
             chkChuaTiem.Checked = true;
             txtSearch.Clear();
@@ -244,9 +245,6 @@ namespace TPVAXWinform_GUI.UserControls
             // Lấy trạng thái của dòng được chọn
             DataGridViewRow selectedRow = dgvLichTiem.SelectedRows[0];
             string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
-
-            // Enable/Disable menu items dựa trên trạng thái
-            // Nếu đã tiêm (1) thì không cho phép xác nhận tiêm hoặc hủy nữa
             bool isDaTiem = trangThai.Equals("1");
 
             toolStripMenuItemXacNhanTiem.Enabled = !isDaTiem;

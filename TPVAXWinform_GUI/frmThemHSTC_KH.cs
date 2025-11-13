@@ -95,8 +95,9 @@ namespace TPVAXWinform_GUI
 
             try
             {
-                dtKH.Columns.Add("DisplayAll",typeof(string),"HoTen + ' - ' + CCCD");
-            }catch(Exception ex)
+                dtKH.Columns.Add("DisplayAll", typeof(string), "HoTen + ' - ' + CCCD");
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi thêm cột hiển thị: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -116,12 +117,6 @@ namespace TPVAXWinform_GUI
                 return;
             }
             string cccd = cboDSKHHG.SelectedValue.ToString().Trim();
-            if (string.IsNullOrWhiteSpace(cccd) || !Regex.IsMatch(cccd, REGEX_CCCD))
-            {
-                MessageBox.Show("CCCD tìm kiếm không hợp lệ. Phải là 12 số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cboDSKHHG.Focus();
-                return; 
-            }
 
             DataTable dt = khachHangBLL.GetData();
             if (dt.PrimaryKey == null || dt.PrimaryKey.Length == 0)
@@ -291,7 +286,7 @@ namespace TPVAXWinform_GUI
                 // Gán lỗi cho txtCCCDKH
                 errorProvider1.SetError(txtCCCDKH, "CCCD không hợp lệ. Phải là 12 số.");
                 flag = false;
-            } 
+            }
 
             // Kiểm tra ComboBox Giới tính
             if (cboGioiTinhKH.SelectedItem == null)
@@ -357,7 +352,7 @@ namespace TPVAXWinform_GUI
             hso.CCCD = txtCCCDHSTC.Text.Trim();
             hso.GhiChu = txtGhiChuHSTC.Text.Trim();
             try
-            { 
+            {
                 hoSoTiemChungBLL.Insert(hso);
                 lienKetHoSoBLL.Insert(new LienKetHoSoDTO
                 {
@@ -379,8 +374,141 @@ namespace TPVAXWinform_GUI
 
         private void btnLienKet_Click(object sender, EventArgs e)
         {
+
             EnableAllInputsHSTC();
-            btnThemHoSo.Enabled = true;
+            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
+            {
+                DialogResult result = MessageBox.Show("Khách hàng đã tồn tại. Bạn có muốn sử dụng thông tin khách hàng hiện tại để liên kết hồ sơ tiêm chủng không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    string cccd = txtCCCDKH.Text.Trim();
+
+                    DataTable dt = khachHangBLL.GetData();
+                    if (dt.PrimaryKey == null || dt.PrimaryKey.Length == 0)
+                        dt.PrimaryKey = new[] { dt.Columns["CCCD"] };
+
+                    DataRow dr = dt.Rows.Find(cccd);
+                    if (dr == null)
+                    {
+                        MessageBox.Show("Không tìm thấy khách hàng với CCCD đã nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    // Maked đã tìm thấy KH thông qua Flag và thêm vào mã kh tmp
+                    tempMaKH = dr["MaKH"]?.ToString() ?? "";
+
+                    List<String> DSHSTCLienKet = new List<String>();
+                    string makh = dr["MaKH"]?.ToString() ?? "";
+                    DataRow[] drDSHSTCLienKet = hoSoTiemChungBLL.GetHSTC_QuanHe_KH(makh).Select();
+                    foreach (DataRow row in drDSHSTCLienKet)
+                    {
+                        string HoTenKH = row["HoTenKH"]?.ToString() ?? "";
+                        string HoTenHS = row["HoTenHS"]?.ToString() ?? "";
+                        string quanHe = row["VaiTro"]?.ToString() ?? "Khác";
+
+                        string tmp = $"HS: {HoTenHS} - KH: {HoTenKH} - ({quanHe})";
+                        if (quanHe == "Bản thân")
+                            tmp = $"{HoTenKH} - {quanHe}";
+                        DSHSTCLienKet.Add(tmp);
+                    }
+                    cboDSHSTCLienKet.DataSource = null;
+                    if (DSHSTCLienKet.Count > 0)
+                    {
+                        cboDSHSTCLienKet.DataSource = DSHSTCLienKet;
+                    }
+
+                    txtHoTenKH.Text = dr["HoTen"]?.ToString() ?? "";
+                    txtDiaChi.Text = dr["DiaChi"]?.ToString() ?? "";
+                    txtSoDT.Text = dr["SoDT"]?.ToString() ?? "";
+                    dtpNgaySinhKH.Value = dr["NgaySinh"] is DateTime dte ? dte : DateTime.Now;
+                    txtEmail.Text = dr["Email"]?.ToString() ?? "";
+                    txtCCCDKH.Text = dr["CCCD"]?.ToString() ?? "";
+                    DisableAllInpusKH();
+                    btnThemTatCa.Visible = false;
+                    btnThemHoSo.Visible = true;
+                    return;
+                }
+                else
+                {
+                   btnReset_Click(sender, e);
+                    return;
+                }
+
+            }
+            btnThemTatCa.Visible = true;
+            btnThemHoSo.Visible = false;
+        }
+        private void btnThemTatCa_Click(object sender, EventArgs e)
+        {
+            if (txtCCCDHSTC.Text.Trim() == txtCCCDKH.Text.Trim())
+            {
+                MessageBox.Show("CCCD hồ sơ tiêm chủng không được trùng với CCCD khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Validation
+            bool hopLe = CheckValidationBeforeAddKH(); // Flag
+            if (!hopLe)
+            {
+                return;
+            }
+            string maKH = khachHangBLL.CreateMaKH(txtCCCDKH.Text.Trim());
+            string maHSTC = hoSoTiemChungBLL.CreateMaHSTC(txtCCCDKH.Text.Trim());
+            string maLK = lienKetHoSoBLL.CreateMaLK(txtCCCDKH.Text.Trim());
+            // Add
+            KhachHangDTO newKH = new KhachHangDTO();
+            newKH.CCCD = txtCCCDKH.Text.Trim();
+            newKH.MaKH = maKH;
+
+            newKH.HoTen = txtHoTenKH.Text.Trim();
+            newKH.DiaChi = txtDiaChi.Text.Trim();
+            newKH.SoDT = txtSoDT.Text.Trim();
+            newKH.NgaySinh = dtpNgaySinhKH.Value;
+            newKH.Email = txtEmail.Text.Trim();
+            newKH.GioiTinh = cboGioiTinhKH.SelectedItem.ToString();
+            // HoSoTiemChung
+            HoSoTiemChungDTO hso = new HoSoTiemChungDTO();
+            hso.MaHSTC = maHSTC;
+            hso.HoTen = txtHoTenHSTC.Text.Trim();
+            hso.GioiTinh = cboGioiTinhHSTC.SelectedItem.ToString();
+            hso.NgaySinh = dtpNgaySinhHSTC.Value;
+            hso.CCCD = txtCCCDKH.Text.Trim();
+            hso.GhiChu = txtGhiChuHSTC.Text.Trim();
+
+            // LienKet
+            LienKetHoSoDTO lkhs = new LienKetHoSoDTO();
+            lkhs.MaLK = maLK;
+            lkhs.NgayLienKet = DateTime.Now;
+            lkhs.MaKH = maKH;
+            lkhs.MaHSTC = maHSTC;
+            lkhs.VaiTro = "Bản thân";
+            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
+            {
+                try
+                {
+                    hoSoTiemChungBLL.Insert(hso);
+                    lienKetHoSoBLL.Insert(lkhs);
+                    MessageBox.Show("Khách hàng đã tồn tại. Thêm hồ sơ tiêm chủng và liên kết thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi thêm hồ sơ tiêm chủng và liên kết: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            try
+            {
+                khachHangBLL.Insert(newKH);
+                hoSoTiemChungBLL.Insert(hso);
+                lienKetHoSoBLL.Insert(lkhs);
+                MessageBox.Show("Thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm khách hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void btnDangKyKHAndHSTC_Click(object sender, EventArgs e)
         {
@@ -439,5 +567,8 @@ namespace TPVAXWinform_GUI
                 MessageBox.Show("Lỗi khi thêm khách hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
     }
+
 }
