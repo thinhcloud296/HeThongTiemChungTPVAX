@@ -1,0 +1,36 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TPVAXWebsite.Models.Domain
+{
+    [Table("HoSoTiemChung")]
+    public class HoSoTiemChung
+    {
+        [Key]
+        [StringLength(10)]
+        public string MaHSTC { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string HoTen { get; set; }
+
+        [StringLength(10)]
+        public string GioiTinh { get; set; }
+
+        [Required]
+        public DateTime NgaySinh { get; set; }
+
+        [Required]
+        [StringLength(12)]
+        public string CCCD { get; set; }
+
+        public string GhiChu { get; set; }
+
+        public bool TrangThai { get; set; } = true;
+
+        // Navigation properties
+        public virtual ICollection<LienKetHoSo> LienKetHoSos { get; set; }
+        public virtual ICollection<LichTiem> LichTiems { get; set; }
+    }
+}
