@@ -54,7 +54,6 @@
             this.colNuocSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlVaccineFilter = new System.Windows.Forms.Panel();
-            this.btnThemGoiVaccine = new System.Windows.Forms.Button();
             this.txtSoLuong = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnThemMuiTiem = new System.Windows.Forms.Button();
@@ -89,6 +88,7 @@
             this.lblTenNguoiTiemValue = new System.Windows.Forms.Label();
             this.lblTenNguoiTiem = new System.Windows.Forms.Label();
             this.pnlActions = new System.Windows.Forms.Panel();
+            this.btnLuuGoi = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.lbTongSoMui = new System.Windows.Forms.Label();
             this.lbTongGia = new System.Windows.Forms.Label();
@@ -100,7 +100,7 @@
             this.colSoLuongWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayTiemWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnLuuGoi = new System.Windows.Forms.Button();
+            this.btnThemGoiVaccine = new System.Windows.Forms.Button();
             this.pnlMain.SuspendLayout();
             this.grpDanhSachCho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
@@ -428,22 +428,6 @@
             this.pnlVaccineFilter.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             this.pnlVaccineFilter.Size = new System.Drawing.Size(1964, 60);
             this.pnlVaccineFilter.TabIndex = 1;
-            // 
-            // btnThemGoiVaccine
-            // 
-            this.btnThemGoiVaccine.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnThemGoiVaccine.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnThemGoiVaccine.FlatAppearance.BorderSize = 0;
-            this.btnThemGoiVaccine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThemGoiVaccine.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnThemGoiVaccine.ForeColor = System.Drawing.Color.White;
-            this.btnThemGoiVaccine.Location = new System.Drawing.Point(1767, 12);
-            this.btnThemGoiVaccine.Name = "btnThemGoiVaccine";
-            this.btnThemGoiVaccine.Size = new System.Drawing.Size(184, 38);
-            this.btnThemGoiVaccine.TabIndex = 17;
-            this.btnThemGoiVaccine.Text = "Thêm gói";
-            this.btnThemGoiVaccine.UseVisualStyleBackColor = false;
-            this.btnThemGoiVaccine.Click += new System.EventHandler(this.btnThemGoiVaccine_Click);
             // 
             // txtSoLuong
             // 
@@ -840,6 +824,22 @@
             this.pnlActions.Size = new System.Drawing.Size(1984, 92);
             this.pnlActions.TabIndex = 0;
             // 
+            // btnLuuGoi
+            // 
+            this.btnLuuGoi.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnLuuGoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.btnLuuGoi.FlatAppearance.BorderSize = 0;
+            this.btnLuuGoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuuGoi.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnLuuGoi.ForeColor = System.Drawing.Color.White;
+            this.btnLuuGoi.Location = new System.Drawing.Point(1022, 12);
+            this.btnLuuGoi.Name = "btnLuuGoi";
+            this.btnLuuGoi.Size = new System.Drawing.Size(223, 73);
+            this.btnLuuGoi.TabIndex = 6;
+            this.btnLuuGoi.Text = "Lưu gói";
+            this.btnLuuGoi.UseVisualStyleBackColor = false;
+            this.btnLuuGoi.Click += new System.EventHandler(this.btnLuuGoi_Click);
+            // 
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -960,20 +960,21 @@
             this.colNuocSXWait.ReadOnly = true;
             this.colNuocSXWait.Width = 150;
             // 
-            // btnLuuGoi
+            // btnThemGoiVaccine
             // 
-            this.btnLuuGoi.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnLuuGoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnLuuGoi.FlatAppearance.BorderSize = 0;
-            this.btnLuuGoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLuuGoi.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnLuuGoi.ForeColor = System.Drawing.Color.White;
-            this.btnLuuGoi.Location = new System.Drawing.Point(1022, 12);
-            this.btnLuuGoi.Name = "btnLuuGoi";
-            this.btnLuuGoi.Size = new System.Drawing.Size(223, 73);
-            this.btnLuuGoi.TabIndex = 6;
-            this.btnLuuGoi.Text = "Lưu gói";
-            this.btnLuuGoi.UseVisualStyleBackColor = false;
+            this.btnThemGoiVaccine.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnThemGoiVaccine.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnThemGoiVaccine.FlatAppearance.BorderSize = 0;
+            this.btnThemGoiVaccine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemGoiVaccine.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemGoiVaccine.ForeColor = System.Drawing.Color.White;
+            this.btnThemGoiVaccine.Location = new System.Drawing.Point(1767, 12);
+            this.btnThemGoiVaccine.Name = "btnThemGoiVaccine";
+            this.btnThemGoiVaccine.Size = new System.Drawing.Size(184, 38);
+            this.btnThemGoiVaccine.TabIndex = 17;
+            this.btnThemGoiVaccine.Text = "Thêm gói";
+            this.btnThemGoiVaccine.UseVisualStyleBackColor = false;
+            this.btnThemGoiVaccine.Click += new System.EventHandler(this.btnThemGoiVaccine_Click);
             // 
             // frmThemMuiTiem
             // 
@@ -1079,7 +1080,7 @@ private System.Windows.Forms.GroupBox grpThongTinHoSo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenGoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDoiTuongApDung;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaGoi;
-        private System.Windows.Forms.Button btnThemGoiVaccine;
         private System.Windows.Forms.Button btnLuuGoi;
+        private System.Windows.Forms.Button btnThemGoiVaccine;
     }
 }

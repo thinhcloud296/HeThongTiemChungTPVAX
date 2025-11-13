@@ -757,5 +757,17 @@ namespace TPVAXWinform_GUI
         {
             Close();
         }
+
+        private void btnLuuGoi_Click(object sender, EventArgs e)
+        {
+            if (dgvGoiVaccine.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một gói vaccine từ danh sách.", "Chưa chọn gói", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int selectedRowIndex = dgvGoiVaccine.SelectedRows[0].Index;
+            string maGoi = dgvGoiVaccine.Rows[selectedRowIndex].Cells["colMaGoi"].Value?.ToString()?.Trim() ?? "";
+            string tenGoi = dgvGoiVaccine.Rows[selectedRowIndex].Cells["colTenGoi"].Value?.ToString() ?? "";
+        }
     }
 }

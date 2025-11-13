@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
+using TPVAXWinform_DTO;
+using TPVAXWinform_DAL;
+namespace TPVAXWinform_BLL
+{
+    public class HoaDonBLL
+    {
+        HoaDonDAL dal = new HoaDonDAL();
+        public DataTable GetData()
+        {
+            return dal.GetData();
+        }
+        public void Insert(HoaDonDTO hd)
+        {
+            dal.Insert(hd);
+        }
+        public void Edit(HoaDonDTO hd)
+        {
+            dal.Edit(hd);
+        }
+    }
+}
