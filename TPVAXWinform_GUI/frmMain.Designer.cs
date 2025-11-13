@@ -55,6 +55,7 @@
             this.bangDieuKhienControl1 = new TPVAXWinform.UserControls.BangDieuKhienControl();
             this.hoSoTiemChungControl1 = new TPVAXWinform.UserControls.HoSoTiemChungControl();
             this.lichTiemControl1 = new TPVAXWinform_GUI.UserControls.LichTiemControl();
+            this.hoaDonControl1 = new TPVAXWinform_GUI.UserControls.HoaDonControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -507,6 +508,7 @@
             this.panel3.Controls.Add(this.bangDieuKhienControl1);
             this.panel3.Controls.Add(this.hoSoTiemChungControl1);
             this.panel3.Controls.Add(this.lichTiemControl1);
+            this.panel3.Controls.Add(this.hoaDonControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -540,6 +542,15 @@
             this.lichTiemControl1.Name = "lichTiemControl1";
             this.lichTiemControl1.Size = new System.Drawing.Size(1408, 818);
             this.lichTiemControl1.TabIndex = 2;
+            // 
+            // hoaDonControl1
+            // 
+            this.hoaDonControl1.BackColor = System.Drawing.Color.White;
+            this.hoaDonControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hoaDonControl1.Location = new System.Drawing.Point(10, 10);
+            this.hoaDonControl1.Name = "hoaDonControl1";
+            this.hoaDonControl1.Size = new System.Drawing.Size(1408, 818);
+            this.hoaDonControl1.TabIndex = 3;
             // 
             // frmMain
             // 
@@ -595,6 +606,7 @@
         private UserControls.BangDieuKhienControl bangDieuKhienControl1;
         private UserControls.HoSoTiemChungControl hoSoTiemChungControl1;
         private TPVAXWinform_GUI.UserControls.LichTiemControl lichTiemControl1;
+        private TPVAXWinform_GUI.UserControls.HoaDonControl hoaDonControl1;
     }
 }
 

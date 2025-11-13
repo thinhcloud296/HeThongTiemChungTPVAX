@@ -72,7 +72,7 @@ namespace TPVAXWinform
             button3.Click += (s, e) => MessageBox.Show("Vaccine - Đang phát triển", "Thông báo");
             button4.Click += (s, e) => MessageBox.Show("Nhà cung cấp - Đang phát triển", "Thông báo");
             button5.Click += (s, e) => MessageBox.Show("Nhân viên - Đang phát triển", "Thông báo");
-            button6.Click += (s, e) => MessageBox.Show("Hóa đơn - Đang phát triển", "Thông báo");
+            button6.Click += (s, e) => ShowHoaDonControl();
             button7.Click += (s, e) => MessageBox.Show("Khuyến mãi - Đang phát triển", "Thông báo");
             button8.Click += (s, e) => ShowDashboard();
 
@@ -86,6 +86,7 @@ namespace TPVAXWinform
             bangDieuKhienControl1.Visible = true;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
+            hoaDonControl1.Visible = false;
 
             // Bring dashboard to front
             bangDieuKhienControl1.BringToFront();
@@ -101,6 +102,7 @@ namespace TPVAXWinform
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = true;
             lichTiemControl1.Visible = false;
+            hoaDonControl1.Visible = false;
 
             // Bring immunization record to front
             hoSoTiemChungControl1.BringToFront();
@@ -112,12 +114,14 @@ namespace TPVAXWinform
             ResetMenuButtons();
             button1.BackColor = Color.FromArgb(52, 152, 219); // Highlight
         }
+
         private void ShowLichTiemControl()
         {
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = true;
+            hoaDonControl1.Visible = false;
 
             // Bring Lich Tiem control to front
             lichTiemControl1.BringToFront();
@@ -125,6 +129,22 @@ namespace TPVAXWinform
             // Reset button styles
             ResetMenuButtons();
             button2.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+        }
+
+        private void ShowHoaDonControl()
+        {
+            // Hide all user controls
+            bangDieuKhienControl1.Visible = false;
+            hoSoTiemChungControl1.Visible = false;
+            lichTiemControl1.Visible = false;
+            hoaDonControl1.Visible = true;
+
+            // Bring Hoa Don control to front
+            hoaDonControl1.BringToFront();
+
+            // Reset button styles
+            ResetMenuButtons();
+            button6.BackColor = Color.FromArgb(52, 152, 219); // Highlight
         }
 
         private void ResetMenuButtons()

@@ -96,6 +96,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Dashboard\Controls\KpiCard.Designer.cs" />
+    <Compile Include="frmChiTietHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChiTietHoaDon.Designer.cs">
+      <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEditHSTC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,12 @@
     <Compile Include="UserControls\BangDieuKhienControl.Designer.cs">
       <DependentUpon>BangDieuKhienControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\HoaDonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HoaDonControl.Designer.cs">
+      <DependentUpon>HoaDonControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\HoSoTiemChungControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -153,6 +165,9 @@
     <Compile Include="UserControls\LichTiemControl.Designer.cs">
       <DependentUpon>LichTiemControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="frmChiTietHoaDon.resx">
+      <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmEditHSTC.resx">
       <DependentUpon>frmEditHSTC.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\BangDieuKhienControl.resx">
       <DependentUpon>BangDieuKhienControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HoaDonControl.resx">
+      <DependentUpon>HoaDonControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\HoSoTiemChungControl.resx">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
