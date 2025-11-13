@@ -47,6 +47,7 @@ namespace TPVAXWinform_GUI
             cboGioiTinhHSTC.DataSource = gioiTinhOptions;
             cboGioiTinhKH.DataSource = gioiTinhOptions.Clone();
             DisableAllInputsHSTC();
+            LoadCboDSKHHG();
         }
         private void DisableAllInputsHSTC()
         {
@@ -88,18 +89,39 @@ namespace TPVAXWinform_GUI
             cboGioiTinhKH.Enabled = true;
             dtpNgaySinhKH.Enabled = true;
         }
+        private void LoadCboDSKHHG()
+        {
+            DataTable dtKH = khachHangBLL.GetDataWithHoTenAndCCCD();
 
+            try
+            {
+                dtKH.Columns.Add("DisplayAll",typeof(string),"HoTen + ' - ' + CCCD");
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm cột hiển thị: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            cboDSKHHG.DataSource = dtKH;
+            cboDSKHHG.DisplayMember = "DisplayAll";
+            cboDSKHHG.ValueMember = "CCCD";
+
+
+        }
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-
-            string cccd = txtTimCCCD.Text.Trim();
+            // 1. Kiểm tra xem người dùng đã chọn gì chưa
+            if (cboDSKHHG.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn một khách hàng từ danh sách.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboDSKHHG.Focus();
+                return;
+            }
+            string cccd = cboDSKHHG.SelectedValue.ToString().Trim();
             if (string.IsNullOrWhiteSpace(cccd) || !Regex.IsMatch(cccd, REGEX_CCCD))
             {
                 MessageBox.Show("CCCD tìm kiếm không hợp lệ. Phải là 12 số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtTimCCCD.Focus();
+                cboDSKHHG.Focus();
                 return; 
             }
-
 
             DataTable dt = khachHangBLL.GetData();
             if (dt.PrimaryKey == null || dt.PrimaryKey.Length == 0)
@@ -151,7 +173,6 @@ namespace TPVAXWinform_GUI
 
             cboDSHSTCLienKet.DataSource = null;
 
-            txtTimCCCD.Clear();
             txtHoTenKH.Clear();
             txtDiaChi.Clear();
             txtSoDT.Clear();

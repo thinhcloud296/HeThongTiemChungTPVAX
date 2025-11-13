@@ -47,6 +47,7 @@
             this.lblHoTenHoSo = new System.Windows.Forms.Label();
             this.lblTitleHoSo = new System.Windows.Forms.Label();
             this.pnlKhachHang = new System.Windows.Forms.Panel();
+            this.btnDangKyKHAndHSTC = new System.Windows.Forms.Button();
             this.cboDSHSTCLienKet = new System.Windows.Forms.ComboBox();
             this.txtCCCDKH = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -65,11 +66,10 @@
             this.txtHoTenKH = new System.Windows.Forms.TextBox();
             this.lblHoTenKH = new System.Windows.Forms.Label();
             this.btnTimKiem = new System.Windows.Forms.Button();
-            this.txtTimCCCD = new System.Windows.Forms.TextBox();
             this.lblTimCCCD = new System.Windows.Forms.Label();
             this.lblTitleKH = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnDangKyKHAndHSTC = new System.Windows.Forms.Button();
+            this.cboDSKHHG = new System.Windows.Forms.ComboBox();
             this.pnlMain.SuspendLayout();
             this.pnlHoSo.SuspendLayout();
             this.pnlKhachHang.SuspendLayout();
@@ -301,6 +301,7 @@
             // 
             this.pnlKhachHang.BackColor = System.Drawing.Color.White;
             this.pnlKhachHang.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKhachHang.Controls.Add(this.cboDSKHHG);
             this.pnlKhachHang.Controls.Add(this.btnDangKyKHAndHSTC);
             this.pnlKhachHang.Controls.Add(this.cboDSHSTCLienKet);
             this.pnlKhachHang.Controls.Add(this.txtCCCDKH);
@@ -320,7 +321,6 @@
             this.pnlKhachHang.Controls.Add(this.txtHoTenKH);
             this.pnlKhachHang.Controls.Add(this.lblHoTenKH);
             this.pnlKhachHang.Controls.Add(this.btnTimKiem);
-            this.pnlKhachHang.Controls.Add(this.txtTimCCCD);
             this.pnlKhachHang.Controls.Add(this.lblTimCCCD);
             this.pnlKhachHang.Controls.Add(this.lblTitleKH);
             this.pnlKhachHang.Dock = System.Windows.Forms.DockStyle.Top;
@@ -329,6 +329,22 @@
             this.pnlKhachHang.Name = "pnlKhachHang";
             this.pnlKhachHang.Size = new System.Drawing.Size(1290, 370);
             this.pnlKhachHang.TabIndex = 0;
+            // 
+            // btnDangKyKHAndHSTC
+            // 
+            this.btnDangKyKHAndHSTC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnDangKyKHAndHSTC.FlatAppearance.BorderSize = 0;
+            this.btnDangKyKHAndHSTC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDangKyKHAndHSTC.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnDangKyKHAndHSTC.ForeColor = System.Drawing.Color.White;
+            this.btnDangKyKHAndHSTC.Location = new System.Drawing.Point(929, 318);
+            this.btnDangKyKHAndHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDangKyKHAndHSTC.Name = "btnDangKyKHAndHSTC";
+            this.btnDangKyKHAndHSTC.Size = new System.Drawing.Size(311, 45);
+            this.btnDangKyKHAndHSTC.TabIndex = 17;
+            this.btnDangKyKHAndHSTC.Text = "Đăng ký Hồ sơ khách hàng";
+            this.btnDangKyKHAndHSTC.UseVisualStyleBackColor = false;
+            this.btnDangKyKHAndHSTC.Click += new System.EventHandler(this.btnDangKyKHAndHSTC_Click);
             // 
             // cboDSHSTCLienKet
             // 
@@ -534,15 +550,6 @@
             this.btnTimKiem.UseVisualStyleBackColor = false;
             this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
-            // txtTimCCCD
-            // 
-            this.txtTimCCCD.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtTimCCCD.Location = new System.Drawing.Point(270, 80);
-            this.txtTimCCCD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txtTimCCCD.Name = "txtTimCCCD";
-            this.txtTimCCCD.Size = new System.Drawing.Size(448, 34);
-            this.txtTimCCCD.TabIndex = 2;
-            // 
             // lblTimCCCD
             // 
             this.lblTimCCCD.AutoSize = true;
@@ -550,9 +557,9 @@
             this.lblTimCCCD.Location = new System.Drawing.Point(45, 85);
             this.lblTimCCCD.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTimCCCD.Name = "lblTimCCCD";
-            this.lblTimCCCD.Size = new System.Drawing.Size(160, 28);
+            this.lblTimCCCD.Size = new System.Drawing.Size(168, 28);
             this.lblTimCCCD.TabIndex = 1;
-            this.lblTimCCCD.Text = "Tìm kiếm CCCD:";
+            this.lblTimCCCD.Text = "Tìm khách hàng:";
             // 
             // lblTitleKH
             // 
@@ -573,21 +580,21 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // btnDangKyKHAndHSTC
+            // cboDSKHHG
             // 
-            this.btnDangKyKHAndHSTC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnDangKyKHAndHSTC.FlatAppearance.BorderSize = 0;
-            this.btnDangKyKHAndHSTC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDangKyKHAndHSTC.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnDangKyKHAndHSTC.ForeColor = System.Drawing.Color.White;
-            this.btnDangKyKHAndHSTC.Location = new System.Drawing.Point(929, 318);
-            this.btnDangKyKHAndHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnDangKyKHAndHSTC.Name = "btnDangKyKHAndHSTC";
-            this.btnDangKyKHAndHSTC.Size = new System.Drawing.Size(311, 45);
-            this.btnDangKyKHAndHSTC.TabIndex = 17;
-            this.btnDangKyKHAndHSTC.Text = "Đăng ký Hồ sơ khách hàng";
-            this.btnDangKyKHAndHSTC.UseVisualStyleBackColor = false;
-            this.btnDangKyKHAndHSTC.Click += new System.EventHandler(this.btnDangKyKHAndHSTC_Click);
+            this.cboDSKHHG.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cboDSKHHG.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboDSKHHG.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboDSKHHG.FormattingEnabled = true;
+            this.cboDSKHHG.Items.AddRange(new object[] {
+            "Nam",
+            "Nữ",
+            "Khác"});
+            this.cboDSKHHG.Location = new System.Drawing.Point(270, 81);
+            this.cboDSKHHG.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboDSKHHG.Name = "cboDSKHHG";
+            this.cboDSKHHG.Size = new System.Drawing.Size(482, 36);
+            this.cboDSKHHG.TabIndex = 16;
             // 
             // frmThemHSTC_KH
             // 
@@ -618,7 +625,6 @@
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Panel pnlKhachHang;
         private System.Windows.Forms.Label lblTitleKH;
-        private System.Windows.Forms.TextBox txtTimCCCD;
         private System.Windows.Forms.Label lblTimCCCD;
         private System.Windows.Forms.Button btnTimKiem;
         private System.Windows.Forms.TextBox txtHoTenKH;
@@ -656,5 +662,6 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button btnLienKet;
         private System.Windows.Forms.Button btnDangKyKHAndHSTC;
+        private System.Windows.Forms.ComboBox cboDSKHHG;
     }
 }

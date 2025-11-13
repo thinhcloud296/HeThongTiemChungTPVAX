@@ -16,6 +16,11 @@ namespace TPVAXWinform_DAL
             const string sql = "SELECT * FROM dbo.KhachHang";
             return DBConnect.ExecuteQuery(sql);
         }
+        public DataTable GetDataWithHoTenAndCCCD()
+        {
+            const string sql = "SELECT HoTen,CCCD FROM dbo.KhachHang";
+            return DBConnect.ExecuteQuery(sql);
+        }
         public string CreateMaKH(string CCCD)
         {
             string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;

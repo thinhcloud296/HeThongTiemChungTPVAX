@@ -49,6 +49,8 @@
             this.colNuocSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlVaccineFilter = new System.Windows.Forms.Panel();
+            this.txtSoLuong = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.btnThemMuiTiem = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtGhiChu = new System.Windows.Forms.TextBox();
@@ -90,8 +92,6 @@
             this.colSoLuongWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayTiemWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSXWait = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtSoLuong = new System.Windows.Forms.TextBox();
             this.pnlMain.SuspendLayout();
             this.grpDanhSachCho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaccineWait)).BeginInit();
@@ -352,6 +352,25 @@
             this.pnlVaccineFilter.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             this.pnlVaccineFilter.Size = new System.Drawing.Size(1964, 60);
             this.pnlVaccineFilter.TabIndex = 1;
+            // 
+            // txtSoLuong
+            // 
+            this.txtSoLuong.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtSoLuong.Location = new System.Drawing.Point(1624, 15);
+            this.txtSoLuong.Name = "txtSoLuong";
+            this.txtSoLuong.Size = new System.Drawing.Size(43, 34);
+            this.txtSoLuong.TabIndex = 16;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.label5.Location = new System.Drawing.Point(1519, 20);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(99, 25);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Số lượng:";
             // 
             // btnThemMuiTiem
             // 
@@ -819,25 +838,6 @@
             this.colNuocSXWait.Name = "colNuocSXWait";
             this.colNuocSXWait.ReadOnly = true;
             this.colNuocSXWait.Width = 150;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.label5.Location = new System.Drawing.Point(1519, 20);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(99, 25);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Số lượng:";
-            // 
-            // txtSoLuong
-            // 
-            this.txtSoLuong.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSoLuong.Location = new System.Drawing.Point(1624, 15);
-            this.txtSoLuong.Name = "txtSoLuong";
-            this.txtSoLuong.Size = new System.Drawing.Size(43, 34);
-            this.txtSoLuong.TabIndex = 16;
             // 
             // frmThemMuiTiem
             // 

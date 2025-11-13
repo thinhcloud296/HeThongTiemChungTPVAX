@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
+using System.Globalization;
 using TPVAXWinform_BLL;
 using TPVAXWinform_DTO;
 
@@ -305,8 +306,6 @@ namespace TPVAXWinform_GUI
                 loaiBenh = drv["Loại bệnh"].ToString();
                 loaiVC = drv["Loại Vaccine"].ToString();
                 giaBan = Convert.ToDecimal(drv["Giá bán"]);
-
-                // Lấy SoMuiToiDa trực tiếp (chúng ta đã thêm cột này vào Proc)
                 soMuiToiDa = Convert.ToInt32(drv["SoMuiToiDa"]);
             }
             catch (Exception ex)
@@ -316,7 +315,7 @@ namespace TPVAXWinform_GUI
             }
 
             // --- BƯỚC 2: LẤY DỮ LIỆU NHẬP LIỆU ---
-            string ngayTiem = dtpNgayTiem.Value.ToString("dd/MM/yyyy");
+            string ngayTiem = dtpNgayTiem.Value.ToString();
             string ghiChu = txtGhiChu.Text.Trim();
             int soLuongMoi; // Số lượng mũi người dùng muốn thêm (từ textbox)
 
