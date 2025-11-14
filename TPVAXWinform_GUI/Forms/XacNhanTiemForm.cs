@@ -88,14 +88,14 @@ namespace TPVAXWinform_GUI.Forms
                         return;
                     }
 
-                    // C?p nh?t l?ch tiêm
+                  
                     LichTiemDTO lichTiem = new LichTiemDTO
                     {
                         MaLT = maLT,
                         MaHSTC = maHSTC,
                         MaVC = maVC,
                         NgayHenTiem = ngayHenTiem,
-                        TrangThai = true, // ?ã tiêm
+                        TrangThai = "Đã tiêm",
                         NgayTiemThucTe = DateTime.Now,
                         GhiChu = txtGhiChu.Text.Trim()
                     };

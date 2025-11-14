@@ -199,7 +199,7 @@ namespace TPVAXWinform_DAL
             lichHenMoi.MaVC = maVCDaTiem;
             lichHenMoi.NgayHenTiem = ngayHenMoi;
             lichHenMoi.SoMui = soMuiKeTiep;
-            lichHenMoi.TrangThai = false; // (Vì bạn đã đổi sang NVARCHAR)
+            lichHenMoi.TrangThai = "Chưa tiêm"; // (Vì bạn đã đổi sang NVARCHAR)
             lichHenMoi.GhiChu = $"Hẹn nhắc lại mũi {soMuiKeTiep} cho {vaccine.TenVC}";
 
             // Thêm vào CSDL

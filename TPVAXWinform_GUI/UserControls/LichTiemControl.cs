@@ -81,16 +81,16 @@ namespace TPVAXWinform_GUI.UserControls
         {
             string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
 
-            // Kiểm tra trạng thái
-            if (trangThai.Equals("1"))
+            // Kiểm tra nếu đã tiêm (TrangThai = true hoặc "1")
+            if (trangThai.Equals("Đã tiêm", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Mũi tiêm này đã được xác nhận tiêm rồi!", "Thông báo",
+                MessageBox.Show("Đã tiêm!", "Thông báo",
                  MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             // Kiểm tra nếu đã hủy (null hoặc rỗng)
-            if (string.IsNullOrEmpty(trangThai) || trangThai == "")
+            if (trangThai.Equals("Đã hủy", StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(trangThai) || trangThai == "")
             {
                 MessageBox.Show("Không thể xác nhận mũi tiêm đã bị hủy!", "Thông báo",
             MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -135,8 +135,8 @@ namespace TPVAXWinform_GUI.UserControls
         {
             string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
 
-            // Kiểm tra trạng thái
-            if (trangThai.Equals("1"))
+            // Kiểm tra nếu đã tiêm (TrangThai = true hoặc "1")
+            if (trangThai.Equals("Đã tiêm", StringComparison.OrdinalIgnoreCase))
             {
                 MessageBox.Show("Không thể hủy mũi tiêm đã được tiêm!", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -149,10 +149,10 @@ namespace TPVAXWinform_GUI.UserControls
 
             DialogResult result = MessageBox.Show(
              $"Hủy lịch tiêm cho:\n\n" +
-    $"👤 Người tiêm: {tenNguoiTiem}\n" +
-           $"💉 Vaccine: {tenVaccine}\n\n" +
-              $"Bạn có chắc chắn muốn hủy?",
-                "Hủy lịch tiêm",
+             $"👤 Người tiêm: {tenNguoiTiem}\n" +
+             $"💉 Vaccine: {tenVaccine}\n\n" +
+             $"Bạn có chắc chắn muốn hủy?",
+            "Hủy lịch tiêm",
             MessageBoxButtons.YesNo,
          MessageBoxIcon.Warning);
 
@@ -174,7 +174,7 @@ namespace TPVAXWinform_GUI.UserControls
                             MaHSTC = maHSTC,
                             MaVC = maVC,
                             NgayHenTiem = ngayHenTiem,
-                            TrangThai = null,
+                            TrangThai = null, // Đã hủy - set thành null
                             NgayTiemThucTe = null,
                             GhiChu = "Đã hủy"
                         };
@@ -182,7 +182,7 @@ namespace TPVAXWinform_GUI.UserControls
                         lichTiemBLL.Edit(lichTiem);
 
                         MessageBox.Show("Hủy lịch tiêm thành công!", "Thành công",
-                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // Refresh lại dữ liệu
                         LoadDSLT();
@@ -191,7 +191,7 @@ namespace TPVAXWinform_GUI.UserControls
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Lỗi khi hủy lịch tiêm: {ex.Message}", "Lỗi",
-                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -210,13 +210,13 @@ namespace TPVAXWinform_GUI.UserControls
                 DataGridViewCellStyle style = e.CellStyle;
                 style.Font = new Font(e.CellStyle.Font, FontStyle.Regular);
 
-                if (trangThaiValue.Equals("True", StringComparison.OrdinalIgnoreCase) || trangThaiValue.Equals("1"))
+                if (trangThaiValue.Equals("Đã tiêm", StringComparison.OrdinalIgnoreCase))
                 {
                     e.Value = "Đã tiêm";
                     style.BackColor = Color.FromArgb(200, 230, 201); // Xanh lá
                     style.ForeColor = Color.Black;
                 }
-                else if (trangThaiValue.Equals("False", StringComparison.OrdinalIgnoreCase) || trangThaiValue.Equals("0"))
+                else if (trangThaiValue.Equals("Chưa tiêm", StringComparison.OrdinalIgnoreCase))
                 {
                     e.Value = "Chưa tiêm";
                     style.BackColor = Color.FromArgb(255, 224, 178); // Cam
@@ -255,6 +255,14 @@ namespace TPVAXWinform_GUI.UserControls
             dgvLichTiem.Columns["colNgayHen"].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvLichTiem.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
             dgvLichTiem.RowTemplate.Height = 36;
+
+            // Căn giữa các cột theo yêu cầu
+            dgvLichTiem.Columns["colMaLT"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dgvLichTiem.Columns["colMaHSTC"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dgvLichTiem.Columns["colSoMui"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dgvLichTiem.Columns["colNgayHen"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dgvLichTiem.Columns["colTrangThai"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dgvLichTiem.Columns["colNgayTiemThucTe"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
         }
 
         #region Bộ lọc
@@ -293,11 +301,11 @@ namespace TPVAXWinform_GUI.UserControls
                 // (Code lọc trạng thái của bạn đã ĐÚNG, vì cột Trạng thái đang là "0" hoặc "1")
                 if (daTiem && !chuaTiem)
                 {
-                    filters.Add("[Trạng thái] = 1 ");
+                    filters.Add("[Trạng thái] = 'Đã tiêm' ");
                 }
                 else if (!daTiem && chuaTiem)
                 {
-                    filters.Add("[Trạng thái] = 0 ");
+                    filters.Add("[Trạng thái] = 'Chưa tiêm' ");
                 }
                 else if (!daTiem && !chuaTiem)
                 {
