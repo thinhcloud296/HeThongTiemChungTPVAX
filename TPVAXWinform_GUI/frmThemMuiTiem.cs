@@ -20,8 +20,11 @@ namespace TPVAXWinform_GUI
         private VaccineBLL vaccineBLL = new VaccineBLL();
         private LichTiemBLL lichTiemBLL = new LichTiemBLL();
         private GoiVaccineBLL goiVaccineBLL = new GoiVaccineBLL();
+        private HoaDonBLL hoaDonBLL = new HoaDonBLL();
+        private ChiTietHoaDonBLL chiTietHoaDonBLL = new ChiTietHoaDonBLL();
         private ChiTietGoiVaccineBLL chiTietGoiVaccineBLL = new ChiTietGoiVaccineBLL();
         private string MaHSTC;
+        private string MaKHHSTC;
         public frmThemMuiTiem()
         {
             InitializeComponent();
@@ -33,7 +36,7 @@ namespace TPVAXWinform_GUI
         }
 
 
-        public frmThemMuiTiem(string maHSTC, string hoTen, string gioiTinh, string ngaySinh, string tenKH, string quanHe, string soDTKH)
+        public frmThemMuiTiem(string maHSTC, string hoTen, string gioiTinh, string ngaySinh, string maKH, string tenKH, string quanHe, string soDTKH)
         {
             InitializeComponent();
             InitializeFormSize();
@@ -49,6 +52,8 @@ namespace TPVAXWinform_GUI
             lblTenKhachHangValue.Text = tenKH;
             lblQuanHeValue.Text = quanHe;
             lblSoDTValue.Text = soDTKH;
+
+            MaKHHSTC = maKH;
             MaHSTC = maHSTC;
         }
 
@@ -104,8 +109,8 @@ namespace TPVAXWinform_GUI
             dgvVaccineWait.Rows.Clear();
             LoadDSGoiVC();
             LoadDSVC();
-            btnLuuGoi.Visible = false; 
-            btnLuuTatCa.Visible = true;  
+            btnLuuGoi.Visible = false;
+            btnLuuTatCa.Visible = true;
             // Reset các combobox bộ lọc
             if (cboLoaiBenh.Items.Count > 0)
             {
@@ -704,7 +709,7 @@ namespace TPVAXWinform_GUI
                     {
                         if (waitRow.IsNewRow) continue;
                         if (waitRow.Cells["colMaVCW"].Value != null &&
-   waitRow.Cells["colMaVCW"].Value.ToString() == maVC)
+                            waitRow.Cells["colMaVCW"].Value.ToString() == maVC)
                         {
                             isDuplicate = true;
                             countSkipped++;
@@ -738,14 +743,6 @@ namespace TPVAXWinform_GUI
                         dgvGoiVaccine.Rows.RemoveAt(i);
                     }
                 }
-
-                // Thông báo kết quả
-                string message = $"Đã thêm {countAdded} vaccine từ gói '{tenGoi}' vào danh sách chờ.";
-                if (countSkipped > 0)
-                {
-                    message += $"\n{countSkipped} vaccine đã tồn tại trong danh sách.";
-                }
-                MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -767,7 +764,35 @@ namespace TPVAXWinform_GUI
             }
             int selectedRowIndex = dgvGoiVaccine.SelectedRows[0].Index;
             string maGoi = dgvGoiVaccine.Rows[selectedRowIndex].Cells["colMaGoi"].Value?.ToString()?.Trim() ?? "";
-            string tenGoi = dgvGoiVaccine.Rows[selectedRowIndex].Cells["colTenGoi"].Value?.ToString() ?? "";
+
+            HoaDonDTO newHD = new HoaDonDTO();
+            newHD.MaHD = hoaDonBLL.CreateNewMaHD();
+            newHD.NgayLap = DateTime.Now;
+            newHD.TongTien = Convert.ToDecimal(dgvGoiVaccine.Rows[selectedRowIndex].Cells["colGiaGoi"].Value);
+            newHD.TrangThai = false;
+            newHD.MaKH = MaKHHSTC;
+            newHD.MaNV = null;
+            newHD.MaKM = null;
+
+            ChiTietHoaDonDTO NewCTHD = new ChiTietHoaDonDTO();
+            NewCTHD.MaCTHD = chiTietHoaDonBLL.CreateNewMaCTHD();
+            NewCTHD.SoLuong = 1;
+            NewCTHD.DonGia = newHD.TongTien;
+            NewCTHD.MaSanPham = maGoi;
+            NewCTHD.LoaiSanPham = "GOIVACCINE";
+            NewCTHD.MaHD = newHD.MaHD;
+            try
+            {
+                hoaDonBLL.Insert(newHD);
+                chiTietHoaDonBLL.Insert(NewCTHD);
+                MessageBox.Show("Lưu gói vaccine vào hóa đơn thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu gói vaccine vào hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

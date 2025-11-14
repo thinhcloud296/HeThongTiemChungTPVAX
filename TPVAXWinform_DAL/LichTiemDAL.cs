@@ -38,13 +38,13 @@ namespace TPVAXWinform_DAL
             }
             if (string.IsNullOrEmpty(lastMaLT))
             {
-                return "LT000001";
+                return "LTIE000001";
             }
-            string numericPart = lastMaLT.Substring(2);
+            string numericPart = lastMaLT.Substring(4);
             if (int.TryParse(numericPart, out int number))
             {
                 number++;
-                string nextMaLT = "LT" + number.ToString("D6");
+                string nextMaLT = "LTIE" + number.ToString("D6");
                 lastMaLT = nextMaLT;
                 return nextMaLT;
             }
@@ -52,12 +52,6 @@ namespace TPVAXWinform_DAL
             {
                 throw new Exception("Invalid MaLT format in database.");
             }
-        }
-        public string CreateMaLT(string CCCD)
-        {
-
-            string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;
-            return string.Equals(cccdSuffix, string.Empty) ? string.Empty : "LT" + cccdSuffix;
         }
 
         public void Insert(LichTiemDTO lichTiem)

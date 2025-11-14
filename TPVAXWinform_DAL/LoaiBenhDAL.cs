@@ -35,13 +35,13 @@ namespace TPVAXWinform_DAL
             }
             if (string.IsNullOrEmpty(lastMaLoaiBenh))
             {
-                return "LB000001";
+                return "LBEN000001";
             }
-            string numericPart = lastMaLoaiBenh.Substring(2);
+            string numericPart = lastMaLoaiBenh.Substring(4);
             if (int.TryParse(numericPart, out int number))
             {
                 number++;
-                string MaLoaiBenh = "LB" + number.ToString("D6");
+                string MaLoaiBenh = "LBEN" + number.ToString("D6");
                 lastMaLoaiBenh = MaLoaiBenh;
                 return MaLoaiBenh;
             }

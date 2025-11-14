@@ -176,6 +176,7 @@ namespace TPVAXWinform.UserControls
             colQuanHeHS.DataPropertyName = "VaiTro";
             colCCCDHS.DataPropertyName = "CCCDHS";
             colSoDTKhHSTC.DataPropertyName = "SoDT";
+            colMaKHHSTC.DataPropertyName = "MaKH";
             dgvHSTC.DataSource = dt;
 
             dgvHSTC.Columns["colNgaySinhHS"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -614,8 +615,9 @@ namespace TPVAXWinform.UserControls
                     "";
                 string quanhe = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colQuanHeHS"].Value?.ToString() ?? "";
                 string tenKH = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenKHHGHS"].Value?.ToString() ?? "";
+                string maKH = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colMaKHHSTC"].Value?.ToString() ?? "";
 
-                frmThemMuiTiem formTiem = new frmThemMuiTiem(maHSTC, hoTen, gt, ns, tenKH, quanhe,soDTKH);
+                frmThemMuiTiem formTiem = new frmThemMuiTiem(maHSTC, hoTen, gt, ns,maKH, tenKH, quanhe,soDTKH);
                 formTiem.ShowDialog();
             }
         }

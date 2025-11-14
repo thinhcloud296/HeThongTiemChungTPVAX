@@ -35,13 +35,13 @@ namespace TPVAXWinform_DAL
             }
             if (string.IsNullOrEmpty(lastMaLoaiVaccine))
             {
-                return "LV000001";
+                return "LVAC000001";
             }
-            string numericPart = lastMaLoaiVaccine.Substring(2);
+            string numericPart = lastMaLoaiVaccine.Substring(4);
             if (int.TryParse(numericPart, out int number))
             {
                 number++;
-                string MaLoaiVaccine = "LV" + number.ToString("D6");
+                string MaLoaiVaccine = "LVAC" + number.ToString("D6");
                 lastMaLoaiVaccine = MaLoaiVaccine;
                 return MaLoaiVaccine;
             }

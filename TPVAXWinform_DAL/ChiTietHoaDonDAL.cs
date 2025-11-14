@@ -11,9 +11,47 @@ namespace TPVAXWinform_DAL
     public class ChiTietHoaDonDAL
     {
         private string selectSql = "SELECT * FROM dbo.ChiTietHoaDon";
-        public DataTable GetData()
+        private string lastMaCTHD = "";
+        public DataTable GetDataByMaHD(string MaHD)
         {
-            return DBConnect.ExecuteQuery(selectSql);
+            return DBConnect.ExecuteQuery(
+                "dbo.usp_ChiTietHoaDon_GetByMaHD",
+                CommandType.StoredProcedure,
+                DBConnect.Param("@MaHD", MaHD, SqlDbType.Char, 8) // Gán giá trị MaHD, sửa size = 8
+            );
+        }
+        public string GetLastMaCTHD()
+        {
+            const string sql = "SELECT TOP 1 MaCTHD FROM dbo.ChiTietHoaDon ORDER BY MaCTHD DESC";
+            DataTable dt = DBConnect.ExecuteQuery(sql);
+            if (dt.Rows.Count > 0)
+            {
+                lastMaCTHD = dt.Rows[0]["MaCTHD"].ToString();
+            }
+            return lastMaCTHD;
+        }
+        public string CreateNewMaCTHD()
+        {
+            if (string.IsNullOrEmpty(lastMaCTHD))
+            {
+                lastMaCTHD = GetLastMaCTHD();
+            }
+            if (string.IsNullOrEmpty(lastMaCTHD))
+            {
+                return "CTHD000001";
+            }
+            string numericPart = lastMaCTHD.Substring(4);
+            if (int.TryParse(numericPart, out int number))
+            {
+                number++;
+                string nextMaCTHD = "CTHD" + number.ToString("D6");
+                lastMaCTHD = nextMaCTHD;
+                return nextMaCTHD;
+            }
+            else
+            {
+                throw new Exception("Invalid MaCTHD format in database.");
+            }
         }
         public void Insert(ChiTietHoaDonDTO cthd)
         {
@@ -53,7 +91,7 @@ namespace TPVAXWinform_DAL
                         row["DonGia"] = cthd.DonGia;
                         row["MaSanPham"] = cthd.MaSanPham;
                         row["LoaiSanPham"] = cthd.LoaiSanPham;
-                        row["MaHD"] = cthd.MaHD;
+                        row["MaCTHD"] = cthd.MaCTHD;
 
                         buffer.Save();
                     }
@@ -68,6 +106,5 @@ namespace TPVAXWinform_DAL
                 throw new Exception("Lỗi khi sửa chi tiết hóa đơn: " + ex.Message);
             }
         }
-
     }
 }

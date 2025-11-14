@@ -26,5 +26,6 @@ namespace TPVAXWinform_DTO
             LoaiSanPham = loaiSanPham;
             MaHD = maHD;
         }
+        
     }
 }

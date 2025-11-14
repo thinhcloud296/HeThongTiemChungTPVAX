@@ -15,6 +15,10 @@ namespace TPVAXWinform_BLL
         {
             return dal.GetData();
         }
+        public string CreateNewMaHD()
+        {
+            return dal.CreateNewMaHD();
+        }
         public void Insert(HoaDonDTO hd)
         {
             dal.Insert(hd);

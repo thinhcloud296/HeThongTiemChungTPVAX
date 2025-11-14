@@ -72,6 +72,7 @@
             this.colHoTenKHHGHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colQuanHeHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoDTKhHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaKHHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).BeginInit();
@@ -363,7 +364,8 @@
             this.colCCCDHS,
             this.colHoTenKHHGHS,
             this.colQuanHeHS,
-            this.colSoDTKhHSTC});
+            this.colSoDTKhHSTC,
+            this.colMaKHHSTC});
             this.dgvHSTC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvHSTC.Location = new System.Drawing.Point(3, 189);
             this.dgvHSTC.Name = "dgvHSTC";
@@ -569,11 +571,19 @@
             // 
             // colSoDTKhHSTC
             // 
-            this.colSoDTKhHSTC.HeaderText = "Column1";
+            this.colSoDTKhHSTC.HeaderText = "Số ĐT khách hàng";
             this.colSoDTKhHSTC.MinimumWidth = 8;
             this.colSoDTKhHSTC.Name = "colSoDTKhHSTC";
             this.colSoDTKhHSTC.ReadOnly = true;
             this.colSoDTKhHSTC.Visible = false;
+            // 
+            // colMaKHHSTC
+            // 
+            this.colMaKHHSTC.HeaderText = "Mã KH của HSTC";
+            this.colMaKHHSTC.MinimumWidth = 8;
+            this.colMaKHHSTC.Name = "colMaKHHSTC";
+            this.colMaKHHSTC.ReadOnly = true;
+            this.colMaKHHSTC.Visible = false;
             // 
             // HoSoTiemChungControl
             // 
@@ -646,5 +656,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colHoTenKHHGHS;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQuanHeHS;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoDTKhHSTC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMaKHHSTC;
     }
 }

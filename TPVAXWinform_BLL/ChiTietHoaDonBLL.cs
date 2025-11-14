@@ -11,10 +11,15 @@ namespace TPVAXWinform_BLL
     public class ChiTietHoaDonBLL
     {
         ChiTietHoaDonDAL dal = new ChiTietHoaDonDAL();
-        public DataTable GetData()
+        public DataTable GetDataByMaHD(string MaHD)
         {
-            return dal.GetData();
+            return dal.GetDataByMaHD(MaHD);
         }
+        public string CreateNewMaCTHD()
+        {
+            return dal.CreateNewMaCTHD();
+        }   
+
         public void Insert(ChiTietHoaDonDTO cthd)
         {
             dal.Insert(cthd);

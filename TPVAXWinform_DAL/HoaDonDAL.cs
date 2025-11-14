@@ -11,11 +11,44 @@ namespace TPVAXWinform_DAL
     public class HoaDonDAL
     {
         private string selectSql = "SELECT * FROM dbo.HoaDon";
+        private string lastMaHD = "";
         public DataTable GetData()
         {
             return DBConnect.ExecuteQuery(selectSql);
         }
-
+        public string GetLastMaHD()
+        {
+            const string sql = "SELECT TOP 1 MaHD FROM dbo.HoaDon ORDER BY MaHD DESC";
+            DataTable dt = DBConnect.ExecuteQuery(sql);
+            if (dt.Rows.Count > 0)
+            {
+                lastMaHD = dt.Rows[0]["MaHD"].ToString();
+            }
+            return lastMaHD;
+        }
+        public string CreateNewMaHD()
+        {
+            if (string.IsNullOrEmpty(lastMaHD))
+            {
+                lastMaHD = GetLastMaHD();
+            }
+            if (string.IsNullOrEmpty(lastMaHD))
+            {
+                return "HDON000001";
+            }
+            string numericPart = lastMaHD.Substring(4);
+            if (int.TryParse(numericPart, out int number))
+            {
+                number++;
+                string nextMaHD = "HDON" + number.ToString("D6");
+                lastMaHD = nextMaHD;
+                return nextMaHD;
+            }
+            else
+            {
+                throw new Exception("Invalid MaHD format in database.");
+            }
+        }
         public void Insert(HoaDonDTO hd)
         {
             try
