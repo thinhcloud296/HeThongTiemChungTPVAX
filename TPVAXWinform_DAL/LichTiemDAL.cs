@@ -11,7 +11,7 @@ namespace TPVAXWinform_DAL
     public class LichTiemDAL
     {
         private string lastMaLT = "";
-        private string selectSql = "SELECT * FROM dbo.Vaccine";
+        private string selectSql = "SELECT * FROM dbo.LichTiem";
         public DataTable GetData()
         {
             return DBConnect.ExecuteQuery(selectSql);

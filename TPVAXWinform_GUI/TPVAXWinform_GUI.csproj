@@ -96,6 +96,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Dashboard\Controls\KpiCard.Designer.cs" />
+    <Compile Include="Forms\XacNhanTiemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\XacNhanTiemForm.Designer.cs">
+      <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmChiTietHoaDon.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,9 @@
     <Compile Include="UserControls\LichTiemControl.Designer.cs">
       <DependentUpon>LichTiemControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\XacNhanTiemForm.resx">
+      <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmChiTietHoaDon.resx">
       <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>
     </EmbeddedResource>

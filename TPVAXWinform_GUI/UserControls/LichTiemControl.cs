@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TPVAXWinform_BLL;
 using TPVAXWinform_DTO;
+using TPVAXWinform_GUI.Forms;
 
 namespace TPVAXWinform_GUI.UserControls
 {
@@ -34,6 +35,9 @@ namespace TPVAXWinform_GUI.UserControls
         {
             // Gán event handler để tô màu các dòng theo trạng thái
             dgvLichTiem.CellFormatting += dgvLichTiem_CellFormatting;
+
+            // Gán event handler cho button clicks trong DataGridView
+            dgvLichTiem.CellContentClick += dgvLichTiem_CellContentClick;
         }
 
         private void InitializeFilters()
@@ -50,6 +54,146 @@ namespace TPVAXWinform_GUI.UserControls
             // Mặc định check cả 2 checkbox
             chkDaTiem.Checked = true;
             chkChuaTiem.Checked = true;
+        }
+
+        private void dgvLichTiem_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Bỏ qua nếu click vào header
+            if (e.RowIndex < 0)
+                return;
+
+            DataGridViewRow selectedRow = dgvLichTiem.Rows[e.RowIndex];
+            string columnName = dgvLichTiem.Columns[e.ColumnIndex].Name;
+
+            // Xử lý khi click vào cột "Tiêm"
+            if (columnName == "colCheckIn")
+            {
+                XacNhanTiemClick(selectedRow);
+            }
+            // Xử lý khi click vào cột "Hủy"
+            else if (columnName == "colHuy")
+            {
+                HuyTiemClick(selectedRow);
+            }
+        }
+
+        private void XacNhanTiemClick(DataGridViewRow selectedRow)
+        {
+            string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
+
+            // Kiểm tra trạng thái
+            if (trangThai.Equals("1"))
+            {
+                MessageBox.Show("Mũi tiêm này đã được xác nhận tiêm rồi!", "Thông báo",
+                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Kiểm tra nếu đã hủy (null hoặc rỗng)
+            if (string.IsNullOrEmpty(trangThai) || trangThai == "")
+            {
+                MessageBox.Show("Không thể xác nhận mũi tiêm đã bị hủy!", "Thông báo",
+            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Lấy thông tin từ row
+                DataRowView drv = selectedRow.DataBoundItem as DataRowView;
+                if (drv != null)
+                {
+                    string maLT = drv.Row["MaLT"]?.ToString() ?? "";
+                    string maHSTC = drv.Row["MaHSTC"]?.ToString() ?? "";
+                    string maVC = drv.Row["MaVC"]?.ToString() ?? "";
+                    DateTime ngayHenTiem = Convert.ToDateTime(drv.Row["Ngày hẹn"]);
+                    string tenNguoiTiem = drv.Row["Tên người tiêm"]?.ToString() ?? "";
+                    string tenVaccine = drv.Row["Tên Vaccine"]?.ToString() ?? "";
+                    string ngayHen = Convert.ToDateTime(drv.Row["Ngày hẹn"]).ToString("dd/MM/yyyy");
+                    int? soMui = drv.Row["SoMui"] != DBNull.Value ? Convert.ToInt32(drv.Row["SoMui"]) : (int?)null;
+
+                    // Mở form xác nhận tiêm
+                    XacNhanTiemForm form = new XacNhanTiemForm(
+                    maLT, maHSTC, maVC, ngayHenTiem,
+                   tenNguoiTiem, tenVaccine, ngayHen, soMui);
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        // Refresh lại dữ liệu
+                        LoadDSLT();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi xác nhận tiêm: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void HuyTiemClick(DataGridViewRow selectedRow)
+        {
+            string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
+
+            // Kiểm tra trạng thái
+            if (trangThai.Equals("1"))
+            {
+                MessageBox.Show("Không thể hủy mũi tiêm đã được tiêm!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Xác nhận với người dùng
+            string tenNguoiTiem = selectedRow.Cells["colTenNguoiTiem"].Value?.ToString() ?? "";
+            string tenVaccine = selectedRow.Cells["colTenVC"].Value?.ToString() ?? "";
+
+            DialogResult result = MessageBox.Show(
+             $"Hủy lịch tiêm cho:\n\n" +
+    $"👤 Người tiêm: {tenNguoiTiem}\n" +
+           $"💉 Vaccine: {tenVaccine}\n\n" +
+              $"Bạn có chắc chắn muốn hủy?",
+                "Hủy lịch tiêm",
+            MessageBoxButtons.YesNo,
+         MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    DataRowView drv = selectedRow.DataBoundItem as DataRowView;
+                    if (drv != null)
+                    {
+                        string maLT = drv.Row["MaLT"]?.ToString() ?? "";
+                        string maHSTC = drv.Row["MaHSTC"]?.ToString() ?? "";
+                        string maVC = drv.Row["MaVC"]?.ToString() ?? "";
+                        DateTime ngayHenTiem = Convert.ToDateTime(drv.Row["Ngày hẹn"]);
+
+                        LichTiemDTO lichTiem = new LichTiemDTO
+                        {
+                            MaLT = maLT,
+                            MaHSTC = maHSTC,
+                            MaVC = maVC,
+                            NgayHenTiem = ngayHenTiem,
+                            TrangThai = null,
+                            NgayTiemThucTe = null,
+                            GhiChu = "Đã hủy"
+                        };
+
+                        lichTiemBLL.Edit(lichTiem);
+
+                        MessageBox.Show("Hủy lịch tiêm thành công!", "Thành công",
+                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Refresh lại dữ liệu
+                        LoadDSLT();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi hủy lịch tiêm: {ex.Message}", "Lỗi",
+                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void dgvLichTiem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -98,9 +242,11 @@ namespace TPVAXWinform_GUI.UserControls
         {
             dgvLichTiem.AutoGenerateColumns = false;
 
+            colMaLT.DataPropertyName = "MaLT";
             colMaHSTC.DataPropertyName = "MaHSTC";
             colTenNguoiTiem.DataPropertyName = "Tên người tiêm";
             colTenVC.DataPropertyName = "Tên Vaccine";
+            colSoMui.DataPropertyName = "SoMui";
             colNgayHen.DataPropertyName = "Ngày hẹn";
             colTrangThai.DataPropertyName = "Trạng thái";
             colNgayTiemThucTe.DataPropertyName = "Ngày tiêm thực tế";
@@ -197,7 +343,7 @@ namespace TPVAXWinform_GUI.UserControls
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi lọc dữ liệu: {ex.Message}", "Lỗi",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -260,7 +406,7 @@ namespace TPVAXWinform_GUI.UserControls
             if (dgvLichTiem.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Vui lòng chọn một lịch tiêm để xem thông tin!", "Thông báo",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -275,17 +421,17 @@ namespace TPVAXWinform_GUI.UserControls
             string ngayTiemThucTe = selectedRow.Cells["colNgayTiemThucTe"].Value?.ToString() ?? "";
 
             // Chuyển đổi trạng thái để hiển thị
-            string trangThaiText = trangThai.Equals("1") ? "Đã tiêm" : "Chưa tiêm";
+            string trangThaiText = trangThai.Equals("True", StringComparison.OrdinalIgnoreCase) ? "Đã tiêm" : "Chưa tiêm";
 
             // Hiển thị thông tin chi tiết
             string thongTin = $"═══════════════════════════════════════\n" +
         $"     THÔNG TIN MŨI TIÊM\n" +
         $"═══════════════════════════════════════\n\n" +
-      $"📋 Mã HSTC: {maHSTC}\n\n" +
-         $"👤 Tên người tiêm: {tenNguoiTiem}\n\n" +
+   $"📋 Mã HSTC: {maHSTC}\n\n" +
+ $"👤 Tên người tiêm: {tenNguoiTiem}\n\n" +
   $"💉 Tên Vaccine: {tenVaccine}\n\n" +
-             $"📅 Ngày hẹn: {ngayHen}\n\n" +
-             $"📊 Trạng thái: {trangThaiText}\n\n" +
+       $"📅 Ngày hẹn: {ngayHen}\n\n" +
+          $"📊 Trạng thái: {trangThaiText}\n\n" +
        $"✅ Ngày tiêm thực tế: {ngayTiemThucTe}\n\n" +
      $"═══════════════════════════════════════";
 
@@ -298,73 +444,12 @@ namespace TPVAXWinform_GUI.UserControls
             if (dgvLichTiem.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Vui lòng chọn một lịch tiêm để xác nhận!", "Thông báo",
-           MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DataGridViewRow selectedRow = dgvLichTiem.SelectedRows[0];
-            string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
-
-            // Kiểm tra trạng thái
-            if (trangThai.Equals("1"))
-            {
-                MessageBox.Show("Mũi tiêm này đã được xác nhận tiêm rồi!", "Thông báo",
-                   MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            // Xác nhận với người dùng
-            string tenNguoiTiem = selectedRow.Cells["colTenNguoiTiem"].Value?.ToString() ?? "";
-            string tenVaccine = selectedRow.Cells["colTenVC"].Value?.ToString() ?? "";
-
-            DialogResult result = MessageBox.Show(
-                  $"Xác nhận đã tiêm cho:\n\n" +
-                $"👤 Người tiêm: {tenNguoiTiem}\n" +
-               $"💉 Vaccine: {tenVaccine}\n\n" +
-           $"Bạn có chắc chắn muốn xác nhận?",
-     "Xác nhận tiêm",
-                 MessageBoxButtons.YesNo,
-              MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    // Lấy thông tin từ row để cập nhật
-                    DataRowView drv = selectedRow.DataBoundItem as DataRowView;
-                    if (drv != null)
-                    {
-                        string maLT = drv.Row["MaLT"]?.ToString() ?? "";
-                        string maHSTC = drv.Row["MaHSTC"]?.ToString() ?? "";
-                        string maVC = drv.Row["MaVC"]?.ToString() ?? "";
-                        DateTime ngayHenTiem = Convert.ToDateTime(drv.Row["Ngày hẹn"]);
-
-                        // Tạo DTO và cập nhật
-                        LichTiemDTO lichTiem = new LichTiemDTO
-                        {
-                            MaLT = maLT,
-                            MaHSTC = maHSTC,
-                            MaVC = maVC,
-                            NgayHenTiem = ngayHenTiem,
-                            TrangThai = true, // Đã tiêm
-                            NgayTiemThucTe = DateTime.Now
-                        };
-
-                        lichTiemBLL.Edit(lichTiem);
-
-                        MessageBox.Show("Xác nhận tiêm thành công!", "Thành công",
-                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        // Refresh lại dữ liệu
-                        LoadDSLT();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khi xác nhận tiêm: {ex.Message}", "Lỗi",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            XacNhanTiemClick(selectedRow);
         }
 
         private void toolStripMenuItemHuyTiem_Click(object sender, EventArgs e)
@@ -372,75 +457,12 @@ namespace TPVAXWinform_GUI.UserControls
             if (dgvLichTiem.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Vui lòng chọn một lịch tiêm để hủy!", "Thông báo",
-                       MessageBoxButtons.OK, MessageBoxIcon.Warning);
+     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DataGridViewRow selectedRow = dgvLichTiem.SelectedRows[0];
-            string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
-
-            // Kiểm tra trạng thái
-            if (trangThai.Equals("1"))
-            {
-                MessageBox.Show("Không thể hủy mũi tiêm đã được tiêm!", "Thông báo",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Xác nhận với người dùng
-            string tenNguoiTiem = selectedRow.Cells["colTenNguoiTiem"].Value?.ToString() ?? "";
-            string tenVaccine = selectedRow.Cells["colTenVC"].Value?.ToString() ?? "";
-
-            DialogResult result = MessageBox.Show(
-              $"Hủy lịch tiêm cho:\n\n" +
-             $"👤 Người tiêm: {tenNguoiTiem}\n" +
-                $"💉 Vaccine: {tenVaccine}\n\n" +
-                  $"Bạn có chắc chắn muốn hủy?",
-                          "Hủy lịch tiêm",
-                          MessageBoxButtons.YesNo,
-                      MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    // Xóa lịch tiêm khỏi database hoặc đánh dấu đã hủy
-                    DataRowView drv = selectedRow.DataBoundItem as DataRowView;
-                    if (drv != null)
-                    {
-                        string maLT = drv.Row["MaLT"]?.ToString() ?? "";
-
-                        // Có thể xóa hoặc update trạng thái thành hủy tùy vào yêu cầu
-                        // Ở đây tôi sẽ đặt trạng thái = "0" và xóa ngày tiêm thực tế
-                        string maHSTC = drv.Row["MaHSTC"]?.ToString() ?? "";
-                        string maVC = drv.Row["MaVC"]?.ToString() ?? "";
-                        DateTime ngayHenTiem = Convert.ToDateTime(drv.Row["Ngày hẹn"]);
-
-                        LichTiemDTO lichTiem = new LichTiemDTO
-                        {
-                            MaLT = maLT,
-                            MaHSTC = maHSTC,
-                            MaVC = maVC,
-                            NgayHenTiem = ngayHenTiem,
-                            TrangThai = false, // Chưa tiêm
-                            NgayTiemThucTe = null
-                        };
-
-                        lichTiemBLL.Edit(lichTiem);
-
-                        MessageBox.Show("Hủy lịch tiêm thành công!", "Thành công",
-                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        // Refresh lại dữ liệu
-                        LoadDSLT();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khi hủy lịch tiêm: {ex.Message}", "Lỗi",
-               MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            HuyTiemClick(selectedRow);
         }
 
         #endregion
