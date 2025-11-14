@@ -582,7 +582,7 @@ namespace TPVAXWinform_GUI
                             lichTiem.NgayHenTiem = ngayHen;
                             lichTiem.NgayTiemThucTe = null;
                             lichTiem.SoMui = i + 1; // LỖI 3: Sửa thành i + 1
-                            lichTiem.TrangThai = "0"; // 0 = Chưa tiêm
+                            lichTiem.TrangThai = false; // 0 = Chưa tiêm
                             lichTiem.GhiChu = ghiChu;
                             lichTiem.MaHSTC = maHSTC_HienTai;
                             lichTiem.MaVC = maVC;
@@ -600,7 +600,7 @@ namespace TPVAXWinform_GUI
                         lichTiem.NgayHenTiem = ngayHen;
                         lichTiem.NgayTiemThucTe = null;
                         lichTiem.SoMui = 1;
-                        lichTiem.TrangThai = "0";
+                        lichTiem.TrangThai = false;
                         lichTiem.GhiChu = ghiChu;
                         lichTiem.MaHSTC = maHSTC_HienTai;
                         lichTiem.MaVC = maVC;

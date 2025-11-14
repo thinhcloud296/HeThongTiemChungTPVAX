@@ -12,7 +12,7 @@ namespace TPVAXWinform_DTO
         public DateTime NgayHenTiem { get; set; } = DateTime.Now;
         public DateTime? NgayTiemThucTe { get; set; }
         public int? SoMui { get; set; }
-        public string TrangThai { get; set; } = string.Empty;
+        public bool TrangThai { get; set; } =false;
         public string GhiChu { get; set; } = string.Empty;
         public string MaHSTC { get; set; } = string.Empty;
         public string MaVC { get; set; } = string.Empty;
@@ -20,7 +20,7 @@ namespace TPVAXWinform_DTO
 
         public LichTiemDTO() { }
 
-        public LichTiemDTO(string maLT, DateTime ngayHenTiem, DateTime? ngayTiemThucTe, int? soMui, string trangThai, string ghiChu, string maHSTC, string maVC, string maNV)
+        public LichTiemDTO(string maLT, DateTime ngayHenTiem, DateTime? ngayTiemThucTe, int? soMui, bool trangThai, string ghiChu, string maHSTC, string maVC, string maNV)
         {
             MaLT = maLT;
             NgayHenTiem = ngayHenTiem;

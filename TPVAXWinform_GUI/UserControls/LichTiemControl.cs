@@ -66,20 +66,24 @@ namespace TPVAXWinform_GUI.UserControls
                 DataGridViewCellStyle style = e.CellStyle;
                 style.Font = new Font(e.CellStyle.Font, FontStyle.Regular);
 
-                if (trangThaiValue.Equals("1", StringComparison.OrdinalIgnoreCase))
+                if (trangThaiValue.Equals("True", StringComparison.OrdinalIgnoreCase) || trangThaiValue.Equals("1"))
                 {
                     e.Value = "Đã tiêm";
                     style.BackColor = Color.FromArgb(200, 230, 201); // Xanh lá
                     style.ForeColor = Color.Black;
                 }
-                else
+                else if (trangThaiValue.Equals("False", StringComparison.OrdinalIgnoreCase) || trangThaiValue.Equals("0"))
                 {
                     e.Value = "Chưa tiêm";
                     style.BackColor = Color.FromArgb(255, 224, 178); // Cam
                     style.ForeColor = Color.Black;
                 }
-
-                // Đánh dấu là đã format
+                else
+                {
+                    e.Value = "Đã hủy";
+                    style.BackColor = Color.FromArgb(215, 215, 215); // Xám nhạt
+                    style.ForeColor = Color.Black;
+                }
                 e.FormattingApplied = true;
             }
         }
@@ -143,11 +147,11 @@ namespace TPVAXWinform_GUI.UserControls
                 // (Code lọc trạng thái của bạn đã ĐÚNG, vì cột Trạng thái đang là "0" hoặc "1")
                 if (daTiem && !chuaTiem)
                 {
-                    filters.Add("[Trạng thái] = '1' OR [Trạng thái] = 'True'");
+                    filters.Add("[Trạng thái] = 1 ");
                 }
                 else if (!daTiem && chuaTiem)
                 {
-                    filters.Add("[Trạng thái] = '0' OR [Trạng thái] = 'False'");
+                    filters.Add("[Trạng thái] = 0 ");
                 }
                 else if (!daTiem && !chuaTiem)
                 {
@@ -342,7 +346,7 @@ namespace TPVAXWinform_GUI.UserControls
                             MaHSTC = maHSTC,
                             MaVC = maVC,
                             NgayHenTiem = ngayHenTiem,
-                            TrangThai = "1", // Đã tiêm
+                            TrangThai = true, // Đã tiêm
                             NgayTiemThucTe = DateTime.Now
                         };
 
@@ -418,7 +422,7 @@ namespace TPVAXWinform_GUI.UserControls
                             MaHSTC = maHSTC,
                             MaVC = maVC,
                             NgayHenTiem = ngayHenTiem,
-                            TrangThai = "0", // Chưa tiêm
+                            TrangThai = false, // Chưa tiêm
                             NgayTiemThucTe = null
                         };
 
