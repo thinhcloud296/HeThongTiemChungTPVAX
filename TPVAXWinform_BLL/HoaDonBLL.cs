@@ -27,5 +27,9 @@ namespace TPVAXWinform_BLL
         {
             dal.Edit(hd);
         }
+        public void Delete(string MaHD)
+        {
+            dal.Delete(MaHD);
+        }
     }
 }

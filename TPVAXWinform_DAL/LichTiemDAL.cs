@@ -205,5 +205,45 @@ namespace TPVAXWinform_DAL
             // Thêm vào CSDL
             this.Insert(lichHenMoi);
         }
+        public int TaoLichHenDauTienChoGoi(string maGoi, string maHSTC)
+        {
+            // 1. Lấy danh sách vaccine (chỉ Mũi 1) của gói
+            string procName = "dbo.usp_GetChiTietGoi_FirstDoses";
+            var param = DBConnect.Param("@MaGoi", maGoi, SqlDbType.Char, 10);
+            DataTable dtFirstDoses = DBConnect.ExecuteQuery(procName, CommandType.StoredProcedure, param);
+
+            int count = 0;
+            if (dtFirstDoses.Rows.Count == 0)
+            {
+                return 0; // Gói này không có Mũi 1
+            }
+
+            // 2. Lặp qua từng vaccine Mũi 1 và tạo lịch hẹn
+            foreach (DataRow row in dtFirstDoses.Rows)
+            {
+                try
+                {
+                    string maVC = row["MaVC"].ToString();
+
+                    LichTiemDTO lichHenMoi = new LichTiemDTO();
+                    lichHenMoi.MaLT = this.CreateNewMaLT(); // Dùng hàm tạo mã của bạn
+                    lichHenMoi.MaHSTC = maHSTC;
+                    lichHenMoi.MaVC = maVC;
+                    lichHenMoi.NgayHenTiem = DateTime.Now; // Hẹn ngay hôm nay
+                    lichHenMoi.SoMui = 1; // Vì đây là mũi đầu tiên
+                    lichHenMoi.TrangThai = "Chưa tiêm"; // (Kiểu NVARCHAR)
+                    lichHenMoi.GhiChu = $"Hẹn Mũi 1 (từ Gói {maGoi})";
+
+                    this.Insert(lichHenMoi); // Gọi hàm Insert BLL
+                    count++;
+                }
+                catch (Exception ex)
+                {
+                    // Bỏ qua nếu lỗi 1 mũi (ví dụ: trùng lặp) và tiếp tục mũi khác
+                    Console.WriteLine("Lỗi tạo lịch hẹn tự động: " + ex.Message);
+                }
+            }
+            return count;
+        }
     }
 }

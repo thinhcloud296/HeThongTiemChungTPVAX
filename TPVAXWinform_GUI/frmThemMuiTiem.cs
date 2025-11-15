@@ -25,6 +25,7 @@ namespace TPVAXWinform_GUI
         private ChiTietGoiVaccineBLL chiTietGoiVaccineBLL = new ChiTietGoiVaccineBLL();
         private string MaHSTC;
         private string MaKHHSTC;
+        private decimal TongGia = 0;
         public frmThemMuiTiem()
         {
             InitializeComponent();
@@ -123,7 +124,6 @@ namespace TPVAXWinform_GUI
             }
 
             txtGhiChu.Clear();
-            txtSoLuong.Text = "1";
             dtpNgayTiem.Value = DateTime.Now;
 
             if (cboLoaiThem.SelectedIndex != 0)
@@ -382,8 +382,6 @@ namespace TPVAXWinform_GUI
 
         private void AddSelectedVaccineToWaitList(int rowIndex)
         {
-            // --- BƯỚC 1: LẤY DỮ LIỆU TỪ NGUỒN (dgvVaccine) ---
-            // (Giả sử bạn đã sửa proc để trả về SoMuiToiDa)
             DataRowView drv;
             string maVC, tenVC, nuocSX, loaiBenh, loaiVC;
             decimal giaBan;
@@ -404,16 +402,9 @@ namespace TPVAXWinform_GUI
                 return;
             }
 
-            // --- BƯỚC 2: LẤY DỮ LIỆU NHẬP LIỆU ---
             string ngayTiem = dtpNgayTiem.Value.ToString();
             string ghiChu = txtGhiChu.Text.Trim();
-            int soLuongMoi;
-            if (!int.TryParse(txtSoLuong.Text, out soLuongMoi) || soLuongMoi <= 0)
-            {
-                soLuongMoi = 1;
-            }
 
-            // --- BƯỚC 3: KIỂM TRA TRÙNG LẶP TRONG BẢNG CHỜ ---
             foreach (DataGridViewRow row in dgvVaccineWait.Rows)
             {
                 if (row.IsNewRow) continue;
@@ -424,22 +415,18 @@ namespace TPVAXWinform_GUI
                 }
             }
 
-            // --- BƯỚC 4: (LOGIC VALIDATION ĐÃ BỊ XÓA THEO YÊU CẦU CỦA BẠN) ---
-            // Khối code kiểm tra soMuiToiDa đã được xóa.
-
-            // --- BƯỚC 5: THÊM VÀO BẢNG CHỜ (dgvVaccineWait) ---
             try
             {
-                // (Đảm bảo dgvVaccineWait có đúng 9 cột và đúng thứ tự)
+
                 dgvVaccineWait.Rows.Add(
                     maVC,
                     tenVC,
                     loaiBenh,
                     loaiVC,
                     ngayTiem,
-                    soLuongMoi,
+                    1,
                     nuocSX,
-                    giaBan.ToString("N0"), // Format giá
+                    giaBan.ToString("N0"),
                     ghiChu
                 );
             }
@@ -532,6 +519,7 @@ namespace TPVAXWinform_GUI
                 }
             }
 
+            TongGia = tongGia;
             // Cập nhật Label Tổng giá
             // "N0" sẽ định dạng số (vd: 1,200,000)
             lbTongGia.Text = tongGia.ToString("N0") + " đ";
@@ -559,6 +547,24 @@ namespace TPVAXWinform_GUI
 
             int countSuccess = 0;
             int countFailed = 0;
+            HoaDonDTO newHD = new HoaDonDTO();
+            newHD.MaHD = hoaDonBLL.CreateNewMaHD();
+            newHD.NgayLap = DateTime.Now;
+            newHD.TongTien = TongGia;
+            newHD.TrangThai = false;
+            newHD.MaKH = MaKHHSTC;
+            newHD.MaNV = null;
+            newHD.MaKM = null;
+            
+            try
+            {
+                hoaDonBLL.Insert(newHD);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tạo hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             foreach (DataGridViewRow row in dgvVaccineWait.Rows)
             {
@@ -568,31 +574,12 @@ namespace TPVAXWinform_GUI
                 string ghiChu = row.Cells["colGhiChuW"].Value.ToString();
                 string maVC = row.Cells["colMaVCW"].Value.ToString();
                 string maHSTC_HienTai = MaHSTC;
+                decimal giaBan = Convert.ToDecimal(row.Cells["colGiaBanW"].Value);
 
                 try
                 {
-                    if (soMui > 1) // LỖI 2: Dùng if-else
-                    {
-                        // Xử lý phác đồ nhiều mũi (nhưng cùng 1 ngày hẹn)
-                        for (int i = 0; i < soMui; i++)
-                        {
-                            // LỖI 1: Tạo DTO MỚI bên trong vòng lặp
-                            LichTiemDTO lichTiem = new LichTiemDTO();
-                            lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
-                            lichTiem.NgayHenTiem = ngayHen;
-                            lichTiem.NgayTiemThucTe = null;
-                            lichTiem.SoMui = i + 1; // LỖI 3: Sửa thành i + 1
-                            lichTiem.TrangThai = "Chưa tiêm"; // 0 = Chưa tiêm
-                            lichTiem.GhiChu = ghiChu;
-                            lichTiem.MaHSTC = maHSTC_HienTai;
-                            lichTiem.MaVC = maVC;
+                    // LỖI 2: Dùng if-else
 
-                            lichTiemBLL.Insert(lichTiem);
-                            countSuccess++;
-                        }
-                    }
-                    else // LỖI 2: Dùng if-else
-                    {
                         // Xử lý 1 mũi
                         // LỖI 1: Tạo DTO MỚI
                         LichTiemDTO lichTiem = new LichTiemDTO();
@@ -605,9 +592,17 @@ namespace TPVAXWinform_GUI
                         lichTiem.MaHSTC = maHSTC_HienTai;
                         lichTiem.MaVC = maVC;
 
+                        ChiTietHoaDonDTO NewCTHD = new ChiTietHoaDonDTO();
+                        NewCTHD.MaCTHD = chiTietHoaDonBLL.CreateNewMaCTHD();
+                        NewCTHD.SoLuong = 1;
+                        NewCTHD.DonGia = giaBan;
+                        NewCTHD.MaSanPham = maVC;
+                        NewCTHD.LoaiSanPham = "VACCINE";
+                        NewCTHD.MaHD = newHD.MaHD;
+
                         lichTiemBLL.Insert(lichTiem);
+                        chiTietHoaDonBLL.Insert(NewCTHD);
                         countSuccess++;
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -625,6 +620,7 @@ namespace TPVAXWinform_GUI
             }
             else if (countFailed > 0)
             {
+                hoaDonBLL.Delete(newHD.MaHD);
                 MessageBox.Show($"Thêm thất bại {countFailed} lịch hẹn.", "Thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -785,6 +781,8 @@ namespace TPVAXWinform_GUI
             {
                 hoaDonBLL.Insert(newHD);
                 chiTietHoaDonBLL.Insert(NewCTHD);
+
+                int soLichHen = lichTiemBLL.TaoLichHenDauTienChoGoi(maGoi, MaHSTC);
                 MessageBox.Show("Lưu gói vaccine vào hóa đơn thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();

@@ -68,6 +68,8 @@ namespace TPVAXWinform_GUI
 
             dgvChiTietHD.DataSource = dt;
 
+            dgvChiTietHD.Columns["colDonGia"].DefaultCellStyle.Format = "N0";
+            dgvChiTietHD.Columns["colThanhTien"].DefaultCellStyle.Format = "N0";
             dgvChiTietHD.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
             dgvChiTietHD.RowTemplate.Height = 36;
         }

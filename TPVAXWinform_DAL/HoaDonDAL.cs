@@ -106,6 +106,28 @@ namespace TPVAXWinform_DAL
                 throw new Exception("Lỗi khi sửa hóa đơn: " + ex.Message);
             }
         }
-
+        public void Delete(string MaHD)
+        {
+            try
+            {
+                using (var buffer = DBConnect.CreateBuffer(selectSql))
+                {
+                    DataRow row = buffer.Table.Rows.Find(MaHD);
+                    if (row != null)
+                    {
+                        row.Delete();
+                        buffer.Save();
+                    }
+                    else
+                    {
+                        throw new Exception($"Không tìm thấy hóa đơn với mã: {MaHD}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi xóa hóa đơn: " + ex.Message);
+            }
+        }
     }
 }

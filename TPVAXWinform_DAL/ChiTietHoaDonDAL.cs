@@ -17,7 +17,7 @@ namespace TPVAXWinform_DAL
             return DBConnect.ExecuteQuery(
                 "dbo.usp_ChiTietHoaDon_GetByMaHD",
                 CommandType.StoredProcedure,
-                DBConnect.Param("@MaHD", MaHD, SqlDbType.Char, 8) // Gán giá trị MaHD, sửa size = 8
+                DBConnect.Param("@MaHD", MaHD, SqlDbType.Char, 10) 
             );
         }
         public string GetLastMaCTHD()

@@ -38,5 +38,9 @@ namespace TPVAXWinform_BLL
         {
             return lichTiemDAL.SoMuiDangChoTiem(maHSTC, maVC);
         }
+        public int TaoLichHenDauTienChoGoi(string maGoi, string maHSTC)
+        {
+            return lichTiemDAL.TaoLichHenDauTienChoGoi(maGoi, maHSTC);
+        }
     }
 }
