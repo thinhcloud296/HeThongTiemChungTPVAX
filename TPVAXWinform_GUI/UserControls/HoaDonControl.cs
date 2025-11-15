@@ -21,11 +21,16 @@ namespace TPVAXWinform_GUI.UserControls
             InitializeComponent();
             InitializeEventHandlers();
         }
-
         private void HoaDonControl_Load(object sender, EventArgs e)
         {
             LoadDSHD();
             InitializeFilters();
+        }
+
+        // Public method để refresh data từ bên ngoài
+        public void RefreshData()
+        {
+            LoadDSHD();
         }
 
         private void InitializeEventHandlers()
@@ -191,6 +196,7 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void btnDatLai_Click(object sender, EventArgs e)
         {
+            RefreshData();
             // Reset các control về mặc định
             dtpTuNgay.Value = DateTime.Now.AddYears(-5);
             dtpDenNgay.Value = DateTime.Now;

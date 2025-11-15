@@ -31,6 +31,12 @@ namespace TPVAXWinform_GUI.UserControls
             InitializeFilters();
         }
 
+        // Public method để refresh data từ bên ngoài
+        public void RefreshData()
+        {
+            LoadDSLT();
+        }
+
         private void InitializeEventHandlers()
         {
             // Gán event handler để tô màu các dòng theo trạng thái
@@ -375,6 +381,7 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void btnDatLai_Click(object sender, EventArgs e)
         {
+            RefreshData();
             // Reset các control về mặc định
             dtpTuThang.Value = DateTime.Now.AddYears(-5);
             dtpDenThang.Value = DateTime.Now.AddYears(1);

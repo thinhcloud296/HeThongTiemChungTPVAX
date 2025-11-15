@@ -80,8 +80,23 @@ namespace TPVAXWinform
             logo.Click += (s, e) => ShowDashboard();
         }
 
+        private void CloseAllChildForms()
+        {
+            // Đóng tất cả các form con đang mở
+            foreach (Form childForm in Application.OpenForms.Cast<Form>().ToList())
+            {
+                if (childForm != this && childForm.Owner == this)
+                {
+                    childForm.Close();
+                }
+            }
+        }
+
         private void ShowDashboard()
         {
+            // Đóng tất cả các form con
+            CloseAllChildForms();
+
             // Hide all user controls
             bangDieuKhienControl1.Visible = true;
             hoSoTiemChungControl1.Visible = false;
@@ -98,6 +113,9 @@ namespace TPVAXWinform
 
         private void ShowHoSoTiemChungControl()
         {
+            // Đóng tất cả các form con
+            CloseAllChildForms();
+
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = true;
@@ -117,6 +135,9 @@ namespace TPVAXWinform
 
         private void ShowLichTiemControl()
         {
+            // Đóng tất cả các form con
+            CloseAllChildForms();
+
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
@@ -126,6 +147,9 @@ namespace TPVAXWinform
             // Bring Lich Tiem control to front
             lichTiemControl1.BringToFront();
 
+            // Refresh data để load lại dữ liệu mới nhất
+            lichTiemControl1.RefreshData();
+
             // Reset button styles
             ResetMenuButtons();
             button2.BackColor = Color.FromArgb(52, 152, 219); // Highlight
@@ -133,6 +157,9 @@ namespace TPVAXWinform
 
         private void ShowHoaDonControl()
         {
+            // Đóng tất cả các form con
+            CloseAllChildForms();
+
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
@@ -141,6 +168,9 @@ namespace TPVAXWinform
 
             // Bring Hoa Don control to front
             hoaDonControl1.BringToFront();
+
+            // Refresh data để load lại dữ liệu mới nhất
+            hoaDonControl1.RefreshData();
 
             // Reset button styles
             ResetMenuButtons();
