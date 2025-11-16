@@ -120,40 +120,40 @@
     <Compile Include="Forms\XacNhanTiemForm.Designer.cs">
       <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmChiTietHoaDon.cs">
+    <Compile Include="Forms\frmChiTietHoaDon.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChiTietHoaDon.Designer.cs">
+    <Compile Include="Forms\frmChiTietHoaDon.Designer.cs">
       <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmEditHSTC.cs">
+    <Compile Include="Forms\frmEditHSTC.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEditHSTC.Designer.cs">
+    <Compile Include="Forms\frmEditHSTC.Designer.cs">
       <DependentUpon>frmEditHSTC.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmEditKH.cs">
+    <Compile Include="Forms\frmEditKH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEditKH.Designer.cs">
+    <Compile Include="Forms\frmEditKH.Designer.cs">
       <DependentUpon>frmEditKH.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMain.cs">
+    <Compile Include="Forms\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.cs">
+    <Compile Include="Forms\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmThemHSTC_KH.cs">
+    <Compile Include="Forms\frmThemHSTC_KH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmThemHSTC_KH.Designer.cs">
+    <Compile Include="Forms\frmThemHSTC_KH.Designer.cs">
       <DependentUpon>frmThemHSTC_KH.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmThemMuiTiem.cs">
+    <Compile Include="Forms\frmThemMuiTiem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmThemMuiTiem.Designer.cs">
+    <Compile Include="Forms\frmThemMuiTiem.Designer.cs">
       <DependentUpon>frmThemMuiTiem.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -201,28 +201,34 @@
     <Compile Include="UserControls\VaccineControl.Designer.cs">
       <DependentUpon>VaccineControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\frmEditNV.resx">
+      <DependentUpon>frmEditNV.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmQuanLyDanhMuc.resx">
       <DependentUpon>frmQuanLyDanhMuc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmThemNV.resx">
+      <DependentUpon>frmThemNV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\XacNhanTiemForm.resx">
       <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmChiTietHoaDon.resx">
+    <EmbeddedResource Include="Forms\frmChiTietHoaDon.resx">
       <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEditHSTC.resx">
+    <EmbeddedResource Include="Forms\frmEditHSTC.resx">
       <DependentUpon>frmEditHSTC.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEditKH.resx">
+    <EmbeddedResource Include="Forms\frmEditKH.resx">
       <DependentUpon>frmEditKH.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
+    <EmbeddedResource Include="Forms\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmThemHSTC_KH.resx">
+    <EmbeddedResource Include="Forms\frmThemHSTC_KH.resx">
       <DependentUpon>frmThemHSTC_KH.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmThemMuiTiem.resx">
+    <EmbeddedResource Include="Forms\frmThemMuiTiem.resx">
       <DependentUpon>frmThemMuiTiem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

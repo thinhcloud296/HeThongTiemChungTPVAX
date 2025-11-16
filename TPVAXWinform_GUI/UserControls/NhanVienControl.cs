@@ -15,204 +15,197 @@ namespace TPVAXWinform_GUI.UserControls
     public partial class NhanVienControl : UserControl
     {
         private DataTable dtNhanVien;
-    private NhanVienBLL nhanVienBLL = new NhanVienBLL();
+        private NhanVienBLL nhanVienBLL = new NhanVienBLL();
         private int selectedRowIndex = -1;
-
+        private readonly Dictionary<int, string> chucVuOptions = new Dictionary<int, string>
+        {
+            { 1, "Quản lý" },
+            { 2, "Nhân viên y tế" },
+            { 3, "Nhân viên tiếp nhận" },
+            { 4, "Nhân viên kho" }
+        };
         public NhanVienControl()
- {
-        InitializeComponent();
+        {
+            InitializeComponent();
             InitializeActionButtons();
         }
 
-      private void InitializeActionButtons()
+        private void InitializeActionButtons()
         {
-   ConfigureDataGridViewStyling();
-  SetupContextMenu();
+            ConfigureDataGridViewStyling();
+            SetupContextMenu();
 
-      if (dgvNhanVien.Columns["colEdit"] == null)
+            if (dgvNhanVien.Columns["colEdit"] == null)
             {
-          var btnEditColumn = new DataGridViewButtonColumn
-         {
-          Name = "colEdit",
-     HeaderText = "Sửa",
-            Text = "✏️ Sửa",
-         UseColumnTextForButtonValue = true,
-         Width = 80,
-   FlatStyle = FlatStyle.Flat
-    };
-   dgvNhanVien.Columns.Add(btnEditColumn);
-        }
+                var btnEditColumn = new DataGridViewButtonColumn
+                {
+                    Name = "colEdit",
+                    HeaderText = "Sửa",
+                    Text = "✏️ Sửa",
+                    UseColumnTextForButtonValue = true,
+                    Width = 80,
+                    FlatStyle = FlatStyle.Flat
+                };
+                dgvNhanVien.Columns.Add(btnEditColumn);
+            }
         }
 
         private void ConfigureDataGridViewStyling()
-      {
+        {
             var headerStyle = new DataGridViewCellStyle
             {
-    Alignment = DataGridViewContentAlignment.MiddleCenter,
-    BackColor = System.Drawing.Color.FromArgb(41, 128, 185),
-  ForeColor = System.Drawing.Color.White,
-     Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold),
-         Padding = new Padding(5)
-        };
-       dgvNhanVien.ColumnHeadersDefaultCellStyle = headerStyle;
-       dgvNhanVien.ColumnHeadersHeight = 45;
-      dgvNhanVien.EnableHeadersVisualStyles = false;
+                Alignment = DataGridViewContentAlignment.MiddleCenter,
+                BackColor = System.Drawing.Color.FromArgb(41, 128, 185),
+                ForeColor = System.Drawing.Color.White,
+                Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold),
+                Padding = new Padding(5)
+            };
+            dgvNhanVien.ColumnHeadersDefaultCellStyle = headerStyle;
+            dgvNhanVien.ColumnHeadersHeight = 45;
+            dgvNhanVien.EnableHeadersVisualStyles = false;
 
-     // Căn giữa các cột
-string[] centerColumns = { "colMaNV", "colGioiTinh", "colNgaySinh", "colCCCD", "colNgayVaoLam", "colChucVu", "colTrangThai" };
-          foreach (var name in centerColumns)
-    {
-        if (dgvNhanVien.Columns[name] != null)
-      dgvNhanVien.Columns[name].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-       }
+            // Căn giữa các cột
+            string[] centerColumns = { "colMaNV", "colGioiTinh", "colNgaySinh", "colCCCD", "colNgayVaoLam", "colChucVu", "colTrangThai" };
+            foreach (var name in centerColumns)
+            {
+                if (dgvNhanVien.Columns[name] != null)
+                    dgvNhanVien.Columns[name].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
 
-     dgvNhanVien.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-          dgvNhanVien.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(52, 152, 219);
-         dgvNhanVien.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            dgvNhanVien.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dgvNhanVien.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(52, 152, 219);
+            dgvNhanVien.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
             dgvNhanVien.RowTemplate.Height = 40;
-        dgvNhanVien.BorderStyle = BorderStyle.None;
-    dgvNhanVien.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvNhanVien.BorderStyle = BorderStyle.None;
+            dgvNhanVien.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvNhanVien.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);
-        dgvNhanVien.RowHeadersVisible = false;
+            dgvNhanVien.RowHeadersVisible = false;
         }
 
-  private void NhanVienControl_Load(object sender, EventArgs e)
-     {
-            LoadDSNhanVien();
-   SetupEventHandlers();
-   AdjustTitlePosition();
-        }
-
-  private void AdjustTitlePosition()
+        private void NhanVienControl_Load(object sender, EventArgs e)
         {
-          lblTitle.Left = (panelHeader.Width - lblTitle.Width) / 2;
-            lblTitle.Top = (panelHeader.Height - lblTitle.Height) / 2;
-  }
+            LoadDSNhanVien();
+            SetupEventHandlers();
+            AdjustTitlePosition();
+        }
 
-      private void SetupEventHandlers()
+        private void AdjustTitlePosition()
+        {
+            lblTitle.Left = (panelHeader.Width - lblTitle.Width) / 2;
+            lblTitle.Top = (panelHeader.Height - lblTitle.Height) / 2;
+        }
+
+        private void SetupEventHandlers()
         {
             btnSearch.Click += BtnSearch_Click;
             btnReset.Click += BtnReset_Click;
-dgvNhanVien.CellContentClick += DgvNhanVien_CellContentClick;
+            dgvNhanVien.CellContentClick += DgvNhanVien_CellContentClick;
 
             // Hover effects for buttons
             btnSearch.MouseEnter += (s, e) => { btnSearch.BackColor = System.Drawing.Color.FromArgb(52, 152, 219); };
-  btnSearch.MouseLeave += (s, e) => { btnSearch.BackColor = System.Drawing.Color.FromArgb(41, 128, 185); };
+            btnSearch.MouseLeave += (s, e) => { btnSearch.BackColor = System.Drawing.Color.FromArgb(41, 128, 185); };
             btnReset.MouseEnter += (s, e) => { btnReset.BackColor = System.Drawing.Color.FromArgb(127, 140, 141); };
             btnReset.MouseLeave += (s, e) => { btnReset.BackColor = System.Drawing.Color.FromArgb(149, 165, 166); };
         }
 
         private void LoadDSNhanVien()
         {
-          dtNhanVien = nhanVienBLL.GetData();
-      BindDataToGrid(dtNhanVien);
+            dtNhanVien = nhanVienBLL.GetData();
+            BindDataToGrid(dtNhanVien);
         }
 
         private void BindDataToGrid(DataTable dt)
         {
-          dgvNhanVien.AutoGenerateColumns = false;
+            dgvNhanVien.AutoGenerateColumns = false;
 
-     colMaNV.DataPropertyName = "MaNV";
+            colMaNV.DataPropertyName = "MaNV";
             colHoTen.DataPropertyName = "HoTen";
-  colGioiTinh.DataPropertyName = "GioiTinh";
+            colGioiTinh.DataPropertyName = "GioiTinh";
             colNgaySinh.DataPropertyName = "NgaySinh";
- colCCCD.DataPropertyName = "CCCD";
-  colNgayVaoLam.DataPropertyName = "NgayVaoLam";
+            colCCCD.DataPropertyName = "CCCD";
+            colNgayVaoLam.DataPropertyName = "NgayVaoLam";
             colChucVu.DataPropertyName = "ChucVu";
             colTrangThai.DataPropertyName = "TrangThai";
-          colSoDT.DataPropertyName = "SoDT";
+            colSoDT.DataPropertyName = "SoDT";
 
             dgvNhanVien.DataSource = dt;
 
-          dgvNhanVien.Columns["colNgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvNhanVien.Columns["colNgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvNhanVien.Columns["colNgayVaoLam"].DefaultCellStyle.Format = "dd/MM/yyyy";
-        dgvNhanVien.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
+            dgvNhanVien.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
             dgvNhanVien.RowTemplate.Height = 36;
-   }
+        }
 
-    // Tô màu trạng thái theo yêu cầu
-     private void dgvNhanVien_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        // Tô màu trạng thái theo yêu cầu
+        private void dgvNhanVien_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
- if (dgvNhanVien.Columns[e.ColumnIndex].Name == "colTrangThai")
-       {
-            if (e.Value != null && e.Value != DBNull.Value)
+            if (dgvNhanVien.Columns[e.ColumnIndex].Name == "colTrangThai")
+            {
+                if (e.Value != null && e.Value != DBNull.Value)
                 {
-         string trangThai = e.Value.ToString().Trim();
+                    string trangThai = e.Value.ToString().Trim();
 
-         if (trangThai == "1")
-     {
-         e.CellStyle.BackColor = System.Drawing.Color.LightGreen;
-  e.CellStyle.ForeColor = System.Drawing.Color.DarkGreen;
-           e.Value = "Đang hoạt động";
-    }
-             else if (trangThai == "0")
-      {
-           e.CellStyle.BackColor = System.Drawing.Color.LightCoral;
-   e.CellStyle.ForeColor = System.Drawing.Color.DarkRed;
-        e.Value = "Ngưng hoạt động";
- }
- }
-  }
+                    if (trangThai == "1")
+                    {
+                        e.CellStyle.BackColor = System.Drawing.Color.LightGreen;
+                        e.CellStyle.ForeColor = System.Drawing.Color.DarkGreen;
+                        e.Value = "Đang hoạt động";
+                    }
+                    else if (trangThai == "0")
+                    {
+                        e.CellStyle.BackColor = System.Drawing.Color.LightCoral;
+                        e.CellStyle.ForeColor = System.Drawing.Color.DarkRed;
+                        e.Value = "Ngưng hoạt động";
+                    }
+                }
+            }
 
             // Hiển thị Chức vụ
             if (dgvNhanVien.Columns[e.ColumnIndex].Name == "colChucVu")
-        {
- if (e.Value != null && e.Value != DBNull.Value)
-         {
-   if (int.TryParse(e.Value.ToString(), out int chucVu))
-          {
-         switch (chucVu)
-      {
-    case 1:
-          e.Value = "Quản lý";
-         break;
-          case 2:
- e.Value = "Nhân viên";
-            break;
-         default:
-  e.Value = "Chưa xác định";
-   break;
-   }
-       }
-     }
-          }
+            {
+                if (e.Value != null && e.Value != DBNull.Value)
+                {
+                    e.Value = chucVuOptions.ContainsKey(Convert.ToInt32(e.Value)) ?
+                        chucVuOptions[Convert.ToInt32(e.Value)] : "Không xác định";
+                }
+            }
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
-   {
-       var filtered = dtNhanVien.Clone();
+        {
+            var filtered = dtNhanVien.Clone();
 
-    string kwName = txtSearchName.Text.Trim().ToLower();
-         string kwMaNV = txtSearchMaNV.Text.Trim().ToLower();
-   string kwCCCD = txtSearchCCCD.Text.Trim().ToLower();
+            string kwName = txtSearchName.Text.Trim().ToLower();
+            string kwMaNV = txtSearchMaNV.Text.Trim().ToLower();
+            string kwCCCD = txtSearchCCCD.Text.Trim().ToLower();
 
-         foreach (DataRow row in dtNhanVien.Rows)
+            foreach (DataRow row in dtNhanVien.Rows)
             {
-          bool match = true;
-    if (!string.IsNullOrEmpty(kwName) &&
-             !(row["HoTen"]?.ToString() ?? "").ToLower().Contains(kwName)) match = false;
+                bool match = true;
+                if (!string.IsNullOrEmpty(kwName) &&
+                         !(row["HoTen"]?.ToString() ?? "").ToLower().Contains(kwName)) match = false;
 
-      if (!string.IsNullOrEmpty(kwMaNV) &&
-   !(row["MaNV"]?.ToString() ?? "").ToLower().Contains(kwMaNV)) match = false;
+                if (!string.IsNullOrEmpty(kwMaNV) &&
+             !(row["MaNV"]?.ToString() ?? "").ToLower().Contains(kwMaNV)) match = false;
 
-           if (!string.IsNullOrEmpty(kwCCCD) &&
-      !(row["CCCD"]?.ToString() ?? "").ToLower().Contains(kwCCCD)) match = false;
+                if (!string.IsNullOrEmpty(kwCCCD) &&
+           !(row["CCCD"]?.ToString() ?? "").ToLower().Contains(kwCCCD)) match = false;
 
-     if (match) filtered.ImportRow(row);
+                if (match) filtered.ImportRow(row);
             }
 
             BindDataToGrid(filtered);
 
-      if (filtered.Rows.Count == 0)
-    MessageBox.Show("Không tìm thấy kết quả phù hợp!",
-        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (filtered.Rows.Count == 0)
+                MessageBox.Show("Không tìm thấy kết quả phù hợp!",
+                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnReset_Click(object sender, EventArgs e)
         {
- txtSearchName.Clear();
-        txtSearchMaNV.Clear();
-   txtSearchCCCD.Clear();
+            txtSearchName.Clear();
+            txtSearchMaNV.Clear();
+            txtSearchCCCD.Clear();
             BindDataToGrid(dtNhanVien);
         }
 
@@ -224,115 +217,115 @@ dgvNhanVien.CellContentClick += DgvNhanVien_CellContentClick;
         private void SetupContextMenu()
         {
             ContextMenuStrip contextMenu = new ContextMenuStrip();
-  contextMenu.Font = new System.Drawing.Font("Segoe UI", 10F);
+            contextMenu.Font = new System.Drawing.Font("Segoe UI", 10F);
 
-         ToolStripMenuItem viewInfoItem = new ToolStripMenuItem("📄 Xem thông tin");
-      viewInfoItem.Click += ViewInfo_Click;
-     contextMenu.Items.Add(viewInfoItem);
+            ToolStripMenuItem viewInfoItem = new ToolStripMenuItem("📄 Xem thông tin");
+            viewInfoItem.Click += ViewInfo_Click;
+            contextMenu.Items.Add(viewInfoItem);
 
-   ToolStripMenuItem editInfoItem = new ToolStripMenuItem("✏️ Sửa thông tin");
-          editInfoItem.Click += EditInfo_Click;
-        contextMenu.Items.Add(editInfoItem);
+            ToolStripMenuItem editInfoItem = new ToolStripMenuItem("✏️ Sửa thông tin");
+            editInfoItem.Click += EditInfo_Click;
+            contextMenu.Items.Add(editInfoItem);
 
-       dgvNhanVien.ContextMenuStrip = contextMenu;
-       dgvNhanVien.MouseDown += DgvNhanVien_MouseDown;
+            dgvNhanVien.ContextMenuStrip = contextMenu;
+            dgvNhanVien.MouseDown += DgvNhanVien_MouseDown;
         }
 
         private void DgvNhanVien_MouseDown(object sender, MouseEventArgs e)
         {
-    if (e.Button == MouseButtons.Right)
-      {
+            if (e.Button == MouseButtons.Right)
+            {
                 var hitTest = dgvNhanVien.HitTest(e.X, e.Y);
-    if (hitTest.RowIndex >= 0)
-   {
-            dgvNhanVien.ClearSelection();
-           dgvNhanVien.Rows[hitTest.RowIndex].Selected = true;
-        selectedRowIndex = hitTest.RowIndex;
-           }
-   else
-   {
-         selectedRowIndex = -1;
-         }
+                if (hitTest.RowIndex >= 0)
+                {
+                    dgvNhanVien.ClearSelection();
+                    dgvNhanVien.Rows[hitTest.RowIndex].Selected = true;
+                    selectedRowIndex = hitTest.RowIndex;
+                }
+                else
+                {
+                    selectedRowIndex = -1;
+                }
             }
         }
 
         private void ViewInfo_Click(object sender, EventArgs e)
- {
+        {
             if (selectedRowIndex >= 0 && selectedRowIndex < dgvNhanVien.Rows.Count)
             {
-        string maNV = dgvNhanVien.Rows[selectedRowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
-       string hoTen = dgvNhanVien.Rows[selectedRowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
+                string maNV = dgvNhanVien.Rows[selectedRowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
+                string hoTen = dgvNhanVien.Rows[selectedRowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
                 string gioiTinh = dgvNhanVien.Rows[selectedRowIndex].Cells["colGioiTinh"].Value?.ToString() ?? "";
-   var valNgaySinh = dgvNhanVien.Rows[selectedRowIndex].Cells["colNgaySinh"].Value;
-       string ngaySinh = valNgaySinh is DateTime dt ? dt.ToString("dd/MM/yyyy") :
-           DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd/MM/yyyy") : "";
-    string cccd = dgvNhanVien.Rows[selectedRowIndex].Cells["colCCCD"].Value?.ToString() ?? "";
-    string soDT = dgvNhanVien.Rows[selectedRowIndex].Cells["colSoDT"].Value?.ToString() ?? "";
+                var valNgaySinh = dgvNhanVien.Rows[selectedRowIndex].Cells["colNgaySinh"].Value;
+                string ngaySinh = valNgaySinh is DateTime dt ? dt.ToString("dd/MM/yyyy") :
+                    DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd/MM/yyyy") : "";
+                string cccd = dgvNhanVien.Rows[selectedRowIndex].Cells["colCCCD"].Value?.ToString() ?? "";
+                string soDT = dgvNhanVien.Rows[selectedRowIndex].Cells["colSoDT"].Value?.ToString() ?? "";
 
-      MessageBox.Show(
-  "📋 THÔNG TIN NHÂN VIÊN\n\n" +
-     $"Mã nhân viên: {maNV}\n" +
-       $"Họ tên: {hoTen}\n" +
-      $"Giới tính: {gioiTinh}\n" +
-          $"Ngày sinh: {ngaySinh}\n" +
-         $"CCCD: {cccd}\n" +
-      $"Số điện thoại: {soDT}\n",
-        "Thông tin nhân viên", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+            "📋 THÔNG TIN NHÂN VIÊN\n\n" +
+               $"Mã nhân viên: {maNV}\n" +
+                 $"Họ tên: {hoTen}\n" +
+                $"Giới tính: {gioiTinh}\n" +
+                    $"Ngày sinh: {ngaySinh}\n" +
+                   $"CCCD: {cccd}\n" +
+                $"Số điện thoại: {soDT}\n",
+                  "Thông tin nhân viên", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void EditInfo_Click(object sender, EventArgs e)
-      {
-    if (selectedRowIndex >= 0 && selectedRowIndex < dgvNhanVien.Rows.Count)
         {
-     string maNV = dgvNhanVien.Rows[selectedRowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
+            if (selectedRowIndex >= 0 && selectedRowIndex < dgvNhanVien.Rows.Count)
+            {
+                string maNV = dgvNhanVien.Rows[selectedRowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
 
                 if (string.IsNullOrEmpty(maNV))
-    {
-   MessageBox.Show("Không tìm thấy mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-       return;
+                {
+                    MessageBox.Show("Không tìm thấy mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-     frmEditNV frmEdit = new frmEditNV();
-      frmEdit.LoadNhanVienData(maNV);
+                frmEditNV frmEdit = new frmEditNV();
+                frmEdit.LoadNhanVienData(maNV);
 
-          if (frmEdit.ShowDialog() == DialogResult.OK)
-         {
-         LoadDSNhanVien();
-        }
-    }
+                if (frmEdit.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDSNhanVien();
+                }
+            }
         }
 
         private void DgvNhanVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
-  {
-          if (e.RowIndex < 0) return;
+        {
+            if (e.RowIndex < 0) return;
 
-      if (e.ColumnIndex == dgvNhanVien.Columns["colEdit"]?.Index)
-       {
-      string maNV = dgvNhanVien.Rows[e.RowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
-  if (string.IsNullOrEmpty(maNV))
-     {
-            MessageBox.Show("Không tìm thấy mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-           return;
- }
+            if (e.ColumnIndex == dgvNhanVien.Columns["colEdit"]?.Index)
+            {
+                string maNV = dgvNhanVien.Rows[e.RowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
+                if (string.IsNullOrEmpty(maNV))
+                {
+                    MessageBox.Show("Không tìm thấy mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-       frmEditNV frmEdit = new frmEditNV();
-         frmEdit.LoadNhanVienData(maNV);
+                frmEditNV frmEdit = new frmEditNV();
+                frmEdit.LoadNhanVienData(maNV);
 
                 if (frmEdit.ShowDialog() == DialogResult.OK)
-            {
- LoadDSNhanVien();
-}
-   }
+                {
+                    LoadDSNhanVien();
+                }
+            }
         }
 
         private void btnThemMoi_Click(object sender, EventArgs e)
- {
-         frmThemNV frmThem = new frmThemNV();
-    if (frmThem.ShowDialog() == DialogResult.OK)
-    {
-       RefreshData();
+        {
+            frmThemNV frmThem = new frmThemNV();
+            if (frmThem.ShowDialog() == DialogResult.OK)
+            {
+                RefreshData();
             }
         }
-  }
+    }
 }

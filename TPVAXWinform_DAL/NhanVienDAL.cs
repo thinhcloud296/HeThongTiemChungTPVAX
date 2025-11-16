@@ -10,113 +10,118 @@ namespace TPVAXWinform_DAL
 {
     public class NhanVienDAL
     {
-        string selectAll = "SELECT * FROM NhanVien"; 
+        string selectAll = "SELECT * FROM NhanVien";
         string lastMaNV = "";
 
         public DataTable GetData()
         {
-             return DBConnect.ExecuteQuery(selectAll);
+            return DBConnect.ExecuteQuery(selectAll);
         }
 
         public string GetLastMaNV()
         {
-   const string sql = "SELECT TOP 1 MaNV FROM dbo.NhanVien ORDER BY MaNV DESC";
+            const string sql = "SELECT TOP 1 MaNV FROM dbo.NhanVien ORDER BY MaNV DESC";
             DataTable dt = DBConnect.ExecuteQuery(sql);
             if (dt.Rows.Count > 0)
             {
-       lastMaNV = dt.Rows[0]["MaNV"].ToString();
-      }
-    return lastMaNV;
+                lastMaNV = dt.Rows[0]["MaNV"].ToString();
+            }
+            return lastMaNV;
         }
-
+        public DataTable GetNhanVienByMaNV(string maNV)
+        {
+            return DBConnect.ExecuteQuery("SELECT * FROM NhanVien WHERE MaNV = @MaNV"
+                ,CommandType.Text,
+                DBConnect.Param("@MaNV", maNV, SqlDbType.Char,10));
+        }
         public string CreateNewMaNV()
         {
             if (string.IsNullOrEmpty(lastMaNV))
-    {
-    lastMaNV = GetLastMaNV();
+            {
+                lastMaNV = GetLastMaNV();
             }
             if (string.IsNullOrEmpty(lastMaNV))
             {
-         return "NV000001";
-      }
- string numericPart = lastMaNV.Substring(2);
-        if (int.TryParse(numericPart, out int number))
-    {
-        number++;
-     string MaNV = "NV" + number.ToString("D6");
-     lastMaNV = MaNV;
-              return MaNV;
+                return "NVIE000001";
             }
-          else
-   {
-      throw new Exception("Invalid MaNV format in database.");
-    }
-     }
+            string numericPart = lastMaNV.Substring(2);
+            if (int.TryParse(numericPart, out int number))
+            {
+                number++;
+                string MaNV = "NVIE" + number.ToString("D6");
+                lastMaNV = MaNV;
+                return MaNV;
+            }
+            else
+            {
+                throw new Exception("Invalid MaNV format in database.");
+            }
+        }
 
         public void Insert(NhanVienDTO nv)
         {
             try
             {
-         using (var buffer = DBConnect.CreateBuffer(selectAll))
-     {
-           DataRow row = buffer.Table.NewRow();
+                using (var buffer = DBConnect.CreateBuffer(selectAll))
+                {
+                    DataRow row = buffer.Table.NewRow();
 
-           row["MaNV"] = nv.MaNV;
-  row["HoTen"] = nv.HoTen;
-   row["GioiTinh"] = nv.GioiTinh;
-      row["NgaySinh"] = (object)nv.NgaySinh ?? DBNull.Value;
-    row["CCCD"] = nv.CCCD;
- row["NgayVaoLam"] = nv.NgayVaoLam;
-          row["ChucVu"] = (object)nv.ChucVu ?? DBNull.Value;
-      row["TrangThai"] = nv.TrangThai;
-      row["SoDT"] = nv.SoDT;
-            row["DiaChi"] = nv.DiaChi;
-                 row["Email"] = nv.Email;
-  row["MaTK"] = (object)nv.MaTK ?? DBNull.Value;
+                    row["MaNV"] = nv.MaNV;
+                    row["HoTen"] = nv.HoTen;
+                    row["GioiTinh"] = nv.GioiTinh;
+                    row["NgaySinh"] = (object)nv.NgaySinh ?? DBNull.Value;
+                    row["CCCD"] = nv.CCCD;
+                    row["NgayVaoLam"] = nv.NgayVaoLam;
+                    row["ChucVu"] = (object)nv.ChucVu ?? DBNull.Value;
+                    row["TrangThai"] = nv.TrangThai;
+                    row["SoDT"] = nv.SoDT;
+                    row["DiaChi"] = nv.DiaChi;
+                    row["Email"] = nv.Email;
+                    row["MaTK"] = (object)nv.MaTK ?? DBNull.Value;
 
                     buffer.Table.Rows.Add(row);
-           buffer.Save();
-          }
-      }
-          catch (Exception ex)
-       {
-       throw new Exception("Lỗi khi thêm nhân viên: " + ex.Message);
-    }
-  }
-
-   public void Edit(NhanVienDTO nv)
-        {
-   try
-   {
- using (var buffer = DBConnect.CreateBuffer(selectAll))
-      {
-   DataRow row = buffer.Table.Rows.Find(nv.MaNV);
-          if (row != null)
-           {
-       row["HoTen"] = nv.HoTen;
-            row["GioiTinh"] = nv.GioiTinh;
-               row["NgaySinh"] = (object)nv.NgaySinh ?? DBNull.Value;
-      row["CCCD"] = nv.CCCD;
-       row["NgayVaoLam"] = nv.NgayVaoLam;
-  row["ChucVu"] = (object)nv.ChucVu ?? DBNull.Value;
-    row["TrangThai"] = nv.TrangThai;
-          row["SoDT"] = nv.SoDT;
-       row["DiaChi"] = nv.DiaChi;
-       row["Email"] = nv.Email;
-        row["MaTK"] = (object)nv.MaTK ?? DBNull.Value;
-
-          buffer.Save();
-         }
-           else
-    {
-              throw new Exception($"Không tìm thấy nhân viên với mã: {nv.MaNV}");
-         }
-     }
+                    buffer.Save();
+                }
             }
             catch (Exception ex)
-  {
-      throw new Exception("Lỗi khi sửa nhân viên: " + ex.Message);
-     }
+            {
+                throw new Exception("Lỗi khi thêm nhân viên: " + ex.Message);
+            }
+        }
+
+        public void Edit(NhanVienDTO nv)
+        {
+            try
+            {
+                using (var buffer = DBConnect.CreateBuffer(selectAll))
+                {
+                    DataRow row = buffer.Table.Rows.Find(nv.MaNV);
+                    if (row != null)
+                    {
+                        row["HoTen"] = nv.HoTen;
+                        row["GioiTinh"] = nv.GioiTinh;
+                        row["NgaySinh"] = (object)nv.NgaySinh ?? DBNull.Value;
+                        row["CCCD"] = nv.CCCD;
+                        row["NgayVaoLam"] = nv.NgayVaoLam;
+                        row["ChucVu"] = (object)nv.ChucVu ?? DBNull.Value;
+                        row["TrangThai"] = nv.TrangThai;
+                        row["SoDT"] = nv.SoDT;
+                        row["DiaChi"] = nv.DiaChi;
+                        row["Email"] = nv.Email;
+                        row["MaTK"] = (object)nv.MaTK ?? DBNull.Value;
+
+                        buffer.Save();
+                    }
+                    else
+                    {
+                        throw new Exception($"Không tìm thấy nhân viên với mã: {nv.MaNV}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi sửa nhân viên: " + ex.Message);
+            }
         }
     }
 }

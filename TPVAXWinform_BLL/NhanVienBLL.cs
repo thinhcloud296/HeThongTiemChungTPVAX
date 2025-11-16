@@ -15,7 +15,10 @@ namespace TPVAXWinform_BLL
         {
             return nhanVienDAL.GetData();
         }
-
+        public DataTable GetNhanVienByMaNV(string maNV)
+        {
+            return nhanVienDAL.GetNhanVienByMaNV(maNV);
+        }
         public string CreateNewMaNV()
         {
             return nhanVienDAL.CreateNewMaNV();
