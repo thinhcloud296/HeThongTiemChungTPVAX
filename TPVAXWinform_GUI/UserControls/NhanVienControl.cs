@@ -16,6 +16,7 @@ namespace TPVAXWinform_GUI.UserControls
     {
         private DataTable dtNhanVien;
         private NhanVienBLL nhanVienBLL = new NhanVienBLL();
+        private TaiKhoanBLL taiKhoanBLL = new TaiKhoanBLL();
         private int selectedRowIndex = -1;
         private readonly Dictionary<int, string> chucVuOptions = new Dictionary<int, string>
         {
@@ -227,6 +228,10 @@ namespace TPVAXWinform_GUI.UserControls
             editInfoItem.Click += EditInfo_Click;
             contextMenu.Items.Add(editInfoItem);
 
+            ToolStripMenuItem resetPasswordItem = new ToolStripMenuItem("🔑 Đặt lại mật khẩu");
+            resetPasswordItem.Click += ResetPassword_Click;
+            contextMenu.Items.Add(resetPasswordItem);
+
             dgvNhanVien.ContextMenuStrip = contextMenu;
             dgvNhanVien.MouseDown += DgvNhanVien_MouseDown;
         }
@@ -317,14 +322,72 @@ namespace TPVAXWinform_GUI.UserControls
                     LoadDSNhanVien();
                 }
             }
+            else if (e.ColumnIndex == dgvNhanVien.Columns["colResetPassword"]?.Index)
+            {
+                string maNV = dgvNhanVien.Rows[e.RowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
+                string tenNV = dgvNhanVien.Rows[e.RowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
+                if (string.IsNullOrEmpty(maNV))
+                {
+                    MessageBox.Show("Không tìm thấy mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                ResetEmployeePassword(maNV, tenNV);
+            }
         }
 
-        private void btnThemMoi_Click(object sender, EventArgs e)
+        private void BtnThemMoi_Click(object sender, EventArgs e)
         {
             frmThemNV frmThem = new frmThemNV();
             if (frmThem.ShowDialog() == DialogResult.OK)
             {
                 RefreshData();
+            }
+        }
+
+        private void ResetPassword_Click(object sender, EventArgs e)
+        {
+            if (selectedRowIndex >= 0 && selectedRowIndex < dgvNhanVien.Rows.Count)
+            {
+                string maNV = dgvNhanVien.Rows[selectedRowIndex].Cells["colMaNV"].Value?.ToString() ?? "";
+                string tenNV = dgvNhanVien.Rows[selectedRowIndex].Cells["colHoTen"].Value?.ToString() ?? "";
+                if (string.IsNullOrEmpty(maNV))
+                {
+                    MessageBox.Show("Không tìm thấy mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                ResetEmployeePassword(maNV, tenNV);
+            }
+        }
+
+        private void ResetEmployeePassword(string maNV, string tenNV)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                 $"Bạn có chắc chắn muốn đặt lại mật khẩu cho nhân viên '{tenNV}' thành '123456Aa@'?",
+                    "Xác nhận đặt lại mật khẩu",
+                     MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    taiKhoanBLL.ResetPassword(maNV, "123456Aa@");
+                    MessageBox.Show(
+                      $"Đã đặt lại mật khẩu thành công!\n\nMật khẩu mới: 123456Aa@",
+                       "Thành công",
+                     MessageBoxButtons.OK,
+                     MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+   $"Lỗi khi đặt lại mật khẩu: {ex.Message}",
+          "Lỗi",
+    MessageBoxButtons.OK,
+    MessageBoxIcon.Error);
             }
         }
     }

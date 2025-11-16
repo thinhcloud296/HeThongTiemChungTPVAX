@@ -13,6 +13,7 @@ namespace TPVAXWinform.UserControls
         private DataTable dtKH;
         private HoSoTiemChungBLL HSCT_bll = new HoSoTiemChungBLL();
         private KhachHangBLL KH_bll = new KhachHangBLL();
+        private TaiKhoanBLL taiKhoanBLL = new TaiKhoanBLL();
         private int selectedHSTCRowIndex = -1;
         private int selectedKHRowIndex = -1;
         public HoSoTiemChungControl()
@@ -51,6 +52,19 @@ namespace TPVAXWinform.UserControls
                     FlatStyle = FlatStyle.Flat
                 };
                 dgvKhachHang.Columns.Add(btnEditColumn);
+            }
+            if (dgvKhachHang.Columns["colResetPasswordKH"] == null)
+            {
+                var btnResetPasswordColumn = new DataGridViewButtonColumn
+                {
+                    Name = "colResetPasswordKH",
+                    HeaderText = "Đặt lại mật khẩu",
+                    Text = "🔑 Đặt lại MK",
+                    UseColumnTextForButtonValue = true,
+                    Width = 120,
+                    FlatStyle = FlatStyle.Flat
+                };
+                dgvKhachHang.Columns.Add(btnResetPasswordColumn);
             }
             ConfigureDataGridViewKHStyling();
             SetupContextMenuKH();
@@ -389,11 +403,16 @@ namespace TPVAXWinform.UserControls
             editInfoItem.Click += EditInfo_Click_KH;
             contextMenu.Items.Add(editInfoItem);
 
-            // Gán context menu cho DataGridView
-            dgvKhachHang.ContextMenuStrip = contextMenu;
+            // Menu item: Đặt lại mật khẩu
+            ToolStripMenuItem resetPasswordItem = new ToolStripMenuItem("🔑 Đặt lại mật khẩu");
+            resetPasswordItem.Click += ResetPassword_Click_KH;
+   contextMenu.Items.Add(resetPasswordItem);
 
-            // Xử lý sự kiện mở context menu để lấy thông tin dòng được chọn
-            dgvKhachHang.MouseDown += DgvKhachHang_MouseDown;
+            // Gán context menu cho DataGridView
+   dgvKhachHang.ContextMenuStrip = contextMenu;
+
+   // Xử lý sự kiện mở context menu để lấy thông tin dòng được chọn
+         dgvKhachHang.MouseDown += DgvKhachHang_MouseDown;
         }
 
         private void DgvKhachHang_MouseDown(object sender, MouseEventArgs e)
@@ -545,25 +564,36 @@ namespace TPVAXWinform.UserControls
 
             // Chỉ chạy khi click vào cột "colEditKH"
             if (e.ColumnIndex == dgvKhachHang.Columns["colEditKH"].Index)
-            {
-                // Lấy MaKH từ dòng được click
-                string maKH = dgvKhachHang.Rows[e.RowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
-                if (string.IsNullOrEmpty(maKH))
-                {
-                    MessageBox.Show("Không tìm thấy mã khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                frmEditKH frmEdit = new frmEditKH();
-                frmEdit.LoadKhachHangData(maKH); // Giả sử frmEditKH có hàm này
+          {
+       // Lấy MaKH từ dòng được click
+    string maKH = dgvKhachHang.Rows[e.RowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
+       if (string.IsNullOrEmpty(maKH))
+  {
+         MessageBox.Show("Không tìm thấy mã khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+return;
+      }
+       frmEditKH frmEdit = new frmEditKH();
+        frmEdit.LoadKhachHangData(maKH); // Giả sử frmEditKH có hàm này
 
-                if (frmEdit.ShowDialog() == DialogResult.OK)
-                {
-                    // Refresh data sau khi cập nhật thành công
-                    RefreshData();
-                }
+        if (frmEdit.ShowDialog() == DialogResult.OK)
+        {
+               // Refresh data sau khi cập nhật thành công
+             RefreshData();
+     }
             }
+    else if (e.ColumnIndex == dgvKhachHang.Columns["colResetPasswordKH"]?.Index)
+  {
+        string maKH = dgvKhachHang.Rows[e.RowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
+  string tenKH = dgvKhachHang.Rows[e.RowIndex].Cells["colHoTenKH"].Value?.ToString() ?? "";
+     if (string.IsNullOrEmpty(maKH))
+                {
+             MessageBox.Show("Không tìm thấy mã khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+ return;
+         }
 
-        }
+           ResetCustomerPassword(maKH, tenKH);
+    }
+   }
         private void btnThemMoi_Click(object sender, EventArgs e)
         {
             frmThemHSTC_KH frmThem = new frmThemHSTC_KH();
@@ -619,6 +649,52 @@ namespace TPVAXWinform.UserControls
 
                 frmThemMuiTiem formTiem = new frmThemMuiTiem(maHSTC, hoTen, gt, ns,maKH, tenKH, quanhe,soDTKH);
                 formTiem.ShowDialog();
+            }
+        }
+
+        private void ResetPassword_Click_KH(object sender, EventArgs e)
+        {
+   if (selectedKHRowIndex >= 0 && selectedKHRowIndex < dgvKhachHang.Rows.Count)
+          {
+              string maKH = dgvKhachHang.Rows[selectedKHRowIndex].Cells["colMaKH"].Value?.ToString() ?? "";
+     string tenKH = dgvKhachHang.Rows[selectedKHRowIndex].Cells["colHoTenKH"].Value?.ToString() ?? "";
+  if (string.IsNullOrEmpty(maKH))
+{
+         MessageBox.Show("Không tìm thấy mã khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+     return;
+                }
+
+       ResetCustomerPassword(maKH, tenKH);
+            }
+    }
+
+        private void ResetCustomerPassword(string maKH, string tenKH)
+        {
+     try
+            {
+       DialogResult result = MessageBox.Show(
+          $"Bạn có chắc chắn muốn đặt lại mật khẩu cho khách hàng '{tenKH}' thành '123456Aa@'?",
+   "Xác nhận đặt lại mật khẩu",
+  MessageBoxButtons.YesNo,
+      MessageBoxIcon.Question);
+
+        if (result == DialogResult.Yes)
+  {
+       taiKhoanBLL.ResetPassword(maKH, "123456Aa@");
+          MessageBox.Show(
+    $"Đã đặt lại mật khẩu thành công!\n\nMật khẩu mới: 123456Aa@",
+                   "Thành công",
+        MessageBoxButtons.OK,
+       MessageBoxIcon.Information);
+  }
+            }
+catch (Exception ex)
+   {
+     MessageBox.Show(
+      $"Lỗi khi đặt lại mật khẩu: {ex.Message}",
+          "Lỗi",
+  MessageBoxButtons.OK,
+     MessageBoxIcon.Error);
             }
         }
     }

@@ -41,6 +41,7 @@
             this.colChucVu = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTrangThai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colResetPassword = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panelFilter = new System.Windows.Forms.Panel();
             this.txtSearchName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -99,7 +100,7 @@
             this.btnThemMoi.TabIndex = 9;
             this.btnThemMoi.Text = "Thêm mới";
             this.btnThemMoi.UseVisualStyleBackColor = false;
-            this.btnThemMoi.Click += new System.EventHandler(this.btnThemMoi_Click);
+            this.btnThemMoi.Click += new System.EventHandler(this.BtnThemMoi_Click);
             // 
             // dgvNhanVien
             // 
@@ -117,7 +118,8 @@
             this.colNgayVaoLam,
             this.colChucVu,
             this.colTrangThai,
-            this.colSoDT});
+            this.colSoDT,
+            this.colResetPassword});
             this.dgvNhanVien.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNhanVien.Location = new System.Drawing.Point(3, 189);
             this.dgvNhanVien.Name = "dgvNhanVien";
@@ -191,6 +193,15 @@
             this.colSoDT.MinimumWidth = 8;
             this.colSoDT.Name = "colSoDT";
             this.colSoDT.ReadOnly = true;
+            // 
+            // colResetPassword
+            // 
+            this.colResetPassword.HeaderText = "Đặt lại mật khẩu";
+            this.colResetPassword.MinimumWidth = 8;
+            this.colResetPassword.Name = "colResetPassword";
+            this.colResetPassword.ReadOnly = true;
+            this.colResetPassword.Text = "Reset";
+            this.colResetPassword.UseColumnTextForButtonValue = true;
             // 
             // panelFilter
             // 
@@ -367,5 +378,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colChucVu;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTrangThai;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoDT;
+        private System.Windows.Forms.DataGridViewButtonColumn colResetPassword;
     }
 }

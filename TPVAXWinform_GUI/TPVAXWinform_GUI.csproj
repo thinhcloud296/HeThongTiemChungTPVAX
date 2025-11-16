@@ -195,6 +195,12 @@
     <Compile Include="UserControls\NhanVienControl.Designer.cs">
       <DependentUpon>NhanVienControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\TaiKhoanControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TaiKhoanControl.Designer.cs">
+      <DependentUpon>TaiKhoanControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\VaccineControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

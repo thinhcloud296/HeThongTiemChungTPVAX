@@ -30,6 +30,7 @@ namespace TPVAXWinform_DAL
                 DBConnect.Param("@CCCD", CCCD, SqlDbType.NVarChar, 12)
             );
         }
+  
         public string CreateMaKH(string CCCD)
         {
             string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;

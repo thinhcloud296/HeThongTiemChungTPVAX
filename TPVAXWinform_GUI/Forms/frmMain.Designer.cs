@@ -279,7 +279,7 @@
             this.button4.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(97)))), ((int)(((byte)(141)))));
             this.button4.Size = new System.Drawing.Size(302, 63);
             this.button4.TabIndex = 4;
-            this.button4.Text = "NHÀ CUNG CẤP";
+            this.button4.Text = "TÀI KHOẢN";
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.TextColor = System.Drawing.Color.White;
             this.button4.UseVisualStyleBackColor = true;
@@ -543,6 +543,7 @@
             this.lichTiemControl1.BackColor = System.Drawing.Color.White;
             this.lichTiemControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lichTiemControl1.Location = new System.Drawing.Point(10, 10);
+            this.lichTiemControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lichTiemControl1.Name = "lichTiemControl1";
             this.lichTiemControl1.Size = new System.Drawing.Size(1408, 818);
             this.lichTiemControl1.TabIndex = 2;
@@ -552,6 +553,7 @@
             this.vaccineControl1.BackColor = System.Drawing.Color.White;
             this.vaccineControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.vaccineControl1.Location = new System.Drawing.Point(10, 10);
+            this.vaccineControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.vaccineControl1.Name = "vaccineControl1";
             this.vaccineControl1.Size = new System.Drawing.Size(1408, 818);
             this.vaccineControl1.TabIndex = 4;
@@ -561,6 +563,7 @@
             this.hoaDonControl1.BackColor = System.Drawing.Color.White;
             this.hoaDonControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hoaDonControl1.Location = new System.Drawing.Point(10, 10);
+            this.hoaDonControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.hoaDonControl1.Name = "hoaDonControl1";
             this.hoaDonControl1.Size = new System.Drawing.Size(1408, 818);
             this.hoaDonControl1.TabIndex = 3;
