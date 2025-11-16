@@ -20,9 +20,17 @@ namespace TPVAXWinform_BLL
         {
             return dal.GetDataWithHoTenAndCCCD();
         }
+        public DataTable GetDataByCCCD(string CCCD)
+        {
+            return dal.GetDataByCCCD(CCCD);
+        }
         public bool IsKHExists(string CCCD)
         {
             return dal.IsKHExists(CCCD);
+        }
+        public bool IsSoDTExists(string soDT)
+        {
+            return dal.IsSoDTExists(soDT);
         }
         public bool IsLinkedHSTCBanThan(string CCCD)
         {

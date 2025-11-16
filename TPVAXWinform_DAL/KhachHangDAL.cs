@@ -21,6 +21,15 @@ namespace TPVAXWinform_DAL
             const string sql = "SELECT HoTen,CCCD FROM dbo.KhachHang";
             return DBConnect.ExecuteQuery(sql);
         }
+        public DataTable GetDataByCCCD(string CCCD)
+        {
+            const string sql = "SELECT * FROM dbo.KhachHang WHERE CCCD = @CCCD";
+            return DBConnect.ExecuteQuery(
+                sql,
+                CommandType.Text,
+                DBConnect.Param("@CCCD", CCCD, SqlDbType.NVarChar, 12)
+            );
+        }
         public string CreateMaKH(string CCCD)
         {
             string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;
@@ -36,6 +45,16 @@ namespace TPVAXWinform_DAL
                 DBConnect.Param("@CCCD", CCCD, SqlDbType.Char, 12)
             ));
 
+            return count > 0;
+        }
+        public bool IsSoDTExists(string SoDT)
+        {
+            const string sql = "SELECT COUNT(*) FROM dbo.KhachHang WHERE SoDT = @SoDT";
+            int count = Convert.ToInt32(DBConnect.ExecuteScalar(
+                sql,
+                CommandType.Text,
+                DBConnect.Param("@SoDT", SoDT, SqlDbType.NVarChar, 10)
+            ));
             return count > 0;
         }
         public bool IsLinkedHSTCBanThan(string CCCD)

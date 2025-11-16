@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-// --- 1. THÊM THƯ VIỆN REGEX ---
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,6 +20,7 @@ namespace TPVAXWinform_GUI
         HoSoTiemChungBLL hoSoTiemChungBLL = new HoSoTiemChungBLL();
         LienKetHoSoBLL lienKetHoSoBLL = new LienKetHoSoBLL();
 
+        bool flagTimKiemKH = false;
 
         string[] quanHeOptions = {
              "Cha", "Mẹ", "Con",
@@ -32,8 +32,7 @@ namespace TPVAXWinform_GUI
         };
         string[] gioiTinhOptions = { "Nam", "Nữ", "Khác" };
 
-        // --- 2. THÊM CÁC CHUỖI REGEX LÀM HẰNG SỐ ---
-        private const string REGEX_HOTEN = @"^[\p{L}\s']+$"; // Cho phép cả dấu nháy đơn '
+        private const string REGEX_HOTEN = @"^[\p{L}\s']+$"; 
         private const string REGEX_SODT = @"^0\d{9}$";
         private const string REGEX_CCCD = @"^\d{12}$";
         private const string REGEX_EMAIL = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
@@ -118,11 +117,8 @@ namespace TPVAXWinform_GUI
             }
             string cccd = cboDSKHHG.SelectedValue.ToString().Trim();
 
-            DataTable dt = khachHangBLL.GetData();
-            if (dt.PrimaryKey == null || dt.PrimaryKey.Length == 0)
-                dt.PrimaryKey = new[] { dt.Columns["CCCD"] };
-
-            DataRow dr = dt.Rows.Find(cccd);
+            DataTable dt = khachHangBLL.GetDataByCCCD(cccd);
+            DataRow dr = dt.Rows.Count > 0 ? dt.Rows[0] : null;
             if (dr == null)
             {
                 MessageBox.Show("Không tìm thấy khách hàng với CCCD đã nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -158,6 +154,7 @@ namespace TPVAXWinform_GUI
             txtEmail.Text = dr["Email"]?.ToString() ?? "";
             txtCCCDKH.Text = dr["CCCD"]?.ToString() ?? "";
 
+            flagTimKiemKH = true;
             DisableAllInpusKH();
         }
 
@@ -167,6 +164,7 @@ namespace TPVAXWinform_GUI
             DisableAllInputsHSTC();
 
             cboDSHSTCLienKet.DataSource = null;
+            flagTimKiemKH = false;
 
             txtHoTenKH.Clear();
             txtDiaChi.Clear();
@@ -181,6 +179,8 @@ namespace TPVAXWinform_GUI
             txtGhiChuHSTC.Clear();
 
             btnLienKet.Visible = true;
+            btnThemTatCa.Visible = true;
+            btnThemHoSo.Visible = true;
         }
         // Kiểm tra Validation
         public bool CheckValidationBeforeAddKH()
@@ -333,6 +333,10 @@ namespace TPVAXWinform_GUI
 
         private void btnThemHoSo_Click(object sender, EventArgs e)
         {
+            if (dtpNgaySinhHSTC.Value >= DateTime.Now ||dtpNgaySinhKH.Value>=DateTime.Now)
+                MessageBox.Show("Ngày sinh hồ sơ tiêm chủng phải nhỏ hơn ngày hiện tại.","Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if(dtpNgaySinhKH.Value.Date == dtpNgaySinhHSTC.Value.Date)
+                MessageBox.Show("Ngày sinh hồ sơ tiêm chủng không được trùng với ngày sinh khách hàng.","Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             if (hoSoTiemChungBLL.IsHSTCExists(txtCCCDHSTC.Text.Trim()))
             {
                 MessageBox.Show("Hồ sơ tiêm chủng với CCCD này đã tồn tại cho khách hàng đã chọn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -374,31 +378,67 @@ namespace TPVAXWinform_GUI
 
         private void btnLienKet_Click(object sender, EventArgs e)
         {
+            if (khachHangBLL.IsSoDTExists(txtSoDT.Text.Trim()) && !flagTimKiemKH)
+            { MessageBox.Show("Số điện thoại đã tồn tại. Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            List<String> DSHSTCLienKet = new List<String>();
+            DataRow[] drDSHSTCLienKet;
+            string makh;
+            string cccd = txtCCCDKH.Text.Trim();
+            DataTable dt = khachHangBLL.GetDataByCCCD(cccd);
+            DataRow dr = dt.Rows.Count > 0 ? dt.Rows[0] : null;
+            if (flagTimKiemKH)
+            {   
+                if (dr == null && flagTimKiemKH)
+                {
+                    MessageBox.Show("Chưa có thông tin khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                // Maked đã tìm thấy KH thông qua Flag và thêm vào mã kh tmp
+                tempMaKH = dr["MaKH"]?.ToString() ?? "";
 
-            EnableAllInputsHSTC();
-            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
+
+                makh = dr["MaKH"]?.ToString() ?? "";
+                drDSHSTCLienKet = hoSoTiemChungBLL.GetHSTC_QuanHe_KH(makh).Select();
+
+                foreach (DataRow row in drDSHSTCLienKet)
+                {
+                    string HoTenKH = row["HoTenKH"]?.ToString() ?? "";
+                    string HoTenHS = row["HoTenHS"]?.ToString() ?? "";
+                    string quanHe = row["VaiTro"]?.ToString() ?? "Khác";
+
+                    string tmp = $"HS: {HoTenHS} - KH: {HoTenKH} - ({quanHe})";
+                    if (quanHe == "Bản thân")
+                        tmp = $"{HoTenKH} - {quanHe}";
+                    DSHSTCLienKet.Add(tmp);
+                }
+                cboDSHSTCLienKet.DataSource = null;
+                if (DSHSTCLienKet.Count > 0)
+                {
+                    cboDSHSTCLienKet.DataSource = DSHSTCLienKet;
+                }
+
+                txtHoTenKH.Text = dr["HoTen"]?.ToString() ?? "";
+                txtDiaChi.Text = dr["DiaChi"]?.ToString() ?? "";
+                txtSoDT.Text = dr["SoDT"]?.ToString() ?? "";
+                dtpNgaySinhKH.Value = dr["NgaySinh"] is DateTime ? Convert.ToDateTime(dr["NgaySinh"]) : DateTime.Now;
+                txtEmail.Text = dr["Email"]?.ToString() ?? "";
+                txtCCCDKH.Text = dr["CCCD"]?.ToString() ?? "";
+                DisableAllInpusKH();
+                EnableAllInputsHSTC();
+                btnThemTatCa.Visible = false;
+                btnThemHoSo.Visible = true;
+                return;
+            }
+            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim())&&!flagTimKiemKH)
             {
-                DialogResult result = MessageBox.Show("Khách hàng đã tồn tại. Bạn có muốn sử dụng thông tin khách hàng hiện tại để liên kết hồ sơ tiêm chủng không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Khách hàng đã tồn tại. Bạn có muốn sử dụng CCCD khách hàng hiện tại để liên kết hồ sơ tiêm chủng không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    string cccd = txtCCCDKH.Text.Trim();
-
-                    DataTable dt = khachHangBLL.GetData();
-                    if (dt.PrimaryKey == null || dt.PrimaryKey.Length == 0)
-                        dt.PrimaryKey = new[] { dt.Columns["CCCD"] };
-
-                    DataRow dr = dt.Rows.Find(cccd);
-                    if (dr == null)
-                    {
-                        MessageBox.Show("Không tìm thấy khách hàng với CCCD đã nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-                    // Maked đã tìm thấy KH thông qua Flag và thêm vào mã kh tmp
                     tempMaKH = dr["MaKH"]?.ToString() ?? "";
-
-                    List<String> DSHSTCLienKet = new List<String>();
-                    string makh = dr["MaKH"]?.ToString() ?? "";
-                    DataRow[] drDSHSTCLienKet = hoSoTiemChungBLL.GetHSTC_QuanHe_KH(makh).Select();
+                    makh = dr["MaKH"]?.ToString() ?? "";
+                    drDSHSTCLienKet = hoSoTiemChungBLL.GetHSTC_QuanHe_KH(makh).Select();
                     foreach (DataRow row in drDSHSTCLienKet)
                     {
                         string HoTenKH = row["HoTenKH"]?.ToString() ?? "";
@@ -419,10 +459,11 @@ namespace TPVAXWinform_GUI
                     txtHoTenKH.Text = dr["HoTen"]?.ToString() ?? "";
                     txtDiaChi.Text = dr["DiaChi"]?.ToString() ?? "";
                     txtSoDT.Text = dr["SoDT"]?.ToString() ?? "";
-                    dtpNgaySinhKH.Value = dr["NgaySinh"] is DateTime dte ? dte : DateTime.Now;
+                    dtpNgaySinhKH.Value = dr["NgaySinh"] is DateTime ? Convert.ToDateTime(dr["NgaySinh"]) : DateTime.Now;
                     txtEmail.Text = dr["Email"]?.ToString() ?? "";
                     txtCCCDKH.Text = dr["CCCD"]?.ToString() ?? "";
                     DisableAllInpusKH();
+                    EnableAllInputsHSTC();
                     btnThemTatCa.Visible = false;
                     btnThemHoSo.Visible = true;
                     return;
@@ -430,18 +471,28 @@ namespace TPVAXWinform_GUI
                 else
                 {
                    btnReset_Click(sender, e);
-                    return;
+                   return;
                 }
-
             }
+            EnableAllInputsHSTC();
             btnThemTatCa.Visible = true;
             btnThemHoSo.Visible = false;
         }
         private void btnThemTatCa_Click(object sender, EventArgs e)
         {
+            if(khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
+            {
+                MessageBox.Show("Khách hàng đã tồn tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }   
             if (txtCCCDHSTC.Text.Trim() == txtCCCDKH.Text.Trim())
             {
                 MessageBox.Show("CCCD hồ sơ tiêm chủng không được trùng với CCCD khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if(dtpNgaySinhHSTC.Value.Date == dtpNgaySinhKH.Value.Date)
+            {
+                MessageBox.Show("Ngày sinh hồ sơ tiêm chủng không được trùng với ngày sinh khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
