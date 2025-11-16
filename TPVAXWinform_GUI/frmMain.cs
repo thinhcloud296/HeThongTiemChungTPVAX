@@ -69,7 +69,7 @@ namespace TPVAXWinform
             // Wire up button clicks
             button1.Click += (s, e) => ShowHoSoTiemChungControl();
             button2.Click += (s, e) => ShowLichTiemControl();
-            button3.Click += (s, e) => MessageBox.Show("Vaccine - Đang phát triển", "Thông báo");
+            button3.Click += (s, e) => ShowVaccineControl();
             button4.Click += (s, e) => MessageBox.Show("Nhà cung cấp - Đang phát triển", "Thông báo");
             button5.Click += (s, e) => MessageBox.Show("Nhân viên - Đang phát triển", "Thông báo");
             button6.Click += (s, e) => ShowHoaDonControl();
@@ -101,6 +101,7 @@ namespace TPVAXWinform
             bangDieuKhienControl1.Visible = true;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
+            vaccineControl1.Visible = false;
             hoaDonControl1.Visible = false;
 
             // Bring dashboard to front
@@ -120,6 +121,7 @@ namespace TPVAXWinform
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = true;
             lichTiemControl1.Visible = false;
+            vaccineControl1.Visible = false;
             hoaDonControl1.Visible = false;
 
             // Bring immunization record to front
@@ -142,6 +144,7 @@ namespace TPVAXWinform
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = true;
+            vaccineControl1.Visible = false;
             hoaDonControl1.Visible = false;
 
             // Bring Lich Tiem control to front
@@ -155,6 +158,26 @@ namespace TPVAXWinform
             button2.BackColor = Color.FromArgb(52, 152, 219); // Highlight
         }
 
+        private void ShowVaccineControl()
+        {
+            // Đóng tất cả các form con
+            CloseAllChildForms();
+
+            // Hide all user controls
+            bangDieuKhienControl1.Visible = false;
+            hoSoTiemChungControl1.Visible = false;
+            lichTiemControl1.Visible = false;
+            vaccineControl1.Visible = true;
+            hoaDonControl1.Visible = false;
+
+            // Bring Vaccine control to front
+            vaccineControl1.BringToFront();
+
+            // Reset button styles
+            ResetMenuButtons();
+            button3.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+        }
+
         private void ShowHoaDonControl()
         {
             // Đóng tất cả các form con
@@ -164,6 +187,7 @@ namespace TPVAXWinform
             bangDieuKhienControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
+            vaccineControl1.Visible = false;
             hoaDonControl1.Visible = true;
 
             // Bring Hoa Don control to front

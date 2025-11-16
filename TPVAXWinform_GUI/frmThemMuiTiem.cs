@@ -442,6 +442,11 @@ namespace TPVAXWinform_GUI
         // HÀM CLICK ĐÃ SỬA LẠI (GỌN HƠN)
         private void btnThemMuiTiem_Click(object sender, EventArgs e)
         {
+            if(dtpNgayTiem.Value.Date < DateTime.Now.Date)
+            {
+                MessageBox.Show("Ngày tiêm không được nhỏ hơn ngày hiện tại.", "Ngày tiêm không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (dgvVaccine.SelectedRows.Count > 0)
             {
                 // Lấy index của dòng đang được chọn

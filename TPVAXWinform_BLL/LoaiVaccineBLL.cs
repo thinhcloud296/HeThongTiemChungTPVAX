@@ -15,5 +15,20 @@ namespace TPVAXWinform_BLL
         {
             return _dal.GetData();
         }
+
+        public string CreateNewMaLoaiVaccine()
+        {
+            return _dal.CreateNewMaLoaiVaccine();
+        }
+
+        public void Insert(LoaiVaccineDTO loaiVaccine)
+        {
+            _dal.Insert(loaiVaccine);
+        }
+
+        public void Edit(LoaiVaccineDTO loaiVaccine)
+        {
+            _dal.Edit(loaiVaccine);
+        }
     }
 }

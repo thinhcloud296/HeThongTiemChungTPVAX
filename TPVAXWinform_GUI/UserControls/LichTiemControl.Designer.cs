@@ -46,13 +46,7 @@
             this.lblTimKiem = new System.Windows.Forms.Label();
             this.lblTrangThai = new System.Windows.Forms.Label();
             this.pnlHanhDong = new System.Windows.Forms.Panel();
-            this.btnThemLichHen = new System.Windows.Forms.Button();
             this.dgvLichTiem = new System.Windows.Forms.DataGridView();
-            this.contextMenuStripLichTiem = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemXemThongTin = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemXacNhanTiem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemHuyTiem = new System.Windows.Forms.ToolStripMenuItem();
             this.colMaLT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenNguoiTiem = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,9 +57,13 @@
             this.colNgayTiemThucTe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCheckIn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colHuy = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.contextMenuStripLichTiem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemXemThongTin = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemXacNhanTiem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemHuyTiem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTieuDe.SuspendLayout();
             this.pnlLoc.SuspendLayout();
-            this.pnlHanhDong.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLichTiem)).BeginInit();
             this.contextMenuStripLichTiem.SuspendLayout();
             this.SuspendLayout();
@@ -199,10 +197,10 @@
             this.btnDatLai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDatLai.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnDatLai.ForeColor = System.Drawing.Color.White;
-            this.btnDatLai.Location = new System.Drawing.Point(1650, 82);
+            this.btnDatLai.Location = new System.Drawing.Point(1629, 19);
             this.btnDatLai.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDatLai.Name = "btnDatLai";
-            this.btnDatLai.Size = new System.Drawing.Size(120, 55);
+            this.btnDatLai.Size = new System.Drawing.Size(150, 55);
             this.btnDatLai.TabIndex = 7;
             this.btnDatLai.Text = "Đặt lại";
             this.btnDatLai.UseVisualStyleBackColor = false;
@@ -259,7 +257,6 @@
             // pnlHanhDong
             // 
             this.pnlHanhDong.BackColor = System.Drawing.Color.White;
-            this.pnlHanhDong.Controls.Add(this.btnThemLichHen);
             this.pnlHanhDong.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHanhDong.Location = new System.Drawing.Point(0, 268);
             this.pnlHanhDong.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -267,21 +264,6 @@
             this.pnlHanhDong.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
             this.pnlHanhDong.Size = new System.Drawing.Size(1800, 92);
             this.pnlHanhDong.TabIndex = 2;
-            // 
-            // btnThemLichHen
-            // 
-            this.btnThemLichHen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.btnThemLichHen.FlatAppearance.BorderSize = 0;
-            this.btnThemLichHen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThemLichHen.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnThemLichHen.ForeColor = System.Drawing.Color.White;
-            this.btnThemLichHen.Location = new System.Drawing.Point(45, 15);
-            this.btnThemLichHen.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnThemLichHen.Name = "btnThemLichHen";
-            this.btnThemLichHen.Size = new System.Drawing.Size(300, 62);
-            this.btnThemLichHen.TabIndex = 0;
-            this.btnThemLichHen.Text = "➕ Thêm lịch hẹn mới";
-            this.btnThemLichHen.UseVisualStyleBackColor = false;
             // 
             // dgvLichTiem
             // 
@@ -334,44 +316,6 @@
             this.dgvLichTiem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLichTiem.Size = new System.Drawing.Size(1800, 717);
             this.dgvLichTiem.TabIndex = 3;
-            // 
-            // contextMenuStripLichTiem
-            // 
-            this.contextMenuStripLichTiem.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStripLichTiem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemXemThongTin,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemXacNhanTiem,
-            this.toolStripMenuItemHuyTiem});
-            this.contextMenuStripLichTiem.Name = "contextMenuStripLichTiem";
-            this.contextMenuStripLichTiem.Size = new System.Drawing.Size(304, 106);
-            this.contextMenuStripLichTiem.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripLichTiem_Opening);
-            // 
-            // toolStripMenuItemXemThongTin
-            // 
-            this.toolStripMenuItemXemThongTin.Name = "toolStripMenuItemXemThongTin";
-            this.toolStripMenuItemXemThongTin.Size = new System.Drawing.Size(303, 32);
-            this.toolStripMenuItemXemThongTin.Text = "📋 Xem thông tin mũi tiêm";
-            this.toolStripMenuItemXemThongTin.Click += new System.EventHandler(this.toolStripMenuItemXemThongTin_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(300, 6);
-            // 
-            // toolStripMenuItemXacNhanTiem
-            // 
-            this.toolStripMenuItemXacNhanTiem.Name = "toolStripMenuItemXacNhanTiem";
-            this.toolStripMenuItemXacNhanTiem.Size = new System.Drawing.Size(303, 32);
-            this.toolStripMenuItemXacNhanTiem.Text = "✔️ Xác nhận tiêm";
-            this.toolStripMenuItemXacNhanTiem.Click += new System.EventHandler(this.toolStripMenuItemXacNhanTiem_Click);
-            // 
-            // toolStripMenuItemHuyTiem
-            // 
-            this.toolStripMenuItemHuyTiem.Name = "toolStripMenuItemHuyTiem";
-            this.toolStripMenuItemHuyTiem.Size = new System.Drawing.Size(303, 32);
-            this.toolStripMenuItemHuyTiem.Text = "❌ Hủy tiêm";
-            this.toolStripMenuItemHuyTiem.Click += new System.EventHandler(this.toolStripMenuItemHuyTiem_Click);
             // 
             // colMaLT
             // 
@@ -458,6 +402,44 @@
             this.colHuy.Text = "❌ Hủy";
             this.colHuy.UseColumnTextForButtonValue = true;
             // 
+            // contextMenuStripLichTiem
+            // 
+            this.contextMenuStripLichTiem.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStripLichTiem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemXemThongTin,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemXacNhanTiem,
+            this.toolStripMenuItemHuyTiem});
+            this.contextMenuStripLichTiem.Name = "contextMenuStripLichTiem";
+            this.contextMenuStripLichTiem.Size = new System.Drawing.Size(304, 106);
+            this.contextMenuStripLichTiem.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripLichTiem_Opening);
+            // 
+            // toolStripMenuItemXemThongTin
+            // 
+            this.toolStripMenuItemXemThongTin.Name = "toolStripMenuItemXemThongTin";
+            this.toolStripMenuItemXemThongTin.Size = new System.Drawing.Size(303, 32);
+            this.toolStripMenuItemXemThongTin.Text = "📋 Xem thông tin mũi tiêm";
+            this.toolStripMenuItemXemThongTin.Click += new System.EventHandler(this.toolStripMenuItemXemThongTin_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(300, 6);
+            // 
+            // toolStripMenuItemXacNhanTiem
+            // 
+            this.toolStripMenuItemXacNhanTiem.Name = "toolStripMenuItemXacNhanTiem";
+            this.toolStripMenuItemXacNhanTiem.Size = new System.Drawing.Size(303, 32);
+            this.toolStripMenuItemXacNhanTiem.Text = "✔️ Xác nhận tiêm";
+            this.toolStripMenuItemXacNhanTiem.Click += new System.EventHandler(this.toolStripMenuItemXacNhanTiem_Click);
+            // 
+            // toolStripMenuItemHuyTiem
+            // 
+            this.toolStripMenuItemHuyTiem.Name = "toolStripMenuItemHuyTiem";
+            this.toolStripMenuItemHuyTiem.Size = new System.Drawing.Size(303, 32);
+            this.toolStripMenuItemHuyTiem.Text = "❌ Hủy tiêm";
+            this.toolStripMenuItemHuyTiem.Click += new System.EventHandler(this.toolStripMenuItemHuyTiem_Click);
+            // 
             // LichTiemControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -474,7 +456,6 @@
             this.pnlTieuDe.ResumeLayout(false);
             this.pnlLoc.ResumeLayout(false);
             this.pnlLoc.PerformLayout();
-            this.pnlHanhDong.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLichTiem)).EndInit();
             this.contextMenuStripLichTiem.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -498,7 +479,6 @@
         private System.Windows.Forms.Label lblTimKiem;
    private System.Windows.Forms.Label lblTrangThai;
         private System.Windows.Forms.Panel pnlHanhDong;
-     private System.Windows.Forms.Button btnThemLichHen;
         private System.Windows.Forms.DataGridView dgvLichTiem;
   private System.Windows.Forms.ContextMenuStrip contextMenuStripLichTiem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemThongTin;

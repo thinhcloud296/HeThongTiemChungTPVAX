@@ -96,6 +96,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Dashboard\Controls\KpiCard.Designer.cs" />
+    <Compile Include="Forms\frmQuanLyDanhMuc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmQuanLyDanhMuc.Designer.cs">
+      <DependentUpon>frmQuanLyDanhMuc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\XacNhanTiemForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,15 @@
     <Compile Include="UserControls\LichTiemControl.Designer.cs">
       <DependentUpon>LichTiemControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\VaccineControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\VaccineControl.Designer.cs">
+      <DependentUpon>VaccineControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\frmQuanLyDanhMuc.resx">
+      <DependentUpon>frmQuanLyDanhMuc.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\XacNhanTiemForm.resx">
       <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LichTiemControl.resx">
       <DependentUpon>LichTiemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VaccineControl.resx">
+      <DependentUpon>VaccineControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
