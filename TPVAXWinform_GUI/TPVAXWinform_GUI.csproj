@@ -96,11 +96,23 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Dashboard\Controls\KpiCard.Designer.cs" />
+    <Compile Include="Forms\frmEditNV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEditNV.Designer.cs">
+      <DependentUpon>frmEditNV.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmQuanLyDanhMuc.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmQuanLyDanhMuc.Designer.cs">
       <DependentUpon>frmQuanLyDanhMuc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmThemNV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmThemNV.Designer.cs">
+      <DependentUpon>frmThemNV.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\XacNhanTiemForm.cs">
       <SubType>Form</SubType>
@@ -176,6 +188,12 @@
     </Compile>
     <Compile Include="UserControls\LichTiemControl.Designer.cs">
       <DependentUpon>LichTiemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\NhanVienControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\NhanVienControl.Designer.cs">
+      <DependentUpon>NhanVienControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\VaccineControl.cs">
       <SubType>UserControl</SubType>

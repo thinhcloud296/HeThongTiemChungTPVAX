@@ -57,6 +57,7 @@
             this.lichTiemControl1 = new TPVAXWinform_GUI.UserControls.LichTiemControl();
             this.vaccineControl1 = new TPVAXWinform_GUI.UserControls.VaccineControl();
             this.hoaDonControl1 = new TPVAXWinform_GUI.UserControls.HoaDonControl();
+            this.nhanVienControl1 = new TPVAXWinform_GUI.UserControls.NhanVienControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -511,6 +512,7 @@
             this.panel3.Controls.Add(this.lichTiemControl1);
             this.panel3.Controls.Add(this.vaccineControl1);
             this.panel3.Controls.Add(this.hoaDonControl1);
+            this.panel3.Controls.Add(this.nhanVienControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -562,6 +564,15 @@
             this.hoaDonControl1.Name = "hoaDonControl1";
             this.hoaDonControl1.Size = new System.Drawing.Size(1408, 818);
             this.hoaDonControl1.TabIndex = 3;
+            // 
+            // nhanVienControl1
+            // 
+            this.nhanVienControl1.BackColor = System.Drawing.Color.White;
+            this.nhanVienControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nhanVienControl1.Location = new System.Drawing.Point(10, 10);
+            this.nhanVienControl1.Name = "nhanVienControl1";
+            this.nhanVienControl1.Size = new System.Drawing.Size(1408, 818);
+            this.nhanVienControl1.TabIndex = 5;
             // 
             // frmMain
             // 
@@ -619,6 +630,7 @@
         private TPVAXWinform_GUI.UserControls.LichTiemControl lichTiemControl1;
         private TPVAXWinform_GUI.UserControls.VaccineControl vaccineControl1;
         private TPVAXWinform_GUI.UserControls.HoaDonControl hoaDonControl1;
+        private TPVAXWinform_GUI.UserControls.NhanVienControl nhanVienControl1;
     }
 }
 
