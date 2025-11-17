@@ -12,6 +12,7 @@ namespace TPVAXWinform_DAL
     {
         private string lastMaLT = "";
         private string selectSql = "SELECT * FROM dbo.LichTiem";
+        private VaccineDAL vaccineDAL = new VaccineDAL();
         public DataTable GetData()
         {
             return DBConnect.ExecuteQuery(selectSql);
@@ -122,48 +123,10 @@ namespace TPVAXWinform_DAL
             object result = DBConnect.ExecuteScalar(sql);
             return Convert.ToInt32(result);
         }
-        public VaccineDTO GetDataByMaVC(string maVC)
-        {
-            try
-            {
-                // 1. Tải toàn bộ bảng Vaccine vào buffer (Rows.Find yêu cầu PK)
-                using (var buffer = DBConnect.CreateBuffer(selectSql))
-                {
-                    // 2. Tìm vaccine bằng Primary Key
-                    DataRow row = buffer.Table.Rows.Find(maVC);
-
-                    if (row != null)
-                    {
-                        // 3. Ánh xạ (map) dữ liệu từ DataRow sang DTO
-                        VaccineDTO vaccine = new VaccineDTO();
-                        vaccine.MaVC = row["MaVC"].ToString();
-                        vaccine.TenVC = row["TenVC"].ToString();
-                        vaccine.GiaBan = Convert.ToDecimal(row["GiaBan"]);
-                        vaccine.SoLuongTon = Convert.ToInt32(row["SoLuongTon"]);
-                        vaccine.MaLoai = row["MaLoai"].ToString();
-                        vaccine.MoTa = row["MoTa"].ToString();
-                        vaccine.HinhAnh = row["HinhAnh"].ToString();
-
-                        // Lấy 2 cột phác đồ (xử lý DBNull.Value nếu có thể)
-                        vaccine.SoMuiToiDa = (row["SoMuiToiDa"] == DBNull.Value) ? 0 : Convert.ToInt32(row["SoMuiToiDa"]);
-                        vaccine.SoThangCho = (row["SoThangCho"] == DBNull.Value) ? 0 : Convert.ToInt32(row["SoThangCho"]);
-
-                        return vaccine;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Lỗi khi lấy thông tin vaccine: " + ex.Message);
-            }
-
-            // 4. Trả về null nếu không tìm thấy
-            return null;
-        }
         public void TaoLichHenKeTiep(string maHSTC, string maVCDaTiem)
         {
             // (Bạn cần tạo hàm GetDataByMaVC trong VaccineBLL)
-            VaccineDTO vaccine = GetDataByMaVC(maVCDaTiem);
+            VaccineDTO vaccine = vaccineDAL.GetVaccineByMaVC(maVCDaTiem);
 
             if (vaccine == null)
                 throw new Exception("Không tìm thấy thông tin vaccine.");
@@ -205,7 +168,8 @@ namespace TPVAXWinform_DAL
             // Thêm vào CSDL
             this.Insert(lichHenMoi);
         }
-        public int TaoLichHenDauTienChoGoi(string maGoi, string maHSTC)
+        // Thêm tham số "DateTime ngayHen"
+        public int TaoLichHenDauTienChoGoi(string maGoi, string maHSTC, DateTime ngayHen)
         {
             // 1. Lấy danh sách vaccine (chỉ Mũi 1) của gói
             string procName = "dbo.usp_GetChiTietGoi_FirstDoses";
@@ -229,7 +193,11 @@ namespace TPVAXWinform_DAL
                     lichHenMoi.MaLT = this.CreateNewMaLT(); // Dùng hàm tạo mã của bạn
                     lichHenMoi.MaHSTC = maHSTC;
                     lichHenMoi.MaVC = maVC;
-                    lichHenMoi.NgayHenTiem = DateTime.Now; // Hẹn ngay hôm nay
+
+                    // --- SỬA Ở ĐÂY ---
+                    // Dùng ngày hẹn do người dùng chọn
+                    lichHenMoi.NgayHenTiem = ngayHen;
+
                     lichHenMoi.SoMui = 1; // Vì đây là mũi đầu tiên
                     lichHenMoi.TrangThai = "Chưa tiêm"; // (Kiểu NVARCHAR)
                     lichHenMoi.GhiChu = $"Hẹn Mũi 1 (từ Gói {maGoi})";

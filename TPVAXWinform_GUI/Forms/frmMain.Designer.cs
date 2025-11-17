@@ -58,6 +58,7 @@
             this.vaccineControl1 = new TPVAXWinform_GUI.UserControls.VaccineControl();
             this.hoaDonControl1 = new TPVAXWinform_GUI.UserControls.HoaDonControl();
             this.nhanVienControl1 = new TPVAXWinform_GUI.UserControls.NhanVienControl();
+            this.phieuNhapControl1 = new TPVAXWinform_GUI.UserControls.PhieuNhapControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -279,7 +280,7 @@
             this.button4.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(97)))), ((int)(((byte)(141)))));
             this.button4.Size = new System.Drawing.Size(302, 63);
             this.button4.TabIndex = 4;
-            this.button4.Text = "TÀI KHOẢN";
+            this.button4.Text = "PHIẾU NHẬP";
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.TextColor = System.Drawing.Color.White;
             this.button4.UseVisualStyleBackColor = true;
@@ -513,6 +514,7 @@
             this.panel3.Controls.Add(this.vaccineControl1);
             this.panel3.Controls.Add(this.hoaDonControl1);
             this.panel3.Controls.Add(this.nhanVienControl1);
+            this.panel3.Controls.Add(this.phieuNhapControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -577,6 +579,16 @@
             this.nhanVienControl1.Size = new System.Drawing.Size(1408, 818);
             this.nhanVienControl1.TabIndex = 5;
             // 
+            // phieuNhapControl1
+            // 
+            this.phieuNhapControl1.BackColor = System.Drawing.Color.White;
+            this.phieuNhapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.phieuNhapControl1.Location = new System.Drawing.Point(10, 10);
+            this.phieuNhapControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.phieuNhapControl1.Name = "phieuNhapControl1";
+            this.phieuNhapControl1.Size = new System.Drawing.Size(1408, 818);
+            this.phieuNhapControl1.TabIndex = 6;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -634,6 +646,7 @@
         private TPVAXWinform_GUI.UserControls.VaccineControl vaccineControl1;
         private TPVAXWinform_GUI.UserControls.HoaDonControl hoaDonControl1;
         private TPVAXWinform_GUI.UserControls.NhanVienControl nhanVienControl1;
+        private TPVAXWinform_GUI.UserControls.PhieuNhapControl phieuNhapControl1;
     }
 }
 

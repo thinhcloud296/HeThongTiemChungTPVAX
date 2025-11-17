@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Transactions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,7 @@ namespace TPVAXWinform_GUI.UserControls
             // Mặc định check cả 2 checkbox
             chkDaTiem.Checked = true;
             chkChuaTiem.Checked = true;
+            chkDaHuy.Checked = true;
         }
 
         private void dgvLichTiem_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -303,19 +305,41 @@ namespace TPVAXWinform_GUI.UserControls
                 // Lọc theo trạng thái (checkbox)
                 bool daTiem = chkDaTiem.Checked;
                 bool chuaTiem = chkChuaTiem.Checked;
+                bool daHuy = chkDaHuy.Checked;
 
-                // (Code lọc trạng thái của bạn đã ĐÚNG, vì cột Trạng thái đang là "0" hoặc "1")
-                if (daTiem && !chuaTiem)
+                // Tạo một danh sách phụ CHỈ dành cho các bộ lọc trạng thái
+                List<string> statusFilters = new List<string>();
+
+                // 1. Thêm các trạng thái nếu chúng được check
+                if (daTiem)
                 {
-                    filters.Add("[Trạng thái] = 'Đã tiêm' ");
+                    statusFilters.Add("[Trạng thái] = 'Đã tiêm'");
                 }
-                else if (!daTiem && chuaTiem)
+                if (chuaTiem)
                 {
-                    filters.Add("[Trạng thái] = 'Chưa tiêm' ");
+                    statusFilters.Add("[Trạng thái] = 'Chưa tiêm'");
                 }
-                else if (!daTiem && !chuaTiem)
+                if (daHuy)
                 {
-                    filters.Add("1 = 0"); // Không hiển thị gì
+                    statusFilters.Add("[Trạng thái] = 'Đã hủy'");
+                }
+
+                // 2. Xử lý logic
+                if (statusFilters.Count == 3)
+                {
+                    // Cả 3 đều được check -> không cần lọc gì cả (hiển thị tất cả)
+                }
+                else if (statusFilters.Count > 0)
+                {
+                    // Có 1 hoặc 2 trạng thái được check
+                    // Nối chúng bằng 'OR' và thêm dấu ngoặc đơn
+                    // Ví dụ: "([Trạng thái] = 'Đã tiêm' OR [Trạng thái] = 'Đã hủy')"
+                    filters.Add($"({string.Join(" OR ", statusFilters)})");
+                }
+                else
+                {
+                    // Không có checkbox nào được check -> hiển thị 0 kết quả
+                    filters.Add("1 = 0");
                 }
                 // (Nếu cả 2 đều checked -> không thêm filter)
 

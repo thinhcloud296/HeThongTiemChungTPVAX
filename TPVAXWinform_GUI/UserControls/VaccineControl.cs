@@ -44,7 +44,8 @@ namespace TPVAXWinform_GUI.UserControls
             colTenVC.DataPropertyName = "TenVC";
             colLoaiBenh.DataPropertyName = "CacBenhPhongNgua";
             colGiaBan.DataPropertyName = "GiaBan";
-            colSoLuongTon.DataPropertyName = "SoLuongTon";
+            colSoLuongTon.DataPropertyName = "SoLuongTonThucTe";
+            colTongSoLuongTon.DataPropertyName = "TongSoLuongTon";
             colMaLoai.DataPropertyName = "TenLoaiVaccine";
             colSoMuiToiDa.DataPropertyName = "SoMuiToiDa";
             colMoTa.DataPropertyName = "MoTaVaccine";
@@ -54,7 +55,7 @@ namespace TPVAXWinform_GUI.UserControls
             dgvVaccine.Columns["colGiaBan"].DefaultCellStyle.Format = "N0";
 
             // Căn giữa các cột theo yêu cầu: Mã Vaccine, Giá bán, Số lượng tồn, Mã loại, Số mũi
-            string[] centerColumns = { "colMaVC", "colGiaBan", "colSoLuongTon", "colMaLoai", "colSoMuiToiDa" };
+            string[] centerColumns = { "colMaVC", "colGiaBan", "colSoLuongTon", "colTongSoLuongTon", "colMaLoai", "colSoMuiToiDa" };
             foreach (var name in centerColumns)
             {
                 if (dgvVaccine.Columns[name] != null)
@@ -144,16 +145,22 @@ namespace TPVAXWinform_GUI.UserControls
         {
             if (e.RowIndex < 0) return;
 
-            // Highlight out of stock vaccines
-            if (dgvVaccine.Columns[e.ColumnIndex].Name == "colSoLuongTon")
+            // Tô màu cho cột TỒN THỰC TẾ
+            if (dgvVaccine.Columns[e.ColumnIndex].Name == colSoLuongTon.Name) // Dùng .Name
             {
                 if (e.Value != null && e.Value != DBNull.Value)
                 {
-                    int soLuong = Convert.ToInt32(e.Value);
-                    if (soLuong == 0)
+                    int soLuongThucTe = Convert.ToInt32(e.Value);
+                    if (soLuongThucTe == 0)
                     {
-                        e.CellStyle.BackColor = Color.FromArgb(255, 224, 178); // Light orange
+                        e.CellStyle.BackColor = Color.FromArgb(255, 224, 178); // Cam nhạt
                         e.CellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        // Reset lại màu nếu nó > 0 (tránh lỗi tô màu khi scroll)
+                        e.CellStyle.BackColor = dgvVaccine.DefaultCellStyle.BackColor;
+                        e.CellStyle.ForeColor = dgvVaccine.DefaultCellStyle.ForeColor;
                     }
                 }
             }

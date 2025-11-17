@@ -52,6 +52,7 @@
             this.colLoaiBenh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoLuongTon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTongSoLuongTon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMaLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoMuiToiDa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMoTa = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -171,7 +172,7 @@
             this.lblKhoangGia.Location = new System.Drawing.Point(45, 111);
             this.lblKhoangGia.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblKhoangGia.Name = "lblKhoangGia";
-            this.lblKhoangGia.Size = new System.Drawing.Size(120, 28);
+            this.lblKhoangGia.Size = new System.Drawing.Size(124, 28);
             this.lblKhoangGia.TabIndex = 12;
             this.lblKhoangGia.Text = "Khoảng giá:";
             // 
@@ -257,7 +258,7 @@
             this.lblTimKiem.Location = new System.Drawing.Point(790, 33);
             this.lblTimKiem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTimKiem.Name = "lblTimKiem";
-            this.lblTimKiem.Size = new System.Drawing.Size(101, 28);
+            this.lblTimKiem.Size = new System.Drawing.Size(105, 28);
             this.lblTimKiem.TabIndex = 4;
             this.lblTimKiem.Text = "Tìm kiếm:";
             // 
@@ -313,6 +314,7 @@
             this.colLoaiBenh,
             this.colGiaBan,
             this.colSoLuongTon,
+            this.colTongSoLuongTon,
             this.colMaLoai,
             this.colSoMuiToiDa,
             this.colMoTa});
@@ -358,7 +360,6 @@
             // colLoaiBenh
             // 
             this.colLoaiBenh.DataPropertyName = "CacBenhPhongNgua";
-            this.colLoaiBenh.FillWeight = 100F;
             this.colLoaiBenh.HeaderText = "Loại bệnh";
             this.colLoaiBenh.MinimumWidth = 8;
             this.colLoaiBenh.Name = "colLoaiBenh";
@@ -379,6 +380,13 @@
             this.colSoLuongTon.Name = "colSoLuongTon";
             this.colSoLuongTon.ReadOnly = true;
             // 
+            // colTongSoLuongTon
+            // 
+            this.colTongSoLuongTon.HeaderText = "Tổng số lượng";
+            this.colTongSoLuongTon.MinimumWidth = 8;
+            this.colTongSoLuongTon.Name = "colTongSoLuongTon";
+            this.colTongSoLuongTon.ReadOnly = true;
+            // 
             // colMaLoai
             // 
             this.colMaLoai.FillWeight = 80F;
@@ -395,6 +403,7 @@
             this.colSoMuiToiDa.MinimumWidth = 8;
             this.colSoMuiToiDa.Name = "colSoMuiToiDa";
             this.colSoMuiToiDa.ReadOnly = true;
+            this.colSoMuiToiDa.Visible = false;
             // 
             // colMoTa
             // 
@@ -452,6 +461,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLoaiBenh;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaBan;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuongTon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTongSoLuongTon;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaLoai;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoMuiToiDa;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMoTa;

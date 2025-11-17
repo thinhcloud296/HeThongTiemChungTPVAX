@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlTieuDe = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.pnlLoc = new System.Windows.Forms.Panel();
@@ -62,6 +62,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemXacNhanTiem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHuyTiem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkDaHuy = new System.Windows.Forms.CheckBox();
             this.pnlTieuDe.SuspendLayout();
             this.pnlLoc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLichTiem)).BeginInit();
@@ -95,6 +96,7 @@
             // pnlLoc
             // 
             this.pnlLoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.pnlLoc.Controls.Add(this.chkDaHuy);
             this.pnlLoc.Controls.Add(this.chkChuaTiem);
             this.pnlLoc.Controls.Add(this.chkDaTiem);
             this.pnlLoc.Controls.Add(this.lblDen);
@@ -119,7 +121,7 @@
             this.chkChuaTiem.AutoSize = true;
             this.chkChuaTiem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.chkChuaTiem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.chkChuaTiem.Location = new System.Drawing.Point(294, 108);
+            this.chkChuaTiem.Location = new System.Drawing.Point(286, 108);
             this.chkChuaTiem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkChuaTiem.Name = "chkChuaTiem";
             this.chkChuaTiem.Size = new System.Drawing.Size(127, 32);
@@ -273,14 +275,14 @@
             this.dgvLichTiem.BackgroundColor = System.Drawing.Color.White;
             this.dgvLichTiem.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvLichTiem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvLichTiem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvLichTiem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvLichTiem.ColumnHeadersHeight = 40;
             this.dgvLichTiem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvLichTiem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -295,14 +297,14 @@
             this.colCheckIn,
             this.colHuy});
             this.dgvLichTiem.ContextMenuStrip = this.contextMenuStripLichTiem;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(195)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvLichTiem.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(195)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvLichTiem.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvLichTiem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvLichTiem.EnableHeadersVisualStyles = false;
             this.dgvLichTiem.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(195)))), ((int)(((byte)(199)))));
@@ -440,6 +442,19 @@
             this.toolStripMenuItemHuyTiem.Text = "❌ Hủy tiêm";
             this.toolStripMenuItemHuyTiem.Click += new System.EventHandler(this.toolStripMenuItemHuyTiem_Click);
             // 
+            // chkDaHuy
+            // 
+            this.chkDaHuy.AutoSize = true;
+            this.chkDaHuy.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.chkDaHuy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.chkDaHuy.Location = new System.Drawing.Point(428, 108);
+            this.chkDaHuy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chkDaHuy.Name = "chkDaHuy";
+            this.chkDaHuy.Size = new System.Drawing.Size(99, 32);
+            this.chkDaHuy.TabIndex = 15;
+            this.chkDaHuy.Text = "Đã hủy";
+            this.chkDaHuy.UseVisualStyleBackColor = true;
+            // 
             // LichTiemControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -495,5 +510,6 @@ private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNgayTiemThucTe;
         private System.Windows.Forms.DataGridViewButtonColumn colCheckIn;
         private System.Windows.Forms.DataGridViewButtonColumn colHuy;
+        private System.Windows.Forms.CheckBox chkDaHuy;
     }
 }

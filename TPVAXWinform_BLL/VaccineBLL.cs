@@ -17,7 +17,10 @@ namespace TPVAXWinform_BLL
         {
           return _vaccineDAL.GetData();
         }
-        
+        public DataTable GetDataVaccine_SingleDose()
+        {
+           return _vaccineDAL.GetDataVaccine_SingleDose();
+        }
         public DataTable GetDataVaccineDetail()
       {
           return _vaccineDAL.GetDataVaccineDetail();

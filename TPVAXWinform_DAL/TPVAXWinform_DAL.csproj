@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ChiTietGoiVaccineDAL.cs" />
     <Compile Include="ChiTietHoaDonDAL.cs" />
+    <Compile Include="ChiTietPhieuNhapDAL.cs" />
     <Compile Include="DBConnect.cs" />
     <Compile Include="GoiVaccineDAL.cs" />
     <Compile Include="HoaDonDAL.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="LoaiVaccineDAL.cs" />
     <Compile Include="NhaCungCapDAL.cs" />
     <Compile Include="NhanVienDAL.cs" />
+    <Compile Include="PhieuNhapDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaiKhoanDAL.cs" />
     <Compile Include="VaccineDAL.cs" />

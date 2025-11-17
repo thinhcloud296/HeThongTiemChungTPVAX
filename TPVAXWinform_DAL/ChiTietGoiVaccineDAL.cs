@@ -20,7 +20,7 @@ namespace TPVAXWinform_DAL
         public DataTable GetVaccinesByGoiVaccine(string maGoi)
         {
             string procName = "dbo.usp_GetVaccinesByGoiVaccine";
-            var param = DBConnect.Param("@MaGoi", maGoi, SqlDbType.Char, 8);
+            var param = DBConnect.Param("@MaGoi", maGoi, SqlDbType.Char, 10);
             return DBConnect.ExecuteQuery(
                 procName,
                 CommandType.StoredProcedure,

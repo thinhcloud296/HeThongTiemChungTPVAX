@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPVAXWinform_DTO;
 
 namespace TPVAXWinform_BLL
 {
@@ -38,9 +39,13 @@ namespace TPVAXWinform_BLL
         {
             return lichTiemDAL.SoMuiDangChoTiem(maHSTC, maVC);
         }
-        public int TaoLichHenDauTienChoGoi(string maGoi, string maHSTC)
+        public void TaoLichHenKeTiep(string maHSTC, string maVCDaTiem)
         {
-            return lichTiemDAL.TaoLichHenDauTienChoGoi(maGoi, maHSTC);
+            lichTiemDAL.TaoLichHenKeTiep(maHSTC, maVCDaTiem);
+        }
+        public int TaoLichHenDauTienChoGoi(string maGoi, string maHSTC, DateTime ngayHen)
+        {
+            return lichTiemDAL.TaoLichHenDauTienChoGoi(maGoi, maHSTC,ngayHen);
         }
     }
 }
