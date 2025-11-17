@@ -68,34 +68,37 @@ namespace TPVAXWinform_DAL
         }
         public void UpdateSoLuongTon(string maVC, int soLuongThayDoi)
         {
+            // 1. Hàm này chỉ xử lý việc GIẢM kho (số âm, ví dụ: -1)
+            // (Việc TĂNG kho được xử lý bởi nghiệp vụ Nhập hàng)
+            if (soLuongThayDoi >= 0)
+            {
+                // Nếu số lượng là dương hoặc 0, không làm gì cả
+                return;
+            }
+
+            // 2. Chuyển số thay đổi (ví dụ: -1) thành số lượng giảm (ví dụ: 1)
+            //    để truyền vào Stored Procedure
+            int soLuongGiam = Math.Abs(soLuongThayDoi);
+
             try
             {
-                using (var buffer = DBConnect.CreateBuffer(selectSql))
-                {
-                    DataRow row = buffer.Table.Rows.Find(maVC);
-                    if (row != null)
-                    {
-                        int soLuongHienTai = Convert.ToInt32(row["SoLuongTon"]);
-                        int soLuongMoi = soLuongHienTai + soLuongThayDoi;
+                // 3. Gọi Stored Procedure đã xử lý logic FEFO (trừ kho lô)
+                string procName = "dbo.usp_Vaccine_GiamTonKho";
 
-                        if (soLuongMoi < 0)
-                        {
-                            throw new Exception("Số lượng tồn kho không được âm!");
-                        }
+                // 4. Chuẩn bị tham số
+                var paramMaVC = DBConnect.Param("@MaVC", maVC, SqlDbType.Char, 10);
+                var paramSoLuong = DBConnect.Param("@SoLuongGiam", soLuongGiam, SqlDbType.Int);
 
-                        row["SoLuongTon"] = soLuongMoi;
-                        buffer.Save();
-                    }
-                    else
-                    {
-                        throw new Exception($"Không tìm thấy vaccine với mã: {maVC}");
-                    }
-                }
+                // 5. Thực thi Stored Procedure
+                // (Dùng ExecuteNonQuery vì proc này không trả về bảng dữ liệu)
+                DBConnect.ExecuteNonQuery(procName, CommandType.StoredProcedure, paramMaVC, paramSoLuong);
             }
             catch (Exception ex)
             {
-                throw new Exception("Lỗi khi cập nhật số lượng tồn: " + ex.Message);
+                // 6. Ném (throw) lỗi từ Stored Procedure lên (ví dụ: "Không đủ số lượng tồn kho...")
+                throw new Exception(ex.Message);
             }
         }
+        
     }
 }

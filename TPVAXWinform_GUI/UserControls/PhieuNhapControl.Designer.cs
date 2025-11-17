@@ -34,6 +34,7 @@
             this.pnlTieuDe = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.pnlLoc = new System.Windows.Forms.Panel();
+            this.btnThemMoi = new System.Windows.Forms.Button();
             this.dtpDenNgay = new System.Windows.Forms.DateTimePicker();
             this.dtpTuNgay = new System.Windows.Forms.DateTimePicker();
             this.lblDenNgay = new System.Windows.Forms.Label();
@@ -48,6 +49,7 @@
             this.colTenNCC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemXemChiTiet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemXacNhanNhap = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTieuDe.SuspendLayout();
             this.pnlLoc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPhieuNhap)).BeginInit();
@@ -81,6 +83,7 @@
             // pnlLoc
             // 
             this.pnlLoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.pnlLoc.Controls.Add(this.btnThemMoi);
             this.pnlLoc.Controls.Add(this.dtpDenNgay);
             this.pnlLoc.Controls.Add(this.dtpTuNgay);
             this.pnlLoc.Controls.Add(this.lblDenNgay);
@@ -95,6 +98,22 @@
             this.pnlLoc.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
             this.pnlLoc.Size = new System.Drawing.Size(1800, 120);
             this.pnlLoc.TabIndex = 1;
+            // 
+            // btnThemMoi
+            // 
+            this.btnThemMoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnThemMoi.FlatAppearance.BorderSize = 0;
+            this.btnThemMoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemMoi.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemMoi.ForeColor = System.Drawing.Color.White;
+            this.btnThemMoi.Location = new System.Drawing.Point(1458, 35);
+            this.btnThemMoi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnThemMoi.Name = "btnThemMoi";
+            this.btnThemMoi.Size = new System.Drawing.Size(180, 55);
+            this.btnThemMoi.TabIndex = 15;
+            this.btnThemMoi.Text = "Thêm mới";
+            this.btnThemMoi.UseVisualStyleBackColor = false;
+            this.btnThemMoi.Click += new System.EventHandler(this.btnThemMoi_Click);
             // 
             // dtpDenNgay
             // 
@@ -155,7 +174,7 @@
             this.btnDatLai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDatLai.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnDatLai.ForeColor = System.Drawing.Color.White;
-            this.btnDatLai.Location = new System.Drawing.Point(1629, 35);
+            this.btnDatLai.Location = new System.Drawing.Point(1646, 34);
             this.btnDatLai.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDatLai.Name = "btnDatLai";
             this.btnDatLai.Size = new System.Drawing.Size(150, 55);
@@ -167,10 +186,10 @@
             // txtSearch
             // 
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtSearch.Location = new System.Drawing.Point(939, 43);
+            this.txtSearch.Location = new System.Drawing.Point(809, 43);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(682, 37);
+            this.txtSearch.Size = new System.Drawing.Size(629, 37);
             this.txtSearch.TabIndex = 5;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
@@ -179,7 +198,7 @@
             this.lblTimKiem.AutoSize = true;
             this.lblTimKiem.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblTimKiem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblTimKiem.Location = new System.Drawing.Point(790, 48);
+            this.lblTimKiem.Location = new System.Drawing.Point(696, 48);
             this.lblTimKiem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTimKiem.Name = "lblTimKiem";
             this.lblTimKiem.Size = new System.Drawing.Size(105, 28);
@@ -267,16 +286,24 @@
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemXemChiTiet});
+            this.toolStripMenuItemXemChiTiet,
+            this.toolStripMenuItemXacNhanNhap});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(178, 36);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(237, 68);
             // 
             // toolStripMenuItemXemChiTiet
             // 
             this.toolStripMenuItemXemChiTiet.Name = "toolStripMenuItemXemChiTiet";
-            this.toolStripMenuItemXemChiTiet.Size = new System.Drawing.Size(177, 32);
+            this.toolStripMenuItemXemChiTiet.Size = new System.Drawing.Size(236, 32);
             this.toolStripMenuItemXemChiTiet.Text = "Xem chi tiết";
             this.toolStripMenuItemXemChiTiet.Click += new System.EventHandler(this.toolStripMenuItemXemChiTiet_Click);
+            // 
+            // toolStripMenuItemXacNhanNhap
+            // 
+            this.toolStripMenuItemXacNhanNhap.Name = "toolStripMenuItemXacNhanNhap";
+            this.toolStripMenuItemXacNhanNhap.Size = new System.Drawing.Size(236, 32);
+            this.toolStripMenuItemXacNhanNhap.Text = "Xác nhận nhập kho";
+            this.toolStripMenuItemXacNhanNhap.Click += new System.EventHandler(this.toolStripMenuItemXacNhanNhap_Click);
             // 
             // PhieuNhapControl
             // 
@@ -301,22 +328,24 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlTieuDe;
-      private System.Windows.Forms.Label lblTieuDe;
-     private System.Windows.Forms.Panel pnlLoc;
-      private System.Windows.Forms.Button btnDatLai;
+  private System.Windows.Forms.Panel pnlTieuDe;
+        private System.Windows.Forms.Label lblTieuDe;
+private System.Windows.Forms.Panel pnlLoc;
+        private System.Windows.Forms.Button btnThemMoi;
+        private System.Windows.Forms.Button btnDatLai;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Label lblTimKiem;
-        private System.Windows.Forms.DataGridView dgvPhieuNhap;
-      private System.Windows.Forms.Label lblTuNgay;
-     private System.Windows.Forms.Label lblDenNgay;
+   private System.Windows.Forms.Label lblTimKiem;
+  private System.Windows.Forms.DataGridView dgvPhieuNhap;
+        private System.Windows.Forms.Label lblTuNgay;
+        private System.Windows.Forms.Label lblDenNgay;
         private System.Windows.Forms.DateTimePicker dtpTuNgay;
-        private System.Windows.Forms.DateTimePicker dtpDenNgay;
+      private System.Windows.Forms.DateTimePicker dtpDenNgay;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaPN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNgayLap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTenNV;
+ private System.Windows.Forms.DataGridViewTextBoxColumn colNgayLap;
+   private System.Windows.Forms.DataGridViewTextBoxColumn colTenNV;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenNCC;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+ private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemChiTiet;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXacNhanNhap;
     }
 }

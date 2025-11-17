@@ -5,18 +5,36 @@ using System.Text;
 using System.Data;
 using TPVAXWinform_DAL;
 using TPVAXWinform_DTO;
+
 namespace TPVAXWinform_BLL
 {
     public class PhieuNhapBLL
     {
         private readonly PhieuNhapDAL _dal = new PhieuNhapDAL();
+
         public DataTable GetDataDetail()
         {
             return _dal.GetDataDetail();
         }
+
         public DataTable GetDetailByMaPN(string maPN)
         {
             return _dal.GetDetailByMaPN(maPN);
+        }
+
+        public string CreateNewMaPN()
+        {
+            return _dal.CreateNewMaPN();
+        }
+
+        public void Insert(PhieuNhapDTO pn)
+        {
+            _dal.Insert(pn);
+        }
+
+        public void Edit(PhieuNhapDTO pn)
+        {
+            _dal.Edit(pn);
         }
     }
 }

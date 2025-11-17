@@ -11,6 +11,7 @@ namespace TPVAXWinform_DTO
         public string MaCTPN { get; set; } = string.Empty;
         public string NuocSanXuat { get; set; } = string.Empty;
         public int SoLuong { get; set; }
+        public int SoLuongTonKho { get; set; }
         public decimal GiaNhap { get; set; }
         public DateTime? HanSuDung { get; set; }
         public string MaPN { get; set; } = string.Empty;
@@ -18,11 +19,12 @@ namespace TPVAXWinform_DTO
 
         public ChiTietPhieuNhapDTO() { }
 
-        public ChiTietPhieuNhapDTO(string maCTPN, string nuocSanXuat, int soLuong, decimal giaNhap, DateTime? hanSuDung, string maPN, string maVC)
+        public ChiTietPhieuNhapDTO(string maCTPN, string nuocSanXuat, int soLuong, int soLuongTonKho, decimal giaNhap, DateTime? hanSuDung, string maPN, string maVC)
         {
             MaCTPN = maCTPN;
             NuocSanXuat = nuocSanXuat;
             SoLuong = soLuong;
+            SoLuongTonKho = soLuongTonKho;
             GiaNhap = giaNhap;
             HanSuDung = hanSuDung;
             MaPN = maPN;

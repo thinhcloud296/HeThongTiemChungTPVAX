@@ -15,6 +15,8 @@ namespace TPVAXWinform_GUI.UserControls
     public partial class PhieuNhapControl : UserControl
     {
         private PhieuNhapBLL phieuNhapBLL = new PhieuNhapBLL();
+        private ChiTietPhieuNhapBLL chiTietPhieuNhapBLL = new ChiTietPhieuNhapBLL();
+        private VaccineBLL vaccineBLL = new VaccineBLL();
         private DataTable dtPhieuNhap;
 
         public PhieuNhapControl()
@@ -36,9 +38,8 @@ namespace TPVAXWinform_GUI.UserControls
             }
             catch (Exception ex)
             {
-                // SỬA LỖI ENCODING: Hiển thị chữ "Lỗi" đúng
                 MessageBox.Show($"Lỗi khi load dữ liệu: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -46,17 +47,13 @@ namespace TPVAXWinform_GUI.UserControls
         {
             dgvPhieuNhap.AutoGenerateColumns = false;
 
-            // SỬA LỖI ENCODING: Dùng đúng tên cột từ Stored Procedure
             colMaPN.DataPropertyName = "Mã Phiếu Nhập";
             colNgayLap.DataPropertyName = "Ngày Lập";
             colTenNV.DataPropertyName = "Tên Nhân Viên Lập";
             colTenNCC.DataPropertyName = "Tên Nhà Cung Cấp";
 
-            // SỬA HIỆU NĂNG: Gán DataSource cho DefaultView
-            // Điều này cho phép DataGridView tự động cập nhật khi RowFilter thay đổi
             dgvPhieuNhap.DataSource = dt.DefaultView;
 
-            // Căn giữa các cột
             string[] centerColumns = { "colMaPN", "colNgayLap" };
             foreach (var name in centerColumns)
             {
@@ -69,33 +66,27 @@ namespace TPVAXWinform_GUI.UserControls
         {
             if (dtPhieuNhap == null) return;
 
-            // Lấy DefaultView (đã được gán cho DataGridView)
             DataView dv = dtPhieuNhap.DefaultView;
             List<string> filters = new List<string>();
 
-            // Filter by search text
             if (!string.IsNullOrWhiteSpace(txtSearch.Text))
             {
                 string searchText = txtSearch.Text.Trim().Replace("'", "''");
-
-                // SỬA LỖI ENCODING: Dùng đúng tên cột
                 filters.Add($"([Mã Phiếu Nhập] LIKE '%{searchText}%' OR [Tên Nhân Viên Lập] LIKE '%{searchText}%' OR [Tên Nhà Cung Cấp] LIKE '%{searchText}%')");
             }
 
-            // SỬA LỖI LOGIC: Dùng định dạng RowFilter an toàn cho ngày tháng
             if (dtpTuNgay.Checked)
             {
-                DateTime tuNgay = dtpTuNgay.Value.Date; // Lấy 00:00:00 của ngày
+                DateTime tuNgay = dtpTuNgay.Value.Date;
                 filters.Add($"[Ngày Lập] >= '{tuNgay:yyyy-MM-dd HH:mm:ss}'");
             }
 
             if (dtpDenNgay.Checked)
             {
-                DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1); // Lấy 00:00:00 của ngày hôm sau
+                DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1);
                 filters.Add($"[Ngày Lập] < '{denNgay:yyyy-MM-dd HH:mm:ss}'");
             }
 
-            // Apply filter
             if (filters.Count > 0)
             {
                 dv.RowFilter = string.Join(" AND ", filters);
@@ -104,9 +95,6 @@ namespace TPVAXWinform_GUI.UserControls
             {
                 dv.RowFilter = "";
             }
-
-            // SỬA HIỆU NĂNG: Xóa dòng này
-            // dgvPhieuNhap.DataSource = dv.ToTable(); // <-- KHÔNG CẦN DÒNG NÀY
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -130,10 +118,6 @@ namespace TPVAXWinform_GUI.UserControls
             dtpTuNgay.Checked = false;
             dtpDenNgay.Checked = false;
 
-            // Cách 1: Load lại (Đơn giản, nhưng gọi DB)
-            // LoadPhieuNhap(); 
-
-            // Cách 2: Chỉ reset filter (Nhanh hơn)
             if (dtPhieuNhap != null)
             {
                 dtPhieuNhap.DefaultView.RowFilter = "";
@@ -151,13 +135,11 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void toolStripMenuItemXemChiTiet_Click(object sender, EventArgs e)
         {
-            // Kiểm tra xem có dòng nào đang được chọn không
             if (dgvPhieuNhap.SelectedRows.Count == 0)
             {
                 return;
             }
 
-            // Lấy Mã Phiếu Nhập từ dòng đang được chọn
             string maPN = dgvPhieuNhap.SelectedRows[0].Cells[colMaPN.Name].Value?.ToString();
 
             if (!string.IsNullOrEmpty(maPN))
@@ -165,6 +147,78 @@ namespace TPVAXWinform_GUI.UserControls
                 frmChiTietPhieuNhap frm = new frmChiTietPhieuNhap(maPN);
                 frm.ShowDialog();
             }
+        }
+
+        private void btnThemMoi_Click(object sender, EventArgs e)
+        {
+            frmThemPhieuNhap frm = new frmThemPhieuNhap();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadPhieuNhap();
+            }
+        }
+
+        private void toolStripMenuItemXacNhanNhap_Click(object sender, EventArgs e)
+        {
+            if (dgvPhieuNhap.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn phiếu nhập cần xác nhận!", "Thông báo",
+                   MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string maPN = dgvPhieuNhap.SelectedRows[0].Cells[colMaPN.Name].Value?.ToString();
+
+            DialogResult result = MessageBox.Show(
+            $"Bạn có chắc chắn muốn xác nhận nhập kho phiếu '{maPN}'?\n\n" +
+               "Sau khi xác nhận, số lượng vaccine sẽ được cộng vào kho.",
+                   "Xác nhận nhập kho",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                XacNhanNhapKho(maPN);
+            }
+        }
+        // (Trong PhieuNhapControl.cs)
+
+        // Bạn phải thêm 'using System.Transactions;'
+        // (Mặc dù proc đã có transaction, dùng TransactionScope của C# vẫn an toàn hơn)
+
+        private void XacNhanNhapKho(string maPN)
+        {
+            try
+            {
+                // Bạn không cần TransactionScope ở đây nữa
+                // vì Stored Procedure đã xử lý Transaction rồi.
+
+                // --- SỬA LẠI HOÀN TOÀN ---
+
+                // 1. Gọi hàm BLL (đã tạo ở Bước 2)
+                chiTietPhieuNhapBLL.XacNhanNhapKho(maPN);
+
+                // 2. Thông báo thành công
+                MessageBox.Show(
+                    $"Đã xác nhận nhập kho thành công phiếu '{maPN}'!\n" +
+                    $"Số lượng vaccine đã được cập nhật vào kho.",
+                    "Thành công",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                // 3. Refresh lại danh sách
+                LoadPhieuNhap();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi xác nhận nhập kho: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void RefreshData()
+        {
+            LoadPhieuNhap();
         }
     }
 }

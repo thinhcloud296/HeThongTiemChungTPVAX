@@ -44,16 +44,17 @@
             this.lblMaPNValue = new System.Windows.Forms.Label();
             this.lblMaPN = new System.Windows.Forms.Label();
             this.dgvChiTietPN = new System.Windows.Forms.DataGridView();
+            this.pnlButton = new System.Windows.Forms.Panel();
+            this.btnDong = new System.Windows.Forms.Button();
             this.colMaCTPN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMaVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNuocSanXuat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSoLuongTon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaNhap = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHanSuDung = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThanhTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pnlButton = new System.Windows.Forms.Panel();
-            this.btnDong = new System.Windows.Forms.Button();
             this.pnlTieuDe.SuspendLayout();
             this.pnlThongTin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTietPN)).BeginInit();
@@ -249,6 +250,7 @@
             this.colTenVC,
             this.colNuocSanXuat,
             this.colSoLuong,
+            this.colSoLuongTon,
             this.colGiaNhap,
             this.colHanSuDung,
             this.colThanhTien});
@@ -273,6 +275,35 @@
             this.dgvChiTietPN.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvChiTietPN.Size = new System.Drawing.Size(1400, 420);
             this.dgvChiTietPN.TabIndex = 2;
+            // 
+            // pnlButton
+            // 
+            this.pnlButton.BackColor = System.Drawing.Color.White;
+            this.pnlButton.Controls.Add(this.btnDong);
+            this.pnlButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlButton.Location = new System.Drawing.Point(0, 650);
+            this.pnlButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pnlButton.Name = "pnlButton";
+            this.pnlButton.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
+            this.pnlButton.Size = new System.Drawing.Size(1400, 80);
+            this.pnlButton.TabIndex = 3;
+            // 
+            // btnDong
+            // 
+            this.btnDong.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnDong.BackColor = System.Drawing.Color.Gray;
+            this.btnDong.FlatAppearance.BorderSize = 0;
+            this.btnDong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnDong.ForeColor = System.Drawing.Color.White;
+            this.btnDong.Location = new System.Drawing.Point(625, 15);
+            this.btnDong.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDong.Name = "btnDong";
+            this.btnDong.Size = new System.Drawing.Size(150, 50);
+            this.btnDong.TabIndex = 0;
+            this.btnDong.Text = "Đóng";
+            this.btnDong.UseVisualStyleBackColor = false;
+            this.btnDong.Click += new System.EventHandler(this.btnDong_Click);
             // 
             // colMaCTPN
             // 
@@ -313,6 +344,13 @@
             this.colSoLuong.Name = "colSoLuong";
             this.colSoLuong.ReadOnly = true;
             // 
+            // colSoLuongTon
+            // 
+            this.colSoLuongTon.HeaderText = "Số Lượng Tồn";
+            this.colSoLuongTon.MinimumWidth = 8;
+            this.colSoLuongTon.Name = "colSoLuongTon";
+            this.colSoLuongTon.ReadOnly = true;
+            // 
             // colGiaNhap
             // 
             this.colGiaNhap.FillWeight = 80F;
@@ -336,35 +374,6 @@
             this.colThanhTien.MinimumWidth = 8;
             this.colThanhTien.Name = "colThanhTien";
             this.colThanhTien.ReadOnly = true;
-            // 
-            // pnlButton
-            // 
-            this.pnlButton.BackColor = System.Drawing.Color.White;
-            this.pnlButton.Controls.Add(this.btnDong);
-            this.pnlButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlButton.Location = new System.Drawing.Point(0, 650);
-            this.pnlButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.pnlButton.Name = "pnlButton";
-            this.pnlButton.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
-            this.pnlButton.Size = new System.Drawing.Size(1400, 80);
-            this.pnlButton.TabIndex = 3;
-            // 
-            // btnDong
-            // 
-            this.btnDong.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnDong.BackColor = System.Drawing.Color.Gray;
-            this.btnDong.FlatAppearance.BorderSize = 0;
-            this.btnDong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnDong.ForeColor = System.Drawing.Color.White;
-            this.btnDong.Location = new System.Drawing.Point(625, 15);
-            this.btnDong.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnDong.Name = "btnDong";
-            this.btnDong.Size = new System.Drawing.Size(150, 50);
-            this.btnDong.TabIndex = 0;
-            this.btnDong.Text = "Đóng";
-            this.btnDong.UseVisualStyleBackColor = false;
-            this.btnDong.Click += new System.EventHandler(this.btnDong_Click);
             // 
             // frmChiTietPhieuNhap
             // 
@@ -416,6 +425,7 @@ private System.Windows.Forms.Label lblTieuDe;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenVC;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNuocSanXuat;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuong;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuongTon;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaNhap;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHanSuDung;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThanhTien;

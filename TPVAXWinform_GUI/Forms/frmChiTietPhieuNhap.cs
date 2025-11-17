@@ -91,6 +91,7 @@ namespace TPVAXWinform_GUI.Forms
             colTenVC.DataPropertyName = "Tên Vaccine";
             colNuocSanXuat.DataPropertyName = "Nước Sản Xuất";
             colSoLuong.DataPropertyName = "Số Lượng";
+            colSoLuongTon.DataPropertyName = "Số Lượng Tồn";
             colGiaNhap.DataPropertyName = "Giá Nhập";
             colHanSuDung.DataPropertyName = "Hạn Sử Dụng";
             colThanhTien.DataPropertyName = "Thành Tiền";

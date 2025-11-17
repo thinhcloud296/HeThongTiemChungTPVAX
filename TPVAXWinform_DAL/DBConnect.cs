@@ -90,6 +90,28 @@ namespace TPVAXWinform_DAL
                 Table?.Dispose();
             }
         }
+        public static int ExecuteNonQuery(string commandText, CommandType commandType, params SqlParameter[] parameters)
+        {
+            // (Giả sử bạn có hàm GetConnection() hoặc biến 'connectionString' static)
+            using (SqlConnection connection = GetConnection()) // Hoặc new SqlConnection(connectionString)
+            {
+                using (SqlCommand command = new SqlCommand(commandText, connection))
+                {
+                    command.CommandType = commandType;
+
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters);
+                    }
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery(); // <-- Dùng hàm .ExecuteNonQuery() của .NET
+                    connection.Close();
+
+                    return rowsAffected; // Trả về số dòng bị ảnh hưởng
+                }
+            }
+        }
         public static DataTable ExecuteQuery(string sqlOrSp,
                                      CommandType cmdType = CommandType.Text,
                                      params SqlParameter[] parameters)

@@ -136,6 +136,12 @@
     <Compile Include="Forms\frmThemNV.Designer.cs">
       <DependentUpon>frmThemNV.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmThemPhieuNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmThemPhieuNhap.Designer.cs">
+      <DependentUpon>frmThemPhieuNhap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\XacNhanTiemForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,7 +223,6 @@
     <Compile Include="UserControls\NhanVienControl.Designer.cs">
       <DependentUpon>NhanVienControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\PhieuNhanControl.cs" />
     <Compile Include="UserControls\PhieuNhapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -247,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmThemNV.resx">
       <DependentUpon>frmThemNV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmThemPhieuNhap.resx">
+      <DependentUpon>frmThemPhieuNhap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\XacNhanTiemForm.resx">
       <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
