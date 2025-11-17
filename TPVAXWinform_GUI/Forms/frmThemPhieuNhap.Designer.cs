@@ -27,13 +27,6 @@
             this.lblNhaCungCap = new System.Windows.Forms.Label();
             this.groupBoxChiTiet = new System.Windows.Forms.GroupBox();
             this.dgvChiTiet = new System.Windows.Forms.DataGridView();
-            this.colMaVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTenVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNuocSanXuat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGiaNhap = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHanSuDung = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colXoa = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panelChiTiet = new System.Windows.Forms.Panel();
             this.btnThemVaccine = new System.Windows.Forms.Button();
             this.dtpHanSuDung = new System.Windows.Forms.DateTimePicker();
@@ -49,6 +42,13 @@
             this.panelButtons = new System.Windows.Forms.Panel();
             this.btnLuu = new System.Windows.Forms.Button();
             this.btnHuy = new System.Windows.Forms.Button();
+            this.colMaVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTenVC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNuocSanXuat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGiaNhap = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHanSuDung = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colXoa = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBoxThongTin.SuspendLayout();
             this.groupBoxChiTiet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).BeginInit();
@@ -87,7 +87,7 @@
             this.groupBoxThongTin.Size = new System.Drawing.Size(1740, 185);
             this.groupBoxThongTin.TabIndex = 1;
             this.groupBoxThongTin.TabStop = false;
-            this.groupBoxThongTin.Text = "Thông tin phi?u nh?p";
+            this.groupBoxThongTin.Text = "Thông tin phiếu nhập";
             // 
             // dtpNgayLap
             // 
@@ -124,9 +124,9 @@
             this.lblNgayLap.Location = new System.Drawing.Point(30, 51);
             this.lblNgayLap.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNgayLap.Name = "lblNgayLap";
-            this.lblNgayLap.Size = new System.Drawing.Size(94, 28);
+            this.lblNgayLap.Size = new System.Drawing.Size(95, 28);
             this.lblNgayLap.TabIndex = 0;
-            this.lblNgayLap.Text = "Ngày l?p:";
+            this.lblNgayLap.Text = "Ngày lập:";
             // 
             // lblNhanVien
             // 
@@ -144,9 +144,9 @@
             this.lblNhaCungCap.Location = new System.Drawing.Point(870, 112);
             this.lblNhaCungCap.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNhaCungCap.Name = "lblNhaCungCap";
-            this.lblNhaCungCap.Size = new System.Drawing.Size(135, 28);
+            this.lblNhaCungCap.Size = new System.Drawing.Size(136, 28);
             this.lblNhaCungCap.TabIndex = 4;
-            this.lblNhaCungCap.Text = "Nhà cung c?p:";
+            this.lblNhaCungCap.Text = "Nhà cung cấp:";
             // 
             // groupBoxChiTiet
             // 
@@ -160,7 +160,7 @@
             this.groupBoxChiTiet.Size = new System.Drawing.Size(1740, 692);
             this.groupBoxChiTiet.TabIndex = 2;
             this.groupBoxChiTiet.TabStop = false;
-            this.groupBoxChiTiet.Text = "Chi ti?t vaccine";
+            this.groupBoxChiTiet.Text = "Chi tiết vaccine";
             // 
             // dgvChiTiet
             // 
@@ -183,57 +183,6 @@
             this.dgvChiTiet.RowHeadersWidth = 62;
             this.dgvChiTiet.Size = new System.Drawing.Size(1732, 473);
             this.dgvChiTiet.TabIndex = 1;
-            // 
-            // colMaVC
-            // 
-            this.colMaVC.HeaderText = "Mã Vaccine";
-            this.colMaVC.MinimumWidth = 8;
-            this.colMaVC.Name = "colMaVC";
-            this.colMaVC.ReadOnly = true;
-            // 
-            // colTenVC
-            // 
-            this.colTenVC.HeaderText = "Tên Vaccine";
-            this.colTenVC.MinimumWidth = 8;
-            this.colTenVC.Name = "colTenVC";
-            this.colTenVC.ReadOnly = true;
-            // 
-            // colNuocSanXuat
-            // 
-            this.colNuocSanXuat.HeaderText = "N??c s?n xu?t";
-            this.colNuocSanXuat.MinimumWidth = 8;
-            this.colNuocSanXuat.Name = "colNuocSanXuat";
-            this.colNuocSanXuat.ReadOnly = true;
-            // 
-            // colSoLuong
-            // 
-            this.colSoLuong.HeaderText = "S? l??ng";
-            this.colSoLuong.MinimumWidth = 8;
-            this.colSoLuong.Name = "colSoLuong";
-            this.colSoLuong.ReadOnly = true;
-            // 
-            // colGiaNhap
-            // 
-            this.colGiaNhap.HeaderText = "Giá nh?p";
-            this.colGiaNhap.MinimumWidth = 8;
-            this.colGiaNhap.Name = "colGiaNhap";
-            this.colGiaNhap.ReadOnly = true;
-            // 
-            // colHanSuDung
-            // 
-            this.colHanSuDung.HeaderText = "H?n s? d?ng";
-            this.colHanSuDung.MinimumWidth = 8;
-            this.colHanSuDung.Name = "colHanSuDung";
-            this.colHanSuDung.ReadOnly = true;
-            // 
-            // colXoa
-            // 
-            this.colXoa.HeaderText = "Xóa";
-            this.colXoa.MinimumWidth = 8;
-            this.colXoa.Name = "colXoa";
-            this.colXoa.ReadOnly = true;
-            this.colXoa.Text = "Xóa";
-            this.colXoa.UseColumnTextForButtonValue = true;
             // 
             // panelChiTiet
             // 
@@ -273,7 +222,7 @@
             // dtpHanSuDung
             // 
             this.dtpHanSuDung.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpHanSuDung.Location = new System.Drawing.Point(1230, 100);
+            this.dtpHanSuDung.Location = new System.Drawing.Point(1230, 102);
             this.dtpHanSuDung.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpHanSuDung.Name = "dtpHanSuDung";
             this.dtpHanSuDung.Size = new System.Drawing.Size(223, 34);
@@ -281,7 +230,7 @@
             // 
             // numGiaNhap
             // 
-            this.numGiaNhap.Location = new System.Drawing.Point(855, 100);
+            this.numGiaNhap.Location = new System.Drawing.Point(855, 102);
             this.numGiaNhap.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numGiaNhap.Maximum = new decimal(new int[] {
             1000000000,
@@ -294,7 +243,7 @@
             // 
             // numSoLuong
             // 
-            this.numSoLuong.Location = new System.Drawing.Point(480, 100);
+            this.numSoLuong.Location = new System.Drawing.Point(480, 102);
             this.numSoLuong.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numSoLuong.Maximum = new decimal(new int[] {
             10000,
@@ -327,7 +276,7 @@
             // 
             this.cboVaccine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboVaccine.FormattingEnabled = true;
-            this.cboVaccine.Location = new System.Drawing.Point(180, 23);
+            this.cboVaccine.Location = new System.Drawing.Point(154, 23);
             this.cboVaccine.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboVaccine.Name = "cboVaccine";
             this.cboVaccine.Size = new System.Drawing.Size(748, 36);
@@ -339,9 +288,9 @@
             this.lblHanSuDung.Location = new System.Drawing.Point(1095, 105);
             this.lblHanSuDung.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHanSuDung.Name = "lblHanSuDung";
-            this.lblHanSuDung.Size = new System.Drawing.Size(121, 28);
+            this.lblHanSuDung.Size = new System.Drawing.Size(127, 28);
             this.lblHanSuDung.TabIndex = 8;
-            this.lblHanSuDung.Text = "H?n s? d?ng:";
+            this.lblHanSuDung.Text = "Hạn sử dụng:";
             // 
             // lblGiaNhap
             // 
@@ -349,9 +298,9 @@
             this.lblGiaNhap.Location = new System.Drawing.Point(735, 105);
             this.lblGiaNhap.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGiaNhap.Name = "lblGiaNhap";
-            this.lblGiaNhap.Size = new System.Drawing.Size(93, 28);
+            this.lblGiaNhap.Size = new System.Drawing.Size(94, 28);
             this.lblGiaNhap.TabIndex = 6;
-            this.lblGiaNhap.Text = "Giá nh?p:";
+            this.lblGiaNhap.Text = "Giá nhập:";
             // 
             // lblSoLuong
             // 
@@ -359,9 +308,9 @@
             this.lblSoLuong.Location = new System.Drawing.Point(360, 105);
             this.lblSoLuong.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSoLuong.Name = "lblSoLuong";
-            this.lblSoLuong.Size = new System.Drawing.Size(87, 28);
+            this.lblSoLuong.Size = new System.Drawing.Size(92, 28);
             this.lblSoLuong.TabIndex = 4;
-            this.lblSoLuong.Text = "S? l??ng:";
+            this.lblSoLuong.Text = "Số lượng";
             // 
             // lblNuocSanXuat
             // 
@@ -369,9 +318,9 @@
             this.lblNuocSanXuat.Location = new System.Drawing.Point(1065, 28);
             this.lblNuocSanXuat.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNuocSanXuat.Name = "lblNuocSanXuat";
-            this.lblNuocSanXuat.Size = new System.Drawing.Size(132, 28);
+            this.lblNuocSanXuat.Size = new System.Drawing.Size(140, 28);
             this.lblNuocSanXuat.TabIndex = 2;
-            this.lblNuocSanXuat.Text = "N??c s?n xu?t:";
+            this.lblNuocSanXuat.Text = "Nước sản xuất:";
             // 
             // lblVaccine
             // 
@@ -405,7 +354,7 @@
             this.btnLuu.Name = "btnLuu";
             this.btnLuu.Size = new System.Drawing.Size(165, 62);
             this.btnLuu.TabIndex = 0;
-            this.btnLuu.Text = "L?u";
+            this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = false;
             this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
@@ -420,9 +369,60 @@
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Size = new System.Drawing.Size(165, 62);
             this.btnHuy.TabIndex = 1;
-            this.btnHuy.Text = "H?y";
+            this.btnHuy.Text = "Hủy";
             this.btnHuy.UseVisualStyleBackColor = false;
             this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
+            // 
+            // colMaVC
+            // 
+            this.colMaVC.HeaderText = "Mã Vaccine";
+            this.colMaVC.MinimumWidth = 8;
+            this.colMaVC.Name = "colMaVC";
+            this.colMaVC.ReadOnly = true;
+            // 
+            // colTenVC
+            // 
+            this.colTenVC.HeaderText = "Tên Vaccine";
+            this.colTenVC.MinimumWidth = 8;
+            this.colTenVC.Name = "colTenVC";
+            this.colTenVC.ReadOnly = true;
+            // 
+            // colNuocSanXuat
+            // 
+            this.colNuocSanXuat.HeaderText = "Nước sản xuất";
+            this.colNuocSanXuat.MinimumWidth = 8;
+            this.colNuocSanXuat.Name = "colNuocSanXuat";
+            this.colNuocSanXuat.ReadOnly = true;
+            // 
+            // colSoLuong
+            // 
+            this.colSoLuong.HeaderText = "Số lượng";
+            this.colSoLuong.MinimumWidth = 8;
+            this.colSoLuong.Name = "colSoLuong";
+            this.colSoLuong.ReadOnly = true;
+            // 
+            // colGiaNhap
+            // 
+            this.colGiaNhap.HeaderText = "Giá nhập";
+            this.colGiaNhap.MinimumWidth = 8;
+            this.colGiaNhap.Name = "colGiaNhap";
+            this.colGiaNhap.ReadOnly = true;
+            // 
+            // colHanSuDung
+            // 
+            this.colHanSuDung.HeaderText = "Hạn sử dụng";
+            this.colHanSuDung.MinimumWidth = 8;
+            this.colHanSuDung.Name = "colHanSuDung";
+            this.colHanSuDung.ReadOnly = true;
+            // 
+            // colXoa
+            // 
+            this.colXoa.HeaderText = "Xóa";
+            this.colXoa.MinimumWidth = 8;
+            this.colXoa.Name = "colXoa";
+            this.colXoa.ReadOnly = true;
+            this.colXoa.Text = "Xóa";
+            this.colXoa.UseColumnTextForButtonValue = true;
             // 
             // frmThemPhieuNhap
             // 
@@ -482,8 +482,8 @@ private System.Windows.Forms.GroupBox groupBoxChiTiet;
     private System.Windows.Forms.Button btnHuy;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaVC;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenVC;
-  private System.Windows.Forms.DataGridViewTextBoxColumn colNuocSanXuat;
-   private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuong;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNuocSanXuat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuong;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaNhap;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHanSuDung;
         private System.Windows.Forms.DataGridViewButtonColumn colXoa;

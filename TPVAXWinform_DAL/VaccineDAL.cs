@@ -16,7 +16,10 @@ namespace TPVAXWinform_DAL
         {
             return DBConnect.ExecuteQuery(selectSql);
         }
-
+        public DataTable GetDataForComboBox()
+        {
+            return DBConnect.ExecuteQuery("SELECT   MaVC, TenVC, (MaVC + ' - ' + TenVC) AS MaTenVC FROM dbo.Vaccine");
+        }
         public DataTable GetDataVaccineDetail()
         {
             return DBConnect.ExecuteQuery(
@@ -60,6 +63,23 @@ namespace TPVAXWinform_DAL
 
             // 4. Trả về null nếu không tìm thấy
             return null;
+        }
+        public int GetSoLuongTonThucTe(string maVC)
+        {
+            try
+            {
+                string procName = "dbo.usp_Vaccine_GetSoLuongTonThucTe";
+                var paramMaVC = DBConnect.Param("@MaVC", maVC, SqlDbType.Char, 10);
+
+                // Dùng ExecuteScalar vì nó chỉ trả về 1 ô (1 con số)
+                object result = DBConnect.ExecuteScalar(procName, CommandType.StoredProcedure, paramMaVC);
+
+                return (result != null && result != DBNull.Value) ? Convert.ToInt32(result) : 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy tồn kho thực tế: " + ex.Message);
+            }
         }
         public DataTable GetDataVaccine_SingleDose()
         {

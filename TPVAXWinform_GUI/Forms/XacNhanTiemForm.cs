@@ -70,57 +70,52 @@ namespace TPVAXWinform_GUI.Forms
 
                 if (result == DialogResult.Yes)
                 {
-                    // Bắt đầu Transaction
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        // 1. Kiểm tra số lượng tồn kho
-                        // (Lưu ý: hàm BLL này nên gọi proc đã trừ HSD)
-                        var vaccine = vaccineBLL.GetVaccineByMaVC(maVC);
-                        if (vaccine == null)
-                        {
-                            MessageBox.Show("Không tìm thấy thông tin vaccine!", "Lỗi",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
+                        // --- SỬA LOGIC KIỂM TRA KHO ---
 
-                        // (Bạn nên kiểm tra 'SoLuongTonThucTe' nếu dùng proc mới)
-                        if (vaccine.SoLuongTon <= 0)
+                        // 1. Kiểm tra số lượng tồn kho THỰC TẾ (còn hạn)
+                        // (Gọi hàm BLL mới mà chúng ta đã tạo)
+                        int soLuongTonThucTe = vaccineBLL.GetSoLuongTonThucTe(maVC);
+
+                        if (soLuongTonThucTe <= 0)
                         {
                             MessageBox.Show(
-                                $"Vaccine {tenVaccine} đã hết hàng!\nSố lượng tồn: {vaccine.SoLuongTon}",
+                                $"Vaccine {tenVaccine} đã hết hàng (hoặc đã hết hạn)!\n" +
+                                $"Số lượng có thể tiêm: {soLuongTonThucTe}",
                                 "Cảnh báo",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
-                            return;
+                            return; // Thoát (Transaction sẽ tự động hủy)
                         }
 
-                        // 2. Cập nhật lịch tiêm hiện tại
+                        // --- KẾT THÚC SỬA ---
+
+                        // 2. Cập nhật lịch tiêm hiện tại (Code cũ của bạn đã đúng)
                         LichTiemDTO lichTiem = new LichTiemDTO
                         {
                             MaLT = maLT,
                             MaHSTC = maHSTC,
                             MaVC = maVC,
                             NgayHenTiem = ngayHenTiem,
-                            TrangThai = "Đã tiêm", // Cập nhật trạng thái
+                            TrangThai = "Đã tiêm",
                             NgayTiemThucTe = DateTime.Now,
                             GhiChu = txtGhiChu.Text.Trim()
-                            // Giữ nguyên SoMui (không cần gán)
                         };
                         lichTiemBLL.Edit(lichTiem);
 
-                        // 3. Trừ số lượng tồn kho
-                        // (Lưu ý: hàm này cần cập nhật cả 'ChiTietPhieuNhap' và 'Vaccine.SoLuongTon')
+                        // 3. Trừ số lượng tồn kho (Code cũ của bạn đã đúng)
+                        // (Hàm này gọi proc usp_Vaccine_GiamTonKho, tự động trừ FEFO và Trigger)
                         vaccineBLL.UpdateSoLuongTon(maVC, -1);
 
-                        // 4. GỌI HÀM TẠO LỊCH HẸN KẾ TIẾP
-                        // Hàm này sẽ tự xử lý cho cả mũi gói và mũi lẻ
+                        // 4. GỌI HÀM TẠO LỊCH HẸN KẾ TIẾP (Code cũ của bạn đã đúng)
                         lichTiemBLL.TaoLichHenKeTiep(this.maHSTC, this.maVC);
 
                         // 5. Hoàn tất giao dịch
                         scope.Complete();
                     }
 
-                    // (Thông báo thành công nằm BÊN NGOÀI TransactionScope)
+                    // (Thông báo thành công)
                     MessageBox.Show(
                         "Xác nhận tiêm thành công!\n" +
                         "Hệ thống đã tự động kiểm tra và tạo lịch hẹn kế tiếp (nếu có).",
@@ -134,7 +129,6 @@ namespace TPVAXWinform_GUI.Forms
             }
             catch (Exception ex)
             {
-                // Nếu có lỗi, Transaction sẽ tự động rollback
                 MessageBox.Show($"Lỗi khi xác nhận tiêm (toàn bộ thao tác đã được hủy):\n{ex.Message}", "Lỗi",
                      MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -80,9 +80,9 @@ namespace TPVAXWinform_GUI.Forms
             cboNhaCungCap.SelectedIndex = -1;
 
             // Load Vaccine
-            DataTable dtVaccine = vaccineBLL.GetData(); // (Nên dùng proc mới)
+            DataTable dtVaccine = vaccineBLL.GetDataForComboBox();
             cboVaccine.DataSource = dtVaccine;
-            cboVaccine.DisplayMember = "TenVC";
+            cboVaccine.DisplayMember = "MaTenVC";
             cboVaccine.ValueMember = "MaVC";
             cboVaccine.SelectedIndex = -1;
         }
