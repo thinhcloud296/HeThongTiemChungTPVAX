@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TPVAX Admin | Quản lý Gói Vắc xin</title>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+              ><i class="fas fa-bars"></i
+            ></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-bs-toggle="dropdown" href="#">
+              <i class="far fa-bell"></i>
+              <span class="badge badge-warning navbar-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <span class="dropdown-item dropdown-header">3 Thông báo mới</span>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-box-open mr-2"></i> Gói "Tiêm chủng trẻ em"
+                được đặt
+                <span class="float-right text-muted text-sm"
+                  >20 phút trước</span
+                >
+              </a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button"
+              ><i class="fas fa-expand-arrows-alt"></i
+            ></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html"
+              ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="index.html" class="brand-link">
+          <i
+            class="fas fa-syringe brand-image"
+            style="color: #0077b6; font-size: 2rem"
+          ></i>
+          <span class="brand-text font-weight-light">TPVAX Admin</span>
+        </a>
+
+        <div class="sidebar">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img
+                src="https://ui-avatars.com/api/?name=Admin+User&background=0077b6&color=fff"
+                class="img-circle elevation-2"
+                alt="User Image"
+              />
+            </div>
+            <div class="info">
+              <a href="profile.html" class="d-block">Quản trị viên</a>
+            </div>
+          </div>
+
+          <nav class="mt-2">
+            <ul
+              class="nav nav-pills nav-sidebar flex-column"
+              data-widget="treeview"
+              role="menu"
+              data-accordion="false"
+            >
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>Bảng điều khiển</p>
+                </a>
+              </li>
+              <li class="nav-header">QUẢN LÝ</li>
+              <li class="nav-item">
+                <a href="vaccines.html" class="nav-link">
+                  <i class="nav-icon fas fa-capsules"></i>
+                  <p>Quản lý Vắc xin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="phieu-nhap.html" class="nav-link">
+                  <i class="nav-icon fas fa-file-import"></i>
+                  <p>Quản lý Phiếu nhập</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="nha-cung-cap.html" class="nav-link">
+                  <i class="nav-icon fas fa-truck"></i>
+                  <p>Nhà cung cấp</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="goi-vaccine.html" class="nav-link active">
+                  <i class="nav-icon fas fa-box-open"></i>
+                  <p>Gói Vắc xin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="appointments.html" class="nav-link">
+                  <i class="nav-icon fas fa-calendar-alt"></i>
+                  <p>Quản lý Lịch tiêm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="calendar.html" class="nav-link">
+                  <i class="nav-icon fas fa-calendar-day"></i>
+                  <p>Lịch làm việc</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="customers.html" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>Quản lý Khách hàng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="nhan-vien.html" class="nav-link">
+                  <i class="nav-icon fas fa-user-md"></i>
+                  <p>Quản lý Nhân viên</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="reports.html" class="nav-link">
+                  <i class="nav-icon fas fa-chart-bar"></i>
+                  <p>Báo cáo & Thống kê</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+
+      <div class="content-wrapper">
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1><i class="fas fa-box-open mr-2"></i>Quản lý Gói Vắc xin</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="index.html">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Gói Vắc xin</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>15</h3>
+                    <p>Tổng gói vắc xin</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-boxes"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h3>8</h3>
+                    <p>Gói trẻ em</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-baby"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>5</h3>
+                    <p>Gói người lớn</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-user"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>256</h3>
+                    <p>Gói đã bán</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-list mr-2"></i>Danh sách Gói Vắc xin
+                </h3>
+                <div class="card-tools">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#goiVaccineModal"
+                    onclick="resetForm()"
+                  >
+                    <i class="fas fa-plus"></i> Tạo gói mới
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <!-- Package Card 1 -->
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm package-card">
+                      <div class="card-header bg-gradient-primary text-white">
+                        <h5 class="mb-0">
+                          <i class="fas fa-box-open mr-2"></i>Gói Tiêm Chủng Trẻ
+                          Em Cơ Bản
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <span class="badge bg-info">GOI001</span>
+                          <span class="badge bg-success float-end"
+                            >Đang bán</span
+                          >
+                        </div>
+                        <p class="text-muted mb-3">
+                          Gói tiêm chủng cơ bản cho trẻ từ 0-12 tháng tuổi theo
+                          lịch tiêm chủng quốc gia.
+                        </p>
+
+                        <h6>
+                          <i class="fas fa-syringe mr-2 text-primary"></i>Bao
+                          gồm 5 loại vắc xin:
+                        </h6>
+                        <ul class="list-unstyled mb-3">
+                          <li>✓ Vắc xin 6 trong 1 (x3 mũi)</li>
+                          <li>✓ Vắc xin Viêm gan B (x3 mũi)</li>
+                          <li>✓ Vắc xin Lao (x1 mũi)</li>
+                          <li>✓ Vắc xin Sởi - Rubella (x1 mũi)</li>
+                          <li>✓ Vắc xin Bại liệt (x4 mũi)</li>
+                        </ul>
+
+                        <div class="price-box bg-light p-3 rounded mb-3">
+                          <div class="d-flex justify-content-between">
+                            <span>Giá gốc:</span>
+                            <span class="text-decoration-line-through"
+                              >8,500,000 VNĐ</span
+                            >
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <span><strong>Giá ưu đãi:</strong></span>
+                            <span class="text-danger"
+                              ><strong>7,200,000 VNĐ</strong></span
+                            >
+                          </div>
+                          <small class="text-success"
+                            >Tiết kiệm: 1,300,000 VNĐ (15%)</small
+                          >
+                        </div>
+
+                        <div class="mb-2">
+                          <small
+                            ><i class="fas fa-calendar mr-1"></i>Thời gian: 12
+                            tháng</small
+                          >
+                        </div>
+                        <div class="mb-3">
+                          <small
+                            ><i class="fas fa-chart-line mr-1"></i>Đã bán: 124
+                            gói</small
+                          >
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button class="btn btn-primary btn-sm btn-edit">
+                          <i class="fas fa-edit"></i> Sửa
+                        </button>
+                        <button class="btn btn-info btn-sm">
+                          <i class="fas fa-eye"></i> Chi tiết
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete float-end"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Package Card 2 -->
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm package-card">
+                      <div class="card-header bg-gradient-success text-white">
+                        <h5 class="mb-0">
+                          <i class="fas fa-box-open mr-2"></i>Gói Tiêm Chủng Mở
+                          Rộng
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <span class="badge bg-info">GOI002</span>
+                          <span class="badge bg-success float-end"
+                            >Đang bán</span
+                          >
+                        </div>
+                        <p class="text-muted mb-3">
+                          Gói tiêm chủng mở rộng cho trẻ từ 0-24 tháng bao gồm
+                          cả vắc xin dịch vụ cao cấp.
+                        </p>
+
+                        <h6>
+                          <i class="fas fa-syringe mr-2 text-success"></i>Bao
+                          gồm 8 loại vắc xin:
+                        </h6>
+                        <ul class="list-unstyled mb-3">
+                          <li>✓ Tất cả vắc xin gói cơ bản</li>
+                          <li>✓ Prevenar 13 (x4 mũi)</li>
+                          <li>✓ Rotavirus (x3 mũi)</li>
+                          <li>✓ Cúm mùa (x2 mũi)</li>
+                        </ul>
+
+                        <div class="price-box bg-light p-3 rounded mb-3">
+                          <div class="d-flex justify-content-between">
+                            <span>Giá gốc:</span>
+                            <span class="text-decoration-line-through"
+                              >15,800,000 VNĐ</span
+                            >
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <span><strong>Giá ưu đãi:</strong></span>
+                            <span class="text-danger"
+                              ><strong>13,200,000 VNĐ</strong></span
+                            >
+                          </div>
+                          <small class="text-success"
+                            >Tiết kiệm: 2,600,000 VNĐ (16%)</small
+                          >
+                        </div>
+
+                        <div class="mb-2">
+                          <small
+                            ><i class="fas fa-calendar mr-1"></i>Thời gian: 24
+                            tháng</small
+                          >
+                        </div>
+                        <div class="mb-3">
+                          <small
+                            ><i class="fas fa-chart-line mr-1"></i>Đã bán: 87
+                            gói</small
+                          >
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button class="btn btn-primary btn-sm btn-edit">
+                          <i class="fas fa-edit"></i> Sửa
+                        </button>
+                        <button class="btn btn-info btn-sm">
+                          <i class="fas fa-eye"></i> Chi tiết
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete float-end"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Package Card 3 -->
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm package-card">
+                      <div class="card-header bg-gradient-warning text-white">
+                        <h5 class="mb-0">
+                          <i class="fas fa-box-open mr-2"></i>Gói Phòng Cúm Gia
+                          Đình
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <span class="badge bg-info">GOI003</span>
+                          <span class="badge bg-success float-end"
+                            >Đang bán</span
+                          >
+                        </div>
+                        <p class="text-muted mb-3">
+                          Gói tiêm phòng cúm cho cả gia đình (4 người) với vắc
+                          xin cúm tứ giá nhập khẩu.
+                        </p>
+
+                        <h6>
+                          <i class="fas fa-syringe mr-2 text-warning"></i>Bao
+                          gồm:
+                        </h6>
+                        <ul class="list-unstyled mb-3">
+                          <li>✓ Vắc xin Cúm Tứ Giá (4 liều)</li>
+                          <li>✓ Khám sàng lọc miễn phí</li>
+                          <li>✓ Theo dõi sau tiêm 30 phút</li>
+                          <li>✓ Tư vấn y tế miễn phí</li>
+                        </ul>
+
+                        <div class="price-box bg-light p-3 rounded mb-3">
+                          <div class="d-flex justify-content-between">
+                            <span>Giá gốc:</span>
+                            <span class="text-decoration-line-through"
+                              >1,600,000 VNĐ</span
+                            >
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <span><strong>Giá ưu đãi:</strong></span>
+                            <span class="text-danger"
+                              ><strong>1,200,000 VNĐ</strong></span
+                            >
+                          </div>
+                          <small class="text-success"
+                            >Tiết kiệm: 400,000 VNĐ (25%)</small
+                          >
+                        </div>
+
+                        <div class="mb-2">
+                          <small
+                            ><i class="fas fa-calendar mr-1"></i>Thời gian: 1
+                            ngày</small
+                          >
+                        </div>
+                        <div class="mb-3">
+                          <small
+                            ><i class="fas fa-chart-line mr-1"></i>Đã bán: 45
+                            gói</small
+                          >
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button class="btn btn-primary btn-sm btn-edit">
+                          <i class="fas fa-edit"></i> Sửa
+                        </button>
+                        <button class="btn btn-info btn-sm">
+                          <i class="fas fa-eye"></i> Chi tiết
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete float-end"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="main-footer">
+        <div class="float-right d-none d-sm-inline">Version 1.0</div>
+        <strong
+          >Copyright &copy; 2024-2025 <a href="#">TPVAX</a> - Hệ thống tiêm
+          chủng hàng đầu Việt Nam.</strong
+        >
+        All rights reserved.
+      </footer>
+    </div>
+
+    <!-- Modal Tạo/Sửa Gói Vắc xin -->
+    <div class="modal fade" id="goiVaccineModal" tabindex="-1">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <h5 class="modal-title" id="modalTitle">Tạo Gói Vắc xin Mới</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="goiVaccineForm" class="needs-validation" novalidate>
+              <input type="hidden" id="goiId" />
+
+              <h5 class="mb-3">
+                <i class="fas fa-info-circle mr-2"></i>Thông tin gói
+              </h5>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label"
+                    >Mã gói <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="maGoi"
+                    class="form-control"
+                    placeholder="VD: GOI001"
+                    required
+                  />
+                  <div class="invalid-feedback">Vui lòng nhập mã gói.</div>
+                </div>
+                <div class="col-md-8 mb-3">
+                  <label class="form-label"
+                    >Tên gói <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="tenGoi"
+                    class="form-control"
+                    placeholder="VD: Gói Tiêm Chủng Trẻ Em Cơ Bản"
+                    required
+                  />
+                  <div class="invalid-feedback">Vui lòng nhập tên gói.</div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label"
+                  >Mô tả <span class="text-danger">*</span></label
+                >
+                <textarea
+                  id="moTa"
+                  class="form-control"
+                  rows="2"
+                  placeholder="Mô tả chi tiết về gói vắc xin..."
+                  required
+                ></textarea>
+                <div class="invalid-feedback">Vui lòng nhập mô tả.</div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Đối tượng áp dụng</label>
+                  <select id="doiTuong" class="form-select">
+                    <option value="Trẻ em">Trẻ em</option>
+                    <option value="Người lớn">Người lớn</option>
+                    <option value="Gia đình">Gia đình</option>
+                    <option value="Tất cả">Tất cả</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Độ tuổi áp dụng</label>
+                  <input
+                    type="text"
+                    id="doTuoi"
+                    class="form-control"
+                    placeholder="VD: 0-12 tháng"
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Thời gian thực hiện</label>
+                  <input
+                    type="text"
+                    id="thoiGian"
+                    class="form-control"
+                    placeholder="VD: 12 tháng"
+                  />
+                </div>
+              </div>
+
+              <h5 class="mt-4 mb-3">
+                <i class="fas fa-syringe mr-2"></i>Vắc xin trong gói
+              </h5>
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>Tên vắc xin</th>
+                    <th>Số mũi tiêm</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th>
+                      <button
+                        type="button"
+                        class="btn btn-success btn-sm"
+                        id="addVaccineRow"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="vaccineTableBody">
+                  <tr>
+                    <td>
+                      <select class="form-select vaccine-select" required>
+                        <option value="">Chọn vắc xin</option>
+                        <option value="1">Vắc xin 6 trong 1</option>
+                        <option value="2">Vắc xin Cúm Tứ Giá</option>
+                        <option value="3">Prevenar 13</option>
+                        <option value="4">Rotavirus</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control quantity"
+                        min="1"
+                        value="1"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control price"
+                        min="0"
+                        value="850000"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control total"
+                        value="850,000"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm remove-row"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="table-light">
+                    <td colspan="3" class="text-end">
+                      <strong>Tổng giá gốc:</strong>
+                    </td>
+                    <td colspan="2">
+                      <strong id="tongGiaGoc">850,000 VNĐ</strong>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
+              <h5 class="mt-4 mb-3">
+                <i class="fas fa-dollar-sign mr-2"></i>Giá bán
+              </h5>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Giá gốc (VNĐ)</label>
+                  <input
+                    type="number"
+                    id="giaGoc"
+                    class="form-control"
+                    value="850000"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Giảm giá (%)</label>
+                  <input
+                    type="number"
+                    id="giamGia"
+                    class="form-control"
+                    min="0"
+                    max="100"
+                    value="15"
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Giá bán (VNĐ)</label>
+                  <input
+                    type="number"
+                    id="giaBan"
+                    class="form-control"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Trạng thái</label>
+                  <select id="trangThai" class="form-select">
+                    <option value="active">Đang bán</option>
+                    <option value="inactive">Ngừng bán</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Màu hiển thị</label>
+                  <select id="mauHienThi" class="form-select">
+                    <option value="primary">Xanh dương</option>
+                    <option value="success">Xanh lá</option>
+                    <option value="warning">Vàng cam</option>
+                    <option value="info">Xanh nhạt</option>
+                    <option value="danger">Đỏ</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+            <button type="submit" form="goiVaccineForm" class="btn btn-primary">
+              Lưu gói vắc xin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+      // Add vaccine row
+      document
+        .getElementById("addVaccineRow")
+        .addEventListener("click", function () {
+          const tbody = document.getElementById("vaccineTableBody");
+          const newRow = tbody.rows[0].cloneNode(true);
+          tbody.appendChild(newRow);
+        });
+
+      // Remove vaccine row
+      document.addEventListener("click", function (e) {
+        if (e.target.closest(".remove-row")) {
+          const tbody = document.getElementById("vaccineTableBody");
+          if (tbody.rows.length > 1) {
+            e.target.closest("tr").remove();
+          } else {
+            Swal.fire("Lỗi", "Phải có ít nhất một vắc xin trong gói!", "error");
+          }
+        }
+      });
+
+      // Calculate discount price
+      document.getElementById("giamGia").addEventListener("input", function () {
+        const giaGoc = parseFloat(document.getElementById("giaGoc").value) || 0;
+        const giamGia = parseFloat(this.value) || 0;
+        const giaBan = giaGoc - (giaGoc * giamGia) / 100;
+        document.getElementById("giaBan").value = Math.round(giaBan);
+      });
+
+      // Form validation
+      document
+        .getElementById("goiVaccineForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (this.checkValidity()) {
+            Swal.fire({
+              title: "Thành công!",
+              text: "Đã lưu thông tin gói vắc xin.",
+              icon: "success",
+              timer: 2000,
+            });
+            $("#goiVaccineModal").modal("hide");
+          }
+          this.classList.add("was-validated");
+        });
+
+      // Delete handler
+      $(document).on("click", ".btn-delete", function () {
+        Swal.fire({
+          title: "Xác nhận xóa?",
+          text: "Bạn có chắc muốn xóa gói vắc xin này?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#6c757d",
+          confirmButtonText: "Xóa",
+          cancelButtonText: "Hủy",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Đã xóa!", "Gói vắc xin đã được xóa.", "success");
+          }
+        });
+      });
+
+      function resetForm() {
+        document.getElementById("goiVaccineForm").reset();
+        document
+          .getElementById("goiVaccineForm")
+          .classList.remove("was-validated");
+        document.getElementById("modalTitle").innerText = "Tạo Gói Vắc xin Mới";
+      }
+    </script>
+
+    <style>
+      .package-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .package-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2) !important;
+      }
+      .price-box {
+        border-left: 4px solid var(--tpvax-primary);
+      }
+    </style>
+  </body>
+</html>
