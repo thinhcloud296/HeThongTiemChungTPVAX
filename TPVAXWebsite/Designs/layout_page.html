@@ -183,19 +183,43 @@
 
           <!-- Auth & Cart -->
           <div class="d-flex align-items-center gap-2 flex-wrap">
+            <!-- When not logged in -->
             <a
               href="login.html"
               class="btn btn-outline-primary rounded-pill mx-1 login-btn"
               aria-label="Đăng nhập tài khoản"
+              id="loginBtn"
               >Đăng nhập</a
             >
             <a
               href="register.html"
               class="btn btn-outline-primary rounded-pill mx-1 login-btn"
               aria-label="Đăng ký tài khoản mới"
+              id="registerBtn"
               >Đăng ký</a
             >
+            <!-- When logged in (hidden by default) -->
+            <a
+              href="dashboard.html"
+              class="btn btn-primary rounded-pill mx-1"
+              aria-label="Tài khoản của tôi"
+              id="dashboardBtn"
+              style="display: none"
+            >
+              <i class="fas fa-user-circle me-1"></i>Tài khoản
+            </a>
             <div class="vr mx-2 d-none d-lg-block"></div>
+            <!-- Hồ sơ Button (always visible) -->
+            <a
+              href="dashboard.html"
+              class="btn btn-outline-primary rounded-pill d-flex align-items-center"
+              aria-label="Hồ sơ của tôi"
+              id="profileBtn"
+            >
+              <i class="fas fa-user-circle me-1"></i>
+              <span>Hồ sơ</span>
+            </a>
+            <!-- Cart Button -->
             <div class="position-relative">
               <a
                 href="cart.html"
@@ -305,12 +329,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="toi-nen-tiem-gi.html"
                   >Tôi nên tiêm gì</a
-                >
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="#schedule-lookup"
-                  >Tra cứu lịch tiêm</a
                 >
               </li>
 
@@ -2472,6 +2490,22 @@
         "%c🔄 Filter systems activated for seasonal vaccines and packages",
         "color: #0077b6; font-size: 12px;"
       );
+
+      // Login/Logout State Management
+      (function () {
+        const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+        const loginBtn = document.getElementById("loginBtn");
+        const registerBtn = document.getElementById("registerBtn");
+        const dashboardBtn = document.getElementById("dashboardBtn");
+
+        if (isLoggedIn) {
+          if (loginBtn) loginBtn.style.display = "none";
+          if (registerBtn) registerBtn.style.display = "none";
+          if (dashboardBtn) dashboardBtn.style.display = "inline-block";
+        }
+
+        console.log("✅ Login state:", isLoggedIn ? "Logged in" : "Guest");
+      })();
     </script>
   </body>
 </html>
