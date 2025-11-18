@@ -20,6 +20,7 @@ namespace TPVAXWinform_GUI.UserControls
         private LoaiVaccineBLL loaiVaccineBLL = new LoaiVaccineBLL();
         private DataTable dtVaccines;
 
+        bool roleNVKho = RoleManager.RoleNVKho();
         public VaccineControl()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace TPVAXWinform_GUI.UserControls
         {
             LoadVaccines();
             LoadFilters();
+            btnQuanLyDanhMuc.Visible = roleNVKho;
         }
 
         private void LoadVaccines()

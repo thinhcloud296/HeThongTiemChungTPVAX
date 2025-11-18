@@ -14,6 +14,7 @@ namespace TPVAXWinform_GUI
         private const int TIEP_NHAN = 2;
         private const int KHO = 3;
         private const int Y_TE = 4; // (Bác sĩ / Y tá)
+        private const int THU_NGAN= 5; // (Bác sĩ / Y tá)
 
         // (Bạn cũng có thể lưu Dictionary ở đây)
         public static readonly Dictionary<int, string> ChucVuOptions = new Dictionary<int, string>
@@ -21,7 +22,8 @@ namespace TPVAXWinform_GUI
             { 1, "Quản Lý" },
             { 2, "Nhân Viên Tiếp Nhận" },
             { 3, "Nhân Viên Kho" },
-            { 4, "Nhân Viên Y Tế" }
+            { 4, "Nhân Viên Y Tế" },
+            { 5, "Nhân Viên Thu Ngân" }
         };
 
         // --- BƯỚC 2: ĐỊNH NGHĨA CÁC QUYỀN HẠN ---
@@ -61,6 +63,11 @@ namespace TPVAXWinform_GUI
         {
             return UserSession.ChucVu == QUAN_LY ||
                    UserSession.ChucVu == Y_TE;
+        }
+        public static bool RoleNVThuNgan()
+        {
+            return UserSession.ChucVu == QUAN_LY ||
+                   UserSession.ChucVu == THU_NGAN;
         }
 
         /// <summary>

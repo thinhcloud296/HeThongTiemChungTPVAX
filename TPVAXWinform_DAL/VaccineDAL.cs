@@ -11,6 +11,7 @@ namespace TPVAXWinform_DAL
     public class VaccineDAL
     {
         private string selectSql = "SELECT * FROM dbo.Vaccine";
+        private string lastMaVC = "";
 
         public DataTable GetData()
         {
@@ -119,6 +120,99 @@ namespace TPVAXWinform_DAL
                 throw new Exception(ex.Message);
             }
         }
-        
+
+        public string GetLastMaVC()
+        {
+            const string sql = "SELECT TOP 1 MaVC FROM dbo.Vaccine ORDER BY MaVC DESC";
+            DataTable dt = DBConnect.ExecuteQuery(sql);
+            if (dt.Rows.Count > 0)
+            {
+                lastMaVC = dt.Rows[0]["MaVC"].ToString();
+            }
+            return lastMaVC;
+        }
+
+        public string CreateNewMaVC()
+        {
+            if (string.IsNullOrEmpty(lastMaVC))
+            {
+                lastMaVC = GetLastMaVC();
+            }
+            if (string.IsNullOrEmpty(lastMaVC))
+            {
+                return "VACC000001";
+            }
+            string numericPart = lastMaVC.Substring(4);
+            if (int.TryParse(numericPart, out int number))
+            {
+                number++;
+                string newMaVC = "VACC" + number.ToString("D6");
+                lastMaVC = newMaVC;
+                return newMaVC;
+            }
+            else
+            {
+                throw new Exception("Invalid MaVC format in database.");
+            }
+        }
+
+        public void Insert(VaccineDTO vaccine)
+        {
+            try
+            {
+                using (var buffer = DBConnect.CreateBuffer(selectSql))
+                {
+                    DataRow row = buffer.Table.NewRow();
+                    row["MaVC"] = vaccine.MaVC;
+                    row["TenVC"] = vaccine.TenVC;
+                    row["SoMuiToiDa"] = (object)vaccine.SoMuiToiDa ?? DBNull.Value;
+                    row["SoThangCho"] = (object)vaccine.SoThangCho ?? DBNull.Value;
+                    row["GiaBan"] = vaccine.GiaBan;
+                    row["SoLuongTon"] = vaccine.SoLuongTon;
+                    row["MaLoai"] = vaccine.MaLoai;
+                    row["MoTa"] = vaccine.MoTa;
+                    row["HinhAnh"] = vaccine.HinhAnh;
+
+                    buffer.Table.Rows.Add(row);
+                    buffer.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi thêm vaccine: " + ex.Message);
+            }
+        }
+
+        public void Edit(VaccineDTO vaccine)
+        {
+            try
+            {
+                using (var buffer = DBConnect.CreateBuffer(selectSql))
+                {
+                    DataRow row = buffer.Table.Rows.Find(vaccine.MaVC);
+                    if (row != null)
+                    {
+                        row["TenVC"] = vaccine.TenVC;
+                        row["SoMuiToiDa"] = (object)vaccine.SoMuiToiDa ?? DBNull.Value;
+                        row["SoThangCho"] = (object)vaccine.SoThangCho ?? DBNull.Value;
+                        row["GiaBan"] = vaccine.GiaBan;
+                        row["SoLuongTon"] = vaccine.SoLuongTon;
+                        row["MaLoai"] = vaccine.MaLoai;
+                        row["MoTa"] = vaccine.MoTa;
+                        row["HinhAnh"] = vaccine.HinhAnh;
+
+                        buffer.Save();
+                    }
+                    else
+                    {
+                        throw new Exception($"Không tìm thấy vaccine với mã: {vaccine.MaVC}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi sửa vaccine: " + ex.Message);
+            }
+        }
     }
 }

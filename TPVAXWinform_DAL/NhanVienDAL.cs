@@ -135,6 +135,8 @@ namespace TPVAXWinform_DAL
                     return "Nhân Viên Kho";
                 case 4:
                     return "Nhân Viên Y Tế";
+                case 5:
+                    return "Nhân Viên Thu Ngân";
                 default:
                     return "Không Xác Định";
             }

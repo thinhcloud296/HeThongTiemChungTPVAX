@@ -287,6 +287,7 @@
             this.btnQuanLyDanhMuc.TabIndex = 0;
             this.btnQuanLyDanhMuc.Text = "Quản lý Danh mục";
             this.btnQuanLyDanhMuc.UseVisualStyleBackColor = false;
+            this.btnQuanLyDanhMuc.Visible = false;
             this.btnQuanLyDanhMuc.Click += new System.EventHandler(this.btnQuanLyDanhMuc_Click);
             // 
             // dgvVaccine
