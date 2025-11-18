@@ -44,7 +44,7 @@ namespace TPVAXWinform_DAL
             {
                 return "NVIE000001";
             }
-            string numericPart = lastMaNV.Substring(2);
+            string numericPart = lastMaNV.Substring(4);
             if (int.TryParse(numericPart, out int number))
             {
                 number++;

@@ -47,7 +47,7 @@ namespace TPVAXWinform_DAL
               SELECT nv.MaNV, nv.HoTen, nv.Email, nv.SoDT, nv.ChucVu, tk.MaTK, tk.MatKhau
               FROM dbo.NhanVien nv
                      INNER JOIN dbo.TaiKhoan tk ON nv.MaTK = tk.MaTK
-            WHERE nv.MaNV = @MaNV AND nv.TrangThai = '1'"; 
+            WHERE nv.MaNV = @MaNV AND nv.TrangThai = '1'";
 
             return DBConnect.ExecuteQuery(
                  sql,
@@ -77,7 +77,7 @@ namespace TPVAXWinform_DAL
                 {
                     DataRow row = buffer.Table.NewRow();
                     row["MaTK"] = maTK;
-                    row["MatKhau"] = hashedPassword; // Lưu mật khẩu đã băm
+                    row["MatKhau"] = hashedPassword;
                     buffer.Table.Rows.Add(row);
                     buffer.Save();
                 }
@@ -85,6 +85,47 @@ namespace TPVAXWinform_DAL
             catch (Exception ex)
             {
                 throw new Exception("Lỗi khi tạo tài khoản DAL: " + ex.Message);
+            }
+        }
+        public void Delete(string maTK)
+        {
+            try
+            {
+                // 1. Kiểm tra xem Tài khoản này có đang được dùng không
+                // (Kiểm tra trong NhanVien và KhachHang)
+                string checkSql = @"
+            IF EXISTS (SELECT 1 FROM dbo.NhanVien WHERE MaTK = @MaTK)
+               OR EXISTS (SELECT 1 FROM dbo.KhachHang WHERE MaTK = @MaTK)
+            BEGIN
+                SELECT 1
+            END
+            ELSE
+            BEGIN
+                SELECT 0
+            END";
+
+                object result = DBConnect.ExecuteScalar(checkSql, CommandType.Text,
+                    DBConnect.Param("@MaTK", maTK, SqlDbType.Char, 10));
+
+                if (result != null && Convert.ToInt32(result) == 1)
+                {
+                    throw new Exception("Tài khoản này đang được sử dụng bởi Nhân viên hoặc Khách hàng. Không thể xóa!");
+                }
+
+                // 2. Nếu không ai dùng, thực hiện XÓA trực tiếp
+                string deleteSql = "DELETE FROM dbo.TaiKhoan WHERE MaTK = @MaTK";
+
+                int rowsAffected = DBConnect.ExecuteNonQuery(deleteSql, CommandType.Text,
+                    DBConnect.Param("@MaTK", maTK, SqlDbType.Char, 10));
+
+                if (rowsAffected == 0)
+                {
+                    throw new Exception("Không tìm thấy tài khoản để xóa!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi xóa tài khoản DAL: " + ex.Message);
             }
         }
 

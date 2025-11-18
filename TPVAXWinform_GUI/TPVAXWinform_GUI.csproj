@@ -361,6 +361,9 @@
     <EmbeddedResource Include="UserControls\LichTiemControl.resx">
       <DependentUpon>LichTiemControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\NhanVienControl.resx">
+      <DependentUpon>NhanVienControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\PhieuNhapControl.resx">
       <DependentUpon>PhieuNhapControl.cs</DependentUpon>
     </EmbeddedResource>
