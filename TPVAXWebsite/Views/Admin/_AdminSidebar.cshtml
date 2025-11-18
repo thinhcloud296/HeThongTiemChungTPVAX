@@ -1,0 +1,88 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="@Url.Action("Index", "Admin")" class="brand-link">
+        <i class="fas fa-syringe brand-image" style="color: #0077b6; font-size: 2rem"></i>
+        <span class="brand-text font-weight-light">TPVAX Admin</span>
+    </a>
+
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=0077b6&color=fff" 
+                     class="img-circle elevation-2" 
+                     alt="User Image" />
+            </div>
+            <div class="info">
+                <a href="@Url.Action("Profile", "Admin")" class="d-block">Quản trị viên</a>
+            </div>
+        </div>
+
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" 
+                data-widget="treeview" 
+                role="menu" 
+                data-accordion="false">
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Bảng điều khiển</p>
+                    </a>
+                </li>
+                <li class="nav-header">QUẢN LÝ</li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Vaccines", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Vaccines" ? "active" : "")">
+                        <i class="nav-icon fas fa-capsules"></i>
+                        <p>Quản lý Vắc xin</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("PhieuNhap", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "PhieuNhap" ? "active" : "")">
+                        <i class="nav-icon fas fa-file-import"></i>
+                        <p>Quản lý Phiếu nhập</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("NhaCungCap", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "NhaCungCap" ? "active" : "")">
+                        <i class="nav-icon fas fa-truck"></i>
+                        <p>Nhà cung cấp</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("GoiVaccine", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "GoiVaccine" ? "active" : "")">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>Gói Vắc xin</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Appointments", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Appointments" ? "active" : "")">
+                        <i class="nav-icon fas fa-calendar-alt"></i>
+                        <p>Quản lý Lịch tiêm</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Calendar", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Calendar" ? "active" : "")">
+                        <i class="nav-icon fas fa-calendar-day"></i>
+                        <p>Lịch làm việc</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Customers", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Customers" ? "active" : "")">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Quản lý Khách hàng</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("NhanVien", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "NhanVien" ? "active" : "")">
+                        <i class="nav-icon fas fa-user-md"></i>
+                        <p>Quản lý Nhân viên</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Reports", "Admin")" class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Reports" ? "active" : "")">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <p>Báo cáo & Thống kê</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

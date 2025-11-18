@@ -1,0 +1,192 @@
+﻿@{`n    ViewBag.Title = "Dashboard Admin";`n}`n`n<div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Bảng điều khiển</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>150+</h3>
+                    <p>Loại Vắc xin</p>
+                  </div>
+                  <div class="icon"><i class="fas fa-pills"></i></div>
+                  <a href="vaccines.html" class="small-box-footer"
+                    >Xem chi tiết <i class="fas fa-arrow-circle-right"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h3>25</h3>
+                    <p>Lịch tiêm hôm nay</p>
+                  </div>
+                  <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                  <a href="calendar.html" class="small-box-footer"
+                    >Xem chi tiết <i class="fas fa-arrow-circle-right"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>44</h3>
+                    <p>Khách hàng mới</p>
+                  </div>
+                  <div class="icon"><i class="fas fa-user-plus"></i></div>
+                  <a href="customers.html" class="small-box-footer"
+                    >Xem chi tiết <i class="fas fa-arrow-circle-right"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>812M</h3>
+                    <p>Doanh thu tháng</p>
+                  </div>
+                  <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+                  <a href="reports.html" class="small-box-footer"
+                    >Xem chi tiết <i class="fas fa-arrow-circle-right"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <section class="col-lg-7 connectedSortable">
+                <div class="card card-primary card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="fas fa-chart-line me-1"></i>Báo cáo Doanh thu 6
+                      tháng gần nhất
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <canvas
+                      id="revenueChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+                <div class="card card-outline card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="fas fa-history mr-1"></i> Các Phiếu Tiêm Gần Đây
+                    </h3>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>Mã Phiếu</th>
+                          <th>Khách Hàng</th>
+                          <th>Ngày Tiêm</th>
+                          <th>Trạng Thái</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><a href="invoice-details.html">PT001</a></td>
+                          <td>Nguyễn Văn An</td>
+                          <td>21-10-2025</td>
+                          <td>
+                            <span class="badge bg-success">Hoàn thành</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="invoice-details.html">PT002</a></td>
+                          <td>Trần Thị Bình</td>
+                          <td>21-10-2025</td>
+                          <td>
+                            <span class="badge bg-success">Hoàn thành</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="invoice-details.html">PT003</a></td>
+                          <td>Lê Văn Cường</td>
+                          <td>20-10-2025</td>
+                          <td><span class="badge bg-info">Đang xử lý</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </section>
+              <section class="col-lg-5 connectedSortable">
+                <div class="card card-warning card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="fas fa-exclamation-triangle mr-1"></i>Vắc xin
+                      sắp hết hàng
+                    </h3>
+                  </div>
+                  <div class="card-body p-0">
+                    <ul class="products-list product-list-in-card ps-2 pe-2">
+                      <li class="item">
+                        <div class="product-info ml-2">
+                          Prevenar 13<span class="badge bg-warning float-right"
+                            >Còn 80</span
+                          >
+                        </div>
+                      </li>
+                      <li class="item">
+                        <div class="product-info ml-2">
+                          MMR II<span class="badge bg-danger float-right"
+                            >Hết hàng</span
+                          >
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-footer text-center">
+                    <a
+                      href="vaccines.html#content-vaccine-lots"
+                      class="uppercase"
+                      >Xem tất cả lô vắc xin</a
+                    >
+                  </div>
+                </div>
+                <div class="card card-info card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="far fa-calendar-alt me-1"></i>Lịch tiêm gần đây
+                    </h3>
+                  </div>
+                  <div class="card-body p-0">
+                    <ul class="products-list product-list-in-card ps-2 pe-2">
+                      <li class="item">
+                        <div class="product-info ms-2">
+                          Nguyễn Văn An<span class="badge bg-info float-right"
+                            >09:30 - Hôm nay</span
+                          >
+                        </div>
+                      </li>
+                      <li class="item">
+                        <div class="product-info ms-2">
+                          Trần Thị Bình<span class="badge bg-info float-right"
+                            >10:00 - Hôm nay</span
+                          >
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-footer text-center">
+                    <a href="appointments.html">Xem tất cả lịch tiêm</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>

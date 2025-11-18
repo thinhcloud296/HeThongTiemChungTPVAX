@@ -1,0 +1,227 @@
+﻿@{`n    ViewBag.Title = "Quản Lý Vắc Xin";`n}`n`n<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6"><h1>Quản lý Vắc xin</h1></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Quản lý Vắc xin</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <div class="card card-primary card-tabs">
+              <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="vaccine-tabs" role="tablist">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      id="tab-vaccine-list"
+                      data-bs-toggle="pill"
+                      href="#content-vaccine-list"
+                      role="tab"
+                      >Danh sách Vắc xin</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      id="tab-vaccine-lots"
+                      data-bs-toggle="pill"
+                      href="#content-vaccine-lots"
+                      role="tab"
+                      >Quản lý Lô & Hạn sử dụng</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="vaccine-tabs-content">
+                  <div
+                    class="tab-pane fade show active"
+                    id="content-vaccine-list"
+                    role="tabpanel"
+                  >
+                    <div class="d-flex justify-content-end mb-3">
+                      <button
+                        class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#vaccineModal"
+                      >
+                        <i class="fas fa-plus"></i> Thêm Vắc xin
+                      </button>
+                    </div>
+                    <table
+                      id="vaccineTable"
+                      class="table table-bordered table-striped"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Tên Vắc xin</th>
+                          <th>Phòng bệnh</th>
+                          <th>Tồn kho</th>
+                          <th>Giá (VNĐ)</th>
+                          <th>Trạng thái</th>
+                          <th style="width: 100px">Hành động</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>VC001</td>
+                          <td>Vắc xin 6 trong 1</td>
+                          <td>Bạch hầu, ho gà, uốn ván...</td>
+                          <td>250</td>
+                          <td>1.015.000</td>
+                          <td>
+                            <span class="badge bg-success">Đang hoạt động</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-info btn-sm btn-edit">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>VC002</td>
+                          <td>Vắc xin Cúm Tứ Giá</td>
+                          <td>Cúm mùa</td>
+                          <td>1500</td>
+                          <td>356.000</td>
+                          <td>
+                            <span class="badge bg-success">Đang hoạt động</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-info btn-sm btn-edit">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>VC003</td>
+                          <td>Prevenar 13</td>
+                          <td>Viêm phổi, viêm màng não...</td>
+                          <td>80</td>
+                          <td>1.280.000</td>
+                          <td>
+                            <span class="badge bg-warning">Sắp hết hàng</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-info btn-sm btn-edit">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>VC004</td>
+                          <td>Gardasil 9 (Mỹ)</td>
+                          <td>Ung thư cổ tử cung, sùi mào gà</td>
+                          <td>310</td>
+                          <td>2.950.000</td>
+                          <td>
+                            <span class="badge bg-success">Đang hoạt động</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-info btn-sm btn-edit">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>VC005</td>
+                          <td>MMR II</td>
+                          <td>Sởi - Quai bị - Rubella</td>
+                          <td>0</td>
+                          <td>280.000</td>
+                          <td><span class="badge bg-danger">Hết hàng</span></td>
+                          <td>
+                            <button class="btn btn-info btn-sm btn-edit">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="content-vaccine-lots"
+                    role="tabpanel"
+                  >
+                    <div class="d-flex justify-content-end mb-3">
+                      <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> Thêm Lô vắc xin
+                      </button>
+                    </div>
+                    <table
+                      id="vaccineLotsTable"
+                      class="table table-bordered table-striped"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Số lô</th>
+                          <th>Tên Vắc xin</th>
+                          <th>Số lượng</th>
+                          <th>Ngày nhập</th>
+                          <th>Ngày hết hạn</th>
+                          <th>Tình trạng</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="table-danger">
+                          <td>P1023</td>
+                          <td>MMR II</td>
+                          <td>100</td>
+                          <td>2024-05-10</td>
+                          <td>2025-10-15</td>
+                          <td>
+                            <span class="badge bg-danger">Đã hết hạn</span>
+                          </td>
+                        </tr>
+                        <tr class="table-warning">
+                          <td>S5567</td>
+                          <td>Prevenar 13</td>
+                          <td>80</td>
+                          <td>2024-08-20</td>
+                          <td>2025-11-30</td>
+                          <td>
+                            <span class="badge bg-warning">Sắp hết hạn</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>HEX-991</td>
+                          <td>Vắc xin 6 trong 1</td>
+                          <td>250</td>
+                          <td>2025-01-15</td>
+                          <td>2027-01-15</td>
+                          <td><span class="badge bg-success">Mới</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>

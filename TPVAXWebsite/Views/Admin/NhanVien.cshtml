@@ -1,0 +1,277 @@
+﻿@{`n    ViewBag.Title = "Quản Lý Nhân Viên";`n}`n`n<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1><i class="fas fa-user-md mr-2"></i>Quản lý Nhân viên</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Nhân viên</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>28</h3>
+                    <p>Tổng nhân viên</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h3>12</h3>
+                    <p>Bác sĩ</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>10</h3>
+                    <p>Điều dưỡng</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-user-nurse"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>6</h3>
+                    <p>Nhân viên hành chính</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-user-tie"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-list mr-2"></i>Danh sách Nhân viên
+                </h3>
+                <div class="card-tools">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#nhanVienModal"
+                    onclick="resetForm()"
+                  >
+                    <i class="fas fa-plus"></i> Thêm nhân viên
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <table
+                  id="nhanVienTable"
+                  class="table table-bordered table-striped"
+                >
+                  <thead>
+                    <tr>
+                      <th>Mã NV</th>
+                      <th>Ảnh</th>
+                      <th>Họ và Tên</th>
+                      <th>Chức vụ</th>
+                      <th>Số điện thoại</th>
+                      <th>Email</th>
+                      <th>Ngày vào làm</th>
+                      <th>Trạng thái</th>
+                      <th style="width: 100px">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>NV001</td>
+                      <td>
+                        <img
+                          src="https://ui-avatars.com/api/?name=BS+Nguyen+Van+An&background=0077b6&color=fff"
+                          class="img-circle"
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td><strong>BS. Nguyễn Văn An</strong></td>
+                      <td><span class="badge bg-success">Bác sĩ</span></td>
+                      <td>0912 345 678</td>
+                      <td>bs.nguyenvanan@tpvax.vn</td>
+                      <td>01/03/2023</td>
+                      <td>
+                        <span class="badge bg-success">Đang làm việc</span>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NV002</td>
+                      <td>
+                        <img
+                          src="https://ui-avatars.com/api/?name=Tran+Thi+Binh&background=ffa726&color=fff"
+                          class="img-circle"
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td><strong>Trần Thị Bình</strong></td>
+                      <td><span class="badge bg-warning">Điều dưỡng</span></td>
+                      <td>0987 654 321</td>
+                      <td>tran.binh@tpvax.vn</td>
+                      <td>15/05/2023</td>
+                      <td>
+                        <span class="badge bg-success">Đang làm việc</span>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NV003</td>
+                      <td>
+                        <img
+                          src="https://ui-avatars.com/api/?name=BS+Le+Van+Cuong&background=0077b6&color=fff"
+                          class="img-circle"
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td><strong>BS. Lê Văn Cường</strong></td>
+                      <td><span class="badge bg-success">Bác sĩ</span></td>
+                      <td>0901 234 567</td>
+                      <td>bs.levanc@tpvax.vn</td>
+                      <td>10/01/2024</td>
+                      <td>
+                        <span class="badge bg-success">Đang làm việc</span>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NV004</td>
+                      <td>
+                        <img
+                          src="https://ui-avatars.com/api/?name=Pham+Thi+Dung&background=148e63&color=fff"
+                          class="img-circle"
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td><strong>Phạm Thị Dung</strong></td>
+                      <td>
+                        <span class="badge bg-primary"
+                          >Nhân viên hành chính</span
+                        >
+                      </td>
+                      <td>0938 765 432</td>
+                      <td>pham.dung@tpvax.vn</td>
+                      <td>20/06/2023</td>
+                      <td>
+                        <span class="badge bg-success">Đang làm việc</span>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NV005</td>
+                      <td>
+                        <img
+                          src="https://ui-avatars.com/api/?name=Hoang+Van+Em&background=ffa726&color=fff"
+                          class="img-circle"
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td><strong>Hoàng Văn Em</strong></td>
+                      <td><span class="badge bg-warning">Điều dưỡng</span></td>
+                      <td>0923 456 789</td>
+                      <td>hoang.em@tpvax.vn</td>
+                      <td>05/02/2024</td>
+                      <td><span class="badge bg-secondary">Nghỉ phép</span></td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>

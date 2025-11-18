@@ -1,0 +1,139 @@
+﻿@{`n    ViewBag.Title = "Báo Cáo Thống Kê";`n}`n`n<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6"><h1>Báo cáo & Thống kê</h1></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Báo cáo</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-filter mr-1"></i> Bộ lọc báo cáo
+                </h3>
+              </div>
+              <div class="card-body">
+                <div class="row align-items-end">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label>Khoảng thời gian:</label>
+                      <div class="input-group">
+                        <button
+                          type="button"
+                          class="btn btn-default float-right"
+                          id="daterange-btn"
+                        >
+                          <i class="far fa-calendar-alt"></i>
+                          <span>Chọn ngày</span>
+                          <i class="fas fa-caret-down"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label>Loại báo cáo:</label>
+                      <select class="form-control">
+                        <option>Báo cáo doanh thu</option>
+                        <option>Báo cáo tồn kho</option>
+                        <option>Báo cáo lượt tiêm</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary w-100">
+                      Xem báo cáo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Xu hướng tiêm chủng theo thời gian</h3>
+              </div>
+              <div class="card-body">
+                <canvas
+                  id="trendsChart"
+                  style="
+                    min-height: 250px;
+                    height: 300px;
+                    max-height: 350px;
+                    width: 100%;
+                  "
+                ></canvas>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  Báo cáo doanh thu chi tiết theo vắc xin
+                </h3>
+                <div class="card-tools">
+                  <button id="exportExcelBtn" class="btn btn-success btn-sm">
+                    <i class="fas fa-file-excel"></i> Export to Excel
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <table
+                  id="reportsTable"
+                  class="table table-bordered table-striped"
+                >
+                  <thead>
+                    <tr>
+                      <th>Mã Vắc xin</th>
+                      <th>Tên Vắc xin</th>
+                      <th>Số lượt tiêm</th>
+                      <th>Tổng doanh thu (VNĐ)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>VC001</td>
+                      <td>Vắc xin 6 trong 1</td>
+                      <td>150</td>
+                      <td>152,250,000</td>
+                    </tr>
+                    <tr>
+                      <td>VC002</td>
+                      <td>Vắc xin Cúm Tứ Giá</td>
+                      <td>520</td>
+                      <td>185,120,000</td>
+                    </tr>
+                    <tr>
+                      <td>VC003</td>
+                      <td>Prevenar 13</td>
+                      <td>95</td>
+                      <td>121,600,000</td>
+                    </tr>
+                    <tr>
+                      <td>VC004</td>
+                      <td>Gardasil 9</td>
+                      <td>120</td>
+                      <td>354,000,000</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="3" class="text-right">Tổng cộng:</th>
+                      <th>812,970,000</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
