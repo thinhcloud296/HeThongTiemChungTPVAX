@@ -182,6 +182,7 @@ namespace TPVAXWinform
             // Bring Vaccine control to front
             vaccineControl1.BringToFront();
 
+            vaccineControl1.RefreshData();
             // Reset button styles
             ResetMenuButtons();
             button3.BackColor = Color.FromArgb(52, 152, 219); // Highlight
@@ -204,6 +205,7 @@ namespace TPVAXWinform
             // Bring Phieu Nhap control to front
             phieuNhapControl1.BringToFront();
 
+            phieuNhapControl1.RefreshData();
             // Reset button styles
             ResetMenuButtons();
             button4.BackColor = Color.FromArgb(52, 152, 219); // Highlight

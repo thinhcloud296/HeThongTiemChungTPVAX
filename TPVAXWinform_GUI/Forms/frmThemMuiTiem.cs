@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions; // Đảm bảo bạn đã thêm using này
@@ -554,7 +555,25 @@ namespace TPVAXWinform_GUI
                 MessageBox.Show("Không có mũi tiêm nào trong danh sách chờ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            string maVC = dgvVaccineWait.Rows[0].Cells["colMaVCW"].Value.ToString();
+            int soMui = Convert.ToInt32(dgvVaccineWait.Rows[0].Cells["colSoLuongW"].Value);
+            DateTime ngayHen = DateTime.ParseExact(dgvVaccineWait.Rows[0].Cells["colNgayTiemW"].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
+            string ghiChu = dgvVaccineWait.Rows[0].Cells["colGhiChuW"].Value.ToString();
+            string maHSTC_HienTai = MaHSTC;
+            decimal giaBan = Convert.ToDecimal(dgvVaccineWait.Rows[0].Cells["colGiaBanW"].Value);
+            int soLuongTonThucTe = vaccineBLL.GetSoLuongTonThucTe(maVC);
+            // Check tồn kho
+            if (soLuongTonThucTe <= 0)
+            {
+                MessageBox.Show(
+                    $"Vaccine {maVC} đã hết hàng (hoặc đã hết hạn)!\n" +
+                    $"Số lượng có thể tiêm: {soLuongTonThucTe}",
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 using (TransactionScope scope = new TransactionScope())
@@ -567,50 +586,38 @@ namespace TPVAXWinform_GUI
                     newHD.MaKH = MaKHHSTC;
                     newHD.MaNV = null;
                     newHD.MaKM = null;
-
                     hoaDonBLL.Insert(newHD);
 
-                    int countSuccess = 0;
+                    LichTiemDTO lichTiem = new LichTiemDTO();
+                    lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
+                    lichTiem.NgayHenTiem = ngayHen;
+                    lichTiem.NgayTiemThucTe = null;
+                    lichTiem.SoMui = soMui;
+                    lichTiem.TrangThai = "Đã tiêm";
+                    lichTiem.GhiChu = ghiChu;
+                    lichTiem.MaHSTC = maHSTC_HienTai;
+                    lichTiem.MaVC = maVC;
 
-                    foreach (DataGridViewRow row in dgvVaccineWait.Rows)
-                    {
-                        if (row.IsNewRow) continue;
+                    ChiTietHoaDonDTO NewCTHD = new ChiTietHoaDonDTO();
+                    NewCTHD.MaCTHD = chiTietHoaDonBLL.CreateNewMaCTHD();
+                    NewCTHD.SoLuong = soMui;
+                    NewCTHD.DonGia = giaBan;
+                    NewCTHD.MaSanPham = maVC;
+                    NewCTHD.LoaiSanPham = "VACCINE";
+                    NewCTHD.MaHD = newHD.MaHD;
 
-                        int soMui = Convert.ToInt32(row.Cells["colSoLuongW"].Value);
-                        DateTime ngayHen = DateTime.ParseExact(row.Cells["colNgayTiemW"].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-                        string ghiChu = row.Cells["colGhiChuW"].Value.ToString();
-                        string maVC = row.Cells["colMaVCW"].Value.ToString();
-                        string maHSTC_HienTai = MaHSTC;
-                        decimal giaBan = Convert.ToDecimal(row.Cells["colGiaBanW"].Value);
+                    vaccineBLL.UpdateSoLuongTon(maVC, -1);
 
-                        LichTiemDTO lichTiem = new LichTiemDTO();
-                        lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
-                        lichTiem.NgayHenTiem = ngayHen;
-                        lichTiem.NgayTiemThucTe = null;
-                        lichTiem.SoMui = soMui;
-                        lichTiem.TrangThai = "Đã tiêm";
-                        lichTiem.GhiChu = ghiChu;
-                        lichTiem.MaHSTC = maHSTC_HienTai;
-                        lichTiem.MaVC = maVC;
+                    lichTiemBLL.Insert(lichTiem);
 
-                        ChiTietHoaDonDTO NewCTHD = new ChiTietHoaDonDTO();
-                        NewCTHD.MaCTHD = chiTietHoaDonBLL.CreateNewMaCTHD();
-                        NewCTHD.SoLuong = soMui;
-                        NewCTHD.DonGia = giaBan;
-                        NewCTHD.MaSanPham = maVC;
-                        NewCTHD.LoaiSanPham = "VACCINE";
-                        NewCTHD.MaHD = newHD.MaHD;
 
-                        lichTiemBLL.Insert(lichTiem);
-                        chiTietHoaDonBLL.Insert(NewCTHD);
+                    chiTietHoaDonBLL.Insert(NewCTHD);
 
-                        countSuccess++;
-                    }
 
                     scope.Complete();
 
-                    MessageBox.Show($"Đã thêm thành công {countSuccess} lịch hẹn.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Đã thêm thành công lịch hẹn.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }

@@ -143,13 +143,6 @@ namespace TPVAXWinform_GUI.UserControls
         {
             string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
 
-            // Kiểm tra nếu đã tiêm (TrangThai = true hoặc "1")
-            if (trangThai.Equals("Đã tiêm", StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show("Không thể hủy mũi tiêm đã được tiêm!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
             // Xác nhận với người dùng
             string tenNguoiTiem = selectedRow.Cells["colTenNguoiTiem"].Value?.ToString() ?? "";
@@ -182,7 +175,7 @@ namespace TPVAXWinform_GUI.UserControls
                             MaHSTC = maHSTC,
                             MaVC = maVC,
                             NgayHenTiem = ngayHenTiem,
-                            TrangThai = null, // Đã hủy - set thành null
+                            TrangThai = "Đã hủy",
                             NgayTiemThucTe = null,
                             GhiChu = "Đã hủy"
                         };

@@ -24,7 +24,11 @@ namespace TPVAXWinform_GUI.UserControls
         {
             InitializeComponent();
         }
-
+        internal void RefreshData()
+        {
+            dtVaccines = vaccineBLL.GetDataVaccineDetail();
+            BindDataToGrid(dtVaccines);
+        }
         private void VaccineControl_Load(object sender, EventArgs e)
         {
             LoadVaccines();
@@ -203,5 +207,7 @@ namespace TPVAXWinform_GUI.UserControls
         {
             ApplyFilters();
         }
+
+
     }
 }
