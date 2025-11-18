@@ -336,15 +336,6 @@ namespace TPVAXWinform_GUI.UserControls
             }
         }
 
-        private void BtnThemMoi_Click(object sender, EventArgs e)
-        {
-            frmThemNV frmThem = new frmThemNV();
-            if (frmThem.ShowDialog() == DialogResult.OK)
-            {
-                RefreshData();
-            }
-        }
-
         private void ResetPassword_Click(object sender, EventArgs e)
         {
             if (selectedRowIndex >= 0 && selectedRowIndex < dgvNhanVien.Rows.Count)
@@ -388,6 +379,15 @@ namespace TPVAXWinform_GUI.UserControls
           "Lỗi",
     MessageBoxButtons.OK,
     MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnThemMoi_Click(object sender, EventArgs e)
+        {
+            frmThemNV frmThem = new frmThemNV();
+            if (frmThem.ShowDialog() == DialogResult.OK)
+            {
+                RefreshData();
             }
         }
     }

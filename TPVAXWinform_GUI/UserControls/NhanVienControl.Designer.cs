@@ -30,7 +30,6 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnThemMoi = new System.Windows.Forms.Button();
             this.dgvNhanVien = new System.Windows.Forms.DataGridView();
             this.colMaNV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHoTen = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,6 +42,7 @@
             this.colSoDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResetPassword = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panelFilter = new System.Windows.Forms.Panel();
+            this.btnThemMoi = new System.Windows.Forms.Button();
             this.txtSearchName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtSearchMaNV = new System.Windows.Forms.TextBox();
@@ -54,7 +54,6 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNhanVien)).BeginInit();
             this.panelFilter.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -82,25 +81,11 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.btnThemMoi);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 1215);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 1278);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1533, 69);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1533, 1);
             this.flowLayoutPanel1.TabIndex = 13;
-            // 
-            // btnThemMoi
-            // 
-            this.btnThemMoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnThemMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnThemMoi.ForeColor = System.Drawing.Color.White;
-            this.btnThemMoi.Location = new System.Drawing.Point(3, 3);
-            this.btnThemMoi.Name = "btnThemMoi";
-            this.btnThemMoi.Size = new System.Drawing.Size(203, 63);
-            this.btnThemMoi.TabIndex = 9;
-            this.btnThemMoi.Text = "Thêm mới";
-            this.btnThemMoi.UseVisualStyleBackColor = false;
-            this.btnThemMoi.Click += new System.EventHandler(this.BtnThemMoi_Click);
             // 
             // dgvNhanVien
             // 
@@ -127,7 +112,7 @@
             this.dgvNhanVien.RowHeadersWidth = 62;
             this.dgvNhanVien.RowTemplate.Height = 28;
             this.dgvNhanVien.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvNhanVien.Size = new System.Drawing.Size(1533, 1020);
+            this.dgvNhanVien.Size = new System.Drawing.Size(1533, 1083);
             this.dgvNhanVien.TabIndex = 8;
             this.dgvNhanVien.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvNhanVien_CellFormatting);
             // 
@@ -206,6 +191,7 @@
             // panelFilter
             // 
             this.panelFilter.BackColor = System.Drawing.Color.White;
+            this.panelFilter.Controls.Add(this.btnThemMoi);
             this.panelFilter.Controls.Add(this.txtSearchName);
             this.panelFilter.Controls.Add(this.label5);
             this.panelFilter.Controls.Add(this.txtSearchMaNV);
@@ -220,6 +206,19 @@
             this.panelFilter.Padding = new System.Windows.Forms.Padding(15);
             this.panelFilter.Size = new System.Drawing.Size(1533, 80);
             this.panelFilter.TabIndex = 7;
+            // 
+            // btnThemMoi
+            // 
+            this.btnThemMoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnThemMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.btnThemMoi.ForeColor = System.Drawing.Color.White;
+            this.btnThemMoi.Location = new System.Drawing.Point(1251, 18);
+            this.btnThemMoi.Name = "btnThemMoi";
+            this.btnThemMoi.Size = new System.Drawing.Size(203, 48);
+            this.btnThemMoi.TabIndex = 18;
+            this.btnThemMoi.Text = "Thêm mới";
+            this.btnThemMoi.UseVisualStyleBackColor = false;
+            this.btnThemMoi.Click += new System.EventHandler(this.btnThemMoi_Click);
             // 
             // txtSearchName
             // 
@@ -257,7 +256,7 @@
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.label6.Location = new System.Drawing.Point(350, 30);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(104, 25);
+            this.label6.Size = new System.Drawing.Size(105, 25);
             this.label6.TabIndex = 14;
             this.label6.Text = "👤 Mã NV:";
             // 
@@ -328,7 +327,7 @@
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(459, 20);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(389, 54);
+            this.lblTitle.Size = new System.Drawing.Size(433, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "QUẢN LÝ NHÂN VIÊN";
             // 
@@ -343,7 +342,6 @@
             this.Load += new System.EventHandler(this.NhanVienControl_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvNhanVien)).EndInit();
             this.panelFilter.ResumeLayout(false);
             this.panelFilter.PerformLayout();
@@ -368,7 +366,6 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.DataGridView dgvNhanVien;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button btnThemMoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaNV;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHoTen;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGioiTinh;
@@ -379,5 +376,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTrangThai;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoDT;
         private System.Windows.Forms.DataGridViewButtonColumn colResetPassword;
+        private System.Windows.Forms.Button btnThemMoi;
     }
 }

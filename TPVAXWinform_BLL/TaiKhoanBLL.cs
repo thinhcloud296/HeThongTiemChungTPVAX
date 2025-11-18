@@ -76,7 +76,10 @@ namespace TPVAXWinform_BLL
 
             dal.CreateTaiKhoan(maTK, hashedPassword);
         }
-
+        public void Delete(string maTK)
+        {
+            dal.Delete(maTK);
+        }
         public void ResetPassword(string maNVorMaKH, string newPassword)
         {
             if (string.IsNullOrWhiteSpace(newPassword))
