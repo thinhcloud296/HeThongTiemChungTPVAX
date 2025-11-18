@@ -16,6 +16,9 @@ namespace TPVAXWinform.UserControls
         private TaiKhoanBLL taiKhoanBLL = new TaiKhoanBLL();
         private int selectedHSTCRowIndex = -1;
         private int selectedKHRowIndex = -1;
+
+        bool roleNVTiepNhan = RoleManager.RoleNVTiepNhan();
+        bool roleNVYTe = RoleManager.RoleNVYTe();
         public HoSoTiemChungControl()
         {
             InitializeComponent();
@@ -25,7 +28,7 @@ namespace TPVAXWinform.UserControls
         private void InitializeActionButtons()
         {
             ConfigureDataGridViewHSTCStyling();
-            SetupContextMenuHSTC();
+            
 
             if (dgvHSTC.Columns["colEditHS"] == null)
             {
@@ -67,7 +70,10 @@ namespace TPVAXWinform.UserControls
                 dgvKhachHang.Columns.Add(btnResetPasswordColumn);
             }
             ConfigureDataGridViewKHStyling();
-            SetupContextMenuKH();
+            if(roleNVYTe)
+                SetupContextMenuHSTC();
+            if(roleNVTiepNhan)
+                SetupContextMenuKH();
         }
         private void ConfigureDataGridViewHSTCStyling()
         {
@@ -107,6 +113,8 @@ namespace TPVAXWinform.UserControls
             LoadDSKHHG();
             SetupEventHandlers();
             AdjustTitlePositions();
+            btnThemMoi.Visible = roleNVTiepNhan;
+            btnThemMuiTiem.Visible = roleNVYTe;
         }
 
         private void AdjustTitlePositions()

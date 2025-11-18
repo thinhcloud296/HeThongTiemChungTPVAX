@@ -113,8 +113,6 @@ namespace TPVAXWinform_GUI
             dgvVaccineWait.Rows.Clear();
             LoadDSGoiVC();
             LoadDSVC();
-            // btnLuuGoi.Visible = false; // Logic này đã được chuyển vào UpdateUIVisibility
-            // btnLuuTatCa.Visible = true; // Logic này đã được chuyển vào UpdateUIVisibility
 
             if (cboLoaiBenh.Items.Count > 0) cboLoaiBenh.SelectedIndex = 0;
             if (cboLoaiVaccine.Items.Count > 0) cboLoaiVaccine.SelectedIndex = 0;

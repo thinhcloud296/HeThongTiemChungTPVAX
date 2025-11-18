@@ -3,11 +3,15 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TPVAXWinform_BLL;
+using TPVAXWinform_GUI;
+using TPVAXWinform_GUI.Forms;
 
 namespace TPVAXWinform
 {
     public partial class frmMain : Form
     {
+        NhanVienBLL nvBLL = new NhanVienBLL();
         public frmMain()
         {
             InitializeComponent();
@@ -15,20 +19,28 @@ namespace TPVAXWinform
             SetupMenuButtons();
             ShowDashboard();
         }
-        public frmMain(string maNV,string hoTen,string chucVu)
+        private void main_Load(object sender, EventArgs e)
         {
-            InitializeComponent();
-            SetHighQualityRendering();
-            SetupMenuButtons();
-            InitialInfoLogin(maNV, hoTen, chucVu);
-            ShowDashboard();
+            InitialInfoLogin(UserSession.MaNV, UserSession.HoTen, UserSession.ChucVu);
+            bool roleQLNV = RoleManager.RoleQLNV();
+            bool roleNVKho = RoleManager.RoleNVKho();
+            bool roleNVTiepNhan = RoleManager.RoleNVTiepNhan();
+            bool roleNVYTe = RoleManager.RoleNVYTe();
+
+            button1.Visible = roleNVTiepNhan || roleNVYTe;
+            button2.Visible = roleNVTiepNhan || roleNVYTe;
+            button3.Visible = roleNVKho || roleNVYTe;
+            button4.Visible = roleNVKho;
+            button5.Visible = roleQLNV;
+            button6.Visible = roleNVTiepNhan || roleNVYTe;
+
         }
-        public void InitialInfoLogin(string maNV, string hoTen, string chucVu)
+        public void InitialInfoLogin(string maNV, string hoTen, int? chucVu)
         {
             lbHoTenNVDangNhap.Text = hoTen;
             lbMaNVDangNhap.Text = maNV;
-            lbChucVuNVDangNhap.Text = chucVu;
-        }
+            lbChucVuNVDangNhap.Text = nvBLL.GetChucVuString(chucVu);
+        } 
         private void SetHighQualityRendering()
         {
             // Bật double buffering để giảm flickering
@@ -275,10 +287,6 @@ namespace TPVAXWinform
             button8.BackColor = defaultColor;
         }
 
-        private void main_Load(object sender, EventArgs e)
-        {
-            // Dashboard control sẽ tự load khi được khởi tạo
-        }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -295,5 +303,24 @@ namespace TPVAXWinform
 
         }
 
+        private void btnDangXuat_Click(object sender, EventArgs e)
+        {
+            DialogResult confirm = MessageBox.Show(
+                "Bạn có chắc chắn muốn đăng xuất?",
+                "Xác nhận đăng xuất",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            // 2. Nếu người dùng chọn "Yes"
+            if (confirm == DialogResult.Yes)
+            {
+                // 3. Xóa thông tin phiên làm việc hiện tại
+                UserSession.Clear();
+
+                // 4. Khởi động lại ứng dụng
+                Application.Restart();
+            }
+        }
     }
 }

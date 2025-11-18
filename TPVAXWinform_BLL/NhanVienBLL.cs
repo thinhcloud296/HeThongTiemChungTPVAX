@@ -33,7 +33,7 @@ namespace TPVAXWinform_BLL
         {
             nhanVienDAL.Edit(nv);
         }
-        public string GetChucVuString(int chucVu)
+        public string GetChucVuString(int? chucVu)
         {
             return nhanVienDAL.GetChucVuString(chucVu);
         }

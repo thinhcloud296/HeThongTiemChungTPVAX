@@ -97,6 +97,7 @@
             this.lblDiaChiNCC = new System.Windows.Forms.Label();
             this.txtTenNCC = new System.Windows.Forms.TextBox();
             this.lblTenNCC = new System.Windows.Forms.Label();
+            this.tabVaccine = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.tabLoaiBenh.SuspendLayout();
             this.pnlBenhRight.SuspendLayout();
@@ -117,6 +118,7 @@
             // 
             // tabControl
             // 
+            this.tabControl.Controls.Add(this.tabVaccine);
             this.tabControl.Controls.Add(this.tabLoaiBenh);
             this.tabControl.Controls.Add(this.tabLoaiVaccine);
             this.tabControl.Controls.Add(this.tabNhaCungCap);
@@ -886,6 +888,16 @@
             this.lblTenNCC.TabIndex = 0;
             this.lblTenNCC.Text = "Tên nhà cung cấp:";
             // 
+            // tabVaccine
+            // 
+            this.tabVaccine.Location = new System.Drawing.Point(4, 37);
+            this.tabVaccine.Name = "tabVaccine";
+            this.tabVaccine.Padding = new System.Windows.Forms.Padding(3);
+            this.tabVaccine.Size = new System.Drawing.Size(1176, 620);
+            this.tabVaccine.TabIndex = 3;
+            this.tabVaccine.Text = "Vaccine";
+            this.tabVaccine.UseVisualStyleBackColor = true;
+            // 
             // frmQuanLyDanhMuc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -990,5 +1002,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoDTNCC;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenNganHang;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoTK;
+        private System.Windows.Forms.TabPage tabVaccine;
     }
 }

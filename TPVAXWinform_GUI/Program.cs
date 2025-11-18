@@ -23,7 +23,13 @@ namespace TPVAXWinform
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
-            Application.Run(new frmMain());
+            frmDangNhap loginForm = new frmDangNhap();
+
+            // 1. Hiển thị form đăng nhập DƯỚI DẠNG DIALOG
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new frmMain());
+            }
         }
 
         // Import hàm từ user32.dll để bật DPI awareness
