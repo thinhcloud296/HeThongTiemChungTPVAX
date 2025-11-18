@@ -1,0 +1,229 @@
+﻿@{
+    ViewBag.Title = "Quản Lý Nhà Cung Cấp";
+}
+
+<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1><i class="fas fa-truck mr-2"></i>Quản lý Nhà cung cấp</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Nhà cung cấp</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>12</h3>
+                    <p>Tổng nhà cung cấp</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-building"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h3>9</h3>
+                    <p>Đang hoạt động</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>2</h3>
+                    <p>Tạm ngưng</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-pause-circle"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>456</h3>
+                    <p>Tổng đơn nhập</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-list mr-2"></i>Danh sách Nhà cung cấp
+                </h3>
+                <div class="card-tools">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#nhaCungCapModal"
+                    onclick="resetForm()"
+                  >
+                    <i class="fas fa-plus"></i> Thêm nhà cung cấp
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <table
+                  id="nhaCungCapTable"
+                  class="table table-bordered table-striped"
+                >
+                  <thead>
+                    <tr>
+                      <th>Mã NCC</th>
+                      <th>Tên công ty</th>
+                      <th>Người liên hệ</th>
+                      <th>Số điện thoại</th>
+                      <th>Email</th>
+                      <th>Địa chỉ</th>
+                      <th>Trạng thái</th>
+                      <th style="width: 100px">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>NCC001</td>
+                      <td><strong>Pfizer Vietnam Co., Ltd</strong></td>
+                      <td>Mr. John Smith</td>
+                      <td>(028) 3827 8900</td>
+                      <td>contact@pfizer.vn</td>
+                      <td>Tầng 10, Bitexco Financial Tower, Q.1, TP.HCM</td>
+                      <td><span class="badge bg-success">Hoạt động</span></td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NCC002</td>
+                      <td><strong>AstraZeneca Vietnam</strong></td>
+                      <td>Ms. Sarah Johnson</td>
+                      <td>(028) 3910 2525</td>
+                      <td>info@astrazeneca.vn</td>
+                      <td>Lầu 15, Tòa nhà Vietcombank, Q.1, TP.HCM</td>
+                      <td><span class="badge bg-success">Hoạt động</span></td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NCC003</td>
+                      <td><strong>Moderna Inc.</strong></td>
+                      <td>Dr. Michael Chen</td>
+                      <td>(028) 3825 6789</td>
+                      <td>sales@moderna.com</td>
+                      <td>146 Nguyễn Cơ Thạch, Q.2, TP.HCM</td>
+                      <td><span class="badge bg-success">Hoạt động</span></td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NCC004</td>
+                      <td><strong>Sanofi Pasteur Vietnam</strong></td>
+                      <td>Mrs. Nguyễn Thu Hà</td>
+                      <td>(024) 3936 0808</td>
+                      <td>contact@sanofi.vn</td>
+                      <td>Tầng 18, Keangnam Landmark, Hà Nội</td>
+                      <td><span class="badge bg-success">Hoạt động</span></td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>NCC005</td>
+                      <td><strong>GlaxoSmithKline Vietnam</strong></td>
+                      <td>Mr. David Williams</td>
+                      <td>(028) 3824 5678</td>
+                      <td>info@gsk.vn</td>
+                      <td>Lầu 9, Capital Place, Q.Ba Đình, Hà Nội</td>
+                      <td><span class="badge bg-warning">Tạm ngưng</span></td>
+                      <td>
+                        <button
+                          class="btn btn-primary btn-sm btn-edit"
+                          title="Sửa"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete"
+                          title="Xóa"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

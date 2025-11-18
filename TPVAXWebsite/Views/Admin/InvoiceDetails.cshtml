@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Chi Tiết Hóa Đơn";
+}
+
+<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6"><h1>Chi Tiết Phiếu Tiêm #PT001</h1></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Appointments", "Admin")">Phiếu tiêm</a>
+                  </li>
+                  <li class="breadcrumb-item active">#PT001</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="content">
+          <div class="container-fluid">
+            <div class="invoice p-3 mb-3">
+              <div class="row invoice-info">
+                <div class="col-sm-6 invoice-col">
+                  <b>Thông tin khách hàng</b><br />
+                  <strong>Họ tên:</strong> Nguyễn Văn An<br />
+                  <strong>Mã KH:</strong> KH001<br />
+                  <strong>Ngày sinh:</strong> 01/01/1990<br />
+                  <strong>Giới tính:</strong> Nam<br />
+                  <strong>SĐT:</strong> 0901234567<br />
+                  <strong>Địa chỉ:</strong> 123 Đường ABC, Quận 1, TP. HCM
+                </div>
+                <div class="col-sm-6 invoice-col text-sm-right">
+                  <b>Mã phiếu tiêm: #PT001</b><br />
+                  <b>Ngày tạo:</b> 21/10/2025<br />
+                  <b>Người tạo:</b> Admin User<br />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-12 table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Tên vắc xin</th>
+                        <th>Số lô</th>
+                        <th>Hạn sử dụng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Vắc xin 6 trong 1</td>
+                        <td>HEX-991</td>
+                        <td>15/01/2027</td>
+                        <td>1,015,000</td>
+                        <td>1,015,000</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Vắc xin Cúm Tứ Giá</td>
+                        <td>FL-102</td>
+                        <td>30/06/2026</td>
+                        <td>356,000</td>
+                        <td>356,000</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row mt-4">
+                <div class="col-6"></div>
+                <div class="col-6">
+                  <p class="lead">Thông tin thanh toán</p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <th style="width: 50%">Tổng tiền hàng:</th>
+                        <td>1,371,000 VNĐ</td>
+                      </tr>
+                      <tr>
+                        <th>Giảm giá:</th>
+                        <td>0 VNĐ</td>
+                      </tr>
+                      <tr>
+                        <th>Khách cần trả:</th>
+                        <td><b>1,371,000 VNĐ</b></td>
+                      </tr>
+                      <tr>
+                        <th>Hình thức:</th>
+                        <td>Tiền mặt</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row no-print">
+                <div class="col-12">
+                  <button
+                    type="button"
+                    class="btn btn-default"
+                    onclick="window.print();"
+                  >
+                    <i class="fas fa-print"></i> In phiếu
+                  </button>
+                  <button type="button" class="btn btn-primary float-right">
+                    <i class="fas fa-envelope"></i> Gửi Email
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-info float-right"
+                    style="margin-right: 5px"
+                  >
+                    <i class="fas fa-edit"></i> Sửa
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger float-right"
+                    style="margin-right: 5px"
+                  >
+                    <i class="fas fa-trash"></i> Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>

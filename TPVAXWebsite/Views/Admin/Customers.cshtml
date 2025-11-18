@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Quản Lý Khách Hàng";
+}
+
+<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6"><h1>Quản lý Khách hàng</h1></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Quản lý Khách hàng</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Danh sách khách hàng</h3>
+                <div class="card-tools">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#customerModal"
+                  >
+                    <i class="fas fa-plus"></i> Thêm mới
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <table
+                  id="customersTable"
+                  class="table table-bordered table-striped"
+                >
+                  <thead>
+                    <tr>
+                      <th>Mã KH</th>
+                      <th>Họ và Tên</th>
+                      <th>Số điện thoại</th>
+                      <th>Email</th>
+                      <th>Ngày tham gia</th>
+                      <th style="width: 100px">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>KH001</td>
+                      <td>Nguyễn Văn An</td>
+                      <td>0901234567</td>
+                      <td>an.nguyen@email.com</td>
+                      <td>2024-10-20</td>
+                      <td>
+                        <button class="btn btn-info btn-sm btn-edit-customer">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete-customer"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>KH002</td>
+                      <td>Trần Thị Bình</td>
+                      <td>0907654321</td>
+                      <td>binh.tran@email.com</td>
+                      <td>2024-10-18</td>
+                      <td>
+                        <button class="btn btn-info btn-sm btn-edit-customer">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete-customer"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Quản Lý Lịch Hẹn";
+}
+
+<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6"><h1>Quản lý Lịch tiêm</h1></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Quản lý Lịch tiêm</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Danh sách lịch tiêm</h3>
+              </div>
+              <div class="card-body">
+                <table
+                  id="appointmentsTable"
+                  class="table table-bordered table-striped"
+                >
+                  <thead>
+                    <tr>
+                      <th>Mã lịch hẹn</th>
+                      <th>Tên khách hàng</th>
+                      <th>Ngày tiêm</th>
+                      <th>Giờ tiêm</th>
+                      <th>Loại vắc xin</th>
+                      <th>Trạng thái</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>LH-001</td>
+                      <td>Nguyễn Văn An</td>
+                      <td>25/12/2024</td>
+                      <td>09:30</td>
+                      <td>Vắc xin 6 trong 1</td>
+                      <td><span class="badge bg-info">Sắp tới</span></td>
+                      <td>
+                        <button class="btn btn-primary btn-sm">Chi tiết</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>LH-002</td>
+                      <td>Trần Thị Bình</td>
+                      <td>25/12/2024</td>
+                      <td>10:00</td>
+                      <td>Prevenar 13</td>
+                      <td><span class="badge bg-info">Sắp tới</span></td>
+                      <td>
+                        <button class="btn btn-primary btn-sm">Chi tiết</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>LH-003</td>
+                      <td>Lê Văn Cường</td>
+                      <td>24/12/2024</td>
+                      <td>14:00</td>
+                      <td>Cúm tứ giá</td>
+                      <td><span class="badge bg-success">Hoàn thành</span></td>
+                      <td>
+                        <button class="btn btn-primary btn-sm">Chi tiết</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>LH-004</td>
+                      <td>Phạm Thị Dung</td>
+                      <td>23/12/2024</td>
+                      <td>08:00</td>
+                      <td>Gardasil 9</td>
+                      <td><span class="badge bg-danger">Đã hủy</span></td>
+                      <td>
+                        <button class="btn btn-primary btn-sm">Chi tiết</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

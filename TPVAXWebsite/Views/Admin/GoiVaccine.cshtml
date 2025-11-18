@@ -1,0 +1,334 @@
+﻿@{
+    ViewBag.Title = "Quản Lý Gói Vắc Xin";
+}
+
+<section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1><i class="fas fa-box-open mr-2"></i>Quản lý Gói Vắc xin</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Gói Vắc xin</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="container-fluid">
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>15</h3>
+                    <p>Tổng gói vắc xin</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-boxes"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h3>8</h3>
+                    <p>Gói trẻ em</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-baby"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>5</h3>
+                    <p>Gói người lớn</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-user"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>256</h3>
+                    <p>Gói đã bán</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-list mr-2"></i>Danh sách Gói Vắc xin
+                </h3>
+                <div class="card-tools">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#goiVaccineModal"
+                    onclick="resetForm()"
+                  >
+                    <i class="fas fa-plus"></i> Tạo gói mới
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <!-- Package Card 1 -->
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm package-card">
+                      <div class="card-header bg-gradient-primary text-white">
+                        <h5 class="mb-0">
+                          <i class="fas fa-box-open mr-2"></i>Gói Tiêm Chủng Trẻ
+                          Em Cơ Bản
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <span class="badge bg-info">GOI001</span>
+                          <span class="badge bg-success float-end"
+                            >Đang bán</span
+                          >
+                        </div>
+                        <p class="text-muted mb-3">
+                          Gói tiêm chủng cơ bản cho trẻ từ 0-12 tháng tuổi theo
+                          lịch tiêm chủng quốc gia.
+                        </p>
+
+                        <h6>
+                          <i class="fas fa-syringe mr-2 text-primary"></i>Bao
+                          gồm 5 loại vắc xin:
+                        </h6>
+                        <ul class="list-unstyled mb-3">
+                          <li>✓ Vắc xin 6 trong 1 (x3 mũi)</li>
+                          <li>✓ Vắc xin Viêm gan B (x3 mũi)</li>
+                          <li>✓ Vắc xin Lao (x1 mũi)</li>
+                          <li>✓ Vắc xin Sởi - Rubella (x1 mũi)</li>
+                          <li>✓ Vắc xin Bại liệt (x4 mũi)</li>
+                        </ul>
+
+                        <div class="price-box bg-light p-3 rounded mb-3">
+                          <div class="d-flex justify-content-between">
+                            <span>Giá gốc:</span>
+                            <span class="text-decoration-line-through"
+                              >8,500,000 VNĐ</span
+                            >
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <span><strong>Giá ưu đãi:</strong></span>
+                            <span class="text-danger"
+                              ><strong>7,200,000 VNĐ</strong></span
+                            >
+                          </div>
+                          <small class="text-success"
+                            >Tiết kiệm: 1,300,000 VNĐ (15%)</small
+                          >
+                        </div>
+
+                        <div class="mb-2">
+                          <small
+                            ><i class="fas fa-calendar mr-1"></i>Thời gian: 12
+                            tháng</small
+                          >
+                        </div>
+                        <div class="mb-3">
+                          <small
+                            ><i class="fas fa-chart-line mr-1"></i>Đã bán: 124
+                            gói</small
+                          >
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button class="btn btn-primary btn-sm btn-edit">
+                          <i class="fas fa-edit"></i> Sửa
+                        </button>
+                        <button class="btn btn-info btn-sm">
+                          <i class="fas fa-eye"></i> Chi tiết
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete float-end"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Package Card 2 -->
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm package-card">
+                      <div class="card-header bg-gradient-success text-white">
+                        <h5 class="mb-0">
+                          <i class="fas fa-box-open mr-2"></i>Gói Tiêm Chủng Mở
+                          Rộng
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <span class="badge bg-info">GOI002</span>
+                          <span class="badge bg-success float-end"
+                            >Đang bán</span
+                          >
+                        </div>
+                        <p class="text-muted mb-3">
+                          Gói tiêm chủng mở rộng cho trẻ từ 0-24 tháng bao gồm
+                          cả vắc xin dịch vụ cao cấp.
+                        </p>
+
+                        <h6>
+                          <i class="fas fa-syringe mr-2 text-success"></i>Bao
+                          gồm 8 loại vắc xin:
+                        </h6>
+                        <ul class="list-unstyled mb-3">
+                          <li>✓ Tất cả vắc xin gói cơ bản</li>
+                          <li>✓ Prevenar 13 (x4 mũi)</li>
+                          <li>✓ Rotavirus (x3 mũi)</li>
+                          <li>✓ Cúm mùa (x2 mũi)</li>
+                        </ul>
+
+                        <div class="price-box bg-light p-3 rounded mb-3">
+                          <div class="d-flex justify-content-between">
+                            <span>Giá gốc:</span>
+                            <span class="text-decoration-line-through"
+                              >15,800,000 VNĐ</span
+                            >
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <span><strong>Giá ưu đãi:</strong></span>
+                            <span class="text-danger"
+                              ><strong>13,200,000 VNĐ</strong></span
+                            >
+                          </div>
+                          <small class="text-success"
+                            >Tiết kiệm: 2,600,000 VNĐ (16%)</small
+                          >
+                        </div>
+
+                        <div class="mb-2">
+                          <small
+                            ><i class="fas fa-calendar mr-1"></i>Thời gian: 24
+                            tháng</small
+                          >
+                        </div>
+                        <div class="mb-3">
+                          <small
+                            ><i class="fas fa-chart-line mr-1"></i>Đã bán: 87
+                            gói</small
+                          >
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button class="btn btn-primary btn-sm btn-edit">
+                          <i class="fas fa-edit"></i> Sửa
+                        </button>
+                        <button class="btn btn-info btn-sm">
+                          <i class="fas fa-eye"></i> Chi tiết
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete float-end"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Package Card 3 -->
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm package-card">
+                      <div class="card-header bg-gradient-warning text-white">
+                        <h5 class="mb-0">
+                          <i class="fas fa-box-open mr-2"></i>Gói Phòng Cúm Gia
+                          Đình
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <span class="badge bg-info">GOI003</span>
+                          <span class="badge bg-success float-end"
+                            >Đang bán</span
+                          >
+                        </div>
+                        <p class="text-muted mb-3">
+                          Gói tiêm phòng cúm cho cả gia đình (4 người) với vắc
+                          xin cúm tứ giá nhập khẩu.
+                        </p>
+
+                        <h6>
+                          <i class="fas fa-syringe mr-2 text-warning"></i>Bao
+                          gồm:
+                        </h6>
+                        <ul class="list-unstyled mb-3">
+                          <li>✓ Vắc xin Cúm Tứ Giá (4 liều)</li>
+                          <li>✓ Khám sàng lọc miễn phí</li>
+                          <li>✓ Theo dõi sau tiêm 30 phút</li>
+                          <li>✓ Tư vấn y tế miễn phí</li>
+                        </ul>
+
+                        <div class="price-box bg-light p-3 rounded mb-3">
+                          <div class="d-flex justify-content-between">
+                            <span>Giá gốc:</span>
+                            <span class="text-decoration-line-through"
+                              >1,600,000 VNĐ</span
+                            >
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <span><strong>Giá ưu đãi:</strong></span>
+                            <span class="text-danger"
+                              ><strong>1,200,000 VNĐ</strong></span
+                            >
+                          </div>
+                          <small class="text-success"
+                            >Tiết kiệm: 400,000 VNĐ (25%)</small
+                          >
+                        </div>
+
+                        <div class="mb-2">
+                          <small
+                            ><i class="fas fa-calendar mr-1"></i>Thời gian: 1
+                            ngày</small
+                          >
+                        </div>
+                        <div class="mb-3">
+                          <small
+                            ><i class="fas fa-chart-line mr-1"></i>Đã bán: 45
+                            gói</small
+                          >
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button class="btn btn-primary btn-sm btn-edit">
+                          <i class="fas fa-edit"></i> Sửa
+                        </button>
+                        <button class="btn btn-info btn-sm">
+                          <i class="fas fa-eye"></i> Chi tiết
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm btn-delete float-end"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
