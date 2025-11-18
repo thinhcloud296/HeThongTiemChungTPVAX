@@ -587,6 +587,29 @@
                 </article>
               </div>
             </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Phân trang bài viết" class="mt-5">
+              <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                    <i class="fas fa-chevron-left"></i>
+                  </a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">
+                    <i class="fas fa-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </section>
         </div>
     </main>
@@ -698,6 +721,198 @@
       </div>
     </footer>
     <!-- END Footer -->
+
+    <!-- Rating & Review Section -->
+    <section class="container my-5">
+      <div
+        class="rating-review-section"
+        style="background: #f8f9fa; border-radius: 15px; padding: 40px"
+      >
+        <h3 class="text-center mb-4">
+          <i class="fas fa-star text-warning me-2"></i>Đánh giá & Nhận xét
+        </h3>
+
+        <!-- Overall Rating -->
+        <div class="row mb-4">
+          <div class="col-md-4 text-center">
+            <div class="display-3 fw-bold text-primary">4.7</div>
+            <div class="mb-2">
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star-half-alt text-warning"></i>
+            </div>
+            <div class="text-muted small">Dựa trên 342 đánh giá</div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="mb-2 d-flex align-items-center">
+              <span style="width: 60px">5 sao</span>
+              <div class="progress flex-grow-1 mx-2" style="height: 10px">
+                <div class="progress-bar bg-warning" style="width: 75%"></div>
+              </div>
+              <span class="small text-muted">75%</span>
+            </div>
+            <div class="mb-2 d-flex align-items-center">
+              <span style="width: 60px">4 sao</span>
+              <div class="progress flex-grow-1 mx-2" style="height: 10px">
+                <div class="progress-bar bg-warning" style="width: 18%"></div>
+              </div>
+              <span class="small text-muted">18%</span>
+            </div>
+            <div class="mb-2 d-flex align-items-center">
+              <span style="width: 60px">3 sao</span>
+              <div class="progress flex-grow-1 mx-2" style="height: 10px">
+                <div class="progress-bar bg-warning" style="width: 5%"></div>
+              </div>
+              <span class="small text-muted">5%</span>
+            </div>
+            <div class="mb-2 d-flex align-items-center">
+              <span style="width: 60px">2 sao</span>
+              <div class="progress flex-grow-1 mx-2" style="height: 10px">
+                <div class="progress-bar bg-warning" style="width: 1%"></div>
+              </div>
+              <span class="small text-muted">1%</span>
+            </div>
+            <div class="d-flex align-items-center">
+              <span style="width: 60px">1 sao</span>
+              <div class="progress flex-grow-1 mx-2" style="height: 10px">
+                <div class="progress-bar bg-warning" style="width: 1%"></div>
+              </div>
+              <span class="small text-muted">1%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Write Review Form -->
+        <div class="card border-primary mb-4">
+          <div class="card-body">
+            <h6 class="mb-3">
+              <i class="fas fa-edit me-2"></i>Viết đánh giá của bạn
+            </h6>
+            <form id="reviewForm">
+              <div class="mb-3">
+                <label class="form-label">Đánh giá:</label>
+                <div class="d-flex gap-2" style="font-size: 28px">
+                  <i
+                    class="far fa-star rating-star"
+                    data-rating="1"
+                    style="cursor: pointer; color: #ddd"
+                  ></i>
+                  <i
+                    class="far fa-star rating-star"
+                    data-rating="2"
+                    style="cursor: pointer; color: #ddd"
+                  ></i>
+                  <i
+                    class="far fa-star rating-star"
+                    data-rating="3"
+                    style="cursor: pointer; color: #ddd"
+                  ></i>
+                  <i
+                    class="far fa-star rating-star"
+                    data-rating="4"
+                    style="cursor: pointer; color: #ddd"
+                  ></i>
+                  <i
+                    class="far fa-star rating-star"
+                    data-rating="5"
+                    style="cursor: pointer; color: #ddd"
+                  ></i>
+                </div>
+                <input type="hidden" id="ratingValue" value="0" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nhận xét:</label>
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  placeholder="Chia sẻ trải nghiệm của bạn..."
+                  required
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Tên của bạn:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập tên"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-2"></i>Gửi đánh giá
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-list">
+          <h6 class="mb-3">
+            <i class="fas fa-comments me-2"></i>Nhận xét từ khách hàng
+          </h6>
+
+          <!-- Review 1 -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <div>
+                  <strong>Nguyễn Thị Mai</strong>
+                  <div>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                  </div>
+                </div>
+                <small class="text-muted">3 ngày trước</small>
+              </div>
+              <p class="mb-2">
+                Thông tin rất hữu ích và chi tiết. Giúp tôi hiểu rõ hơn về lịch
+                tiêm chủng cho con.
+              </p>
+              <button class="btn btn-sm btn-outline-primary helpful-btn">
+                <i class="far fa-thumbs-up me-1"></i>Hữu ích (15)
+              </button>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <div>
+                  <strong>Trần Văn Nam</strong>
+                  <div>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="far fa-star text-warning"></i>
+                  </div>
+                </div>
+                <small class="text-muted">1 tuần trước</small>
+              </div>
+              <p class="mb-2">
+                Nội dung chuyên nghiệp, dễ hiểu. Cần cập nhật thêm vaccine mới.
+              </p>
+              <button class="btn btn-sm btn-outline-primary helpful-btn">
+                <i class="far fa-thumbs-up me-1"></i>Hữu ích (8)
+              </button>
+            </div>
+          </div>
+
+          <div class="text-center mt-3">
+            <button class="btn btn-outline-primary">
+              <i class="fas fa-sync me-2"></i>Xem thêm đánh giá
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
     
     <script src="Scripts/bootstrap.bundle.min.js"></script>
     <script>
@@ -803,6 +1018,68 @@
         filterArticles('all');
 
         console.log('✅ Mẹ và Bé Page Initialized');
+      })();
+      
+      // Rating & Review System
+      (function() {
+        const ratingStars = document.querySelectorAll('.rating-star');
+        const ratingValue = document.getElementById('ratingValue');
+        const reviewForm = document.getElementById('reviewForm');
+        
+        ratingStars.forEach(star => {
+          star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-rating');
+            ratingValue.value = rating;
+            
+            ratingStars.forEach(s => {
+              const starRating = s.getAttribute('data-rating');
+              if (starRating <= rating) {
+                s.classList.remove('far');
+                s.classList.add('fas');
+                s.style.color = '#ffc107';
+              } else {
+                s.classList.remove('fas');
+                s.classList.add('far');
+                s.style.color = '#ddd';
+              }
+            });
+          });
+        });
+        
+        if (reviewForm) {
+          reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const rating = ratingValue.value;
+            if (rating == 0) {
+              alert('Vui lòng chọn số sao đánh giá!');
+              return;
+            }
+            alert('✓ Cảm ơn bạn đã đánh giá! Nhận xét của bạn sẽ được hiển thị sau khi được duyệt.');
+            this.reset();
+            ratingStars.forEach(s => {
+              s.classList.remove('fas');
+              s.classList.add('far');
+              s.style.color = '#ddd';
+            });
+            ratingValue.value = 0;
+          });
+        }
+        
+        document.querySelectorAll('.helpful-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const icon = this.querySelector('i');
+            if (this.classList.contains('active')) {
+              icon.classList.remove('far');
+              icon.classList.add('fas');
+            } else {
+              icon.classList.remove('fas');
+              icon.classList.add('far');
+            }
+          });
+        });
+        
+        console.log('✅ Rating & Review System Initialized');
       })();
     </script>
   </body>
