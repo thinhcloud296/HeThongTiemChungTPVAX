@@ -1,0 +1,110 @@
+@model TPVAXWebsite.Models.ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Đăng nhập";
+}
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <img src="@Url.Content("~/Content/Assets/Images/logo.png")" alt="TPVAX Logo" style="height: 60px" class="mb-3" />
+                        <h2 class="h4 text-primary fw-bold">Đăng nhập tài khoản</h2>
+                        <p class="text-muted">Chào mừng bạn trở lại TPVAX</p>
+                    </div>
+
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.ErrorMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label for="TenDangNhap" class="form-label fw-semibold">
+                                <i class="fas fa-user me-1"></i>Tên đăng nhập hoặc Email
+                            </label>
+                            @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control form-control-lg", placeholder = "Nhập tên đăng nhập hoặc email", required = "required" })
+                            @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="MatKhau" class="form-label fw-semibold">
+                                <i class="fas fa-lock me-1"></i>Mật khẩu
+                            </label>
+                            <div class="input-group">
+                                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control form-control-lg", placeholder = "Nhập mật khẩu", required = "required", id = "password-input" })
+                                <button class="btn btn-outline-secondary" type="button" id="toggle-password">
+                                    <i class="fas fa-eye" id="eye-icon"></i>
+                                </button>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input", id = "rememberMe" })
+                                <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+                            </div>
+                            <a href="@Url.Action("ForgotPassword", "Account")" class="text-primary small text-decoration-none">Quên mật khẩu?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                            <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                        </button>
+
+                        <div class="text-center">
+                            <span class="text-muted">Chưa có tài khoản?</span>
+                            <a href="@Url.Action("Register", "Account")" class="text-primary fw-semibold text-decoration-none ms-1">Đăng ký ngay</a>
+                        </div>
+                    }
+
+                    <hr class="my-4" />
+
+                    <div class="text-center">
+                        <p class="text-muted small mb-2">Hoặc đăng nhập bằng</p>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <button type="button" class="btn btn-outline-primary flex-fill">
+                                <i class="fab fa-google me-1"></i>Google
+                            </button>
+                            <button type="button" class="btn btn-outline-info flex-fill">
+                                <i class="fab fa-facebook-f me-1"></i>Facebook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Home")" class="text-muted text-decoration-none">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Toggle password visibility
+        $('#toggle-password').click(function () {
+            const passwordInput = $('#password-input');
+            const eyeIcon = $('#eye-icon');
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                eyeIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordInput.attr('type', 'password');
+                eyeIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    </script>
+}

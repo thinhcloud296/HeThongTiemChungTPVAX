@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Tôi Nên Tiêm Gì?";
+}
+
+<main>
+      <section class="advice-consult-hero text-start">
+        <div class="container position-relative">
+          <img
+            src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+            alt="Bác sĩ tư vấn"
+            class="hero-image d-none d-lg-block"
+          />
+          <div class="row">
+            <div class="col-lg-6 py-5">
+              <nav aria-label="breadcrumb" class="mb-1">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index.html" class="text-secondary">Trang chủ</a>
+                  </li>
+                  <li
+                    class="breadcrumb-item active text-primary"
+                    aria-current="page"
+                  >
+                    Tôi nên tiêm gì?
+                  </li>
+                </ol>
+              </nav>
+              <h1 class="fw-bold hero-title">Tôi nên tiêm gì?</h1>
+              <p class="lead hero-subtitle">
+                Chọn thông tin và nhận đề xuất các vắc xin cần tiêm
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container filter-block">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-5 age-select-wrapper">
+            <label for="ageSelect" class="form-label">Độ tuổi</label>
+            <select class="form-select" id="ageSelect"></select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label d-block">Chọn giới tính</label>
+            <div class="d-flex gap-2 gender-options">
+              <button class="gender-select-btn active" data-gender="Nam">
+                <i class="fas fa-male me-1"></i> Nam
+              </button>
+              <button class="gender-select-btn" data-gender="Nữ">
+                <i class="fas fa-female me-1"></i> Nữ
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <button class="btn btn-get-result w-100" id="getResultsButton">
+              Nhận kết quả
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="advice-section row g-4 mt-5"
+        id="adviceResults"
+        style="display: none"
+      >
+        <div class="col-12">
+          <h2 class="section-title fw-bold">
+            <i class="fas fa-star section-title-icon me-2"></i> Đề xuất cho:
+            <span id="currentSelection"></span>
+          </h2>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="advice-card-list" id="vaxLeList">
+            <h3 class="fw-bold mb-3 text-secondary">Vắc xin lẻ</h3>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="advice-card-list" id="vaxGoiList">
+            <h3 class="fw-bold mb-3 text-secondary">Gói Vắc Xin</h3>
+          </div>
+        </div>
+
+        <div class="col-12 cta-bottom-row row g-3">
+          <div class="col-md-6">
+            <button class="btn btn-cta btn-consult">
+              <i class="fas fa-comments me-2"></i> Yêu cầu tư vấn
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-cta btn-chat">
+              <i class="fas fa-headset me-2"></i> Chat với Bác sĩ
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->

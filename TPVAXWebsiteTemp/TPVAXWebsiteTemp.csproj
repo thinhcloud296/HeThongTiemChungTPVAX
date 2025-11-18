@@ -104,7 +104,73 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Designs\Assets1\Icons1\adults.png" />
+    <Content Include="Designs\Assets1\Icons1\baby-boy.png" />
+    <Content Include="Designs\Assets1\Icons1\calendar.png" />
+    <Content Include="Designs\Assets1\Icons1\cart.png" />
+    <Content Include="Designs\Assets1\Icons1\contacs.png" />
+    <Content Include="Designs\Assets1\Icons1\delete.gif" />
+    <Content Include="Designs\Assets1\Icons1\flag1\bi.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\canada.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\cuba.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\france.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\germany.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\halan.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\ireland.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\italy.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\japan.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\united-kingdom.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\united-states-of-america.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\vietnam copy.png" />
+    <Content Include="Designs\Assets1\Icons1\flag1\vietnam.png" />
+    <Content Include="Designs\Assets1\Icons1\injection.png" />
+    <Content Include="Designs\Assets1\Icons1\location_7282031.png" />
+    <Content Include="Designs\Assets1\Icons1\login.gif" />
+    <Content Include="Designs\Assets1\Icons1\logo.png" />
+    <Content Include="Designs\Assets1\Icons1\marriage.png" />
+    <Content Include="Designs\Assets1\Icons1\mother.png" />
+    <Content Include="Designs\Assets1\Icons1\pregnant-woman.png" />
+    <Content Include="Designs\Assets1\Icons1\receiver.png" />
+    <Content Include="Designs\Assets1\Icons1\search.png" />
+    <Content Include="Designs\Assets1\Icons1\shopping-basket.png" />
+    <Content Include="Designs\Assets1\Icons1\teener.png" />
+    <Content Include="Designs\Assets1\Icons1\telephone.png" />
+    <Content Include="Designs\Assets1\Icons1\trash.png" />
+    <Content Include="Designs\Assets1\Icons1\travel.png" />
+    <Content Include="Designs\Assets1\Icons1\ttvacine.png" />
+    <Content Include="Designs\Assets1\Icons1\virus.png" />
+    <Content Include="Designs\Assets1\Images1\banner1.jpg" />
+    <Content Include="Designs\Assets1\Images1\banner2.jpg" />
+    <Content Include="Designs\Assets1\Images1\banner3.png" />
+    <Content Include="Designs\Assets1\Images1\bgbluegradient.jpg" />
+    <Content Include="Designs\Assets1\Images1\hexaxim.png" />
+    <Content Include="Designs\Assets1\Images1\hinh-hop-vac-xin-abrysvo-hover.jpg" />
+    <Content Include="Designs\Assets1\Images1\logo.png" />
+    <Content Include="Designs\Assets1\Images1\test1.jpg" />
+    <Content Include="Designs\Assets1\Images1\tiemphongvaccine.png" />
+    <Content Include="Designs\bai-viet-chi-tiet.html" />
+    <Content Include="Designs\benh-truyen-nhiem.html" />
+    <Content Include="Designs\cart.html" />
+    <Content Include="Designs\cart_backup.html" />
+    <Content Include="Designs\checkout.html" />
+    <Content Include="Designs\chitietvaccine.html" />
+    <Content Include="Designs\dashboard.html" />
+    <Content Include="Designs\goivacxin.html" />
     <Content Include="Designs\index.html" />
+    <Content Include="Designs\khuyen-mai-hot.html" />
+    <Content Include="Designs\layout_page.html" />
+    <Content Include="Designs\layout_page_style.css" />
+    <Content Include="Designs\login.html" />
+    <Content Include="Designs\main_style.css" />
+    <Content Include="Designs\me-va-be.html" />
+    <Content Include="Designs\register.html" />
+    <Content Include="Designs\toi-nen-tiem-gi.html" />
+    <Content Include="Designs\ttvctheodoituong.html" />
+    <Content Include="Designs\vaccine_admin1\assets1\css1\print.css" />
+    <Content Include="Designs\vaccine_admin1\assets1\css1\style.css" />
+    <Content Include="Designs\vaccine_admin1\assets1\images1\mambo.jpg" />
+    <Content Include="Designs\vaccine_admin1\assets1\js1\app.js" />
+    <Content Include="Designs\vacxinphongbenh.html" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -116,6 +182,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GioHangController.cs" />
+    <Compile Include="Controllers\HoaDonController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LichTiemController.cs" />
+    <Compile Include="Controllers\VaccineController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -155,7 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Designs\Content1\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

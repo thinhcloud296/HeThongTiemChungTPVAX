@@ -1,0 +1,670 @@
+﻿@{
+    ViewBag.Title = "Vắc Xin Phòng Bệnh";
+}
+
+<!-- Hero Banner -->
+      <section
+        class="page-hero-banner"
+        style="
+          background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+          padding: 80px 0 60px;
+        "
+      >
+        <div class="container text-center text-white">
+          <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-syringe me-3"></i>Vắc Xin Phòng Bệnh
+          </h1>
+          <p class="lead mb-0" style="font-size: 1.3rem">
+            Hệ thống vắc xin đầy đủ - Chất lượng cao - Giá cả hợp lý
+          </p>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-syringe"></i>
+                </div>
+                <div class="stat-number">46+</div>
+                <div class="stat-label">Loại Vắc Xin</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Chất Lượng Đảm Bảo</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number">50K+</div>
+                <div class="stat-label">Khách Hàng Tin Dùng</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-award"></i>
+                </div>
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Năm Kinh Nghiệm</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vaccine List Section -->
+      <section class="container my-5">
+        <div class="row">
+          <!-- Sidebar Filters -->
+          <div class="col-lg-3 mb-4">
+            <div class="filter-sidebar p-4">
+              <h5 class="fw-bold mb-4">
+                <i class="fas fa-filter me-2"></i>Bộ lọc vắc xin
+              </h5>
+
+              <!-- Filter: Độ tuổi -->
+              <div class="filter-group mb-4">
+                <h6 class="fw-bold mb-3">
+                  <i class="fas fa-baby me-2 text-primary"></i>Độ tuổi
+                </h6>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="ageFilter"
+                    id="age-all"
+                    value="all"
+                    checked
+                  />
+                  <label class="form-check-label" for="age-all">Tất cả</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="ageFilter"
+                    id="age-0-6"
+                    value="0-6"
+                  />
+                  <label class="form-check-label" for="age-0-6"
+                    >0 - 6 tháng tuổi</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="ageFilter"
+                    id="age-6-12"
+                    value="6-12"
+                  />
+                  <label class="form-check-label" for="age-6-12"
+                    >6 - 12 tháng tuổi</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="ageFilter"
+                    id="age-12-24"
+                    value="12-24"
+                  />
+                  <label class="form-check-label" for="age-12-24"
+                    >12 - 24 tháng tuổi</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="ageFilter"
+                    id="age-2-9"
+                    value="2-9"
+                  />
+                  <label class="form-check-label" for="age-2-9"
+                    >2 - 9 tuổi</label
+                  >
+                </div>
+                <button
+                  class="btn btn-link btn-sm p-0 mt-2 text-decoration-none"
+                >
+                  <i class="fas fa-plus-circle me-1"></i>Xem thêm
+                </button>
+              </div>
+
+              <!-- Filter: Phòng bệnh -->
+              <div class="filter-group mb-4">
+                <h6 class="fw-bold mb-3">
+                  <i class="fas fa-shield-virus me-2 text-primary"></i>Phòng
+                  bệnh
+                </h6>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="disease-all"
+                    value="all"
+                    checked
+                  />
+                  <label class="form-check-label" for="disease-all"
+                    >Tất cả</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="disease-6in1"
+                    value="6in1"
+                  />
+                  <label class="form-check-label" for="disease-6in1"
+                    >6 trong 1</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="disease-bho"
+                    value="bho"
+                  />
+                  <label class="form-check-label" for="disease-bho"
+                    >Bạch hầu, Ho gà, Uốn ván</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="disease-4in1"
+                    value="4in1"
+                  />
+                  <label class="form-check-label" for="disease-4in1"
+                    >4 trong 1</label
+                  >
+                </div>
+                <button
+                  class="btn btn-link btn-sm p-0 mt-2 text-decoration-none"
+                >
+                  <i class="fas fa-plus-circle me-1"></i>Xem thêm
+                </button>
+              </div>
+
+              <!-- Filter: Nơi sản xuất -->
+              <div class="filter-group mb-4">
+                <h6 class="fw-bold mb-3">
+                  <i class="fas fa-globe me-2 text-primary"></i>Nơi sản xuất
+                </h6>
+                <input
+                  type="text"
+                  class="form-control form-control-sm mb-3"
+                  placeholder="🔍 Tìm theo quốc gia..."
+                />
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="country-all"
+                    value="all"
+                    checked
+                  />
+                  <label class="form-check-label" for="country-all"
+                    >Tất cả</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="country-india"
+                    value="india"
+                  />
+                  <label class="form-check-label" for="country-india"
+                    >🇮🇳 Ấn Độ</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="country-belgium"
+                    value="belgium"
+                  />
+                  <label class="form-check-label" for="country-belgium"
+                    >🇧🇪 Bỉ</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="country-canada"
+                    value="canada"
+                  />
+                  <label class="form-check-label" for="country-canada"
+                    >🇨🇦 Canada</label
+                  >
+                </div>
+                <button
+                  class="btn btn-link btn-sm p-0 mt-2 text-decoration-none"
+                >
+                  <i class="fas fa-plus-circle me-1"></i>Xem thêm
+                </button>
+              </div>
+
+              <!-- Filter: Số liều -->
+              <div class="filter-group">
+                <h6 class="fw-bold mb-3">
+                  <i class="fas fa-syringe me-2 text-primary"></i>Số liều theo
+                  phác đồ
+                </h6>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="dose-all"
+                    value="all"
+                    checked
+                  />
+                  <label class="form-check-label" for="dose-all">Tất cả</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="dose-1"
+                    value="1"
+                  />
+                  <label class="form-check-label" for="dose-1">1 liều</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="dose-2"
+                    value="2"
+                  />
+                  <label class="form-check-label" for="dose-2">2 liều</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="dose-3"
+                    value="3"
+                  />
+                  <label class="form-check-label" for="dose-3">3 liều</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="dose-4"
+                    value="4"
+                  />
+                  <label class="form-check-label" for="dose-4">4 liều</label>
+                </div>
+              </div>
+
+              <!-- Reset Filters Button -->
+              <div class="mt-4 pt-3 border-top">
+                <button class="btn btn-outline-primary w-100">
+                  <i class="fas fa-redo me-2"></i>Đặt lại bộ lọc
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vaccine List -->
+          <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h4 class="mb-1">Danh sách vắc xin</h4>
+                <p class="text-muted mb-0">
+                  <small>Hiển thị 9 trong tổng 46 vắc xin</small>
+                </p>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <label class="text-muted small mb-0">Sắp xếp theo:</label>
+                <select class="form-select sort-select">
+                  <option value="popular">Được quan tâm</option>
+                  <option value="low-price">Giá thấp đến cao</option>
+                  <option value="high-price">Giá cao đến thấp</option>
+                  <option value="name">Tên A-Z</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-4" id="vaccineList">
+              <!-- Vaccine Card 1 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Bỉ
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Prevenar 13"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Prevenar 13 0.5ml Inj</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng bệnh do Phế
+                      cầu
+                    </span>
+                    <div class="price-section">
+                      <div class="price">1.180.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Prevenar 13', 1180000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 2 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Hoa Kỳ
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="MenQuadfi"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin MenQuadfi</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng bệnh Não mô
+                      cầu ACYW
+                    </span>
+                    <div class="price-section">
+                      <div class="price">1.800.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('MenQuadfi', 1800000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 3 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Hà Lan
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Influvac Tetra"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Influvac Tetra</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng Cúm
+                    </span>
+                    <div class="price-section">
+                      <div class="price">333.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Influvac Tetra', 333000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 4 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Hoa Kỳ
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Gardasil 9"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Gardasil 9 0.5ml</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng ung thư do
+                      HPV
+                    </span>
+                    <div class="price-section">
+                      <div class="price">2.965.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Gardasil 9', 2965000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 5 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Đức
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Qdenga"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Qdenga</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng Sốt xuất
+                      huyết
+                    </span>
+                    <div class="price-section">
+                      <div class="price">1.390.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Qdenga', 1390000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 6 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Hoa Kỳ
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Pneumovax 23"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Pneumovax 23</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng bệnh do Phế
+                      cầu
+                    </span>
+                    <div class="price-section">
+                      <div class="price">1.440.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Pneumovax 23', 1440000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 7 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Việt Nam
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Ivacflu-s"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Ivacflu-s 0.5ml</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng Cúm
+                    </span>
+                    <div class="price-section">
+                      <div class="price">260.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Ivacflu-s', 260000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 8 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Ý
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Bexsero"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Bexsero</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng bệnh Não mô
+                      cầu B
+                    </span>
+                    <div class="price-section">
+                      <div class="price">1.700.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Bexsero', 1700000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Card 9 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card vaccine-card">
+                  <div class="card-img-wrapper">
+                    <span class="country-badge">
+                      <i class="fas fa-flag"></i> Pháp
+                    </span>
+                    <img
+                      src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                      class="card-img-top"
+                      alt="Verorab"
+                    />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">Vắc xin Verorab 0.5ml</h6>
+                    <span class="disease-tag">
+                      <i class="fas fa-shield-virus me-1"></i>Phòng Dại
+                    </span>
+                    <div class="price-section">
+                      <div class="price">510.000₫ <small>/ Liều</small></div>
+                      <button
+                        class="btn btn-add-cart w-100"
+                        onclick="addToCart('Verorab', 510000)"
+                      >
+                        <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-5">
+              <button class="btn btn-load-more">
+                Xem thêm 37 vắc xin <i class="fas fa-chevron-down ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section - Bạn chưa biết tiêm gì? -->
+      <section
+        class="cta-section py-5"
+        style="background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%)"
+      >
+        <div class="container text-center text-white">
+          <h2 class="fw-bold mb-3">Bạn chưa biết nên tiêm gì?</h2>
+          <p class="lead mb-4">
+            Liên hệ ngay với chúng tôi để được tư vấn miễn phí vắc xin phù hợp
+            nhất cho bạn và gia đình
+          </p>
+          <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="tel:0975088626" class="btn btn-warning btn-lg">
+              <i class="fas fa-phone-alt me-2"></i>Gọi ngay: 0975 088 626
+            </a>
+            <a href="toi-nen-tiem-gi.html" class="btn btn-light btn-lg">
+              <i class="fas fa-question-circle me-2"></i>Tôi nên tiêm gì?
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- END Main Content -->

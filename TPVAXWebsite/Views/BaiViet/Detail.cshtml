@@ -1,0 +1,269 @@
+﻿@{
+    ViewBag.Title = "Chi Tiết Bài Viết";
+}
+
+<div class="row justify-content-center">
+        <div class="col-lg-8">
+          <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="@Url.Action("Index", "Home")"
+                  ><i class="fas fa-home me-1"></i>Trang chủ</a
+                >
+              </li>
+              <li class="breadcrumb-item">
+                <a href="ttvctheodoituong.html">Kiến thức tiêm chủng</a>
+              </li>
+              <li
+                class="breadcrumb-item active"
+                aria-current="page"
+                id="breadcrumbCategory"
+              >
+                Thanh thiếu niên
+              </li>
+            </ol>
+          </nav>
+
+          <h1 class="article-title mb-4">
+            Vắc xin HPV là "tấm khiên" bảo vệ bắt buộc cho thanh thiếu niên cả
+            nam và nữ
+          </h1>
+
+          <div
+            class="article-meta d-flex align-items-center justify-content-between mb-4 text-muted small"
+          >
+            <div class="d-flex align-items-center article-meta-info">
+              <span class="me-3">
+                <i class="far fa-calendar-alt me-1"></i>
+                Ngày đăng: 14/10/2025
+              </span>
+              <span class="me-3">
+                <i class="fas fa-user-md me-1"></i>
+                Tác giả: BS. Nguyễn Văn A
+              </span>
+            </div>
+
+            <div class="d-flex align-items-center social-share-bar">
+              <span class="me-2 fw-bold text-dark share-text">Chia sẻ:</span>
+              <a
+                href="#"
+                class="share-btn me-2 facebook-share"
+                title="Chia sẻ Facebook"
+              >
+                <i class="fab fa-facebook fs-5 text-primary"></i>
+              </a>
+              <a href="#" class="share-btn zalo-share" title="Chia sẻ Zalo">
+                <i class="fas fa-share-alt fs-5 text-info"></i>
+              </a>
+            </div>
+          </div>
+
+          <img
+            src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+            alt="Hình ảnh minh họa Vắc xin"
+            class="img-fluid article-main-image rounded shadow-lg mb-5"
+          />
+
+          <div class="article-content">
+            <p class="lead">
+              Nhiều phụ huynh vẫn nghĩ HPV chỉ liên quan đến nữ giới. Tuy nhiên,
+              Tổ chức Y tế Thế giới (WHO) khuyến cáo tiêm vắc xin HPV cho cả nam
+              và nữ ở độ tuổi thanh thiếu niên để phòng ngừa nhiều loại ung thư
+              nguy hiểm.
+            </p>
+
+            <h3 id="muc-1">
+              1. Tầm quan trọng của Vắc xin HPV ở tuổi vị thành niên
+            </h3>
+            <p>
+              Độ tuổi vị thành niên (9-14 tuổi) được coi là "thời điểm vàng" để
+              tiêm vắc xin HPV vì cơ thể tạo ra phản ứng miễn dịch mạnh mẽ nhất,
+              chỉ cần tiêm 2 liều thay vì 3 liều ở độ tuổi lớn hơn.
+            </p>
+            <p>
+              HPV (Human Papillomavirus) không chỉ gây ung thư cổ tử cung mà còn
+              là nguyên nhân hàng đầu gây ra mụn cóc sinh dục, ung thư hậu môn,
+              ung thư vòm họng, và ung thư dương vật ở nam giới.
+            </p>
+
+            <h3 id="muc-2">2. Lợi ích của việc tiêm chủng cho cả nam và nữ</h3>
+
+            <div class="card p-3 my-4 note-box">
+              <h5 class="card-title text-warning fw-bold">Lưu ý chuyên môn</h5>
+              <p class="card-text">
+                Việc tiêm chủng đồng loạt cho cả hai giới giúp tạo ra miễn dịch
+                cộng đồng, giảm thiểu sự lây lan của virus trong xã hội. Đây là
+                chiến lược toàn diện của các quốc gia phát triển nhằm loại bỏ
+                hoàn toàn các bệnh liên quan đến HPV.
+              </p>
+            </div>
+
+            <h4 id="muc-2-1">2.1. Đối với nữ giới</h4>
+            <ul class="article-list-custom">
+              <li>Phòng ngừa ung thư cổ tử cung (99.7% nguyên nhân do HPV).</li>
+              <li>Phòng ngừa ung thư âm hộ, âm đạo và mụn cóc sinh dục.</li>
+            </ul>
+
+            <h4 id="muc-2-2">2.2. Đối với nam giới</h4>
+            <p>
+              Nam giới được bảo vệ khỏi ung thư hậu môn, ung thư vòm họng và ung
+              thư dương vật. Ngoài ra, tiêm phòng cho nam giới còn bảo vệ bạn
+              tình của họ trong tương lai.
+            </p>
+            <p>
+              *Nguồn tham khảo: Trung tâm Dự phòng và Kiểm soát Bệnh tật Hoa Kỳ
+              (CDC)*
+            </p>
+
+            <h3 id="muc-3">3. Lịch tiêm và các loại vắc xin hiện có</h3>
+            <p>
+              Hiện nay, TPVAX cung cấp vắc xin **Gardasil 9** (Mỹ) với khả năng
+              bảo vệ toàn diện nhất, phòng ngừa 9 chủng HPV nguy hiểm.
+            </p>
+            <div class="table-responsive article-table">
+              <table class="table table-bordered text-center">
+                <thead class="bg-primary text-white">
+                  <tr>
+                    <th>Độ tuổi</th>
+                    <th>Liều lượng</th>
+                    <th>Lịch tiêm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>9 – 14 tuổi</td>
+                    <td>2 liều</td>
+                    <td>Mũi 2 cách Mũi 1 từ 6–12 tháng</td>
+                  </tr>
+                  <tr>
+                    <td>15 – 26 tuổi</td>
+                    <td>3 liều</td>
+                    <td>Mũi 2 sau 2 tháng, Mũi 3 sau 6 tháng kể từ Mũi 1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="action-section text-center p-4 my-5 rounded-3">
+            <h4 class="mb-3 text-white">Bạn cần tiêm Vắc xin HPV?</h4>
+            <p class="lead text-white-50">
+              Đừng bỏ lỡ thời điểm vàng. Đặt lịch tiêm ngay tại TPVAX để được tư
+              vấn phác đồ phù hợp nhất.
+            </p>
+            <button
+              class="btn btn-warning btn-lg me-3 fw-bold shadow-lg cta-button"
+              data-bs-toggle="modal"
+              data-bs-target="#appointmentModal"
+            >
+              <i class="far fa-calendar-check me-2"></i> ĐẶT LỊCH TIÊM
+            </button>
+            <a
+              href="chitietvaccine.html"
+              class="btn btn-outline-light btn-lg fw-bold cta-button"
+            >
+              <i class="fas fa-info-circle me-2"></i> XEM CHI TIẾT VẮC XIN
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 d-none d-lg-block">
+          <div class="toc-sticky-wrapper">
+            <div class="table-of-contents p-4 rounded-3 shadow-sm">
+              <h4 class="text-primary mb-3 fw-bold">Mục lục nhanh</h4>
+              <ul id="toc-list" class="list-unstyled"></ul>
+            </div>
+
+            <section class="related-articles mt-4">
+              <h5 class="mb-3 text-primary fw-bold">Xem thêm</h5>
+              <div class="small-article-list d-grid gap-2">
+                <a
+                  href="#"
+                  class="card p-2 shadow-sm text-decoration-none text-dark related-hover-item related-toc-item"
+                >
+                  <h6 class="mb-0 small fw-bold">
+                    Kiểm tra miễn dịch Sởi - Quai bị - Rubella trước khi kết hôn
+                  </h6>
+                  <span
+                    class="text-muted article-meta-small"
+                    style="font-size: 11px"
+                    >[Thanh thiếu niên]</span
+                  >
+                </a>
+                <a
+                  href="#"
+                  class="card p-2 shadow-sm text-decoration-none text-dark related-hover-item related-toc-item"
+                >
+                  <h6 class="mb-0 small fw-bold">
+                    Vắc xin Zona thần kinh: Khi nào người lớn cần tiêm?
+                  </h6>
+                  <span
+                    class="text-muted article-meta-small"
+                    style="font-size: 11px"
+                    >[Người lớn]</span
+                  >
+                </a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-5 d-lg-none" />
+      <section class="related-articles d-lg-none">
+        <h3 class="mb-4 text-primary fw-bold">Bài viết liên quan</h3>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm related-hover-item">
+              <img
+                src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                class="card-img-top related-img"
+                alt="Vắc xin sởi quai bị rubella"
+              />
+              <div class="card-body">
+                <h5 class="card-title small fw-bold">
+                  Kiểm tra miễn dịch Sởi - Quai bị - Rubella trước khi kết hôn
+                </h5>
+                <a href="#" class="btn btn-sm btn-outline-secondary mt-2"
+                  >Đọc thêm</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm related-hover-item">
+              <img
+                src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                class="card-img-top related-img"
+                alt="Vắc xin Zona"
+              />
+              <div class="card-body">
+                <h5 class="card-title small fw-bold">
+                  Vắc xin Zona thần kinh: Khi nào người lớn cần tiêm?
+                </h5>
+                <a href="#" class="btn btn-sm btn-outline-secondary mt-2"
+                  >Đọc thêm</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm related-hover-item">
+              <img
+                src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                class="card-img-top related-img"
+                alt="Viêm màng não mô cầu"
+              />
+              <div class="card-body">
+                <h5 class="card-title small fw-bold">
+                  Nguy cơ bùng phát Viêm màng não mô cầu ở ký túc xá
+                </h5>
+                <a href="#" class="btn btn-sm btn-outline-secondary mt-2"
+                  >Đọc thêm</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
