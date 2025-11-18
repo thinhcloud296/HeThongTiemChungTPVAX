@@ -54,7 +54,7 @@ namespace TPVAXWinform_GUI.UserControls
             dgvVaccine.Columns["colGiaBan"].DefaultCellStyle.Format = "N0";
 
             // Căn giữa các cột theo yêu cầu: Mã Vaccine, Giá bán, Số lượng tồn, Mã loại, Số mũi
-            string[] centerColumns = { "colMaVC", "colGiaBan", "colSoLuongTon", "colTongSoLuongTon", "colMaLoai", "colSoMuiToiDa" };
+            string[] centerColumns = { "colMaVC", "colGiaBan", "colSoLuongTon", "colMaLoai", "colSoMuiToiDa" };
             foreach (var name in centerColumns)
             {
                 if (dgvVaccine.Columns[name] != null)

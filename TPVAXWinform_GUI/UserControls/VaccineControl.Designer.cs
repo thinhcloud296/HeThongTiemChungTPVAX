@@ -52,7 +52,6 @@
             this.colLoaiBenh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoLuongTon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTongSoLuongTon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMaLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoMuiToiDa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMoTa = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -314,7 +313,6 @@
             this.colLoaiBenh,
             this.colGiaBan,
             this.colSoLuongTon,
-            this.colTongSoLuongTon,
             this.colMaLoai,
             this.colSoMuiToiDa,
             this.colMoTa});
@@ -379,13 +377,6 @@
             this.colSoLuongTon.MinimumWidth = 8;
             this.colSoLuongTon.Name = "colSoLuongTon";
             this.colSoLuongTon.ReadOnly = true;
-            // 
-            // colTongSoLuongTon
-            // 
-            this.colTongSoLuongTon.HeaderText = "Tổng số lượng";
-            this.colTongSoLuongTon.MinimumWidth = 8;
-            this.colTongSoLuongTon.Name = "colTongSoLuongTon";
-            this.colTongSoLuongTon.ReadOnly = true;
             // 
             // colMaLoai
             // 
@@ -461,7 +452,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLoaiBenh;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGiaBan;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuongTon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTongSoLuongTon;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaLoai;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoMuiToiDa;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMoTa;

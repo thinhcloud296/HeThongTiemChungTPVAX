@@ -546,7 +546,7 @@ namespace TPVAXWinform_GUI
             CapNhatTongGiaVaTongSoMui();
         }
 
-        // --- HÀM NÀY ĐÃ SỬA LỖI TRANSACTION VÀ LOGIC 'soMui' ---
+
         private void btnLuuTatCa_Click(object sender, EventArgs e)
         {
             if (dgvVaccineWait.Rows.Count == 0 || (dgvVaccineWait.Rows.Count == 1 && dgvVaccineWait.Rows[0].IsNewRow))
@@ -577,9 +577,6 @@ namespace TPVAXWinform_GUI
                         if (row.IsNewRow) continue;
 
                         int soMui = Convert.ToInt32(row.Cells["colSoLuongW"].Value);
-
-                        // --- SỬA: Lỗi Convert 'ngayHen' ---
-                        // Phải parse lại từ string "dd/MM/yyyy"
                         DateTime ngayHen = DateTime.ParseExact(row.Cells["colNgayTiemW"].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                         string ghiChu = row.Cells["colGhiChuW"].Value.ToString();
@@ -592,7 +589,7 @@ namespace TPVAXWinform_GUI
                         lichTiem.NgayHenTiem = ngayHen;
                         lichTiem.NgayTiemThucTe = null;
                         lichTiem.SoMui = soMui;
-                        lichTiem.TrangThai = "Chưa tiêm";
+                        lichTiem.TrangThai = "Đã tiêm";
                         lichTiem.GhiChu = ghiChu;
                         lichTiem.MaHSTC = maHSTC_HienTai;
                         lichTiem.MaVC = maVC;
