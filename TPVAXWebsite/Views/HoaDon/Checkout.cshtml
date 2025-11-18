@@ -1,0 +1,697 @@
+﻿@{
+    ViewBag.Title = "Thanh Toán";
+}
+
+<div class="col-lg-8">
+            <div class="checkout-content">
+              <!-- Step 1: Confirm Information -->
+              <div class="step-content active" id="step-1">
+                <h4 class="mb-4">
+                  <i class="fas fa-clipboard-check me-2 text-primary"></i>Xác
+                  nhận thông tin
+                </h4>
+
+                <!-- Customer Info -->
+                <div class="info-card selected">
+                  <h6 class="mb-3">
+                    <i class="fas fa-user me-2"></i>Thông tin người đặt
+                  </h6>
+                  <div class="row">
+                    <div class="col-md-6 mb-2">
+                      <strong>Họ tên:</strong> Trần Tấn Tài
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>SĐT:</strong> 0975088626
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Email:</strong> tantai@example.com
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Ngày sinh:</strong> 01/02/2004
+                    </div>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary mt-2">
+                    <i class="fas fa-edit me-1"></i>Chỉnh sửa
+                  </button>
+                </div>
+
+                <!-- Vaccination Person -->
+                <div class="info-card selected">
+                  <h6 class="mb-3">
+                    <i class="fas fa-syringe me-2"></i>Người được tiêm
+                  </h6>
+                  <div class="row">
+                    <div class="col-md-6 mb-2">
+                      <strong>Họ tên:</strong> Trần Minh Anh
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Quan hệ:</strong> Con gái
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Ngày sinh:</strong> 15/08/2020
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Giới tính:</strong> Nữ
+                    </div>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary mt-2">
+                    <i class="fas fa-sync-alt me-1"></i>Đổi người tiêm
+                  </button>
+                </div>
+
+                <!-- Appointment Details -->
+                <div class="info-card">
+                  <h6 class="mb-3">
+                    <i class="fas fa-calendar-alt me-2"></i>Thông tin lịch hẹn
+                  </h6>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      ><strong>Chọn ngày tiêm</strong></label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="appointmentDate"
+                      min="2025-11-18"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      ><strong>Chọn giờ tiêm</strong></label
+                    >
+                    <select class="form-select" id="appointmentTime">
+                      <option value="">-- Chọn khung giờ --</option>
+                      <option>08:00 - 09:00</option>
+                      <option>09:00 - 10:00</option>
+                      <option>10:00 - 11:00</option>
+                      <option>13:00 - 14:00</option>
+                      <option>14:00 - 15:00</option>
+                      <option>15:00 - 16:00</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label"
+                      ><strong>Chọn trung tâm</strong></label
+                    >
+                    <select class="form-select" id="center">
+                      <option value="">-- Chọn trung tâm tiêm chủng --</option>
+                      <option>
+                        Trung tâm TPVAX Quận 1 - 123 Nguyễn Huệ, Q1, TP.HCM
+                      </option>
+                      <option>
+                        Trung tâm TPVAX Tân Phú - 140 Lê Trọng Tấn, Tân Phú,
+                        TP.HCM
+                      </option>
+                      <option>
+                        Trung tâm TPVAX Bình Thạnh - 456 Xô Viết Nghệ Tĩnh, Bình
+                        Thạnh, TP.HCM
+                      </option>
+                      <option>
+                        Trung tâm TPVAX Thủ Đức - 789 Võ Văn Ngân, Thủ Đức,
+                        TP.HCM
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <button
+                  class="btn btn-primary btn-lg w-100"
+                  onclick="nextStep()"
+                >
+                  <i class="fas fa-arrow-right me-2"></i>Tiếp tục
+                </button>
+              </div>
+
+              <!-- Step 2: Payment Method -->
+              <div class="step-content" id="step-2">
+                <h4 class="mb-4">
+                  <i class="fas fa-credit-card me-2 text-primary"></i>Chọn
+                  phương thức thanh toán
+                </h4>
+
+                <!-- Cash Payment -->
+                <div class="payment-method" onclick="selectPayment('cash')">
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="payment"
+                      id="payment-cash"
+                      class="me-3"
+                    />
+                    <div class="flex-grow-1">
+                      <h6 class="mb-1">
+                        <i class="fas fa-money-bill-wave me-2 text-success"></i>
+                        Thanh toán tiền mặt tại trung tâm
+                      </h6>
+                      <p class="mb-0 text-muted small">
+                        Thanh toán khi đến trung tâm tiêm chủng
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bank Transfer -->
+                <div class="payment-method" onclick="selectPayment('transfer')">
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="payment"
+                      id="payment-transfer"
+                      class="me-3"
+                    />
+                    <div class="flex-grow-1">
+                      <h6 class="mb-1">
+                        <i class="fas fa-university me-2 text-primary"></i>
+                        Chuyển khoản ngân hàng
+                      </h6>
+                      <p class="mb-0 text-muted small">
+                        Chuyển khoản trước, xác nhận sau
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Credit Card -->
+                <div class="payment-method" onclick="selectPayment('card')">
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="payment"
+                      id="payment-card"
+                      class="me-3"
+                    />
+                    <div class="flex-grow-1">
+                      <h6 class="mb-1">
+                        <i class="fas fa-credit-card me-2 text-info"></i>
+                        Thanh toán bằng thẻ
+                      </h6>
+                      <p class="mb-0 text-muted small">
+                        Visa, Mastercard, JCB, Amex
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- MoMo -->
+                <div class="payment-method" onclick="selectPayment('momo')">
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="payment"
+                      id="payment-momo"
+                      class="me-3"
+                    />
+                    <div class="flex-grow-1">
+                      <h6 class="mb-1">
+                        <i class="fab fa-bity me-2" style="color: #d82d8b"></i>
+                        Ví MoMo
+                      </h6>
+                      <p class="mb-0 text-muted small">
+                        Thanh toán qua ví điện tử MoMo
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ZaloPay -->
+                <div class="payment-method" onclick="selectPayment('zalopay')">
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="payment"
+                      id="payment-zalopay"
+                      class="me-3"
+                    />
+                    <div class="flex-grow-1">
+                      <h6 class="mb-1">
+                        <i
+                          class="fas fa-wallet me-2"
+                          style="color: #008fe5"
+                        ></i>
+                        ZaloPay
+                      </h6>
+                      <p class="mb-0 text-muted small">
+                        Thanh toán qua ví điện tử ZaloPay
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VNPay -->
+                <div class="payment-method" onclick="selectPayment('vnpay')">
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="payment"
+                      id="payment-vnpay"
+                      class="me-3"
+                    />
+                    <div class="flex-grow-1">
+                      <h6 class="mb-1">
+                        <i class="fas fa-qrcode me-2 text-danger"></i>
+                        VNPay QR
+                      </h6>
+                      <p class="mb-0 text-muted small">
+                        Quét mã QR để thanh toán
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                  <button
+                    class="btn btn-outline-secondary btn-lg"
+                    onclick="prevStep()"
+                  >
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại
+                  </button>
+                  <button
+                    class="btn btn-primary btn-lg flex-grow-1"
+                    onclick="nextStep()"
+                  >
+                    <i class="fas fa-arrow-right me-2"></i>Tiếp tục
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 3: Confirm Order -->
+              <div class="step-content" id="step-3">
+                <h4 class="mb-4">
+                  <i class="fas fa-check-circle me-2 text-primary"></i>Xác nhận
+                  đơn hàng
+                </h4>
+
+                <!-- Order Summary -->
+                <div class="info-card">
+                  <h6 class="mb-3">Chi tiết đơn hàng</h6>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Sản phẩm</th>
+                          <th>Số lượng</th>
+                          <th>Đơn giá</th>
+                          <th>Thành tiền</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Vaccine HPV (Gardasil 9)</td>
+                          <td>1</td>
+                          <td>1.750.000đ</td>
+                          <td><strong>1.750.000đ</strong></td>
+                        </tr>
+                        <tr>
+                          <td>Vaccine Phế cầu (Prevenar 13)</td>
+                          <td>1</td>
+                          <td>1.200.000đ</td>
+                          <td><strong>1.200.000đ</strong></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Appointment Info -->
+                <div class="info-card">
+                  <h6 class="mb-3">Thông tin lịch hẹn</h6>
+                  <p class="mb-2">
+                    <strong>Ngày giờ:</strong>
+                    <span id="confirmDate">--</span> -
+                    <span id="confirmTime">--</span>
+                  </p>
+                  <p class="mb-2">
+                    <strong>Trung tâm:</strong>
+                    <span id="confirmCenter">--</span>
+                  </p>
+                  <p class="mb-0"><strong>Người tiêm:</strong> Trần Minh Anh</p>
+                </div>
+
+                <!-- Payment Info -->
+                <div class="info-card">
+                  <h6 class="mb-3">Phương thức thanh toán</h6>
+                  <p class="mb-0" id="confirmPayment">--</p>
+                </div>
+
+                <!-- Terms -->
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="agreeTerms"
+                    required
+                  />
+                  <label class="form-check-label" for="agreeTerms">
+                    Tôi đã đọc và đồng ý với
+                    <a href="#" class="text-primary">điều khoản dịch vụ</a> và
+                    <a href="#" class="text-primary">chính sách bảo mật</a> của
+                    TPVAX
+                  </label>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <button
+                    class="btn btn-outline-secondary btn-lg"
+                    onclick="prevStep()"
+                  >
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại
+                  </button>
+                  <button
+                    class="btn btn-success btn-lg flex-grow-1"
+                    onclick="confirmOrder()"
+                  >
+                    <i class="fas fa-check-circle me-2"></i>Xác nhận đặt hẹn
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 4: Success -->
+              <div class="step-content" id="step-4">
+                <div class="text-center py-5">
+                  <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <h2 class="mt-4 mb-3 text-success">Đặt lịch thành công!</h2>
+                  <p class="lead mb-4">
+                    Mã đơn hàng của bạn:
+                    <strong class="text-primary">#DH123456</strong>
+                  </p>
+
+                  <div class="alert alert-info mb-4">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Thông tin chi tiết đã được gửi đến email
+                    <strong>tantai@example.com</strong>
+                  </div>
+
+                  <div
+                    class="d-flex flex-column gap-3 mx-auto"
+                    style="max-width: 400px"
+                  >
+                    <a href="dashboard.html" class="btn btn-primary btn-lg">
+                      <i class="fas fa-calendar-check me-2"></i>Xem lịch hẹn của
+                      tôi
+                    </a>
+                    <a
+                      href="vacxinphongbenh.html"
+                      class="btn btn-outline-primary btn-lg"
+                    >
+                      <i class="fas fa-redo me-2"></i>Đặt lịch mới
+                    </a>
+                    <a
+                      href="@Url.Action("Index", "Home")"
+                      class="btn btn-outline-secondary btn-lg"
+                    >
+                      <i class="fas fa-home me-2"></i>Về trang chủ
+                    </a>
+                  </div>
+
+                  <div class="mt-5">
+                    <h5 class="mb-3">Hướng dẫn tiếp theo</h5>
+                    <div class="row text-start">
+                      <div class="col-md-6 mb-3">
+                        <div class="d-flex gap-3">
+                          <div class="flex-shrink-0">
+                            <div
+                              class="bg-primary text-white rounded-circle"
+                              style="
+                                width: 40px;
+                                height: 40px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                              "
+                            >
+                              1
+                            </div>
+                          </div>
+                          <div>
+                            <h6>Chuẩn bị trước khi tiêm</h6>
+                            <p class="small mb-0">
+                              Đảm bảo người tiêm khỏe mạnh, không sốt, không ốm
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <div class="d-flex gap-3">
+                          <div class="flex-shrink-0">
+                            <div
+                              class="bg-primary text-white rounded-circle"
+                              style="
+                                width: 40px;
+                                height: 40px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                              "
+                            >
+                              2
+                            </div>
+                          </div>
+                          <div>
+                            <h6>Mang theo giấy tờ</h6>
+                            <p class="small mb-0">
+                              CCCD/CMND, giấy khai sinh (nếu tiêm cho trẻ)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <div class="d-flex gap-3">
+                          <div class="flex-shrink-0">
+                            <div
+                              class="bg-primary text-white rounded-circle"
+                              style="
+                                width: 40px;
+                                height: 40px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                              "
+                            >
+                              3
+                            </div>
+                          </div>
+                          <div>
+                            <h6>Đến đúng giờ</h6>
+                            <p class="small mb-0">
+                              Có mặt trước 15 phút để làm thủ tục
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <div class="d-flex gap-3">
+                          <div class="flex-shrink-0">
+                            <div
+                              class="bg-primary text-white rounded-circle"
+                              style="
+                                width: 40px;
+                                height: 40px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                              "
+                            >
+                              4
+                            </div>
+                          </div>
+                          <div>
+                            <h6>Sau khi tiêm</h6>
+                            <p class="small mb-0">
+                              Ở lại trung tâm 30 phút để theo dõi
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Summary Sidebar -->
+          <div class="col-lg-4">
+            <div class="order-summary">
+              <h5 class="mb-4">
+                <i class="fas fa-receipt me-2"></i>Tóm tắt đơn hàng
+              </h5>
+
+              <div class="summary-item">
+                <span>Vaccine HPV</span>
+                <strong>1.750.000đ</strong>
+              </div>
+              <div class="summary-item">
+                <span>Vaccine Phế cầu</span>
+                <strong>1.200.000đ</strong>
+              </div>
+              <div class="summary-item">
+                <span>Phí dịch vụ</span>
+                <strong>50.000đ</strong>
+              </div>
+              <div class="summary-item">
+                <span class="text-success">Giảm giá</span>
+                <strong class="text-success">-200.000đ</strong>
+              </div>
+
+              <hr class="my-3" />
+
+              <div class="summary-item summary-total">
+                <span>Tổng cộng</span>
+                <span>2.800.000đ</span>
+              </div>
+
+              <div class="mt-4">
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nhập mã giảm giá"
+                  />
+                  <button class="btn btn-outline-primary" type="button">
+                    <i class="fas fa-check"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="alert alert-success mt-3">
+                <i class="fas fa-gift me-2"></i>
+                <small
+                  ><strong>Ưu đãi:</strong> Giảm 200.000đ cho đơn hàng đầu
+                  tiên</small
+                >
+              </div>
+
+              <div class="mt-4 text-center">
+                <img
+                  src="@Url.Content("~/Content/Assets/Icons/secure-payment.png")"
+                  alt="Secure Payment"
+                  style="height: 40px"
+                  class="mb-2"
+                />
+                <p class="small text-muted mb-0">
+                  Thanh toán an toàn & bảo mật
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <script>
+      let currentStep = 1;
+      const totalSteps = 4;
+
+      function updateProgress() {
+        // Update progress line
+        const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        document.getElementById("progressLine").style.width = progress + "%";
+
+        // Update step indicators
+        document.querySelectorAll(".step").forEach((step, index) => {
+          const stepNum = index + 1;
+          if (stepNum < currentStep) {
+            step.classList.add("completed");
+            step.classList.remove("active");
+          } else if (stepNum === currentStep) {
+            step.classList.add("active");
+            step.classList.remove("completed");
+          } else {
+            step.classList.remove("active", "completed");
+          }
+        });
+
+        // Show/hide step content
+        document.querySelectorAll(".step-content").forEach((content, index) => {
+          if (index + 1 === currentStep) {
+            content.classList.add("active");
+          } else {
+            content.classList.remove("active");
+          }
+        });
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function nextStep() {
+        // Validation for each step
+        if (currentStep === 1) {
+          const date = document.getElementById("appointmentDate").value;
+          const time = document.getElementById("appointmentTime").value;
+          const center = document.getElementById("center").value;
+
+          if (!date || !time || !center) {
+            alert("⚠️ Vui lòng chọn đầy đủ thông tin lịch hẹn!");
+            return;
+          }
+
+          // Store values for confirmation
+          document.getElementById("confirmDate").textContent = new Date(
+            date
+          ).toLocaleDateString("vi-VN");
+          document.getElementById("confirmTime").textContent = time;
+          document.getElementById("confirmCenter").textContent = center;
+        }
+
+        if (currentStep === 2) {
+          const selectedPayment = document.querySelector(
+            'input[name="payment"]:checked'
+          );
+          if (!selectedPayment) {
+            alert("⚠️ Vui lòng chọn phương thức thanh toán!");
+            return;
+          }
+
+          const paymentMethod = selectedPayment.closest(".payment-method");
+          const paymentText = paymentMethod.querySelector("h6").textContent;
+          document.getElementById("confirmPayment").textContent = paymentText;
+        }
+
+        if (currentStep < totalSteps) {
+          currentStep++;
+          updateProgress();
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 1) {
+          currentStep--;
+          updateProgress();
+        }
+      }
+
+      function selectPayment(method) {
+        document.querySelectorAll(".payment-method").forEach((pm) => {
+          pm.classList.remove("selected");
+        });
+
+        const radioBtn = document.getElementById(`payment-${method}`);
+        const selectedMethod = radioBtn.closest(".payment-method");
+        selectedMethod.classList.add("selected");
+        radioBtn.checked = true;
+      }
+
+      function confirmOrder() {
+        const agreeTerms = document.getElementById("agreeTerms").checked;
+        if (!agreeTerms) {
+          alert("⚠️ Vui lòng đồng ý với điều khoản dịch vụ!");
+          return;
+        }
+
+        // Simulate API call
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML =
+          '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
+
+        setTimeout(() => {
+          nextStep();
+          btn.disabled = false;
+          btn.innerHTML =
+            '<i class="fas fa-check-circle me-2"></i>Xác nhận đặt hẹn';
+        }, 2000);
+      }
