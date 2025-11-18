@@ -45,7 +45,6 @@ namespace TPVAXWinform_GUI.UserControls
             colLoaiBenh.DataPropertyName = "CacBenhPhongNgua";
             colGiaBan.DataPropertyName = "GiaBan";
             colSoLuongTon.DataPropertyName = "SoLuongTonThucTe";
-            colTongSoLuongTon.DataPropertyName = "TongSoLuongTon";
             colMaLoai.DataPropertyName = "TenLoaiVaccine";
             colSoMuiToiDa.DataPropertyName = "SoMuiToiDa";
             colMoTa.DataPropertyName = "MoTaVaccine";

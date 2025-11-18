@@ -77,7 +77,6 @@ namespace TPVAXWinform_BLL
             dal.CreateTaiKhoan(maTK, hashedPassword);
         }
 
-        // SỬA: Hàm Reset (thực hiện băm)
         public void ResetPassword(string maNVorMaKH, string newPassword)
         {
             if (string.IsNullOrWhiteSpace(newPassword))
