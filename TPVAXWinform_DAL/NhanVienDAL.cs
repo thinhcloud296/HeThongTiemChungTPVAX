@@ -123,7 +123,7 @@ namespace TPVAXWinform_DAL
                 throw new Exception("Lỗi khi sửa nhân viên: " + ex.Message);
             }
         }
-        public string GetChucVuString(int chucVu)
+        public string GetChucVuString(int? chucVu)
         {
             switch (chucVu)
             {

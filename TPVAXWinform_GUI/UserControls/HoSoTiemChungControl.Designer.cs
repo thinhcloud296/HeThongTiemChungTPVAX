@@ -52,6 +52,15 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvHSTC = new System.Windows.Forms.DataGridView();
+            this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHoTenHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGioiTinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNgaySinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCCCDHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHoTenKHHGHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuanHeHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSoDTKhHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaKHHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilter = new System.Windows.Forms.Panel();
             this.btnThemMuiTiem = new System.Windows.Forms.Button();
             this.txtSearchName = new System.Windows.Forms.TextBox();
@@ -64,15 +73,6 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.colMaHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHoTenHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGioiTinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNgaySinhHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCCCDHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHoTenKHHGHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuanHeHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSoDTKhHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMaKHHSTC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).BeginInit();
@@ -129,6 +129,7 @@
             this.btnThemMoi.TabIndex = 9;
             this.btnThemMoi.Text = "Thêm mới";
             this.btnThemMoi.UseVisualStyleBackColor = false;
+            this.btnThemMoi.Visible = false;
             this.btnThemMoi.Click += new System.EventHandler(this.btnThemMoi_Click);
             // 
             // dgvKhachHang
@@ -377,6 +378,71 @@
             this.dgvHSTC.TabIndex = 8;
             this.dgvHSTC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHSTC_CellContentClick);
             // 
+            // colMaHSTC
+            // 
+            this.colMaHSTC.HeaderText = "Mã HS";
+            this.colMaHSTC.MinimumWidth = 8;
+            this.colMaHSTC.Name = "colMaHSTC";
+            this.colMaHSTC.ReadOnly = true;
+            // 
+            // colHoTenHS
+            // 
+            this.colHoTenHS.HeaderText = "Họ tên";
+            this.colHoTenHS.MinimumWidth = 8;
+            this.colHoTenHS.Name = "colHoTenHS";
+            this.colHoTenHS.ReadOnly = true;
+            // 
+            // colGioiTinhHS
+            // 
+            this.colGioiTinhHS.HeaderText = "Giới tính";
+            this.colGioiTinhHS.MinimumWidth = 8;
+            this.colGioiTinhHS.Name = "colGioiTinhHS";
+            this.colGioiTinhHS.ReadOnly = true;
+            // 
+            // colNgaySinhHS
+            // 
+            this.colNgaySinhHS.HeaderText = "Ngày sinh";
+            this.colNgaySinhHS.MinimumWidth = 8;
+            this.colNgaySinhHS.Name = "colNgaySinhHS";
+            this.colNgaySinhHS.ReadOnly = true;
+            // 
+            // colCCCDHS
+            // 
+            this.colCCCDHS.HeaderText = "CCCD";
+            this.colCCCDHS.MinimumWidth = 8;
+            this.colCCCDHS.Name = "colCCCDHS";
+            this.colCCCDHS.ReadOnly = true;
+            // 
+            // colHoTenKHHGHS
+            // 
+            this.colHoTenKHHGHS.HeaderText = "Họ tên KH";
+            this.colHoTenKHHGHS.MinimumWidth = 8;
+            this.colHoTenKHHGHS.Name = "colHoTenKHHGHS";
+            this.colHoTenKHHGHS.ReadOnly = true;
+            // 
+            // colQuanHeHS
+            // 
+            this.colQuanHeHS.HeaderText = "Quan hệ";
+            this.colQuanHeHS.MinimumWidth = 8;
+            this.colQuanHeHS.Name = "colQuanHeHS";
+            this.colQuanHeHS.ReadOnly = true;
+            // 
+            // colSoDTKhHSTC
+            // 
+            this.colSoDTKhHSTC.HeaderText = "Số ĐT khách hàng";
+            this.colSoDTKhHSTC.MinimumWidth = 8;
+            this.colSoDTKhHSTC.Name = "colSoDTKhHSTC";
+            this.colSoDTKhHSTC.ReadOnly = true;
+            this.colSoDTKhHSTC.Visible = false;
+            // 
+            // colMaKHHSTC
+            // 
+            this.colMaKHHSTC.HeaderText = "Mã KH của HSTC";
+            this.colMaKHHSTC.MinimumWidth = 8;
+            this.colMaKHHSTC.Name = "colMaKHHSTC";
+            this.colMaKHHSTC.ReadOnly = true;
+            this.colMaKHHSTC.Visible = false;
+            // 
             // panelFilter
             // 
             this.panelFilter.BackColor = System.Drawing.Color.White;
@@ -407,6 +473,7 @@
             this.btnThemMuiTiem.TabIndex = 18;
             this.btnThemMuiTiem.Text = "Thêm mũi tiêm";
             this.btnThemMuiTiem.UseVisualStyleBackColor = false;
+            this.btnThemMuiTiem.Visible = false;
             this.btnThemMuiTiem.Click += new System.EventHandler(this.btnThemMuiTiem_Click);
             // 
             // txtSearchName
@@ -519,71 +586,6 @@
             this.lblTitle.Size = new System.Drawing.Size(593, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "QUẢN LÝ HỒ SƠ TIÊM CHỦNG";
-            // 
-            // colMaHSTC
-            // 
-            this.colMaHSTC.HeaderText = "Mã HS";
-            this.colMaHSTC.MinimumWidth = 8;
-            this.colMaHSTC.Name = "colMaHSTC";
-            this.colMaHSTC.ReadOnly = true;
-            // 
-            // colHoTenHS
-            // 
-            this.colHoTenHS.HeaderText = "Họ tên";
-            this.colHoTenHS.MinimumWidth = 8;
-            this.colHoTenHS.Name = "colHoTenHS";
-            this.colHoTenHS.ReadOnly = true;
-            // 
-            // colGioiTinhHS
-            // 
-            this.colGioiTinhHS.HeaderText = "Giới tính";
-            this.colGioiTinhHS.MinimumWidth = 8;
-            this.colGioiTinhHS.Name = "colGioiTinhHS";
-            this.colGioiTinhHS.ReadOnly = true;
-            // 
-            // colNgaySinhHS
-            // 
-            this.colNgaySinhHS.HeaderText = "Ngày sinh";
-            this.colNgaySinhHS.MinimumWidth = 8;
-            this.colNgaySinhHS.Name = "colNgaySinhHS";
-            this.colNgaySinhHS.ReadOnly = true;
-            // 
-            // colCCCDHS
-            // 
-            this.colCCCDHS.HeaderText = "CCCD";
-            this.colCCCDHS.MinimumWidth = 8;
-            this.colCCCDHS.Name = "colCCCDHS";
-            this.colCCCDHS.ReadOnly = true;
-            // 
-            // colHoTenKHHGHS
-            // 
-            this.colHoTenKHHGHS.HeaderText = "Họ tên KH";
-            this.colHoTenKHHGHS.MinimumWidth = 8;
-            this.colHoTenKHHGHS.Name = "colHoTenKHHGHS";
-            this.colHoTenKHHGHS.ReadOnly = true;
-            // 
-            // colQuanHeHS
-            // 
-            this.colQuanHeHS.HeaderText = "Quan hệ";
-            this.colQuanHeHS.MinimumWidth = 8;
-            this.colQuanHeHS.Name = "colQuanHeHS";
-            this.colQuanHeHS.ReadOnly = true;
-            // 
-            // colSoDTKhHSTC
-            // 
-            this.colSoDTKhHSTC.HeaderText = "Số ĐT khách hàng";
-            this.colSoDTKhHSTC.MinimumWidth = 8;
-            this.colSoDTKhHSTC.Name = "colSoDTKhHSTC";
-            this.colSoDTKhHSTC.ReadOnly = true;
-            this.colSoDTKhHSTC.Visible = false;
-            // 
-            // colMaKHHSTC
-            // 
-            this.colMaKHHSTC.HeaderText = "Mã KH của HSTC";
-            this.colMaKHHSTC.MinimumWidth = 8;
-            this.colMaKHHSTC.Name = "colMaKHHSTC";
-            this.colMaKHHSTC.ReadOnly = true;
-            this.colMaKHHSTC.Visible = false;
             // 
             // HoSoTiemChungControl
             // 

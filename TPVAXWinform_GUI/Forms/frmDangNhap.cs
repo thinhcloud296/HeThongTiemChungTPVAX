@@ -22,10 +22,6 @@ namespace TPVAXWinform_GUI.Forms
         private void InitializeEvents()
         {
             this.chkHienMatKhau.CheckedChanged += chkHienMatKhau_CheckedChanged;
-
-            // (Giả sử bạn có button tên 'btnDangNhap' và textbox 'txtTenDangNhap')
-            this.btnDangNhap.Click += btnDangNhap_Click;
-           
             // Cho phép nhấn Enter để đăng nhập
             this.txtMatKhau.KeyPress += TxtMatKhau_KeyPress;
             this.txtTenDangNhap.KeyPress += TxtMatKhau_KeyPress; // Thêm cho cả txtTenDangNhap
@@ -73,7 +69,11 @@ namespace TPVAXWinform_GUI.Forms
                     // Đăng nhập thành công
                     DataRow row = dt.Rows[0];
                     string hoTen = row["HoTen"].ToString();
-                    string chucVu = row["ChucVu"].ToString();
+                    int? chucVuId = null;
+                    if (row["ChucVu"] != DBNull.Value)
+                    {
+                        chucVuId = Convert.ToInt32(row["ChucVu"]);
+                    }
 
                     MessageBox.Show($"Đăng nhập thành công!\nXin chào {hoTen}",
                         "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -84,7 +84,7 @@ namespace TPVAXWinform_GUI.Forms
                     UserSession.HoTen = hoTen;
                     UserSession.Email = row["Email"].ToString();
                     UserSession.SoDT = row["SoDT"].ToString();
-                    UserSession.ChucVu = chucVu;
+                    UserSession.ChucVu = chucVuId;
 
                     this.DialogResult = DialogResult.OK;
                     this.Close();
@@ -118,17 +118,15 @@ namespace TPVAXWinform_GUI.Forms
         }
     }
 
-    // THÊM: Class UserSession (Rất quan trọng)
-    // (Bạn có thể đặt class này trong 1 file riêng, ví dụ: 'UserSession.cs')
+    // Class UserSession
     public static class UserSession
     {
         public static string MaNV { get; set; }
         public static string HoTen { get; set; }
         public static string Email { get; set; }
         public static string SoDT { get; set; }
-        public static string ChucVu { get; set; }
-        public static string MaTK { get; set; } // Dùng để đổi mật khẩu
-
+        public static string MaTK { get; set; } 
+        public static int? ChucVu { get; set; }
         public static void Clear()
         {
             MaNV = null;

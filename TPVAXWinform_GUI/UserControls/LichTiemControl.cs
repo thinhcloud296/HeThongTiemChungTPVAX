@@ -20,6 +20,8 @@ namespace TPVAXWinform_GUI.UserControls
 
         DataTable dtRecords = new DataTable();
 
+        bool roleNVTiepNhan = RoleManager.RoleNVTiepNhan();
+        bool roleNVYTe = RoleManager.RoleNVYTe();
         public LichTiemControl()
         {
             InitializeComponent();
@@ -30,6 +32,12 @@ namespace TPVAXWinform_GUI.UserControls
         {
             LoadDSLT();
             InitializeFilters();
+            contextMenuStripLichTiem.Items["toolStripMenuItemXemThongTin"].Visible = roleNVTiepNhan || roleNVYTe;
+            contextMenuStripLichTiem.Items["toolStripMenuItemHuyTiem"].Visible = roleNVYTe;
+            contextMenuStripLichTiem.Items["toolStripMenuItemXacNhanTiem"].Visible = roleNVYTe;
+            dgvLichTiem.Columns["colCheckIn"].Visible = roleNVYTe;
+            dgvLichTiem.Columns["colHuy"].Visible = roleNVYTe;
+
         }
 
         // Public method để refresh data từ bên ngoài

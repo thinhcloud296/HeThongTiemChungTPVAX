@@ -285,7 +285,7 @@
             this.btnQuanLyDanhMuc.Name = "btnQuanLyDanhMuc";
             this.btnQuanLyDanhMuc.Size = new System.Drawing.Size(280, 50);
             this.btnQuanLyDanhMuc.TabIndex = 0;
-            this.btnQuanLyDanhMuc.Text = "📋 Quản lý Danh mục";
+            this.btnQuanLyDanhMuc.Text = "Quản lý Danh mục";
             this.btnQuanLyDanhMuc.UseVisualStyleBackColor = false;
             this.btnQuanLyDanhMuc.Click += new System.EventHandler(this.btnQuanLyDanhMuc_Click);
             // 

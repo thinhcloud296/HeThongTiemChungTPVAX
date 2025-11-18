@@ -324,5 +324,11 @@ namespace TPVAXWinform_GUI.Forms
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void btnQuanLyDanhMuc_Click(object sender, EventArgs e)
+        {
+            frmQuanLyDanhMuc frm = new frmQuanLyDanhMuc();
+            frm.ShowDialog();
+        }
     }
 }
