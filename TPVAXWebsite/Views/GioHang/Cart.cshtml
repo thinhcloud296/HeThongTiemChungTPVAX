@@ -1,0 +1,398 @@
+﻿@{
+    ViewBag.Title = "Giỏ Hàng Đặt Lịch";
+}
+
+.empty-cart-icon {
+        font-size: 80px;
+        color: #dee2e6;
+        margin-bottom: 20px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .vaccine-item-layout {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .vaccine-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .delete-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Back to Home Button -->
+    <div class="back-home-cart">
+      <a href="@Url.Action("Index", "Home")">
+        <i class="fas fa-arrow-left"></i>
+        <span>Tiếp tục mua sắm</span>
+      </a>
+    </div>
+
+    
+      <!-- Page Header -->
+      <div class="cart-header mb-4">
+        <h1 class="page-heading">
+          <i class="fas fa-shopping-cart me-3"></i>
+          Giỏ hàng của bạn
+        </h1>
+        <p class="text-muted">
+          Kiểm tra và chỉnh sửa vaccine trước khi đặt lịch
+        </p>
+      </div>
+
+      <!-- Empty Cart Message (Hidden by default) -->
+      <div class="empty-cart-container" id="emptyCart" style="display: none">
+        <div class="empty-cart-content">
+          <div class="empty-cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <h3>Giỏ hàng trống</h3>
+          <p>Bạn chưa thêm vaccine nào vào giỏ hàng</p>
+          <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">
+            <i class="fas fa-search me-2"></i>
+            Khám phá vaccine
+          </a>
+        </div>
+      </div>
+
+      <!-- Cart Content -->
+      <div class="cart-content-wrapper" id="cartContent">
+        <div class="row justify-content-center">
+          <!-- Single Column - Person Info & Vaccine List -->
+          <div class="col-lg-10">
+            <!-- Person Info Card -->
+            <div class="person-info-card card shadow-sm mb-4">
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center flex-wrap gap-3"
+                >
+                  <div class="person-details">
+                    <div class="person-header mb-2">
+                      <i class="fas fa-user-circle text-primary me-2 fs-5"></i>
+                      <span class="person-name-age fw-bold fs-5"
+                        >Trần Tấn Tài</span
+                      >
+                      <span class="badge bg-primary ms-2">Người được tiêm</span>
+                    </div>
+                    <div class="person-info-details">
+                      <span class="text-muted">
+                        <i class="fas fa-venus-mars me-1"></i>Nam
+                      </span>
+                      <span class="text-muted mx-2">|</span>
+                      <span class="text-muted">
+                        <i class="fas fa-birthday-cake me-1"></i>01/02/2004
+                      </span>
+                      <span class="text-muted mx-2">|</span>
+                      <span class="text-muted">
+                        <i class="fas fa-calendar-alt me-1"></i>21 Tuổi 8 Tháng
+                      </span>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-edit me-1"></i>
+                    Thay đổi
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vaccine List Header -->
+            <div
+              class="vaccine-list-header mb-3 d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">
+                <i class="fas fa-syringe me-2 text-success"></i>
+                Danh sách vaccine (<span id="vaccineCount">2</span>)
+              </h5>
+              <button class="btn btn-link text-danger" id="clearCartBtn">
+                <i class="fas fa-trash me-1"></i>
+                Xóa tất cả
+              </button>
+            </div>
+
+            <!-- Vaccine Items -->
+            <div class="vaccine-list" id="vaccineList">
+              <!-- Vaccine Item 1 -->
+              <div
+                class="vaccine-item-card card mb-3"
+                data-id="1"
+                data-price="1348300"
+              >
+                <div class="card-body">
+                  <div class="vaccine-item-layout">
+                    <!-- Vaccine Image -->
+                    <div class="vaccine-image-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                        alt="Vắc xin Qdenga"
+                        class="vaccine-thumb"
+                        onerror="this.src='Assets/Images/logo.png'"
+                      />
+                      <div class="vaccine-badge">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Info -->
+                    <div class="vaccine-info-section">
+                      <div class="vaccine-header mb-2">
+                        <h6 class="vaccine-name mb-1">
+                          <span class="origin-tag">🇩🇪 Đức</span>
+                          Vắc xin Qdenga
+                        </h6>
+                        <span class="badge bg-success-soft text-success">
+                          <i class="fas fa-shield-alt me-1"></i>
+                          Chính hãng
+                        </span>
+                      </div>
+
+                      <p class="vaccine-disease mb-2">
+                        <i class="fas fa-virus me-1 text-danger"></i>
+                        <strong>Phòng:</strong> Sốt xuất huyết
+                      </p>
+
+                      <p class="vaccine-schedule text-muted mb-2">
+                        <i class="fas fa-calendar-check me-1"></i>
+                        <strong>Phác đồ:</strong> Từ 4 tuổi trở lên (2 Liều)
+                      </p>
+
+                      <div class="vaccine-benefits">
+                        <div class="small-offer">
+                          <i class="fas fa-gift text-success me-1"></i>
+                          Giảm 3% khi mua gói
+                        </div>
+                        <div class="small-offer">
+                          <i class="fas fa-award text-warning me-1"></i>
+                          Tích lũy +1,348 điểm
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Actions -->
+                    <div
+                      class="vaccine-actions d-flex align-items-center gap-3"
+                    >
+                      <div class="quantity-section">
+                        <label class="small text-muted mb-1 d-block"
+                          >Số lượng:</label
+                        >
+                        <div class="quantity-control">
+                          <button class="qty-btn qty-minus" data-id="1">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <input
+                            type="number"
+                            value="1"
+                            min="1"
+                            max="10"
+                            class="quantity-input"
+                            data-id="1"
+                            readonly
+                          />
+                          <button class="qty-btn qty-plus" data-id="1">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <button
+                        class="btn btn-outline-danger btn-sm delete-btn"
+                        data-id="1"
+                      >
+                        <i class="fas fa-trash-alt me-1"></i>
+                        Xóa
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccine Item 2 -->
+              <div
+                class="vaccine-item-card card mb-3"
+                data-id="2"
+                data-price="1396800"
+              >
+                <div class="card-body">
+                  <div class="vaccine-item-layout">
+                    <!-- Vaccine Image -->
+                    <div class="vaccine-image-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                        alt="Vắc xin Hexaxim 23"
+                        class="vaccine-thumb"
+                        onerror="this.src='Assets/Images/logo.png'"
+                      />
+                      <div class="vaccine-badge">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Info -->
+                    <div class="vaccine-info-section">
+                      <div class="vaccine-header mb-2">
+                        <h6 class="vaccine-name mb-1">
+                          <span class="origin-tag">🇺🇸 Hoa Kỳ</span>
+                          Vắc xin Hexaxim 23
+                        </h6>
+                        <span class="badge bg-success-soft text-success">
+                          <i class="fas fa-shield-alt me-1"></i>
+                          Chính hãng
+                        </span>
+                      </div>
+
+                      <p class="vaccine-disease mb-2">
+                        <i class="fas fa-virus me-1 text-danger"></i>
+                        <strong>Phòng:</strong> Bệnh do Phế cầu
+                      </p>
+
+                      <p class="vaccine-schedule text-muted mb-2">
+                        <i class="fas fa-calendar-check me-1"></i>
+                        <strong>Phác đồ:</strong> Từ 2 tuổi trở lên (1 Liều)
+                      </p>
+
+                      <div class="vaccine-benefits">
+                        <div class="small-offer">
+                          <i class="fas fa-gift text-success me-1"></i>
+                          Giảm 3% khi mua gói
+                        </div>
+                        <div class="small-offer">
+                          <i class="fas fa-award text-warning me-1"></i>
+                          Tích lũy +1,397 điểm
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Vaccine Actions -->
+                    <div
+                      class="vaccine-actions d-flex align-items-center gap-3"
+                    >
+                      <div class="quantity-section">
+                        <label class="small text-muted mb-1 d-block"
+                          >Số lượng:</label
+                        >
+                        <div class="quantity-control">
+                          <button class="qty-btn qty-minus" data-id="2">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <input
+                            type="number"
+                            value="1"
+                            min="1"
+                            max="10"
+                            class="quantity-input"
+                            data-id="2"
+                            readonly
+                          />
+                          <button class="qty-btn qty-plus" data-id="2">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <button
+                        class="btn btn-outline-danger btn-sm delete-btn"
+                        data-id="2"
+                      >
+                        <i class="fas fa-trash-alt me-1"></i>
+                        Xóa
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Continue Button -->
+            <div class="text-center mt-5 mb-5">
+              <a
+                href="checkout.html"
+                class="btn btn-lg btn-confirm px-5 py-3"
+                id="continueBtn"
+              >
+                <i class="fas fa-arrow-right me-2"></i>
+                Tiếp tục
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <script>
+      // Cart functionality
+      (function () {
+        "use strict";
+
+        // Quantity controls
+        document.querySelectorAll(".qty-minus").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const id = this.dataset.id;
+            const input = document.querySelector(
+              `.quantity-input[data-id="${id}"]`
+            );
+            let value = parseInt(input.value);
+            if (value > 1) {
+              input.value = value - 1;
+            }
+          });
+        });
+
+        document.querySelectorAll(".qty-plus").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const id = this.dataset.id;
+            const input = document.querySelector(
+              `.quantity-input[data-id="${id}"]`
+            );
+            let value = parseInt(input.value);
+            if (value < 10) {
+              input.value = value + 1;
+            }
+          });
+        });
+
+        // Delete vaccine item
+        document.querySelectorAll(".delete-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            if (confirm("Bạn có chắc muốn xóa vaccine này?")) {
+              const card = this.closest(".vaccine-item-card");
+              card.style.opacity = "0";
+              setTimeout(() => card.remove(), 300);
+
+              // Update count
+              const count =
+                document.querySelectorAll(".vaccine-item-card").length - 1;
+              document.getElementById("vaccineCount").textContent = count;
+
+              if (count === 0) {
+                document.getElementById("emptyCart").style.display = "block";
+                document.getElementById("cartContent").style.display = "none";
+              }
+            }
+          });
+        });
+
+        // Clear all items
+        document
+          .getElementById("clearCartBtn")
+          .addEventListener("click", function () {
+            if (
+              confirm("Bạn có chắc muốn xóa tất cả vaccine trong giỏ hàng?")
+            ) {
+              document.getElementById("emptyCart").style.display = "block";
+              document.getElementById("cartContent").style.display = "none";
+            }
+          });
+      })();
+    </script>
+  </body>
+</html>
