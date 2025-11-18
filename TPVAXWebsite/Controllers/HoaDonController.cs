@@ -2,7 +2,7 @@ using System.Web.Mvc;
 using TPVAXWebsite.DAL;
 using TPVAXWebsite.Services;
 using TPVAXWebsite.Filters;
-
+using TPVAXWebsite.DAL.Repositories;
 namespace TPVAXWebsite.Controllers
 {
     /// <summary>

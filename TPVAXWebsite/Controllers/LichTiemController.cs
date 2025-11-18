@@ -4,6 +4,7 @@ using TPVAXWebsite.Services;
 using TPVAXWebsite.Models.ViewModels;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Filters;
+using TPVAXWebsite.DAL.Repositories;
 
 namespace TPVAXWebsite.Controllers
 {
@@ -127,7 +128,8 @@ namespace TPVAXWebsite.Controllers
         // POST: LichTiem/ThemHoSo
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemHoSo(HoSoTiemChung hoSo, string vaiTro)
+        [ActionName("ThemHoSo")]
+        public ActionResult ThemHoSoPost(HoSoTiemChung hoSo, string vaiTro)
         {
             if (!ModelState.IsValid)
             {

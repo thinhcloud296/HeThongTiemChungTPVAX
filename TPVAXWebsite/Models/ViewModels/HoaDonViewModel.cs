@@ -12,6 +12,9 @@ namespace TPVAXWebsite.Models.ViewModels
         public string TenKhuyenMai { get; set; }
         public decimal GiaTriGiam { get; set; }
         public List<ChiTietHoaDonViewModel> ChiTietHoaDons { get; set; }
+        public string SoDienThoai { get; set; }
+        public int SoLuongSanPham { get; set; }
+        public string TenKhachHang { get; set; } // <-- Add this property
     }
 
     public class ChiTietHoaDonViewModel

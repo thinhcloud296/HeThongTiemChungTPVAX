@@ -1,4 +1,4 @@
-@model TPVAXWebsite.Models.ViewModels.GioHangViewModel
+@model IEnumerable<TPVAXWebsite.Models.ViewModels.GioHangItemViewModel>
 
 @{
     ViewBag.Title = "Giỏ hàng";
@@ -15,7 +15,7 @@
 
 <!-- Cart Content -->
 <section class="container my-5">
-    @if (Model != null && Model.DanhSachSanPham != null && Model.DanhSachSanPham.Any())
+    @if (Model != null && Model.Any())
     {
         <div class="row">
             <!-- Cart Items -->
@@ -23,33 +23,33 @@
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-white">
                         <h5 class="mb-0">
-                            <i class="fas fa-list me-2"></i>Danh sách sản phẩm (@Model.DanhSachSanPham.Count items)
+                            <i class="fas fa-list me-2"></i>Danh sách sản phẩm (@Model.Count() items)
                         </h5>
                     </div>
                     <div class="card-body p-0">
-                        @foreach (var item in Model.DanhSachSanPham)
+                        @foreach (var item in Model)
                         {
-                            <div class="cart-item border-bottom p-3" data-item-id="@item.MaChiTiet">
+                            <div class="cart-item border-bottom p-3" data-item-id="@item.MaGH">
                                 <div class="row align-items-center">
                                     <div class="col-md-2 col-3">
                                         <img src="@Url.Content("~/Content/Assets/Images/" + (item.HinhAnh ?? "hexaxim.png"))" 
-                                             alt="@item.TenVaccine" 
+                                             alt="@item.TenSanPham" 
                                              class="img-fluid rounded" 
                                              style="max-height: 80px; object-fit: cover;" />
                                     </div>
                                     <div class="col-md-4 col-9">
-                                        <h6 class="mb-1 fw-bold">@item.TenVaccine</h6>
-                                        <p class="text-muted small mb-0">@string.Format("{0:N0}₫", item.DonGia) / liều</p>
+                                        <h6 class="mb-1 fw-bold">@item.TenSanPham</h6>
+                                        <p class="text-muted small mb-0">@string.Format("{0:N0}₫", item.DonGia) / sản phẩm</p>
                                     </div>
                                     <div class="col-md-3 col-6 mt-2 mt-md-0">
                                         <div class="input-group input-group-sm">
-                                            <button class="btn btn-outline-secondary btn-decrease" type="button" data-id="@item.MaChiTiet">
+                                            <button class="btn btn-outline-secondary btn-decrease" type="button" data-id="@item.MaGH">
                                                 <i class="fas fa-minus"></i>
                                             </button>
                                             <input type="number" class="form-control text-center quantity-input" 
                                                    value="@item.SoLuong" min="1" max="10" 
-                                                   data-id="@item.MaChiTiet" readonly />
-                                            <button class="btn btn-outline-secondary btn-increase" type="button" data-id="@item.MaChiTiet">
+                                                   data-id="@item.MaGH" readonly />
+                                            <button class="btn btn-outline-secondary btn-increase" type="button" data-id="@item.MaGH">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
@@ -60,7 +60,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-1 col-2 mt-2 mt-md-0 text-end">
-                                        <button class="btn btn-sm btn-outline-danger btn-remove" data-id="@item.MaChiTiet">
+                                        <button class="btn btn-sm btn-outline-danger btn-remove" data-id="@item.MaGH">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>

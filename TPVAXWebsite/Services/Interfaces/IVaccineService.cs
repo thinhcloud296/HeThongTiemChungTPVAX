@@ -1,5 +1,7 @@
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace TPVAXWebsite.Services.Interfaces
 {

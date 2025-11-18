@@ -183,7 +183,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DefaultController.cs" />
+    <Compile Include="Models\ViewModels\GoiVaccineInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <!-- Controllers -->
     <Compile Include="Controllers\HomeController.cs" />

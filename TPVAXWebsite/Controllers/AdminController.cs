@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using TPVAXWebsite.DAL;
+using TPVAXWebsite.DAL.Repositories;
 using TPVAXWebsite.Filters;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;

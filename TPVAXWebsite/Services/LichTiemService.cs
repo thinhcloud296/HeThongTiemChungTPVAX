@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TPVAXWebsite.DAL;
+using TPVAXWebsite.DAL.Repositories;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
 
@@ -55,7 +56,7 @@ namespace TPVAXWebsite.Services
                 {
                     MaLT = GenerateMaLT(),
                     NgayHenTiem = model.NgayHenTiem,
-                    SoMui = model.SoMui,
+                    SoMui = null, // DatLichTiemViewModel does not have SoMui, set to null or default
                     TrangThai = false, // false = Chưa tiêm
                     GhiChu = model.GhiChu,
                     MaHSTC = model.MaHSTC,

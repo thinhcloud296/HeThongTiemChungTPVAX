@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TPVAXWinform_GUI.Forms;
+using Microsoft.SqlServer.Types;
 
 namespace TPVAXWinform
 {

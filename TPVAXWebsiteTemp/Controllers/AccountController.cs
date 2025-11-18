@@ -1,5 +1,5 @@
 using System.Web.Mvc;
-using TPVAXWebsite.Models.ViewModels;
+using TPVAXWebsiteTemp.Models.ViewModels;
 
 namespace TPVAXWebsite.Controllers
 {
@@ -41,7 +41,7 @@ namespace TPVAXWebsite.Controllers
         // TODO: Xử lý đăng ký
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(TPVAXWebsite.Models.ViewModels.RegisterViewModel model)
         {
             // 1. Validate model
             // 2. Kiểm tra CCCD/SĐT đã tồn tại chưa
