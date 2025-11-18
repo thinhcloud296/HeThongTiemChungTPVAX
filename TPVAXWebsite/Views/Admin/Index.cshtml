@@ -1,4 +1,8 @@
-﻿@{`n    ViewBag.Title = "Dashboard Admin";`n}`n`n<div class="content-header">
+﻿@{
+    ViewBag.Title = "Dashboard Admin";
+}
+
+<div class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
@@ -17,7 +21,7 @@
                     <p>Loại Vắc xin</p>
                   </div>
                   <div class="icon"><i class="fas fa-pills"></i></div>
-                  <a href="vaccines.html" class="small-box-footer"
+                  <a href="@Url.Action("Vaccines", "Admin")" class="small-box-footer"
                     >Xem chi tiết <i class="fas fa-arrow-circle-right"></i
                   ></a>
                 </div>
@@ -41,7 +45,7 @@
                     <p>Khách hàng mới</p>
                   </div>
                   <div class="icon"><i class="fas fa-user-plus"></i></div>
-                  <a href="customers.html" class="small-box-footer"
+                  <a href="@Url.Action("Customers", "Admin")" class="small-box-footer"
                     >Xem chi tiết <i class="fas fa-arrow-circle-right"></i
                   ></a>
                 </div>
@@ -183,7 +187,7 @@
                     </ul>
                   </div>
                   <div class="card-footer text-center">
-                    <a href="appointments.html">Xem tất cả lịch tiêm</a>
+                    <a href="@Url.Action("Appointments", "Admin")">Xem tất cả lịch tiêm</a>
                   </div>
                 </div>
               </section>

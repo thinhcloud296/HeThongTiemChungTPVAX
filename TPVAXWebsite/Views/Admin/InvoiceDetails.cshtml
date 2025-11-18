@@ -1,4 +1,8 @@
-﻿@{`n    ViewBag.Title = "Chi Tiết Hóa Đơn";`n}`n`n<section class="content-header">
+﻿@{
+    ViewBag.Title = "Chi Tiết Hóa Đơn";
+}
+
+<section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6"><h1>Chi Tiết Phiếu Tiêm #PT001</h1></div>
@@ -8,7 +12,7 @@
                     <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
                   </li>
                   <li class="breadcrumb-item">
-                    <a href="appointments.html">Phiếu tiêm</a>
+                    <a href="@Url.Action("Appointments", "Admin")">Phiếu tiêm</a>
                   </li>
                   <li class="breadcrumb-item active">#PT001</li>
                 </ol>
