@@ -123,5 +123,21 @@ namespace TPVAXWinform_DAL
                 throw new Exception("Lỗi khi sửa nhân viên: " + ex.Message);
             }
         }
+        public string GetChucVuString(int chucVu)
+        {
+            switch (chucVu)
+            {
+                case 1:
+                    return "Quản Lý";
+                case 2:
+                    return "Nhân Viên Tiếp Nhận";
+                case 3:
+                    return "Nhân Viên Kho";
+                case 4:
+                    return "Nhân Viên Y Tế";
+                default:
+                    return "Không Xác Định";
+            }
+        }
     }
 }

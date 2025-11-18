@@ -8,6 +8,26 @@ namespace TPVAXWinform_DTO
 {
     public class NhanVienDTO
     {
+        public NhanVienDTO()
+        {
+        }
+
+        public NhanVienDTO(string maNV, string hoTen, string gioiTinh, DateTime? ngaySinh, string cCCD, DateTime ngayVaoLam, int? chucVu, string trangThai, string soDT, string diaChi, string email, string maTK)
+        {
+            MaNV = maNV;
+            HoTen = hoTen;
+            GioiTinh = gioiTinh;
+            NgaySinh = ngaySinh;
+            CCCD = cCCD;
+            NgayVaoLam = ngayVaoLam;
+            ChucVu = chucVu;
+            TrangThai = trangThai;
+            SoDT = soDT;
+            DiaChi = diaChi;
+            Email = email;
+            MaTK = maTK;
+        }
+
         public string MaNV { get; set; }
         public string HoTen { get; set; }
         public string GioiTinh { get; set; }

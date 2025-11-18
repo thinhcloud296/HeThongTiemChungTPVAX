@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TPVAXWinform_GUI;
-using TPVAXWinform_GUI.UserControls;
 
 namespace TPVAXWinform
 {
@@ -17,17 +11,24 @@ namespace TPVAXWinform
         public frmMain()
         {
             InitializeComponent();
-
-            // Cải thiện chất lượng rendering
             SetHighQualityRendering();
-
-            // Setup button events
             SetupMenuButtons();
-
-            // Show dashboard by default
             ShowDashboard();
         }
-
+        public frmMain(string maNV,string hoTen,string chucVu)
+        {
+            InitializeComponent();
+            SetHighQualityRendering();
+            SetupMenuButtons();
+            InitialInfoLogin(maNV, hoTen, chucVu);
+            ShowDashboard();
+        }
+        public void InitialInfoLogin(string maNV, string hoTen, string chucVu)
+        {
+            lbHoTenNVDangNhap.Text = hoTen;
+            lbMaNVDangNhap.Text = maNV;
+            lbChucVuNVDangNhap.Text = chucVu;
+        }
         private void SetHighQualityRendering()
         {
             // Bật double buffering để giảm flickering

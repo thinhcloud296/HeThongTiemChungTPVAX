@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient; // Thêm thư viện này
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,8 @@ namespace TPVAXWinform_DAL
             return DBConnect.ExecuteQuery(
                 sql,
                 CommandType.Text,
-                DBConnect.Param("@MaKH", MaKH, SqlDbType.NVarChar, 10)
+                // SỬA: Dùng đúng kiểu CHAR
+                DBConnect.Param("@MaKH", MaKH, SqlDbType.Char, 10)
             );
         }
         public DataTable GetTaiKhoanByMaNV(string MaNV)
@@ -32,30 +34,76 @@ namespace TPVAXWinform_DAL
             return DBConnect.ExecuteQuery(
                 sql,
                 CommandType.Text,
-                DBConnect.Param("@MaNV", MaNV, SqlDbType.NVarChar, 10)
+                // SỬA: Dùng đúng kiểu CHAR
+                DBConnect.Param("@MaNV", MaNV, SqlDbType.Char, 10)
             );
         }
 
-        public void ResetPassword(string maNVorMaKH, string newPassword)
+        // THÊM: Hàm chỉ lấy thông tin user và mật khẩu (đã băm)
+        public DataTable GetLoginInfoByMaNV(string maNV)
+        {
+            // (Bạn có thể đổi "dbo.usp_TaiKhoan_GetLoginInfoByMaNV" nếu bạn đã tạo proc)
+            const string sql = @"
+              SELECT nv.MaNV, nv.HoTen, nv.Email, nv.SoDT, nv.ChucVu, tk.MaTK, tk.MatKhau
+              FROM dbo.NhanVien nv
+                     INNER JOIN dbo.TaiKhoan tk ON nv.MaTK = tk.MaTK
+            WHERE nv.MaNV = @MaNV AND nv.TrangThai = '1'"; 
+
+            return DBConnect.ExecuteQuery(
+                 sql,
+                 CommandType.Text,
+                 DBConnect.Param("@MaNV", maNV, SqlDbType.Char, 10)
+            );
+        }
+
+        // THÊM: Hàm kiểm tra tồn tại
+        public bool CheckTaiKhoanExists(string maTK)
+        {
+            const string sql = "SELECT COUNT(*) FROM dbo.TaiKhoan WHERE MaTK = @MaTK";
+            object result = DBConnect.ExecuteScalar(
+                sql,
+                CommandType.Text,
+                DBConnect.Param("@MaTK", maTK, SqlDbType.Char, 10)
+            );
+            return (result != null && Convert.ToInt32(result) > 0);
+        }
+
+        // THÊM: Hàm tạo mới (nhận mật khẩu đã băm)
+        public void CreateTaiKhoan(string maTK, string hashedPassword)
         {
             try
             {
-                // Thử tìm MaTK từ NhanVien trước
-                string sqlGetMaTK = @"
-                    SELECT MaTK FROM dbo.NhanVien WHERE MaNV = @MaNV";
+                using (var buffer = DBConnect.CreateBuffer("SELECT * FROM dbo.TaiKhoan"))
+                {
+                    DataRow row = buffer.Table.NewRow();
+                    row["MaTK"] = maTK;
+                    row["MatKhau"] = hashedPassword; // Lưu mật khẩu đã băm
+                    buffer.Table.Rows.Add(row);
+                    buffer.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi tạo tài khoản DAL: " + ex.Message);
+            }
+        }
 
+        // SỬA: Hàm Reset nhận mật khẩu đã băm
+        public void ResetPassword(string maNVorMaKH, string hashedNewPassword)
+        {
+            try
+            {
+                // (Logic tìm MaTK của bạn đã ổn)
+                string sqlGetMaTK = @"SELECT MaTK FROM dbo.NhanVien WHERE MaNV = @MaNV";
                 DataTable dtMaTK = DBConnect.ExecuteQuery(
                     sqlGetMaTK,
                     CommandType.Text,
                     DBConnect.Param("@MaNV", maNVorMaKH, SqlDbType.Char, 10)
                 );
 
-                // Nếu không tìm thấy trong NhanVien, thử tìm trong KhachHang
                 if (dtMaTK.Rows.Count == 0)
                 {
-                    sqlGetMaTK = @"
-                        SELECT MaTK FROM dbo.KhachHang WHERE MaKH = @MaKH";
-
+                    sqlGetMaTK = @"SELECT MaTK FROM dbo.KhachHang WHERE MaKH = @MaKH";
                     dtMaTK = DBConnect.ExecuteQuery(
                         sqlGetMaTK,
                         CommandType.Text,
@@ -70,7 +118,6 @@ namespace TPVAXWinform_DAL
 
                 string maTK = dtMaTK.Rows[0]["MaTK"].ToString().Trim();
 
-                // Sử dụng EditableBuffer để cập nhật mật khẩu
                 using (var buffer = DBConnect.CreateBuffer("SELECT * FROM dbo.TaiKhoan"))
                 {
                     DataRow row = buffer.Table.Rows.Cast<DataRow>()
@@ -78,7 +125,7 @@ namespace TPVAXWinform_DAL
 
                     if (row != null)
                     {
-                        row["MatKhau"] = newPassword;
+                        row["MatKhau"] = hashedNewPassword; // Cập nhật mật khẩu đã băm
                         buffer.Save();
                     }
                     else
@@ -89,7 +136,7 @@ namespace TPVAXWinform_DAL
             }
             catch (Exception ex)
             {
-                throw new Exception("Lỗi khi đặt lại mật khẩu: " + ex.Message);
+                throw new Exception("Lỗi khi đặt lại mật khẩu DAL: " + ex.Message);
             }
         }
     }

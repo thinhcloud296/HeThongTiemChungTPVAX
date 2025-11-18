@@ -8,8 +8,8 @@ namespace TPVAXWinform_DTO
 {
     public class TaiKhoanDTO
     {
-        string MaTK { get; set; } = string.Empty;
-        string MatKhau { get; set; } = string.Empty;
+        public string MaTK { get; set; } = string.Empty;
+        public string MatKhau { get; set; } = string.Empty;
 
         public TaiKhoanDTO() { }
 

@@ -1,122 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using LiveCharts;
+﻿using LiveCharts;
 using LiveCharts.Wpf;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace TPVAXWinform.UserControls
 {
     public partial class BangDieuKhienControl : UserControl
-  {
+    {
         public BangDieuKhienControl()
         {
-   InitializeComponent();
+            InitializeComponent();
         }
-
-     private void BangDieuKhienControl_Load(object sender, EventArgs e)
+        private void BangDieuKhienControl_Load(object sender, EventArgs e)
         {
- // InitializeSearchHandlers();
-          SetupLiveCharts();
-    }
-
-
-  /*private void InitializeSearchHandlers()
-        {
-         // Wire up event handlers cho tìm kiếm bệnh nhân
-        btnSearchPatient.Click += BtnSearchPatient_Click;
-   btnResetPatient.Click += BtnResetPatient_Click;
-            txtSearchPatient.KeyPress += TxtSearchPatient_KeyPress;
-      
-   // Wire up event handlers cho tìm kiếm vaccine
-  btnFilter.Click += BtnSearchVaccine_Click;
-      btnReset.Click += BtnResetVaccine_Click;
-        txtSearchVaccine.KeyPress += TxtSearchVaccine_KeyPress;
+            // InitializeSearchHandlers();
+            SetupLiveCharts();
         }
-
-    private void TxtSearchPatient_KeyPress(object sender, KeyPressEventArgs e)
-  {
-            if (e.KeyChar == (char)Keys.Enter)
-    {
-  BtnSearchPatient_Click(sender, e);
-   e.Handled = true;
-  }
-        }
-
-        private void TxtSearchVaccine_KeyPress(object sender, KeyPressEventArgs e)
-     {
-     if (e.KeyChar == (char)Keys.Enter)
+        private void SetupLiveCharts()
         {
-       BtnSearchVaccine_Click(sender, e);
-e.Handled = true;
-            }
-        }
-
-        private void BtnSearchPatient_Click(object sender, EventArgs e)
-        {
-       string searchText = txtSearchPatient.Text.Trim();
-      
-    if (string.IsNullOrEmpty(searchText))
-   {
-       MessageBox.Show("Vui lòng nhập tên hoặc mã hồ sơ tiêm chủng!", 
-   "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-              txtSearchPatient.Focus();
-        return;
-   }
-     
-// TODO: Implement search logic
- MessageBox.Show($"Tìm kiếm bệnh nhân: {searchText}", 
-       "Kết quả", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-     private void BtnResetPatient_Click(object sender, EventArgs e)
-        {
- txtSearchPatient.Clear();
-     txtSearchPatient.Focus();
-   
-        // TODO: Reset chart data
-       SetupLiveCharts();
-    }
-
-      private void BtnSearchVaccine_Click(object sender, EventArgs e)
-        {
-string searchText = txtSearchVaccine.Text.Trim();
-     
-            if (string.IsNullOrEmpty(searchText))
-    {
-  MessageBox.Show("Vui lòng nhập tên vaccine!", 
-         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtSearchVaccine.Focus();
-  return;
-        }
-         
- // TODO: Implement search logic
-   MessageBox.Show($"Tìm kiếm vaccine: {searchText}", 
- "Kết quả", MessageBoxButtons.OK, MessageBoxIcon.Information);
-  }
-
-    private void BtnResetVaccine_Click(object sender, EventArgs e)
-  {
-   txtSearchVaccine.Clear();
-    txtSearchVaccine.Focus();
- 
-          // TODO: Reset chart data
-    SetupLiveCharts();
-        }*/
-
-   private void SetupLiveCharts()
-      {
-   // ========== BIỂU ĐỒ CỘT (Column Chart) ==========
-      var columnChart = new LiveCharts.WinForms.CartesianChart
-{
-   Dock = DockStyle.Fill,
-     BackColor = Color.White,
-    Series = new LiveCharts.SeriesCollection
+            // ========== BIỂU ĐỒ CỘT (Column Chart) ==========
+            var columnChart = new LiveCharts.WinForms.CartesianChart
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.White,
+                Series = new LiveCharts.SeriesCollection
     {
   new ColumnSeries
         {
@@ -127,7 +35,7 @@ string searchText = txtSearchVaccine.Text.Trim();
   LabelPoint = point => point.Y.ToString("N0")
     }
     },
-  AxisX = new AxesCollection
+                AxisX = new AxesCollection
          {
  new Axis
         {
@@ -136,7 +44,7 @@ Labels = new[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Th
     Separator = new Separator { Step = 1 }
      }
        },
-   AxisY = new AxesCollection
+                AxisY = new AxesCollection
       {
             new Axis
     {
@@ -144,25 +52,25 @@ Labels = new[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Th
        LabelFormatter = value => value.ToString("N0")
         }
    },
-    LegendLocation = LiveCharts.LegendLocation.Top
+                LegendLocation = LiveCharts.LegendLocation.Top
             };
 
-        // Xóa chart1 cũ và thêm LiveChart mới
-       if (chart1 != null && chart1.Parent != null)
-          {
-            var parent = chart1.Parent;
-      var index = parent.Controls.IndexOf(chart1);
-     parent.Controls.Remove(chart1);
-           parent.Controls.Add(columnChart);
-          parent.Controls.SetChildIndex(columnChart, index);
+            // Xóa chart1 cũ và thêm LiveChart mới
+            if (chart1 != null && chart1.Parent != null)
+            {
+                var parent = chart1.Parent;
+                var index = parent.Controls.IndexOf(chart1);
+                parent.Controls.Remove(chart1);
+                parent.Controls.Add(columnChart);
+                parent.Controls.SetChildIndex(columnChart, index);
             }
 
-// ========== BIỂU ĐỒ TRÒN (Pie Chart) ==========
-        var pieChart = new LiveCharts.WinForms.PieChart
-  {
-       Dock = DockStyle.Fill,
-   BackColor = Color.White,
-   Series = new LiveCharts.SeriesCollection
+            // ========== BIỂU ĐỒ TRÒN (Pie Chart) ==========
+            var pieChart = new LiveCharts.WinForms.PieChart
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.White,
+                Series = new LiveCharts.SeriesCollection
     {
         new PieSeries
     {
@@ -205,21 +113,21 @@ new PieSeries
 Fill = System.Windows.Media.Brushes.Purple
       }
           },
-LegendLocation = LiveCharts.LegendLocation.Right,
-   InnerRadius = 20 // Tạo hiệu ứng donut chart
-      };
+                LegendLocation = LiveCharts.LegendLocation.Right,
+                InnerRadius = 20 // Tạo hiệu ứng donut chart
+            };
 
-  // Xóa chart2 cũ và thêm LiveChart mới
-if (chart2 != null && chart2.Parent != null)
-    {
-           var parent = chart2.Parent;
-       var index = parent.Controls.IndexOf(chart2);
-    parent.Controls.Remove(chart2);
-       parent.Controls.Add(pieChart);
-    parent.Controls.SetChildIndex(pieChart, index);
-  }
+            // Xóa chart2 cũ và thêm LiveChart mới
+            if (chart2 != null && chart2.Parent != null)
+            {
+                var parent = chart2.Parent;
+                var index = parent.Controls.IndexOf(chart2);
+                parent.Controls.Remove(chart2);
+                parent.Controls.Add(pieChart);
+                parent.Controls.SetChildIndex(pieChart, index);
+            }
         }
 
-  // Public methods để cập nhật KPI từ bên ngoài
+        // Public methods để cập nhật KPI từ bên ngoài
     }
 }

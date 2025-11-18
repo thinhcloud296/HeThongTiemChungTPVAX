@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TPVAXWinform_GUI.Forms;
 
 namespace TPVAXWinform
 {
@@ -14,7 +15,6 @@ namespace TPVAXWinform
         [STAThread]
         static void Main()
         {
-            // Bật High DPI support cho .NET Framework 4.7+
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 SetProcessDPIAware();

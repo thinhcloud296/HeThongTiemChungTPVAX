@@ -118,6 +118,12 @@
     <Compile Include="Forms\frmChiTietPhieuNhap.Designer.cs">
       <DependentUpon>frmChiTietPhieuNhap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmDangNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDangNhap.Designer.cs">
+      <DependentUpon>frmDangNhap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmEditNV.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,6 +249,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\frmChiTietPhieuNhap.resx">
       <DependentUpon>frmChiTietPhieuNhap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDangNhap.resx">
+      <DependentUpon>frmDangNhap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmEditNV.resx">
       <DependentUpon>frmEditNV.cs</DependentUpon>
