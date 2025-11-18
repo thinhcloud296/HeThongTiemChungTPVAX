@@ -1,0 +1,1671 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+}
+
+<!-- Hero Carousel Banner -->
+      <section aria-label="Khuyến mãi nổi bật">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1: Viêm màng não"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="1"
+              aria-label="Slide 2: Bảo vệ con yêu"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="2"
+              aria-label="Slide 3: Phòng ngừa ung thư HPV"
+            ></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="@Url.Content("~/Content/Assets/Images/banner1.jpg")"
+                class="d-block w-100"
+                alt="Banner khuyến mãi vaccine viêm màng não"
+                loading="eager"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="@Url.Content("~/Content/Assets/Images/banner2.jpg")"
+                class="d-block w-100"
+                alt="Banner bảo vệ con yêu với vaccine chất lượng"
+                loading="lazy"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="@Url.Content("~/Content/Assets/Images/banner3.png")"
+                class="d-block w-100"
+                alt="Banner vaccine phòng ngừa ung thư HPV"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="prev"
+            aria-label="Slide trước"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Slide trước</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="next"
+            aria-label="Slide tiếp theo"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Slide tiếp theo</span>
+          </button>
+        </div>
+      </section>
+      <!-- END Banner -->
+
+      <!-- Vaccine Catalog Section -->
+      <section
+        class="container my-5"
+        id="vaccine-catalog"
+        aria-labelledby="vaccine-catalog-heading"
+      >
+        <div
+          class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-primary border-5"
+        >
+          <h2 id="vaccine-catalog-heading" class="mb-0">
+            <strong class="text-primary">DANH MỤC VẮC XIN</strong>
+          </h2>
+          <a href="@Url.Action("Index", "Home")#all-vaccines" class="view-all-link">Xem tất cả</a>
+        </div>
+
+        <div class="row g-4">
+          <!-- Vaccine Card 1 - Featured Example -->
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Vaccine Cards 2-6 -->
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <!-- END Vaccine Catalog -->
+
+      <!-- Services Section -->
+      <section class="cac-dich-vu py-5" aria-labelledby="services-heading">
+        <div class="container">
+          <h2 id="services-heading" class="visually-hidden">
+            Dịch vụ của chúng tôi
+          </h2>
+          <div class="row g-4 justify-content-center">
+            <div class="col-lg-3 col-md-6">
+              <div
+                class="service-card text-center p-4 bg-white bg-opacity-90 rounded-4 h-100"
+              >
+                <img
+                  src="@Url.Content("~/Content/Assets/Icons/injection.png")"
+                  alt=""
+                  aria-hidden="true"
+                  class="service-icon mb-3 mx-auto"
+                  style="width: 80px"
+                  loading="lazy"
+                />
+                <h3 class="h5 text-primary fw-bold">
+                  Tiêm chủng tại trung tâm TPVAX
+                </h3>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div
+                class="service-card text-center p-4 bg-white bg-opacity-90 rounded-4 h-100"
+              >
+                <img
+                  src="@Url.Content("~/Content/Assets/Icons/injection.png")"
+                  alt=""
+                  aria-hidden="true"
+                  class="service-icon mb-3 mx-auto"
+                  style="width: 80px"
+                  loading="lazy"
+                />
+                <h3 class="h5 text-primary fw-bold">
+                  Tiêm chủng tại trung tâm TPVAX
+                </h3>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div
+                class="service-card text-center p-4 bg-white bg-opacity-90 rounded-4 h-100"
+              >
+                <img
+                  src="@Url.Content("~/Content/Assets/Icons/injection.png")"
+                  alt=""
+                  aria-hidden="true"
+                  class="service-icon mb-3 mx-auto"
+                  style="width: 80px"
+                  loading="lazy"
+                />
+                <h3 class="h5 text-primary fw-bold">
+                  Tiêm chủng tại trung tâm TPVAX
+                </h3>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div
+                class="service-card text-center p-4 bg-white bg-opacity-90 rounded-4 h-100"
+              >
+                <img
+                  src="@Url.Content("~/Content/Assets/Icons/injection.png")"
+                  alt=""
+                  aria-hidden="true"
+                  class="service-icon mb-3 mx-auto"
+                  style="width: 80px"
+                  loading="lazy"
+                />
+                <h3 class="h5 text-primary fw-bold">
+                  Tiêm chủng tại trung tâm TPVAX
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Services Section -->
+
+      <!-- Seasonal Vaccine Section - "Mùa này cần tiêm gì?" -->
+      <section
+        class="seasonal-vaccine-section"
+        aria-labelledby="seasonal-vaccine-heading"
+      >
+        <div class="container">
+          <div class="seasonal-season-title">
+            <h2 id="seasonal-vaccine-heading">🌦️ Mùa này cần tiêm gì?</h2>
+            <p>
+              Tìm hiểu về các bệnh truyền nhiễm theo mùa và vaccine phòng bệnh
+              hiệu quả
+            </p>
+          </div>
+
+          <div class="row">
+            <!-- Left Column: Filter Sidebar -->
+            <div class="col-lg-3 col-md-4 mb-4">
+              <div class="seasonal-filter-sidebar">
+                <h3 class="seasonal-filter-title">🦠 Loại bệnh</h3>
+
+                <div class="seasonal-filter-item active" data-disease="dengue">
+                  <div class="filter-icon">🦟</div>
+                  <div class="filter-label">Sốt Xuất Huyết</div>
+                </div>
+
+                <div
+                  class="seasonal-filter-item"
+                  data-disease="meningococcal-acyw"
+                >
+                  <div class="filter-icon">🧠</div>
+                  <div class="filter-label">Viêm Não Mô Cầu ACYW</div>
+                </div>
+
+                <div
+                  class="seasonal-filter-item"
+                  data-disease="meningococcal-b"
+                >
+                  <div class="filter-icon">🧠</div>
+                  <div class="filter-label">Viêm Não Mô Cầu Bexsero</div>
+                </div>
+
+                <div class="seasonal-filter-item" data-disease="flu">
+                  <div class="filter-icon">🤧</div>
+                  <div class="filter-label">Cúm Mùa</div>
+                </div>
+
+                <div class="seasonal-filter-item" data-disease="hpv">
+                  <div class="filter-icon">�</div>
+                  <div class="filter-label">HPV (Ung thư cổ tử cung)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Content Area -->
+            <div class="col-lg-9 col-md-8">
+              <div class="seasonal-content-area">
+                <!-- Disease Info: Dengue (Active by default) -->
+                <div class="disease-info-section" id="disease-dengue">
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🦟</span>
+                    Bảo vệ bản thân khỏi sốt xuất huyết Dengue thế nào?
+                  </h3>
+
+                  <p class="disease-description">
+                    Sốt xuất huyết Dengue là bệnh truyền nhiễm cấp tính lây
+                    truyền qua vết đốt của muỗi vằn Aedes aegypti, thường gây
+                    sốt cao, đau đầu, đau cơ, buồn nôn, phát ban. Nếu không được
+                    kiểm soát, bệnh có thể dẫn đến các biến chứng nghiêm trọng.
+                  </p>
+
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Biến chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🩸">Xuất huyết nội tạng nguy hiểm</li>
+                      <li data-icon="⚡">Sốc do thoát huyết tương</li>
+                      <li data-icon="🫀">Suy tạng, thậm chí tử vong</li>
+                    </ul>
+                  </div>
+
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">
+                        Vaccine được khuyến nghị
+                      </h4>
+                    </div>
+
+                    <div class="vaccine-product-card">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                        alt="Vaccine Qdenga"
+                        class="vaccine-product-image"
+                        loading="lazy"
+                      />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">
+                          Vaccine Qdenga (Đức)
+                        </h5>
+                        <p class="vaccine-product-desc">
+                          Tạo ra miễn dịch chủ động đối với cả bốn tuýp huyết
+                          thanh của virus Dengue (DEN-1, DEN-2, DEN-3 và DEN-4).
+                          Chỉ định tiêm cho trẻ em từ 4 tuổi trở lên và người
+                          lớn khỏe mạnh.
+                        </p>
+                        <p class="vaccine-product-price">
+                          1.390.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-primary"
+                          >Đặt lịch tiêm</a
+                        >
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-secondary"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Disease Info: Meningococcal ACYW -->
+                <div
+                  class="disease-info-section"
+                  id="disease-meningococcal-acyw"
+                  style="display: none"
+                >
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🧠</span>
+                    Phòng ngừa viêm não mô cầu ACYW
+                  </h3>
+
+                  <p class="disease-description">
+                    Viêm não mô cầu là bệnh nhiễm trùng nghiêm trọng do vi khuẩn
+                    Neisseria meningitidis gây ra, ảnh hưởng đến màng não và tủy
+                    sống. Bệnh tiến triển rất nhanh và có thể gây tử vong trong
+                    vòng 24 giờ nếu không được điều trị kịp thời.
+                  </p>
+
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Triệu chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🤒">Sốt cao đột ngột và đau đầu dữ dội</li>
+                      <li data-icon="🤢">Buồn nôn, nôn mửa</li>
+                      <li data-icon="😵">Co giật, lú lẫn</li>
+                      <li data-icon="🔴">Phát ban màu tím đỏ trên da</li>
+                    </ul>
+                  </div>
+
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">
+                        Vaccine được khuyến nghị
+                      </h4>
+                    </div>
+
+                    <div class="vaccine-product-card">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                        alt="Vaccine MenQuadfi"
+                        class="vaccine-product-image"
+                        loading="lazy"
+                      />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">
+                          Vaccine MenQuadfi (Pháp)
+                        </h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine liên hợp phòng viêm màng não do não mô cầu
+                          nhóm A, C, W, Y. Bảo vệ hiệu quả lên đến 5 năm. Khuyến
+                          nghị cho trẻ em từ 12 tháng tuổi và người lớn.
+                        </p>
+                        <p class="vaccine-product-price">
+                          1.850.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-primary"
+                          >Đặt lịch tiêm</a
+                        >
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-secondary"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Disease Info: Meningococcal B (Bexsero) -->
+                <div
+                  class="disease-info-section"
+                  id="disease-meningococcal-b"
+                  style="display: none"
+                >
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🧠</span>
+                    Phòng ngừa viêm não mô cầu B với Bexsero
+                  </h3>
+
+                  <p class="disease-description">
+                    Vi khuẩn não mô cầu nhóm B (Meningococcal B) là nguyên nhân
+                    gây viêm màng não và nhiễm trùng huyết nghiêm trọng. Nhóm B
+                    khó phòng ngừa hơn các nhóm khác do tính đa dạng của chủng
+                    vi khuẩn, nhưng vaccine Bexsero mang lại khả năng bảo vệ
+                    rộng.
+                  </p>
+
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Biến chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🧠">Viêm màng não cấp tính</li>
+                      <li data-icon="🩸">Nhiễm trùng huyết nặng</li>
+                      <li data-icon="⚡">Tử vong trong vòng 24-48 giờ</li>
+                      <li data-icon="🦵">Di chứng thần kinh, cắt cụt chi</li>
+                    </ul>
+                  </div>
+
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">
+                        Vaccine được khuyến nghị
+                      </h4>
+                    </div>
+
+                    <div class="vaccine-product-card">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                        alt="Vaccine Bexsero"
+                        class="vaccine-product-image"
+                        loading="lazy"
+                      />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">
+                          Vaccine Bexsero (Ý)
+                        </h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine phòng viêm màng não do não mô cầu nhóm B. Sử
+                          dụng công nghệ "reverse vaccinology" tiên tiến. Khuyến
+                          nghị cho trẻ từ 2 tháng tuổi và người lớn có nguy cơ
+                          cao.
+                        </p>
+                        <p class="vaccine-product-price">
+                          2.100.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-primary"
+                          >Đặt lịch tiêm</a
+                        >
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-secondary"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Disease Info: Influenza (Flu) -->
+                <div
+                  class="disease-info-section"
+                  id="disease-flu"
+                  style="display: none"
+                >
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🤧</span>
+                    Phòng ngừa cúm mùa hiệu quả
+                  </h3>
+
+                  <p class="disease-description">
+                    Cúm mùa là bệnh truyền nhiễm đường hô hấp cấp tính do virus
+                    cúm gây ra. Virus cúm thay đổi hàng năm, vì vậy cần tiêm
+                    vaccine định kỳ mỗi năm để duy trì khả năng bảo vệ. Đặc biệt
+                    nguy hiểm cho trẻ nhỏ, người cao tuổi và người có bệnh mãn
+                    tính.
+                  </p>
+
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Biến chứng nguy hiểm:</h4>
+                    <ul>
+                      <li data-icon="🫁">Viêm phổi nặng</li>
+                      <li data-icon="💨">Suy hô hấp cấp</li>
+                      <li data-icon="❤️">Viêm cơ tim</li>
+                      <li data-icon="⚡">Tử vong ở người có bệnh nền</li>
+                    </ul>
+                  </div>
+
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">
+                        Vaccine được khuyến nghị
+                      </h4>
+                    </div>
+
+                    <div class="vaccine-product-card">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                        alt="Vaccine Cúm 4 giá"
+                        class="vaccine-product-image"
+                        loading="lazy"
+                      />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">
+                          Vaccine Cúm 4 giá (Pháp)
+                        </h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine phòng cúm tetravalent chứa 4 chủng virus cúm
+                          phổ biến (2 chủng A và 2 chủng B). Cập nhật hàng năm
+                          theo khuyến nghị của WHO. Dành cho mọi lứa tuổi từ 6
+                          tháng trở lên.
+                        </p>
+                        <p class="vaccine-product-price">
+                          450.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-primary"
+                          >Đặt lịch tiêm</a
+                        >
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-secondary"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Disease Info: HPV -->
+                <div
+                  class="disease-info-section"
+                  id="disease-hpv"
+                  style="display: none"
+                >
+                  <h3 class="disease-title">
+                    <span class="disease-title-icon">🛡️</span>
+                    Phòng ngừa ung thư cổ tử cung với vaccine HPV
+                  </h3>
+
+                  <p class="disease-description">
+                    Virus HPV (Human Papillomavirus) gây ra nhiều bệnh nguy hiểm
+                    bao gồm ung thư cổ tử cung, ung thư hậu môn, ung thư vòm
+                    họng và mụn cóc sinh dục. Vaccine HPV là cách phòng ngừa
+                    hiệu quả nhất, đặc biệt khi tiêm trước khi bắt đầu quan hệ
+                    tình dục.
+                  </p>
+
+                  <div class="disease-symptoms">
+                    <h4>⚠️ Bệnh do HPV gây ra:</h4>
+                    <ul>
+                      <li data-icon="🎗️">Ung thư cổ tử cung (99% do HPV)</li>
+                      <li data-icon="🎗️">Ung thư hậu môn, dương vật</li>
+                      <li data-icon="🎗️">Ung thư vòm họng</li>
+                      <li data-icon="⚕️">Mụn cóc sinh dục (Condyloma)</li>
+                    </ul>
+                  </div>
+
+                  <div class="vaccine-recommendation">
+                    <div class="vaccine-rec-header">
+                      <div class="vaccine-rec-icon">💉</div>
+                      <h4 class="vaccine-rec-title">
+                        Vaccine được khuyến nghị
+                      </h4>
+                    </div>
+
+                    <div class="vaccine-product-card">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                        alt="Vaccine Gardasil 9"
+                        class="vaccine-product-image"
+                        loading="lazy"
+                      />
+                      <div class="vaccine-product-info">
+                        <h5 class="vaccine-product-name">
+                          Vaccine Gardasil 9 (Mỹ)
+                        </h5>
+                        <p class="vaccine-product-desc">
+                          Vaccine phòng HPV 9 giá bảo vệ chống lại 9 type HPV
+                          nguy hiểm nhất (6, 11, 16, 18, 31, 33, 45, 52, 58).
+                          Hiệu quả phòng ngừa lên đến 90% các bệnh liên quan
+                          HPV. Khuyến nghị cho nam và nữ từ 9-45 tuổi.
+                        </p>
+                        <p class="vaccine-product-price">
+                          2.400.000₫<small>/liều</small>
+                        </p>
+                      </div>
+                      <div class="vaccine-product-action">
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-primary"
+                          >Đặt lịch tiêm</a
+                        >
+                        <a
+                          href="@Url.Action("Detail", "Vaccine")"
+                          class="vaccine-btn vaccine-btn-secondary"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- More disease sections can be added here with JavaScript toggle -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Seasonal Vaccine Section -->
+
+      <!-- Vaccine Package Section - "Vaccine bảo vệ toàn diện" -->
+      <section
+        class="vaccine-package-section"
+        aria-labelledby="package-heading"
+      >
+        <div class="container">
+          <div class="package-section-title">
+            <h2 id="package-heading">📦 Gói vắc xin bảo vệ toàn diện</h2>
+            <p>
+              Tiết kiệm chi phí, đảm bảo lịch tiêm khoa học và toàn diện cho cả
+              gia đình
+            </p>
+          </div>
+
+          <!-- Package Commitments -->
+          <div class="package-commitment mb-4">
+            <div class="row">
+              <div class="col-lg-4 col-md-4">
+                <div class="commitment-item">
+                  <div class="commitment-icon">🔔</div>
+                  <h4>Miễn phí nhắc lịch hẹn</h4>
+                  <p>Chính xác và khoa học cho cả gia đình</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4">
+                <div class="commitment-item">
+                  <div class="commitment-icon">💰</div>
+                  <h4>Cam kết giữ giá vắc xin</h4>
+                  <p>Suốt thời gian tiêm theo phác đồ</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4">
+                <div class="commitment-item">
+                  <div class="commitment-icon">✅</div>
+                  <h4>Cam kết luôn đủ vắc xin</h4>
+                  <p>Không lo hàng khan hiếm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Left Column: Filter Sidebar -->
+            <div class="col-lg-3 col-md-4 mb-4">
+              <div class="package-filter-sidebar">
+                <!-- Filter Category 1: By Age -->
+                <div class="package-filter-category">
+                  <h4 class="package-filter-category-title">
+                    <span class="package-filter-category-icon">👶</span>
+                    Theo độ tuổi
+                  </h4>
+                  <div
+                    class="package-filter-item active"
+                    data-category="age-6months"
+                  >
+                    Gói 6 tháng tuổi
+                  </div>
+                  <div class="package-filter-item" data-category="age-12months">
+                    Gói 12 tháng tuổi
+                  </div>
+                  <div class="package-filter-item" data-category="age-24months">
+                    Gói 24 tháng tuổi
+                  </div>
+                  <div
+                    class="package-filter-item"
+                    data-category="age-preschool"
+                  >
+                    Tiền học đường (3-9 tuổi)
+                  </div>
+                  <div class="package-filter-item" data-category="age-teen">
+                    Thanh thiếu niên (9-18 tuổi)
+                  </div>
+                  <div class="package-filter-item" data-category="age-adult">
+                    Người trưởng thành
+                  </div>
+                </div>
+
+                <!-- Filter Category 2: By Target Group -->
+                <div class="package-filter-category">
+                  <h4 class="package-filter-category-title">
+                    <span class="package-filter-category-icon">👥</span>
+                    Theo đối tượng
+                  </h4>
+                  <div
+                    class="package-filter-item"
+                    data-category="target-prewedding"
+                  >
+                    Tiền hôn nhân
+                  </div>
+                  <div
+                    class="package-filter-item"
+                    data-category="target-prepregnancy"
+                  >
+                    Trước mang thai
+                  </div>
+                  <div
+                    class="package-filter-item"
+                    data-category="target-50plus"
+                  >
+                    Người 50+ bệnh mãn tính
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Package Cards Grid -->
+            <div class="col-lg-9 col-md-8">
+              <div class="package-cards-grid">
+                <!-- Package 1: 6 months -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/baby-boy.png")"
+                        alt="Gói 6 tháng tuổi"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói vắc xin 6 tháng tuổi</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 554.850₫</span>
+                    <p>5-6 loại vaccine cơ bản cho bé 6 tháng tuổi</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 2: 12 months -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/baby-boy.png")"
+                        alt="Gói 12 tháng tuổi"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói vắc xin 12 tháng tuổi</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 855.960₫</span>
+                    <p>7-8 loại vaccine quan trọng cho bé 1 tuổi</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 3: 24 months -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/baby-boy.png")"
+                        alt="Gói 24 tháng tuổi"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói vắc xin 24 tháng tuổi</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 1.089.150₫</span>
+                    <p>Gói vaccine toàn diện cho bé 2 tuổi</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 4: Preschool -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/baby-boy.png")"
+                        alt="Gói tiền học đường"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói trẻ tiền học đường (3-9 tuổi)</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 634.390₫</span>
+                    <p>Chuẩn bị sức khỏe tốt nhất cho bé đi học</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 5: Teenagers -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/adults.png")"
+                        alt="Gói thanh thiếu niên"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói thanh thiếu niên (9-18 tuổi)</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 906.790₫</span>
+                    <p>Vaccine quan trọng cho tuổi dậy thì</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 6: Adults -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/adults.png")"
+                        alt="Gói người lớn"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói cho người trưởng thành</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 842.290₫</span>
+                    <p>Vaccine cần thiết cho người lớn khỏe mạnh</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 7: Pre-wedding -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/pregnant-woman.png")"
+                        alt="Gói tiền hôn nhân"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói vắc xin tiền hôn nhân</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 506.490₫</span>
+                    <p>Chuẩn bị sức khỏe tốt nhất trước kết hôn</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 8: Before pregnancy -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/pregnant-woman.png")"
+                        alt="Gói trước mang thai"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói cho phụ nữ trước mang thai</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 175.140₫</span>
+                    <p>Bảo vệ mẹ và bé ngay từ khi chuẩn bị</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Package 9: 50+ chronic disease -->
+                <div class="package-card">
+                  <div class="package-card-header">
+                    <div class="package-icon-wrapper">
+                      <img
+                        src="@Url.Content("~/Content/Assets/Icons/adults.png")"
+                        alt="Gói 50+ bệnh mãn tính"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h3>Gói cho người 50+ có bệnh mãn tính</h3>
+                  </div>
+                  <div class="package-card-body">
+                    <span class="package-discount">Giảm tới 743.240₫</span>
+                    <p>Vaccine quan trọng cho người cao tuổi</p>
+                    <a href="@Url.Action("Index", "Home")#vaccine-packages" class="package-btn"
+                      >Đặt hẹn ngay</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Vaccine Package Section -->
+
+      <!-- Travel Vaccine Banner - "Bạn có kế hoạch đi nước ngoài?" -->
+      <section
+        class="travel-vaccine-banner"
+        aria-labelledby="travel-vaccine-heading"
+      >
+        <div class="container">
+          <div class="travel-banner-content">
+            <div class="travel-banner-icon">🌍</div>
+            <h2 id="travel-vaccine-heading">Bạn có kế hoạch đi nước ngoài?</h2>
+            <p>
+              Tiêm vaccine đầy đủ là điều kiện bắt buộc cho nhiều quốc gia.<br />
+              Hãy chuẩn bị sức khỏe tốt nhất cho chuyến đi của bạn!
+            </p>
+            <a href="@Url.Action("Index", "Home")#travel-packages" class="travel-banner-btn">
+              ✈️ Xem gói vaccine đi nước ngoài
+            </a>
+
+            <div class="travel-features">
+              <div class="travel-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                  <path
+                    d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"
+                  />
+                  <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-1 0A7 7 0 1 0 1 8a7 7 0 0 0 14 0z"
+                  />
+                </svg>
+                <span>Tư vấn miễn phí</span>
+              </div>
+              <div class="travel-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                  <path
+                    d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"
+                  />
+                  <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-1 0A7 7 0 1 0 1 8a7 7 0 0 0 14 0z"
+                  />
+                </svg>
+                <span>Vaccine đầy đủ theo quốc gia</span>
+              </div>
+              <div class="travel-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                  <path
+                    d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"
+                  />
+                  <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-1 0A7 7 0 1 0 1 8a7 7 0 0 0 14 0z"
+                  />
+                </svg>
+                <span>Cấp giấy xác nhận quốc tế</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END Travel Vaccine Banner -->
+
+      <!-- Trust Badges Section -->
+      <section class="trust-badges-section" aria-labelledby="trust-heading">
+        <div class="container">
+          <!-- Section Title -->
+          <div class="section-title-trust">
+            <h2 id="trust-heading">
+              <strong>ĐỐI TÁC & CHỨNG NHẬN UY TÍN</strong>
+            </h2>
+            <p>
+              TPVAX tự hào là đơn vị tiên phong trong lĩnh vực tiêm chủng với
+              đầy đủ giấy phép và chứng nhận từ các cơ quan chức năng
+            </p>
+          </div>
+
+          <!-- Trust Badges Grid -->
+          <div class="row g-4 justify-content-center">
+            <!-- Badge 1: Bộ Y Tế -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    fill="#0077b6"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8.864 2.318a.5.5 0 0 0-.728 0L7.75 2.72 6.869 1.84a.5.5 0 0 0-.708 0l-.881.88-.88-.88a.5.5 0 0 0-.708 0l-.88.88-.881-.88a.5.5 0 0 0-.708 0l-1.028 1.028a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l1.028 1.028a.5.5 0 0 0 .708 0l.881-.88.88.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l1.028-1.028a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708L8.864 2.318zM8 12.293l-3.146-3.147a.5.5 0 0 1 .708-.708L8 10.877l2.438-2.439a.5.5 0 0 1 .708.708L8 12.293z"
+                    />
+                  </svg>
+                </div>
+                <h3>Giấy Phép Bộ Y Tế</h3>
+                <p>
+                  Cơ sở đạt chuẩn quốc gia về an toàn tiêm chủng. Giấy phép hoạt
+                  động số: 1234/GP-BYT
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+
+            <!-- Badge 2: ISO Certification -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    fill="#0077b6"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"
+                    />
+                    <path
+                      d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"
+                    />
+                  </svg>
+                </div>
+                <h3>Chứng Nhận ISO 9001:2015</h3>
+                <p>
+                  Hệ thống quản lý chất lượng đạt tiêu chuẩn quốc tế. Cam kết
+                  chất lượng dịch vụ tốt nhất.
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+
+            <!-- Badge 3: GMP Certification -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    fill="#0077b6"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                    />
+                    <path
+                      d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"
+                    />
+                  </svg>
+                </div>
+                <h3>Tiêu Chuẩn GMP WHO</h3>
+                <p>
+                  Vaccine được bảo quản theo chuẩn GMP của Tổ chức Y tế Thế
+                  giới. Chuỗi lạnh 2-8°C 24/7.
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+
+            <!-- Badge 4: Authorized Partner -->
+            <div class="col-lg-3 col-md-6">
+              <div class="trust-badge-card">
+                <div class="trust-badge-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    fill="#0077b6"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
+                    />
+                  </svg>
+                </div>
+                <h3>Đối Tác Chính Hãng</h3>
+                <p>
+                  Nhà phân phối được ủy quyền chính thức từ các hãng vaccine
+                  hàng đầu thế giới: Sanofi, GSK, Pfizer.
+                </p>
+                <span class="trust-badge-verified">✓ Đã xác thực</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Partners Logo Section -->
+          <div class="partners-logo-wrapper">
+            <div class="row align-items-center justify-content-center g-4">
+              <div class="col-6 col-md-3 text-center">
+                <div
+                  class="partner-logo-placeholder"
+                  style="
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 15px;
+                  "
+                >
+                  <span
+                    style="color: #6c757d; font-weight: bold; font-size: 18px"
+                    >SANOFI</span
+                  >
+                </div>
+              </div>
+              <div class="col-6 col-md-3 text-center">
+                <div
+                  class="partner-logo-placeholder"
+                  style="
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 15px;
+                  "
+                >
+                  <span
+                    style="color: #6c757d; font-weight: bold; font-size: 18px"
+                    >GSK</span
+                  >
+                </div>
+              </div>
+              <div class="col-6 col-md-3 text-center">
+                <div
+                  class="partner-logo-placeholder"
+                  style="
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 15px;
+                  "
+                >
+                  <span
+                    style="color: #6c757d; font-weight: bold; font-size: 18px"
+                    >PFIZER</span
+                  >
+                </div>
+              </div>
+              <div class="col-6 col-md-3 text-center">
+                <div
+                  class="partner-logo-placeholder"
+                  style="
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 15px;
+                  "
+                >
+                  <span
+                    style="color: #6c757d; font-weight: bold; font-size: 18px"
+                    >ASTRAZENECA</span
+                  >
+                </div>
+              </div>
+            </div>
+            <p class="text-center text-muted mt-4 mb-0" style="font-size: 14px">
+              <em
+                >* Logo đối tác chỉ mang tính minh họa. Vui lòng cung cấp logo
+                thực tế để thay thế.</em
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- END Trust Badges Section -->
+
+      <!-- News & Articles Section -->
+      <section class="container my-5" aria-labelledby="news-heading">
+        <div
+          class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-primary border-5"
+        >
+          <h2 id="news-heading" class="mb-0">
+            <strong class="text-primary">TIN TỨC & KIẾN THỨC</strong>
+          </h2>
+          <a href="@Url.Action("Index", "Home")#all-news" class="view-all-link">Xem tất cả</a>
+        </div>
+
+        <div class="parent_tintuc">
+          <!-- Featured Article -->
+          <article class="div1_tintuc">
+            <a href="@Url.Action("Detail", "News")" class="text-decoration-none">
+              <img
+                src="@Url.Content("~/Content/Assets/Images/tiemphongvaccine.png")"
+                alt="Tại sao phải tiêm phòng vắc xin"
+                class="img-fluid rounded mb-3"
+                loading="lazy"
+              />
+              <h3 class="text-primary fw-bold fs-4 mb-2">
+                Tại sao phải tiêm phòng vắc xin?<br />
+                Các loại vắc xin hiện có.
+              </h3>
+              <p class="text-secondary mb-3">
+                Mỗi người, ở bất kỳ giai đoạn nào trong cuộc đời, đều cần được
+                tiêm phòng các loại vắc xin phù hợp để phòng ngừa nguy cơ bệnh
+                tật, bảo vệ sức khỏe cả trẻ em và người lớn. Đối với trẻ em,
+                nhất là nhóm tuổi mầm non, tiểu học và đặc biệt là nhóm trẻ dưới
+                5 tuổi...
+              </p>
+              <time
+                datetime="2025-10-14"
+                class="d-flex align-items-center text-muted small"
+              >
+                <img
+                  src="@Url.Content("~/Content/Assets/Icons/calendar.png")"
+                  alt=""
+                  aria-hidden="true"
+                  style="width: 20px"
+                  class="me-2"
+                  loading="lazy"
+                />
+                14/10/2025
+              </time>
+            </a>
+          </article>
+
+          <!-- Small Article 1 -->
+          <article class="div2_tintuc tin-nho">
+            <a
+              href="@Url.Action("Detail", "News")"
+              class="text-decoration-none d-flex gap-3"
+            >
+              <img
+                src="@Url.Content("~/Content/Assets/Images/tiemphongvaccine.png")"
+                alt="Tại sao phải tiêm phòng vắc xin"
+                class="tin-nho-img"
+                loading="lazy"
+              />
+              <div class="tin-nho-content">
+                <h4 class="text-primary fw-bold h6 mb-2">
+                  Tại sao phải tiêm phòng vắc xin?<br />
+                  Các loại vắc xin hiện có.
+                </h4>
+                <p class="text-secondary small mb-2">
+                  Mỗi người, ở bất kỳ giai đoạn nào trong cuộc đời, đều cần được
+                  tiêm phòng các loại vắc xin phù hợp để phòng ngừa nguy cơ bệnh
+                  tật...
+                </p>
+                <time
+                  datetime="2025-10-07"
+                  class="d-flex align-items-center text-muted small"
+                >
+                  <img
+                    src="@Url.Content("~/Content/Assets/Icons/calendar.png")"
+                    alt=""
+                    aria-hidden="true"
+                    style="width: 16px"
+                    class="me-1"
+                    loading="lazy"
+                  />
+                  07/10/2025
+                </time>
+              </div>
+            </a>
+          </article>
+
+          <!-- Small Article 2 -->
+          <article class="div3_tintuc tin-nho">
+            <a
+              href="@Url.Action("Detail", "News")"
+              class="text-decoration-none d-flex gap-3"
+            >
+              <img
+                src="@Url.Content("~/Content/Assets/Images/tiemphongvaccine.png")"
+                alt="Tại sao phải tiêm phòng vắc xin"
+                class="tin-nho-img"
+                loading="lazy"
+              />
+              <div class="tin-nho-content">
+                <h4 class="text-primary fw-bold h6 mb-2">
+                  Tại sao phải tiêm phòng vắc xin?<br />
+                  Các loại vắc xin hiện có.
+                </h4>
+                <p class="text-secondary small mb-2">
+                  Mỗi người, ở bất kỳ giai đoạn nào trong cuộc đời, đều cần được
+                  tiêm phòng các loại vắc xin phù hợp để phòng ngừa nguy cơ bệnh
+                  tật...
+                </p>
+                <time
+                  datetime="2025-10-07"
+                  class="d-flex align-items-center text-muted small"
+                >
+                  <img
+                    src="@Url.Content("~/Content/Assets/Icons/calendar.png")"
+                    alt=""
+                    aria-hidden="true"
+                    style="width: 16px"
+                    class="me-1"
+                    loading="lazy"
+                  />
+                  07/10/2025
+                </time>
+              </div>
+            </a>
+          </article>
+
+          <!-- Small Article 3 -->
+          <article class="div4_tintuc tin-nho">
+            <a
+              href="@Url.Action("Detail", "News")"
+              class="text-decoration-none d-flex gap-3"
+            >
+              <img
+                src="@Url.Content("~/Content/Assets/Images/tiemphongvaccine.png")"
+                alt="Tại sao phải tiêm phòng vắc xin"
+                class="tin-nho-img"
+                loading="lazy"
+              />
+              <div class="tin-nho-content">
+                <h4 class="text-primary fw-bold h6 mb-2">
+                  Tại sao phải tiêm phòng vắc xin?<br />
+                  Các loại vắc xin hiện có.
+                </h4>
+                <p class="text-secondary small mb-2">
+                  Mỗi người, ở bất kỳ giai đoạn nào trong cuộc đời, đều cần được
+                  tiêm phòng các loại vắc xin phù hợp để phòng ngừa nguy cơ bệnh
+                  tật...
+                </p>
+                <time
+                  datetime="2025-10-07"
+                  class="d-flex align-items-center text-muted small"
+                >
+                  <img
+                    src="@Url.Content("~/Content/Assets/Icons/calendar.png")"
+                    alt=""
+                    aria-hidden="true"
+                    style="width: 16px"
+                    class="me-1"
+                    loading="lazy"
+                  />
+                  07/10/2025
+                </time>
+              </div>
+            </a>
+          </article>
+        </div>
+    </div>
+</section>
+<!-- END News Section -->
+
+@section scripts {
+    <script>
+        function addToCart(productId) {
+            // TODO: Implement AJAX call to add to cart
+            alert('Đã thêm vào giỏ hàng: ' + productId);
+        }
+    </script>
+}
