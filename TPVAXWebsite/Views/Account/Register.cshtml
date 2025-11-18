@@ -1,0 +1,195 @@
+@model TPVAXWebsite.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewBag.Title = "Đăng ký tài khoản";
+}
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <img src="@Url.Content("~/Content/Assets/Images/logo.png")" alt="TPVAX Logo" style="height: 60px" class="mb-3" />
+                        <h2 class="h4 text-primary fw-bold">Đăng ký tài khoản mới</h2>
+                        <p class="text-muted">Tạo tài khoản để trải nghiệm dịch vụ tiêm chủng tốt nhất</p>
+                    </div>
+
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.ErrorMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    @if (ViewBag.SuccessMessage != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>@ViewBag.SuccessMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="TenKhachHang" class="form-label fw-semibold">
+                                    <i class="fas fa-user me-1"></i>Họ và tên <span class="text-danger">*</span>
+                                </label>
+                                @Html.TextBoxFor(m => m.TenKhachHang, new { @class = "form-control", placeholder = "Nguyễn Văn A", required = "required" })
+                                @Html.ValidationMessageFor(m => m.TenKhachHang, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="SoDienThoai" class="form-label fw-semibold">
+                                    <i class="fas fa-phone me-1"></i>Số điện thoại <span class="text-danger">*</span>
+                                </label>
+                                @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control", placeholder = "0912345678", required = "required", pattern = "[0-9]{10}" })
+                                @Html.ValidationMessageFor(m => m.SoDienThoai, "", new { @class = "text-danger small" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Email" class="form-label fw-semibold">
+                                <i class="fas fa-envelope me-1"></i>Email <span class="text-danger">*</span>
+                            </label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "example@email.com", type = "email", required = "required" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="NgaySinh" class="form-label fw-semibold">
+                                    <i class="fas fa-birthday-cake me-1"></i>Ngày sinh
+                                </label>
+                                @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="GioiTinh" class="form-label fw-semibold">
+                                    <i class="fas fa-venus-mars me-1"></i>Giới tính
+                                </label>
+                                @Html.DropDownListFor(m => m.GioiTinh, new SelectList(new[] { "Nam", "Nữ", "Khác" }), "-- Chọn giới tính --", new { @class = "form-select" })
+                                @Html.ValidationMessageFor(m => m.GioiTinh, "", new { @class = "text-danger small" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="DiaChi" class="form-label fw-semibold">
+                                <i class="fas fa-map-marker-alt me-1"></i>Địa chỉ
+                            </label>
+                            @Html.TextAreaFor(m => m.DiaChi, new { @class = "form-control", rows = "2", placeholder = "Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố" })
+                            @Html.ValidationMessageFor(m => m.DiaChi, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <div class="mb-3">
+                            <label for="TenDangNhap" class="form-label fw-semibold">
+                                <i class="fas fa-user-circle me-1"></i>Tên đăng nhập <span class="text-danger">*</span>
+                            </label>
+                            @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "username", required = "required", minlength = "4" })
+                            <small class="text-muted">Ít nhất 4 ký tự, không có khoảng trắng</small>
+                            @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger small d-block" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="MatKhau" class="form-label fw-semibold">
+                                    <i class="fas fa-lock me-1"></i>Mật khẩu <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Mật khẩu", required = "required", minlength = "6", id = "password-input" })
+                                    <button class="btn btn-outline-secondary" type="button" id="toggle-password">
+                                        <i class="fas fa-eye" id="eye-icon"></i>
+                                    </button>
+                                </div>
+                                <small class="text-muted">Ít nhất 6 ký tự</small>
+                                @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small d-block" })
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="XacNhanMatKhau" class="form-label fw-semibold">
+                                    <i class="fas fa-lock me-1"></i>Xác nhận mật khẩu <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhập lại mật khẩu", required = "required", id = "confirm-password-input" })
+                                    <button class="btn btn-outline-secondary" type="button" id="toggle-confirm-password">
+                                        <i class="fas fa-eye" id="eye-icon-confirm"></i>
+                                    </button>
+                                </div>
+                                @Html.ValidationMessageFor(m => m.XacNhanMatKhau, "", new { @class = "text-danger small d-block" })
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required />
+                            <label class="form-check-label" for="agreeTerms">
+                                Tôi đồng ý với <a href="#" class="text-primary">Điều khoản dịch vụ</a> và <a href="#" class="text-primary">Chính sách bảo mật</a> <span class="text-danger">*</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                            <i class="fas fa-user-plus me-2"></i>Đăng ký tài khoản
+                        </button>
+
+                        <div class="text-center">
+                            <span class="text-muted">Đã có tài khoản?</span>
+                            <a href="@Url.Action("Login", "Account")" class="text-primary fw-semibold text-decoration-none ms-1">Đăng nhập ngay</a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Home")" class="text-muted text-decoration-none">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Toggle password visibility
+        $('#toggle-password').click(function () {
+            const passwordInput = $('#password-input');
+            const eyeIcon = $('#eye-icon');
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                eyeIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordInput.attr('type', 'password');
+                eyeIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        $('#toggle-confirm-password').click(function () {
+            const confirmPasswordInput = $('#confirm-password-input');
+            const eyeIconConfirm = $('#eye-icon-confirm');
+            if (confirmPasswordInput.attr('type') === 'password') {
+                confirmPasswordInput.attr('type', 'text');
+                eyeIconConfirm.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                confirmPasswordInput.attr('type', 'password');
+                eyeIconConfirm.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        // Password match validation
+        $('#confirm-password-input').on('keyup', function () {
+            if ($('#password-input').val() !== $(this).val()) {
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            }
+        });
+    </script>
+}
