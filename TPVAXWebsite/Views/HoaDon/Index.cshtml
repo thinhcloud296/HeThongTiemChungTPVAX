@@ -1,0 +1,78 @@
+@model IEnumerable<TPVAXWebsite.Models.ViewModels.HoaDonViewModel>
+
+@{
+    ViewBag.Title = "Hóa đơn";
+}
+
+<!-- Page Header -->
+<section class="page-header bg-primary bg-gradient text-white py-4">
+    <div class="container">
+        <h1 class="h3 mb-0">
+            <i class="fas fa-file-invoice me-2"></i>Hóa Đơn Của Tôi
+        </h1>
+    </div>
+</section>
+
+<!-- Invoice List -->
+<section class="container my-5">
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Mã HĐ</th>
+                        <th>Ngày lập</th>
+                        <th>Sản phẩm</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hd in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">#@hd.MaHoaDon</td>
+                            <td>@hd.NgayLap.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <small class="text-muted">@hd.SoLuongSanPham sản phẩm</small>
+                            </td>
+                            <td class="fw-bold text-warning">@string.Format("{0:N0}₫", hd.TongTien)</td>
+                            <td>
+                                @if (hd.TrangThai == "Đã thanh toán")
+                                {
+                                    <span class="badge bg-success">@hd.TrangThai</span>
+                                }
+                                else if (hd.TrangThai == "Chờ thanh toán")
+                                {
+                                    <span class="badge bg-warning text-dark">@hd.TrangThai</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@hd.TrangThai</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a href="@Url.Action("Detail", "HoaDon", new { id = hd.MaHoaDon })" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye me-1"></i>Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-file-invoice fa-5x text-muted mb-4"></i>
+            <h4>Chưa có hóa đơn nào</h4>
+            <p class="text-muted mb-4">Bạn chưa có hóa đơn nào trong hệ thống</p>
+            <a href="@Url.Action("Index", "Vaccine")" class="btn btn-primary btn-lg">
+                <i class="fas fa-shopping-bag me-2"></i>Mua sắm ngay
+            </a>
+        </div>
+    }
+</section>

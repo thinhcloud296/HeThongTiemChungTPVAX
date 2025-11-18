@@ -1,0 +1,242 @@
+@model TPVAXWebsite.Models.ViewModels.GioHangViewModel
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+}
+
+<!-- Page Header -->
+<section class="page-header bg-primary bg-gradient text-white py-4">
+    <div class="container">
+        <h1 class="h3 mb-0">
+            <i class="fas fa-shopping-cart me-2"></i>Giỏ Hàng Của Bạn
+        </h1>
+    </div>
+</section>
+
+<!-- Cart Content -->
+<section class="container my-5">
+    @if (Model != null && Model.DanhSachSanPham != null && Model.DanhSachSanPham.Any())
+    {
+        <div class="row">
+            <!-- Cart Items -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list me-2"></i>Danh sách sản phẩm (@Model.DanhSachSanPham.Count items)
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        @foreach (var item in Model.DanhSachSanPham)
+                        {
+                            <div class="cart-item border-bottom p-3" data-item-id="@item.MaChiTiet">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 col-3">
+                                        <img src="@Url.Content("~/Content/Assets/Images/" + (item.HinhAnh ?? "hexaxim.png"))" 
+                                             alt="@item.TenVaccine" 
+                                             class="img-fluid rounded" 
+                                             style="max-height: 80px; object-fit: cover;" />
+                                    </div>
+                                    <div class="col-md-4 col-9">
+                                        <h6 class="mb-1 fw-bold">@item.TenVaccine</h6>
+                                        <p class="text-muted small mb-0">@string.Format("{0:N0}₫", item.DonGia) / liều</p>
+                                    </div>
+                                    <div class="col-md-3 col-6 mt-2 mt-md-0">
+                                        <div class="input-group input-group-sm">
+                                            <button class="btn btn-outline-secondary btn-decrease" type="button" data-id="@item.MaChiTiet">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" class="form-control text-center quantity-input" 
+                                                   value="@item.SoLuong" min="1" max="10" 
+                                                   data-id="@item.MaChiTiet" readonly />
+                                            <button class="btn btn-outline-secondary btn-increase" type="button" data-id="@item.MaChiTiet">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-4 mt-2 mt-md-0 text-end">
+                                        <p class="fw-bold text-warning mb-0 item-total" data-price="@item.DonGia">
+                                            @string.Format("{0:N0}₫", item.ThanhTien)
+                                        </p>
+                                    </div>
+                                    <div class="col-md-1 col-2 mt-2 mt-md-0 text-end">
+                                        <button class="btn btn-sm btn-outline-danger btn-remove" data-id="@item.MaChiTiet">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="@Url.Action("Index", "Vaccine")" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
+                    </a>
+                    <button class="btn btn-outline-danger" id="btnClearCart">
+                        <i class="fas fa-trash-alt me-2"></i>Xóa tất cả
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-receipt me-2"></i>Tổng Đơn Hàng
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Tạm tính:</span>
+                            <span class="fw-bold" id="subtotal">@string.Format("{0:N0}₫", Model.TongTien)</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Giảm giá:</span>
+                            <span class="text-success fw-bold" id="discount">@string.Format("-{0:N0}₫", Model.TienGiamGia)</span>
+                        </div>
+                        <hr />
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="h5 mb-0">Tổng cộng:</span>
+                            <span class="h5 mb-0 text-warning fw-bold" id="total">@string.Format("{0:N0}₫", Model.TongTienSauGiam)</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small">Mã giảm giá:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="couponCode" placeholder="Nhập mã..." />
+                                <button class="btn btn-outline-secondary" type="button" id="btnApplyCoupon">
+                                    Áp dụng
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <a href="@Url.Action("Checkout", "GioHang")" class="btn btn-success btn-lg">
+                                <i class="fas fa-credit-card me-2"></i>Thanh toán
+                            </a>
+                            <a href="@Url.Action("DatLich", "LichTiem")" class="btn btn-outline-primary">
+                                <i class="fas fa-calendar-check me-2"></i>Đặt lịch tiêm
+                            </a>
+                        </div>
+
+                        <div class="alert alert-info mt-3 small mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Miễn phí vận chuyển cho đơn hàng trên 5.000.000₫
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Empty Cart -->
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i class="fas fa-shopping-cart fa-5x text-muted"></i>
+            </div>
+            <h3 class="h4 mb-3">Giỏ hàng trống</h3>
+            <p class="text-muted mb-4">Bạn chưa thêm sản phẩm nào vào giỏ hàng</p>
+            <a href="@Url.Action("Index", "Vaccine")" class="btn btn-primary btn-lg">
+                <i class="fas fa-shopping-bag me-2"></i>Khám phá vắc xin
+            </a>
+        </div>
+    }
+</section>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Update quantity
+            $('.btn-increase, .btn-decrease').click(function () {
+                const itemId = $(this).data('id');
+                const input = $('.quantity-input[data-id="' + itemId + '"]');
+                const currentVal = parseInt(input.val());
+                const isIncrease = $(this).hasClass('btn-increase');
+                const newVal = isIncrease ? Math.min(currentVal + 1, 10) : Math.max(currentVal - 1, 1);
+
+                if (newVal !== currentVal) {
+                    updateCartItem(itemId, newVal);
+                }
+            });
+
+            // Remove item
+            $('.btn-remove').click(function () {
+                if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+                    const itemId = $(this).data('id');
+                    removeCartItem(itemId);
+                }
+            });
+
+            // Clear cart
+            $('#btnClearCart').click(function () {
+                if (confirm('Bạn có chắc muốn xóa tất cả sản phẩm trong giỏ hàng?')) {
+                    $.post('@Url.Action("Clear", "GioHang")', function (data) {
+                        if (data.success) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+            // Apply coupon
+            $('#btnApplyCoupon').click(function () {
+                const code = $('#couponCode').val();
+                if (code) {
+                    $.post('@Url.Action("ApplyCoupon", "GioHang")', { couponCode: code }, function (data) {
+                        if (data.success) {
+                            alert('Áp dụng mã giảm giá thành công!');
+                            location.reload();
+                        } else {
+                            alert(data.message || 'Mã giảm giá không hợp lệ');
+                        }
+                    });
+                }
+            });
+
+            function updateCartItem(itemId, quantity) {
+                $.post('@Url.Action("Update", "GioHang")', { itemId: itemId, quantity: quantity }, function (data) {
+                    if (data.success) {
+                        // Update UI
+                        const input = $('.quantity-input[data-id="' + itemId + '"]');
+                        input.val(quantity);
+                        
+                        const price = parseFloat($('.item-total[data-price]').filter(function() {
+                            return $(this).closest('.cart-item').data('item-id') == itemId;
+                        }).data('price'));
+                        
+                        const itemTotal = price * quantity;
+                        $('.item-total').filter(function() {
+                            return $(this).closest('.cart-item').data('item-id') == itemId;
+                        }).text(itemTotal.toLocaleString('vi-VN') + '₫');
+
+                        // Update totals
+                        $('#subtotal').text(data.tongTien.toLocaleString('vi-VN') + '₫');
+                        $('#total').text(data.tongTienSauGiam.toLocaleString('vi-VN') + '₫');
+                        $('#cart-count').text(data.soLuongSanPham);
+                    }
+                });
+            }
+
+            function removeCartItem(itemId) {
+                $.post('@Url.Action("Remove", "GioHang")', { itemId: itemId }, function (data) {
+                    if (data.success) {
+                        $('.cart-item[data-item-id="' + itemId + '"]').fadeOut(300, function () {
+                            $(this).remove();
+                            if ($('.cart-item').length === 0) {
+                                location.reload();
+                            } else {
+                                $('#cart-count').text(data.soLuongSanPham);
+                                $('#subtotal').text(data.tongTien.toLocaleString('vi-VN') + '₫');
+                                $('#total').text(data.tongTienSauGiam.toLocaleString('vi-VN') + '₫');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+}
