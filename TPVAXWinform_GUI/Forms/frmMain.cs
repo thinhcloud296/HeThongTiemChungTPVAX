@@ -26,13 +26,13 @@ namespace TPVAXWinform
             bool roleNVKho = RoleManager.RoleNVKho();
             bool roleNVTiepNhan = RoleManager.RoleNVTiepNhan();
             bool roleNVYTe = RoleManager.RoleNVYTe();
-
+            bool roleNVThuNgan = RoleManager.RoleNVThuNgan();
             button1.Visible = roleNVTiepNhan || roleNVYTe;
             button2.Visible = roleNVTiepNhan || roleNVYTe;
             button3.Visible = roleNVKho || roleNVYTe;
             button4.Visible = roleNVKho;
             button5.Visible = roleQLNV;
-            button6.Visible = roleNVTiepNhan || roleNVYTe;
+            button6.Visible = roleNVTiepNhan || roleNVThuNgan;
 
         }
         public void InitialInfoLogin(string maNV, string hoTen, int? chucVu)

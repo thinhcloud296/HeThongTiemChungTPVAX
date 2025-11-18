@@ -42,5 +42,20 @@ namespace TPVAXWinform_BLL
         {
             _vaccineDAL.UpdateSoLuongTon(maVC, soLuongThayDoi);
         }
+
+        public string CreateNewMaVC()
+        {
+            return _vaccineDAL.CreateNewMaVC();
+        }
+
+        public void Insert(VaccineDTO vaccine)
+        {
+            _vaccineDAL.Insert(vaccine);
+        }
+
+        public void Edit(VaccineDTO vaccine)
+        {
+            _vaccineDAL.Edit(vaccine);
+        }
     }
 }

@@ -16,6 +16,9 @@ namespace TPVAXWinform_GUI.UserControls
     {
         DataTable dtRecords = new DataTable();
         HoaDonBLL hoaDonBLL = new HoaDonBLL();
+
+        bool RoleNVThuNgan = RoleManager.RoleNVThuNgan();
+        bool RoleNVTiepNhan = RoleManager.RoleNVTiepNhan();
         public HoaDonControl()
         {
             InitializeComponent();
@@ -25,6 +28,8 @@ namespace TPVAXWinform_GUI.UserControls
         {
             LoadDSHD();
             InitializeFilters();
+            contextMenuStripHoaDon.Items["toolStripMenuItemXacNhanThanhToan"].Visible = RoleNVThuNgan;
+            contextMenuStripHoaDon.Items["toolStripMenuItemXemChiTiet"].Visible = RoleNVThuNgan || RoleNVTiepNhan;
         }
 
         // Public method để refresh data từ bên ngoài

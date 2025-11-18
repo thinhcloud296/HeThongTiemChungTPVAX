@@ -17,9 +17,11 @@ namespace TPVAXWinform_GUI.Forms
         private LoaiBenhBLL loaiBenhBLL = new LoaiBenhBLL();
         private LoaiVaccineBLL loaiVaccineBLL = new LoaiVaccineBLL();
         private NhaCungCapBLL nhaCungCapBLL = new NhaCungCapBLL();
+        private VaccineBLL vaccineBLL = new VaccineBLL();
         private DataTable dtLoaiBenh;
         private DataTable dtLoaiVaccine;
         private DataTable dtNhaCungCap;
+        private DataTable dtVaccine;
 
         public frmQuanLyDanhMuc()
         {
@@ -40,9 +42,10 @@ namespace TPVAXWinform_GUI.Forms
             LoadLoaiBenh();
             LoadLoaiVaccine();
             LoadNhaCungCap();
+            LoadVaccine();
         }
 
-        #region Lo?i B?nh
+        #region Loại Bệnh
         private void LoadLoaiBenh()
         {
             dtLoaiBenh = loaiBenhBLL.GetData();
@@ -167,7 +170,7 @@ namespace TPVAXWinform_GUI.Forms
         }
         #endregion
 
-        #region Lo?i Vaccine
+        #region Loại Vaccine
         private void LoadLoaiVaccine()
         {
             dtLoaiVaccine = loaiVaccineBLL.GetData();
@@ -426,6 +429,212 @@ namespace TPVAXWinform_GUI.Forms
             txtTenNganHang.Clear();
             txtSoTK.Clear();
             dgvNhaCungCap.ClearSelection();
+        }
+        #endregion
+
+        #region Vaccine
+        private void LoadVaccine()
+        {
+            dtVaccine = vaccineBLL.GetData();
+            BindDataToGridVaccine(dtVaccine);
+            LoadLoaiVaccineComboBox();
+        }
+
+        private void LoadLoaiVaccineComboBox()
+        {
+            DataTable dtLoaiVC = loaiVaccineBLL.GetData();
+            cboMaLoaiVC.DataSource = dtLoaiVC;
+            cboMaLoaiVC.DisplayMember = "TenLoai";
+            cboMaLoaiVC.ValueMember = "MaLoai";
+            cboMaLoaiVC.SelectedIndex = -1;
+        }
+
+        private void BindDataToGridVaccine(DataTable dt)
+        {
+            dgvVaccine.AutoGenerateColumns = false;
+            colMaVC.DataPropertyName = "MaVC";
+            colTenVC.DataPropertyName = "TenVC";
+            colSoMuiToiDa.DataPropertyName = "SoMuiToiDa";
+            colSoThangCho.DataPropertyName = "SoThangCho";
+            colGiaBan.DataPropertyName = "GiaBan";
+            colSoLuongTon.DataPropertyName = "SoLuongTon";
+            colMaLoaiVC.DataPropertyName = "MaLoai";
+            dgvVaccine.DataSource = dt;
+        }
+
+        private void txtTimKiemVC_TextChanged(object sender, EventArgs e)
+        {
+            if (dtVaccine == null) return;
+
+            string searchText = txtTimKiemVC.Text.Trim();
+            if (string.IsNullOrEmpty(searchText))
+            {
+                dgvVaccine.DataSource = dtVaccine;
+                return;
+            }
+
+            DataView dv = dtVaccine.DefaultView;
+            dv.RowFilter = $"TenVC LIKE '%{searchText.Replace("'", "''")}%'";
+            dgvVaccine.DataSource = dv.ToTable();
+        }
+
+        private void btnThemVC_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtTenVC.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (cboMaLoaiVC.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn loại vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                VaccineDTO vaccine = new VaccineDTO
+                {
+                    MaVC = vaccineBLL.CreateNewMaVC(),
+                    TenVC = txtTenVC.Text.Trim(),
+                    MoTa = txtMoTaVC.Text.Trim(),
+                    SoMuiToiDa = string.IsNullOrWhiteSpace(txtSoMuiToiDaVC.Text) ? 0 : int.Parse(txtSoMuiToiDaVC.Text),
+                    SoThangCho = string.IsNullOrWhiteSpace(txtSoThangChoVC.Text) ? 0 : int.Parse(txtSoThangChoVC.Text),
+                    GiaBan = string.IsNullOrWhiteSpace(txtGiaBanVC.Text) ? 0 : decimal.Parse(txtGiaBanVC.Text),
+                    SoLuongTon = string.IsNullOrWhiteSpace(txtSoLuongTonVC.Text) ? 0 : int.Parse(txtSoLuongTonVC.Text),
+                    MaLoai = cboMaLoaiVC.SelectedValue.ToString(),
+                    HinhAnh = ""
+                };
+
+                vaccineBLL.Insert(vaccine);
+                MessageBox.Show("Thêm vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadVaccine();
+                ClearVaccineInputs();
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Vui lòng nhập đúng định dạng số cho các trường số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm vaccine: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnSuaVC_Click(object sender, EventArgs e)
+        {
+            if (dgvVaccine.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn vaccine cần sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtTenVC.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (cboMaLoaiVC.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn loại vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string maVC = dgvVaccine.SelectedRows[0].Cells["colMaVC"].Value.ToString();
+                VaccineDTO vaccine = new VaccineDTO
+                {
+                    MaVC = maVC,
+                    TenVC = txtTenVC.Text.Trim(),
+                    MoTa = txtMoTaVC.Text.Trim(),
+                    SoMuiToiDa = string.IsNullOrWhiteSpace(txtSoMuiToiDaVC.Text) ? 0 : int.Parse(txtSoMuiToiDaVC.Text),
+                    SoThangCho = string.IsNullOrWhiteSpace(txtSoThangChoVC.Text) ? 0 : int.Parse(txtSoThangChoVC.Text),
+                    GiaBan = string.IsNullOrWhiteSpace(txtGiaBanVC.Text) ? 0 : decimal.Parse(txtGiaBanVC.Text),
+                    SoLuongTon = string.IsNullOrWhiteSpace(txtSoLuongTonVC.Text) ? 0 : int.Parse(txtSoLuongTonVC.Text),
+                    MaLoai = cboMaLoaiVC.SelectedValue.ToString(),
+                    HinhAnh = dgvVaccine.SelectedRows[0].Cells["colMaVC"].Value != DBNull.Value ? 
+ vaccineBLL.GetVaccineByMaVC(maVC)?.HinhAnh ?? "" : ""
+                };
+
+                vaccineBLL.Edit(vaccine);
+                MessageBox.Show("Sửa vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadVaccine();
+                ClearVaccineInputs();
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Vui lòng nhập đúng định dạng số cho các trường số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi sửa vaccine: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvVaccine_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvVaccine.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = dgvVaccine.SelectedRows[0];
+                txtTenVC.Text = row.Cells["colTenVC"].Value?.ToString() ?? "";
+                txtMoTaVC.Text = "";
+                txtSoMuiToiDaVC.Text = row.Cells["colSoMuiToiDa"].Value?.ToString() ?? "0";
+                txtSoThangChoVC.Text = row.Cells["colSoThangCho"].Value?.ToString() ?? "0";
+                txtGiaBanVC.Text = row.Cells["colGiaBan"].Value?.ToString() ?? "0";
+                txtSoLuongTonVC.Text = row.Cells["colSoLuongTon"].Value?.ToString() ?? "0";
+
+                // Set combo box value
+                string maLoai = row.Cells["colMaLoaiVC"].Value?.ToString() ?? "";
+                if (!string.IsNullOrEmpty(maLoai))
+                {
+                    cboMaLoaiVC.SelectedValue = maLoai;
+                }
+                else
+                {
+                    cboMaLoaiVC.SelectedIndex = -1;
+                }
+
+                // Load full vaccine details including MoTa
+                try
+                {
+                    string maVC = row.Cells["colMaVC"].Value?.ToString() ?? "";
+                    if (!string.IsNullOrEmpty(maVC))
+                    {
+                        VaccineDTO vaccine = vaccineBLL.GetVaccineByMaVC(maVC);
+                        if (vaccine != null)
+                        {
+                            txtMoTaVC.Text = vaccine.MoTa;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Ignore error when loading details
+                    Console.WriteLine("Error loading vaccine details: " + ex.Message);
+                }
+            }
+        }
+
+        private void btnLamMoiVC_Click(object sender, EventArgs e)
+        {
+            ClearVaccineInputs();
+            LoadVaccine();
+            txtTimKiemVC.Clear();
+        }
+
+        private void ClearVaccineInputs()
+        {
+            txtTenVC.Clear();
+            txtMoTaVC.Clear();
+            txtSoMuiToiDaVC.Clear();
+            txtSoThangChoVC.Clear();
+            txtGiaBanVC.Clear();
+            txtSoLuongTonVC.Clear();
+            cboMaLoaiVC.SelectedIndex = -1;
+            dgvVaccine.ClearSelection();
         }
         #endregion
     }
