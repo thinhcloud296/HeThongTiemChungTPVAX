@@ -1,111 +1,124 @@
 @using System.Web.Optimization
+
 @model TPVAXWebsite.Models.ViewModels.LoginViewModel
 
 @{
     ViewBag.Title = "Đăng nhập";
 }
+<meta charset="UTF-8" />
 
-<section class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
-            <div class="card shadow-sm">
-                <div class="card-body p-5">
-                    <div class="text-center mb-4">
-                        <img src="@Url.Content("~/Content/Assets/Images/logo.png")" alt="TPVAX Logo" style="height: 60px" class="mb-3" />
-                        <h2 class="h4 text-primary fw-bold">Đăng nhập tài khoản</h2>
-                        <p class="text-muted">Chào mừng bạn trở lại TPVAX</p>
-                    </div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Đăng nhập tài khoản TPVAX để quản lý lịch tiêm chủng, xem thông tin vaccine và nhận ưu đãi đặc biệt." />
+    <meta name="keywords" content="đăng nhập, TPVAX, tài khoản, tiêm chủng, vaccine" />
+    <link rel="icon" type="image/png" href="@Url.Content(" ~ /Content/Assets/Images/logo.png")" />
+    <link rel="stylesheet" href="@Url.Content(" ~ /Content/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content(" ~ /Content/main_style.css")" />
+    <link rel="stylesheet" href="@Url.Content(" ~ /Content/layout_page_style.css")" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-left">
+            <div class="brand-content">
+                <div class="brand-logo"><i class="fas fa-syringe"></i></div>
+                <h1>TPVAX</h1>
+                <p>Hệ thống tiêm chủng vaccine hàng đầu Việt Nam. An toàn - Chuyên nghiệp - Tiện lợi.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-shield-alt"></i><span>Vaccine chính hãng, nguồn gốc rõ ràng</span></li>
+                    <li><i class="fas fa-user-md"></i><span>Đội ngũ bác sĩ chuyên môn cao</span></li>
+                    <li><i class="fas fa-calendar-check"></i><span>Đặt lịch online nhanh chóng</span></li>
+                    <li><i class="fas fa-chart-line"></i><span>Theo dõi lịch sử tiêm chủng</span></li>
+                </ul>
+            </div>
+        </div>
 
-                    @if (ViewBag.ErrorMessage != null)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.ErrorMessage
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    }
-
-                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <div class="mb-3">
-                            <label for="TenDangNhap" class="form-label fw-semibold">
-                                <i class="fas fa-user me-1"></i>Tên đăng nhập hoặc Email
-                            </label>
-                            @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control form-control-lg", placeholder = "Nhập tên đăng nhập hoặc email", required = "required" })
-                            @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger small" })
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="MatKhau" class="form-label fw-semibold">
-                                <i class="fas fa-lock me-1"></i>Mật khẩu
-                            </label>
-                            <div class="input-group">
-                                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control form-control-lg", placeholder = "Nhập mật khẩu", required = "required", id = "password-input" })
-                                <button class="btn btn-outline-secondary" type="button" id="toggle-password">
-                                    <i class="fas fa-eye" id="eye-icon"></i>
-                                </button>
-                            </div>
-                            @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small" })
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div class="form-check">
-                                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input", id = "rememberMe" })
-                                <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
-                            </div>
-                            <a href="@Url.Action("ForgotPassword", "Account")" class="text-primary small text-decoration-none">Quên mật khẩu?</a>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
-                            <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
-                        </button>
-
-                        <div class="text-center">
-                            <span class="text-muted">Chưa có tài khoản?</span>
-                            <a href="@Url.Action("Register", "Account")" class="text-primary fw-semibold text-decoration-none ms-1">Đăng ký ngay</a>
-                        </div>
-                    }
-
-                    <hr class="my-4" />
-
-                    <div class="text-center">
-                        <p class="text-muted small mb-2">Hoặc đăng nhập bằng</p>
-                        <div class="d-flex gap-2 justify-content-center">
-                            <button type="button" class="btn btn-outline-primary flex-fill">
-                                <i class="fab fa-google me-1"></i>Google
-                            </button>
-                            <button type="button" class="btn btn-outline-info flex-fill">
-                                <i class="fab fa-facebook-f me-1"></i>Facebook
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <div class="auth-right">
+            <div class="back-home">
+                <a href="@Url.Action(" Index","Home")">
+                    <i class="fas fa-home"></i><span>Trang chủ</span>
+                </a>
             </div>
 
-            <div class="text-center mt-4">
-                <a href="@Url.Action("Index", "Home")" class="text-muted text-decoration-none">
-                    <i class="fas fa-arrow-left me-2"></i>Quay lại trang chủ
-                </a>
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Chào mừng trở lại! 👋</h2>
+                    <p>Đăng nhập để tiếp tục quản lý sức khỏe của bạn</p>
+                </div>
+
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>@TempData["SuccessMessage"]</span>
+                </div>
+                }
+
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "auth-form", id = "loginForm" }))
+                {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TenDangNhap, "Email hoặc Số điện thoại")
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "VD: example@email.com hoặc 0912345678", autocomplete = "username", id = "login-email" })
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MatKhau, "Mật khẩu")
+                    <div class="input-group">
+                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu của bạn", autocomplete = "current-password", id = "login-password" })
+                        <button type="button" class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></button>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        @Html.CheckBoxFor(m => m.RememberMe, new { id = "rememberMe" })
+                        <span>Ghi nhớ đăng nhập</span>
+                    </label>
+                    <a href="#" class="forgot-password" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Đăng Nhập Ngay
+                </button>
+                }
+
+                <div class="divider"><span>Hoặc tiếp tục với</span></div>
+                <div class="social-login">
+                    <button class="social-btn google"><i class="fab fa-google"></i><span>Google</span></button>
+                    <button class="social-btn facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></button>
+                </div>
+
+                <p class="auth-switch">Chưa có tài khoản? <a href="@Url.Action(" Register","Account")">Đăng ký miễn phí</a></p>
             </div>
         </div>
     </div>
-</section>
 
-@section scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content(" ~ /Content/bootstrap.bundle.min.js")"></script>
     <script>
-        // Toggle password visibility
-        $('#toggle-password').click(function () {
-            const passwordInput = $('#password-input');
-            const eyeIcon = $('#eye-icon');
-            if (passwordInput.attr('type') === 'password') {
-                passwordInput.attr('type', 'text');
-                eyeIcon.removeClass('fa-eye').addClass('fa-eye-slash');
-            } else {
-                passwordInput.attr('type', 'password');
-                eyeIcon.removeClass('fa-eye-slash').addClass('fa-eye');
-            }
-        });
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('login-password');
+        if (togglePassword) {
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        }
     </script>
-}
+</body>
+</html>
