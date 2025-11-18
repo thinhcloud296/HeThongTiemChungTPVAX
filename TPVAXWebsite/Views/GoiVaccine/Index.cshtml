@@ -1,0 +1,430 @@
+﻿@{
+    ViewBag.Title = "Gói Vắc Xin Bảo Vệ Toàn Diện";
+}
+
+<!-- Hero Banner -->
+      <section class="package-hero-banner" style="background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%); padding: 60px 0;">
+        <div class="container text-center text-white">
+          <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-box-open me-3"></i>Gói Vắc Xin Bảo Vệ Toàn Diện
+          </h1>
+          <p class="lead mb-4">Tiết kiệm chi phí - Đảm bảo lịch tiêm khoa học - Bảo vệ sức khỏe cả gia đình</p>
+          <div class="d-flex justify-content-center gap-4 flex-wrap">
+            <div class="commitment-badge">
+              <i class="fas fa-bell fs-1 mb-2"></i>
+              <p class="mb-0"><strong>Miễn phí nhắc lịch hẹn</strong><br/>Chính xác & khoa học</p>
+            </div>
+            <div class="commitment-badge">
+              <i class="fas fa-tag fs-1 mb-2"></i>
+              <p class="mb-0"><strong>Cam kết giữ giá</strong><br/>Suốt phác đồ tiêm</p>
+            </div>
+            <div class="commitment-badge">
+              <i class="fas fa-check-circle fs-1 mb-2"></i>
+              <p class="mb-0"><strong>Luôn đủ vắc xin</strong><br/>Không lo khan hiếm</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Package Tabs -->
+      <section class="container my-5">
+        <ul class="nav nav-pills nav-fill mb-4" id="packageTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="age-tab" data-bs-toggle="tab" data-bs-target="#age-packages" type="button" role="tab" aria-controls="age-packages" aria-selected="true">
+              <i class="fas fa-baby me-2"></i>Theo Độ Tuổi
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="target-tab" data-bs-toggle="tab" data-bs-target="#target-packages" type="button" role="tab" aria-controls="target-packages" aria-selected="false">
+              <i class="fas fa-users me-2"></i>Theo Đối Tượng
+            </button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="packageTabsContent">
+          <!-- Theo Độ Tuổi -->
+          <div class="tab-pane fade show active" id="age-packages" role="tabpanel" aria-labelledby="age-tab">
+            <h2 class="text-center text-primary fw-bold mb-4">6 GÓI VẮC XIN THEO ĐỘ TUỔI</h2>
+            
+            <div class="row g-4">
+              <!-- Gói 6 tháng -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-baby fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói vắc xin 6 tháng tuổi</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 554.850₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">5-6 loại vaccine cơ bản cho bé 6 tháng tuổi</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Vaccine 6 trong 1</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Phòng Rotavirus</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Phòng Phế cầu</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Phòng Não mô cầu B</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">12.683.000₫</span>
+                        <span class="text-danger fw-bold fs-4">12.128.150₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="6months">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-6months" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gói 12 tháng -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-child fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói vắc xin 12 tháng tuổi</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 855.960₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">7-8 loại vaccine quan trọng cho bé 1 tuổi</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Sởi - Quai bị - Rubella</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Thủy đậu</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Viêm gan A</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Não mô cầu ACYW</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">18.450.000₫</span>
+                        <span class="text-danger fw-bold fs-4">17.594.040₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="12months">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-12months" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gói 24 tháng -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-child fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói vắc xin 24 tháng tuổi</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 1.089.150₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">Gói vaccine toàn diện cho bé 2 tuổi</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Vaccine 6 trong 1 (nhắc lại)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Viêm gan A (mũi 2)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Sốt xuất huyết</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Não mô cầu (nhắc lại)</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">22.890.000₫</span>
+                        <span class="text-danger fw-bold fs-4">21.800.850₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="24months">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-24months" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gói tiền học đường -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-school fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói trẻ tiền học đường (3-9 tuổi)</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 634.390₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">Chuẩn bị sức khỏe tốt nhất cho bé đi học</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Cúm mùa hàng năm</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Thủy đậu (liều nhắc)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Não mô cầu (nhắc lại)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Kiểm tra miễn dịch</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">8.950.000₫</span>
+                        <span class="text-danger fw-bold fs-4">8.315.610₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="preschool">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-preschool" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gói thanh thiếu niên -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-user-graduate fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói thanh thiếu niên (9-18 tuổi)</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 906.790₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">Vaccine quan trọng cho tuổi dậy thì</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>HPV 9 giá (Gardasil 9)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Não mô cầu ACYW & B</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Cúm mùa</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Viêm gan B (nếu thiếu)</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">14.670.000₫</span>
+                        <span class="text-danger fw-bold fs-4">13.763.210₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="teen">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-teen" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gói người trưởng thành -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-user-tie fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói cho người trưởng thành</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 842.290₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">Vaccine cần thiết cho người lớn khỏe mạnh</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>HPV (nếu chưa tiêm)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Cúm mùa hàng năm</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Viêm gan B</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Zona thần kinh (50+)</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">11.250.000₫</span>
+                        <span class="text-danger fw-bold fs-4">10.407.710₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="adult">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-adult" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Theo Đối Tượng -->
+          <div class="tab-pane fade" id="target-packages" role="tabpanel" aria-labelledby="target-tab">
+            <h2 class="text-center text-primary fw-bold mb-4">3 GÓI VẮC XIN THEO ĐỐI TƯỢNG</h2>
+            
+            <div class="row g-4">
+              <!-- Gói tiền hôn nhân -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-rings-wedding fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói vắc xin tiền hôn nhân</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 506.490₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">Chuẩn bị sức khỏe tốt nhất trước kết hôn</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Sởi - Quai bị - Rubella</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Thủy đậu</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>HPV (cho cả nam & nữ)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Viêm gan B</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Kiểm tra miễn dịch</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">9.850.000₫</span>
+                        <span class="text-danger fw-bold fs-4">9.343.510₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="prewedding">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-prewedding" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gói trước mang thai -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-baby-carriage fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói cho phụ nữ trước mang thai</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 175.140₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">Bảo vệ mẹ và bé ngay từ khi chuẩn bị</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Rubella (Sởi - Quai bị)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Thủy đậu</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Viêm gan B</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Cúm mùa</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Tư vấn chuyên sâu</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">3.450.000₫</span>
+                        <span class="text-danger fw-bold fs-4">3.274.860₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="prepregnancy">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-prepregnancy" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gói 50+ bệnh mãn tính -->
+              <div class="col-lg-4 col-md-6">
+                <div class="package-card-modern h-100">
+                  <div class="package-card-header-modern">
+                    <div class="package-icon-circle">
+                      <i class="fas fa-user-nurse fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 mt-3 mb-2">Gói cho người 50+ có bệnh mãn tính</h3>
+                    <span class="badge bg-danger fs-6">Giảm tới 743.240₫</span>
+                  </div>
+                  <div class="package-card-body-modern">
+                    <p class="text-muted mb-3">Vaccine quan trọng cho người cao tuổi</p>
+                    <ul class="package-features">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Cúm mùa (hàng năm)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Phế cầu (Synflorix)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Zona thần kinh</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Viêm gan B</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Tư vấn chuyên khoa</li>
+                    </ul>
+                    <div class="price-section mt-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted text-decoration-line-through">12.683.000₫</span>
+                        <span class="text-danger fw-bold fs-4">11.939.760₫</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#packageDetailModal" data-package="senior">
+                        <i class="fas fa-calendar-check me-2"></i>Đặt hẹn ngay
+                      </button>
+                      <a href="#detail-senior" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Xem chi tiết gói
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Packages Section -->
+      <section class="why-packages-section py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+        <div class="container">
+          <h2 class="text-center text-primary fw-bold mb-5">TẠI SAO NÊN CHỌN GÓI VẮC XIN?</h2>
+          <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="benefit-card text-center p-4 bg-white rounded-4 h-100 shadow-sm">
+                <div class="benefit-icon mb-3">
+                  <i class="fas fa-piggy-bank fs-1 text-success"></i>
+                </div>
+                <h4 class="h5 mb-3">Tiết kiệm chi phí</h4>
+                <p class="text-muted mb-0">Giảm giá lên đến 10% so với tiêm lẻ từng mũi</p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="benefit-card text-center p-4 bg-white rounded-4 h-100 shadow-sm">
+                <div class="benefit-icon mb-3">
+                  <i class="fas fa-calendar-alt fs-1 text-info"></i>
+                </div>
+                <h4 class="h5 mb-3">Lịch tiêm khoa học</h4>
+                <p class="text-muted mb-0">Phác đồ được tính toán kỹ lưỡng theo độ tuổi</p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="benefit-card text-center p-4 bg-white rounded-4 h-100 shadow-sm">
+                <div class="benefit-icon mb-3">
+                  <i class="fas fa-shield-virus fs-1 text-warning"></i>
+                </div>
+                <h4 class="h5 mb-3">Bảo vệ toàn diện</h4>
+                <p class="text-muted mb-0">Phòng ngừa đầy đủ các bệnh nguy hiểm theo lứa tuổi</p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="benefit-card text-center p-4 bg-white rounded-4 h-100 shadow-sm">
+                <div class="benefit-icon mb-3">
+                  <i class="fas fa-user-md fs-1 text-danger"></i>
+                </div>
+                <h4 class="h5 mb-3">Tư vấn chuyên sâu</h4>
+                <p class="text-muted mb-0">Bác sĩ hỗ trợ tận tình trong suốt phác đồ</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-package-section py-5" style="background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);">
+        <div class="container text-center text-white">
+          <h2 class="fw-bold mb-3">Chưa biết nên chọn gói nào?</h2>
+          <p class="lead mb-4">Liên hệ ngay với chúng tôi để được tư vấn miễn phí gói vaccine phù hợp nhất</p>
+          <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="tel:0975088626" class="btn btn-warning btn-lg">
+              <i class="fas fa-phone-alt me-2"></i>Gọi ngay: 0975 088 626
+            </a>
+            <a href="@Url.Action("ToiNenTiemGi", "Home")" class="btn btn-light btn-lg">
+              <i class="fas fa-question-circle me-2"></i>Tôi nên tiêm gì?
+            </a>
+          </div>
+        </div>
+      </section>
+
