@@ -43,15 +43,15 @@ namespace TPVAXWebsite.Controllers
                 TongSoLichHen = _unitOfWork.Repository<LichTiem>().GetAll().Count(),
                 TongDoanhThu = _unitOfWork.Repository<HoaDon>()
                     .GetAll()
-                    .Where(h => h.TrangThai == "Đã thanh toán")
+                    .Where(h => h.TrangThai == true )
                     .Sum(h => (decimal?)h.TongTien) ?? 0,
                 LichHenHomNay = _unitOfWork.Repository<LichTiem>()
                     .GetAll()
-                    .Where(l => l.NgayHen.Date == DateTime.Today)
+                    .Where(l => l.NgayHenTiem.Date == DateTime.Today)
                     .Count(),
                 VaccineSapHet = _unitOfWork.Repository<Vaccine>()
                     .GetAll()
-                    .Where(v => v.SoLuongTonKho < 10)
+                    .Where(v => v.SoLuongTon < 10)
                     .Count()
             };
 
@@ -67,7 +67,7 @@ namespace TPVAXWebsite.Controllers
         {
             var vaccines = _unitOfWork.Repository<Models.Domain.Vaccine>()
                 .GetAll()
-                .OrderByDescending(v => v.NgayNhap)
+               // .OrderByDescending(v => v.NgayNhap)
                 .ToList();
 
             return View(vaccines);
@@ -82,8 +82,8 @@ namespace TPVAXWebsite.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    vaccine.MaVaccine = Guid.NewGuid().ToString();
-                    vaccine.NgayNhap = DateTime.Now;
+                    vaccine.MaVC = Guid.NewGuid().ToString();
+                 //   vaccine.NgayLap = DateTime.Now;
                     _unitOfWork.Repository<Vaccine>().Add(vaccine);
                     _unitOfWork.SaveChanges();
 
@@ -131,7 +131,7 @@ namespace TPVAXWebsite.Controllers
                 var vaccine = _unitOfWork.Repository<Vaccine>().GetById(id);
                 if (vaccine != null)
                 {
-                    _unitOfWork.Repository<Vaccine>().Delete(vaccine);
+                    _unitOfWork.Repository<Vaccine>().Remove(vaccine);
                     _unitOfWork.SaveChanges();
 
                     return Json(new { success = true, message = "Xóa vắc xin thành công!" });
@@ -154,7 +154,7 @@ namespace TPVAXWebsite.Controllers
         {
             var customers = _unitOfWork.Repository<KhachHang>()
                 .GetAll()
-                .OrderByDescending(k => k.NgayTao)
+                .OrderByDescending(k => k.NgaySinh)
                 .ToList();
 
             return View(customers);
@@ -181,7 +181,7 @@ namespace TPVAXWebsite.Controllers
         {
             var appointments = _unitOfWork.Repository<LichTiem>()
                 .GetAll()
-                .OrderByDescending(l => l.NgayHen)
+                .OrderByDescending(l => l.NgayHenTiem)
                 .ToList();
 
             return View(appointments);
@@ -197,13 +197,12 @@ namespace TPVAXWebsite.Controllers
                 var appointment = _unitOfWork.Repository<LichTiem>().GetById(id);
                 if (appointment != null)
                 {
-                    appointment.TrangThai = status;
+                    // Sửa: Chuyển string sang bool
+                    appointment.TrangThai = (status == "Đã tiêm" || status == "Hoàn thành" || status == "true");
                     _unitOfWork.Repository<LichTiem>().Update(appointment);
                     _unitOfWork.SaveChanges();
-
                     return Json(new { success = true, message = "Cập nhật trạng thái thành công!" });
                 }
-
                 return Json(new { success = false, message = "Không tìm thấy lịch hẹn!" });
             }
             catch (Exception ex)
@@ -260,7 +259,7 @@ namespace TPVAXWebsite.Controllers
         {
             var suppliers = _unitOfWork.Repository<NhaCungCap>()
                 .GetAll()
-                .OrderBy(n => n.TenNhaCungCap)
+                .OrderBy(n => n.TenNCC)
                 .ToList();
 
             return View(suppliers);
@@ -275,7 +274,7 @@ namespace TPVAXWebsite.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    nhaCungCap.MaNhaCungCap = Guid.NewGuid().ToString();
+                    nhaCungCap.MaNCC = Guid.NewGuid().ToString();
                     _unitOfWork.Repository<NhaCungCap>().Add(nhaCungCap);
                     _unitOfWork.SaveChanges();
 
@@ -314,7 +313,7 @@ namespace TPVAXWebsite.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    nhanVien.MaNhanVien = Guid.NewGuid().ToString();
+                    nhanVien.MaNV = Guid.NewGuid().ToString();
                     _unitOfWork.Repository<NhanVien>().Add(nhanVien);
                     _unitOfWork.SaveChanges();
 
@@ -338,7 +337,7 @@ namespace TPVAXWebsite.Controllers
         {
             var phieuNhaps = _unitOfWork.Repository<PhieuNhapVaccine>()
                 .GetAll()
-                .OrderByDescending(p => p.NgayNhap)
+                .OrderByDescending(p => p.NgayLap)
                 .ToList();
 
             return View(phieuNhaps);
@@ -353,8 +352,8 @@ namespace TPVAXWebsite.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    phieuNhap.MaPhieuNhap = Guid.NewGuid().ToString();
-                    phieuNhap.NgayNhap = DateTime.Now;
+                    phieuNhap.MaPN = Guid.NewGuid().ToString();
+                    phieuNhap.NgayLap = DateTime.Now;
                     _unitOfWork.Repository<PhieuNhapVaccine>().Add(phieuNhap);
                     _unitOfWork.SaveChanges();
 
@@ -378,8 +377,8 @@ namespace TPVAXWebsite.Controllers
         {
             var appointments = _unitOfWork.Repository<LichTiem>()
                 .GetAll()
-                .Where(l => l.NgayHen >= DateTime.Today)
-                .OrderBy(l => l.NgayHen)
+                .Where(l => l.NgayHenTiem >= DateTime.Today)
+                .OrderBy(l => l.NgayHenTiem)
                 .ToList();
 
             return View(appointments);
@@ -408,7 +407,7 @@ namespace TPVAXWebsite.Controllers
             var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             return _unitOfWork.Repository<HoaDon>()
                 .GetAll()
-                .Where(h => h.NgayLap >= startOfMonth && h.TrangThai == "Đã thanh toán")
+                .Where(h => h.NgayLap >= startOfMonth && h.TrangThai == true)
                 .Sum(h => (decimal?)h.TongTien) ?? 0;
         }
 
@@ -417,7 +416,7 @@ namespace TPVAXWebsite.Controllers
             var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             return _unitOfWork.Repository<LichTiem>()
                 .GetAll()
-                .Where(l => l.NgayHen >= startOfMonth && l.TrangThai == "Đã tiêm")
+                .Where(l => l.NgayHenTiem >= startOfMonth && l.TrangThai == true)
                 .Count();
         }
 
@@ -458,20 +457,24 @@ namespace TPVAXWebsite.Controllers
         // POST: Admin/UpdateProfile
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateProfile(TaiKhoan model)
+        public ActionResult UpdateProfile(NhanVien model)  // ĐỔI THÀNH NhanVien
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var taiKhoan = _unitOfWork.Repository<TaiKhoan>().GetById(model.MaTaiKhoan);
-                    if (taiKhoan != null)
+                    var nhanVien = _unitOfWork.Repository<NhanVien>()
+                        .GetById(model.MaNV);   // Dùng MaNV, không phải MaTK
+
+                    if (nhanVien != null)
                     {
-                        taiKhoan.HoTen = model.HoTen;
-                        taiKhoan.Email = model.Email;
-                        taiKhoan.SoDienThoai = model.SoDienThoai;
-                        
-                        _unitOfWork.Repository<TaiKhoan>().Update(taiKhoan);
+                        nhanVien.HoTen = model.HoTen;
+                        nhanVien.Email = model.Email;
+                        nhanVien.SoDT = model.SoDT;        // Đúng tên cột trong DB
+                                                           // nhanVien.DiaChi = model.DiaChi; // thêm nếu cần
+                                                           // nhanVien.GioiTinh = model.GioiTinh;
+
+                        _unitOfWork.Repository<NhanVien>().Update(nhanVien);
                         _unitOfWork.SaveChanges();
 
                         TempData["SuccessMessage"] = "Cập nhật thông tin thành công!";
@@ -504,7 +507,7 @@ namespace TPVAXWebsite.Controllers
 
             var chiTiet = _unitOfWork.Repository<ChiTietHoaDon>()
                 .GetAll()
-                .Where(c => c.MaHoaDon == id)
+                .Where(c => c.MaHD == id)
                 .ToList();
 
             var viewModel = new InvoiceDetailsViewModel
