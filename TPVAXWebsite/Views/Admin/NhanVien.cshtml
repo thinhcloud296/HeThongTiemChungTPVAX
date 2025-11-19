@@ -1,6 +1,5 @@
-﻿@model IEnumerable<TPVAXWebsite.Models.Domain.NhanVien>
-@{
-    ViewBag.Title = "Quản Lý Nhân Viên";
+﻿@{
+    ViewBag.Title = "Quản lý Nhân viên";
 }
 
 <section class="content-header">
@@ -281,3 +280,310 @@
           </div>
         </section>
       </div>
+
+      
+    </div>
+
+    <!-- Modal Thêm/Sửa Nhân viên -->
+    <div class="modal fade" id="nhanVienModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <h5 class="modal-title" id="modalTitle">Thêm Nhân Viên Mới</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="nhanVienForm" class="needs-validation" novalidate>
+              <input type="hidden" id="nvId" />
+
+              <h5 class="mb-3">
+                <i class="fas fa-user mr-2"></i>Thông tin cá nhân
+              </h5>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label"
+                    >Mã nhân viên <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="maNV"
+                    class="form-control"
+                    placeholder="VD: NV001"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Vui lòng nhập mã nhân viên.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label"
+                    >Họ và Tên <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="hoTen"
+                    class="form-control"
+                    placeholder="VD: Nguyễn Văn An"
+                    required
+                  />
+                  <div class="invalid-feedback">Vui lòng nhập họ tên.</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label"
+                    >Ngày sinh <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="date"
+                    id="ngaySinh"
+                    class="form-control"
+                    required
+                  />
+                  <div class="invalid-feedback">Vui lòng chọn ngày sinh.</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label"
+                    >Giới tính <span class="text-danger">*</span></label
+                  >
+                  <select id="gioiTinh" class="form-select" required>
+                    <option value="">-- Chọn --</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                  </select>
+                  <div class="invalid-feedback">Vui lòng chọn giới tính.</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label"
+                    >CMND/CCCD <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="cmnd"
+                    class="form-control"
+                    placeholder="VD: 001234567890"
+                    required
+                  />
+                  <div class="invalid-feedback">Vui lòng nhập CMND/CCCD.</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label"
+                    >Số điện thoại <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="tel"
+                    id="soDienThoai"
+                    class="form-control"
+                    placeholder="0912 345 678"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Vui lòng nhập số điện thoại.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label"
+                    >Email <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="example@tpvax.vn"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Vui lòng nhập email hợp lệ.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label"
+                  >Địa chỉ <span class="text-danger">*</span></label
+                >
+                <textarea
+                  id="diaChi"
+                  class="form-control"
+                  rows="2"
+                  placeholder="Nhập địa chỉ đầy đủ..."
+                  required
+                ></textarea>
+                <div class="invalid-feedback">Vui lòng nhập địa chỉ.</div>
+              </div>
+
+              <hr class="my-4" />
+              <h5 class="mb-3">
+                <i class="fas fa-briefcase mr-2"></i>Thông tin công việc
+              </h5>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label"
+                    >Chức vụ <span class="text-danger">*</span></label
+                  >
+                  <select id="chucVu" class="form-select" required>
+                    <option value="">-- Chọn chức vụ --</option>
+                    <option value="Bác sĩ">Bác sĩ</option>
+                    <option value="Điều dưỡng">Điều dưỡng</option>
+                    <option value="Nhân viên hành chính">
+                      Nhân viên hành chính
+                    </option>
+                    <option value="Dược sĩ">Dược sĩ</option>
+                    <option value="Kỹ thuật viên">Kỹ thuật viên</option>
+                  </select>
+                  <div class="invalid-feedback">Vui lòng chọn chức vụ.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label"
+                    >Ngày vào làm <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="date"
+                    id="ngayVaoLam"
+                    class="form-control"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Vui lòng chọn ngày vào làm.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Bằng cấp</label>
+                  <input
+                    type="text"
+                    id="bangCap"
+                    class="form-control"
+                    placeholder="VD: Bác sĩ Đa khoa"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Chứng chỉ hành nghề</label>
+                  <input
+                    type="text"
+                    id="chungChi"
+                    class="form-control"
+                    placeholder="VD: Số 12345/BYT"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Lương cơ bản (VNĐ)</label>
+                  <input
+                    type="number"
+                    id="luong"
+                    class="form-control"
+                    placeholder="VD: 15000000"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Trạng thái</label>
+                  <select id="trangThai" class="form-select">
+                    <option value="active">Đang làm việc</option>
+                    <option value="leave">Nghỉ phép</option>
+                    <option value="inactive">Nghỉ việc</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Ghi chú</label>
+                <textarea
+                  id="ghiChu"
+                  class="form-control"
+                  rows="2"
+                  placeholder="Ghi chú về nhân viên..."
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+            <button type="submit" form="nhanVienForm" class="btn btn-primary">
+              Lưu thông tin
+            </button>
+          </div>
+        </div>
+      </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/app.js"></script>
+
+@section scripts {
+<script>
+      $(document).ready(function () {
+        $("#nhanVienTable").DataTable({
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json",
+          },
+        });
+
+        // Set default date
+        document.getElementById("ngayVaoLam").valueAsDate = new Date();
+
+        // Form validation
+        $("#nhanVienForm").on("submit", function (e) {
+          e.preventDefault();
+          if (this.checkValidity()) {
+            Swal.fire({
+              title: "Thành công!",
+              text: "Đã lưu thông tin nhân viên.",
+              icon: "success",
+              timer: 2000,
+            });
+            $("#nhanVienModal").modal("hide");
+          }
+          this.classList.add("was-validated");
+        });
+
+        // Delete handler
+        $(document).on("click", ".btn-delete", function () {
+          Swal.fire({
+            title: "Xác nhận xóa?",
+            text: "Bạn có chắc muốn xóa nhân viên này?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Đã xóa!", "Nhân viên đã được xóa.", "success");
+            }
+          });
+        });
+      });
+
+      function resetForm() {
+        document.getElementById("nhanVienForm").reset();
+        document
+          .getElementById("nhanVienForm")
+          .classList.remove("was-validated");
+        document.getElementById("modalTitle").innerText = "Thêm Nhân Viên Mới";
+        document.getElementById("ngayVaoLam").valueAsDate = new Date();
+      }
+    </script>
+}

@@ -35,13 +35,6 @@ namespace TPVAXWebsite.Controllers
             return View();
         }
 
-        // GET: Admin/Calendar
-        public ActionResult Calendar()
-        {
-            // TODO: Hiển thị lịch hẹn
-            return View();
-        }
-
         // GET: Admin/GoiVaccine
         public ActionResult GoiVaccine()
         {
@@ -67,13 +60,6 @@ namespace TPVAXWebsite.Controllers
         public ActionResult NhanVien()
         {
             // TODO: Load danh sách nhân viên
-            return View();
-        }
-
-        // GET: Admin/PhieuNhap
-        public ActionResult PhieuNhap()
-        {
-            // TODO: Load danh sách phiếu nhập
             return View();
         }
 
