@@ -373,6 +373,9 @@
     <EmbeddedResource Include="UserControls\PhieuNhapControl.resx">
       <DependentUpon>PhieuNhapControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ThongKeControl.resx">
+      <DependentUpon>ThongKeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\VaccineControl.resx">
       <DependentUpon>VaccineControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -395,6 +398,8 @@
     <Content Include="Assets\Images\logo.png" />
     <None Include="Resources\Doctor Hospital GIF.gif" />
     <None Include="Resources\Doctor Hospital GIF1.gif" />
+    <Content Include="Forms\frmMain_ThongKe_Integration_Guide.txt" />
+    <Content Include="UserControls\ThongKeControl_Usage_Example.txt" />
     <Content Include="vaccine.ico" />
   </ItemGroup>
   <ItemGroup>

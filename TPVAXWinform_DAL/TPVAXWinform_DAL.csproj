@@ -78,6 +78,7 @@
     <Compile Include="PhieuNhapDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaiKhoanDAL.cs" />
+    <Compile Include="ThongKeDAL.cs" />
     <Compile Include="VaccineDAL.cs" />
   </ItemGroup>
   <ItemGroup>

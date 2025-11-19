@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TPVAXWinform_GUI.Forms;
-using Microsoft.SqlServer.Types;
 
 namespace TPVAXWinform
 {
@@ -23,7 +22,6 @@ namespace TPVAXWinform
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
             frmDangNhap loginForm = new frmDangNhap();
 
             // 1. Hiển thị form đăng nhập DƯỚI DẠNG DIALOG

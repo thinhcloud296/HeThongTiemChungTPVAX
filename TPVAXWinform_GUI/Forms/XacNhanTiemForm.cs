@@ -21,16 +21,9 @@ namespace TPVAXWinform_GUI.Forms
         private string tenVaccine;
         private string ngayHen;
         private int? soMui;
+        private string trangThai;
 
-        public XacNhanTiemForm(
-             string maLT,
-              string maHSTC,
-           string maVC,
-                    DateTime ngayHenTiem,
-         string tenNguoiTiem,
-          string tenVaccine,
-             string ngayHen,
-                    int? soMui)
+        public XacNhanTiemForm(string maLT,string maHSTC,string maVC,DateTime ngayHenTiem,string tenNguoiTiem,string tenVaccine,string ngayHen,int? soMui,string trangThai)
         {
             InitializeComponent();
 
@@ -42,6 +35,7 @@ namespace TPVAXWinform_GUI.Forms
             this.tenVaccine = tenVaccine;
             this.ngayHen = ngayHen;
             this.soMui = soMui;
+            this.trangThai = trangThai;
 
             LoadThongTin();
         }
@@ -106,10 +100,12 @@ namespace TPVAXWinform_GUI.Forms
 
                         // 3. Trừ số lượng tồn kho (Code cũ của bạn đã đúng)
                         // (Hàm này gọi proc usp_Vaccine_GiamTonKho, tự động trừ FEFO và Trigger)
-                        vaccineBLL.UpdateSoLuongTon(maVC, -1);
+                        if(!trangThai.Equals("Đã hủy", StringComparison.OrdinalIgnoreCase))
+                            vaccineBLL.UpdateSoLuongTon(maVC, -1);
 
                         // 4. GỌI HÀM TẠO LỊCH HẸN KẾ TIẾP (Code cũ của bạn đã đúng)
-                        lichTiemBLL.TaoLichHenKeTiep(this.maHSTC, this.maVC);
+                        if (!trangThai.Equals("Đã hủy", StringComparison.OrdinalIgnoreCase))
+                            lichTiemBLL.TaoLichHenKeTiep(this.maHSTC, this.maVC);
 
                         // 5. Hoàn tất giao dịch
                         scope.Complete();

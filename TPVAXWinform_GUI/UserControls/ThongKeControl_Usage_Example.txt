@@ -1,0 +1,180 @@
+========================================
+H??NG D?N S? D?NG ThongKeControl
+========================================
+
+1. THÊM CONTROL VÀO FORM
+------------------------
+Kéo th? ThongKeControl t? Toolbox vào Form c?a b?n ho?c t?o b?ng code:
+
+```csharp
+var thongKeControl = new ThongKeControl();
+thongKeControl.Dock = DockStyle.Fill;
+this.Controls.Add(thongKeControl);
+```
+
+2. C?P NH?T D? LI?U KPI
+------------------------
+C?p nh?t các th? KPI (Doanh thu, L??t tiêm, Khách m?i, S?p h?t h?n):
+
+```csharp
+thongKeControl.UpdateKPI(
+    doanhThu: 125500000m,    // Doanh thu tháng (decimal)
+    luotTiem: 450,           // S? l??t tiêm (int)
+    khachMoi: 120,          // S? khách m?i (int)
+    sapHetHan: 15  // S? vaccine s?p h?t h?n (int)
+);
+```
+
+3. C?P NH?T BI?U ?? DOANH THU (7 NGÀY)
+--------------------------------------
+C?p nh?t bi?u ?? c?t doanh thu 7 ngày g?n nh?t:
+
+```csharp
+double[] doanhThuValues = new double[] { 
+    1500000,  // Ch? nh?t
+    2300000,  // Th? 2
+    2100000,  // Th? 3
+    2500000,  // Th? 4
+    2200000,  // Th? 5
+    3000000,  // Th? 6
+    1800000   // Th? 7
+};
+
+string[] labels = new string[] { 
+    "CN", "T2", "T3", "T4", "T5", "T6", "T7" 
+};
+
+thongKeControl.UpdateDoanhThuChart(doanhThuValues, labels);
+```
+
+4. C?P NH?T BI?U ?? T? L? GÓI/L?
+---------------------------------
+C?p nh?t bi?u ?? tròn t? l? tiêm theo gói và tiêm l?:
+
+```csharp
+thongKeControl.UpdateTyLeChart(
+    goiValue: 350,  // S? l??t tiêm theo gói
+    leValue: 100    // S? l??t tiêm l?
+);
+```
+
+5. C?P NH?T DATAGRIDVIEW (B?NG CHI TI?T)
+-----------------------------------------
+C?p nh?t d? li?u cho 3 tab chi ti?t:
+
+a) Tab "Chi ti?t Doanh thu":
+```csharp
+DataTable dtDoanhThu = new DataTable();
+dtDoanhThu.Columns.Add("Ngày", typeof(DateTime));
+dtDoanhThu.Columns.Add("T?ng ti?n", typeof(decimal));
+dtDoanhThu.Columns.Add("S? l??t", typeof(int));
+
+dtDoanhThu.Rows.Add(DateTime.Now.AddDays(-6), 1500000, 25);
+dtDoanhThu.Rows.Add(DateTime.Now.AddDays(-5), 2300000, 38);
+// ... thêm d? li?u khác
+
+thongKeControl.UpdateDataGrid("doanhthu", dtDoanhThu);
+```
+
+b) Tab "Xu?t Nh?p T?n":
+```csharp
+DataTable dtXuatNhapTon = new DataTable();
+dtXuatNhapTon.Columns.Add("Vaccine", typeof(string));
+dtXuatNhapTon.Columns.Add("Nh?p", typeof(int));
+dtXuatNhapTon.Columns.Add("Xu?t", typeof(int));
+dtXuatNhapTon.Columns.Add("T?n", typeof(int));
+
+dtXuatNhapTon.Rows.Add("Vaccine A", 100, 80, 20);
+dtXuatNhapTon.Rows.Add("Vaccine B", 150, 120, 30);
+// ... thêm d? li?u khác
+
+thongKeControl.UpdateDataGrid("xuatnhapton", dtXuatNhapTon);
+```
+
+c) Tab "C?nh báo H?t h?n":
+```csharp
+DataTable dtSapHetHan = new DataTable();
+dtSapHetHan.Columns.Add("Vaccine", typeof(string));
+dtSapHetHan.Columns.Add("S? l??ng", typeof(int));
+dtSapHetHan.Columns.Add("Ngày h?t h?n", typeof(DateTime));
+dtSapHetHan.Columns.Add("Còn l?i (ngày)", typeof(int));
+
+dtSapHetHan.Rows.Add("Vaccine A", 5, DateTime.Now.AddDays(10), 10);
+dtSapHetHan.Rows.Add("Vaccine C", 3, DateTime.Now.AddDays(7), 7);
+// ... thêm d? li?u khác
+
+thongKeControl.UpdateDataGrid("saphethan", dtSapHetHan);
+```
+
+6. VÍ D? HOÀN CH?NH - LOAD D? LI?U T? DATABASE
+----------------------------------------------
+```csharp
+public void LoadDashboardData()
+{
+    try
+    {
+        // 1. C?p nh?t KPI
+        decimal doanhThuThang = GetDoanhThuThang(); // Method c?a b?n
+    int luotTiem = GetTongLuotTiem();
+        int khachMoi = GetKhachMoiThang();
+  int sapHetHan = GetVaccineSapHetHan();
+        
+        thongKeControl.UpdateKPI(doanhThuThang, luotTiem, khachMoi, sapHetHan);
+ 
+        // 2. C?p nh?t bi?u ?? doanh thu 7 ngày
+ var doanhThu7Ngay = GetDoanhThu7NgayGanNhat(); // Returns double[]
+        var labels7Ngay = GetLabels7Ngay();   // Returns string[]
+        thongKeControl.UpdateDoanhThuChart(doanhThu7Ngay, labels7Ngay);
+  
+        // 3. C?p nh?t bi?u ?? t? l?
+        int tiemGoi = GetTiemTheoGoi();
+        int tiemLe = GetTiemLe();
+        thongKeControl.UpdateTyLeChart(tiemGoi, tiemLe);
+        
+        // 4. C?p nh?t các b?ng chi ti?t
+  DataTable dtDoanhThu = GetChiTietDoanhThu();
+        thongKeControl.UpdateDataGrid("doanhthu", dtDoanhThu);
+        
+        DataTable dtXuatNhapTon = GetXuatNhapTon();
+        thongKeControl.UpdateDataGrid("xuatnhapton", dtXuatNhapTon);
+        
+      DataTable dtSapHetHan = GetDanhSachSapHetHan();
+   thongKeControl.UpdateDataGrid("saphethan", dtSapHetHan);
+ }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"L?i t?i d? li?u Dashboard: {ex.Message}", 
+    "L?i", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
+```
+
+7. GHI CHÚ QUAN TR?NG
+----------------------
+- ThongKeControl ???c thi?t k? v?i layout t?nh, t?t c? controls ???c t?o trong constructor
+- T?t c? controls s? d?ng Dock/TableLayoutPanel nên t? ??ng responsive
+- Các bi?u ?? LiveCharts ?ã ???c kh?i t?o v?i d? li?u m?c ??nh (giá tr? 0)
+- DataGridView có style ??ng b? và s?n sàng hi?n th? d? li?u
+- Không c?n g?i Refresh() sau khi c?p nh?t, LiveCharts t? ??ng update
+
+8. YÊU C?U PACKAGE
+-------------------
+??m b?o project ?ã cài ??t:
+- LiveCharts (>= 0.9.7)
+- LiveCharts.WinForms (>= 0.9.7.1)
+
+Cài ??t qua NuGet Package Manager ho?c Package Manager Console:
+```
+Install-Package LiveCharts
+Install-Package LiveCharts.WinForms
+```
+
+9. CUSTOM STYLE (TÙY CH?N)
+---------------------------
+N?u mu?n thay ??i màu s?c KPI ho?c bi?u ??, b?n có th?:
+- S?a tr?c ti?p trong method CreateKPICard() (dòng ~82)
+- Thay ??i Fill color c?a Series trong CreateChartSection() (dòng ~166 và ~230)
+
+========================================
+K?T THÚC H??NG D?N
+========================================

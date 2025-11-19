@@ -105,13 +105,7 @@ namespace TPVAXWinform_GUI.UserControls
                 return;
             }
 
-            // Kiểm tra nếu đã hủy (null hoặc rỗng)
-            if (trangThai.Equals("Đã hủy", StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(trangThai) || trangThai == "")
-            {
-                MessageBox.Show("Không thể xác nhận mũi tiêm đã bị hủy!", "Thông báo",
-            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+
 
             try
             {
@@ -131,7 +125,7 @@ namespace TPVAXWinform_GUI.UserControls
                     // Mở form xác nhận tiêm
                     XacNhanTiemForm form = new XacNhanTiemForm(
                     maLT, maHSTC, maVC, ngayHenTiem,
-                   tenNguoiTiem, tenVaccine, ngayHen, soMui);
+                   tenNguoiTiem, tenVaccine, ngayHen, soMui, trangThai);
 
                     if (form.ShowDialog() == DialogResult.OK)
                     {

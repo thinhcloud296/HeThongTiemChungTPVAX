@@ -363,7 +363,6 @@ namespace TPVAXWinform_GUI
 
         private void AddToList_Click(object sender, EventArgs e)
         {
-            // Dùng biến 'selectedVaccineRowIndex' đã được gán ở sự kiện MouseDown
             if (selectedVaccineRowIndex >= 0 && selectedVaccineRowIndex < dgvVaccine.Rows.Count)
             {
                 AddSelectedVaccineToWaitList(selectedVaccineRowIndex);
@@ -391,9 +390,6 @@ namespace TPVAXWinform_GUI
             // (Bạn cần thêm 2 cột 'colSoLuongTonThucTe' và 'colTongSoLuongTon' vào dgvVaccine trong Designer)
             if (dgvVaccine.Columns.Contains("colSoLuongTonThucTe"))
                 dgvVaccine.Columns["colSoLuongTonThucTe"].DataPropertyName = "SoLuongTonThucTe";
-
-            if (dgvVaccine.Columns.Contains("colTongSoLuongTon"))
-                dgvVaccine.Columns["colTongSoLuongTon"].DataPropertyName = "TongSoLuongTon";
             // --- KẾT THÚC SỬA ---
 
             dgvVaccine.DataSource = dt;
@@ -580,7 +576,7 @@ namespace TPVAXWinform_GUI
                     newHD.MaHD = hoaDonBLL.CreateNewMaHD();
                     newHD.NgayLap = DateTime.Now;
                     newHD.TongTien = TongGia;
-                    newHD.TrangThai = false;
+                    newHD.TrangThai = true;
                     newHD.MaKH = MaKHHSTC;
                     newHD.MaNV = null;
                     newHD.MaKM = null;
@@ -589,7 +585,7 @@ namespace TPVAXWinform_GUI
                     LichTiemDTO lichTiem = new LichTiemDTO();
                     lichTiem.MaLT = lichTiemBLL.CreateNewMaLT();
                     lichTiem.NgayHenTiem = ngayHen;
-                    lichTiem.NgayTiemThucTe = null;
+                    lichTiem.NgayTiemThucTe = DateTime.Now;
                     lichTiem.SoMui = soMui;
                     lichTiem.TrangThai = "Đã tiêm";
                     lichTiem.GhiChu = ghiChu;
@@ -778,7 +774,7 @@ namespace TPVAXWinform_GUI
                     newHD.MaHD = hoaDonBLL.CreateNewMaHD();
                     newHD.NgayLap = DateTime.Now;
                     newHD.TongTien = Convert.ToDecimal(dgvGoiVaccine.Rows[selectedRowIndex].Cells["colGiaGoi"].Value);
-                    newHD.TrangThai = false;
+                    newHD.TrangThai = true;
                     newHD.MaKH = MaKHHSTC;
                     newHD.MaNV = null;
                     newHD.MaKM = null;

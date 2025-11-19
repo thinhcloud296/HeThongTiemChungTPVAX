@@ -87,7 +87,7 @@ namespace TPVAXWinform
             button5.Click += (s, e) => ShowNhanVienControl();
             button6.Click += (s, e) => ShowHoaDonControl();
             button7.Click += (s, e) => MessageBox.Show("Khuyến mãi - Đang phát triển", "Thông báo");
-            button8.Click += (s, e) => ShowDashboard();
+            button8.Click += (s, e) => ShowThongKeControl();
 
             // Logo click để về Dashboard
             logo.Click += (s, e) => ShowDashboard();
@@ -112,6 +112,7 @@ namespace TPVAXWinform
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = true;
+            thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
             vaccineControl1.Visible = false;
@@ -121,6 +122,33 @@ namespace TPVAXWinform
 
             // Bring dashboard to front
             bangDieuKhienControl1.BringToFront();
+
+            // Reset button styles
+            ResetMenuButtons();
+            // Không highlight button8 vì đây là dashboard cũ (BangDieuKhienControl)
+        }
+
+        private void ShowThongKeControl()
+        {
+            // Đóng tất cả các form con
+            CloseAllChildForms();
+
+            // Hide all user controls
+            bangDieuKhienControl1.Visible = false;
+            thongKeControl1.Visible = true;
+            hoSoTiemChungControl1.Visible = false;
+            lichTiemControl1.Visible = false;
+            vaccineControl1.Visible = false;
+            hoaDonControl1.Visible = false;
+            nhanVienControl1.Visible = false;
+            phieuNhapControl1.Visible = false;
+
+            // Bring Thong Ke control to front
+            thongKeControl1.BringToFront();
+
+            thongKeControl1.RefreshData();
+            // TODO: Load data for ThongKeControl
+            // LoadThongKeData();
 
             // Reset button styles
             ResetMenuButtons();
@@ -134,6 +162,7 @@ namespace TPVAXWinform
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
+            thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = true;
             lichTiemControl1.Visible = false;
             vaccineControl1.Visible = false;
@@ -159,6 +188,7 @@ namespace TPVAXWinform
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
+            thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = true;
             vaccineControl1.Visible = false;
@@ -184,6 +214,7 @@ namespace TPVAXWinform
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
+            thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
             vaccineControl1.Visible = true;
@@ -207,6 +238,7 @@ namespace TPVAXWinform
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
+            thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
             vaccineControl1.Visible = false;
@@ -230,6 +262,7 @@ namespace TPVAXWinform
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
+            thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
             vaccineControl1.Visible = false;
@@ -255,6 +288,7 @@ namespace TPVAXWinform
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
+            thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
             vaccineControl1.Visible = false;
@@ -285,22 +319,6 @@ namespace TPVAXWinform
             button6.BackColor = defaultColor;
             button7.BackColor = defaultColor;
             button8.BackColor = defaultColor;
-        }
-
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnDangXuat_Click(object sender, EventArgs e)

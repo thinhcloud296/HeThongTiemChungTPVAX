@@ -1,0 +1,224 @@
+==========================================================
+H??NG D?N TÍCH H?P ThongKeControl VÀO frmMain
+==========================================================
+
+? ?Ã HOÀN THÀNH:
+
+1. THÊM ThongKeControl VÀO frmMain
+-----------------------------------
+- ?ã thêm control "thongKeControl1" vào panel3 c?a frmMain.Designer.cs
+- TabIndex = 7
+- BackColor = Color.FromArgb(240, 240, 240)
+- Dock = DockStyle.Fill
+
+2. C?P NH?T LOGIC HI?N TH?
+--------------------------
+- ?ã t?o method m?i: ShowThongKeControl()
+- ?ã c?p nh?t SetupMenuButtons() ?? button8 g?i ShowThongKeControl()
+- ?ã c?p nh?t t?t c? các Show...Control() methods ?? ?n thongKeControl1
+
+3. PHÂN BI?T 2 DASHBOARD
+-------------------------
+a) BangDieuKhienControl (Dashboard c?):
+   - Hi?n th? khi click vào logo
+   - Method: ShowDashboard()
+   - Không highlight button8
+
+b) ThongKeControl (Dashboard m?i - Th?ng kê):
+   - Hi?n th? khi click button8 "TH?NG KÊ"
+   - Method: ShowThongKeControl()
+   - Highlight button8 màu xanh
+
+==========================================================
+CÁCH S? D?NG
+==========================================================
+
+1. KHI NG??I DÙNG B?M BUTTON8 "TH?NG KÊ":
+-----------------------------------------
+? Hi?n th? ThongKeControl v?i:
+  - 4 KPI Cards (Doanh thu, L??t tiêm, Khách m?i, S?p h?t h?n)
+  - 2 Bi?u ?? LiveCharts (C?t + Tròn)
+  - 3 Tab chi ti?t (DataGridView)
+
+2. LOAD D? LI?U CHO TH?NG KÊ:
+-----------------------------
+Thêm code vào method ShowThongKeControl() trong frmMain.cs:
+
+```csharp
+private void ShowThongKeControl()
+{
+    // ?óng t?t c? các form con
+    CloseAllChildForms();
+
+    // Hide all user controls
+    bangDieuKhienControl1.Visible = false;
+    thongKeControl1.Visible = true;
+    hoSoTiemChungControl1.Visible = false;
+    lichTiemControl1.Visible = false;
+    vaccineControl1.Visible = false;
+    hoaDonControl1.Visible = false;
+    nhanVienControl1.Visible = false;
+  phieuNhapControl1.Visible = false;
+
+    // Bring Thong Ke control to front
+    thongKeControl1.BringToFront();
+
+ // ? THÊM CODE LOAD D? LI?U ? ?ÂY ?
+    LoadThongKeData();
+
+    // Reset button styles
+    ResetMenuButtons();
+    button8.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+}
+
+private void LoadThongKeData()
+{
+  try
+    {
+        // 1. L?y d? li?u KPI t? BLL
+        // TODO: Thay th? b?ng logic l?y d? li?u th?c t? c?a b?n
+        decimal doanhThuThang = 125500000m;  // T? HoaDonBLL
+  int luotTiem = 450;      // T? LichTiemBLL
+        int khachMoi = 120;  // T? KhachHangBLL
+     int sapHetHan = 15;              // T? VaccineBLL
+  
+        thongKeControl1.UpdateKPI(doanhThuThang, luotTiem, khachMoi, sapHetHan);
+
+        // 2. L?y d? li?u bi?u ?? doanh thu 7 ngày
+  double[] doanhThu7Ngay = new double[] { 
+   1500000, 2300000, 2100000, 2500000, 2200000, 3000000, 1800000 
+        };
+        string[] labels7Ngay = new string[] { 
+         "CN", "T2", "T3", "T4", "T5", "T6", "T7" 
+        };
+        thongKeControl1.UpdateDoanhThuChart(doanhThu7Ngay, labels7Ngay);
+
+  // 3. L?y d? li?u bi?u ?? t? l? gói/l?
+        double tiemGoi = 350;
+     double tiemLe = 100;
+      thongKeControl1.UpdateTyLeChart(tiemGoi, tiemLe);
+
+    // 4. L?y d? li?u cho các b?ng chi ti?t
+        // Tab 1: Chi ti?t doanh thu
+    DataTable dtDoanhThu = GetChiTietDoanhThu();
+        thongKeControl1.UpdateDataGrid("doanhthu", dtDoanhThu);
+
+        // Tab 2: Xu?t nh?p t?n
+   DataTable dtXuatNhapTon = GetXuatNhapTon();
+        thongKeControl1.UpdateDataGrid("xuatnhapton", dtXuatNhapTon);
+
+        // Tab 3: S?p h?t h?n
+        DataTable dtSapHetHan = GetDanhSachSapHetHan();
+        thongKeControl1.UpdateDataGrid("saphethan", dtSapHetHan);
+    }
+    catch (Exception ex)
+    {
+   MessageBox.Show($"L?i t?i d? li?u th?ng kê: {ex.Message}", 
+  "L?i", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
+
+// Ví d? method l?y d? li?u
+private DataTable GetChiTietDoanhThu()
+{
+    DataTable dt = new DataTable();
+    dt.Columns.Add("Ngày", typeof(DateTime));
+    dt.Columns.Add("T?ng ti?n", typeof(decimal));
+    dt.Columns.Add("S? l??t", typeof(int));
+    
+    // TODO: L?y d? li?u t? database qua BLL
+    // Ví d?:
+    // var hoaDonBLL = new HoaDonBLL();
+ // return hoaDonBLL.GetDoanhThu7NgayGanNhat();
+    
+    // Data m?u:
+    for (int i = 6; i >= 0; i--)
+    {
+     dt.Rows.Add(
+      DateTime.Now.AddDays(-i),
+    (decimal)(1500000 + i * 200000),
+            25 + i * 3
+        );
+    }
+    
+    return dt;
+}
+
+private DataTable GetXuatNhapTon()
+{
+    DataTable dt = new DataTable();
+ dt.Columns.Add("Mã Vaccine", typeof(string));
+  dt.Columns.Add("Tên Vaccine", typeof(string));
+    dt.Columns.Add("Nh?p", typeof(int));
+    dt.Columns.Add("Xu?t", typeof(int));
+    dt.Columns.Add("T?n", typeof(int));
+    
+    // TODO: L?y d? li?u t? VaccineBLL
+    // var vaccineBLL = new VaccineBLL();
+    // return vaccineBLL.GetXuatNhapTon();
+    
+    return dt;
+}
+
+private DataTable GetDanhSachSapHetHan()
+{
+    DataTable dt = new DataTable();
+    dt.Columns.Add("Mã Vaccine", typeof(string));
+    dt.Columns.Add("Tên Vaccine", typeof(string));
+    dt.Columns.Add("S? l??ng", typeof(int));
+    dt.Columns.Add("Ngày h?t h?n", typeof(DateTime));
+    dt.Columns.Add("Còn l?i (ngày)", typeof(int));
+    
+    // TODO: L?y d? li?u t? VaccineBLL
+    // var vaccineBLL = new VaccineBLL();
+    // return vaccineBLL.GetVaccineSapHetHan(30); // 30 ngày
+    
+    return dt;
+}
+```
+
+==========================================================
+L?U Ý QUAN TR?NG
+==========================================================
+
+1. PHÂN BI?T 2 DASHBOARD:
+   - Logo ? BangDieuKhienControl (dashboard g?c)
+   - Button8 ? ThongKeControl (dashboard th?ng kê m?i)
+
+2. D? LI?U M?C ??NH:
+   - ThongKeControl hi?n ?ang hi?n th? giá tr? 0
+   - C?n implement LoadThongKeData() ?? load d? li?u th?c
+
+3. REFRESH D? LI?U:
+   - M?i l?n b?m button8 s? g?i LoadThongKeData()
+   - Có th? thêm button Refresh trong ThongKeControl n?u c?n
+
+4. PERFORMANCE:
+   - LiveCharts t? ??ng render khi update data
+   - Không c?n g?i Refresh() sau khi c?p nh?t
+
+5. TÍCH H?P BLL:
+   - C?n t?o methods trong các BLL class:
+     * HoaDonBLL: GetDoanhThuThang(), GetDoanhThu7Ngay()
+     * LichTiemBLL: GetTongLuotTiem(), GetTyLeGoiLe()
+     * KhachHangBLL: GetKhachMoiThang()
+     * VaccineBLL: GetVaccineSapHetHan(), GetXuatNhapTon()
+
+==========================================================
+TEST ?NG D?NG
+==========================================================
+
+1. Ch?y ?ng d?ng
+2. ??ng nh?p
+3. B?m button8 "TH?NG KÊ"
+4. Ki?m tra:
+   ? 4 KPI cards hi?n th? ?úng
+   ? 2 Bi?u ?? hi?n th? (có th? là 0 n?u ch?a load data)
+   ? 3 Tab DataGridView hi?n th? ?úng
+   ? Button8 ???c highlight màu xanh
+5. B?m logo ? Quay v? BangDieuKhienControl c?
+6. B?m button8 l?i ? Quay v? ThongKeControl
+
+==========================================================
+K?T THÚC H??NG D?N
+==========================================================

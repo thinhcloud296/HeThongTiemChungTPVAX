@@ -51,6 +51,7 @@
             this.lbChucVuNVDangNhap = new System.Windows.Forms.Label();
             this.logo = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.thongKeControl1 = new TPVAXWinform_GUI.UserControls.ThongKeControl();
             this.bangDieuKhienControl1 = new TPVAXWinform.UserControls.BangDieuKhienControl();
             this.hoSoTiemChungControl1 = new TPVAXWinform.UserControls.HoSoTiemChungControl();
             this.lichTiemControl1 = new TPVAXWinform_GUI.UserControls.LichTiemControl();
@@ -512,6 +513,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
+            this.panel3.Controls.Add(this.thongKeControl1);
             this.panel3.Controls.Add(this.bangDieuKhienControl1);
             this.panel3.Controls.Add(this.hoSoTiemChungControl1);
             this.panel3.Controls.Add(this.lichTiemControl1);
@@ -525,6 +527,15 @@
             this.panel3.Padding = new System.Windows.Forms.Padding(10);
             this.panel3.Size = new System.Drawing.Size(1428, 1304);
             this.panel3.TabIndex = 0;
+            // 
+            // thongKeControl1
+            // 
+            this.thongKeControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.thongKeControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.thongKeControl1.Location = new System.Drawing.Point(10, 10);
+            this.thongKeControl1.Name = "thongKeControl1";
+            this.thongKeControl1.Size = new System.Drawing.Size(1408, 1284);
+            this.thongKeControl1.TabIndex = 7;
             // 
             // bangDieuKhienControl1
             // 
@@ -648,23 +659,6 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel logo;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label lbChucVuNVDangNhap;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lbMaNVDangNhap;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lbHoTenNVDangNhap;
-        private System.Windows.Forms.Panel panel3;
-        private UserControls.BangDieuKhienControl bangDieuKhienControl1;
-        private UserControls.HoSoTiemChungControl hoSoTiemChungControl1;
-        private TPVAXWinform_GUI.UserControls.LichTiemControl lichTiemControl1;
-        private TPVAXWinform_GUI.UserControls.VaccineControl vaccineControl1;
-        private TPVAXWinform_GUI.UserControls.HoaDonControl hoaDonControl1;
-        private TPVAXWinform_GUI.UserControls.NhanVienControl nhanVienControl1;
-        private TPVAXWinform_GUI.UserControls.PhieuNhapControl phieuNhapControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private CustomControls.MenuButton button8;
@@ -676,6 +670,24 @@
         private CustomControls.MenuButton button2;
         private CustomControls.MenuButton button1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbChucVuNVDangNhap;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbMaNVDangNhap;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbHoTenNVDangNhap;
+        private System.Windows.Forms.Panel logo;
+        private System.Windows.Forms.Panel panel3;
+        private TPVAXWinform_GUI.UserControls.ThongKeControl thongKeControl1;
+        private UserControls.BangDieuKhienControl bangDieuKhienControl1;
+        private UserControls.HoSoTiemChungControl hoSoTiemChungControl1;
+        private TPVAXWinform_GUI.UserControls.LichTiemControl lichTiemControl1;
+        private TPVAXWinform_GUI.UserControls.VaccineControl vaccineControl1;
+        private TPVAXWinform_GUI.UserControls.HoaDonControl hoaDonControl1;
+        private TPVAXWinform_GUI.UserControls.NhanVienControl nhanVienControl1;
+        private TPVAXWinform_GUI.UserControls.PhieuNhapControl phieuNhapControl1;
         private System.Windows.Forms.Button btnDangXuat;
         private System.Windows.Forms.Label label2;
     }
