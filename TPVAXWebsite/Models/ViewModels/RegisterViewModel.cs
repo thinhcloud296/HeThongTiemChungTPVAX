@@ -19,6 +19,7 @@ namespace TPVAXWebsite.Models.ViewModels
         [DataType(DataType.Date)]
         public DateTime? NgaySinh { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng chọn giới tính")]
         [Display(Name = "Giới tính")]
         public string GioiTinh { get; set; }
 
@@ -32,10 +33,16 @@ namespace TPVAXWebsite.Models.ViewModels
         [RegularExpression(@"^0\d{9}$", ErrorMessage = "Số điện thoại không hợp lệ")]
         public string SoDT { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng nhập email")]
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         [StringLength(100)]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập")]
+        [Display(Name = "Tên đăng nhập")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Tên đăng nhập phải từ 4-50 ký tự")]
+        public string TenDangNhap { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]
