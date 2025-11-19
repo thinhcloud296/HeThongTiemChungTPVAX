@@ -55,6 +55,7 @@
             this.colMaKM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStripHoaDon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemXemChiTiet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemInHoaDon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemXacNhanThanhToan = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTieuDe.SuspendLayout();
@@ -376,10 +377,11 @@
             this.contextMenuStripHoaDon.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStripHoaDon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemXemChiTiet,
+            this.toolStripMenuItemInHoaDon,
             this.toolStripSeparator1,
             this.toolStripMenuItemXacNhanThanhToan});
             this.contextMenuStripHoaDon.Name = "contextMenuStripHoaDon";
-            this.contextMenuStripHoaDon.Size = new System.Drawing.Size(299, 74);
+            this.contextMenuStripHoaDon.Size = new System.Drawing.Size(299, 106);
             this.contextMenuStripHoaDon.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripHoaDon_Opening);
             // 
             // toolStripMenuItemXemChiTiet
@@ -388,6 +390,13 @@
             this.toolStripMenuItemXemChiTiet.Size = new System.Drawing.Size(298, 32);
             this.toolStripMenuItemXemChiTiet.Text = "📋 Xem chi tiết hóa đơn";
             this.toolStripMenuItemXemChiTiet.Click += new System.EventHandler(this.toolStripMenuItemXemChiTiet_Click);
+            // 
+            // toolStripMenuItemInHoaDon
+            // 
+            this.toolStripMenuItemInHoaDon.Name = "toolStripMenuItemInHoaDon";
+            this.toolStripMenuItemInHoaDon.Size = new System.Drawing.Size(298, 32);
+            this.toolStripMenuItemInHoaDon.Text = "🖨️ In hóa đơn";
+            this.toolStripMenuItemInHoaDon.Click += new System.EventHandler(this.toolStripMenuItemInHoaDon_Click);
             // 
             // toolStripSeparator1
             // 
@@ -450,6 +459,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaKM;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripHoaDon;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemChiTiet;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInHoaDon;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXacNhanThanhToan;
     }

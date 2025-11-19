@@ -50,6 +50,7 @@
     <Compile Include="ChiTietPhieuNhapDTO.cs" />
     <Compile Include="GoiVaccineDTO.cs" />
     <Compile Include="HoaDonDTO.cs" />
+    <Compile Include="HoaDonInDTO.cs" />
     <Compile Include="HoSoTiemChungDTO.cs" />
     <Compile Include="KhachHangDTO.cs" />
     <Compile Include="LichTiemDTO.cs" />

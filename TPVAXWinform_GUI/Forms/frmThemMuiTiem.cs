@@ -12,6 +12,7 @@ using System.Transactions; // Đảm bảo bạn đã thêm using này
 using System.Windows.Forms;
 using TPVAXWinform_BLL;
 using TPVAXWinform_DTO;
+using TPVAXWinform_GUI.Forms;
 
 namespace TPVAXWinform_GUI
 {
@@ -28,6 +29,7 @@ namespace TPVAXWinform_GUI
         private ChiTietGoiVaccineBLL chiTietGoiVaccineBLL = new ChiTietGoiVaccineBLL();
         private string MaHSTC;
         private string MaKHHSTC;
+        private string maHDMoi;
         private decimal TongGia = 0;
 
         public frmThemMuiTiem()
@@ -36,7 +38,6 @@ namespace TPVAXWinform_GUI
             InitializeFormSize();
             InitializeDataGridViewStyling();
             SetupContextMenuVaccine();
-            InitializeActionButtons();
             InitializeLoaiThem();
         }
 
@@ -47,7 +48,6 @@ namespace TPVAXWinform_GUI
             InitializeFormSize();
             InitializeDataGridViewStyling();
             SetupContextMenuVaccine();
-            InitializeActionButtons();
             InitializeLoaiThem();
             lbMaHSTC.Text = maHSTC;
             lblTenNguoiTiemValue.Text = hoTen;
@@ -106,7 +106,6 @@ namespace TPVAXWinform_GUI
             LoadDSGoiVC();
             LoadDSVC();
             LoadCboTimKiem();
-            dgvVaccineWait.CellContentClick += dgvVaccineWait_CellContentClick;
         }
         private void btnResetFilter_Click(object sender, EventArgs e)
         {
@@ -140,25 +139,7 @@ namespace TPVAXWinform_GUI
             cboLoaiVaccine.DisplayMember = "TenLoai";
             cboLoaiVaccine.ValueMember = "MaLoai";
         }
-        public void InitializeActionButtons()
-        {
-            if (dgvVaccineWait.Columns["colXoaMuiTiem"] == null)
-            {
-                var btnEditColumn = new DataGridViewButtonColumn
-                {
-                    Name = "colXoaMuiTiem",
-                    HeaderText = "Xóa mũi tiêm",
-                    Text = "Xóa",
-                    UseColumnTextForButtonValue = true,
-                    Width = 80,
-                    FlatStyle = FlatStyle.Flat
-                };
-                dgvVaccineWait.Columns.Add(btnEditColumn);
-            }
-        }
-
-        // ... (Các hàm InitializeFormSize, InitializeDataGridViewStyling, Configure...Styling giữ nguyên) ...
-        // ... (Các hàm SetupContextMenuVaccine, DgvVaccine_MouseDown, ViewVaccineInfo_Click, AddToList_Click giữ nguyên) ...
+       
 
         private void InitializeFormSize()
         {
@@ -272,10 +253,10 @@ namespace TPVAXWinform_GUI
             }
 
             // Styling chung
-            dgvVaccineWait.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
+            dgvVaccineWait.DefaultCellStyle.Font = new Font("Segoe UI", 10.5F, FontStyle.Regular);
             dgvVaccineWait.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
             dgvVaccineWait.DefaultCellStyle.SelectionForeColor = Color.White;
-            dgvVaccineWait.RowTemplate.Height = 40;
+            dgvVaccineWait.RowTemplate.Height = 100;
             dgvVaccineWait.BorderStyle = BorderStyle.None;
             dgvVaccineWait.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvVaccineWait.GridColor = Color.FromArgb(224, 224, 224);
@@ -464,6 +445,11 @@ namespace TPVAXWinform_GUI
                 MessageBox.Show("Ngày tiêm không được nhỏ hơn ngày hiện tại.", "Ngày tiêm không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (dgvVaccineWait.Rows.Count == 1)
+            {
+                MessageBox.Show("Chỉ được đăng ký 1 mũi tiêm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (dgvVaccine.SelectedRows.Count > 0)
             {
                 int rowIndex = dgvVaccine.SelectedRows[0].Index;
@@ -474,28 +460,7 @@ namespace TPVAXWinform_GUI
                 MessageBox.Show("Vui lòng chọn một vaccine từ danh sách.", "Chưa chọn vaccine", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        private void dgvVaccineWait_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dgvVaccineWait.Columns[e.ColumnIndex].Name == "colXoaMuiTiem")
-            {
-                if (dgvVaccineWait.Rows[e.RowIndex].IsNewRow) return;
-
-                // --- SỬA: Lấy tên bằng 'Name' thay vì index ---
-                string tenVaccine = dgvVaccineWait.Rows[e.RowIndex].Cells["colTenVCW"].Value?.ToString() ?? "mũi tiêm này";
-
-                DialogResult confirm = MessageBox.Show(
-                    $"Bạn có chắc muốn xóa '{tenVaccine}' khỏi danh sách chờ?",
-                    "Xác nhận xóa",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (confirm == DialogResult.Yes)
-                {
-                    dgvVaccineWait.Rows.RemoveAt(e.RowIndex);
-                }
-            }
-        }
+       
 
         private void CapNhatTongGiaVaTongSoMui()
         {
@@ -549,6 +514,11 @@ namespace TPVAXWinform_GUI
                 MessageBox.Show("Không có mũi tiêm nào trong danh sách chờ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if(dgvVaccineWait.Rows.Count > 1)
+            {
+                MessageBox.Show("Chỉ được đăng ký 1 mũi tiêm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             string maVC = dgvVaccineWait.Rows[0].Cells["colMaVCW"].Value.ToString();
             int soMui = Convert.ToInt32(dgvVaccineWait.Rows[0].Cells["colSoLuongW"].Value);
             DateTime ngayHen = DateTime.ParseExact(dgvVaccineWait.Rows[0].Cells["colNgayTiemW"].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -578,7 +548,7 @@ namespace TPVAXWinform_GUI
                     newHD.TongTien = TongGia;
                     newHD.TrangThai = true;
                     newHD.MaKH = MaKHHSTC;
-                    newHD.MaNV = null;
+                    newHD.MaNV = UserSession.MaNV ?? "";
                     newHD.MaKM = null;
                     hoaDonBLL.Insert(newHD);
 
@@ -608,13 +578,27 @@ namespace TPVAXWinform_GUI
 
                     chiTietHoaDonBLL.Insert(NewCTHD);
 
-
+                    maHDMoi = newHD.MaHD;
                     scope.Complete();
 
-                    MessageBox.Show($"Đã thêm thành công lịch hẹn.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
+                    
                 }
+                MessageBox.Show($"Đã thêm thành công lịch hẹn.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult printConfirm = MessageBox.Show(
+                    "Bạn có muốn in hóa đơn ngay không?",
+                    "In Hóa Đơn",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (printConfirm == DialogResult.Yes)
+                {
+                    // Truyền Mã Hóa Đơn vừa tạo vào form in
+                    frmInHoaDon frm = new frmInHoaDon(maHDMoi);
+                    frm.ShowDialog();
+                }
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -774,9 +758,9 @@ namespace TPVAXWinform_GUI
                     newHD.MaHD = hoaDonBLL.CreateNewMaHD();
                     newHD.NgayLap = DateTime.Now;
                     newHD.TongTien = Convert.ToDecimal(dgvGoiVaccine.Rows[selectedRowIndex].Cells["colGiaGoi"].Value);
-                    newHD.TrangThai = true;
+                    newHD.TrangThai = false;
                     newHD.MaKH = MaKHHSTC;
-                    newHD.MaNV = null;
+                    newHD.MaNV = UserSession.MaNV ?? "";
                     newHD.MaKM = null;
 
                     ChiTietHoaDonDTO NewCTHD = new ChiTietHoaDonDTO();
@@ -793,13 +777,26 @@ namespace TPVAXWinform_GUI
                     DateTime ngayHenChon = dtpNgayTiem.Value;
                     // (Hàm BLL này phải được sửa để nhận 'ngayHenChon' như lần trước)
                     int soLichHen = lichTiemBLL.TaoLichHenDauTienChoGoi(maGoi, MaHSTC, ngayHenChon);
-
+                    maHDMoi = newHD.MaHD;
                     scope.Complete(); // Hoàn tất giao dịch
 
                     MessageBox.Show($"Lưu gói vaccine và tạo {soLichHen} lịch hẹn đầu tiên thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
+                    
                 }
+                DialogResult printConfirm = MessageBox.Show(
+                        "Bạn có muốn in hóa đơn ngay không?",
+                        "In Hóa Đơn",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                if (printConfirm == DialogResult.Yes)
+                {
+                    frmInHoaDon frm = new frmInHoaDon(maHDMoi);
+                    frm.ShowDialog();
+                }
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             catch (Exception ex)
             {

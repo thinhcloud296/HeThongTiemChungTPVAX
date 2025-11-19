@@ -1,0 +1,242 @@
+====================================================================
+    H??NG D?N KH?C PH?C L?I "KHÔNG TÌM TH?Y FILE BÁO CÁO"
+====================================================================
+
+?? **L?I G?P PH?I:**
+--------------------------------------------------------------------
+Không tìm th?y file báo cáo t?i: C:\srcKhoaLuan\TPVAXWinform_GUI\bin\Debug\rptHoaDon.rdlc
+
+?? **NGUYÊN NHÂN:**
+--------------------------------------------------------------------
+File rptHoaDon.rdlc không ???c copy vào th? m?c bin\Debug khi build project.
+
+====================================================================
+? **GI?I PHÁP 1: THI?T L?P PROPERTIES (KHUY?N NGH?)**
+====================================================================
+
+**B??c 1: M? Visual Studio**
+--------------------------------------------------------------------
+- M? project TPVAXWinform_GUI trong Visual Studio
+
+**B??c 2: Tìm file rptHoaDon.rdlc trong Solution Explorer**
+--------------------------------------------------------------------
+- Trong Solution Explorer, tìm file:
+  TPVAXWinform_GUI > rptHoaDon.rdlc
+
+**B??c 3: M? Properties**
+--------------------------------------------------------------------
+- Nh?n chu?t ph?i vào file "rptHoaDon.rdlc"
+- Ch?n "Properties" (ho?c nh?n F4)
+
+**B??c 4: Thi?t l?p Copy to Output Directory**
+--------------------------------------------------------------------
+Trong c?a s? Properties, tìm property:
+??????????????????????????????????????????
+? Copy to Output Directory      ?
+? ????????????????????   ?
+? [v] Copy always ? CH?N    ?
+? [ ] Copy if newer      ?
+? [ ] Do not copy          ?
+??????????????????????????????????????????
+
+**Ch?n m?t trong hai:**
+- ? "Copy always" (KHUY?N NGH?): Luôn copy khi build
+- ? "Copy if newer": Copy khi file m?i h?n
+
+**B??c 5: Build l?i project**
+--------------------------------------------------------------------
+- Nh?n Ctrl + Shift + B (ho?c Build > Build Solution)
+- Ki?m tra th? m?c bin\Debug có file rptHoaDon.rdlc ch?a
+
+**B??c 6: Ch?y th?**
+--------------------------------------------------------------------
+- M? form Qu?n lý hóa ??n
+- Ch?n 1 hóa ??n
+- Nh?n chu?t ph?i > "??? In hóa ??n"
+- Ki?m tra xem l?i còn xu?t hi?n không
+
+====================================================================
+? **GI?I PHÁP 2: CODE ?Ã ???C C?P NH?T (T? ??NG)**
+====================================================================
+
+**?ã s?a trong frmInHoaDon.cs:**
+--------------------------------------------------------------------
+? Thêm method `GetReportPath()` ?? tìm file RDLC t? nhi?u v? trí:
+
+1. Th? m?c bin\Debug (n?u ?ã copy)
+2. Th? m?c project g?c (..\..\rptHoaDon.rdlc)
+3. ???ng d?n tuy?t ??i
+
+? Thông báo l?i chi ti?t h?n v?i h??ng d?n kh?c ph?c
+
+**?u ?i?m:**
+- Không c?n thi?t l?p Properties
+- T? ??ng tìm file ? nhi?u v? trí
+- Ch?y ???c c? khi debug và release
+
+====================================================================
+?? **KI?M TRA SAU KHI S?A:**
+====================================================================
+
+**1. Ki?m tra file t?n t?i:**
+--------------------------------------------------------------------
+M? Windows Explorer, ki?m tra 2 v? trí:
+
+?? V? trí 1 (Project g?c):
+C:\srcKhoaLuan\TPVAXWinform_GUI\rptHoaDon.rdlc
+
+?? V? trí 2 (Sau khi build):
+C:\srcKhoaLuan\TPVAXWinform_GUI\bin\Debug\rptHoaDon.rdlc
+
+**2. Ki?m tra Properties:**
+--------------------------------------------------------------------
+Trong Solution Explorer:
+- Nh?n chu?t ph?i vào rptHoaDon.rdlc
+- Ch?n Properties
+- Xem "Copy to Output Directory" có ?úng ch?a
+
+**3. Ch?y th? ch?c n?ng in:**
+--------------------------------------------------------------------
+- M? form Qu?n lý hóa ??n
+- Ch?n 1 hóa ??n b?t k?
+- Nh?n chu?t ph?i > "??? In hóa ??n"
+- Form frmInHoaDon ph?i hi?n th? báo cáo
+
+====================================================================
+??? **GI?I PHÁP 3: COPY TH? CÔNG (T?M TH?I)**
+====================================================================
+
+N?u 2 cách trên không ???c, b?n có th? copy th? công:
+
+**B??c 1: Tìm file rptHoaDon.rdlc**
+--------------------------------------------------------------------
+V? trí: C:\srcKhoaLuan\TPVAXWinform_GUI\rptHoaDon.rdlc
+
+**B??c 2: Copy file**
+--------------------------------------------------------------------
+Copy file rptHoaDon.rdlc
+
+**B??c 3: Paste vào th? m?c bin\Debug**
+--------------------------------------------------------------------
+Paste vào: C:\srcKhoaLuan\TPVAXWinform_GUI\bin\Debug\
+
+**L?u ý:**
+?? M?i l?n build l?i, b?n ph?i copy l?i file
+?? ?ây ch? là gi?i pháp t?m th?i
+
+====================================================================
+?? **GI?I PHÁP 4: S?A TRONG .CSPROJ (NÂNG CAO)**
+====================================================================
+
+N?u b?n mu?n t? ??ng copy file mà không c?n thi?t l?p Properties:
+
+**B??c 1: M? file .csproj**
+--------------------------------------------------------------------
+- ?óng Visual Studio
+- M? file: C:\srcKhoaLuan\TPVAXWinform_GUI\TPVAXWinform_GUI.csproj
+- Dùng Notepad ho?c editor khác
+
+**B??c 2: Tìm th? <ItemGroup> ch?a rptHoaDon.rdlc**
+--------------------------------------------------------------------
+Tìm dòng:
+<None Include="rptHoaDon.rdlc" />
+
+ho?c:
+<EmbeddedResource Include="rptHoaDon.rdlc" />
+
+**B??c 3: Thêm CopyToOutputDirectory**
+--------------------------------------------------------------------
+S?a thành:
+<None Include="rptHoaDon.rdlc">
+  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+</None>
+
+ho?c:
+<Content Include="rptHoaDon.rdlc">
+  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+</Content>
+
+**B??c 4: L?u file và m? l?i Visual Studio**
+--------------------------------------------------------------------
+- L?u file .csproj
+- M? l?i Visual Studio
+- Build l?i project
+
+====================================================================
+?? **TROUBLESHOOTING (N?U V?N L?I):**
+====================================================================
+
+**1. L?i: File không t?n t?i sau khi build**
+--------------------------------------------------------------------
+GI?I PHÁP:
+- Clean Solution (Build > Clean Solution)
+- Rebuild Solution (Build > Rebuild Solution)
+- Ki?m tra l?i Properties
+
+**2. L?i: Access Denied**
+--------------------------------------------------------------------
+GI?I PHÁP:
+- Ch?y Visual Studio as Administrator
+- Ki?m tra quy?n ghi file vào th? m?c bin\Debug
+
+**3. L?i: File b? lock**
+--------------------------------------------------------------------
+GI?I PHÁP:
+- ?óng t?t c? instance c?a ?ng d?ng
+- ?óng Visual Studio Report Viewer
+- Build l?i
+
+**4. L?i: Wrong path**
+--------------------------------------------------------------------
+GI?I PHÁP:
+- Ki?m tra ???ng d?n trong code
+- ??m b?o file tên ?úng: "rptHoaDon.rdlc" (không có kho?ng tr?ng)
+- Ki?m tra phân bi?t hoa th??ng (n?u ch?y trên Linux)
+
+====================================================================
+? **CHECKLIST SAU KHI KH?C PH?C:**
+====================================================================
+
+[ ] File rptHoaDon.rdlc có trong th? m?c project g?c
+[ ] Properties "Copy to Output Directory" = "Copy always"
+[ ] Build thành công không có l?i
+[ ] File rptHoaDon.rdlc xu?t hi?n trong bin\Debug
+[ ] Ch?c n?ng in hóa ??n ho?t ??ng bình th??ng
+[ ] ReportViewer hi?n th? báo cáo ?úng
+
+====================================================================
+?? **LIÊN H? H? TR?:**
+====================================================================
+
+N?u sau khi th? t?t c? các cách trên v?n l?i:
+
+1. Ki?m tra Output window (View > Output)
+2. Xem thông báo l?i chi ti?t
+3. Ch?p ?nh màn hình:
+   - Solution Explorer v?i file rptHoaDon.rdlc
+   - Properties c?a file
+   - Thông báo l?i
+   - Th? m?c bin\Debug
+
+====================================================================
+?? **G?I Ý PHÁT TRI?N:**
+====================================================================
+
+**1. Embed RDLC vào EXE:**
+--------------------------------------------------------------------
+- Set "Build Action" = "Embedded Resource"
+- ??c file t? Assembly.GetManifestResourceStream()
+- Không c?n copy file ra th? m?c bin
+
+**2. ??t file ? th? m?c riêng:**
+--------------------------------------------------------------------
+- T?o th? m?c "Reports" trong project
+- ??t t?t c? file RDLC vào ?ó
+- Copy c? th? m?c vào bin khi build
+
+**3. S? d?ng Installer:**
+--------------------------------------------------------------------
+- Khi deploy ?ng d?ng, dùng installer
+- T? ??ng copy file RDLC ??n ?úng v? trí
+
+====================================================================

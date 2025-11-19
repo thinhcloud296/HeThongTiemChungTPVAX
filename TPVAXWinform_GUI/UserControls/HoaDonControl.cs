@@ -30,6 +30,7 @@ namespace TPVAXWinform_GUI.UserControls
             InitializeFilters();
             contextMenuStripHoaDon.Items["toolStripMenuItemXacNhanThanhToan"].Visible = RoleNVThuNgan;
             contextMenuStripHoaDon.Items["toolStripMenuItemXemChiTiet"].Visible = RoleNVThuNgan || RoleNVTiepNhan;
+            contextMenuStripHoaDon.Items["toolStripMenuItemInHoaDon"].Visible = RoleNVThuNgan || RoleNVTiepNhan;
         }
 
         // Public method để refresh data từ bên ngoài
@@ -111,7 +112,7 @@ namespace TPVAXWinform_GUI.UserControls
             ApplyFilters();
         }
 
-        
+
 
         private void BindDataToGridHD(DataTable dt)
         {
@@ -247,10 +248,39 @@ namespace TPVAXWinform_GUI.UserControls
             DataGridViewRow selectedRow = dgvHoaDon.SelectedRows[0];
             string maHD = selectedRow.Cells["colMaHD"].Value?.ToString() ?? "";
 
-            // TODO: Tạo form chi tiết hóa đơn
-            // Tạm thời hiển thị MessageBox
             frmChiTietHoaDon frmChiTiet = new frmChiTietHoaDon(maHD);
             frmChiTiet.ShowDialog();
+        }
+
+        private void toolStripMenuItemInHoaDon_Click(object sender, EventArgs e)
+        {
+            if (dgvHoaDon.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một hóa đơn để in!", "Thông báo",
+               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DataGridViewRow selectedRow = dgvHoaDon.SelectedRows[0];
+            string maHD = selectedRow.Cells["colMaHD"].Value?.ToString() ?? "";
+
+            if (string.IsNullOrEmpty(maHD))
+            {
+                MessageBox.Show("Không thể lấy mã hóa đơn!", "Lỗi",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                frmInHoaDon frmIn = new frmInHoaDon(maHD);
+                frmIn.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form in hóa đơn:\n{ex.Message}",
+       "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void toolStripMenuItemXacNhanThanhToan_Click(object sender, EventArgs e)
@@ -288,9 +318,31 @@ namespace TPVAXWinform_GUI.UserControls
 
             if (result == DialogResult.Yes)
             {
-                // TODO: Implement payment confirmation logic
-                MessageBox.Show("Chức năng xác nhận thanh toán đang được phát triển!", "Thông báo",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    // Cập nhật trạng thái hóa đơn
+                    HoaDonDTO hd = new HoaDonDTO();
+                    hd.MaHD = maHD;
+                    hd.NgayLap = Convert.ToDateTime(selectedRow.Cells["colNgayLap"].Value);
+                    hd.TongTien = tongTien;
+                    hd.TrangThai = true; // Đã thanh toán
+                    hd.MaKH = selectedRow.Cells["colMaKH"].Value?.ToString();
+                    hd.MaNV = selectedRow.Cells["colMaNV"].Value?.ToString();
+                    hd.MaKM = selectedRow.Cells["colMaKM"].Value?.ToString();
+
+                    hoaDonBLL.Edit(hd);
+
+                    MessageBox.Show("Xác nhận thanh toán thành công!", "Thành công",
+         MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Refresh lại danh sách
+                    RefreshData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi xác nhận thanh toán:\n{ex.Message}",
+         "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

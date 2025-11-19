@@ -122,7 +122,7 @@
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlMain.Size = new System.Drawing.Size(2014, 1410);
+            this.pnlMain.Size = new System.Drawing.Size(2014, 1008);
             this.pnlMain.TabIndex = 0;
             // 
             // grpDanhSachCho
@@ -133,7 +133,7 @@
             this.grpDanhSachCho.Location = new System.Drawing.Point(15, 675);
             this.grpDanhSachCho.Name = "grpDanhSachCho";
             this.grpDanhSachCho.Padding = new System.Windows.Forms.Padding(10);
-            this.grpDanhSachCho.Size = new System.Drawing.Size(1984, 628);
+            this.grpDanhSachCho.Size = new System.Drawing.Size(1984, 226);
             this.grpDanhSachCho.TabIndex = 3;
             this.grpDanhSachCho.TabStop = false;
             this.grpDanhSachCho.Text = "Danh sách mũi tiêm chờ lưu";
@@ -166,7 +166,7 @@
             this.dgvVaccineWait.RowHeadersWidth = 62;
             this.dgvVaccineWait.RowTemplate.Height = 40;
             this.dgvVaccineWait.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVaccineWait.Size = new System.Drawing.Size(1964, 581);
+            this.dgvVaccineWait.Size = new System.Drawing.Size(1964, 179);
             this.dgvVaccineWait.TabIndex = 3;
             this.dgvVaccineWait.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvVaccineWait_RowsAdded);
             this.dgvVaccineWait.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvVaccineWait_RowsRemoved);
@@ -276,7 +276,6 @@
             this.colTenGoi,
             this.colDoiTuongApDung,
             this.colGiaGoi});
-            this.dgvGoiVaccine.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvGoiVaccine.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dgvGoiVaccine.Location = new System.Drawing.Point(10, 149);
             this.dgvGoiVaccine.Name = "dgvGoiVaccine";
@@ -811,7 +810,7 @@
             this.pnlActions.Controls.Add(this.btnDong);
             this.pnlActions.Controls.Add(this.btnLuuTatCa);
             this.pnlActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlActions.Location = new System.Drawing.Point(15, 1303);
+            this.pnlActions.Location = new System.Drawing.Point(15, 901);
             this.pnlActions.Name = "pnlActions";
             this.pnlActions.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.pnlActions.Size = new System.Drawing.Size(1984, 92);
@@ -957,7 +956,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2014, 1410);
+            this.ClientSize = new System.Drawing.Size(2014, 1008);
             this.Controls.Add(this.pnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
