@@ -60,6 +60,7 @@
     <Compile Include="NhaCungCapDTO.cs" />
     <Compile Include="NhanVienDTO.cs" />
     <Compile Include="PhieuNhapDTO.cs" />
+    <Compile Include="PhieuNhapInDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaiKhoanDTO.cs" />
     <Compile Include="VaccineDTO.cs" />

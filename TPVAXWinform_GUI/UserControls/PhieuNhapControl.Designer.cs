@@ -49,6 +49,7 @@
             this.colTenNCC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemXemChiTiet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemInPhieuNhap = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemXacNhanNhap = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTieuDe.SuspendLayout();
             this.pnlLoc.SuspendLayout();
@@ -287,9 +288,10 @@
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemXemChiTiet,
+            this.toolStripMenuItemInPhieuNhap,
             this.toolStripMenuItemXacNhanNhap});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(237, 68);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(237, 100);
             // 
             // toolStripMenuItemXemChiTiet
             // 
@@ -297,6 +299,13 @@
             this.toolStripMenuItemXemChiTiet.Size = new System.Drawing.Size(236, 32);
             this.toolStripMenuItemXemChiTiet.Text = "Xem chi tiết";
             this.toolStripMenuItemXemChiTiet.Click += new System.EventHandler(this.toolStripMenuItemXemChiTiet_Click);
+            // 
+            // toolStripMenuItemInPhieuNhap
+            // 
+            this.toolStripMenuItemInPhieuNhap.Name = "toolStripMenuItemInPhieuNhap";
+            this.toolStripMenuItemInPhieuNhap.Size = new System.Drawing.Size(236, 32);
+            this.toolStripMenuItemInPhieuNhap.Text = "In phiếu nhập";
+            this.toolStripMenuItemInPhieuNhap.Click += new System.EventHandler(this.toolStripMenuItemInPhieuNhap_Click);
             // 
             // toolStripMenuItemXacNhanNhap
             // 
@@ -346,6 +355,7 @@ private System.Windows.Forms.Panel pnlLoc;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenNCC;
  private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemChiTiet;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInPhieuNhap;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXacNhanNhap;
     }
 }

@@ -239,13 +239,6 @@ namespace TPVAXWinform_GUI.Forms
                         maPN = pn.MaPN;
                     }
 
-                    // (Logic để xóa các chi tiết cũ nếu là Edit Mode)
-                    if (isEditMode)
-                    {
-                        // Bạn cần hàm này để xóa các chi tiết cũ trước khi thêm lại
-                        // chiTietPhieuNhapBLL.DeleteByMaPN(maPN);
-                    }
-
                     // 2. Lưu Chi Tiết Phiếu Nhập
                     foreach (var ct in danhSachChiTiet)
                     {
@@ -282,6 +275,18 @@ namespace TPVAXWinform_GUI.Forms
 
                 MessageBox.Show(isEditMode ? "Sửa phiếu nhập thành công!" : "Thêm phiếu nhập thành công!",
                      "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                DialogResult printConfirm = MessageBox.Show(
+                         "Bạn có muốn in phiếu nhập ngay không?",
+                         "In Phiếu Nhập",
+                         MessageBoxButtons.YesNo,
+                         MessageBoxIcon.Question);
+
+                if (printConfirm == DialogResult.Yes)
+                {
+                    frmInPhieuNhap frm = new frmInPhieuNhap(maPN);
+                    frm.ShowDialog();
+                }
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

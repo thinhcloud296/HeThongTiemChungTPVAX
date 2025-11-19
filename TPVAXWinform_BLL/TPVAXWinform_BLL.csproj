@@ -76,6 +76,7 @@
     <Compile Include="NhaCungCapBLL.cs" />
     <Compile Include="NhanVienBLL.cs" />
     <Compile Include="PhieuNhapBLL.cs" />
+    <Compile Include="PhieuNhapInBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaiKhoanBLL.cs" />
     <Compile Include="ThongKeBLL.cs" />

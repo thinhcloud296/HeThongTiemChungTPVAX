@@ -149,6 +149,36 @@ namespace TPVAXWinform_GUI.UserControls
             }
         }
 
+        private void toolStripMenuItemInPhieuNhap_Click(object sender, EventArgs e)
+        {
+            if (dgvPhieuNhap.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một phiếu nhập để in!", "Thông báo",
+          MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string maPN = dgvPhieuNhap.SelectedRows[0].Cells[colMaPN.Name].Value?.ToString();
+
+            if (string.IsNullOrEmpty(maPN))
+            {
+                MessageBox.Show("Không thể lấy mã phiếu nhập!", "Lỗi",
+          MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                frmInPhieuNhap frmIn = new frmInPhieuNhap(maPN);
+                frmIn.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form in phiếu nhập:\n{ex.Message}",
+      "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnThemMoi_Click(object sender, EventArgs e)
         {
             frmThemPhieuNhap frm = new frmThemPhieuNhap();
