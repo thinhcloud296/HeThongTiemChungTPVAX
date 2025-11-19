@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TPVAXWebsite.DAL;
+using TPVAXWebsite.DAL.Repositories;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
 
@@ -9,7 +10,7 @@ namespace TPVAXWebsite.Services
 {
     public interface IGioHangService
     {
-        IEnumerable<GioHangViewModel> GetGioHangByMaKH(string maKH);
+        IEnumerable<GioHangItemViewModel> GetGioHangByMaKH(string maKH);
         bool ThemVaoGio(string maKH, string maSanPham, string loaiSanPham, int soLuong);
         bool CapNhatSoLuong(int maGH, int soLuong);
         bool XoaKhoiGio(int maGH);
@@ -26,19 +27,20 @@ namespace TPVAXWebsite.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<GioHangViewModel> GetGioHangByMaKH(string maKH)
+        public IEnumerable<GioHangItemViewModel> GetGioHangByMaKH(string maKH)
         {
             var gioHangs = _unitOfWork.Repository<GioHang>()
                 .Find(g => g.MaKH == maKH)
                 .ToList();
 
-            var viewModels = new List<GioHangViewModel>();
+            var viewModels = new List<GioHangItemViewModel>();
 
             foreach (var item in gioHangs)
             {
-                var vm = new GioHangViewModel
+                var vm = new GioHangItemViewModel
                 {
                     MaGH = item.MaGH,
+                    MaSanPham = item.MaSanPham,
                     SoLuong = item.SoLuong,
                     LoaiSanPham = item.LoaiSanPham
                 };
@@ -49,7 +51,7 @@ namespace TPVAXWebsite.Services
                     if (vaccine != null)
                     {
                         vm.TenSanPham = vaccine.TenVC;
-                        vm.GiaBan = vaccine.GiaBan;
+                        vm.DonGia = vaccine.GiaBan;
                         vm.HinhAnh = vaccine.HinhAnh;
                     }
                 }
@@ -59,11 +61,10 @@ namespace TPVAXWebsite.Services
                     if (goi != null)
                     {
                         vm.TenSanPham = goi.TenGoi;
-                        vm.GiaBan = goi.GiaGoi;
+                        vm.DonGia = goi.GiaGoi;
                     }
                 }
 
-                vm.ThanhTien = vm.GiaBan * vm.SoLuong;
                 viewModels.Add(vm);
             }
 

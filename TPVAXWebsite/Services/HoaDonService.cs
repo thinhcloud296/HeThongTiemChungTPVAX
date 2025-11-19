@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TPVAXWebsite.DAL;
+using TPVAXWebsite.DAL.Repositories;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
 
@@ -42,7 +43,7 @@ namespace TPVAXWebsite.Services
                     MaHD = hoaDon.MaHD,
                     NgayLap = hoaDon.NgayLap,
                     TongTien = hoaDon.TongTien,
-                    TrangThai = hoaDon.TrangThai ? "Đã thanh toán" : "Chưa thanh toán"
+                    TrangThai = hoaDon.TrangThai
                 };
 
                 // Lấy chi tiết hóa đơn
@@ -69,7 +70,7 @@ namespace TPVAXWebsite.Services
                 MaHD = hoaDon.MaHD,
                 NgayLap = hoaDon.NgayLap,
                 TongTien = hoaDon.TongTien,
-                TrangThai = hoaDon.TrangThai ? "Đã thanh toán" : "Chưa thanh toán"
+                TrangThai = hoaDon.TrangThai
             };
 
             // Lấy thông tin khách hàng
@@ -85,7 +86,15 @@ namespace TPVAXWebsite.Services
                 .Find(ct => ct.MaHD == maHD)
                 .ToList();
 
-            vm.ChiTietHoaDons = chiTiets;
+            vm.ChiTietHoaDons = chiTiets.Select(ct => new ChiTietHoaDonViewModel
+            {
+                TenSanPham = "", // You may need to fetch product name here
+                LoaiSanPham = ct.LoaiSanPham,
+                SoLuong = ct.SoLuong,
+                DonGia = ct.DonGia
+                // ThanhTien is a getter, so no need to set
+            }).ToList();        
+
             vm.SoLuongSanPham = chiTiets.Sum(ct => ct.SoLuong);
 
             return vm;

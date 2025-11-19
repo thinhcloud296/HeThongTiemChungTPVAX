@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TPVAXWebsite.Models.Domain;
 
 namespace TPVAXWebsite.Models.ViewModels
 {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TPVAXWebsite.DAL;
+using TPVAXWebsite.DAL.Repositories;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
 
@@ -104,10 +105,20 @@ namespace TPVAXWebsite.Services
 
             return new VaccineDetailViewModel
             {
-                Vaccine = vaccine,
-                LoaiVaccine = loaiVaccine,
-                LoaiBenhs = loaiBenhs,
-                GoiVaccines = goiVaccines
+                MaVC = vaccine.MaVC,
+                TenVC = vaccine.TenVC,
+                GiaBan = vaccine.GiaBan,
+                SoLuongTon = vaccine.SoLuongTon,
+                TenLoai = loaiVaccine?.TenLoai,
+                MoTaLoai = loaiVaccine?.MoTa,
+                CacBenhPhongChong = loaiBenhs.Select(lb => lb.TenBenh).ToList(),
+                NuocSanXuat = vaccine.LoaiVaccine?.MoTa, // Adjust if you have a specific property for country
+                CacGoiVaccineChung = goiVaccines.Select(g => new GoiVaccineInfo
+                {
+                    MaGoi = g.MaGoi,
+                    TenGoi = g.TenGoi,
+                    GiaGoi = g.GiaGoi
+                }).ToList()
             };
         }
     }

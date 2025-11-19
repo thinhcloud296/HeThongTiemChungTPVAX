@@ -67,7 +67,7 @@ namespace TPVAXWebsite.Controllers
 
         // TODO: Xử lý thêm hồ sơ
         [HttpPost]
-        public ActionResult ThemHoSo()
+        public ActionResult ThemHoSo(FormCollection form)
         {
             // Tạo HoSoTiemChung mới
             // Tạo LienKetHoSo với vai trò (con, bố mẹ, vợ/chồng...)
