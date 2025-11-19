@@ -292,6 +292,12 @@
     <Compile Include="UserControls\TaiKhoanControl.Designer.cs">
       <DependentUpon>TaiKhoanControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ThongKeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ThongKeControl.Designer.cs">
+      <DependentUpon>ThongKeControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\VaccineControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
