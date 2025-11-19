@@ -1,101 +1,136 @@
 <header class="container-fluid" role="banner">
+    <!-- Toolbar -->
     <div class="toolbar-section">
         <div class="container d-flex align-items-center justify-content-between py-3 flex-wrap gap-3">
+            <!-- Search Bar -->
             <div class="search-bar-wrapper" style="flex: 1; min-width: 250px; max-width: 400px">
-                <form action="@Url.Action("Index", "Vaccine")" method="get" role="search" class="position-relative h-100">
-                    <label for="search-vaccine" class="visually-hidden">Tìm kiếm vắc xin</label>
-                    <input id="search-vaccine" name="search" placeholder="Tìm kiếm vắc xin..." type="search" 
-                           class="form-control h-100 rounded-pill pe-5 border border-primary" style="background-color: #ffffff; text-indent: 10px" />
+                <form action="@Url.Action("Index", "Vaccine")" method="get" role="search" aria-label="Tim kiem vaccine" class="position-relative h-100">
+                    <label for="search-vaccine" class="visually-hidden">Tim kiem vac xin</label>
+                    <input id="search-vaccine" name="search" placeholder="Tim kiem vac xin..." type="search" 
+                           class="form-control h-100 rounded-pill pe-5 border border-primary" 
+                           style="background-color: #ffffff; text-indent: 10px" aria-label="Nhap ten vac xin can tim" />
                     <img class="position-absolute top-50 translate-middle-y" src="@Url.Content("~/Content/Assets/Icons/search.png")" 
-                         alt="" style="width: 30px; right: 10px; pointer-events: none" loading="lazy" />
+                         alt="" aria-hidden="true" style="width: 30px; right: 10px; pointer-events: none" loading="lazy" />
                 </form>
             </div>
 
+            <!-- Contact Links -->
             <div class="d-flex align-items-center gap-3 flex-wrap">
-                <a href="tel:0975088626" class="d-flex align-items-center toolbar-link">
-                    <img src="@Url.Content("~/Content/Assets/Icons/telephone.png")" alt="" class="toolbar-icon" loading="lazy" />
+                <a href="tel:0975088626" class="d-flex align-items-center toolbar-link" aria-label="Goi hotline 0975 088 626">
+                    <img src="@Url.Content("~/Content/Assets/Icons/telephone.png")" alt="" aria-hidden="true" class="toolbar-icon" loading="lazy" />
                     <span class="fw-bold fs-5 text-warning">0975 088 626</span>
                 </a>
-                <a href="@Url.Action("Index", "Vaccine")" class="d-flex align-items-center toolbar-link">
-                    <img src="@Url.Content("~/Content/Assets/Icons/shopping-basket.png")" alt="" class="toolbar-icon" loading="lazy" />
-                    <span class="fw-bold fs-5 text-warning">Đặt mua vắc xin</span>
+                <a href="@Url.Action("Index", "Vaccine")" class="d-flex align-items-center toolbar-link" aria-label="Xem danh sach vaccine de dat mua">
+                    <img src="@Url.Content("~/Content/Assets/Icons/shopping-basket.png")" alt="" aria-hidden="true" class="toolbar-icon" loading="lazy" />
+                    <span class="fw-bold fs-5 text-warning">Dat mua vac xin</span>
                 </a>
             </div>
 
+            <!-- Auth & Cart -->
             <div class="d-flex align-items-center gap-2 flex-wrap">
                 @if (Session["TaiKhoanID"] == null)
                 {
-                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng nhập</a>
-                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary rounded-pill mx-1 login-btn">Đăng ký</a>
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary rounded-pill mx-1 login-btn" aria-label="Dang nhap tai khoan">Dang nhap</a>
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary rounded-pill mx-1 login-btn" aria-label="Dang ky tai khoan moi">Dang ky</a>
                 }
                 else
                 {
-                    <a href="#" class="btn btn-primary rounded-pill mx-1" id="dashboardBtn">
-                        <i class="fas fa-user-circle me-1"></i>Tài khoản
+                    <a href="@Url.Action("Dashboard", "Account")" class="btn btn-primary rounded-pill mx-1" id="dashboardBtn" aria-label="Tai khoan cua toi">
+                        <i class="fas fa-user-circle me-1"></i>Tai khoan
                     </a>
                 }
                 <div class="vr mx-2 d-none d-lg-block"></div>
-                <a href="#" class="btn btn-outline-primary rounded-pill d-flex align-items-center" id="profileBtn">
-                    <i class="fas fa-user-circle me-1"></i><span>Hồ sơ</span>
+                <a href="@Url.Action("Dashboard", "Account")" class="btn btn-outline-primary rounded-pill d-flex align-items-center" id="profileBtn" aria-label="Ho so cua toi">
+                    <i class="fas fa-user-circle me-1"></i><span>Ho so</span>
                 </a>
                 <div class="position-relative">
-                    <a href="@Url.Action("Index", "GioHang")" class="btn d-flex align-items-center btn-cart-custom">
-                        <img src="@Url.Content("~/Content/Assets/Icons/cart.png")" alt="" class="toolbar-icon-small" loading="lazy" />
-                        <span class="ms-2">Giỏ hàng</span>
+                    <a href="@Url.Action("Index", "GioHang")" class="btn d-flex align-items-center btn-cart-custom" aria-label="Gio hang co 3 san pham">
+                        <img src="@Url.Content("~/Content/Assets/Icons/cart.png")" alt="" aria-hidden="true" class="toolbar-icon-small" loading="lazy" />
+                        <span class="ms-2">Gio hang</span>
                     </a>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" aria-label="3 san pham trong gio">3</span>
                 </div>
             </div>
         </div>
     </div>
+    <!-- END Toolbar -->
 
+    <!-- Logo & Branding -->
     <div class="brand-section">
         <div class="container-fluid px-0">
             <div class="row align-items-center g-0">
                 <div class="col-md-5">
-                    <img src="@Url.Content("~/Content/Assets/Images/logo.png")" alt="Logo TPVAX" class="img-fluid" loading="eager" />
+                    <img src="@Url.Content("~/Content/Assets/Images/logo.png")" alt="Logo TPVAX - He thong tiem chung vaccine" class="img-fluid" loading="eager" />
                 </div>
                 <div class="col-md-7">
                     <div class="d-flex flex-column justify-content-center p-3 p-lg-4 brand-slogan" style="background-color: #0077b6; color: white">
-                        <h1 class="display-5 display-lg-4 mb-1 fw-bold">Cổng tiêm chủng vắc xin</h1>
-                        <p class="display-6 display-lg-5 mb-0">Chất lượng hàng đầu Việt Nam</p>
+                        <h1 class="display-5 display-lg-4 mb-1 fw-bold">Cong tiem chung vac xin</h1>
+                        <p class="display-6 display-lg-5 mb-0">Chat luong hang dau Viet Nam</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- END Logo -->
 
-    <nav class="navbar navbar-expand-lg main-navbar" role="navigation">
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg main-navbar" role="navigation" aria-label="Menu chinh">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" 
+                    aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Mo/Dong menu dieu huong">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse px-0 m-0" id="mainNavbarContent">
                 <ul class="container-fluid navbar-nav mx-auto d-flex flex-lg-row justify-content-around">
-                    <li class="nav-item"><a class="nav-link active" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("PhongBenh", "Vaccine")">Vắc xin phòng bệnh</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("GoiVaccine", "Vaccine")">Gói vắc xin</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Khuyến mãi HOT</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Tôi nên tiêm gì</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="@Url.Action("Index", "Home")">Trang chu</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "VaccinePhongBenh")">Vac xin phong benh</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "GoiVaccine")">Goi vac xin</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "KhuyenMai")">Khuyen mai HOT</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "ToiNenTiemGi")">Toi nen tiem gi</a>
+                    </li>
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Kiến thức tiêm chủng</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">
-                                <img src="@Url.Content("~/Content/Assets/Icons/ttvacine.png")" alt="" class="dropdown-icon-custom" loading="lazy" />
-                                Thông tin vaccine theo đối tượng
-                            </a></li>
-                            <li><a class="dropdown-item" href="#">
-                                <img src="@Url.Content("~/Content/Assets/Icons/mother.png")" alt="" class="dropdown-icon-custom" loading="lazy" />
-                                Mẹ và bé
-                            </a></li>
-                            <li><a class="dropdown-item" href="#">
-                                <img src="@Url.Content("~/Content/Assets/Icons/virus.png")" alt="" class="dropdown-icon-custom" loading="lazy" />
-                                Bệnh truyền nhiễm
-                            </a></li>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" 
+                           aria-expanded="false" aria-haspopup="true">Kien thuc tiem chung</a>
+                        <ul class="dropdown-menu" aria-label="Menu kien thuc tiem chung">
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "TheoDoiTuong")">
+                                    <img src="@Url.Content("~/Content/Assets/Icons/ttvacine.png")" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />
+                                    Thong tin vaccine theo doi tuong
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "MeVaBe")">
+                                    <img src="@Url.Content("~/Content/Assets/Icons/mother.png")" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />
+                                    Me va be
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "BenhTruyenNhiem")">
+                                    <img src="@Url.Content("~/Content/Assets/Icons/virus.png")" alt="" aria-hidden="true" class="dropdown-icon-custom" loading="lazy" />
+                                    Benh truyen nhiem
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    <!-- END Menu -->
 </header>
+<!-- END Header -->

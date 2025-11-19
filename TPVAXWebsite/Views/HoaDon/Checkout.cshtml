@@ -1,698 +1,926 @@
-﻿@model TPVAXWebsite.Models.ViewModels.GioHangViewModel
+@model TPVAXWebsite.Models.ViewModels.GioHangViewModel
 @{
-    ViewBag.Title = "Thanh Toán";
+    ViewBag.Title = "Thanh toan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-8">
-            <div class="checkout-content">
-              <!-- Step 1: Confirm Information -->
-              <div class="step-content active" id="step-1">
-                <h4 class="mb-4">
-                  <i class="fas fa-clipboard-check me-2 text-primary"></i>Xác
-                  nhận thông tin
-                </h4>
+@section styles {
+<style>
+    /* Checkout Page - Professional Payment Flow */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    }
 
-                <!-- Customer Info -->
-                <div class="info-card selected">
-                  <h6 class="mb-3">
-                    <i class="fas fa-user me-2"></i>Thông tin người đặt
-                  </h6>
-                  <div class="row">
-                    <div class="col-md-6 mb-2">
-                      <strong>Họ tên:</strong> Trần Tấn Tài
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <strong>SĐT:</strong> 0975088626
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <strong>Email:</strong> tantai@example.com
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <strong>Ngày sinh:</strong> 01/02/2004
-                    </div>
-                  </div>
-                  <button class="btn btn-sm btn-outline-primary mt-2">
-                    <i class="fas fa-edit me-1"></i>Chỉnh sửa
-                  </button>
+    .checkout-container {
+        background: transparent;
+        min-height: 100vh;
+        padding: 30px 0;
+    }
+
+    .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        position: relative;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-steps::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 60px;
+        right: 60px;
+        height: 4px;
+        background: #e1e8ed;
+        transform: translateY(-50%);
+        z-index: 0;
+    }
+
+    .progress-line {
+        position: absolute;
+        top: 50%;
+        left: 60px;
+        height: 3px;
+        background: #0077b6;
+        transform: translateY(-50%);
+        transition: width 0.5s ease;
+        z-index: 1;
+    }
+
+    .step {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .step-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #e1e8ed;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 12px;
+        transition: all 0.4s;
+        border: 4px solid transparent;
+    }
+
+    .step.active .step-circle {
+        background: linear-gradient(135deg, #0077b6, #00b4d8);
+        color: white;
+        box-shadow: 0 0 0 8px rgba(0, 119, 182, 0.15);
+        border-color: white;
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0%, 100% {
+            box-shadow: 0 0 0 8px rgba(0, 119, 182, 0.15);
+        }
+        50% {
+            box-shadow: 0 0 0 12px rgba(0, 119, 182, 0.25);
+        }
+    }
+
+    .step.completed .step-circle {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border-color: white;
+    }
+
+    .step-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #6c757d;
+        text-align: center;
+    }
+
+    .step.active .step-label {
+        color: #0077b6;
+    }
+
+    .checkout-content {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+        padding: 40px;
+        border: 1px solid #e9ecef;
+    }
+
+    .checkout-content h4 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #0077b6;
+    }
+
+    .step-content {
+        display: none;
+    }
+
+    .step-content.active {
+        display: block;
+        animation: fadeIn 0.5s;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .info-card {
+        border: 2px solid #e1e8ed;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .info-card.selected {
+        border-color: #0077b6;
+        background: #e7f3ff;
+    }
+
+    .payment-method {
+        border: 2px solid #e1e8ed;
+        border-radius: 12px;
+        padding: 22px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: #fafbfc;
+        position: relative;
+    }
+
+    .payment-method:hover {
+        border-color: #0077b6;
+        background: white;
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 119, 182, 0.15);
+    }
+
+    .payment-method.selected {
+        border-color: #0077b6;
+        background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+        box-shadow: 0 4px 20px rgba(0, 119, 182, 0.2);
+    }
+
+    .payment-method.selected::after {
+        content: "✓";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: #0077b6;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .payment-method input[type="radio"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    .order-summary {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border-radius: 15px;
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+        padding: 30px;
+        position: sticky;
+        top: 20px;
+        border: 2px solid #e9ecef;
+    }
+
+    .order-summary h5 {
+        color: #0077b6;
+        font-weight: 700;
+        border-bottom: 3px solid #0077b6;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #e1e8ed;
+    }
+
+    .summary-item:last-child {
+        border-bottom: none;
+    }
+
+    .summary-total {
+        font-size: 24px;
+        font-weight: 700;
+        color: #0077b6;
+        background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .success-icon {
+        font-size: 80px;
+        color: #28a745;
+        animation: scaleIn 0.5s;
+    }
+
+    @@keyframes scaleIn {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+</style>
+}
+
+<!-- Back Button -->
+<div class="container mt-3">
+    <a href="@Url.Action("Index", "GioHang")" class="btn btn-outline-primary">
+        <i class="fas fa-arrow-left me-2"></i>Quay lai gio hang
+    </a>
+</div>
+
+<!-- Checkout Container -->
+<div class="checkout-container">
+    <div class="container">
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="progress-line" id="progressLine" style="width: 0%"></div>
+
+            <div class="step active" data-step="1">
+                <div class="step-circle">
+                    <i class="fas fa-clipboard-check"></i>
                 </div>
+                <div class="step-label">Xac nhan<br />thong tin</div>
+            </div>
 
-                <!-- Vaccination Person -->
-                <div class="info-card selected">
-                  <h6 class="mb-3">
-                    <i class="fas fa-syringe me-2"></i>Người được tiêm
-                  </h6>
-                  <div class="row">
-                    <div class="col-md-6 mb-2">
-                      <strong>Họ tên:</strong> Trần Minh Anh
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <strong>Quan hệ:</strong> Con gái
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <strong>Ngày sinh:</strong> 15/08/2020
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <strong>Giới tính:</strong> Nữ
-                    </div>
-                  </div>
-                  <button class="btn btn-sm btn-outline-primary mt-2">
-                    <i class="fas fa-sync-alt me-1"></i>Đổi người tiêm
-                  </button>
+            <div class="step" data-step="2">
+                <div class="step-circle">
+                    <i class="fas fa-credit-card"></i>
                 </div>
+                <div class="step-label">Phuong thuc<br />thanh toan</div>
+            </div>
 
-                <!-- Appointment Details -->
-                <div class="info-card">
-                  <h6 class="mb-3">
-                    <i class="fas fa-calendar-alt me-2"></i>Thông tin lịch hẹn
-                  </h6>
-                  <div class="mb-3">
-                    <label class="form-label"
-                      ><strong>Chọn ngày tiêm</strong></label
-                    >
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="appointmentDate"
-                      min="2025-11-18"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label"
-                      ><strong>Chọn giờ tiêm</strong></label
-                    >
-                    <select class="form-select" id="appointmentTime">
-                      <option value="">-- Chọn khung giờ --</option>
-                      <option>08:00 - 09:00</option>
-                      <option>09:00 - 10:00</option>
-                      <option>10:00 - 11:00</option>
-                      <option>13:00 - 14:00</option>
-                      <option>14:00 - 15:00</option>
-                      <option>15:00 - 16:00</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="form-label"
-                      ><strong>Chọn trung tâm</strong></label
-                    >
-                    <select class="form-select" id="center">
-                      <option value="">-- Chọn trung tâm tiêm chủng --</option>
-                      <option>
-                        Trung tâm TPVAX Quận 1 - 123 Nguyễn Huệ, Q1, TP.HCM
-                      </option>
-                      <option>
-                        Trung tâm TPVAX Tân Phú - 140 Lê Trọng Tấn, Tân Phú,
-                        TP.HCM
-                      </option>
-                      <option>
-                        Trung tâm TPVAX Bình Thạnh - 456 Xô Viết Nghệ Tĩnh, Bình
-                        Thạnh, TP.HCM
-                      </option>
-                      <option>
-                        Trung tâm TPVAX Thủ Đức - 789 Võ Văn Ngân, Thủ Đức,
-                        TP.HCM
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <button
-                  class="btn btn-primary btn-lg w-100"
-                  onclick="nextStep()"
-                >
-                  <i class="fas fa-arrow-right me-2"></i>Tiếp tục
-                </button>
-              </div>
-
-              <!-- Step 2: Payment Method -->
-              <div class="step-content" id="step-2">
-                <h4 class="mb-4">
-                  <i class="fas fa-credit-card me-2 text-primary"></i>Chọn
-                  phương thức thanh toán
-                </h4>
-
-                <!-- Cash Payment -->
-                <div class="payment-method" onclick="selectPayment('cash')">
-                  <div class="d-flex align-items-center">
-                    <input
-                      type="radio"
-                      name="payment"
-                      id="payment-cash"
-                      class="me-3"
-                    />
-                    <div class="flex-grow-1">
-                      <h6 class="mb-1">
-                        <i class="fas fa-money-bill-wave me-2 text-success"></i>
-                        Thanh toán tiền mặt tại trung tâm
-                      </h6>
-                      <p class="mb-0 text-muted small">
-                        Thanh toán khi đến trung tâm tiêm chủng
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Bank Transfer -->
-                <div class="payment-method" onclick="selectPayment('transfer')">
-                  <div class="d-flex align-items-center">
-                    <input
-                      type="radio"
-                      name="payment"
-                      id="payment-transfer"
-                      class="me-3"
-                    />
-                    <div class="flex-grow-1">
-                      <h6 class="mb-1">
-                        <i class="fas fa-university me-2 text-primary"></i>
-                        Chuyển khoản ngân hàng
-                      </h6>
-                      <p class="mb-0 text-muted small">
-                        Chuyển khoản trước, xác nhận sau
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Credit Card -->
-                <div class="payment-method" onclick="selectPayment('card')">
-                  <div class="d-flex align-items-center">
-                    <input
-                      type="radio"
-                      name="payment"
-                      id="payment-card"
-                      class="me-3"
-                    />
-                    <div class="flex-grow-1">
-                      <h6 class="mb-1">
-                        <i class="fas fa-credit-card me-2 text-info"></i>
-                        Thanh toán bằng thẻ
-                      </h6>
-                      <p class="mb-0 text-muted small">
-                        Visa, Mastercard, JCB, Amex
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- MoMo -->
-                <div class="payment-method" onclick="selectPayment('momo')">
-                  <div class="d-flex align-items-center">
-                    <input
-                      type="radio"
-                      name="payment"
-                      id="payment-momo"
-                      class="me-3"
-                    />
-                    <div class="flex-grow-1">
-                      <h6 class="mb-1">
-                        <i class="fab fa-bity me-2" style="color: #d82d8b"></i>
-                        Ví MoMo
-                      </h6>
-                      <p class="mb-0 text-muted small">
-                        Thanh toán qua ví điện tử MoMo
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- ZaloPay -->
-                <div class="payment-method" onclick="selectPayment('zalopay')">
-                  <div class="d-flex align-items-center">
-                    <input
-                      type="radio"
-                      name="payment"
-                      id="payment-zalopay"
-                      class="me-3"
-                    />
-                    <div class="flex-grow-1">
-                      <h6 class="mb-1">
-                        <i
-                          class="fas fa-wallet me-2"
-                          style="color: #008fe5"
-                        ></i>
-                        ZaloPay
-                      </h6>
-                      <p class="mb-0 text-muted small">
-                        Thanh toán qua ví điện tử ZaloPay
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- VNPay -->
-                <div class="payment-method" onclick="selectPayment('vnpay')">
-                  <div class="d-flex align-items-center">
-                    <input
-                      type="radio"
-                      name="payment"
-                      id="payment-vnpay"
-                      class="me-3"
-                    />
-                    <div class="flex-grow-1">
-                      <h6 class="mb-1">
-                        <i class="fas fa-qrcode me-2 text-danger"></i>
-                        VNPay QR
-                      </h6>
-                      <p class="mb-0 text-muted small">
-                        Quét mã QR để thanh toán
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="d-flex gap-2 mt-4">
-                  <button
-                    class="btn btn-outline-secondary btn-lg"
-                    onclick="prevStep()"
-                  >
-                    <i class="fas fa-arrow-left me-2"></i>Quay lại
-                  </button>
-                  <button
-                    class="btn btn-primary btn-lg flex-grow-1"
-                    onclick="nextStep()"
-                  >
-                    <i class="fas fa-arrow-right me-2"></i>Tiếp tục
-                  </button>
-                </div>
-              </div>
-
-              <!-- Step 3: Confirm Order -->
-              <div class="step-content" id="step-3">
-                <h4 class="mb-4">
-                  <i class="fas fa-check-circle me-2 text-primary"></i>Xác nhận
-                  đơn hàng
-                </h4>
-
-                <!-- Order Summary -->
-                <div class="info-card">
-                  <h6 class="mb-3">Chi tiết đơn hàng</h6>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Sản phẩm</th>
-                          <th>Số lượng</th>
-                          <th>Đơn giá</th>
-                          <th>Thành tiền</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Vaccine HPV (Gardasil 9)</td>
-                          <td>1</td>
-                          <td>1.750.000đ</td>
-                          <td><strong>1.750.000đ</strong></td>
-                        </tr>
-                        <tr>
-                          <td>Vaccine Phế cầu (Prevenar 13)</td>
-                          <td>1</td>
-                          <td>1.200.000đ</td>
-                          <td><strong>1.200.000đ</strong></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <!-- Appointment Info -->
-                <div class="info-card">
-                  <h6 class="mb-3">Thông tin lịch hẹn</h6>
-                  <p class="mb-2">
-                    <strong>Ngày giờ:</strong>
-                    <span id="confirmDate">--</span> -
-                    <span id="confirmTime">--</span>
-                  </p>
-                  <p class="mb-2">
-                    <strong>Trung tâm:</strong>
-                    <span id="confirmCenter">--</span>
-                  </p>
-                  <p class="mb-0"><strong>Người tiêm:</strong> Trần Minh Anh</p>
-                </div>
-
-                <!-- Payment Info -->
-                <div class="info-card">
-                  <h6 class="mb-3">Phương thức thanh toán</h6>
-                  <p class="mb-0" id="confirmPayment">--</p>
-                </div>
-
-                <!-- Terms -->
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="agreeTerms"
-                    required
-                  />
-                  <label class="form-check-label" for="agreeTerms">
-                    Tôi đã đọc và đồng ý với
-                    <a href="#" class="text-primary">điều khoản dịch vụ</a> và
-                    <a href="#" class="text-primary">chính sách bảo mật</a> của
-                    TPVAX
-                  </label>
-                </div>
-
-                <div class="d-flex gap-2">
-                  <button
-                    class="btn btn-outline-secondary btn-lg"
-                    onclick="prevStep()"
-                  >
-                    <i class="fas fa-arrow-left me-2"></i>Quay lại
-                  </button>
-                  <button
-                    class="btn btn-success btn-lg flex-grow-1"
-                    onclick="confirmOrder()"
-                  >
-                    <i class="fas fa-check-circle me-2"></i>Xác nhận đặt hẹn
-                  </button>
-                </div>
-              </div>
-
-              <!-- Step 4: Success -->
-              <div class="step-content" id="step-4">
-                <div class="text-center py-5">
-                  <div class="success-icon">
+            <div class="step" data-step="3">
+                <div class="step-circle">
                     <i class="fas fa-check-circle"></i>
-                  </div>
-                  <h2 class="mt-4 mb-3 text-success">Đặt lịch thành công!</h2>
-                  <p class="lead mb-4">
-                    Mã đơn hàng của bạn:
-                    <strong class="text-primary">#DH123456</strong>
-                  </p>
-
-                  <div class="alert alert-info mb-4">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Thông tin chi tiết đã được gửi đến email
-                    <strong>tantai@example.com</strong>
-                  </div>
-
-                  <div
-                    class="d-flex flex-column gap-3 mx-auto"
-                    style="max-width: 400px"
-                  >
-                    <a href="dashboard.html" class="btn btn-primary btn-lg">
-                      <i class="fas fa-calendar-check me-2"></i>Xem lịch hẹn của
-                      tôi
-                    </a>
-                    <a
-                      href="vacxinphongbenh.html"
-                      class="btn btn-outline-primary btn-lg"
-                    >
-                      <i class="fas fa-redo me-2"></i>Đặt lịch mới
-                    </a>
-                    <a
-                      href="@Url.Action("Index", "Home")"
-                      class="btn btn-outline-secondary btn-lg"
-                    >
-                      <i class="fas fa-home me-2"></i>Về trang chủ
-                    </a>
-                  </div>
-
-                  <div class="mt-5">
-                    <h5 class="mb-3">Hướng dẫn tiếp theo</h5>
-                    <div class="row text-start">
-                      <div class="col-md-6 mb-3">
-                        <div class="d-flex gap-3">
-                          <div class="flex-shrink-0">
-                            <div
-                              class="bg-primary text-white rounded-circle"
-                              style="
-                                width: 40px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                              "
-                            >
-                              1
-                            </div>
-                          </div>
-                          <div>
-                            <h6>Chuẩn bị trước khi tiêm</h6>
-                            <p class="small mb-0">
-                              Đảm bảo người tiêm khỏe mạnh, không sốt, không ốm
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <div class="d-flex gap-3">
-                          <div class="flex-shrink-0">
-                            <div
-                              class="bg-primary text-white rounded-circle"
-                              style="
-                                width: 40px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                              "
-                            >
-                              2
-                            </div>
-                          </div>
-                          <div>
-                            <h6>Mang theo giấy tờ</h6>
-                            <p class="small mb-0">
-                              CCCD/CMND, giấy khai sinh (nếu tiêm cho trẻ)
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <div class="d-flex gap-3">
-                          <div class="flex-shrink-0">
-                            <div
-                              class="bg-primary text-white rounded-circle"
-                              style="
-                                width: 40px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                              "
-                            >
-                              3
-                            </div>
-                          </div>
-                          <div>
-                            <h6>Đến đúng giờ</h6>
-                            <p class="small mb-0">
-                              Có mặt trước 15 phút để làm thủ tục
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <div class="d-flex gap-3">
-                          <div class="flex-shrink-0">
-                            <div
-                              class="bg-primary text-white rounded-circle"
-                              style="
-                                width: 40px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                              "
-                            >
-                              4
-                            </div>
-                          </div>
-                          <div>
-                            <h6>Sau khi tiêm</h6>
-                            <p class="small mb-0">
-                              Ở lại trung tâm 30 phút để theo dõi
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
+                <div class="step-label">Xac nhan<br />don hang</div>
             </div>
-          </div>
 
-          <!-- Order Summary Sidebar -->
-          <div class="col-lg-4">
-            <div class="order-summary">
-              <h5 class="mb-4">
-                <i class="fas fa-receipt me-2"></i>Tóm tắt đơn hàng
-              </h5>
-
-              <div class="summary-item">
-                <span>Vaccine HPV</span>
-                <strong>1.750.000đ</strong>
-              </div>
-              <div class="summary-item">
-                <span>Vaccine Phế cầu</span>
-                <strong>1.200.000đ</strong>
-              </div>
-              <div class="summary-item">
-                <span>Phí dịch vụ</span>
-                <strong>50.000đ</strong>
-              </div>
-              <div class="summary-item">
-                <span class="text-success">Giảm giá</span>
-                <strong class="text-success">-200.000đ</strong>
-              </div>
-
-              <hr class="my-3" />
-
-              <div class="summary-item summary-total">
-                <span>Tổng cộng</span>
-                <span>2.800.000đ</span>
-              </div>
-
-              <div class="mt-4">
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nhập mã giảm giá"
-                  />
-                  <button class="btn btn-outline-primary" type="button">
-                    <i class="fas fa-check"></i>
-                  </button>
+            <div class="step" data-step="4">
+                <div class="step-circle">
+                    <i class="fas fa-smile"></i>
                 </div>
-              </div>
-
-              <div class="alert alert-success mt-3">
-                <i class="fas fa-gift me-2"></i>
-                <small
-                  ><strong>Ưu đãi:</strong> Giảm 200.000đ cho đơn hàng đầu
-                  tiên</small
-                >
-              </div>
-
-              <div class="mt-4 text-center">
-                <img
-                  src="@Url.Content("~/Content/Assets/Icons/secure-payment.png")"
-                  alt="Secure Payment"
-                  style="height: 40px"
-                  class="mb-2"
-                />
-                <p class="small text-muted mb-0">
-                  Thanh toán an toàn & bảo mật
-                </p>
-              </div>
+                <div class="step-label">Hoan tat</div>
             </div>
-          </div>
         </div>
-      </div>
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <div class="checkout-content">
+                    <!-- Step 1: Confirm Information -->
+                    <div class="step-content active" id="step-1">
+                        <h4 class="mb-4">
+                            <i class="fas fa-clipboard-check me-2 text-primary"></i>Xac nhan thong tin
+                        </h4>
+
+                        <!-- Customer Info -->
+                        <div class="info-card selected">
+                            <h6 class="mb-3">
+                                <i class="fas fa-user me-2"></i>Thong tin nguoi dat
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <strong>Ho ten:</strong> Tran Tan Tai
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <strong>SDT:</strong> 0975088626
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <strong>Email:</strong> tantai@example.com
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <strong>Ngay sinh:</strong> 01/02/2004
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary mt-2">
+                                <i class="fas fa-edit me-1"></i>Chinh sua
+                            </button>
+                        </div>
+
+                        <!-- Vaccination Person -->
+                        <div class="info-card selected">
+                            <h6 class="mb-3">
+                                <i class="fas fa-syringe me-2"></i>Nguoi duoc tiem
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <strong>Ho ten:</strong> Tran Minh Anh
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <strong>Quan he:</strong> Con gai
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <strong>Ngay sinh:</strong> 15/08/2020
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <strong>Gioi tinh:</strong> Nu
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary mt-2">
+                                <i class="fas fa-sync-alt me-1"></i>Doi nguoi tiem
+                            </button>
+                        </div>
+
+                        <!-- Appointment Details -->
+                        <div class="info-card">
+                            <h6 class="mb-3">
+                                <i class="fas fa-calendar-alt me-2"></i>Thong tin lich hen
+                            </h6>
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Chon ngay tiem</strong></label>
+                                <input type="date" class="form-control" id="appointmentDate" min="2025-11-18" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Chon gio tiem</strong></label>
+                                <select class="form-select" id="appointmentTime">
+                                    <option value="">-- Chon khung gio --</option>
+                                    <option>08:00 - 09:00</option>
+                                    <option>09:00 - 10:00</option>
+                                    <option>10:00 - 11:00</option>
+                                    <option>13:00 - 14:00</option>
+                                    <option>14:00 - 15:00</option>
+                                    <option>15:00 - 16:00</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label"><strong>Chon trung tam</strong></label>
+                                <select class="form-select" id="center">
+                                    <option value="">-- Chon trung tam tiem chung --</option>
+                                    <option>Trung tam TPVAX Quan 1 - 123 Nguyen Hue, Q1, TP.HCM</option>
+                                    <option>Trung tam TPVAX Tan Phu - 140 Le Trong Tan, Tan Phu, TP.HCM</option>
+                                    <option>Trung tam TPVAX Binh Thanh - 456 Xo Viet Nghe Tinh, Binh Thanh, TP.HCM</option>
+                                    <option>Trung tam TPVAX Thu Duc - 789 Vo Van Ngan, Thu Duc, TP.HCM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg w-100" onclick="nextStep()">
+                            <i class="fas fa-arrow-right me-2"></i>Tiep tuc
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Payment Method -->
+                    <div class="step-content" id="step-2">
+                        <h4 class="mb-4">
+                            <i class="fas fa-credit-card me-2 text-primary"></i>Chon phuong thuc thanh toan
+                        </h4>
+
+                        <!-- Cash Payment -->
+                        <div class="payment-method" onclick="selectPayment('cash')">
+                            <div class="d-flex align-items-center">
+                                <input type="radio" name="payment" id="payment-cash" class="me-3" />
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <i class="fas fa-money-bill-wave me-2 text-success"></i>
+                                        Thanh toan tien mat tai trung tam
+                                    </h6>
+                                    <p class="mb-0 text-muted small">
+                                        Thanh toan khi den trung tam tiem chung
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer -->
+                        <div class="payment-method" onclick="selectPayment('transfer')">
+                            <div class="d-flex align-items-center">
+                                <input type="radio" name="payment" id="payment-transfer" class="me-3" />
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <i class="fas fa-university me-2 text-primary"></i>
+                                        Chuyen khoan ngan hang
+                                    </h6>
+                                    <p class="mb-0 text-muted small">
+                                        Chuyen khoan truoc, xac nhan sau
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Credit Card -->
+                        <div class="payment-method" onclick="selectPayment('card')">
+                            <div class="d-flex align-items-center">
+                                <input type="radio" name="payment" id="payment-card" class="me-3" />
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <i class="fas fa-credit-card me-2 text-info"></i>
+                                        Thanh toan bang the
+                                    </h6>
+                                    <p class="mb-0 text-muted small">
+                                        Visa, Mastercard, JCB, Amex
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MoMo -->
+                        <div class="payment-method" onclick="selectPayment('momo')">
+                            <div class="d-flex align-items-center">
+                                <input type="radio" name="payment" id="payment-momo" class="me-3" />
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <i class="fab fa-bity me-2" style="color: #d82d8b"></i>
+                                        Vi MoMo
+                                    </h6>
+                                    <p class="mb-0 text-muted small">
+                                        Thanh toan qua vi dien tu MoMo
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ZaloPay -->
+                        <div class="payment-method" onclick="selectPayment('zalopay')">
+                            <div class="d-flex align-items-center">
+                                <input type="radio" name="payment" id="payment-zalopay" class="me-3" />
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <i class="fas fa-wallet me-2" style="color: #008fe5"></i>
+                                        ZaloPay
+                                    </h6>
+                                    <p class="mb-0 text-muted small">
+                                        Thanh toan qua vi dien tu ZaloPay
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VNPay -->
+                        <div class="payment-method" onclick="selectPayment('vnpay')">
+                            <div class="d-flex align-items-center">
+                                <input type="radio" name="payment" id="payment-vnpay" class="me-3" />
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <i class="fas fa-qrcode me-2 text-danger"></i>
+                                        VNPay QR
+                                    </h6>
+                                    <p class="mb-0 text-muted small">
+                                        Quet ma QR de thanh toan
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button class="btn btn-outline-secondary btn-lg" onclick="prevStep()">
+                                <i class="fas fa-arrow-left me-2"></i>Quay lai
+                            </button>
+                            <button class="btn btn-primary btn-lg flex-grow-1" onclick="nextStep()">
+                                <i class="fas fa-arrow-right me-2"></i>Tiep tuc
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Confirm Order -->
+                    <div class="step-content" id="step-3">
+                        <h4 class="mb-4">
+                            <i class="fas fa-check-circle me-2 text-primary"></i>Xac nhan don hang
+                        </h4>
+
+                        <!-- Order Summary -->
+                        <div class="info-card">
+                            <h6 class="mb-3">Chi tiet don hang</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>San pham</th>
+                                            <th>So luong</th>
+                                            <th>Don gia</th>
+                                            <th>Thanh tien</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null && Model.Items != null)
+                                        {
+                                            foreach (var item in Model.Items)
+                                            {
+                                                <tr>
+                                                    <td>@item.TenSanPham</td>
+                                                    <td>@item.SoLuong</td>
+                                                    <td>@string.Format("{0:N0}d", item.DonGia)</td>
+                                                    <td><strong>@string.Format("{0:N0}d", item.ThanhTien)</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>Vaccine HPV (Gardasil 9)</td>
+                                                <td>1</td>
+                                                <td>1.750.000d</td>
+                                                <td><strong>1.750.000d</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Vaccine Phe cau (Prevenar 13)</td>
+                                                <td>1</td>
+                                                <td>1.200.000d</td>
+                                                <td><strong>1.200.000d</strong></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Appointment Info -->
+                        <div class="info-card">
+                            <h6 class="mb-3">Thong tin lich hen</h6>
+                            <p class="mb-2">
+                                <strong>Ngay gio:</strong>
+                                <span id="confirmDate">--</span> -
+                                <span id="confirmTime">--</span>
+                            </p>
+                            <p class="mb-2">
+                                <strong>Trung tam:</strong>
+                                <span id="confirmCenter">--</span>
+                            </p>
+                            <p class="mb-0"><strong>Nguoi tiem:</strong> Tran Minh Anh</p>
+                        </div>
+
+                        <!-- Payment Info -->
+                        <div class="info-card">
+                            <h6 class="mb-3">Phuong thuc thanh toan</h6>
+                            <p class="mb-0" id="confirmPayment">--</p>
+                        </div>
+
+                        <!-- Terms -->
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required />
+                            <label class="form-check-label" for="agreeTerms">
+                                Toi da doc va dong y voi
+                                <a href="#" class="text-primary">dieu khoan dich vu</a> va
+                                <a href="#" class="text-primary">chinh sach bao mat</a> cua
+                                TPVAX
+                            </label>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary btn-lg" onclick="prevStep()">
+                                <i class="fas fa-arrow-left me-2"></i>Quay lai
+                            </button>
+                            <button class="btn btn-success btn-lg flex-grow-1" onclick="confirmOrder()">
+                                <i class="fas fa-check-circle me-2"></i>Xac nhan dat hen
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Success -->
+                    <div class="step-content" id="step-4">
+                        <div class="text-center py-5">
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h2 class="mt-4 mb-3 text-success">Dat lich thanh cong!</h2>
+                            <p class="lead mb-4">
+                                Ma don hang cua ban:
+                                <strong class="text-primary">#DH123456</strong>
+                            </p>
+
+                            <div class="alert alert-info mb-4">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Thong tin chi tiet da duoc gui den email
+                                <strong>tantai@example.com</strong>
+                            </div>
+
+                            <div class="d-flex flex-column gap-3 mx-auto" style="max-width: 400px">
+                                <a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-calendar-check me-2"></i>Xem lich hen cua toi
+                                </a>
+                                <a href="@Url.Action("Index", "VaccinePhongBenh")" class="btn btn-outline-primary btn-lg">
+                                    <i class="fas fa-redo me-2"></i>Dat lich moi
+                                </a>
+                                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary btn-lg">
+                                    <i class="fas fa-home me-2"></i>Ve trang chu
+                                </a>
+                            </div>
+
+                            <div class="mt-5">
+                                <h5 class="mb-3">Huong dan tiep theo</h5>
+                                <div class="row text-start">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex gap-3">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-primary text-white rounded-circle"
+                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                                    1
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6>Chuan bi truoc khi tiem</h6>
+                                                <p class="small mb-0">
+                                                    Dam bao nguoi tiem khoe manh, khong sot, khong om
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex gap-3">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-primary text-white rounded-circle"
+                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                                    2
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6>Mang theo giay to</h6>
+                                                <p class="small mb-0">
+                                                    CCCD/CMND, giay khai sinh (neu tiem cho tre)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex gap-3">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-primary text-white rounded-circle"
+                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                                    3
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6>Den dung gio</h6>
+                                                <p class="small mb-0">
+                                                    Co mat truoc 15 phut de lam thu tuc
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex gap-3">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-primary text-white rounded-circle"
+                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                                    4
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6>Sau khi tiem</h6>
+                                                <p class="small mb-0">
+                                                    O lai trung tam 30 phut de theo doi
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <h5 class="mb-4">
+                        <i class="fas fa-receipt me-2"></i>Tom tat don hang
+                    </h5>
+
+                    @if (Model != null && Model.Items != null)
+                    {
+                        foreach (var item in Model.Items)
+                        {
+                            <div class="summary-item">
+                                <span>@item.TenSanPham</span>
+                                <strong>@string.Format("{0:N0}d", item.DonGia)</strong>
+                            </div>
+                        }
+
+                        <div class="summary-item">
+                            <span>Phi dich vu</span>
+                            <strong>50.000d</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span class="text-success">Giam gia</span>
+                            <strong class="text-success">-@string.Format("{0:N0}d", Model.TienGiam)</strong>
+                        </div>
+
+                        <hr class="my-3" />
+
+                        <div class="summary-item summary-total">
+                            <span>Tong cong</span>
+                            <span>@string.Format("{0:N0}d", Model.ThanhToan)</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="summary-item">
+                            <span>Vaccine HPV</span>
+                            <strong>1.750.000d</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Vaccine Phe cau</span>
+                            <strong>1.200.000d</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Phi dich vu</span>
+                            <strong>50.000d</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span class="text-success">Giam gia</span>
+                            <strong class="text-success">-200.000d</strong>
+                        </div>
+
+                        <hr class="my-3" />
+
+                        <div class="summary-item summary-total">
+                            <span>Tong cong</span>
+                            <span>2.800.000d</span>
+                        </div>
+                    }
+
+                    <div class="mt-4">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nhap ma giam gia" id="couponInput" />
+                            <button class="btn btn-outline-primary" type="button" onclick="applyCoupon()">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <i class="fas fa-gift me-2"></i>
+                        <small><strong>Uu dai:</strong> Giam 200.000d cho don hang dau tien</small>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <p class="small text-muted mb-0">
+                            Thanh toan an toan & bao mat
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script src="Scripts/bootstrap.bundle.min.js"></script>
-    <script>
-      let currentStep = 1;
-      const totalSteps = 4;
+@section scripts {
+<script>
+    let currentStep = 1;
+    const totalSteps = 4;
 
-      function updateProgress() {
+    function updateProgress() {
         // Update progress line
         const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
         document.getElementById("progressLine").style.width = progress + "%";
 
         // Update step indicators
         document.querySelectorAll(".step").forEach((step, index) => {
-          const stepNum = index + 1;
-          if (stepNum < currentStep) {
-            step.classList.add("completed");
-            step.classList.remove("active");
-          } else if (stepNum === currentStep) {
-            step.classList.add("active");
-            step.classList.remove("completed");
-          } else {
-            step.classList.remove("active", "completed");
-          }
+            const stepNum = index + 1;
+            if (stepNum < currentStep) {
+                step.classList.add("completed");
+                step.classList.remove("active");
+            } else if (stepNum === currentStep) {
+                step.classList.add("active");
+                step.classList.remove("completed");
+            } else {
+                step.classList.remove("active", "completed");
+            }
         });
 
         // Show/hide step content
         document.querySelectorAll(".step-content").forEach((content, index) => {
-          if (index + 1 === currentStep) {
-            content.classList.add("active");
-          } else {
-            content.classList.remove("active");
-          }
+            if (index + 1 === currentStep) {
+                content.classList.add("active");
+            } else {
+                content.classList.remove("active");
+            }
         });
 
         // Scroll to top
         window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+    }
 
-      function nextStep() {
+    function nextStep() {
         // Validation for each step
         if (currentStep === 1) {
-          const date = document.getElementById("appointmentDate").value;
-          const time = document.getElementById("appointmentTime").value;
-          const center = document.getElementById("center").value;
+            const date = document.getElementById("appointmentDate").value;
+            const time = document.getElementById("appointmentTime").value;
+            const center = document.getElementById("center").value;
 
-          if (!date || !time || !center) {
-            alert("⚠️ Vui lòng chọn đầy đủ thông tin lịch hẹn!");
-            return;
-          }
+            if (!date || !time || !center) {
+                alert("Vui long chon day du thong tin lich hen!");
+                return;
+            }
 
-          // Store values for confirmation
-          document.getElementById("confirmDate").textContent = new Date(
-            date
-          ).toLocaleDateString("vi-VN");
-          document.getElementById("confirmTime").textContent = time;
-          document.getElementById("confirmCenter").textContent = center;
+            // Store values for confirmation
+            document.getElementById("confirmDate").textContent = new Date(date).toLocaleDateString("vi-VN");
+            document.getElementById("confirmTime").textContent = time;
+            document.getElementById("confirmCenter").textContent = center;
         }
 
         if (currentStep === 2) {
-          const selectedPayment = document.querySelector(
-            'input[name="payment"]:checked'
-          );
-          if (!selectedPayment) {
-            alert("⚠️ Vui lòng chọn phương thức thanh toán!");
-            return;
-          }
+            const selectedPayment = document.querySelector('input[name="payment"]:checked');
+            if (!selectedPayment) {
+                alert("Vui long chon phuong thuc thanh toan!");
+                return;
+            }
 
-          const paymentMethod = selectedPayment.closest(".payment-method");
-          const paymentText = paymentMethod.querySelector("h6").textContent;
-          document.getElementById("confirmPayment").textContent = paymentText;
+            const paymentMethod = selectedPayment.closest(".payment-method");
+            const paymentText = paymentMethod.querySelector("h6").textContent;
+            document.getElementById("confirmPayment").textContent = paymentText;
         }
 
         if (currentStep < totalSteps) {
-          currentStep++;
-          updateProgress();
+            currentStep++;
+            updateProgress();
         }
-      }
+    }
 
-      function prevStep() {
+    function prevStep() {
         if (currentStep > 1) {
-          currentStep--;
-          updateProgress();
+            currentStep--;
+            updateProgress();
         }
-      }
+    }
 
-      function selectPayment(method) {
+    function selectPayment(method) {
         document.querySelectorAll(".payment-method").forEach((pm) => {
-          pm.classList.remove("selected");
+            pm.classList.remove("selected");
         });
 
         const radioBtn = document.getElementById(`payment-${method}`);
         const selectedMethod = radioBtn.closest(".payment-method");
         selectedMethod.classList.add("selected");
         radioBtn.checked = true;
-      }
+    }
 
-      function confirmOrder() {
+    function confirmOrder() {
         const agreeTerms = document.getElementById("agreeTerms").checked;
         if (!agreeTerms) {
-          alert("⚠️ Vui lòng đồng ý với điều khoản dịch vụ!");
-          return;
+            alert("Vui long dong y voi dieu khoan dich vu!");
+            return;
         }
 
         // Simulate API call
         const btn = event.target;
         btn.disabled = true;
-        btn.innerHTML =
-          '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Dang xu ly...';
 
         setTimeout(() => {
-          nextStep();
-          btn.disabled = false;
-          btn.innerHTML =
-            '<i class="fas fa-check-circle me-2"></i>Xác nhận đặt hẹn';
+            nextStep();
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xac nhan dat hen';
         }, 2000);
-      }
+    }
+
+    function applyCoupon() {
+        const code = document.getElementById("couponInput").value;
+        if (code) {
+            alert("Chuc nang dang phat trien!");
+        }
+    }
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("appointmentDate").setAttribute("min", today);
+
+    // Initialize
+    updateProgress();
+
+    console.log("Checkout page loaded successfully");
+</script>
+}

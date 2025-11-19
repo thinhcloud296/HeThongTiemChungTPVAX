@@ -1,53 +1,61 @@
-@using System.Web.Optimization
-
 @model TPVAXWebsite.Models.ViewModels.LoginViewModel
 
 @{
-    ViewBag.Title = "Đăng nhập";
+    ViewBag.Title = "Dang nhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<meta charset="UTF-8" />
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Đăng nhập tài khoản TPVAX để quản lý lịch tiêm chủng, xem thông tin vaccine và nhận ưu đãi đặc biệt." />
-    <meta name="keywords" content="đăng nhập, TPVAX, tài khoản, tiêm chủng, vaccine" />
-    <link rel="icon" type="image/png" href="@Url.Content(" ~ /Content/Assets/Images/logo.png")" />
-    <link rel="stylesheet" href="@Url.Content(" ~ /Content/bootstrap.min.css")" />
-    <link rel="stylesheet" href="@Url.Content(" ~ /Content/main_style.css")" />
-    <link rel="stylesheet" href="@Url.Content(" ~ /Content/layout_page_style.css")" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>@ViewBag.Title</title>
-</head>
-<body>
+@section styles {
+    <style>
+        /* Auth page specific styles */
+        .main { padding: 0 !important; margin: 0 !important; }
+        .auth-page { min-height: 100vh; display: flex; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .auth-left, .auth-right { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .auth-left { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); color: white; }
+        .brand-content { max-width: 500px; }
+        .brand-logo { font-size: 4rem; margin-bottom: 1rem; }
+        .feature-list { list-style: none; padding: 0; margin-top: 2rem; }
+        .feature-list li { padding: 0.8rem 0; display: flex; align-items: center; gap: 1rem; }
+        .auth-right { background: white; position: relative; }
+        .back-home { position: absolute; top: 2rem; right: 2rem; }
+        .auth-container { max-width: 450px; width: 100%; }
+        .form-group { margin-bottom: 1.5rem; }
+        .input-group { position: relative; }
+        .input-group .form-control { padding-right: 3rem; }
+        .password-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; }
+        .btn-login { width: 100%; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 0.5rem; font-weight: 600; }
+        .social-login { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-btn { flex: 1; padding: 0.8rem; border: 1px solid #ddd; background: white; border-radius: 0.5rem; }
+    </style>
+}
+
+<div style="margin: 0; padding: 0;">
     <div class="auth-page">
         <div class="auth-left">
             <div class="brand-content">
                 <div class="brand-logo"><i class="fas fa-syringe"></i></div>
                 <h1>TPVAX</h1>
-                <p>Hệ thống tiêm chủng vaccine hàng đầu Việt Nam. An toàn - Chuyên nghiệp - Tiện lợi.</p>
+                <p>He thong tiem chung vaccine hang dau Viet Nam. An toan - Chuyen nghiep - Tien loi.</p>
                 <ul class="feature-list">
-                    <li><i class="fas fa-shield-alt"></i><span>Vaccine chính hãng, nguồn gốc rõ ràng</span></li>
-                    <li><i class="fas fa-user-md"></i><span>Đội ngũ bác sĩ chuyên môn cao</span></li>
-                    <li><i class="fas fa-calendar-check"></i><span>Đặt lịch online nhanh chóng</span></li>
-                    <li><i class="fas fa-chart-line"></i><span>Theo dõi lịch sử tiêm chủng</span></li>
+                    <li><i class="fas fa-shield-alt"></i><span>Vaccine chinh hang, nguon goc ro rang</span></li>
+                    <li><i class="fas fa-user-md"></i><span>Doi ngu bac si chuyen mon cao</span></li>
+                    <li><i class="fas fa-calendar-check"></i><span>Dat lich online nhanh chong</span></li>
+                    <li><i class="fas fa-chart-line"></i><span>Theo doi lich su tiem chung</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="auth-right">
             <div class="back-home">
-                <a href="@Url.Action(" Index","Home")">
-                    <i class="fas fa-home"></i><span>Trang chủ</span>
+                <a href="@Url.Action("Index", "Home")">
+                    <i class="fas fa-home"></i><span>Trang chu</span>
                 </a>
             </div>
 
             <div class="auth-container">
                 <div class="auth-header">
-                    <h2>Chào mừng trở lại! 👋</h2>
-                    <p>Đăng nhập để tiếp tục quản lý sức khỏe của bạn</p>
+                    <h2>Chao mung tro lai!</h2>
+                    <p>Dang nhap de tiep tuc quan ly suc khoe cua ban</p>
                 </div>
 
                 @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
@@ -65,18 +73,18 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.TenDangNhap, "Email hoặc Số điện thoại")
+                    @Html.LabelFor(m => m.TenDangNhap, "Email hoac So dien thoai")
                     <div class="input-group">
-                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "VD: example@email.com hoặc 0912345678", autocomplete = "username", id = "login-email" })
+                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "VD: example@email.com hoac 0912345678", autocomplete = "username", id = "login-email" })
                         <i class="fas fa-envelope input-icon"></i>
                     </div>
                     @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.MatKhau, "Mật khẩu")
+                    @Html.LabelFor(m => m.MatKhau, "Mat khau")
                     <div class="input-group">
-                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu của bạn", autocomplete = "current-password", id = "login-password" })
+                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhap mat khau cua ban", autocomplete = "current-password", id = "login-password" })
                         <button type="button" class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></button>
                     </div>
                     @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
@@ -85,28 +93,29 @@
                 <div class="form-options">
                     <label class="remember-me">
                         @Html.CheckBoxFor(m => m.RememberMe, new { id = "rememberMe" })
-                        <span>Ghi nhớ đăng nhập</span>
+                        <span>Ghi nho dang nhap</span>
                     </label>
-                    <a href="#" class="forgot-password" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Quên mật khẩu?</a>
+                    <a href="#" class="forgot-password" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Quen mat khau?</a>
                 </div>
 
                 <button type="submit" class="btn-login" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i> Đăng Nhập Ngay
+                    <i class="fas fa-sign-in-alt"></i> Dang Nhap Ngay
                 </button>
                 }
 
-                <div class="divider"><span>Hoặc tiếp tục với</span></div>
+                <div class="divider"><span>Hoac tiep tuc voi</span></div>
                 <div class="social-login">
                     <button class="social-btn google"><i class="fab fa-google"></i><span>Google</span></button>
                     <button class="social-btn facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></button>
                 </div>
 
-                <p class="auth-switch">Chưa có tài khoản? <a href="@Url.Action(" Register","Account")">Đăng ký miễn phí</a></p>
+                <p class="auth-switch">Chua co tai khoan? <a href="@Url.Action("Register","Account")">Dang ky mien phi</a></p>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="@Url.Content(" ~ /Content/bootstrap.bundle.min.js")"></script>
+@section scripts {
     <script>
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('login-password');
@@ -120,5 +129,4 @@
             });
         }
     </script>
-</body>
-</html>
+}

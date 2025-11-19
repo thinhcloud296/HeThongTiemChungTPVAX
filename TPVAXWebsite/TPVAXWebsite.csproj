@@ -192,6 +192,15 @@
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HoaDonController.cs" />
     <Compile Include="Controllers\LichTiemController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaiVietController.cs" />
+    <Compile Include="Controllers\BenhTruyenNhiemController.cs" />
+    <Compile Include="Controllers\GoiVaccineController.cs" />
+    <Compile Include="Controllers\KhuyenMaiController.cs" />
+    <Compile Include="Controllers\MeVaBeController.cs" />
+    <Compile Include="Controllers\TheoDoiTuongController.cs" />
+    <Compile Include="Controllers\ToiNenTiemGiController.cs" />
+    <Compile Include="Controllers\VaccinePhongBenhController.cs" />
     <!-- Domain Models -->
     <Compile Include="Models\Domain\TaiKhoan.cs" />
     <Compile Include="Models\Domain\KhachHang.cs" />
@@ -214,12 +223,17 @@
     <Compile Include="Models\Domain\PhieuNhapVaccine.cs" />
     <Compile Include="Models\Domain\ChiTietPhieuNhap.cs" />
     <!-- ViewModels -->
+    <Compile Include="Models\ViewModels\AdminViewModels.cs" />
+    <Compile Include="Models\ViewModels\BaiVietViewModel.cs" />
+    <Compile Include="Models\ViewModels\BenhViewModel.cs" />
+    <Compile Include="Models\ViewModels\DatLichTiemViewModel.cs" />
+    <Compile Include="Models\ViewModels\GioHangViewModel.cs" />
+    <Compile Include="Models\ViewModels\GoiVaccineViewModel.cs" />
+    <Compile Include="Models\ViewModels\HoaDonViewModel.cs" />
+    <Compile Include="Models\ViewModels\KhuyenMaiViewModel.cs" />
+    <Compile Include="Models\ViewModels\LichSuTiemChungViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
-    <Compile Include="Models\ViewModels\GioHangViewModel.cs" />
-    <Compile Include="Models\ViewModels\HoaDonViewModel.cs" />
-    <Compile Include="Models\ViewModels\LichSuTiemChungViewModel.cs" />
-    <Compile Include="Models\ViewModels\DatLichTiemViewModel.cs" />
     <Compile Include="Models\ViewModels\VaccineDetailViewModel.cs" />
     <!-- DAL -->
     <Compile Include="DAL\TPVAXDbContext.cs" />

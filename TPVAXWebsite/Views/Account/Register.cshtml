@@ -1,141 +1,154 @@
 @model TPVAXWebsite.Models.ViewModels.RegisterViewModel
+
 @{
-    ViewBag.Title = "Đăng Ký - TPVAX";
-    Layout = null;
+    ViewBag.Title = "Dang ky";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Đăng ký tài khoản TPVAX miễn phí để quản lý lịch tiêm chủng, đặt lịch vaccine online và nhận ưu đãi đặc biệt." />
-    <meta name="keywords" content="đăng ký, TPVAX, tài khoản miễn phí, tiêm chủng, vaccine" />
+@section styles {
+    <style>
+        .main { padding: 0 !important; margin: 0 !important; }
+        .auth-page { min-height: 100vh; display: flex; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .auth-left, .auth-right { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .auth-left { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); color: white; }
+        .brand-content { max-width: 500px; }
+        .brand-logo { font-size: 4rem; margin-bottom: 1rem; }
+        .benefit-list { list-style: none; padding: 0; margin-top: 2rem; }
+        .benefit-list li { padding: 0.8rem 0; display: flex; align-items: center; gap: 1rem; }
+        .auth-right { background: white; position: relative; max-height: 100vh; overflow-y: auto; }
+        .back-home { position: absolute; top: 2rem; right: 2rem; }
+        .auth-container { max-width: 450px; width: 100%; padding: 2rem 0; }
+        .form-group { margin-bottom: 1.5rem; }
+        .input-group { position: relative; }
+        .input-group .form-control { padding-right: 3rem; }
+        .input-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #999; }
+        .password-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; }
+        .btn-register { width: 100%; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 0.5rem; font-weight: 600; margin-top: 1rem; }
+        .social-login { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-btn { flex: 1; padding: 0.8rem; border: 1px solid #ddd; background: white; border-radius: 0.5rem; cursor: pointer; }
+        .divider { text-align: center; margin: 1.5rem 0; position: relative; }
+        .divider::before { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: #ddd; }
+        .divider span { background: white; padding: 0 1rem; position: relative; z-index: 1; color: #999; }
+        .auth-switch { text-align: center; margin-top: 1.5rem; }
+        .terms-group { margin: 1rem 0; }
+        .terms-checkbox { display: flex; gap: 0.5rem; font-size: 0.9rem; }
+    </style>
+}
 
-    <link rel="icon" type="image/png" href="@Url.Content("~/Content/Assets/logo.png")" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/main_style.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/layout_page_style.css")" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div class="auth-page">
-        <div class="auth-left">
-            <div class="brand-content">
-                <div class="brand-logo"><i class="fas fa-user-plus"></i></div>
-                <h1>TPVAX</h1>
-                <p>Tham gia cùng hàng nghìn khách hàng đã tin tưởng và sử dụng dịch vụ tiêm chủng của chúng tôi.</p>
-                <ul class="benefit-list">
-                    <li><i class="fas fa-gift"></i><span>Miễn phí đăng ký tài khoản</span></li>
-                    <li><i class="fas fa-percent"></i><span>Ưu đãi độc quyền cho thành viên</span></li>
-                    <li><i class="fas fa-bell"></i><span>Nhận thông báo lịch tiêm nhắc nhở</span></li>
-                    <li><i class="fas fa-mobile-alt"></i><span>Quản lý sức khỏe mọi lúc mọi nơi</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="auth-right">
-            <div class="back-home">
-                <a href="@Url.Action("Index","Home")">
-                    <i class="fas fa-home"></i><span>Trang chủ</span>
-                </a>
-            </div>
-
-            <div class="auth-container">
-                <div class="auth-header">
-                    <h2>Tạo tài khoản mới 🎉</h2>
-                    <p>Chỉ mất 2 phút để bắt đầu hành trình chăm sóc sức khỏe</p>
-                </div>
-
-                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-
-                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "auth-form", id = "registerForm" }))
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.TenDangNhap)
-                        <div class="input-group">
-                            @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "Tên đăng nhập (tối đa 10 ký tự)", id = "register-username" })
-                            <i class="fas fa-id-card input-icon"></i>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.HoTen)
-                        <div class="input-group">
-                            @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "VD: Nguyễn Văn A", autocomplete = "name", id = "register-name" })
-                            <i class="fas fa-user input-icon"></i>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.SoDT)
-                        <div class="input-group">
-                            @Html.TextBoxFor(m => m.SoDT, new { @class = "form-control", placeholder = "VD: 0912345678", autocomplete = "tel", id = "register-phone" })
-                            <i class="fas fa-phone input-icon"></i>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.SoDT, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Email)
-                        <div class="input-group">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "VD: example@email.com (không bắt buộc)", autocomplete = "email", id = "register-email" })
-                            <i class="fas fa-envelope input-icon"></i>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.MatKhau)
-                        <div class="input-group">
-                            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Tối thiểu 6 ký tự", autocomplete = "new-password", id = "register-password" })
-                            <button type="button" class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></button>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.XacNhanMatKhau)
-                        <div class="input-group">
-                            @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhập lại mật khẩu", autocomplete = "new-password", id = "register-confirm-password" })
-                            <button type="button" class="password-toggle" id="toggleConfirmPassword"><i class="far fa-eye"></i></button>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.XacNhanMatKhau, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="terms-group">
-                        <div class="terms-checkbox">
-                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required />
-                            <label for="agreeTerms">
-                                Tôi đồng ý với <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Điều khoản dịch vụ</a> và
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Chính sách bảo mật</a> của TPVAX
-                            </label>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-register" id="registerBtn">
-                        <i class="fas fa-user-plus"></i> Đăng Ký Miễn Phí
-                    </button>
-                }
-
-                <div class="divider"><span>Hoặc đăng ký với</span></div>
-                <div class="social-login">
-                    <button class="social-btn google"><i class="fab fa-google"></i><span>Google</span></button>
-                    <button class="social-btn facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></button>
-                </div>
-
-                <p class="auth-switch">Đã có tài khoản? <a href="@Url.Action("Login","Account")">Đăng nhập ngay</a></p>
-            </div>
+<div class="auth-page">
+    <div class="auth-left">
+        <div class="brand-content">
+            <div class="brand-logo"><i class="fas fa-user-plus"></i></div>
+            <h1>TPVAX</h1>
+            <p>Tham gia cung hang nghin khach hang da tin tuong va su dung dich vu tiem chung cua chung toi.</p>
+            <ul class="benefit-list">
+                <li><i class="fas fa-gift"></i><span>Mien phi dang ky tai khoan</span></li>
+                <li><i class="fas fa-percent"></i><span>Uu dai doc quyen cho thanh vien</span></li>
+                <li><i class="fas fa-bell"></i><span>Nhan thong bao lich tiem nhac nho</span></li>
+                <li><i class="fas fa-mobile-alt"></i><span>Quan ly suc khoe moi luc moi noi</span></li>
+            </ul>
         </div>
     </div>
 
-    <script src="@Url.Content("~/Content/bootstrap.bundle.min.js")"></script>
+    <div class="auth-right">
+        <div class="back-home">
+            <a href="@Url.Action("Index","Home")">
+                <i class="fas fa-home"></i><span>Trang chu</span>
+            </a>
+        </div>
+
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Tao tai khoan moi</h2>
+                <p>Chi mat 2 phut de bat dau hanh trinh cham soc suc khoe</p>
+            </div>
+
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "auth-form", id = "registerForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TenDangNhap, "Ten dang nhap")
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "Ten dang nhap (toi da 10 ky tu)", id = "register-username" })
+                        <i class="fas fa-id-card input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HoTen, "Ho va ten")
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "VD: Nguyen Van A", id = "register-name" })
+                        <i class="fas fa-user input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoDT, "So dien thoai")
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.SoDT, new { @class = "form-control", placeholder = "VD: 0912345678", id = "register-phone" })
+                        <i class="fas fa-phone input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.SoDT, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, "Email")
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "example@email.com (khong bat buoc)", id = "register-email" })
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MatKhau, "Mat khau")
+                    <div class="input-group">
+                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Toi thieu 6 ky tu", id = "register-password" })
+                        <button type="button" class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></button>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.XacNhanMatKhau, "Xac nhan mat khau")
+                    <div class="input-group">
+                        @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhap lai mat khau", id = "register-confirm-password" })
+                        <button type="button" class="password-toggle" id="toggleConfirmPassword"><i class="far fa-eye"></i></button>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.XacNhanMatKhau, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="terms-group">
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required />
+                        <label for="agreeTerms">
+                            Toi dong y voi Dieu khoan dich vu va Chinh sach bao mat cua TPVAX
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-register" id="registerBtn">
+                    <i class="fas fa-user-plus"></i> Dang Ky Mien Phi
+                </button>
+            }
+
+            <div class="divider"><span>Hoac dang ky voi</span></div>
+            <div class="social-login">
+                <button class="social-btn google"><i class="fab fa-google"></i><span>Google</span></button>
+                <button class="social-btn facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></button>
+            </div>
+
+            <p class="auth-switch">Da co tai khoan? <a href="@Url.Action("Login","Account")">Dang nhap ngay</a></p>
+        </div>
+    </div>
+</div>
+
+@section scripts {
     <script>
         const togglePassword = document.getElementById('togglePassword');
         const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
@@ -153,28 +166,11 @@
 
         if (toggleConfirmPassword) {
             toggleConfirmPassword.addEventListener('click', function () {
-                const type = confirmPasswordInput.getAttribute('type') === 'password' ? '
-                    < script >
-        const togglePassword = document.getElementById('togglePassword');
-                const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-                const passwordInput = document.getElementById('register-password');
-                const confirmPasswordInput = document.getElementById('register-confirm-password');
-
-                if (togglePassword) {
-                    togglePassword.addEventListener('click', function () {
-                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                        passwordInput.setAttribute('type', type);
-                        this.querySelector('i').classList.toggle('fa-eye');
-                        this.querySelector('i').classList.toggle('fa-eye-slash');
-                    });
-                }
-
-                if (toggleConfirmPassword) {
-                    toggleConfirmPassword.addEventListener('click', function () {
-                        const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                        confirmPasswordInput.setAttribute('type', type);
-                        this.querySelector('i').classList.toggle('fa-eye');
-                        this.querySelector('i').classList.toggle('fa-eye-slash');
-                    });
-                }
+                const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPasswordInput.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+        }
     </script>
+}

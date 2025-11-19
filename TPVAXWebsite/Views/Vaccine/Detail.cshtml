@@ -142,7 +142,7 @@
                         <div class="col-md-6 d-flex align-items-end">
                             <button class="btn btn-outline-success w-100" id="btnAddToCart" 
                                     @(Model.Vaccine.SoLuongTon == null || Model.Vaccine.SoLuongTon <= 0 ? "disabled" : "")>
-                                <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng
+                                <i class="fas fa-cart-plus me-2"></i>Them vao gio hang
                             </button>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                         <a href="@Url.Action("DatLich", "LichTiem", new { vaccineId = Model.Vaccine.MaVaccine })" 
                            class="btn btn-primary btn-lg"
                            @(Model.Vaccine.SoLuongTon == null || Model.Vaccine.SoLuongTon <= 0 ? "disabled" : "")>
-                            <i class="fas fa-calendar-check me-2"></i>Đặt lịch tiêm ngay
+                            <i class="fas fa-calendar-check me-2"></i>Dat lich tiem ngay
                         </a>
                         <a href="tel:0975088626" class="btn btn-outline-primary btn-lg">
                             <i class="fas fa-phone me-2"></i>Gọi tư vấn: 0975 088 626
@@ -224,23 +224,23 @@
             $('#btnAddToCart').click(function () {
                 const quantity = parseInt($('#quantity').val());
                 const button = $(this);
-                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Đang thêm...');
+                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Dang them...');
 
                 $.post('@Url.Action("Add", "GioHang")', { vaccineId: vaccineId, soLuong: quantity }, function (data) {
                     if (data.success) {
                         $('#cart-count').text(data.cartCount);
-                        alert('Đã thêm ' + quantity + ' liều "' + vaccineName + '" vào giỏ hàng!');
-                        button.html('<i class="fas fa-check me-2"></i>Đã thêm vào giỏ');
+                        alert('Da them ' + quantity + ' lieu "' + vaccineName + '" vao gio hang!');
+                        button.html('<i class="fas fa-check me-2"></i>Da them vao gio');
                         setTimeout(() => {
-                            button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
+                            button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Them vao gio hang');
                         }, 2000);
                     } else {
-                        alert('Lỗi: ' + (data.message || 'Không thể thêm vào giỏ hàng'));
-                        button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
+                        alert('Loi: ' + (data.message || 'Khong the them vao gio hang'));
+                        button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Them vao gio hang');
                     }
                 }).fail(function () {
-                    alert('Vui lòng đăng nhập để thêm vào giỏ hàng');
-                    button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
+                    alert('Vui long dang nhap de them vao gio hang');
+                    button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Them vao gio hang');
                 });
             });
         });

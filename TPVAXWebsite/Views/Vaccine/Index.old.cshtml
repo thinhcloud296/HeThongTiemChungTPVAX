@@ -165,7 +165,7 @@
                 const vaccineName = $(this).data('vaccine-name');
                 const button = $(this);
 
-                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i>Dang them...');
+                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i>Đang thêm...');
 
                 $.post('@Url.Action("Add", "GioHang")', { vaccineId: vaccineId, soLuong: 1 }, function (data) {
                     if (data.success) {
@@ -173,14 +173,14 @@
                         $('#cart-count').text(data.cartCount);
                         
                         // Show success message
-                        alert('Da them "' + vaccineName + '" vao gio hang!');
-                        button.html('<i class="fas fa-check me-1"></i>Da them');
+                        alert('Đã thêm "' + vaccineName + '" vào giỏ hàng!');
+                        button.html('<i class="fas fa-check me-1"></i>Đã thêm');
                     } else {
-                        alert('Loi: ' + (data.message || 'Khong the them vao gio hang'));
-                        button.prop('disabled', false).html('<i class="fas fa-cart-plus me-1"></i>Them vao gio');
+                        alert('Lỗi: ' + (data.message || 'Không thể thêm vào giỏ hàng'));
+                        button.prop('disabled', false).html('<i class="fas fa-cart-plus me-1"></i>Thêm vào giỏ');
                     }
                 }).fail(function () {
-                    alert('Vui long dang nhap de them vao gio hang');
+                    alert('Vui lòng đăng nhập để thêm vào giỏ hàng');
                     button.prop('disabled', false).html('<i class="fas fa-cart-plus me-1"></i>Thêm vào giỏ');
                 });
             });

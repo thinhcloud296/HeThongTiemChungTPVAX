@@ -21,105 +21,39 @@ namespace TPVAXWebsite.Services
 
     public class VaccineService : IVaccineService
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public VaccineService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public IEnumerable<Vaccine> GetAllVaccines()
         {
-            return _unitOfWork.Repository<Vaccine>()
-                .Find(v => v.SoLuongTon > 0)
-                .OrderBy(v => v.TenVC);
+            throw new NotImplementedException();
         }
 
         public Vaccine GetVaccineById(string maVC)
         {
-            return _unitOfWork.Repository<Vaccine>().GetById(maVC);
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Vaccine> SearchVaccines(string keyword)
         {
-            if (string.IsNullOrEmpty(keyword))
-                return GetAllVaccines();
-
-            keyword = keyword.ToLower();
-            return _unitOfWork.Repository<Vaccine>()
-                .Find(v => v.TenVC.ToLower().Contains(keyword) && v.SoLuongTon > 0)
-                .OrderBy(v => v.TenVC);
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Vaccine> GetVaccinesByLoaiBenh(string maLoaiBenh)
         {
-            // Lấy danh sách vaccine phòng bệnh này
-            var vaccinePhongBenhs = _unitOfWork.Repository<VaccinePhongBenh>()
-                .Find(vpb => vpb.MaLoaiBenh == maLoaiBenh);
-
-            var maVCs = vaccinePhongBenhs.Select(vpb => vpb.MaVC).ToList();
-
-            return _unitOfWork.Repository<Vaccine>()
-                .Find(v => maVCs.Contains(v.MaVC) && v.SoLuongTon > 0)
-                .OrderBy(v => v.TenVC);
+            throw new NotImplementedException();
         }
 
         public IEnumerable<GoiVaccine> GetAllGoiVaccines()
         {
-            return _unitOfWork.Repository<GoiVaccine>()
-                .Find(g => g.TrangThai == "Đang áp dụng")
-                .OrderBy(g => g.TenGoi);
+            throw new NotImplementedException();
         }
 
         public GoiVaccine GetGoiVaccineById(string maGoi)
         {
-            return _unitOfWork.Repository<GoiVaccine>().GetById(maGoi);
+            throw new NotImplementedException();
         }
 
         public VaccineDetailViewModel GetVaccineDetail(string maVC)
         {
-            var vaccine = GetVaccineById(maVC);
-            if (vaccine == null)
-                return null;
-
-            // Lấy thông tin loại vaccine
-            var loaiVaccine = _unitOfWork.Repository<LoaiVaccine>().GetById(vaccine.MaLoai);
-
-            // Lấy các bệnh mà vaccine này phòng
-            var vaccinePhongBenhs = _unitOfWork.Repository<VaccinePhongBenh>()
-                .Find(vpb => vpb.MaVC == maVC);
-
-            var maBenhs = vaccinePhongBenhs.Select(vpb => vpb.MaLoaiBenh).ToList();
-            var loaiBenhs = _unitOfWork.Repository<LoaiBenh>()
-                .Find(lb => maBenhs.Contains(lb.MaLoaiBenh))
-                .ToList();
-
-            // Lấy các gói vaccine chứa vaccine này
-            var chiTietGois = _unitOfWork.Repository<ChiTietGoiVaccine>()
-                .Find(ct => ct.MaVC == maVC);
-
-            var maGois = chiTietGois.Select(ct => ct.MaGoi).ToList();
-            var goiVaccines = _unitOfWork.Repository<GoiVaccine>()
-                .Find(g => maGois.Contains(g.MaGoi) && g.TrangThai == "Đang áp dụng")
-                .ToList();
-
-            return new VaccineDetailViewModel
-            {
-                MaVC = vaccine.MaVC,
-                TenVC = vaccine.TenVC,
-                GiaBan = vaccine.GiaBan,
-                SoLuongTon = vaccine.SoLuongTon,
-                TenLoai = loaiVaccine?.TenLoai,
-                MoTaLoai = loaiVaccine?.MoTa,
-                CacBenhPhongChong = loaiBenhs.Select(lb => lb.TenBenh).ToList(),
-                NuocSanXuat = vaccine.LoaiVaccine?.MoTa, // Adjust if you have a specific property for country
-                CacGoiVaccineChung = goiVaccines.Select(g => new GoiVaccineInfo
-                {
-                    MaGoi = g.MaGoi,
-                    TenGoi = g.TenGoi,
-                    GiaGoi = g.GiaGoi
-                }).ToList()
-            };
+            throw new NotImplementedException();
         }
     }
 }
