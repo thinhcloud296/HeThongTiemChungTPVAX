@@ -430,12 +430,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C9382360AEF37678498CAF5E2985A262"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E3D8BBCC92554FB5BFF652A2B3F0B322"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -631,6 +625,12 @@
         "OwnerKey" = "8:_C991D868057C10F2A6E49CC9DE233EBB"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C9382360AEF37678498CAF5E2985A262"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -649,6 +649,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -1992,7 +2000,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_ED0663F7CE0640DFA705658FD55BB605"
             {
-            "Name" = "8:Phần Mềm Tiêm Chủng TPVAX"
+            "Name" = "8:TPVAX Manager"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -2006,7 +2014,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FF1884D9F0044955A7623C632B5A04EE"
             {
-            "Name" = "8:Phần Mềm Tiêm Chủng TPVAX"
+            "Name" = "8:TPVAX Manager"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
