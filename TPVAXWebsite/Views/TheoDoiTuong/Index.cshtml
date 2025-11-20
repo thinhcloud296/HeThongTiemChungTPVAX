@@ -4,642 +4,516 @@
 }
 
 <!-- Page Header -->
-      <div class="text-center mb-5">
-        <h2 class="display-4 fw-bold text-primary mb-3">
-          📋 THÔNG TIN VẮC XIN THEO ĐỐI TƯỢNG
-        </h2>
-        <p class="lead text-muted">
-          Tìm hiểu thông tin vắc xin phù hợp với từng lứa tuổi và đối tượng.
-          Hướng dẫn chi tiết, khoa học và cập nhật từ chuyên gia TPVAX.
-        </p>
-      </div>
+<div class="text-center mb-5">
+    <h2 class="display-4 fw-bold text-primary mb-3">
+        📋 THÔNG TIN VẮC XIN THEO ĐỐI TƯỢNG
+    </h2>
+    <p class="lead text-muted">
+        Tìm hiểu thông tin vắc xin phù hợp với từng lứa tuổi và đối tượng.
+    </p>
+</div>
 
-      <!-- Category Cards - Modern Design -->
-      <section class="mb-5">
-        <div class="row g-4">
-          <div class="col-6 col-md-4 col-lg">
-            <a
-              href="#nhi"
-              class="category-card-modern active"
-              data-target="nhi"
-            >
-              <div class="category-card-icon-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Icons/baby-boy.png")" alt="Nhi" loading="lazy" />
-              </div>
-              <h3 class="category-card-title">Nhi</h3>
-              <p class="category-card-desc">Trẻ em & Sơ sinh</p>
-            </a>
-          </div>
-
-          <div class="col-6 col-md-4 col-lg">
-            <a
-              href="#thanh-thieu-nien"
-              class="category-card-modern"
-              data-target="thanh-thieu-nien"
-            >
-              <div class="category-card-icon-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Icons/teener.png")"
-                  alt="Thanh thiếu niên"
-                  loading="lazy"
-                />
-              </div>
-              <h3 class="category-card-title">Thanh thiếu niên</h3>
-              <p class="category-card-desc">9-18 tuổi</p>
-            </a>
-          </div>
-
-          <div class="col-6 col-md-4 col-lg">
-            <a
-              href="#du-lich"
-              class="category-card-modern"
-              data-target="du-lich"
-            >
-              <div class="category-card-icon-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Icons/travel.png")"
-                  alt="Du lịch"
-                  loading="lazy"
-                />
-              </div>
-              <h3 class="category-card-title">Du lịch</h3>
-              <p class="category-card-desc">Đi nước ngoài</p>
-            </a>
-          </div>
-
-          <div class="col-6 col-md-4 col-lg">
-            <a
-              href="#tien-hon-nhan"
-              class="category-card-modern"
-              data-target="tien-hon-nhan"
-            >
-              <div class="category-card-icon-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Icons/marriage.png")"
-                  alt="Tiền hôn nhân"
-                  loading="lazy"
-                />
-              </div>
-              <h3 class="category-card-title">Tiền hôn nhân</h3>
-              <p class="category-card-desc">Chuẩn bị kết hôn</p>
-            </a>
-          </div>
-
-          <div class="col-6 col-md-4 col-lg">
-            <a
-              href="#nguoi-truong-thanh"
-              class="category-card-modern"
-              data-target="nguoi-truong-thanh"
-            >
-              <div class="category-card-icon-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Icons/adults.png")"
-                  alt="Người trưởng thành"
-                  loading="lazy"
-                />
-              </div>
-              <h3 class="category-card-title">Người trưởng thành</h3>
-              <p class="category-card-desc">18+ tuổi</p>
-            </a>
-          </div>
+<!-- Category Navigation -->
+<section class="mb-5">
+    <div class="row g-3 justify-content-center">
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="#" class="category-btn active" data-category="all">📋 Tất cả</a>
         </div>
-      </section>
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="#" class="category-btn" data-category="nhi">👶 Nhi (0-12)</a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="#" class="category-btn" data-category="thanh-thieu-nien">🧒 Teen (9-18)</a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="#" class="category-btn" data-category="du-lich">✈️ Du lịch</a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="#" class="category-btn" data-category="tien-hon-nhan">💑 Hôn nhân</a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="#" class="category-btn" data-category="nguoi-lon">👨‍🦱 Người lớn</a>
+        </div>
+    </div>
+</section>
 
-      <!-- Search Section -->
-      <section class="mb-5">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="search-box-modern position-relative">
-              <input
-                type="text"
-                class="form-control form-control-lg rounded-pill"
-                placeholder="🔍 Tìm kiếm bài viết (VD: HPV, Cúm, Viêm gan B, Rotavirus...)"
-                id="articleSearchInput"
-                autocomplete="off"
-              />
-              <div
-                id="searchSuggestions"
-                class="search-suggestions-modern"
-                style="display: none"
-              ></div>
+<!-- Article Grid -->
+<div class="row g-3" id="articleGrid">
+    <!-- NHI -->
+    <div class="col-lg-4 col-md-6" data-category="nhi" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/ss1.png")" alt="Lịch tiêm so sinh" />
             </div>
-            <div
-              id="searchResultCount"
-              class="text-center mt-3"
-              style="font-size: 14px; color: #6c757d; display: none"
-            ></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- No Results Message -->
-      <section id="noResultsMessage" style="display: none">
-        <div
-          class="alert alert-warning text-center py-5 mx-auto"
-          style="max-width: 600px"
-        >
-          <h3 class="mb-3">🔍 Không tìm thấy bài viết nào</h3>
-          <p class="mb-3">
-            Vui lòng thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác.
-          </p>
-          <button
-            class="btn btn-primary"
-            onclick="document.getElementById('articleSearchInput').value=''; document.getElementById('articleSearchInput').focus();"
-          >
-            Xóa tìm kiếm
-          </button>
-        </div>
-      </section>
-
-      <!-- Content for "Nhi" Category -->
-      <section class="category-content" id="nhi">
-        <!-- Featured Article -->
-        <div class="featured-article mb-5">
-          <article
-            class="article-card-featured article-item"
-            data-keywords="Lịch tiêm, trẻ 5 tuổi, bảo vệ, toàn diện"
-          >
-            <div class="row g-0">
-              <div class="col-md-6">
-                <div class="featured-image-wrapper">
-                  <img
-                    src="@Url.Content("~/Content/Assets/Images/test1.jpg")"
-                    alt="Lịch tiêm chủng cho trẻ em"
-                    class="img-fluid"
-                    loading="lazy"
-                  />
-                  <span class="featured-badge">📌 Bài viết nổi bật</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="featured-content">
-                  <div class="article-meta mb-3">
-                    <span class="badge bg-primary me-2">💉 Nhi</span>
-                    <span class="text-muted"
-                      ><i class="bi bi-clock"></i> 5 phút đọc</span
-                    >
-                  </div>
-                  <h2 class="article-title-featured mb-3">
-                    Lịch tiêm chủng quan trọng nhất cho trẻ dưới 5 tuổi: Đảm bảo
-                    con bạn được bảo vệ toàn diện
-                  </h2>
-                  <p class="article-excerpt">
-                    Tìm hiểu chi tiết về lịch tiêm chủng đầy đủ và khoa học cho
-                    trẻ em từ sơ sinh đến 5 tuổi. Hướng dẫn từng mũi tiêm, thời
-                    gian phù hợp và những lưu ý quan trọng mà cha mẹ cần biết.
-                  </p>
-                  <a
-                    href="bai-viet-chi-tiet.html?slug=lich-tiem-chung-tre-5-tuoi"
-                    class="btn btn-primary btn-read-more"
-                  >
-                    Đọc tiếp <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
+            <div class="article-content">
+                <span class="badge bg-primary">👶 Nhi</span>
+                <h5>Lịch tiêm chủng cho trẻ so sinh</h5>
+                <p>Cập nhật lịch tiêm chủng đầy đủ của trẻ từ 0 đến 12 tháng tuổi.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 1 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
             </div>
-          </article>
         </div>
+    </div>
 
-        <!-- Related Articles Grid -->
-        <div class="row g-4">
-          <div class="col-12 mb-3">
-            <h3 class="section-subtitle">
-              <span class="subtitle-line"></span>
-              📚 Bài viết liên quan
-              <span class="subtitle-line"></span>
-            </h3>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <article
-              class="article-card article-item"
-              data-keywords="Hexaxim, Infanrix Hexa, 6 trong 1"
-            >
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/test1.jpg")"
-                  alt="Vắc xin 6 trong 1"
-                  class="img-fluid"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">💉 Vắc xin</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 28/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 1.2K lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Vắc xin 6 trong 1: Nên tiêm Hexaxim hay Infanrix Hexa cho bé?
-                </h3>
-                <p class="article-description">
-                  So sánh chi tiết hai loại vắc xin 6 trong 1 phổ biến nhất hiện
-                  nay và tư vấn lựa chọn phù hợp...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=vac-xin-6-trong-1"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <article
-              class="article-card article-item"
-              data-keywords="Sốt xuất huyết, trẻ em, phòng ngừa"
-            >
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/test1.jpg")"
-                  alt="Sốt xuất huyết"
-                  class="img-fluid"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">⚠️ Phòng bệnh</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 27/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 856 lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Triệu chứng sốt xuất huyết ở trẻ em và cách phòng ngừa tối ưu
-                </h3>
-                <p class="article-description">
-                  Nhận biết sớm các dấu hiệu sốt xuất huyết ở trẻ em và biện
-                  pháp phòng ngừa hiệu quả nhất...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=sot-xuat-huyet-tre-em"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <article
-              class="article-card article-item"
-              data-keywords="Rotavirus, uống vắc xin"
-            >
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/test1.jpg")"
-                  alt="Vắc xin Rotavirus"
-                  class="img-fluid"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">💊 Lịch tiêm</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 26/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 645 lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Lịch uống vắc xin Rotavirus và những lưu ý khi cho trẻ uống
-                </h3>
-                <p class="article-description">
-                  Hướng dẫn chi tiết về liều lượng, thời gian uống và những điều
-                  cần chú ý khi tiêm Rotavirus...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=lich-uong-rotavirus"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <article
-              class="article-card article-item"
-              data-keywords="Viêm màng não, tiêm phòng"
-            >
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/test1.jpg")"
-                  alt="Viêm màng não"
-                  class="img-fluid"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">🛡️ Bảo vệ</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 25/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 923 lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Phòng ngừa viêm màng não ở trẻ: Các mũi tiêm không thể bỏ qua
-                </h3>
-                <p class="article-description">
-                  Tầm quan trọng của việc tiêm phòng viêm màng não và lịch tiêm
-                  đầy đủ cho trẻ em...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=phong-ngua-viem-mang-nao"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <article
-              class="article-card article-item"
-              data-keywords="HPV, phòng ung thư"
-            >
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/test1.jpg")"
-                  alt="Vắc xin HPV"
-                  class="img-fluid"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">🎗️ Ung thư</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 24/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 1.5K lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Vắc xin HPV: Phòng ngừa ung thư cổ tử cung từ sớm
-                </h3>
-                <p class="article-description">
-                  Tại sao nên tiêm vắc xin HPV cho trẻ em và độ tuổi phù hợp
-                  nhất để tiêm phòng...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=vac-xin-hpv"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <article
-              class="article-card article-item"
-              data-keywords="Thủy đậu, lây lan"
-            >
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/test1.jpg")"
-                  alt="Thủy đậu"
-                  class="img-fluid"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">🌡️ Bệnh mùa</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 23/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 778 lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Thủy đậu ở trẻ em: Triệu chứng và cách điều trị hiệu quả
-                </h3>
-                <p class="article-description">
-                  Tìm hiểu về bệnh thủy đậu, cách nhận biết và điều trị đúng
-                  cách để tránh biến chứng...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=thuy-dau-tre-em"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- Content for "Thanh thiếu niên" Category -->
-      <section class="category-content d-none" id="thanh-thieu-nien">
-        <div class="featured-article mb-5">
-          <article
-            class="article-card-featured article-item"
-            data-keywords="HPV, nam, nữ, bảo vệ, ung thư"
-          >
-            <div class="row g-0">
-              <div class="col-md-6">
-                <div class="featured-image-wrapper">
-                  <img
-                    src="@Url.Content("~/Content/Assets/Images/thanhthieunien.jpg")"
-                    alt="Tiêm HPV"
-                    class="img-fluid"
-                    loading="lazy"
-                  />
-                  <span class="featured-badge">📌 Bài viết nổi bật</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="featured-content">
-                  <div class="article-meta mb-3">
-                    <span class="badge bg-success me-2"
-                      >👨‍🎓 Thanh thiếu niên</span
-                    >
-                    <span class="text-muted"
-                      ><i class="bi bi-clock"></i> 7 phút đọc</span
-                    >
-                  </div>
-                  <h2 class="article-title-featured mb-3">
-                    Vì sao Vắc xin HPV là "tấm khiên" bảo vệ bắt buộc cho thanh
-                    thiếu niên cả nam và nữ?
-                  </h2>
-                  <p class="article-excerpt">
-                    Tìm hiểu tầm quan trọng của vaccine HPV trong việc phòng
-                    ngừa ung thư và các bệnh lý nguy hiểm. Độ tuổi vàng để tiêm
-                    và lợi ích lâu dài cho sức khỏe.
-                  </p>
-                  <a
-                    href="bai-viet-chi-tiet.html?slug=vaccine-hpv-thanh-thieu-nien"
-                    class="btn btn-success btn-read-more"
-                  >
-                    Đọc tiếp <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
+    <div class="col-lg-4 col-md-6" data-category="nhi" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/ss2.png")" alt="Có cần sắc tộc mua từ mua vaccine" />
             </div>
-          </article>
+            <div class="article-content">
+                <span class="badge bg-primary">👶 Nhi</span>
+                <h5>Có cần sắc tộc tr? mua từ mua vaccine</h5>
+                <p>Hướng dẫn chi tiết cách cách sắc tộc của trẻ.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 2 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
         </div>
+    </div>
 
-        <div class="row g-4">
-          <div class="col-12 mb-3">
-            <h3 class="section-subtitle">
-              <span class="subtitle-line"></span>
-              📚 Bài viết liên quan
-              <span class="subtitle-line"></span>
-            </h3>
-          </div>
-          <div class="col-lg-6">
-            <article
-              class="article-card article-item"
-              data-keywords="Bạch hầu, Ho gà, Uốn ván"
-            >
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/thanhthieunien_nho1.jpg")"
-                  alt="Vắc xin"
-                  class="img-fluid"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">💉 Tiêm nhắc</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 28/10/2025</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Hoàn thành các mũi tiêm nhắc: Bạch hầu, Ho gà, Uốn ván cho độ
-                  tuổi dậy thì
-                </h3>
-                <p class="article-description">
-                  Hướng dẫn về các mũi tiêm nhắc cần thiết cho thanh thiếu
-                  niên...
-                </p>
-                <a href="bai-viet-chi-tiet.html" class="article-link"
-                  >Xem chi tiết →</a
-                >
-              </div>
-            </article>
-          </div>
+    <div class="col-lg-4 col-md-6" data-category="nhi" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/ss3.png")" alt="Top 10 vaccine quan trọng cho trẻ" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-primary">👶 Nhi</span>
+                <h5>Top 10 vaccine quan trọng cho trẻ</h5>
+                <p>Danh sách 10 vaccine thiết yếu để bảo vệ sức khỏe trẻ em.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 3 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
         </div>
-      </section>
+    </div>
 
-      <!-- Content for "Du lịch" Category -->
-      <section class="category-content d-none" id="du-lich">
-        <div class="alert alert-info text-center py-5">
-          <div class="mb-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="64"
-              height="64"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-              />
-            </svg>
-          </div>
-          <h4 class="mb-3">📌 Nội dung đang được cập nhật...</h4>
-          <p class="text-muted">
-            Các bài viết về vaccine du lịch sẽ được cập nhật trong thời gian sớm
-            nhất.
-          </p>
+    <!-- TEEN -->
+    <div class="col-lg-4 col-md-6" data-category="thanh-thieu-nien" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/ttn1.png")" alt="Vaccine HPV cho trẻ vị thành niên" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-info">🧒 Teen</span>
+                <h5>Vaccine HPV cho trẻ vị thành niên</h5>
+                <p>Tìm hiểu vaccine HPV quan trọng cho trẻ 9-14 tuổi.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 4 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
         </div>
-      </section>
+    </div>
 
-      <!-- Content for "Tiền hôn nhân" Category -->
-      <section class="category-content d-none" id="tien-hon-nhan">
-        <div class="alert alert-info text-center py-5">
-          <div class="mb-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="64"
-              height="64"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-              />
-            </svg>
-          </div>
-          <h4 class="mb-3">📌 Nội dung đang được cập nhật...</h4>
-          <p class="text-muted">
-            Các bài viết về vaccine tiền hôn nhân sẽ được cập nhật trong thời
-            gian sớm nhất.
-          </p>
+    <div class="col-lg-4 col-md-6" data-category="thanh-thieu-nien" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/ttn2.png")" alt="Lịch tiêm cho học sinh cấp 2 và 3" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-info">🧒 Teen</span>
+                <h5>Lịch tiêm cho học sinh cấp 2 và 3</h5>
+                <p>Cập nhật lịch tiêm chủng bắt buộc cho học sinh trung học.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 5 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
         </div>
-      </section>
+    </div>
 
-      <!-- Content for "Người trưởng thành" Category -->
-      <section class="category-content d-none" id="nguoi-truong-thanh">
-        <div class="alert alert-info text-center py-5">
-          <div class="mb-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="64"
-              height="64"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-              />
-            </svg>
-          </div>
-          <h4 class="mb-3">📌 Nội dung đang được cập nhật...</h4>
-          <p class="text-muted">
-            Các bài viết về vaccine người trưởng thành sẽ được cập nhật trong
-            thời gian sớm nhất.
-          </p>
+    <div class="col-lg-4 col-md-6" data-category="thanh-thieu-nien" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/ttn3.png")" alt="Vaccine với môi trường ngộ độc cho teen" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-info">🧒 Teen</span>
+                <h5>Vaccine với môi trường ngộ độc cho teen</h5>
+                <p>Những vaccine bổ sung phòng chống bệnh truyền nhiễm cho thanh thiếu niên.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 6 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
         </div>
-      </section>
+    </div>
 
-      <!-- Pagination -->
-      <nav aria-label="Phân trang bài viết" class="mt-5">
-        <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-              <i class="fas fa-chevron-left"></i>
-            </a>
-          </li>
-          <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">
-              <i class="fas fa-chevron-right"></i>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </main>
-    <!-- END Main Content -->
+    <!-- DU LỊCH -->
+    <div class="col-lg-4 col-md-6" data-category="du-lich" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/travel1.png")" alt="Vaccine bắt buộc khi đi du lịch nước ngoài" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-warning">✈️ Du lịch</span>
+                <h5>Vaccine bắt buộc khi đi du lịch nước ngoài</h5>
+                <p>Danh sách vaccine bắt buộc và khuyến nghị trước khi đi du lịch.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 7 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="du-lich" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/travel2.png")" alt="Chuẩn bị vaccine trước chuyến đi châu Á" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-warning">✈️ Du lịch</span>
+                <h5>Chuẩn bị vaccine trước chuyến đi châu Á</h5>
+                <p>Những vaccine nên tiêm khi du lịch đến các nước Đông Nam Á.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 8 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="du-lich" data-page="1">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/travel3.png")" alt="Vaccine sốt vàng, bại liệt cho du lịch nước ngoài" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-warning">✈️ Du lịch</span>
+                <h5>Vaccine sốt vàng, bại liệt cho du lịch nước ngoài</h5>
+                <p>Thông tin chi tiết về vaccine sốt vàng và bại liệt khi đi du lịch.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 9 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="du-lich" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/travel4.png")" alt="Du lịch an toàn với vaccine đầy đủ" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-warning">✈️ Du lịch</span>
+                <h5>Du lịch an toàn với vaccine đầy đủ</h5>
+                <p>Hướng dẫn chuẩn bị vaccine toàn diện cho chuyến du lịch an toàn.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 10 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HÔN NHÂN -->
+    <div class="col-lg-4 col-md-6" data-category="tien-hon-nhan" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/thn1.png")" alt="Vaccine trước hôn nhân là gì" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-success">💑 Hôn nhân</span>
+                <h5>Vaccine trước hôn nhân là gì</h5>
+                <p>Tìm hiểu các vaccine quan trọng cần tiêm trước khi kết hôn.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 11 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="tien-hon-nhan" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/thn2.png")" alt="Vaccine sàng lọc trước hôn nhân" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-success">💑 Hôn nhân</span>
+                <h5>Vaccine sàng lọc trước hôn nhân</h5>
+                <p>Danh sách vaccine kiểm tra sức khỏe trước hôn nhân.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 12 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="tien-hon-nhan" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/thn3.png")" alt="Vaccine phòng chống bệnh lây nhiễm qua đường tình dục" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-success">💑 Hôn nhân</span>
+                <h5>Vaccine phòng chống bệnh lây nhiễm qua đường tình dục</h5>
+                <p>Vaccine HPV và các vaccine khác phòng chống bệnh lây nhiễm.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 13 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="tien-hon-nhan" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/thn4.png")" alt="Sức khỏe sinh sản và vaccine" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-success">💑 Hôn nhân</span>
+                <h5>Sức khỏe sinh sản và vaccine</h5>
+                <p>Mối liên hệ giữa vaccine và sức khỏe sinh sản cặp vợ chồng.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 14 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="tien-hon-nhan" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/thn5.png")" alt="Kiểm tra miễn dịch trước khi sinh con" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-success">💑 Hôn nhân</span>
+                <h5>Kiểm tra miễn dịch trước khi sinh con</h5>
+                <p>Hướng dẫn kiểm tra miễn dịch và vaccine trước khi mang thai.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 15 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NGƯỜI LỚN -->
+    <div class="col-lg-4 col-md-6" data-category="nguoi-lon" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/adults.png")" alt="Vaccine cho người lớn" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-danger">👨‍🦱 Người lớn</span>
+                <h5>Vaccine cho người lớn</h5>
+                <p>Danh sách vaccine quan trọng cần tiêm định kỳ cho người lớn.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 16 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="nguoi-lon" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/adults1.png")" alt="Vaccine cúm hàng năm cho người lớn" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-danger">👨‍🦱 Người lớn</span>
+                <h5>Vaccine cúm hàng năm cho người lớn</h5>
+                <p>Tìm hiểu tầm quan trọng của vaccine cúm định kỳ hàng năm.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 17 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="nguoi-lon" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/adults2.png")" alt="Vaccine viêm phổi phế cầu cho người cao tuổi" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-danger">👨‍🦱 Người lớn</span>
+                <h5>Vaccine viêm phổi phế cầu cho người cao tuổi</h5>
+                <p>Vaccine ngừa viêm phổi cần thiết cho người trên 65 tuổi.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 18 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="nguoi-lon" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/adults3.png")" alt="Vaccine zona thần kinh cho người lớn" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-danger">👨‍🦱 Người lớn</span>
+                <h5>Vaccine zona thần kinh cho người lớn</h5>
+                <p>Vaccine phòng chống bệnh zona thần kinh ở người cao tuổi.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 19 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="nguoi-lon" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/adults4.png")" alt="Vaccine bệnh tim mạch cho người lớn" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-danger">👨‍🦱 Người lớn</span>
+                <h5>Vaccine bệnh tim mạch cho người lớn</h5>
+                <p>Tầm quan trọng của vaccine trong phòng chống bệnh tim mạch.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 20 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6" data-category="nguoi-lon" data-page="2">
+        <div class="article-card">
+            <div class="article-image-wrapper">
+                <img src="@Url.Content("~/Content/Images/BaiViet/adults5.png")" alt="Tiêm bổ sung vaccine viêm gan B" />
+            </div>
+            <div class="article-content">
+                <span class="badge bg-danger">👨‍🦱 Người lớn</span>
+                <h5>Tiêm bổ sung vaccine viêm gan B</h5>
+                <p>Khi nào cần tiêm bổ sung vaccine viêm gan B cho người lớn.</p>
+                <a href="@Url.Action("Detail", "BaiViet", new { id = 21 })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation" class="mt-5 d-flex justify-content-center">
+    <ul class="pagination" id="pagination">
+        <li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>
+        <li class="page-item"><a class="page-link" href="#" data-page="2">2</a></li>
+        <li class="page-item"><a class="page-link" href="#" data-page="3">3</a></li>
+    </ul>
+</nav>
+
+<style>
+.article-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 22px rgba(0,0,0,0.12);
+}
+
+/* ===============================
+   ẢNH CARD TỶ LỆ VUÔNG 1:1
+   =============================== */
+.article-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;  /* TỶ LỆ VUÔNG */
+    overflow: hidden;
+    background: #f2f2f2;
+    border-bottom: 1px solid #eee;
+}
+
+.article-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Phủ kín ô vuông */
+    display: block;
+}
+/* ================================= */
+
+.article-content {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-content .badge {
+    width: fit-content;
+    margin-bottom: 0.6rem;
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.article-content h5 {
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+    color: #222;
+    flex: 1;
+    line-height: 1.45;
+}
+
+.article-content p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.article-content .btn {
+    align-self: flex-start;
+}
+
+/* Nút lọc danh mục */
+.category-btn {
+    display: block;
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* Phân trang */
+.pagination .page-link {
+    cursor: pointer;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+</style>
+
+<script>
+    const cardsPerPage = 6;
+    let currentCategory = 'all';
+    let currentPage = 1;
+
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const allCards = document.querySelectorAll('#articleGrid > div');
+    const paginationLinks = document.querySelectorAll('.pagination .page-link');
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.dataset.category;
+            currentPage = 1;
+            updateDisplay();
+        });
+    });
+
+    paginationLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentPage = parseInt(link.dataset.page);
+            updateDisplay();
+        });
+    });
+
+    function updateDisplay() {
+        const filteredCards = Array.from(allCards).filter(card => {
+            return currentCategory === 'all' || card.dataset.category === currentCategory;
+        });
+
+        const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+
+        // Hide all cards
+        allCards.forEach(card => card.style.display = 'none');
+
+        // Show current page cards
+        const start = (currentPage - 1) * cardsPerPage;
+        const end = start + cardsPerPage;
+        filteredCards.slice(start, end).forEach(card => card.style.display = 'block');
+
+        // Update pagination
+        updatePagination(totalPages);
+    }
+
+    function updatePagination(totalPages) {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement('li');
+            li.className = 'page-item' + (i === currentPage ? ' active' : '');
+            li.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
+            pagination.appendChild(li);
+
+            li.querySelector('a').addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPage = i;
+                updateDisplay();
+            });
+        }
+    }
+
+    // Initial display
+    updateDisplay();
+</script>

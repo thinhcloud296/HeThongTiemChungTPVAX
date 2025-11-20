@@ -120,6 +120,18 @@
 .d-none {
     display: none !important;
 }
+
+/* Kiểu dáng cho Pagination */
+.pagination .page-item .page-link {
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    color: white;
+}
 </style>
 }
 
@@ -163,7 +175,6 @@
     </div>
 
     <div class="row g-4 article-container">
-        <!-- 11 bài viết với ảnh btn1-btn11 -->
         <div class="col-lg-4 col-md-6 article-item" data-tags="article virus" data-keywords="thủy đậu nốt trắng điều trị vaccine">
             <article class="article-card">
                 <div class="article-image-wrapper">
@@ -318,6 +329,12 @@
             </article>
         </div>
     </div>
+    
+    <div class="d-flex justify-content-center mt-4">
+        <nav>
+            <ul id="pagination" class="pagination"></ul>
+        </nav>
+    </div>
 </div>
 
 @section Scripts {
@@ -328,6 +345,101 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('diseaseSearchInput');
     const noResultsMsg = document.getElementById('noResultsMessage');
 
+    // Cài đặt Phân trang
+    const itemsPerPage = 6; // số bài viết mỗi trang
+    const pagination = document.getElementById('pagination');
+    let currentPage = 1;
+
+    // Lấy tất cả bài viết đang hiển thị (sau khi lọc/tìm kiếm)
+    function getVisibleArticles() {
+        // Lọc các bài viết dựa trên tiêu chí lọc và tìm kiếm hiện tại
+        return [...document.querySelectorAll('.article-item')].filter(item => {
+            const activeFilterButton = document.querySelector('.disease-filter-btn.active');
+            const currentCategory = activeFilterButton ? activeFilterButton.dataset.filter : 'all';
+            const currentSearchTerm = searchInput.value.toLowerCase();
+
+            const tags = item.dataset.tags;
+            const keywords = item.dataset.keywords.toLowerCase();
+            const text = item.textContent.toLowerCase();
+
+            const matchCategory = currentCategory === 'all' || tags.includes(currentCategory);
+            const matchSearch = currentSearchTerm === '' || keywords.includes(currentSearchTerm) || text.includes(currentSearchTerm);
+
+            return matchCategory && matchSearch;
+        });
+    }
+
+    // Hiển thị bài theo trang hiện tại
+    function showPage() {
+        const visibleItems = getVisibleArticles();
+        const totalItems = visibleItems.length;
+
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        // Ẩn tất cả bài viết
+        articleItems.forEach(item => {
+            item.style.display = "none";
+        });
+        
+        // Chỉ hiển thị các bài viết trên trang hiện tại
+        visibleItems.forEach((item, index) => {
+            if (index >= start && index < end) {
+                item.style.display = "block";
+            }
+        });
+
+        renderPagination(totalItems);
+        
+        // Cập nhật thông báo kết quả (nếu visibleItems là 0)
+        if (totalItems === 0) {
+            noResultsMsg.classList.remove('d-none');
+        } else {
+            noResultsMsg.classList.add('d-none');
+        }
+    }
+
+    // Tạo thanh pagination
+    function renderPagination(totalItems) {
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        if (totalPages <= 1) return;
+
+        // Tạo nút trang
+        for (let i = 1; i <= totalPages; i++) {
+            let li = document.createElement("li");
+            li.classList.add("page-item");
+            if (i === currentPage) li.classList.add("active");
+
+            let a = document.createElement("a");
+            a.classList.add("page-link");
+            a.href = "#";
+            a.innerText = i;
+
+            a.addEventListener("click", function (e) {
+                e.preventDefault();
+                currentPage = i;
+                window.scrollTo(0, 0); // Cuộn lên đầu trang (tùy chọn)
+                showPage(); // Cập nhật bài viết trên trang
+            });
+
+            li.appendChild(a);
+            pagination.appendChild(li);
+        }
+    }
+
+    // ---------------------------
+    // LOGIC LỌC/TÌM KIẾM (Đã tích hợp Phân trang)
+    // ---------------------------
+
+    // Hàm lọc/tìm kiếm được sử dụng trong sự kiện và được gọi lần đầu
+    function filterArticles(category, searchTerm) {
+        currentPage = 1; 
+        showPage();
+    }
+    
+    // Gắn sự kiện cho nút lọc
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             filterBtns.forEach(b => b.classList.remove('active'));
@@ -335,40 +447,20 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const filter = this.dataset.filter;
             searchInput.value = '';
+            
             filterArticles(filter, '');
         });
     });
 
+    // Gắn sự kiện cho ô tìm kiếm
     searchInput.addEventListener('input', function() {
         const activeFilter = document.querySelector('.disease-filter-btn.active').dataset.filter;
         filterArticles(activeFilter, this.value.toLowerCase());
     });
 
-    function filterArticles(category, searchTerm) {
-        let visibleCount = 0;
-
-        articleItems.forEach(item => {
-            const tags = item.dataset.tags;
-            const keywords = item.dataset.keywords.toLowerCase();
-            const text = item.textContent.toLowerCase();
-
-            const matchCategory = category === 'all' || tags.includes(category);
-            const matchSearch = searchTerm === '' || keywords.includes(searchTerm) || text.includes(searchTerm);
-
-            if (matchCategory && matchSearch) {
-                item.style.display = 'block';
-                visibleCount++;
-            } else {
-                item.style.display = 'none';
-            }
-        });
-
-        if (visibleCount === 0) {
-            noResultsMsg.classList.remove('d-none');
-        } else {
-            noResultsMsg.classList.add('d-none');
-        }
-    }
+    // Lần đầu load trang
+    const initialFilter = document.querySelector('.disease-filter-btn.active').dataset.filter;
+    filterArticles(initialFilter, ''); 
 });
 </script>
 }

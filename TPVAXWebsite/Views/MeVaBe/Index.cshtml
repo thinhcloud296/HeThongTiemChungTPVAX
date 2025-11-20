@@ -136,6 +136,18 @@
 .d-none {
     display: none !important;
 }
+
+/* Kiểu dáng cho Pagination */
+.pagination .page-item .page-link {
+    color: #ff6b9d;
+    border-color: #ff6b9d;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ff6b9d;
+    border-color: #ff6b9d;
+    color: white;
+}
 </style>
 }
 
@@ -189,7 +201,6 @@
     </div>
 
     <div class="row g-4 article-container">
-        <!-- 11 bài viết với ảnh mvb1-mvb11 -->
         <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="mang thai ngoài tử cung kinh nguyệt dấu hiệu">
             <article class="article-card">
                 <div class="article-image-wrapper">
@@ -376,17 +387,106 @@
                 </div>
             </article>
         </div>
+        
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <nav>
+            <ul id="pagination" class="pagination"></ul>
+        </nav>
     </div>
 </main>
 
 @section Scripts {
 <script>
+// --- LOGIC PHÂN TRANG VÀ LỌC/TÌM KIẾM ---
+
 document.addEventListener('DOMContentLoaded', function() {
     const filterBtns = document.querySelectorAll('.category-filter-btn');
     const articleItems = document.querySelectorAll('.article-item');
     const searchInput = document.getElementById('articleSearchInput');
     const noResultsMsg = document.getElementById('noResultsMessage');
 
+    // Cài đặt Phân trang
+    const itemsPerPage = 6; // số bài viết mỗi trang
+    const pagination = document.getElementById('pagination');
+    let currentPage = 1;
+
+    // Lấy tất cả bài viết đang hiển thị (sau khi lọc/tìm kiếm)
+    function getVisibleArticles() {
+        // Lấy tất cả bài viết và lọc ra những bài không có style display="none"
+        // Dựa vào logic lọc của filterArticles() bên dưới
+        return [...document.querySelectorAll('.article-item')].filter(item => {
+            const currentCategory = document.querySelector('.category-filter-btn.active').dataset.filter;
+            const currentSearchTerm = searchInput.value.toLowerCase();
+
+            const tags = item.dataset.tags;
+            const keywords = item.dataset.keywords.toLowerCase();
+            const text = item.textContent.toLowerCase();
+
+            const matchCategory = currentCategory === 'all' || tags.includes(currentCategory);
+            const matchSearch = currentSearchTerm === '' || keywords.includes(currentSearchTerm) || text.includes(currentSearchTerm);
+
+            return matchCategory && matchSearch;
+        });
+    }
+
+    // Hiển thị bài theo trang hiện tại
+    function showPage() {
+        const visibleItems = getVisibleArticles();
+        const totalItems = visibleItems.length;
+
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        // Chỉ hiển thị các bài viết trên trang hiện tại
+        articleItems.forEach(item => {
+            // Ẩn tất cả bài viết trước
+            item.style.display = "none";
+        });
+        
+        visibleItems.forEach((item, index) => {
+            if (index >= start && index < end) {
+                item.style.display = "block";
+            }
+        });
+
+        renderPagination(totalItems);
+    }
+
+    // Tạo thanh pagination
+    function renderPagination(totalItems) {
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        if (totalPages <= 1) return;
+
+        // Tạo nút trang
+        for (let i = 1; i <= totalPages; i++) {
+            let li = document.createElement("li");
+            li.classList.add("page-item");
+            if (i === currentPage) li.classList.add("active");
+
+            let a = document.createElement("a");
+            a.classList.add("page-link");
+            a.href = "#";
+            a.innerText = i;
+
+            a.addEventListener("click", function (e) {
+                e.preventDefault();
+                currentPage = i;
+                showPage(); // Cập nhật bài viết trên trang
+            });
+
+            li.appendChild(a);
+            pagination.appendChild(li);
+        }
+    }
+    // ---------------------------
+    // LOGIC LỌC/TÌM KIẾM
+    // ---------------------------
+    
+    // Gắn sự kiện cho nút lọc
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             filterBtns.forEach(b => b.classList.remove('active'));
@@ -394,16 +494,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const filter = this.dataset.filter;
             searchInput.value = '';
+            
+            // Gọi hàm lọc mới để xử lý phân trang
             filterArticles(filter, '');
         });
     });
 
+    // Gắn sự kiện cho ô tìm kiếm
     searchInput.addEventListener('input', function() {
         const activeFilter = document.querySelector('.category-filter-btn.active').dataset.filter;
+        
+        // Gọi hàm lọc mới để xử lý phân trang
         filterArticles(activeFilter, this.value.toLowerCase());
     });
 
-    function filterArticles(category, searchTerm) {
+    // Hàm lọc chính, được CẬP NHẬT để tích hợp Phân trang
+    window.filterArticles = function (category, searchTerm) {
         let visibleCount = 0;
 
         articleItems.forEach(item => {
@@ -414,8 +520,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const matchCategory = category === 'all' || tags.includes(category);
             const matchSearch = searchTerm === '' || keywords.includes(searchTerm) || text.includes(searchTerm);
 
+            // Ghi đè style.display để ẩn những bài KHÔNG khớp với tiêu chí lọc/tìm kiếm
+            // Sau đó showPage() sẽ chịu trách nhiệm ẩn/hiện các bài viết theo trang.
             if (matchCategory && matchSearch) {
-                item.style.display = 'block';
+                // Đặt style.display về 'initial' hoặc 'block' trước khi showPage() chạy
+                // Tuy nhiên, việc tính toán `getVisibleArticles` sẽ dựa trên logic này.
+                // Để đơn giản, ta sẽ chỉ ẩn những cái không khớp.
+                item.style.display = 'block'; // Tạm thời để nó tính là "có thể nhìn thấy"
                 visibleCount++;
             } else {
                 item.style.display = 'none';
@@ -427,7 +538,17 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             noResultsMsg.classList.add('d-none');
         }
+
+        // --- BƯỚC TÍCH HỢP PHÂN TRANG ---
+        currentPage = 1; // reset về trang 1 khi lọc/tìm
+        showPage(); // áp dụng phân trang cho các bài viết đã được lọc
     }
+    
+    // Lần đầu load trang
+    // Vì hàm filterArticles đã bị ghi đè, ta cần đảm bảo nó chạy để hiển thị trang 1
+    const initialFilter = document.querySelector('.category-filter-btn.active').dataset.filter;
+    window.filterArticles(initialFilter, '');
+
 });
 </script>
 }
