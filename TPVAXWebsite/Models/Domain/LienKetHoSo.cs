@@ -15,7 +15,6 @@ namespace TPVAXWebsite.Models.Domain
         public string VaiTro { get; set; }
 
         [Required]
-        [Column(TypeName = "datetime2(3)")]
         public DateTime NgayLienKet { get; set; } = DateTime.UtcNow;
 
         [Required]

@@ -21,7 +21,6 @@ namespace TPVAXWebsite.Models.Domain
         public string DoiTuongApDung { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 0)")]
         public decimal GiaGoi { get; set; }
 
         [StringLength(50)]

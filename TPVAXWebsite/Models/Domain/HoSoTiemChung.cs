@@ -20,7 +20,6 @@ namespace TPVAXWebsite.Models.Domain
         public string GioiTinh { get; set; }
 
         [Required]
-        [Column(TypeName = "date")]
         public DateTime NgaySinh { get; set; }
 
         [Required]

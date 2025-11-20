@@ -14,7 +14,6 @@ namespace TPVAXWebsite.Models.Domain
         public int SoLuong { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 0)")]
         public decimal DonGia { get; set; }
 
         [Required]

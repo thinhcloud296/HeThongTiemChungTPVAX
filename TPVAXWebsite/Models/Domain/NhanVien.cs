@@ -19,14 +19,12 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(10)]
         public string GioiTinh { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? NgaySinh { get; set; }
 
         [StringLength(12)]
         public string CCCD { get; set; }
 
         [Required]
-        [Column(TypeName = "date")]
         public DateTime NgayVaoLam { get; set; }
 
         [StringLength(10)]

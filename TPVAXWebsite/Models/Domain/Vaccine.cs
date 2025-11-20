@@ -16,7 +16,6 @@ namespace TPVAXWebsite.Models.Domain
         public string TenVC { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 0)")]
         public decimal GiaBan { get; set; }
 
         [Required]

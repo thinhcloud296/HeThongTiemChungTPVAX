@@ -20,7 +20,6 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(12)]
         public string CCCD { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? NgaySinh { get; set; }
 
         [StringLength(10)]

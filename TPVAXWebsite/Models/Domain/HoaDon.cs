@@ -16,7 +16,6 @@ namespace TPVAXWebsite.Models.Domain
         public DateTime NgayLap { get; set; } = DateTime.Now;
 
         [Required]
-        [Column(TypeName = "decimal(18, 0)")]
         public decimal TongTien { get; set; }
 
         public bool? TrangThai { get; set; }

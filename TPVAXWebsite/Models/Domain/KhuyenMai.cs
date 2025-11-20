@@ -25,7 +25,6 @@ namespace TPVAXWebsite.Models.Domain
         public string KieuGiam { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 2)")]
         public decimal GiaTriGiam { get; set; }
 
         [Required]
