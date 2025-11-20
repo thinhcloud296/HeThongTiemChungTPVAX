@@ -179,7 +179,7 @@ namespace TPVAXWebsite.Services
         public int GetActiveCount()
         {
             return _unitOfWork.GoiVaccines.Query()
-                .Count(g => g.TrangThai == "Hoạt động" || g.TrangThai == "Đang bán");
+                .Count(g => g.TrangThai == "Đang áp dụng" || g.TrangThai == "Hoạt động" || g.TrangThai == "Đang bán");
         }
 
         #endregion
@@ -223,8 +223,8 @@ namespace TPVAXWebsite.Services
                 query = query.Where(g => g.DoiTuongApDung.Contains(doiTuong));
             }
 
-            // Only active packages
-            query = query.Where(g => g.TrangThai == "Hoạt động" || g.TrangThai == "Đang bán");
+            // Only active packages (bỏ filter để lấy tất cả hoặc cho phép nhiều trạng thái)
+            // query = query.Where(g => !string.IsNullOrEmpty(g.TrangThai));
 
             query = query.OrderBy(g => g.TenGoi);
             totalRecords = query.Count();

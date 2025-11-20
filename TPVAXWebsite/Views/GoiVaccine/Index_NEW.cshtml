@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TPVAXWebsite.Models.Domain.GoiVaccine>
+@model IEnumerable<TPVAXWebsite.Models.Domain.GoiVaccine>
 @{
     ViewBag.Title = "Gói Vắc Xin Bảo Vệ Toàn Diện";
     int totalPackages = ViewBag.TotalCount ?? 0;
@@ -41,7 +41,6 @@
                     <div class="floating-icon floating-icon-1"><i class="fas fa-syringe"></i></div>
                     <div class="floating-icon floating-icon-2"><i class="fas fa-shield-alt"></i></div>
                     <div class="floating-icon floating-icon-3"><i class="fas fa-heart"></i></div>
-                    <img src="@Url.Content("~/Content/Assets/Images/vaccine-family.jpg")" alt="Vaccine Family" class="hero-img" onerror="this.style.display='none'">
                 </div>
             </div>
         </div>
@@ -88,59 +87,81 @@
             foreach (var goi in Model)
             {
                 <div class="col-lg-4 col-md-6">
-                    <div class="package-card h-100" style="border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;">
-                        <div class="text-center mb-3">
-                            @if (!string.IsNullOrEmpty(goi.HinhAnh))
+                    <div class="pricing-card-goi">
+                        @if (!string.IsNullOrEmpty(goi.HinhAnh))
+                        {
+                            <div class="pricing-card-image">
+                                <img src="@Url.Content("~/Content/Images/GoiVaccine/" + goi.HinhAnh)" alt="@goi.TenGoi" />
+                                <div class="pricing-badge">
+                                    <i class="fas fa-award"></i> Phổ biến
+                                </div>
+                            </div>
+                        }
+                        <div class="pricing-card-body">
+                            @if (!string.IsNullOrEmpty(goi.DoiTuongApDung))
                             {
-                                <img src="@Url.Content("~/Content/Images/GoiVaccine/" + goi.HinhAnh)" alt="@goi.TenGoi" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                                <div style="width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%); display: none; align-items: center; justify-content: center;">
-                                    <i class="fas fa-box-open fs-1 text-white"></i>
+                                <div class="pricing-target-badge">
+                                    <i class="fas fa-users me-1"></i>@goi.DoiTuongApDung
                                 </div>
                             }
-                            else
+                            <h3 class="pricing-card-title">@goi.TenGoi</h3>
+                            @if (!string.IsNullOrEmpty(goi.MoTa))
                             {
-                                <div style="width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-box-open fs-1 text-white"></i>
-                                </div>
+                                <p class="pricing-card-desc">
+                                    @(goi.MoTa.Length > 80 ? goi.MoTa.Substring(0, 80) + "..." : goi.MoTa)
+                                </p>
                             }
+                            <div class="pricing-divider"></div>
+                            <div class="pricing-price-section">
+                                <div class="pricing-label">Giá trọn gói</div>
+                                <div class="pricing-price">
+                                    <span class="price-amount">@string.Format("{0:N0}", goi.GiaGoi)</span>
+                                    <span class="price-currency">đ</span>
+                                </div>
+                                <div class="pricing-save-badge">
+                                    <i class="fas fa-tag me-1"></i>Tiết kiệm 10-15%
+                                </div>
+                            </div>
+                            <div class="pricing-features">
+                                <div class="pricing-feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Lịch tiêm khoa học</span>
+                                </div>
+                                <div class="pricing-feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Vaccine chính hãng</span>
+                                </div>
+                                <div class="pricing-feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Tư vấn miễn phí</span>
+                                </div>
+                            </div>
+                            <div class="pricing-actions">
+                                <a href="@Url.Action("Detail", "GoiVaccine", new { id = goi.MaGoi })" class="btn-pricing-detail">
+                                    <i class="fas fa-file-medical me-2"></i>Xem chi tiết
+                                </a>
+                                <button class="btn-pricing-book" onclick="alert('Chức năng đặt lịch đang phát triển')">
+                                    <i class="fas fa-calendar-check me-2"></i>Đặt lịch ngay
+                                </button>
+                            </div>
                         </div>
-                        <h3 style="font-size: 1.2rem; font-weight: 700; color: #00457a; text-align: center;" class="mb-2">@goi.TenGoi</h3>
-                        @if (!string.IsNullOrEmpty(goi.DoiTuongApDung))
-                        {
-                            <p class="text-center mb-3">
-                                <span class="badge bg-info">@goi.DoiTuongApDung</span>
-                            </p>
-                        }
-                        @if (!string.IsNullOrEmpty(goi.MoTa))
-                        {
-                            <p class="text-muted mb-3" style="font-size: 0.9rem; min-height: 60px;">
-                                @(goi.MoTa.Length > 100 ? goi.MoTa.Substring(0, 100) + "..." : goi.MoTa)
-                            </p>
-                        }
-                        <div class="text-center mb-3">
-                            <span class="text-warning fw-bold" style="font-size: 1.8rem;">@string.Format("{0:N0}₫", goi.GiaGoi)</span>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="@Url.Action("Detail", "GoiVaccine", new { id = goi.MaGoi })" class="btn btn-primary flex-fill rounded-pill">
-                                <i class="fas fa-info-circle me-2"></i>Chi tiết
-                            </a>
-                            <button class="btn btn-success flex-fill rounded-pill" onclick="alert('Chức năng đặt lịch đang phát triển')">
-                                <i class="fas fa-calendar-check me-2"></i>Đặt hẹn
-                            </button>
-                        </div>
-                        @if (goi.TrangThai == "Hoạt động" || goi.TrangThai == "Đang bán")
-                        {
-                            <span class="badge bg-success position-absolute top-0 end-0 m-2">Đang bán</span>
-                        }
                     </div>
                 </div>
             }
         }
         else
         {
-            <div class="col-12 text-center py-5">
-                <i class="fas fa-box-open fs-1 text-muted mb-3"></i>
-                <p class="text-muted">@(ViewBag.Error ?? "Chưa có gói vắc xin nào")</p>
+            <div class="col-12">
+                <div class="empty-state-goi">
+                    <div class="empty-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>Không tìm thấy gói vaccine</h3>
+                    <p>@(ViewBag.Error ?? "Hiện tại chưa có gói vắc xin phù hợp với bộ lọc của bạn")</p>
+                    <a href="@Url.Action("Index", "GoiVaccine")" class="btn-empty-reset">
+                        <i class="fas fa-redo me-2"></i>Xem tất cả gói
+                    </a>
+                </div>
             </div>
         }
     </div>
@@ -190,9 +211,9 @@
                 </nav>
                 <div class="text-center mt-3">
                     <p class="text-muted">
-                        Trang <strong class="text-primary">@currentPage</strong> / <strong>@totalPages</strong>
+                        Trang <strong class="text-primary fs-5">@currentPage</strong> / <strong>@totalPages</strong>
                         <span class="mx-2">|</span>
-                        Tổng cộng <strong class="text-success">@totalPackages</strong> gói vắc xin
+                        Tổng cộng <strong class="text-success">@totalPackages</strong> gói vaccine
                     </p>
                 </div>
             </div>
@@ -200,86 +221,22 @@
     }
 </section>
 
-<!-- Why Choose Packages Section -->
-<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-    <div class="container">
-        <h2 class="text-center text-primary fw-bold mb-5" style="font-size: 2rem;">TẠI SAO NÊN CHỌN GÓI VẮC XIN?</h2>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-white rounded-4 h-100 shadow-sm">
-                    <i class="fas fa-piggy-bank fs-1 text-success mb-3"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 600;" class="mb-3">Tiết kiệm chi phí</h4>
-                    <p class="text-muted mb-0">Giảm giá lên đến 10% so với tiêm lẻ từng mũi</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-white rounded-4 h-100 shadow-sm">
-                    <i class="fas fa-calendar-alt fs-1 text-info mb-3"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 600;" class="mb-3">Lịch tiêm khoa học</h4>
-                    <p class="text-muted mb-0">Phác đồ được tính toán kỹ lưỡng theo độ tuổi</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-white rounded-4 h-100 shadow-sm">
-                    <i class="fas fa-shield-virus fs-1 text-warning mb-3"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 600;" class="mb-3">Bảo vệ toàn diện</h4>
-                    <p class="text-muted mb-0">Phòng ngừa đầy đủ các bệnh nguy hiểm theo lứa tuổi</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-white rounded-4 h-100 shadow-sm">
-                    <i class="fas fa-user-md fs-1 text-danger mb-3"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 600;" class="mb-3">Tư vấn chuyên sâu</h4>
-                    <p class="text-muted mb-0">Bác sĩ hỗ trợ tận tình trong suốt phác đồ</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- CTA Section -->
-<section class="py-5" style="background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);">
-    <div class="container text-center text-white">
-        <h2 class="fw-bold mb-3">Chưa biết nên chọn gói nào?</h2>
-        <p style="font-size: 1.1rem;" class="mb-4">Liên hệ ngay với chúng tôi để được tư vấn miễn phí gói vaccine phù hợp nhất</p>
+<section class="container my-5">
+    <div class="cta-section text-center p-5 rounded-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <h2 class="text-white mb-3">
+            <i class="fas fa-headset me-3"></i>Cần tư vấn chọn gói phù hợp?
+        </h2>
+        <p class="text-white mb-4" style="font-size: 1.1rem;">
+            Đội ngũ chuyên gia của chúng tôi sẵn sàng hỗ trợ bạn 24/7
+        </p>
         <div class="d-flex justify-content-center gap-3 flex-wrap">
-            <a href="tel:0975088626" class="btn btn-warning btn-lg">
-                <i class="fas fa-phone-alt me-2"></i>Gọi ngay: 0975 088 626
+            <a href="tel:0973085626" class="btn btn-light btn-lg px-4" style="border-radius: 50px;">
+                <i class="fas fa-phone me-2"></i>Gọi ngay: 0973.085.626
             </a>
-            <a href="@Url.Action("Index", "ToiNenTiemGi")" class="btn btn-light btn-lg">
-                <i class="fas fa-question-circle me-2"></i>Tôi nên tiêm gì?
+            <a href="@Url.Action("Index", "TuVan")" class="btn btn-outline-light btn-lg px-4" style="border-radius: 50px; border-width: 2px;">
+                <i class="fas fa-comment-medical me-2"></i>Tư vấn online
             </a>
         </div>
     </div>
 </section>
-
-<style>
-    .package-card {
-        position: relative;
-    }
-
-    .package-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        border-color: #0077b6 !important;
-    }
-
-    .page-link {
-        border-radius: 8px;
-        margin: 0 4px;
-        border: 2px solid #dee2e6;
-        color: #0077b6;
-        font-weight: 600;
-    }
-
-    .page-link:hover {
-        background-color: #0077b6;
-        border-color: #0077b6;
-        color: white;
-    }
-
-    .page-item.active .page-link {
-        background-color: #0077b6;
-        border-color: #0077b6;
-    }
-</style>

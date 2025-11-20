@@ -189,21 +189,23 @@
                         </div>
                       </a>
                       <div class="d-flex gap-2 mt-3">
-                        <button
-                          class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
-                          onclick="addToCart('@vaccine.MaVC')"
-                          aria-label="Thêm @vaccine.TenVC vào giỏ hàng"
-                          @(vaccine.SoLuongTon <= 0 ? "disabled" : "")
-                        >
-                          Thêm vào giỏ
-                        </button>
                         <a
                           href="@Url.Action("Index", "Vaccine", new { id = vaccine.MaVC })"
-                          class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
-                          aria-label="Đặt lịch tiêm @vaccine.TenVC"
+                          class="btn btn-primary flex-fill rounded-pill btn-addcart-custom-card"
+                          aria-label="Chi tiết @vaccine.TenVC"
+                          style="font-weight: 600;"
                         >
-                          Đặt lịch tiêm
+                          <i class="fas fa-info-circle me-1"></i> Chi tiết
                         </a>
+                        <button
+                          class="btn btn-outline-success flex-fill rounded-pill btn-price-custom-card"
+                          onclick="addToCart('@vaccine.MaVC')"
+                          aria-label="Đặt lịch tiêm @vaccine.TenVC"
+                          @(vaccine.SoLuongTon <= 0 ? "disabled" : "")
+                          style="font-weight: 600; background: transparent;"
+                        >
+                          <i class="fas fa-calendar-check me-1"></i> Đặt lịch
+                        </button>
                       </div>
                     </article>
                   </div>

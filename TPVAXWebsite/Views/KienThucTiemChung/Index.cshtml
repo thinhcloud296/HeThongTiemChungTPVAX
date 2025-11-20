@@ -1,0 +1,599 @@
+@{
+    ViewBag.Title = "Kiến Thức Tiêm Chủng";
+}
+
+@section Styles {
+<style>
+.category-hero {
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+    padding: 60px 0;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.category-tab {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 15px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.category-tab:hover {
+    border-color: #0077b6;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.2);
+}
+
+.category-tab.active {
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+    color: white;
+    border-color: #0077b6;
+}
+
+.category-tab .icon {
+    font-size: 1.5rem;
+}
+
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.article-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 119, 182, 0.2);
+}
+
+.article-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.article-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-category {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #0077b6;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.article-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.article-excerpt {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #999;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.article-link {
+    color: #0077b6;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: auto;
+}
+
+.article-link:hover {
+    color: #005a8c;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.search-box {
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #dee2e6;
+    border-radius: 50px;
+    font-size: 1rem;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #0077b6;
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
+}
+</style>
+}
+
+<div class="category-hero">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">📚 KIẾN THỨC TIÊM CHỦNG</h1>
+        <p class="lead">Thông tin hữu ích về tiêm chủng cho mọi lứa tuổi - Cập nhật từ chuyên gia TPVAX</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="all">
+            <span class="icon">📚</span>
+            <span>Tất cả</span>
+        </button>
+        <button class="category-tab" data-category="nhi">
+            <span class="icon">👶</span>
+            <span>Trẻ em & Sơ sinh</span>
+        </button>
+        <button class="category-tab" data-category="thanh-thieu-nien">
+            <span class="icon">🧒</span>
+            <span>Thanh thiếu niên (9-18 tuổi)</span>
+        </button>
+        <button class="category-tab" data-category="du-lich">
+            <span class="icon">✈️</span>
+            <span>Du lịch nước ngoài</span>
+        </button>
+        <button class="category-tab" data-category="tien-hon-nhan">
+            <span class="icon">💑</span>
+            <span>Tiền hôn nhân</span>
+        </button>
+        <button class="category-tab" data-category="nguoi-lon">
+            <span class="icon">🧑</span>
+            <span>Người trưởng thành</span>
+        </button>
+    </div>
+
+    <!-- Search Box -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm bài viết..." />
+    </div>
+
+    <!-- Article Grid -->
+    <div class="article-grid" id="articleGrid">
+        <!-- Trẻ em & Sơ sinh (3 bài - ss1, ss2, ss3) -->
+        <div class="article-card" data-category="nhi" data-keywords="trẻ em sơ sinh vaccine tiêm chủng bé">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ss1.png")" alt="Lịch tiêm chủng cho trẻ sơ sinh" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">👶 Trẻ em & Sơ sinh</span>
+                <h3 class="article-title">Lịch tiêm chủng mở rộng cho trẻ sơ sinh theo khuyến cáo mới nhất</h3>
+                <p class="article-excerpt">Cập nhật lịch tiêm chủng đầy đủ cho trẻ từ 0-12 tháng tuổi theo Bộ Y Tế...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 18/11/2025</span>
+                    <span>👁️ 3.2K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="nhi" data-keywords="vaccine trẻ em phản ứng sau tiêm">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ss2.png")" alt="Chăm sóc trẻ sau tiêm" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">👶 Trẻ em & Sơ sinh</span>
+                <h3 class="article-title">Cách chăm sóc trẻ sau tiêm vaccine - Xử lý phản ứng phụ</h3>
+                <p class="article-excerpt">Hướng dẫn chi tiết cách chăm sóc bé sau tiêm, nhận biết và xử lý phản ứng...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 15/11/2025</span>
+                    <span>👁️ 2.8K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="nhi" data-keywords="vaccine trẻ nhỏ bắt buộc quan trọng">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ss3.png")" alt="Vaccine quan trọng cho trẻ" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">👶 Trẻ em & Sơ sinh</span>
+                <h3 class="article-title">Top 10 vaccine quan trọng nhất cho trẻ dưới 5 tuổi</h3>
+                <p class="article-excerpt">Danh sách các vaccine thiết yếu giúp bảo vệ trẻ khỏi bệnh nguy hiểm...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 12/11/2025</span>
+                    <span>👁️ 4.1K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thanh thiếu niên (5 bài - ttn1-5) -->
+        <div class="article-card" data-category="thanh-thieu-nien" data-keywords="thanh thiếu niên vaccine HPV tuổi dậy thì">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ttn1.png")" alt="Vaccine cho thanh thiếu niên" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧒 Thanh thiếu niên</span>
+                <h3 class="article-title">Vaccine HPV cho trẻ vị thành niên - Phòng ngừa ung thư</h3>
+                <p class="article-excerpt">Tại sao vaccine HPV quan trọng cho trẻ 9-14 tuổi và thời điểm tiêm tốt nhất...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 10/11/2025</span>
+                    <span>👁️ 5.3K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="thanh-thieu-nien" data-keywords="học sinh tiêm chủng trường học">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ttn2.png")" alt="Tiêm chủng cho học sinh" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧒 Thanh thiếu niên</span>
+                <h3 class="article-title">Lịch tiêm chủng bắt buộc cho học sinh cấp 2 và cấp 3</h3>
+                <p class="article-excerpt">Các vaccine cần thiết khi con vào cấp 2-3 theo quy định Bộ GD&ĐT...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 08/11/2025</span>
+                    <span>👁️ 3.7K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="thanh-thieu-nien" data-keywords="vaccine viêm màng não thanh thiếu niên">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ttn3.png")" alt="Vaccine viêm màng não" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧒 Thanh thiếu niên</span>
+                <h3 class="article-title">Vaccine viêm màng não cho trẻ vị thành niên - Bảo vệ toàn diện</h3>
+                <p class="article-excerpt">Phòng ngừa viêm màng não do não mô cầu - bệnh nguy hiểm ở độ tuổi teen...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 05/11/2025</span>
+                    <span>👁️ 2.9K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="thanh-thieu-nien" data-keywords="cúm mùa thanh thiếu niên vaccine">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ttn4.png")" alt="Vaccine cúm cho teen" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧒 Thanh thiếu niên</span>
+                <h3 class="article-title">Vaccine cúm mùa cho học sinh - Phòng bệnh mùa thi</h3>
+                <p class="article-excerpt">Tiêm vaccine cúm hàng năm giúp teen tránh bỏ học và học tập hiệu quả...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 02/11/2025</span>
+                    <span>👁️ 4.5K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="thanh-thieu-nien" data-keywords="vaccine viêm gan B thanh thiếu niên">
+            <img src="@Url.Content("~/Content/Images/BaiViet/ttn5.png")" alt="Vaccine viêm gan B" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧒 Thanh thiếu niên</span>
+                <h3 class="article-title">Tiêm bổ sung vaccine viêm gan B cho trẻ vị thành niên</h3>
+                <p class="article-excerpt">Khi nào cần tiêm nhắc vaccine viêm gan B cho trẻ 12-18 tuổi...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 30/10/2025</span>
+                    <span>👁️ 3.1K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Du lịch (4 bài - travel1-4) -->
+        <div class="article-card" data-category="du-lich" data-keywords="du lịch vaccine nước ngoài xuất cảnh">
+            <img src="@Url.Content("~/Content/Images/BaiViet/travel1.png")" alt="Vaccine đi du lịch" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">✈️ Du lịch</span>
+                <h3 class="article-title">Danh sách vaccine bắt buộc khi đi du lịch nước ngoài 2025</h3>
+                <p class="article-excerpt">Vaccine cần thiết theo từng quốc gia và châu lục - Chuẩn bị trước 4-6 tuần...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 28/10/2025</span>
+                    <span>👁️ 6.8K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="du-lich" data-keywords="vaccine vàng da du lịch châu phi">
+            <img src="@Url.Content("~/Content/Images/BaiViet/travel2.png")" alt="Vaccine sốt vàng" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">✈️ Du lịch</span>
+                <h3 class="article-title">Vaccine sốt vàng (Yellow Fever) - Bắt buộc với nhiều nước</h3>
+                <p class="article-excerpt">Thông tin về vaccine sốt vàng khi đi châu Phi, Nam Mỹ và cấp chứng nhận...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 25/10/2025</span>
+                    <span>👁️ 4.2K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="du-lich" data-keywords="vaccine nhật bản viêm não">
+            <img src="@Url.Content("~/Content/Images/BaiViet/travel3.png")" alt="Vaccine viêm não Nhật Bản" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">✈️ Du lịch</span>
+                <h3 class="article-title">Vaccine viêm não Nhật Bản khi du lịch Đông Nam Á</h3>
+                <p class="article-excerpt">Phòng ngừa viêm não do muỗi khi đi Thái Lan, Indonesia, Philippines...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 22/10/2025</span>
+                    <span>👁️ 3.9K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="du-lich" data-keywords="vaccine dại du lịch động vật">
+            <img src="@Url.Content("~/Content/Images/BaiViet/travel4.png")" alt="Vaccine dại" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">✈️ Du lịch</span>
+                <h3 class="article-title">Vaccine dại phòng ngừa - Quan trọng khi du lịch vùng sâu</h3>
+                <p class="article-excerpt">Bảo vệ khỏi bệnh dại khi tiếp xúc động vật hoang dã ở các nước nhiệt đới...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 20/10/2025</span>
+                    <span>👁️ 5.1K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tiền hôn nhân (5 bài - thn1-5) -->
+        <div class="article-card" data-category="tien-hon-nhan" data-keywords="tiền hôn nhân vaccine rubella">
+            <img src="@Url.Content("~/Content/Images/BaiViet/thn1.png")" alt="Vaccine trước hôn nhân" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">💑 Tiền hôn nhân</span>
+                <h3 class="article-title">Vaccine rubella trước khi kết hôn - Bảo vệ thai nhi</h3>
+                <p class="article-excerpt">Tầm quan trọng của vaccine rubella cho phụ nữ chuẩn bị mang thai...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 18/10/2025</span>
+                    <span>👁️ 7.2K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="tien-hon-nhan" data-keywords="xét nghiệm miễn dịch trước hôn nhân">
+            <img src="@Url.Content("~/Content/Images/BaiViet/thn2.png")" alt="Xét nghiệm miễn dịch" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">💑 Tiền hôn nhân</span>
+                <h3 class="article-title">Xét nghiệm miễn dịch trước khi kết hôn - Những điều cần biết</h3>
+                <p class="article-excerpt">Kiểm tra kháng thể vaccine và các xét nghiệm cần thiết trước hôn nhân...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 15/10/2025</span>
+                    <span>👁️ 6.5K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="tien-hon-nhan" data-keywords="vaccine HPV phụ nữ trước kết hôn">
+            <img src="@Url.Content("~/Content/Images/BaiViet/thn3.png")" alt="Vaccine HPV" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">💑 Tiền hôn nhân</span>
+                <h3 class="article-title">Vaccine HPV cho phụ nữ trước hôn nhân - Phòng ung thư</h3>
+                <p class="article-excerpt">Lợi ích của việc tiêm vaccine HPV trước khi kết hôn và mang thai...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 12/10/2025</span>
+                    <span>👁️ 8.1K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="tien-hon-nhan" data-keywords="vaccine viêm gan B tiền hôn nhân">
+            <img src="@Url.Content("~/Content/Images/BaiViet/thn4.png")" alt="Vaccine viêm gan B" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">💑 Tiền hôn nhân</span>
+                <h3 class="article-title">Tầm quan trọng của vaccine viêm gan B cho cặp đôi sắp cưới</h3>
+                <p class="article-excerpt">Phòng ngừa lây nhiễm viêm gan B giữa vợ chồng và cho con trong tương lai...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 10/10/2025</span>
+                    <span>👁️ 5.8K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="tien-hon-nhan" data-keywords="lịch tiêm vaccine chuẩn bị mang thai">
+            <img src="@Url.Content("~/Content/Images/BaiViet/thn5.png")" alt="Lịch tiêm trước mang thai" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">💑 Tiền hôn nhân</span>
+                <h3 class="article-title">Lịch tiêm vaccine chuẩn bị mang thai - Bảo vệ mẹ và bé</h3>
+                <p class="article-excerpt">Lộ trình tiêm vaccine đầy đủ trước khi mang thai 3-6 tháng...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 08/10/2025</span>
+                    <span>👁️ 9.3K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Người trưởng thành (6 bài - adults, adults1-5) -->
+        <div class="article-card" data-category="nguoi-lon" data-keywords="người lớn vaccine cúm">
+            <img src="@Url.Content("~/Content/Images/BaiViet/adults.png")" alt="Vaccine cho người lớn" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧑 Người trưởng thành</span>
+                <h3 class="article-title">Vaccine cúm hàng năm - Bảo vệ người trưởng thành khỏi biến chứng</h3>
+                <p class="article-excerpt">Tại sao người lớn cần tiêm vaccine cúm mỗi năm và thời điểm tiêm tốt nhất...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 05/10/2025</span>
+                    <span>👁️ 4.7K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="nguoi-lon" data-keywords="vaccine phế cầu người già">
+            <img src="@Url.Content("~/Content/Images/BaiViet/adults1.png")" alt="Vaccine phế cầu" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧑 Người trưởng thành</span>
+                <h3 class="article-title">Vaccine phế cầu cho người trên 50 tuổi - Phòng viêm phổi</h3>
+                <p class="article-excerpt">Bảo vệ người cao tuổi khỏi viêm phổi do phế cầu - Nguyên nhân tử vong hàng đầu...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 03/10/2025</span>
+                    <span>👁️ 5.9K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="nguoi-lon" data-keywords="vaccine zona người lớn tuổi">
+            <img src="@Url.Content("~/Content/Images/BaiViet/adults2.png")" alt="Vaccine zona" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧑 Người trưởng thành</span>
+                <h3 class="article-title">Vaccine zona (Shingles) - Phòng bệnh đau thần kinh</h3>
+                <p class="article-excerpt">Vaccine zona giúp người từ 50 tuổi tránh bệnh zona và di chứng đau dây thần kinh...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 01/10/2025</span>
+                    <span>👁️ 6.4K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="nguoi-lon" data-keywords="vaccine bệnh mãn tính tiểu đường">
+            <img src="@Url.Content("~/Content/Images/BaiViet/adults3.png")" alt="Vaccine cho người bệnh mãn" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧑 Người trưởng thành</span>
+                <h3 class="article-title">Vaccine quan trọng cho người có bệnh mãn tính</h3>
+                <p class="article-excerpt">Tiêm chủng cho người tiểu đường, tim mạch, hen suyễn để tránh biến chứng...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 28/09/2025</span>
+                    <span>👁️ 7.1K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="nguoi-lon" data-keywords="vaccine viêm gan A người lớn">
+            <img src="@Url.Content("~/Content/Images/BaiViet/adults4.png")" alt="Vaccine viêm gan A" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧑 Người trưởng thành</span>
+                <h3 class="article-title">Vaccine viêm gan A cho người trưởng thành - An toàn vệ sinh thực phẩm</h3>
+                <p class="article-excerpt">Phòng ngừa viêm gan A qua đường ăn uống - Vaccine 2 mũi hiệu quả suốt đời...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 25/09/2025</span>
+                    <span>👁️ 4.3K lượt xem</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-category="nguoi-lon" data-keywords="vaccine uốn ván người lớn">
+            <img src="@Url.Content("~/Content/Images/BaiViet/adults5.png")" alt="Vaccine uốn ván" class="article-image" />
+            <div class="article-content">
+                <span class="article-category">🧑 Người trưởng thành</span>
+                <h3 class="article-title">Vaccine uốn ván - Tiêm nhắc 10 năm một lần cho người lớn</h3>
+                <p class="article-excerpt">Lý do cần tiêm nhắc vaccine uốn ván định kỳ và khi bị thương...</p>
+                <a href="#" class="article-link">Xem chi tiết →</a>
+                <div class="article-meta">
+                    <span>📅 22/09/2025</span>
+                    <span>👁️ 5.6K lượt xem</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="text-center py-5 hidden">
+        <i class="fas fa-search" style="font-size: 4rem; color: #dee2e6;"></i>
+        <h3 class="mt-3 text-muted">Không tìm thấy bài viết phù hợp</h3>
+        <p class="text-muted">Vui lòng thử từ khóa khác hoặc chọn danh mục khác</p>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const articleCards = document.querySelectorAll('.article-card');
+    const searchInput = document.getElementById('searchInput');
+    const articleGrid = document.getElementById('articleGrid');
+    const emptyState = document.getElementById('emptyState');
+
+    // Category Filter
+    categoryTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            categoryTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            const category = this.dataset.category;
+            searchInput.value = '';
+            filterArticles(category, '');
+        });
+    });
+
+    // Search Filter
+    searchInput.addEventListener('input', function() {
+        const activeCategory = document.querySelector('.category-tab.active').dataset.category;
+        filterArticles(activeCategory, this.value.toLowerCase());
+    });
+
+    function filterArticles(category, searchTerm) {
+        let visibleCount = 0;
+
+        articleCards.forEach(card => {
+            const cardCategory = card.dataset.category;
+            const cardKeywords = card.dataset.keywords.toLowerCase();
+            const cardText = card.textContent.toLowerCase();
+
+            const matchCategory = category === 'all' || cardCategory === category;
+            const matchSearch = searchTerm === '' || 
+                                cardKeywords.includes(searchTerm) || 
+                                cardText.includes(searchTerm);
+
+            if (matchCategory && matchSearch) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        if (visibleCount === 0) {
+            articleGrid.style.display = 'none';
+            emptyState.classList.remove('hidden');
+        } else {
+            articleGrid.style.display = 'grid';
+            emptyState.classList.add('hidden');
+        }
+    }
+});
+</script>
+}

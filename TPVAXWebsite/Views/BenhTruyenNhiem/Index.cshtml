@@ -1,484 +1,374 @@
-﻿@model IEnumerable<TPVAXWebsite.Models.Domain.LoaiBenh>
 @{
     ViewBag.Title = "Bệnh Truyền Nhiễm";
 }
 
-<!-- Page Header -->
-      <div class="text-center mb-5">
-        <h2 class="display-4 fw-bold text-primary mb-3">
-          🦠 BỆNH TRUYỀN NHIỄM
-        </h2>
-        <p class="lead text-muted">
-          Tìm hiểu thông tin chi tiết về các bệnh truyền nhiễm phổ biến, triệu
-          chứng nhận biết, cách phòng ngừa và vaccine bảo vệ. Thông tin khoa học
-          từ chuyên gia TPVAX.
-        </p>
-      </div>
+@section Styles {
+<style>
+.btn-hero {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    padding: 60px 0;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+}
 
-      <!-- Filter Bar -->
-      <section class="mb-5">
-        <div class="disease-filter-bar">
-          <button class="disease-filter-btn active" data-filter="all">
-            <i class="fas fa-th-large me-2"></i>
-            <span>Tất cả</span>
-          </button>
-          <button class="disease-filter-btn" data-filter="article">
-            <i class="fas fa-file-alt me-2"></i>
-            <span>Bài viết</span>
-          </button>
-          <button class="disease-filter-btn" data-filter="az">
-            <i class="fas fa-book-medical me-2"></i>
-            <span>Bệnh A-Z</span>
-          </button>
-          <button class="disease-filter-btn" data-filter="virus">
-            <i class="fas fa-viruses me-2"></i>
-            <span>Do Virus</span>
-          </button>
-          <button class="disease-filter-btn" data-filter="bacteria">
-            <i class="fas fa-bacterium me-2"></i>
-            <span>Do Vi khuẩn</span>
-          </button>
-          <button class="disease-filter-btn" data-filter="quiz">
-            <i class="fas fa-question-circle me-2"></i>
-            <span>Quiz</span>
-          </button>
-        </div>
-      </section>
+.disease-filter-btn {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    margin: 5px;
+}
 
-      <!-- Search Box -->
-      <section class="mb-5">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="search-box-modern position-relative">
-              <input
-                type="text"
-                class="form-control form-control-lg rounded-pill"
-                placeholder="🔍 Tìm kiếm bệnh truyền nhiễm (VD: Sốt xuất huyết, Thủy đậu, Viêm gan...)"
+.disease-filter-btn:hover {
+    border-color: #e74c3c;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
+}
+
+.disease-filter-btn.active {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border-color: #e74c3c;
+}
+
+.search-box-modern input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #dee2e6;
+    border-radius: 50px;
+    font-size: 1rem;
+}
+
+.search-box-modern input:focus {
+    outline: none;
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.article-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+    height: 100%;
+}
+
+.article-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(231, 76, 60, 0.25);
+}
+
+.article-image-wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.article-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-category-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(231, 76, 60, 0.9);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.article-body {
+    padding: 20px;
+}
+
+.article-title-medium {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.article-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.article-link {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.article-link:hover {
+    color: #c0392b;
+}
+
+.d-none {
+    display: none !important;
+}
+</style>
+}
+
+<div class="btn-hero">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">🦠 BỆNH TRUYỀN NHIỄM</h1>
+        <p class="lead">Tìm hiểu thông tin chi tiết về các bệnh truyền nhiễm phổ biến và vaccine bảo vệ</p>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="mb-5 text-center">
+        <button class="disease-filter-btn active" data-filter="all">
+            <i class="fas fa-th-large"></i> <span>Tất cả</span>
+        </button>
+        <button class="disease-filter-btn" data-filter="article">
+            <i class="fas fa-file-alt"></i> <span>Bài viết</span>
+        </button>
+        <button class="disease-filter-btn" data-filter="virus">
+            <i class="fas fa-viruses"></i> <span>Do Virus</span>
+        </button>
+        <button class="disease-filter-btn" data-filter="bacteria">
+            <i class="fas fa-bacterium"></i> <span>Do Vi khuẩn</span>
+        </button>
+    </div>
+
+    <div class="mb-5">
+        <div class="search-box-modern">
+            <input 
+                type="text" 
                 id="diseaseSearchInput"
-                autocomplete="off"
-              />
-            </div>
-            <div
-              id="searchResultCount"
-              class="text-center mt-3"
-              style="font-size: 14px; color: #6c757d"
-            ></div>
-          </div>
+                class="form-control form-control-lg rounded-pill" 
+                placeholder="🔍 Tìm kiếm bệnh truyền nhiễm (VD: Sốt xuất huyết, Thủy đậu...)"
+            />
         </div>
-      </section>
+    </div>
 
-      <!-- No Results Message -->
-      <section id="noResultsMessage" style="display: none">
-        <div
-          class="alert alert-warning text-center py-5 mx-auto"
-          style="max-width: 600px"
-        >
-          <h3 class="mb-3">🔍 Không tìm thấy bài viết nào</h3>
-          <p class="mb-3">
-            Vui lòng thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác.
-          </p>
-          <button
-            class="btn btn-primary"
-            onclick="document.getElementById('diseaseSearchInput').value=''; document.getElementById('diseaseSearchInput').focus();"
-          >
-            Xóa tìm kiếm
-          </button>
-        </div>
-      </section>
+    <div id="noResultsMessage" class="alert alert-warning text-center d-none">
+        <h3>🔍 Không tìm thấy bài viết nào</h3>
+        <p>Vui lòng thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác.</p>
+    </div>
 
-      <!-- Article Grid -->
-      <section class="article-grid">
-        <div class="row g-4 article-container">
-          <!-- Article 1 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="article virus"
-            data-keywords="thủy đậu nốt trắng điều trị"
-          >
+    <div class="row g-4 article-container">
+        <!-- 11 bài viết với ảnh btn1-btn11 -->
+        <div class="col-lg-4 col-md-6 article-item" data-tags="article virus" data-keywords="thủy đậu nốt trắng điều trị vaccine">
             <article class="article-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Nốt thủy đậu trắng"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">📝 Bài viết</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 28/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 1.8K lượt xem</span
-                  >
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn1.png")" alt="Thủy đậu" />
+                    <div class="article-category-badge">🦠 Virus</div>
                 </div>
-                <h3 class="article-title-medium mb-2">
-                  Nốt thủy đậu màu trắng đục là hiện tượng gì? Cách điều trị
-                  đúng
-                </h3>
-                <p class="article-description">
-                  Tìm hiểu về hiện tượng nốt thủy đậu chuyển màu trắng đục,
-                  nguyên nhân và cách xử lý phù hợp...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=not-thuy-dau-trang"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <!-- Article 2 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="article virus"
-            data-keywords="sữa rửa mặt thủy đậu chăm sóc da"
-          >
-            <article class="article-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Sữa rửa mặt thủy đậu"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">💧 Chăm sóc</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 27/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 1.5K lượt xem</span
-                  >
+                <div class="article-body">
+                    <h3 class="article-title-medium">Bệnh thủy đậu - Triệu chứng và cách phòng ngừa</h3>
+                    <p class="article-description">Thủy đậu là bệnh truyền nhiễm do virus varicella-zoster gây ra, dễ lây lan...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
                 </div>
-                <h3 class="article-title-medium mb-2">
-                  Những người bị thủy đậu có dùng sữa rửa mặt được không?
-                </h3>
-                <p class="article-description">
-                  Hướng dẫn cách chăm sóc da mặt khi bị thủy đậu, sản phẩm nên
-                  và không nên sử dụng...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=sua-rua-mat-thuy-dau"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
             </article>
-          </div>
-
-          <!-- Article 3 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="az virus"
-            data-keywords="sốt zika virus muỗi"
-          >
-            <article class="article-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Sốt Zika"
-                  loading="lazy"
-                />
-                <div class="article-category-badge az-badge">📖 Bệnh A-Z</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 26/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 2.3K lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Sốt Zika là gì? Những vấn đề cần biết về sốt Zika
-                </h3>
-                <p class="article-description">
-                  Thông tin đầy đủ về bệnh sốt Zika, cách lây truyền, triệu
-                  chứng và biện pháp phòng ngừa...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=sot-zika-can-biet"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <!-- Article 4 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="az virus"
-            data-keywords="chikungunya virus muỗi sốt khớp"
-          >
-            <article class="article-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Chikungunya"
-                  loading="lazy"
-                />
-                <div class="article-category-badge az-badge">📖 Bệnh A-Z</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 25/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 1.9K lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Bệnh Chikungunya là gì? Những vấn đề cần biết về bệnh
-                  Chikungunya
-                </h3>
-                <p class="article-description">
-                  Tìm hiểu về bệnh Chikungunya do virus, triệu chứng đau khớp
-                  đặc trưng và cách điều trị...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=benh-chikungunya"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <!-- Article 5 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="article virus"
-            data-keywords="rubella phát ban giai đoạn"
-          >
-            <article class="article-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Bệnh Rubella"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">🔬 Nghiên cứu</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 24/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 2.1K lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Tìm hiểu về 3 giai đoạn phát triển của bệnh Rubella
-                </h3>
-                <p class="article-description">
-                  Phân tích chi tiết 3 giai đoạn của bệnh Rubella (Rubivirus),
-                  triệu chứng từng giai đoạn...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=3-giai-doan-rubella"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <!-- Article 6 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="az bacteria"
-            data-keywords="bệnh than vi khuẩn anthrax"
-          >
-            <article class="article-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Bệnh than"
-                  loading="lazy"
-                />
-                <div class="article-category-badge az-badge">📖 Bệnh A-Z</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 23/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 1.7K lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Bệnh than là gì? Những vấn đề cần biết về bệnh than
-                </h3>
-                <p class="article-description">
-                  Thông tin về bệnh than (Anthrax) do vi khuẩn, đường lây nhiễm
-                  và biện pháp phòng ngừa...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=benh-than"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
-
-          <!-- Quiz 1 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="quiz bacteria"
-            data-keywords="quiz lao kiểm tra kiến thức"
-          >
-            <article class="article-card quiz-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Quiz Lao"
-                  loading="lazy"
-                />
-                <div class="article-category-badge quiz-badge">❓ Quiz</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="badge bg-warning text-dark">7 câu hỏi</span>
-                  <span class="text-muted ms-2"
-                    ><i class="bi bi-trophy"></i> Trung bình</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Bạn có chắc mình đã biết hết về các thể loại của bệnh lao?
-                </h3>
-                <p class="article-description">
-                  Kiểm tra kiến thức của bạn về bệnh lao qua 7 câu hỏi thú vị.
-                  Thử thách ngay!
-                </p>
-                <a href="quiz.html?id=lao" class="article-link"> Làm Quiz → </a>
-              </div>
-            </article>
-          </div>
-
-          <!-- Quiz 2 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="quiz virus"
-            data-keywords="quiz sốt xuất huyết muỗi dengue"
-          >
-            <article class="article-card quiz-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Quiz SXH"
-                  loading="lazy"
-                />
-                <div class="article-category-badge quiz-badge">❓ Quiz</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="badge bg-warning text-dark">7 câu hỏi</span>
-                  <span class="text-muted ms-2"
-                    ><i class="bi bi-trophy"></i> Dễ</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Bạn có nhầm lẫn muỗi thường với muỗi truyền bệnh Sốt xuất
-                  huyết?
-                </h3>
-                <p class="article-description">
-                  Phân biệt muỗi Aedes aegypti gây sốt xuất huyết với muỗi
-                  thường. Kiểm tra ngay!
-                </p>
-                <a href="quiz.html?id=sxh" class="article-link"> Làm Quiz → </a>
-              </div>
-            </article>
-          </div>
-
-          <!-- Article 7 -->
-          <div
-            class="col-lg-4 col-md-6 article-item"
-            data-tags="article virus"
-            data-keywords="cúm phòng ngừa vaccine"
-          >
-            <article class="article-card">
-              <div class="article-image-wrapper">
-                <img
-                  src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                  class="img-fluid"
-                  alt="Cúm mùa"
-                  loading="lazy"
-                />
-                <div class="article-category-badge">💉 Phòng ngừa</div>
-              </div>
-              <div class="article-body">
-                <div class="article-meta-small mb-2">
-                  <span class="text-muted"
-                    ><i class="bi bi-calendar"></i> 22/10/2025</span
-                  >
-                  <span class="text-muted ms-3"
-                    ><i class="bi bi-eye"></i> 3.2K lượt xem</span
-                  >
-                </div>
-                <h3 class="article-title-medium mb-2">
-                  Vaccine cúm: Tại sao cần tiêm mỗi năm và thời điểm phù hợp?
-                </h3>
-                <p class="article-description">
-                  Giải đáp về vaccine cúm mùa, lý do cần tiêm hàng năm và thời
-                  điểm tốt nhất để tiêm...
-                </p>
-                <a
-                  href="bai-viet-chi-tiet.html?slug=vaccine-cum"
-                  class="article-link"
-                >
-                  Xem chi tiết →
-                </a>
-              </div>
-            </article>
-          </div>
         </div>
 
-        <!-- Pagination -->
-        <nav aria-label="Phân trang bài viết" class="mt-5">
-          <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                <i class="fas fa-chevron-left"></i>
-              </a>
-            </li>
-            <li class="page-item active" aria-current="page">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class="fas fa-chevron-right"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </section>
-    </main>
-    <!-- END Main Content -->
+        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="sốt xuất huyết dengue muỗi vaccine">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn2.png")" alt="Sốt xuất huyết" />
+                    <div class="article-category-badge">🦟 Muỗi</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Sốt xuất huyết Dengue - Nguy hiểm và cách phòng tránh</h3>
+                    <p class="article-description">Sốt xuất huyết do muỗi Aedes truyền, có thể gây biến chứng nguy hiểm...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="viêm màng não não mô cầu vaccine">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn3.png")" alt="Viêm màng não" />
+                    <div class="article-category-badge">⚠️ Vi khuẩn</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Viêm màng não do não mô cầu - Bệnh cấp cứu</h3>
+                    <p class="article-description">Viêm màng não cực kỳ nguy hiểm, có thể tử vong trong 24-48 giờ nếu không điều trị...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="cúm influenza vaccine phòng bệnh">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn4.png")" alt="Cúm mùa" />
+                    <div class="article-category-badge">🤧 Cúm</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Cúm mùa (Influenza) - Không chỉ là cảm lạnh thông thường</h3>
+                    <p class="article-description">Cúm có thể gây biến chứng nghiêm trọng ở trẻ nhỏ, người già...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="HPV ung thư vaccine gardasil">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn5.png")" alt="Virus HPV" />
+                    <div class="article-category-badge">🎗️ HPV</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Virus HPV - Nguyên nhân gây ung thư cổ tử cung</h3>
+                    <p class="article-description">HPV là virus phổ biến, gây ung thư cổ tử cung, hầu họng...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="viêm gan B virus vaccine">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn6.png")" alt="Viêm gan B" />
+                    <div class="article-category-badge">🫀 Gan</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Viêm gan B - Bệnh lây truyền qua đường máu</h3>
+                    <p class="article-description">Viêm gan B gây xơ gan, ung thư gan nếu không điều trị...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="bạch hầu hô hấp vaccine">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn7.png")" alt="Bạch hầu" />
+                    <div class="article-category-badge">🦠 Vi khuẩn</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Bạch hầu - Bệnh nguy hiểm đường hô hấp</h3>
+                    <p class="article-description">Bạch hầu gây màng giả ở họng, có thể gây tắc nghẽn đường thở...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="ho gà pertussis trẻ em vaccine">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn8.png")" alt="Ho gà" />
+                    <div class="article-category-badge">😷 Ho gà</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Ho gà (Pertussis) - Nguy hiểm với trẻ nhỏ</h3>
+                    <p class="article-description">Ho gà gây ho dữ dội, trẻ sơ sinh có thể tử vong do ngạt thở...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="sởi rubella vaccine mmr">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn9.png")" alt="Sởi" />
+                    <div class="article-category-badge">🔴 Sởi</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Bệnh sởi - Dễ lây lan và có biến chứng nặng</h3>
+                    <p class="article-description">Sởi lây rất nhanh, gây viêm phổi, viêm não nguy hiểm...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="phế cầu viêm phổi vaccine">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn10.png")" alt="Phế cầu khuẩn" />
+                    <div class="article-category-badge">🫁 Phế cầu</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">Nhiễm khuẩn phế cầu - Nguyên nhân viêm phổi</h3>
+                    <p class="article-description">Phế cầu gây viêm phổi, viêm màng não, nhiễm trùng huyết...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="covid19 coronavirus vaccine pfizer">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn11.png")" alt="COVID-19" />
+                    <div class="article-category-badge">😷 COVID-19</div>
+                </div>
+                <div class="article-body">
+                    <h3 class="article-title-medium">COVID-19 - Đại dịch thế kỷ và vaccine phòng bệnh</h3>
+                    <p class="article-description">COVID-19 do SARS-CoV-2, lây qua đường hô hấp với nhiều biến chủng...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.disease-filter-btn');
+    const articleItems = document.querySelectorAll('.article-item');
+    const searchInput = document.getElementById('diseaseSearchInput');
+    const noResultsMsg = document.getElementById('noResultsMessage');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            searchInput.value = '';
+            filterArticles(filter, '');
+        });
+    });
+
+    searchInput.addEventListener('input', function() {
+        const activeFilter = document.querySelector('.disease-filter-btn.active').dataset.filter;
+        filterArticles(activeFilter, this.value.toLowerCase());
+    });
+
+    function filterArticles(category, searchTerm) {
+        let visibleCount = 0;
+
+        articleItems.forEach(item => {
+            const tags = item.dataset.tags;
+            const keywords = item.dataset.keywords.toLowerCase();
+            const text = item.textContent.toLowerCase();
+
+            const matchCategory = category === 'all' || tags.includes(category);
+            const matchSearch = searchTerm === '' || keywords.includes(searchTerm) || text.includes(searchTerm);
+
+            if (matchCategory && matchSearch) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        if (visibleCount === 0) {
+            noResultsMsg.classList.remove('d-none');
+        } else {
+            noResultsMsg.classList.add('d-none');
+        }
+    }
+});
+</script>
+}

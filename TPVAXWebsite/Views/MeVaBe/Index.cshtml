@@ -1,331 +1,433 @@
-﻿@model dynamic
-@{
+﻿@{
     ViewBag.Title = "Mẹ Và Bé - Kiến Thức Tiêm Chủng";
 }
 
+@section Styles {
+<style>
+.mvb-hero {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    padding: 60px 0;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.category-filter-btn {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.category-filter-btn:hover {
+    border-color: #ff6b9d;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.2);
+}
+
+.category-filter-btn.active {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    color: white;
+    border-color: #ff6b9d;
+}
+
+.search-box-modern input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #dee2e6;
+    border-radius: 50px;
+    font-size: 1rem;
+}
+
+.search-box-modern input:focus {
+    outline: none;
+    border-color: #ff6b9d;
+    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+}
+
+.article-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.25);
+}
+
+.article-image-wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.article-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-category-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 107, 157, 0.9);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.article-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-title-medium {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.article-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.article-link {
+    color: #ff6b9d;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: auto;
+}
+
+.article-link:hover {
+    color: #c06c84;
+}
+
+.article-meta-small {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.d-none {
+    display: none !important;
+}
+</style>
+}
+
+<div class="mvb-hero">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">👶 MẸ VÀ BÉ</h1>
+        <p class="lead">Cùng TPVAX tìm hiểu các thông tin hữu ích về sức khỏe, chăm sóc và tiêm chủng cho mẹ và bé</p>
+    </div>
+</div>
+
 <main class="container my-5">
-      <!-- Breadcrumb -->
-      <nav aria-label="breadcrumb" class="mb-4">
+    <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">🏠 Trang chủ</a></li>
-          <li class="breadcrumb-item"><a href="#">📚 Kiến thức tiêm chủng</a></li>
-          <li class="breadcrumb-item active" aria-current="page">👶 Mẹ và Bé</li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">🏠 Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="#">📚 Kiến thức tiêm chủng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">👶 Mẹ và Bé</li>
         </ol>
-      </nav>
+    </nav>
 
-      <!-- Page Header -->
-      <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-primary mb-3">
-          👶 MẸ VÀ BÉ
-        </h1>
-        <p class="lead text-muted">
-          Cùng TPVAX tìm hiểu các thông tin hữu ích về sức khỏe, chăm sóc và tiêm chủng cho mẹ và bé. 
-          Kiến thức khoa học, cập nhật và tin cậy từ các chuyên gia.
-        </p>
-      </div>
-
-              <div class="container-fluid px-0">
-            <!-- Category Filter Tabs -->
-            <div class="mb-5">
-              <div class="row g-3 justify-content-center">
-                <div class="col-auto">
-                  <button class="category-filter-btn active" data-filter="all">
-                    <div class="filter-icon">📚</div>
-                    <span>Tất cả</span>
-                  </button>
-                </div>
-                <div class="col-auto">
-                  <button class="category-filter-btn" data-filter="pregnancy">
-                    <div class="filter-icon">🤰</div>
-                    <span>Chuẩn bị mang thai</span>
-                  </button>
-                </div>
-                <div class="col-auto">
-                  <button class="category-filter-btn" data-filter="postpartum">
-                    <div class="filter-icon">👶</div>
-                    <span>Sau sinh & Nuôi con</span>
-                  </button>
-                </div>
-                <div class="col-auto">
-                  <button class="category-filter-btn" data-filter="article">
-                    <div class="filter-icon">📝</div>
-                    <span>Bài viết thông tin</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Search Box -->
-            <div class="mb-5">
-              <div class="search-box-modern">
-                <input 
-                  type="text" 
-                  id="articleSearchInput"
-                  class="form-control form-control-lg rounded-pill" 
-                  placeholder="🔍 Tìm kiếm bài viết về mẹ và bé..."
-                />
-                <div id="searchResultCount" class="mt-2 text-muted text-center"></div>
-              </div>
-            </div>
-
-            <!-- No Results Message -->
-            <div id="noResultsMessage" class="alert alert-info text-center d-none">
-              <h5>🔍 Không tìm thấy bài viết phù hợp</h5>
-              <p class="mb-0">Vui lòng thử lại với từ khóa khác hoặc chọn danh mục khác.</p>
-            </div>
-
-            <!-- Article Grid -->
-            <div class="row g-4 article-container">
-              <!-- Article 1 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="mang thai ngoài tử cung kinh nguyệt dấu hiệu">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Mang thai ngoài tử cung" loading="lazy" />
-                    <div class="article-category-badge">🤰 Mang thai</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 25/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 2.1K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Mang thai ngoài tử cung có kinh nguyệt không và dấu hiệu nhận biết?
-                    </h3>
-                    <p class="article-description">
-                      Tìm hiểu về hiện tượng mang thai ngoài tử cung, các dấu hiệu nhận biết sớm và cách xử lý...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=mang-thai-ngoai-tu-cung" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 2 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="nguyên tắc kiêng cữ mổ phục hồi">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Nguyên tắc kiêng cữ" loading="lazy" />
-                    <div class="article-category-badge">🏥 Chăm sóc</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 24/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 1.8K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Nguyên tắc kiêng cữ sau mổ thai ngoài tử cung giúp phục hồi nhanh
-                    </h3>
-                    <p class="article-description">
-                      Hướng dẫn chế độ ăn uống, sinh hoạt và chăm sóc sau phẫu thuật để phục hồi tốt nhất...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=nguyen-tac-kieng-cu" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 3 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="mổ nội soi thai ngoài">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Mổ nội soi" loading="lazy" />
-                    <div class="article-category-badge">⚕️ Y tế</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 23/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 1.5K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Mổ nội soi thai ngoài tử cung là gì và khi nào cần thực hiện?
-                    </h3>
-                    <p class="article-description">
-                      Thông tin về phương pháp mổ nội soi, quy trình, ưu điểm và những trường hợp cần áp dụng...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=mo-noi-soi" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 4 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="dấu hiệu tự tiêu thai">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Dấu hiệu tự tiêu" loading="lazy" />
-                    <div class="article-category-badge">🩺 Triệu chứng</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 22/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 1.9K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Dấu hiệu thai ngoài tử cung tự tiêu và những điều cần biết
-                    </h3>
-                    <p class="article-description">
-                      Nhận biết các dấu hiệu thai tự tiêu, cách theo dõi và những lưu ý quan trọng cho mẹ bầu...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=dau-hieu-tu-tieu" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 5 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="thai ngoài tử cung vỡ tuần">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Thai ngoài tử cung" loading="lazy" />
-                    <div class="article-category-badge">⚠️ Cảnh báo</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 21/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 2.3K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Thai ngoài tử cung mấy tuần thì vỡ? Những điều mẹ bầu cần biết
-                    </h3>
-                    <p class="article-description">
-                      Thông tin về nguy cơ vỡ thai, thời điểm nguy hiểm và cách phòng tránh biến chứng...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=thai-ngoai-may-tuan" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 6 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="vỡ ối sinh dấu hiệu">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Vỡ ối" loading="lazy" />
-                    <div class="article-category-badge">🤱 Sinh nở</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 20/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 3.1K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Vỡ ối bao lâu thì sinh? Những dấu hiệu mẹ bầu cần lưu ý
-                    </h3>
-                    <p class="article-description">
-                      Hướng dẫn nhận biết vỡ ối, thời gian chuyển dạ và những việc cần làm ngay lập tức...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=vo-oi-bao-lau" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 7 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="trẻ phát ban không sốt chăm sóc">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Trẻ phát ban" loading="lazy" />
-                    <div class="article-category-badge">👶 Chăm bé</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 19/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 2.7K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Trẻ bị phát ban nhưng không sốt là dấu hiệu bệnh gì? Cách chăm sóc
-                    </h3>
-                    <p class="article-description">
-                      Phân biệt các loại phát ban ở trẻ, nguyên nhân và cách xử lý đúng cách tại nhà...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=tre-bi-phat-ban" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 8 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="dạy trẻ tập nói phát triển">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Dạy trẻ tương tác" loading="lazy" />
-                    <div class="article-category-badge">🗣️ Phát triển</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 18/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 3.5K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Hướng dẫn dạy trẻ tập nói theo từng giai đoạn phát triển
-                    </h3>
-                    <p class="article-description">
-                      Phương pháp kích thích phát triển ngôn ngữ cho trẻ từ 0-3 tuổi hiệu quả và khoa học...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=day-tre-tuong-tac" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Article 9 -->
-              <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="gò sinh lý chuyển dạ thai máy">
-                <article class="article-card">
-                  <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" class="img-fluid" alt="Gò sinh lý" loading="lazy" />
-                    <div class="article-category-badge">🤰 Mang thai</div>
-                  </div>
-                  <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                      <span class="text-muted"><i class="bi bi-calendar"></i> 17/10/2025</span>
-                      <span class="text-muted ms-3"><i class="bi bi-eye"></i> 2.9K lượt xem</span>
-                    </div>
-                    <h3 class="article-title-medium mb-2">
-                      Cách phân biệt cơn gò sinh lý, cơn gò chuyển dạ và thai máy
-                    </h3>
-                    <p class="article-description">
-                      Nhận biết chính xác các loại cơn gò để xử lý đúng cách và biết thời điểm đến bệnh viện...
-                    </p>
-                    <a href="bai-viet-chi-tiet.html?slug=phan-biet-go-sinh-ly" class="article-link">
-                      Xem chi tiết →
-                    </a>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <!-- Pagination -->
-            <nav aria-label="Phân trang bài viết" class="mt-5">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                    <i class="fas fa-chevron-left"></i>
-                  </a>
-                </li>
-                <li class="page-item active" aria-current="page">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">
-                    <i class="fas fa-chevron-right"></i>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </section>
+    <div class="mb-5">
+        <div class="text-center">
+            <button class="category-filter-btn active" data-filter="all">
+                <span>📚 Tất cả</span>
+            </button>
+            <button class="category-filter-btn" data-filter="pregnancy">
+                <span>🤰 Chuẩn bị mang thai</span>
+            </button>
+            <button class="category-filter-btn" data-filter="postpartum">
+                <span>👶 Sau sinh & Nuôi con</span>
+            </button>
+            <button class="category-filter-btn" data-filter="article">
+                <span>📝 Bài viết thông tin</span>
+            </button>
         </div>
-    </main>
+    </div>
 
-    <!-- Footer -->
+    <div class="mb-5">
+        <div class="search-box-modern">
+            <input 
+                type="text" 
+                id="articleSearchInput"
+                class="form-control form-control-lg rounded-pill" 
+                placeholder="🔍 Tìm kiếm bài viết về mẹ và bé..."
+            />
+        </div>
+    </div>
+
+    <div id="noResultsMessage" class="alert alert-info text-center d-none">
+        <h5>🔍 Không tìm thấy bài viết phù hợp</h5>
+        <p class="mb-0">Vui lòng thử lại với từ khóa khác hoặc chọn danh mục khác.</p>
+    </div>
+
+    <div class="row g-4 article-container">
+        <!-- 11 bài viết với ảnh mvb1-mvb11 -->
+        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="mang thai ngoài tử cung kinh nguyệt dấu hiệu">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb1.png")" class="img-fluid" alt="Mang thai ngoài tử cung" />
+                    <div class="article-category-badge">🤰 Mang thai</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 25/10/2025</span> <span class="ms-3">👁️ 2.1K</span>
+                    </div>
+                    <h3 class="article-title-medium">Mang thai ngoài tử cung có kinh nguyệt không?</h3>
+                    <p class="article-description">Tìm hiểu về hiện tượng mang thai ngoài tử cung, các dấu hiệu nhận biết sớm...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="nguyên tắc kiêng cữ mổ phục hồi">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb2.png")" class="img-fluid" alt="Nguyên tắc kiêng cữ" />
+                    <div class="article-category-badge">🏥 Chăm sóc</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 24/10/2025</span> <span class="ms-3">👁️ 1.8K</span>
+                    </div>
+                    <h3 class="article-title-medium">Nguyên tắc kiêng cữ sau mổ thai ngoài tử cung</h3>
+                    <p class="article-description">Hướng dẫn chế độ ăn uống, sinh hoạt sau phẫu thuật để phục hồi tốt...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="mổ nội soi thai ngoài">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb3.png")" class="img-fluid" alt="Mổ nội soi" />
+                    <div class="article-category-badge">⚕️ Y tế</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 23/10/2025</span> <span class="ms-3">👁️ 1.5K</span>
+                    </div>
+                    <h3 class="article-title-medium">Mổ nội soi thai ngoài tử cung là gì?</h3>
+                    <p class="article-description">Thông tin về phương pháp mổ nội soi, quy trình và ưu điểm...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="dấu hiệu tự tiêu thai">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb4.png")" class="img-fluid" alt="Dấu hiệu tự tiêu" />
+                    <div class="article-category-badge">🩺 Triệu chứng</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 22/10/2025</span> <span class="ms-3">👁️ 1.9K</span>
+                    </div>
+                    <h3 class="article-title-medium">Dấu hiệu thai ngoài tử cung tự tiêu</h3>
+                    <p class="article-description">Nhận biết các dấu hiệu thai tự tiêu và cách theo dõi...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="thai ngoài tử cung vỡ tuần">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb5.png")" class="img-fluid" alt="Thai ngoài tử cung" />
+                    <div class="article-category-badge">⚠️ Cảnh báo</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 21/10/2025</span> <span class="ms-3">👁️ 2.3K</span>
+                    </div>
+                    <h3 class="article-title-medium">Thai ngoài tử cung mấy tuần thì vỡ?</h3>
+                    <p class="article-description">Thông tin về nguy cơ vỡ thai và cách phòng tránh biến chứng...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="vỡ ối sinh dấu hiệu">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb6.png")" class="img-fluid" alt="Vỡ ối" />
+                    <div class="article-category-badge">🤱 Sinh nở</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 20/10/2025</span> <span class="ms-3">👁️ 3.1K</span>
+                    </div>
+                    <h3 class="article-title-medium">Vỡ ối bao lâu thì sinh?</h3>
+                    <p class="article-description">Hướng dẫn nhận biết vỡ ối và những việc cần làm ngay...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="trẻ phát ban không sốt chăm sóc">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb7.png")" class="img-fluid" alt="Trẻ phát ban" />
+                    <div class="article-category-badge">👶 Chăm bé</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 19/10/2025</span> <span class="ms-3">👁️ 2.7K</span>
+                    </div>
+                    <h3 class="article-title-medium">Trẻ bị phát ban nhưng không sốt</h3>
+                    <p class="article-description">Phân biệt các loại phát ban ở trẻ và cách xử lý đúng cách...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="dạy trẻ tập nói phát triển">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb8.png")" class="img-fluid" alt="Dạy trẻ tập nói" />
+                    <div class="article-category-badge">🗣️ Phát triển</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 18/10/2025</span> <span class="ms-3">👁️ 3.5K</span>
+                    </div>
+                    <h3 class="article-title-medium">Hướng dẫn dạy trẻ tập nói hiệu quả</h3>
+                    <p class="article-description">Phương pháp kích thích phát triển ngôn ngữ cho trẻ 0-3 tuổi...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="gò sinh lý chuyển dạ thai máy">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb9.png")" class="img-fluid" alt="Gò sinh lý" />
+                    <div class="article-category-badge">🤰 Mang thai</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 17/10/2025</span> <span class="ms-3">👁️ 2.9K</span>
+                    </div>
+                    <h3 class="article-title-medium">Phân biệt cơn gò sinh lý và gò chuyển dạ</h3>
+                    <p class="article-description">Nhận biết chính xác các loại cơn gò để xử lý đúng cách...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="vaccine trẻ sơ sinh lịch tiêm">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb10.png")" class="img-fluid" alt="Lịch tiêm vaccine" />
+                    <div class="article-category-badge">💉 Vaccine</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 15/10/2025</span> <span class="ms-3">👁️ 4.8K</span>
+                    </div>
+                    <h3 class="article-title-medium">Lịch tiêm chủng cho trẻ 0-24 tháng tuổi</h3>
+                    <p class="article-description">Cập nhật lịch tiêm vaccine mới nhất theo Bộ Y Tế...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-4 col-md-6 article-item" data-tags="article" data-keywords="dinh dưỡng mẹ bầu thai nhi">
+            <article class="article-card">
+                <div class="article-image-wrapper">
+                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb11.png")" class="img-fluid" alt="Dinh dưỡng mẹ bầu" />
+                    <div class="article-category-badge">🥗 Dinh dưỡng</div>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta-small mb-2">
+                        <span>📅 12/10/2025</span> <span class="ms-3">👁️ 5.2K</span>
+                    </div>
+                    <h3 class="article-title-medium">Chế độ dinh dưỡng cho mẹ bầu</h3>
+                    <p class="article-description">Hướng dẫn dinh dưỡng theo từng giai đoạn thai kỳ...</p>
+                    <a href="#" class="article-link">Xem chi tiết →</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.category-filter-btn');
+    const articleItems = document.querySelectorAll('.article-item');
+    const searchInput = document.getElementById('articleSearchInput');
+    const noResultsMsg = document.getElementById('noResultsMessage');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            searchInput.value = '';
+            filterArticles(filter, '');
+        });
+    });
+
+    searchInput.addEventListener('input', function() {
+        const activeFilter = document.querySelector('.category-filter-btn.active').dataset.filter;
+        filterArticles(activeFilter, this.value.toLowerCase());
+    });
+
+    function filterArticles(category, searchTerm) {
+        let visibleCount = 0;
+
+        articleItems.forEach(item => {
+            const tags = item.dataset.tags;
+            const keywords = item.dataset.keywords.toLowerCase();
+            const text = item.textContent.toLowerCase();
+
+            const matchCategory = category === 'all' || tags.includes(category);
+            const matchSearch = searchTerm === '' || keywords.includes(searchTerm) || text.includes(searchTerm);
+
+            if (matchCategory && matchSearch) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        if (visibleCount === 0) {
+            noResultsMsg.classList.remove('d-none');
+        } else {
+            noResultsMsg.classList.add('d-none');
+        }
+    }
+});
+</script>
+}
