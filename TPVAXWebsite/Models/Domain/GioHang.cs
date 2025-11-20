@@ -15,12 +15,12 @@ namespace TPVAXWebsite.Models.Domain
         public string MaKH { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaSanPham { get; set; }
 
         [Required]
         [StringLength(20)]
-        public string LoaiSanPham { get; set; } // 'GOIVACCINE' hoặc 'VACCINE'
+        public string LoaiSanPham { get; set; }
 
         [Required]
         public int SoLuong { get; set; } = 1;

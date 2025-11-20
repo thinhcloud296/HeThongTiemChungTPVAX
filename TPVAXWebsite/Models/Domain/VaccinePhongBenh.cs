@@ -7,11 +7,11 @@ namespace TPVAXWebsite.Models.Domain
     public class VaccinePhongBenh
     {
         [Key, Column(Order = 0)]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaVC { get; set; }
 
         [Key, Column(Order = 1)]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaLoaiBenh { get; set; }
 
         public string GhiChu { get; set; }

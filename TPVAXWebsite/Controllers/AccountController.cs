@@ -1,5 +1,4 @@
 using System.Web.Mvc;
-using TPVAXWebsite.Models.ViewModels;
 
 namespace TPVAXWebsite.Controllers
 {
@@ -13,27 +12,47 @@ namespace TPVAXWebsite.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            // TODO: Implement login logic với DAL + Services
             return View();
+        }
+
+        // POST: Account/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoginPost()
+        {
+            // TODO: Implement login logic với DAL + Services
+            return View("Login");
         }
 
         // GET: Account/Register
         [HttpGet]
         public ActionResult Register()
         {
+            // TODO: Implement register logic với DAL + Services
             return View();
+        }
+
+        // POST: Account/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterPost()
+        {
+            // TODO: Implement register logic với DAL + Services
+            return View("Register");
         }
 
         // GET: Account/Logout
         public ActionResult Logout()
         {
-            // TODO: Clear session
+            // TODO: Clear session với Services
             return RedirectToAction("Index", "Home");
         }
 
         // GET: Account/Dashboard
         public ActionResult Dashboard()
         {
-            // TODO: Check login and load data
+            // TODO: Check login and load data với DAL + Services
             return View();
         }
     }

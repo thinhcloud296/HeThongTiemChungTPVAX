@@ -7,21 +7,19 @@ namespace TPVAXWebsite.Models.Domain
     public class ChiTietGoiVaccine
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaCTGoi { get; set; }
 
         public int? SoMui { get; set; }
 
-        public int? ThangTiem { get; set; }
-
         public string GhiChu { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaGoi { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaVC { get; set; }
 
         // Navigation properties

@@ -9,16 +9,16 @@ namespace TPVAXWebsite.Models.Domain
     public class PhieuNhapVaccine
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaPN { get; set; }
 
         [Required]
         public DateTime NgayLap { get; set; } = DateTime.Now;
 
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaNV { get; set; }
 
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaNCC { get; set; }
 
         // Navigation properties
@@ -28,6 +28,6 @@ namespace TPVAXWebsite.Models.Domain
         [ForeignKey("MaNCC")]
         public virtual NhaCungCap NhaCungCap { get; set; }
 
-        public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
+        public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhap { get; set; }
     }
 }

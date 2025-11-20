@@ -20,6 +20,7 @@ namespace TPVAXWebsite.Models.Domain
         public string GioiTinh { get; set; }
 
         [Required]
+        [Column(TypeName = "date")]
         public DateTime NgaySinh { get; set; }
 
         [Required]
@@ -31,7 +32,7 @@ namespace TPVAXWebsite.Models.Domain
         public bool TrangThai { get; set; } = true;
 
         // Navigation properties
-        public virtual ICollection<LienKetHoSo> LienKetHoSos { get; set; }
-        public virtual ICollection<LichTiem> LichTiems { get; set; }
+        public virtual ICollection<LienKetHoSo> LienKetHoSo { get; set; }
+        public virtual ICollection<LichTiem> LichTiem { get; set; }
     }
 }

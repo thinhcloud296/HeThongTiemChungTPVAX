@@ -8,7 +8,7 @@ namespace TPVAXWebsite.Models.Domain
     public class LichTiem
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaLT { get; set; }
 
         [Required]
@@ -18,7 +18,8 @@ namespace TPVAXWebsite.Models.Domain
 
         public int? SoMui { get; set; }
 
-        public bool TrangThai { get; set; }
+        [StringLength(50)]
+        public string TrangThai { get; set; } = "Chưa tiêm";
 
         public string GhiChu { get; set; }
 
@@ -26,8 +27,11 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(10)]
         public string MaHSTC { get; set; }
 
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaVC { get; set; }
+
+        [StringLength(10)]
+        public string MaNV { get; set; }
 
         // Navigation properties
         [ForeignKey("MaHSTC")]
@@ -35,5 +39,8 @@ namespace TPVAXWebsite.Models.Domain
 
         [ForeignKey("MaVC")]
         public virtual Vaccine Vaccine { get; set; }
+
+        [ForeignKey("MaNV")]
+        public virtual NhanVien NhanVien { get; set; }
     }
 }

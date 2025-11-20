@@ -8,7 +8,7 @@ namespace TPVAXWebsite.Models.Domain
     public class ChiTietPhieuNhap
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaCTPN { get; set; }
 
         [StringLength(100)]
@@ -18,17 +18,21 @@ namespace TPVAXWebsite.Models.Domain
         public int SoLuong { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,0)")]
+        public int SoLuongTonKho { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal GiaNhap { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? HanSuDung { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaPN { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaVC { get; set; }
 
         // Navigation properties

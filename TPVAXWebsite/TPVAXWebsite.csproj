@@ -183,7 +183,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModels\GoiVaccineInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <!-- Controllers -->
     <Compile Include="Controllers\HomeController.cs" />
@@ -205,56 +204,36 @@
     <Compile Include="Models\Domain\TaiKhoan.cs" />
     <Compile Include="Models\Domain\KhachHang.cs" />
     <Compile Include="Models\Domain\NhanVien.cs" />
-    <Compile Include="Models\Domain\Vaccine.cs" />
+    <Compile Include="Models\Domain\HoSoTiemChung.cs" />
+    <Compile Include="Models\Domain\LienKetHoSo.cs" />
     <Compile Include="Models\Domain\LoaiVaccine.cs" />
     <Compile Include="Models\Domain\LoaiBenh.cs" />
+    <Compile Include="Models\Domain\Vaccine.cs" />
     <Compile Include="Models\Domain\VaccinePhongBenh.cs" />
     <Compile Include="Models\Domain\GoiVaccine.cs" />
     <Compile Include="Models\Domain\ChiTietGoiVaccine.cs" />
-    <Compile Include="Models\Domain\HoSoTiemChung.cs" />
-    <Compile Include="Models\Domain\LienKetHoSo.cs" />
-    <Compile Include="Models\Domain\LichTiem.cs" />
     <Compile Include="Models\Domain\GioHang.cs" />
-    <Compile Include="Models\Domain\HoaDon.cs" />
-    <Compile Include="Models\Domain\ChiTietHoaDon.cs" />
     <Compile Include="Models\Domain\KhuyenMai.cs" />
     <Compile Include="Models\Domain\ChiTietKhuyenMai.cs" />
+    <Compile Include="Models\Domain\HoaDon.cs" />
+    <Compile Include="Models\Domain\ChiTietHoaDon.cs" />
+    <Compile Include="Models\Domain\LichTiem.cs" />
     <Compile Include="Models\Domain\NhaCungCap.cs" />
     <Compile Include="Models\Domain\PhieuNhapVaccine.cs" />
     <Compile Include="Models\Domain\ChiTietPhieuNhap.cs" />
     <!-- ViewModels -->
-    <Compile Include="Models\ViewModels\AdminViewModels.cs" />
-    <Compile Include="Models\ViewModels\BaiVietViewModel.cs" />
-    <Compile Include="Models\ViewModels\BenhViewModel.cs" />
-    <Compile Include="Models\ViewModels\DatLichTiemViewModel.cs" />
-    <Compile Include="Models\ViewModels\GioHangViewModel.cs" />
-    <Compile Include="Models\ViewModels\GoiVaccineViewModel.cs" />
-    <Compile Include="Models\ViewModels\HoaDonViewModel.cs" />
-    <Compile Include="Models\ViewModels\KhuyenMaiViewModel.cs" />
-    <Compile Include="Models\ViewModels\LichSuTiemChungViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\VaccineDetailViewModel.cs" />
-    <!-- DAL -->
-    <Compile Include="DAL\TPVAXDbContext.cs" />
-    <Compile Include="DAL\IRepository.cs" />
-    <Compile Include="DAL\Repository.cs" />
-    <Compile Include="DAL\IUnitOfWork.cs" />
-    <Compile Include="DAL\UnitOfWork.cs" />
-    <!-- Services -->
-    <Compile Include="Services\Interfaces\IAccountService.cs" />
-    <Compile Include="Services\Interfaces\IVaccineService.cs" />
-    <Compile Include="Services\Interfaces\IGioHangService.cs" />
-    <Compile Include="Services\Interfaces\IHoaDonService.cs" />
-    <Compile Include="Services\Interfaces\ILichTiemService.cs" />
-    <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Services\VaccineService.cs" />
-    <Compile Include="Services\GioHangService.cs" />
-    <Compile Include="Services\HoaDonService.cs" />
-    <Compile Include="Services\LichTiemService.cs" />
-    <!-- Helpers & Filters -->
-    <Compile Include="Helpers\PasswordHelper.cs" />
-    <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Models\ViewModels\GioHangViewModel.cs" />
+    <Compile Include="Models\ViewModels\HoaDonViewModel.cs" />
+    <Compile Include="Models\ViewModels\GoiVaccineViewModel.cs" />
+    <Compile Include="Models\ViewModels\DatLichTiemViewModel.cs" />
+    <Compile Include="Models\ViewModels\KhuyenMaiViewModel.cs" />
+    <Compile Include="Models\ViewModels\LichSuTiemChungViewModel.cs" />
+    <Compile Include="Models\ViewModels\AdminViewModels.cs" />
+    <Compile Include="Models\ViewModels\BaiVietViewModel.cs" />
+    <Compile Include="Models\ViewModels\BenhViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

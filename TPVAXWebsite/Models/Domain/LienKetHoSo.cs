@@ -15,7 +15,8 @@ namespace TPVAXWebsite.Models.Domain
         public string VaiTro { get; set; }
 
         [Required]
-        public DateTime NgayLienKet { get; set; }
+        [Column(TypeName = "datetime2(3)")]
+        public DateTime NgayLienKet { get; set; } = DateTime.UtcNow;
 
         [Required]
         [StringLength(10)]
@@ -24,8 +25,6 @@ namespace TPVAXWebsite.Models.Domain
         [Required]
         [StringLength(10)]
         public string MaHSTC { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
         [ForeignKey("MaKH")]

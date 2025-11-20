@@ -8,7 +8,7 @@ namespace TPVAXWebsite.Models.Domain
     public class Vaccine
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaVC { get; set; }
 
         [Required]
@@ -16,25 +16,31 @@ namespace TPVAXWebsite.Models.Domain
         public string TenVC { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,0)")]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal GiaBan { get; set; }
 
         [Required]
         public int SoLuongTon { get; set; } = 0;
 
-        [StringLength(8)]
+        public int? SoMuiToiDa { get; set; }
+
+        public int? SoThangCho { get; set; }
+
+        [StringLength(10)]
         public string MaLoai { get; set; }
 
-    [StringLength(255)]
-    public string HinhAnh { get; set; }
+        public string MoTa { get; set; }
+
+        [StringLength(255)]
+        public string HinhAnh { get; set; }
 
         // Navigation properties
         [ForeignKey("MaLoai")]
         public virtual LoaiVaccine LoaiVaccine { get; set; }
 
-        public virtual ICollection<VaccinePhongBenh> VaccinePhongBenhs { get; set; }
-        public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
-        public virtual ICollection<ChiTietGoiVaccine> ChiTietGoiVaccines { get; set; }
-        public virtual ICollection<LichTiem> LichTiems { get; set; }
+        public virtual ICollection<VaccinePhongBenh> VaccinePhongBenh { get; set; }
+        public virtual ICollection<ChiTietGoiVaccine> ChiTietGoiVaccine { get; set; }
+        public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhap { get; set; }
+        public virtual ICollection<LichTiem> LichTiem { get; set; }
     }
 }

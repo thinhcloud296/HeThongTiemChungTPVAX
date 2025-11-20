@@ -20,6 +20,7 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(12)]
         public string CCCD { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? NgaySinh { get; set; }
 
         [StringLength(10)]
@@ -35,15 +36,15 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(100)]
         public string Email { get; set; }
 
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaTK { get; set; }
 
         // Navigation properties
         [ForeignKey("MaTK")]
         public virtual TaiKhoan TaiKhoan { get; set; }
 
-        public virtual ICollection<LienKetHoSo> LienKetHoSos { get; set; }
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
-        public virtual ICollection<GioHang> GioHangs { get; set; }
+        public virtual ICollection<LienKetHoSo> LienKetHoSo { get; set; }
+        public virtual ICollection<GioHang> GioHang { get; set; }
+        public virtual ICollection<HoaDon> HoaDon { get; set; }
     }
 }

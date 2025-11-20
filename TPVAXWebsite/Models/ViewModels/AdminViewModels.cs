@@ -1,53 +1,40 @@
 using System;
 using System.Collections.Generic;
-using TPVAXWebsite.Models.Domain;
 
 namespace TPVAXWebsite.Models.ViewModels
 {
-    /// <summary>
-    /// ViewModel cho Dashboard Admin
-    /// </summary>
     public class AdminDashboardViewModel
     {
-        public int TongSoVaccine { get; set; }
-        public int TongSoKhachHang { get; set; }
-        public int TongSoLichHen { get; set; }
-        public decimal TongDoanhThu { get; set; }
-        public int LichHenHomNay { get; set; }
-        public int VaccineSapHet { get; set; }
-        public List<LichTiem> LichHenSapToi { get; set; }
-        public List<HoaDon> HoaDonMoiNhat { get; set; }
-
-        public AdminDashboardViewModel()
-        {
-            LichHenSapToi = new List<LichTiem>();
-            HoaDonMoiNhat = new List<HoaDon>();
-        }
-    }
-
-    /// <summary>
-    /// ViewModel cho báo cáo thống kê admin
-    /// </summary>
-    public class AdminReportsViewModel
-    {
+        public int TongKhachHang { get; set; }
+        public int TongVaccine { get; set; }
+        public int TongLichHen { get; set; }
         public decimal DoanhThuThang { get; set; }
-        public int SoLuongTiemThang { get; set; }
-        public object TopVaccines { get; set; }
-        public object DoanhThuTheoNgay { get; set; }
     }
 
-    /// <summary>
-    /// ViewModel cho chi tiết hóa đơn
-    /// </summary>
-    public class InvoiceDetailsViewModel
+    public class AdminVaccineViewModel
     {
-        public Domain.HoaDon HoaDon { get; set; }
-        public List<Domain.ChiTietHoaDon> ChiTietHoaDon { get; set; }
-        public Domain.KhachHang KhachHang { get; set; }
+        public string MaVC { get; set; }
+        public string TenVC { get; set; }
+        public decimal GiaBan { get; set; }
+        public int SoLuongTon { get; set; }
+        public int? SoMuiToiDa { get; set; }
+        public int? SoThangCho { get; set; }
+        public string MaLoai { get; set; }
+        public string TenLoai { get; set; }
+        public string MoTa { get; set; }
+        public string HinhAnh { get; set; }
+    }
 
-        public InvoiceDetailsViewModel()
-        {
-            ChiTietHoaDon = new List<Domain.ChiTietHoaDon>();
-        }
+    public class AdminCustomerViewModel
+    {
+        public string MaKH { get; set; }
+        public string HoTen { get; set; }
+        public string CCCD { get; set; }
+        public DateTime? NgaySinh { get; set; }
+        public string GioiTinh { get; set; }
+        public string DiaChi { get; set; }
+        public string SoDT { get; set; }
+        public string Email { get; set; }
+        public string MaTK { get; set; }
     }
 }

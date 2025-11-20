@@ -1,26 +1,25 @@
-using System;
 using System.Collections.Generic;
+using TPVAXWebsite.Models.Domain;
 
 namespace TPVAXWebsite.Models.ViewModels
 {
     public class VaccineDetailViewModel
     {
-        public string MaVC { get; set; }
-        public string TenVC { get; set; }
-        public decimal GiaBan { get; set; }
-        public int SoLuongTon { get; set; }
-        public string TenLoai { get; set; }
-        public string MoTaLoai { get; set; }
-        public List<string> CacBenhPhongChong { get; set; }
-        public string NuocSanXuat { get; set; }
-        public List<GoiVaccineInfo> CacGoiVaccineChung { get; set; }
-    }
+        public VaccineInfo Vaccine { get; set; }
+        public List<string> CacBenhPhong { get; set; }
+        public List<Domain.Vaccine> VaccinesLienQuan { get; set; }
 
-    public class GoiVaccineInfo
-    {
-        public string MaGoi { get; set; }
-        public string TenGoi { get; set; }
-        public decimal GiaGoi { get; set; }
-        public string DoiTuongApDung { get; set; }
+        public class VaccineInfo
+        {
+            public string MaVC { get; set; }
+            public string TenVaccine { get; set; }
+            public decimal GiaBan { get; set; }
+            public int SoLuongTon { get; set; }
+            public int? SoMuiToiDa { get; set; }
+            public int? SoThangCho { get; set; }
+            public string MoTa { get; set; }
+            public string HinhAnh { get; set; }
+            public string TenLoaiVaccine { get; set; }
+        }
     }
 }

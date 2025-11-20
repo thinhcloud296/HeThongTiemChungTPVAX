@@ -8,7 +8,7 @@ namespace TPVAXWebsite.Models.Domain
     public class LoaiBenh
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaLoaiBenh { get; set; }
 
         [Required]
@@ -21,6 +21,6 @@ namespace TPVAXWebsite.Models.Domain
         public string NhomDoiTuong { get; set; }
 
         // Navigation properties
-        public virtual ICollection<VaccinePhongBenh> VaccinePhongBenhs { get; set; }
+        public virtual ICollection<VaccinePhongBenh> VaccinePhongBenh { get; set; }
     }
 }

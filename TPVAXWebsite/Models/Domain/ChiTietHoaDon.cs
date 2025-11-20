@@ -7,18 +7,18 @@ namespace TPVAXWebsite.Models.Domain
     public class ChiTietHoaDon
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaCTHD { get; set; }
 
         [Required]
         public int SoLuong { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,0)")]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal DonGia { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaSanPham { get; set; }
 
         [Required]
@@ -26,7 +26,7 @@ namespace TPVAXWebsite.Models.Domain
         public string LoaiSanPham { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaHD { get; set; }
 
         // Navigation properties

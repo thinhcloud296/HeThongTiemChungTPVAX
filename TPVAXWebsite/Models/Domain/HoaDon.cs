@@ -9,25 +9,25 @@ namespace TPVAXWebsite.Models.Domain
     public class HoaDon
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaHD { get; set; }
 
         [Required]
         public DateTime NgayLap { get; set; } = DateTime.Now;
 
         [Required]
-        [Column(TypeName = "decimal(18,0)")]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal TongTien { get; set; }
 
-        public bool TrangThai { get; set; }
+        public bool? TrangThai { get; set; }
 
         [StringLength(10)]
         public string MaKH { get; set; }
 
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaNV { get; set; }
 
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaKM { get; set; }
 
         // Navigation properties
@@ -40,6 +40,6 @@ namespace TPVAXWebsite.Models.Domain
         [ForeignKey("MaKM")]
         public virtual KhuyenMai KhuyenMai { get; set; }
 
-        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDon { get; set; }
     }
 }

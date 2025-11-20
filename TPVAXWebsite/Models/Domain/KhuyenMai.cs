@@ -9,7 +9,7 @@ namespace TPVAXWebsite.Models.Domain
     public class KhuyenMai
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaKM { get; set; }
 
         [Required]
@@ -22,10 +22,10 @@ namespace TPVAXWebsite.Models.Domain
         public string LoaiKM { get; set; }
 
         [StringLength(50)]
-        public string KieuGiam { get; set; } // 'PhanTram', 'SoTien'
+        public string KieuGiam { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal GiaTriGiam { get; set; }
 
         [Required]
@@ -37,7 +37,7 @@ namespace TPVAXWebsite.Models.Domain
         public bool TrangThai { get; set; } = false;
 
         // Navigation properties
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
-        public virtual ICollection<ChiTietKhuyenMai> ChiTietKhuyenMais { get; set; }
+        public virtual ICollection<HoaDon> HoaDon { get; set; }
+        public virtual ICollection<ChiTietKhuyenMai> ChiTietKhuyenMai { get; set; }
     }
 }

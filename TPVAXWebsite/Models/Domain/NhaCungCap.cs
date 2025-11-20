@@ -8,7 +8,7 @@ namespace TPVAXWebsite.Models.Domain
     public class NhaCungCap
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaNCC { get; set; }
 
         [Required]
@@ -31,6 +31,6 @@ namespace TPVAXWebsite.Models.Domain
         public string SoTK { get; set; }
 
         // Navigation properties
-        public virtual ICollection<PhieuNhapVaccine> PhieuNhapVaccines { get; set; }
+        public virtual ICollection<PhieuNhapVaccine> PhieuNhapVaccine { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace TPVAXWebsite.Models.Domain
     public class LoaiVaccine
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaLoai { get; set; }
 
         [Required]

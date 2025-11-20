@@ -9,7 +9,7 @@ namespace TPVAXWebsite.Models.Domain
     public class NhanVien
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaNV { get; set; }
 
         [Required]
@@ -19,12 +19,14 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(10)]
         public string GioiTinh { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? NgaySinh { get; set; }
 
         [StringLength(12)]
         public string CCCD { get; set; }
 
         [Required]
+        [Column(TypeName = "date")]
         public DateTime NgayVaoLam { get; set; }
 
         [StringLength(10)]
@@ -38,16 +40,17 @@ namespace TPVAXWebsite.Models.Domain
 
         public int? ChucVu { get; set; }
 
-        public bool TrangThai { get; set; } = false;
+        public string TrangThai { get; set; }
 
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaTK { get; set; }
 
         // Navigation properties
         [ForeignKey("MaTK")]
         public virtual TaiKhoan TaiKhoan { get; set; }
 
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
-        public virtual ICollection<PhieuNhapVaccine> PhieuNhapVaccines { get; set; }
+        public virtual ICollection<PhieuNhapVaccine> PhieuNhapVaccine { get; set; }
+        public virtual ICollection<HoaDon> HoaDon { get; set; }
+        public virtual ICollection<LichTiem> LichTiem { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +8,7 @@ namespace TPVAXWebsite.Models.Domain
     public class GoiVaccine
     {
         [Key]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaGoi { get; set; }
 
         [Required]
@@ -22,17 +21,13 @@ namespace TPVAXWebsite.Models.Domain
         public string DoiTuongApDung { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,0)")]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal GiaGoi { get; set; }
-
-        public DateTime? NgayBatDau { get; set; }
-
-        public DateTime? NgayKetThuc { get; set; }
 
         [StringLength(50)]
         public string TrangThai { get; set; }
 
         // Navigation properties
-        public virtual ICollection<ChiTietGoiVaccine> ChiTietGoiVaccines { get; set; }
+        public virtual ICollection<ChiTietGoiVaccine> ChiTietGoiVaccine { get; set; }
     }
 }

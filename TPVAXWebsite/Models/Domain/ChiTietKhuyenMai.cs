@@ -17,14 +17,16 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(20)]
         public string MaSanPham { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? NgayApDung { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? NgayKetThuc { get; set; }
 
         public string GhiChu { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string MaKM { get; set; }
 
         // Navigation properties
