@@ -201,7 +201,6 @@
     <Compile Include="Controllers\TheoDoiTuongController.cs" />
     <Compile Include="Controllers\ToiNenTiemGiController.cs" />
     <Compile Include="Controllers\VaccinePhongBenhController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <!-- Domain Models -->
     <Compile Include="Models\Domain\TaiKhoan.cs" />
     <Compile Include="Models\Domain\KhachHang.cs" />
@@ -229,6 +228,8 @@
     <Compile Include="DAL\Repository.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
+    <!-- Services -->
+    <Compile Include="Services\VaccineService.cs" />
     <!-- ViewModels -->
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />

@@ -1,5 +1,6 @@
+@model IEnumerable<TPVAXWebsite.Models.Domain.Vaccine>
 @{
-    ViewBag.Title = "Danh sach Vac xin";
+    ViewBag.Title = "Danh sách Vắc xin";
 }
 
 <!-- Page Header -->
@@ -58,68 +59,74 @@
     <div class="row mb-4">
         <div class="col">
             <p class="text-muted">
-                Hiển thị <strong id="resultCount">@Model.Count()</strong> vắc xin
+                Hiển thị <strong id="resultCount">@(Model?.Count() ?? 0)</strong> vắc xin
             </p>
         </div>
     </div>
 
     <div class="row g-4" id="vaccineList">
-        <!-- Vaccine Item 1 - Static FE -->
-        <div class="col-lg-4 col-md-6 vaccine-item" data-name="Hexaxim" data-price="1500000">
-            <article class="product-card h-100 shadow-sm">
-                <a href="#" class="text-decoration-none">
-                    <div class="position-relative">
-                        <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" 
-                             alt="Vaccine Hexaxim" 
-                             class="img-fluid mb-3 rounded-top" 
-                             style="width: 100%; height: 250px; object-fit: cover;" 
-                                     loading="lazy" />
-                                @if (vaccine.SoLuongTon != null && vaccine.SoLuongTon > 0)
+        @if (Model != null && Model.Any())
+        {
+            foreach (var vaccine in Model)
+            {
+                <div class="col-lg-4 col-md-6 vaccine-item" data-name="@vaccine.TenVC" data-price="@vaccine.GiaBan">
+                    <article class="card h-100 shadow-sm">
+                        <div class="position-relative">
+                            <img src="@Url.Content(string.IsNullOrEmpty(vaccine.HinhAnh) ? "~/Designs/Assets/Images/hexaxim.png" : "~/" + vaccine.HinhAnh)" 
+                                 alt="@vaccine.TenVC" 
+                                 class="card-img-top" 
+                                 style="width: 100%; height: 250px; object-fit: cover;" 
+                                 loading="lazy" 
+                                 onerror="this.src='@Url.Content("~/Designs/Assets/Images/hexaxim.png")'"/>
+                            @if (vaccine.SoLuongTon > 0)
+                            {
+                                <span class="badge bg-success position-absolute top-0 end-0 m-3">
+                                    <i class="fas fa-check-circle me-1"></i>Còn hàng
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-3">
+                                    <i class="fas fa-times-circle me-1"></i>Hết hàng
+                                </span>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted small mb-2">
+                                <i class="fas fa-shield-virus me-1"></i>@(vaccine.LoaiVaccine?.TenLoai ?? "Vắc xin")
+                            </h6>
+                            <h3 class="card-title h5 mb-3 text-dark">@vaccine.TenVC</h3>
+                            <p class="text-secondary small mb-3" style="min-height: 60px; max-height: 60px; overflow: hidden;">
+                                @if (!string.IsNullOrEmpty(vaccine.MoTa))
                                 {
-                                    <span class="badge bg-success position-absolute top-0 end-0 m-3">
-                                        <i class="fas fa-check-circle me-1"></i>Còn hàng
-                                    </span>
+                                    @(vaccine.MoTa.Length > 100 ? vaccine.MoTa.Substring(0, 100) + "..." : vaccine.MoTa)
                                 }
                                 else
                                 {
-                                    <span class="badge bg-danger position-absolute top-0 end-0 m-3">
-                                        <i class="fas fa-times-circle me-1"></i>Hết hàng
-                                    </span>
+                                    <span>Chưa có mô tả</span>
                                 }
-                            </div>
-                            <div class="card-body px-3">
-                                <h6 class="card-subtitle text-muted small mb-2">
-                                    <i class="fas fa-shield-virus me-1"></i>@(vaccine.LoaiVaccine?.TenLoaiVaccine ?? "Vắc xin")
-                                </h6>
-                                <h3 class="card-title h5 mb-3 text-dark">@vaccine.TenVaccine</h3>
-                                <p class="text-secondary small mb-3" style="min-height: 60px; max-height: 60px; overflow: hidden;">
-                                    @(vaccine.MoTa != null && vaccine.MoTa.Length > 100 ? vaccine.MoTa.Substring(0, 100) + "..." : vaccine.MoTa)
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <p class="text-primary fw-bold fs-4 mb-0">
+                                    @string.Format("{0:N0}₫", vaccine.GiaBan)
+                                    <small class="text-muted fs-6">/ liều</small>
                                 </p>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <p class="text-warning fw-bold fs-4 mb-0">
-                                        @string.Format("{0:N0}₫", vaccine.GiaTien)
-                                        <small class="text-muted fs-6">/ liều</small>
-                                    </p>
-                                    @if (vaccine.SoLuongTon != null)
-                                    {
-                                        <small class="text-muted">
-                                            <i class="fas fa-box me-1"></i>SL: @vaccine.SoLuongTon
-                                        </small>
-                                    }
-                                </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-box me-1"></i>SL: @vaccine.SoLuongTon
+                                </small>
                             </div>
-                        </a>
-                        <div class="card-footer bg-white border-0 px-3 pb-3">
+                        </div>
+                        <div class="card-footer bg-white border-0">
                             <div class="d-flex gap-2">
                                 <button class="btn btn-outline-success flex-fill rounded-pill btn-addcart" 
-                                        data-vaccine-id="@vaccine.MaVaccine" 
-                                        data-vaccine-name="@vaccine.TenVaccine"
-                                        @(vaccine.SoLuongTon == null || vaccine.SoLuongTon <= 0 ? "disabled" : "")>
-                                    <i class="fas fa-cart-plus me-1"></i>Thêm vào giỏ
+                                        data-vaccine-id="@vaccine.MaVC" 
+                                        data-vaccine-name="@vaccine.TenVC"
+                                        @(vaccine.SoLuongTon <= 0 ? "disabled" : "")>
+                                    <i class="fas fa-cart-plus me-1"></i>Thêm
                                 </button>
-                                <a href="@Url.Action("Detail", "Vaccine", new { id = vaccine.MaVaccine })" 
+                                <a href="@Url.Action("Detail", "Vaccine", new { id = vaccine.MaVC })" 
                                    class="btn btn-success flex-fill rounded-pill">
-                                    <i class="fas fa-info-circle me-1"></i>Xem chi tiết
+                                    <i class="fas fa-info-circle me-1"></i>Chi tiết
                                 </a>
                             </div>
                         </div>
@@ -133,7 +140,7 @@
                 <div class="alert alert-info text-center py-5">
                     <i class="fas fa-info-circle fa-3x mb-3 d-block"></i>
                     <h4>Chưa có vắc xin nào</h4>
-                    <p class="mb-0">Hiện tại chưa có vắc xin trong hệ thống. Vui lòng quay lại sau.</p>
+                    <p class="mb-0">@(ViewBag.Error ?? "Hiện tại chưa có vắc xin trong hệ thống. Vui lòng quay lại sau.")</p>
                 </div>
             </div>
         }

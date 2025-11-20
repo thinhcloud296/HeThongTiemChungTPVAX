@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model IEnumerable<TPVAXWebsite.Models.Domain.Vaccine>
 @{
     ViewBag.Title = "Trang chủ";
 }
@@ -96,7 +96,278 @@
         </div>
 
         <div class="row g-4">
-          <!-- Vaccine Card 1 - Featured Example -->
+          @if (Model != null && Model.Any())
+          {
+              foreach (var vaccine in Model.Take(6))
+              {
+                  <div class="col-lg-4 col-md-6">
+                    <article class="product-card h-100">
+                      <a href="@Url.Action("Detail", "Vaccine", new { id = vaccine.MaVC })" class="text-decoration-none">
+                        <div class="position-relative">
+                          <img
+                            src="@Url.Content(string.IsNullOrEmpty(vaccine.HinhAnh) ? "~/Designs/Assets/Images/hexaxim.png" : "~/" + vaccine.HinhAnh)"
+                            alt="@vaccine.TenVC"
+                            class="img-fluid mb-3 rounded"
+                            style="width: 100%; height: 250px; object-fit: cover;"
+                            loading="lazy"
+                            onerror="this.src='@Url.Content("~/Designs/Assets/Images/hexaxim.png")'"
+                          />
+                          <div
+                            class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                          >
+                            <img
+                              src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                              alt="Cờ Việt Nam"
+                              style="width: 20px"
+                              loading="lazy"
+                            />
+                            <small class="text-muted fw-bold">@(vaccine.LoaiVaccine?.TenLoai ?? "Vắc xin")</small>
+                          </div>
+                        </div>
+                        <div class="card-body px-0">
+                          <h6 class="card-subtitle text-muted small mb-2">
+                            @(vaccine.LoaiVaccine?.TenLoai ?? "Vaccine")
+                          </h6>
+                          <h3 class="card-title h5 mb-3">@vaccine.TenVC</h3>
+                          <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                            @string.Format("{0:N0}₫", vaccine.GiaBan)
+                            <small class="text-muted fs-6">/ liều</small>
+                          </p>
+                        </div>
+                      </a>
+                      <div class="d-flex gap-2 mt-3">
+                        <button
+                          class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                          onclick="addToCart('@vaccine.MaVC')"
+                          aria-label="Thêm @vaccine.TenVC vào giỏ hàng"
+                          @(vaccine.SoLuongTon <= 0 ? "disabled" : "")
+                        >
+                          Thêm vào giỏ
+                        </button>
+                        <a
+                          href="@Url.Action("Detail", "Vaccine", new { id = vaccine.MaVC })"
+                          class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                          aria-label="Đặt lịch tiêm @vaccine.TenVC"
+                        >
+                          Đặt lịch tiêm
+                        </a>
+                      </div>
+                    </article>
+                  </div>
+              }
+          }
+          }
+          else
+          {
+              <div class="col-12 text-center py-5">
+                  <p class="text-muted">@(ViewBag.Error ?? "Chưa có dữ liệu vaccine")</p>
+              </div>
+          }
+          <!-- Fallback cards (6 vaccine giống nhau để dự phòng) -->
+          @* <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
           <div class="col-lg-4 col-md-6">
             <article class="product-card h-100">
               <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
@@ -147,264 +418,7 @@
                 </a>
               </div>
             </article>
-          </div>
-
-          <!-- Vaccine Cards 2-6 -->
-          <div class="col-lg-4 col-md-6">
-            <article class="product-card h-100">
-              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
-                <div class="position-relative">
-                  <img
-                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                    alt="Vắc xin Hexaxim 6 trong 1"
-                    class="img-fluid mb-3 rounded"
-                    loading="lazy"
-                  />
-                  <div
-                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
-                  >
-                    <img
-                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
-                      alt="Cờ Việt Nam"
-                      style="width: 20px"
-                      loading="lazy"
-                    />
-                    <small class="text-muted fw-bold">Việt Nam</small>
-                  </div>
-                </div>
-                <div class="card-body px-0">
-                  <h6 class="card-subtitle text-muted small mb-2">
-                    Phòng 6 bệnh nguy hiểm
-                  </h6>
-                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
-                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
-                    1.500.000₫
-                    <small class="text-muted fs-6">/ liều</small>
-                  </p>
-                </div>
-              </a>
-              <div class="d-flex gap-2 mt-3">
-                <button
-                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
-                  onclick="addToCart('hexaxim')"
-                  aria-label="Thêm Hexaxim vào giỏ hàng"
-                >
-                  Thêm vào giỏ
-                </button>
-                <a
-                  href="@Url.Action("Detail", "Vaccine")"
-                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
-                  aria-label="Đặt lịch tiêm Hexaxim"
-                >
-                  Đặt lịch tiêm
-                </a>
-              </div>
-            </article>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <article class="product-card h-100">
-              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
-                <div class="position-relative">
-                  <img
-                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                    alt="Vắc xin Hexaxim 6 trong 1"
-                    class="img-fluid mb-3 rounded"
-                    loading="lazy"
-                  />
-                  <div
-                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
-                  >
-                    <img
-                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
-                      alt="Cờ Việt Nam"
-                      style="width: 20px"
-                      loading="lazy"
-                    />
-                    <small class="text-muted fw-bold">Việt Nam</small>
-                  </div>
-                </div>
-                <div class="card-body px-0">
-                  <h6 class="card-subtitle text-muted small mb-2">
-                    Phòng 6 bệnh nguy hiểm
-                  </h6>
-                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
-                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
-                    1.500.000₫
-                    <small class="text-muted fs-6">/ liều</small>
-                  </p>
-                </div>
-              </a>
-              <div class="d-flex gap-2 mt-3">
-                <button
-                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
-                  onclick="addToCart('hexaxim')"
-                  aria-label="Thêm Hexaxim vào giỏ hàng"
-                >
-                  Thêm vào giỏ
-                </button>
-                <a
-                  href="@Url.Action("Detail", "Vaccine")"
-                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
-                  aria-label="Đặt lịch tiêm Hexaxim"
-                >
-                  Đặt lịch tiêm
-                </a>
-              </div>
-            </article>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <article class="product-card h-100">
-              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
-                <div class="position-relative">
-                  <img
-                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                    alt="Vắc xin Hexaxim 6 trong 1"
-                    class="img-fluid mb-3 rounded"
-                    loading="lazy"
-                  />
-                  <div
-                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
-                  >
-                    <img
-                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
-                      alt="Cờ Việt Nam"
-                      style="width: 20px"
-                      loading="lazy"
-                    />
-                    <small class="text-muted fw-bold">Việt Nam</small>
-                  </div>
-                </div>
-                <div class="card-body px-0">
-                  <h6 class="card-subtitle text-muted small mb-2">
-                    Phòng 6 bệnh nguy hiểm
-                  </h6>
-                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
-                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
-                    1.500.000₫
-                    <small class="text-muted fs-6">/ liều</small>
-                  </p>
-                </div>
-              </a>
-              <div class="d-flex gap-2 mt-3">
-                <button
-                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
-                  onclick="addToCart('hexaxim')"
-                  aria-label="Thêm Hexaxim vào giỏ hàng"
-                >
-                  Thêm vào giỏ
-                </button>
-                <a
-                  href="@Url.Action("Detail", "Vaccine")"
-                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
-                  aria-label="Đặt lịch tiêm Hexaxim"
-                >
-                  Đặt lịch tiêm
-                </a>
-              </div>
-            </article>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <article class="product-card h-100">
-              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
-                <div class="position-relative">
-                  <img
-                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                    alt="Vắc xin Hexaxim 6 trong 1"
-                    class="img-fluid mb-3 rounded"
-                    loading="lazy"
-                  />
-                  <div
-                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
-                  >
-                    <img
-                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
-                      alt="Cờ Việt Nam"
-                      style="width: 20px"
-                      loading="lazy"
-                    />
-                    <small class="text-muted fw-bold">Việt Nam</small>
-                  </div>
-                </div>
-                <div class="card-body px-0">
-                  <h6 class="card-subtitle text-muted small mb-2">
-                    Phòng 6 bệnh nguy hiểm
-                  </h6>
-                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
-                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
-                    1.500.000₫
-                    <small class="text-muted fs-6">/ liều</small>
-                  </p>
-                </div>
-              </a>
-              <div class="d-flex gap-2 mt-3">
-                <button
-                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
-                  onclick="addToCart('hexaxim')"
-                  aria-label="Thêm Hexaxim vào giỏ hàng"
-                >
-                  Thêm vào giỏ
-                </button>
-                <a
-                  href="@Url.Action("Detail", "Vaccine")"
-                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
-                  aria-label="Đặt lịch tiêm Hexaxim"
-                >
-                  Đặt lịch tiêm
-                </a>
-              </div>
-            </article>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <article class="product-card h-100">
-              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
-                <div class="position-relative">
-                  <img
-                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
-                    alt="Vắc xin Hexaxim 6 trong 1"
-                    class="img-fluid mb-3 rounded"
-                    loading="lazy"
-                  />
-                  <div
-                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
-                  >
-                    <img
-                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
-                      alt="Cờ Việt Nam"
-                      style="width: 20px"
-                      loading="lazy"
-                    />
-                    <small class="text-muted fw-bold">Việt Nam</small>
-                  </div>
-                </div>
-                <div class="card-body px-0">
-                  <h6 class="card-subtitle text-muted small mb-2">
-                    Phòng 6 bệnh nguy hiểm
-                  </h6>
-                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
-                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
-                    1.500.000₫
-                    <small class="text-muted fs-6">/ liều</small>
-                  </p>
-                </div>
-              </a>
-              <div class="d-flex gap-2 mt-3">
-                <button
-                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
-                  onclick="addToCart('hexaxim')"
-                  aria-label="Them Hexaxim vao gio hang"
-                >
-                  Them vao gio
-                </button>
-                <a
-                  href="@Url.Action("Detail", "Vaccine")"
-                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
-                  aria-label="Dat lich tiem Hexaxim"
-                >
-                  Dat lich tiem
-                </a>
-              </div>
-            </article>
-          </div>
+          </div> *@
         </div>
       </section>
       <!-- END Vaccine Catalog -->
