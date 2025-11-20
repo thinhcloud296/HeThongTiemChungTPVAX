@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<TPVAXWebsite.Models.Domain.KhuyenMai>
 @{
     ViewBag.Title = "Khuyến Mãi HOT - Ưu Đãi Đặc Biệt";
+    int totalPromotions = ViewBag.TotalCount ?? 0;
+    int activePromotions = ViewBag.ActivePromotions ?? 0;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    var activeList = ViewBag.ActiveList as IEnumerable<TPVAXWebsite.Models.Domain.KhuyenMai>;
+    var upcomingList = ViewBag.UpcomingList as IEnumerable<TPVAXWebsite.Models.Domain.KhuyenMai>;
 }
 
 <!-- Hero Section -->
@@ -19,11 +25,11 @@
             <div class="stats-row">
               <div class="stat-item">
                 <div class="stat-icon"><i class="fas fa-tags"></i></div>
-                <div><div class="stat-num">8+</div><div class="stat-label">Chương trình</div></div>
+                <div><div class="stat-num">@totalPromotions+</div><div class="stat-label">Chương trình</div></div>
               </div>
               <div class="stat-item">
-                <div class="stat-icon"><i class="fas fa-percent"></i></div>
-                <div><div class="stat-num">40%</div><div class="stat-label">Giảm tối đa</div></div>
+                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                <div><div class="stat-num">@activePromotions</div><div class="stat-label">Đang diễn ra</div></div>
               </div>
               <div class="stat-item">
                 <div class="stat-icon"><i class="fas fa-clock"></i></div>
@@ -32,10 +38,63 @@
             </div>
           </div>
           <div class="col-lg-6 d-none d-lg-block">
-            <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi" class="img-fluid hero-img-float">
+            <img src="@Url.Content("~/Content/Assets/Images/km.jpg")" alt="Khuyến mãi" class="img-fluid hero-img-float">
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="container my-4">
+        <div class="filter-bar mb-4 p-4 rounded-3" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9f0f7 100%); border: 2px solid #dee2e6;">
+            <div class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-6">
+                    <label style="font-size: 0.95rem; font-weight: 600; color: #0077b6; margin-bottom: 8px; display: block;">
+                        <i class="fas fa-search me-2"></i>Tìm Kiếm Khuyến Mãi
+                    </label>
+                    <form method="get" action="@Url.Action("Index", "KhuyenMai")">
+                        <div class="input-group" style="height: 44px;">
+                            <input type="text" name="search" class="form-control" placeholder="Nhập tên khuyến mãi..." value="@(ViewBag.Search ?? "")" style="border-radius: 8px 0 0 8px; font-size: 1rem; border: 2px solid #dee2e6;" />
+                            <button class="btn btn-primary" type="submit" style="border-radius: 0 8px 8px 0; padding: 0 24px; font-size: 1rem; font-weight: 600;">
+                                <i class="fas fa-search"></i> Tìm
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label style="font-size: 0.95rem; font-weight: 600; color: #0077b6; margin-bottom: 8px; display: block;">
+                        <i class="fas fa-tag me-2"></i>Loại Khuyến Mãi
+                    </label>
+                    <form method="get" action="@Url.Action("Index", "KhuyenMai")">
+                        <select name="loaiKM" class="form-select" style="border-radius: 8px; padding: 10px 16px; border: 2px solid #dee2e6; font-size: 1rem; height: 44px;" onchange="this.form.submit()">
+                            <option value="">-- Tất cả loại --</option>
+                            <option value="Sự kiện" @(ViewBag.LoaiKM == "Sự kiện" ? "selected" : "")>Sự kiện</option>
+                            <option value="Quà tặng" @(ViewBag.LoaiKM == "Quà tặng" ? "selected" : "")>Quà tặng</option>
+                            <option value="Voucher" @(ViewBag.LoaiKM == "Voucher" ? "selected" : "")>Voucher</option>
+                            <option value="Giảm giá" @(ViewBag.LoaiKM == "Giảm giá" ? "selected" : "")>Giảm giá</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label style="font-size: 0.95rem; font-weight: 600; color: #0077b6; margin-bottom: 8px; display: block;">
+                        <i class="fas fa-filter me-2"></i>Trạng Thái
+                    </label>
+                    <form method="get" action="@Url.Action("Index", "KhuyenMai")">
+                        <select name="trangThai" class="form-select" style="border-radius: 8px; padding: 10px 16px; border: 2px solid #dee2e6; font-size: 1rem; height: 44px;" onchange="this.form.submit()">
+                            <option value="">-- Tất cả trạng thái --</option>
+                            <option value="Đang diễn ra" @(ViewBag.TrangThai == "Đang diễn ra" ? "selected" : "")>Đang diễn ra</option>
+                            <option value="Sắp diễn ra" @(ViewBag.TrangThai == "Sắp diễn ra" ? "selected" : "")>Sắp diễn ra</option>
+                            <option value="Đã hết hạn" @(ViewBag.TrangThai == "Đã hết hạn" ? "selected" : "")>Đã hết hạn</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <a href="@Url.Action("Index", "KhuyenMai")" class="btn btn-outline-primary w-100" style="border-radius: 8px; padding: 10px 24px; font-weight: 600; border-width: 2px; font-size: 1rem; height: 44px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-redo me-2"></i>Đặt Lại
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Promo Cards Section -->
@@ -47,162 +106,171 @@
         </div>
 
         <div class="row g-4">
-          <!-- Card 1 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 1">
-                <span class="badge-hot-new">HOT</span>
-                <span class="badge-discount-new">-30%</span>
+          @if (Model != null && Model.Any())
+          {
+              foreach (var km in Model)
+              {
+                  var today = DateTime.Now.Date;
+                  bool isActive = km.TrangThai && km.NgayBatDau <= today && km.NgayKetThuc >= today;
+                  bool isUpcoming = km.TrangThai && km.NgayBatDau > today;
+                  bool isExpired = km.NgayKetThuc < today;
+                  int daysLeft = (km.NgayKetThuc - today).Days;
+                  
+                  string badgeClass = "";
+                  string tagClass = "card-tag";
+                  string tagIcon = "fas fa-gift";
+                  
+                  if (!string.IsNullOrEmpty(km.LoaiKM))
+                  {
+                      switch (km.LoaiKM)
+                      {
+                          case "Sự kiện": tagClass = "card-tag"; tagIcon = "fas fa-calendar-alt"; break;
+                          case "Quà tặng": tagClass = "card-tag card-tag-green"; tagIcon = "fas fa-gift"; break;
+                          case "Voucher": tagClass = "card-tag card-tag-orange"; tagIcon = "fas fa-ticket-alt"; break;
+                          case "Giảm giá": tagClass = "card-tag card-tag-red"; tagIcon = "fas fa-percent"; break;
+                          default: tagClass = "card-tag"; tagIcon = "fas fa-tag"; break;
+                      }
+                  }
+                  
+                  <div class="col-lg-4 col-md-6">
+                      <div class="promo-card-new">
+                          <div class="card-img-wrapper">
+                              @{
+                                  var imagePath = !string.IsNullOrEmpty(km.HinhAnh) 
+                                      ? Url.Content("~/Content/Images/KhuyenMai/" + km.HinhAnh)
+                                      : Url.Content("~/Content/Assets/Images/hexaxim.png");
+                              }
+                              <img src="@imagePath" 
+                                   alt="@km.TenKM"
+                                   onerror="this.src='@Url.Content("~/Content/Assets/Images/hexaxim.png")'"
+                                   style="width: 100%; height: 200px; object-fit: cover;">
+                              @if (isActive && daysLeft <= 7)
+                              {
+                                  <span class="badge-hot-new">HOT</span>
+                              }
+                              @if (isUpcoming)
+                              {
+                                  <span class="badge-new-label">MỚI</span>
+                              }
+                              @if (km.GiaTriGiam > 0)
+                              {
+                                  <span class="badge-discount-new">
+                                      @if (km.KieuGiam == "Phần trăm" || km.KieuGiam == "%")
+                                      {
+                                          @:-@km.GiaTriGiam%
+                                      }
+                                      else
+                                      {
+                                          @:@string.Format("{0:N0}₫", km.GiaTriGiam)
+                                      }
+                                  </span>
+                              }
+                          </div>
+                          <div class="card-body-new">
+                              <span class="@tagClass"><i class="@tagIcon me-2"></i>@(km.LoaiKM ?? "Khuyến mãi")</span>
+                              <h3 class="card-title-new">@km.TenKM</h3>
+                              <p class="card-desc-new">
+                                  @if (!string.IsNullOrEmpty(km.MoTa))
+                                  {
+                                      @(km.MoTa.Length > 120 ? km.MoTa.Substring(0, 120) + "..." : km.MoTa)
+                                  }
+                                  else
+                                  {
+                                      @:Chương trình khuyến mãi đặc biệt từ TPVAX
+                                  }
+                              </p>
+                              <div class="card-footer-new">
+                                  <span class="card-date">
+                                      <i class="far fa-calendar me-2"></i>
+                                      @if (isExpired)
+                                      {
+                                          <span class="text-danger">Đã hết hạn</span>
+                                      }
+                                      else if (isActive)
+                                      {
+                                          @:Còn @daysLeft ngày
+                                      }
+                                      else if (isUpcoming)
+                                      {
+                                          @:Từ @km.NgayBatDau.ToString("dd/MM/yyyy")
+                                      }
+                                      else
+                                      {
+                                          @:Đến @km.NgayKetThuc.ToString("dd/MM/yyyy")
+                                      }
+                                  </span>
+                                  <a href="@Url.Action("Detail", "KhuyenMai", new { id = km.MaKM })" class="btn-detail-new">
+                                      Chi tiết <i class="fas fa-arrow-right ms-2"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              }
+          }
+          else
+          {
+              <div class="col-12 text-center py-5">
+                  <i class="fas fa-tag fs-1 text-muted mb-3"></i>
+                  <p class="text-muted">@(ViewBag.Error ?? "Chưa có chương trình khuyến mãi nào")</p>
               </div>
-              <div class="card-body-new">
-                <span class="card-tag"><i class="fas fa-gift me-2"></i>Sự kiện</span>
-                <h3 class="card-title-new">Mừng khai trương chi nhánh Hải Phòng</h3>
-                <p class="card-desc-new">Nhân dịp khai trương chi nhánh mới tại Hải Phòng, TPVAX triển khai chương trình ưu đãi đặc biệt với mức giảm giá lên đến 30%.</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/12/2025</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-doi-qua-hai-phong" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
+          }
 
-          <!-- Card 2 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 2">
-                <span class="badge-new-label">MỚI</span>
-              </div>
-              <div class="card-body-new">
-                <span class="card-tag card-tag-green"><i class="fas fa-gift me-2"></i>Quà tặng</span>
-                <h3 class="card-title-new">Gối dưỡng da cao cấp khi tiêm vaccine</h3>
-                <p class="card-desc-new">Tặng ngay gối dưỡng da cao cấp trị giá 500.000đ cho khách hàng tiêm từ 2 mũi vaccine trở lên. Số lượng có hạn!</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 30/11/2025</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-goi-duong-da" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 3">
-                <span class="badge-hot-new">HOT</span>
-              </div>
-              <div class="card-body-new">
-                <span class="card-tag card-tag-purple"><i class="fas fa-users me-2"></i>Sự kiện</span>
-                <h3 class="card-title-new">Fan Meeting - Gặp gỡ chuyên gia</h3>
-                <p class="card-desc-new">Đặc quyền fan meeting độc quyền dành cho khách hàng tiêm vaccine HPV Gardasil 9 tại TPVAX.</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 15/12/2025</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-fan-meeting-domic" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 4">
-                <span class="badge-new-label">MỚI</span>
-                <span class="badge-discount-new">800K</span>
-              </div>
-              <div class="card-body-new">
-                <span class="card-tag card-tag-orange"><i class="fas fa-ticket-alt me-2"></i>Voucher</span>
-                <h3 class="card-title-new">Voucher 800K cho người cao tuổi</h3>
-                <p class="card-desc-new">Chương trình chăm sóc sức khỏe người cao tuổi với ưu đãi đặc biệt giảm 800.000đ khi tiêm gói vaccine toàn diện.</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/01/2026</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-voucher-800k" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 5 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 5">
-                <span class="badge-hot-new">HOT</span>
-                <span class="badge-discount-new">2TR</span>
-              </div>
-              <div class="card-body-new">
-                <span class="card-tag card-tag-red"><i class="fas fa-gift me-2"></i>Ưu đãi lớn</span>
-                <h3 class="card-title-new">Quà tặng trị giá 2 triệu đồng</h3>
-                <p class="card-desc-new">Cơ hội nhận quà tặng trị giá lên đến 2 triệu đồng khi tham gia chương trình tiêm vaccine đặc biệt dành cho gia đình.</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/12/2025</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-qua-tang-2-trieu" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 6 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 6">
-                <span class="badge-new-label">MỚI</span>
-              </div>
-              <div class="card-body-new">
-                <span class="card-tag card-tag-rainbow"><i class="fas fa-rainbow me-2"></i>Chiến dịch</span>
-                <h3 class="card-title-new">Pride Month - Sống dũng cảm</h3>
-                <p class="card-desc-new">Ưu đãi đặc biệt nhân tháng Pride Month cho cộng đồng LGBTQ+ khi tiêm vaccine phòng HPV.</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Tháng 6/2025</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-pride-month" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 7 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 7">
-                <span class="badge-hot-new">HOT</span>
-                <span class="badge-discount-new">-40%</span>
-              </div>
-              <div class="card-body-new">
-                <span class="card-tag card-tag-blue"><i class="fas fa-car me-2"></i>Đối tác</span>
-                <h3 class="card-title-new">Deal di chuyển an toàn</h3>
-                <p class="card-desc-new">Hợp tác với các đối tác vận chuyển uy tín, giảm giá đến 40% phí di chuyển khi đặt lịch tiêm.</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Đến 31/03/2026</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-deal-an-toan" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 8 -->
-          <div class="col-lg-4 col-md-6">
-            <div class="promo-card-new">
-              <div class="card-img-wrapper">
-                <img src="@Url.Content("~/Content/Assets/Images/hexaxim.png")" alt="Khuyến mãi 8">
-                <span class="badge-new-label">MỚI</span>
-              </div>
-              <div class="card-body-new">
-                <span class="card-tag card-tag-gold"><i class="fas fa-star me-2"></i>Tích điểm</span>
-                <h3 class="card-title-new">Nhận điểm thưởng tích lũy</h3>
-                <p class="card-desc-new">Chương trình khách hàng thân thiết - Tích điểm đổi quà và nhận ưu đãi đặc biệt cho lần tiêm tiếp theo.</p>
-                <div class="card-footer-new">
-                  <span class="card-date"><i class="far fa-calendar me-2"></i>Không giới hạn</span>
-                  <a href="@Url.Action("Detail", "BaiViet", new { slug = "km-deal-3-duoc" })" class="btn-detail-new">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+
+        @* Pagination *@
+        @if (totalPages > 1)
+        {
+            <div class="row mt-5">
+                <div class="col-12">
+                    <nav aria-label="Pagination">
+                        <ul class="pagination justify-content-center pagination-lg">
+                            @if (currentPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, loaiKM = ViewBag.LoaiKM, trangThai = ViewBag.TrangThai, page = 1 })">
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, loaiKM = ViewBag.LoaiKM, trangThai = ViewBag.TrangThai, page = currentPage - 1 })">
+                                        <i class="fas fa-angle-left"></i>
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                            {
+                                <li class="page-item @(i == currentPage ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, loaiKM = ViewBag.LoaiKM, trangThai = ViewBag.TrangThai, page = i })">@i</a>
+                                </li>
+                            }
+
+                            @if (currentPage < totalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, loaiKM = ViewBag.LoaiKM, trangThai = ViewBag.TrangThai, page = currentPage + 1 })">
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, loaiKM = ViewBag.LoaiKM, trangThai = ViewBag.TrangThai, page = totalPages })">
+                                        <i class="fas fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                    <div class="text-center mt-3">
+                        <p class="text-muted">
+                            Trang <strong class="text-primary fs-5">@currentPage</strong> / <strong>@totalPages</strong>
+                            <span class="mx-2">|</span>
+                            Tổng cộng <strong class="text-success">@totalPromotions</strong> chương trình
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
       </div>
     </section>
 

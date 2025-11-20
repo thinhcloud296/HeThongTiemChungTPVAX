@@ -27,6 +27,54 @@ body {
   background: #fff;
   color: #0a2157;
   line-height: 1.6;
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: 0.5px;
+  color: #00457a;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.form-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0077b6;
+  margin-bottom: 8px;
 }
 
 img {
@@ -53,7 +101,6 @@ ol {
   padding: 0;
   margin: 0;
 }
-
 
 /* ======================================================================================================================= */
 /* DETAIL VACCINE PAGE */
@@ -1105,18 +1152,16 @@ main.vaccine-detail {
 /* TIN TỨC           */
 /* ======================================= */
 
-
 /* --- BỐ CỤC GRID TỔNG THỂ (Giữ nguyên) --- */
 .parent_tintuc {
   display: grid;
-  grid-template-columns: 1fr 1fr; 
+  grid-template-columns: 1fr 1fr;
   gap: 30px; /* Tăng khoảng cách cho giống thiết kế */
 }
- 
-.div1_tintuc {
-  grid-row: 1 / 4; 
-}
 
+.div1_tintuc {
+  grid-row: 1 / 4;
+}
 
 /* --- CSS CHO CÁC MỤC TIN NHỎ (Thêm vào) --- */
 .tin-nho {
@@ -1136,66 +1181,65 @@ main.vaccine-detail {
   /* Div này giúp nhóm toàn bộ phần chữ lại với nhau */
   flex: 1; /* Cho phép phần nội dung co giãn lấp đầy không gian còn lại */
 }
-        
 
 /* ================================================= */
 /* 1. LAYOUT & TYPOGRAPHY CHO TRANG CHI TIẾT */
 /* ================================================= */
 /* Tiêu đề chính */
 .article-title {
-    color: #003b73;
-    font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1.3;
+  color: #003b73;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.3;
 }
 
 /* Metadata */
 .article-meta {
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 30px !important;
-    color: #555 !important;
-    font-size: 0.95rem;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 30px !important;
+  color: #555 !important;
+  font-size: 0.95rem;
 }
 .article-meta-info img.meta-icon {
-    width: 16px;
-    opacity: 0.7;
+  width: 16px;
+  opacity: 0.7;
 }
 
 /* Ảnh chính */
 .article-main-image {
-    max-height: 450px;
-    width: 100%;
-    object-fit: cover;
+  max-height: 450px;
+  width: 100%;
+  object-fit: cover;
 }
 
 /* Nội dung */
 .article-content .lead {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #333;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
 }
 .article-content h3 {
-    color: #0077b6;
-    border-bottom: 2px solid #b8ddfd; /* Dùng màu xanh nhạt của menu */
-    padding-bottom: 5px;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    font-weight: 700;
+  color: #0077b6;
+  border-bottom: 2px solid #b8ddfd; /* Dùng màu xanh nhạt của menu */
+  padding-bottom: 5px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: 700;
 }
 .article-content h4 {
-    color: #023e54; /* Màu chữ đậm hơn */
-    font-weight: 600;
-    margin-top: 15px;
+  color: #023e54; /* Màu chữ đậm hơn */
+  font-weight: 600;
+  margin-top: 15px;
 }
 .article-content ul {
-    padding-left: 25px;
+  padding-left: 25px;
 }
 /* Khối Lưu ý Chuyên môn (Note Box) */
 .note-box {
-    border-left: 5px solid #d4a000 !important; /* Màu vàng nổi bật */
-    background-color: #fffde6; /* Nền vàng nhạt */
+  border-left: 5px solid #d4a000 !important; /* Màu vàng nổi bật */
+  background-color: #fffde6; /* Nền vàng nhạt */
 }
 
 /* ================================================= */
@@ -1203,110 +1247,110 @@ main.vaccine-detail {
 /* ================================================= */
 /* Khối TOC */
 .table-of-contents {
-    border: 2px solid #0077b6 !important;
-    background-color: #f1f9ff !important;
-    border-radius: 10px !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 2px solid #0077b6 !important;
+  background-color: #f1f9ff !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 /* Vị trí dính (Sticky) */
 .toc-sticky-wrapper {
-    position: sticky;
-    top: 20px; 
-    align-self: flex-start;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
 }
 
 /* Link TOC */
 #toc-list a {
-    color: #333;
-    text-decoration: none;
-    display: block;
-    padding: 2px 0;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
-    padding-left: 5px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  padding: 2px 0;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  padding-left: 5px;
 }
 #toc-list a:hover {
-    color: #0077b6; /* Màu xanh chủ đạo khi hover */
-    border-left-color: #0077b6;
-    font-weight: 500;
+  color: #0077b6; /* Màu xanh chủ đạo khi hover */
+  border-left-color: #0077b6;
+  font-weight: 500;
 }
 
 /* ================================================= */
 /* 3. CTA (Call-to-Action) */
 /* ================================================= */
 .action-section {
-    background-color: #0077b6 !important;
-    color: white;
-    padding: 40px !important;
-    border-radius: 12px !important;
-    box-shadow: 0 10px 20px rgba(0, 119, 182, 0.3) !important;
+  background-color: #0077b6 !important;
+  color: white;
+  padding: 40px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 20px rgba(0, 119, 182, 0.3) !important;
 }
 .action-section .cta-button {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-radius: 50px; /* Làm cho nút CTA tròn hơn */
-    min-width: 200px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 50px; /* Làm cho nút CTA tròn hơn */
+  min-width: 200px;
 }
 .action-section .cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3) !important;
 }
 .btn-warning {
-    background-color: #d4a000 !important; /* Màu vàng thương hiệu */
-    border-color: #d4a000 !important;
-    color: white !important;
+  background-color: #d4a000 !important; /* Màu vàng thương hiệu */
+  border-color: #d4a000 !important;
+  color: white !important;
 }
 
 /* ================================================= */
 /* 4. SOCIAL SHARE BAR */
 /* ================================================= */
 .social-share-bar {
-    background-color: #eef7ff; /* Nền xanh nhạt */
-    border-radius: 50px;
-    padding: 8px 15px;
+  background-color: #eef7ff; /* Nền xanh nhạt */
+  border-radius: 50px;
+  padding: 8px 15px;
 }
 .share-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
 }
 .share-icon {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 /* ================================================= */
 /* 5. BÀI VIẾT LIÊN QUAN */
 /* ================================================= */
 .related-img {
-    height: 150px;
-    object-fit: cover;
-    width: 100%;
+  height: 150px;
+  object-fit: cover;
+  width: 100%;
 }
 .related-hover-item {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .related-hover-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15) !important;
 }
 /* Thẻ bài viết liên quan trong TOC dính */
 .related-toc-item {
-    border-left: 3px solid #0077b6;
-    box-shadow: none !important;
-    background-color: white !important;
-    padding: 10px;
-    transition: all 0.2s;
+  border-left: 3px solid #0077b6;
+  box-shadow: none !important;
+  background-color: white !important;
+  padding: 10px;
+  transition: all 0.2s;
 }
 .related-toc-item:hover {
-    background-color: #eef7ff !important;
-    border-left-color: #d4a000;
+  background-color: #eef7ff !important;
+  border-left-color: #d4a000;
 }
 
 /* ================================================= */
@@ -1314,42 +1358,42 @@ main.vaccine-detail {
 /* ================================================= */
 
 .knowledge-hero {
-    background-color: #f1f9ff; 
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 0 !important;
-    padding-top: 50px !important;
-    text-align: center;
+  background-color: #f1f9ff;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 0 !important;
+  padding-top: 50px !important;
+  text-align: center;
 }
 .hero-title {
-    font-size: 3rem;
-    font-weight: 800;
+  font-size: 3rem;
+  font-weight: 800;
 }
 .hero-subtitle {
-    font-size: 1.2rem;
-    color: #4a5568 !important;
+  font-size: 1.2rem;
+  color: #4a5568 !important;
 }
 
 /* Tùy chỉnh màu sắc Banner Mẹ & Bé */
 .me-va-be-hero .hero-title {
-    color: #ff69b4 !important; /* Hồng */
+  color: #ff69b4 !important; /* Hồng */
 }
 
 /* Tùy chỉnh màu sắc Banner Bệnh Truyền Nhiễm */
 .benh-truyen-nhiem-hero .hero-title {
-    color: #dc3545 !important; /* Đỏ */
+  color: #dc3545 !important; /* Đỏ */
 }
 
 .hero-illustration {
-    max-width: 500px;
-    margin: 0 auto;
-    transform: translateY(20px); /* Nhấc ảnh minh họa lên */
+  max-width: 500px;
+  margin: 0 auto;
+  transform: translateY(20px); /* Nhấc ảnh minh họa lên */
 }
 .hero-img-custom {
-    width: 100%;
-    height: auto;
-    max-height: 250px;
-    object-fit: contain;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  object-fit: contain;
 }
 
 /* ================================================= */
@@ -1357,31 +1401,31 @@ main.vaccine-detail {
 /* ================================================= */
 
 .filter-bar {
-    background-color: white;
-    border-radius: 12px !important;
-    padding: 15px !important;
-    border: 1px solid #e0e0e0;
+  background-color: white;
+  border-radius: 12px !important;
+  padding: 15px !important;
+  border: 1px solid #e0e0e0;
 }
 .filter-bar-item {
-    font-weight: 600;
-    font-size: 15px;
-    border-radius: 50px !important;
-    transition: all 0.2s ease;
-    /* Đảm bảo style không bị lỗi khi chuyển giữa primary và outline */
-    white-space: nowrap; 
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 50px !important;
+  transition: all 0.2s ease;
+  /* Đảm bảo style không bị lỗi khi chuyển giữa primary và outline */
+  white-space: nowrap;
 }
 .filter-bar-item.btn-primary {
-    background-color: #0077b6 !important;
-    border-color: #0077b6 !important;
+  background-color: #0077b6 !important;
+  border-color: #0077b6 !important;
 }
 .filter-bar-item.btn-outline-secondary {
-    color: #4a5568;
-    border-color: #e0e0e0;
+  color: #4a5568;
+  border-color: #e0e0e0;
 }
 .filter-bar-item.btn-outline-secondary:hover {
-    color: #0077b6;
-    border-color: #0077b6;
-    background-color: #f1f9ff;
+  color: #0077b6;
+  border-color: #0077b6;
+  background-color: #f1f9ff;
 }
 
 /* ================================================= */
@@ -1389,98 +1433,98 @@ main.vaccine-detail {
 /* ================================================= */
 
 .article-card-custom {
-    border-radius: 12px !important;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid #f0f0f0;
-    text-decoration: none;
-    color: inherit;
+  border-radius: 12px !important;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #f0f0f0;
+  text-decoration: none;
+  color: inherit;
 }
 .article-card-custom:hover {
-    color: #003b73;
+  color: #003b73;
 }
 .article-grid-img {
-    height: 180px;
-    width: 100%;
-    object-fit: cover;
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
 }
 .article-title-small {
-    font-size: 16px;
-    line-height: 1.4;
-    color: #003b73;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #003b73;
 }
 /* Badge Tag */
 .article-tag-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
 }
 .az-badge {
-    background-color: #6a0dad !important; /* Tím cho Bệnh A-Z */
+  background-color: #6a0dad !important; /* Tím cho Bệnh A-Z */
 }
 .quiz-badge {
-    background-color: #ffc107 !important; /* Vàng cho Quiz */
-    color: #333 !important;
+  background-color: #ffc107 !important; /* Vàng cho Quiz */
+  color: #333 !important;
 }
 .quiz-card .quiz-info {
-    font-size: 13px;
-    font-weight: 500;
-    color: #0077b6;
-    display: block;
-    margin-top: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0077b6;
+  display: block;
+  margin-top: 5px;
 }
 /* ================================================= */
 /* 1. BANNER VÀ HIỆU ỨNG (PROMO HERO) */
 /* ================================================= */
 
 .promo-hero {
-    background-color: #f1f9ff; /* Nền xanh nhạt chủ đạo */
-    padding: 50px 0 0;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
+  background-color: #f1f9ff; /* Nền xanh nhạt chủ đạo */
+  padding: 50px 0 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
 }
 
 .promo-title {
-    color: #0077b6; /* Màu xanh chủ đạo */
-    font-size: 3rem;
-    font-weight: 800;
+  color: #0077b6; /* Màu xanh chủ đạo */
+  font-size: 3rem;
+  font-weight: 800;
 }
 
 .promo-subtitle {
-    color: #4a5568;
-    font-size: 1.2rem;
-    margin-bottom: 40px;
+  color: #4a5568;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
 }
 
 /* Breadcrumb trong Banner */
 .promo-breadcrumb a {
-    color: #0077b6 !important;
-    font-weight: 500;
+  color: #0077b6 !important;
+  font-weight: 500;
 }
 .promo-breadcrumb .active {
-    color: #023e54 !important; /* Màu đậm hơn cho trang hiện tại */
-    font-weight: 700;
+  color: #023e54 !important; /* Màu đậm hơn cho trang hiện tại */
+  font-weight: 700;
 }
 
 /* Ảnh minh họa Hero */
 .hero-illustration {
-    max-width: 600px;
-    margin: 0 auto;
-    /* Hiệu ứng nhấc ảnh lên che một phần header */
-    transform: translateY(20px);
+  max-width: 600px;
+  margin: 0 auto;
+  /* Hiệu ứng nhấc ảnh lên che một phần header */
+  transform: translateY(20px);
 }
 .hero-img-custom {
-    width: 100%;
-    height: auto;
-    max-height: 250px;
-    object-fit: contain;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  object-fit: contain;
 }
 
 /* ================================================= */
@@ -1488,47 +1532,47 @@ main.vaccine-detail {
 /* ================================================= */
 
 .promo-card-custom {
-    border-radius: 12px !important;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    text-decoration: none;
-    color: inherit;
+  border-radius: 12px !important;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
 }
 .promo-card-custom:hover {
-     transform: translateY(-5px);
-     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-     color: inherit;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  color: inherit;
 }
 
 .promo-grid-img {
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
 }
 
 .promo-title-small {
-    font-size: 16px;
-    line-height: 1.4;
-    color: #003b73;
-    height: 3.2em; /* Giới hạn 2 dòng */
-    overflow: hidden;
-    margin-bottom: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #003b73;
+  height: 3.2em; /* Giới hạn 2 dòng */
+  overflow: hidden;
+  margin-bottom: 0;
 }
 
 /* Badge Tag */
 .promo-tag-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #ff5722; /* Màu cam/đỏ nổi bật cho promo */
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ff5722; /* Màu cam/đỏ nổi bật cho promo */
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
 }
 /* ================================================= */
 /* KHỐI VẮC XIN LẺ / GÓI (Tối ưu hóa UI) */
@@ -1536,154 +1580,153 @@ main.vaccine-detail {
 
 /* Khối chính bao quanh danh sách Vắc xin Lẻ/Gói */
 .advice-card-list {
-    background-color: white;
-    border-radius: 10px;
-    padding: 15px; /* Giảm padding tổng thể */
-    height: 100%;
-    border: 1px solid #cce7f2;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px; /* Giảm padding tổng thể */
+  height: 100%;
+  border: 1px solid #cce7f2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Tiêu đề Vắc xin lẻ/Gói */
 .advice-card-list h3 {
-    color: #0077b6;
-    font-size: 1.3rem;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e0e0e0;
-    margin-bottom: 15px !important;
+  color: #0077b6;
+  font-size: 1.3rem;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 15px !important;
 }
 
 /* --- Thẻ Vắc xin Đơn (advice-item) --- */
 .advice-item {
-    /* Đảm bảo bố cục rõ ràng, sử dụng lưới nội bộ nếu cần */
-    display: grid;
-    grid-template-columns: 80px 1fr auto; /* Ảnh | Chi tiết | Nút */
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid #e0e0e0;
-    position: relative;
-    transition: background-color 0.1s ease;
-    cursor: default;
+  /* Đảm bảo bố cục rõ ràng, sử dụng lưới nội bộ nếu cần */
+  display: grid;
+  grid-template-columns: 80px 1fr auto; /* Ảnh | Chi tiết | Nút */
+  grid-template-rows: auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+  transition: background-color 0.1s ease;
+  cursor: default;
 }
 
 .advice-item:hover {
-    background-color: #fcfcfc;
+  background-color: #fcfcfc;
 }
 
 .advice-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 /* Khối Ảnh */
 .item-image-wrapper {
-    grid-column: 1 / 2;
-    grid-row: 1 / 3; /* Chiếm 2 hàng */
-    width: 80px;
-    height: 80px;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  grid-column: 1 / 2;
+  grid-row: 1 / 3; /* Chiếm 2 hàng */
+  width: 80px;
+  height: 80px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .item-image {
-    max-width: 90%;
-    max-height: 90%;
+  max-width: 90%;
+  max-height: 90%;
 }
 
 /* Chi tiết văn bản */
 .item-details {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    align-self: flex-start;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  align-self: flex-start;
 }
 .item-name {
-    font-weight: 700;
-    color: #003b73;
-    font-size: 1rem; /* Giảm nhẹ font size */
-    margin-bottom: 0;
+  font-weight: 700;
+  color: #003b73;
+  font-size: 1rem; /* Giảm nhẹ font size */
+  margin-bottom: 0;
 }
 .item-disease {
-    color: #555;
-    font-size: 0.85rem; /* Rất quan trọng: Giữ chữ nhỏ gọn */
-    font-style: italic;
-    margin-top: 2px;
+  color: #555;
+  font-size: 0.85rem; /* Rất quan trọng: Giữ chữ nhỏ gọn */
+  font-style: italic;
+  margin-top: 2px;
 }
 
 /* Giá và Nút */
 .item-price-block {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    align-self: flex-start;
-    margin-top: -10px; /* Kéo giá lên sát chi tiết */
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  align-self: flex-start;
+  margin-top: -10px; /* Kéo giá lên sát chi tiết */
 }
 .item-price {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: #d4a000;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #d4a000;
 }
 .original-price {
-    font-size: 0.8rem;
-    color: #999;
+  font-size: 0.8rem;
+  color: #999;
 }
 .btn-dat-hen {
-    grid-column: 3 / 4;
-    grid-row: 1 / 3;
-    align-self: center; /* Căn giữa theo chiều dọc */
-    height: 40px; /* Chiều cao cố định */
-    padding: 0 15px;
-    font-weight: 600;
-    border-radius: 50px;
-    /* Loại bỏ màu xanh đậm cũ và dùng màu nền mới nếu cần */
-    background-color: #0077b6; 
-    color: white;
-    border: none;
-    transition: background-color 0.2s, transform 0.2s;
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+  align-self: center; /* Căn giữa theo chiều dọc */
+  height: 40px; /* Chiều cao cố định */
+  padding: 0 15px;
+  font-weight: 600;
+  border-radius: 50px;
+  /* Loại bỏ màu xanh đậm cũ và dùng màu nền mới nếu cần */
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  transition: background-color 0.2s, transform 0.2s;
 }
 .btn-dat-hen:hover {
-    background-color: #023e54;
-    transform: scale(1.05);
+  background-color: #023e54;
+  transform: scale(1.05);
 }
 
 /* Badge (Vị trí) */
 .discount-badge {
-    top: 0;
-    left: 0;
-    font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  font-size: 0.85rem;
 }
 .item-flag-icon {
-    width: 20px;
-    margin-right: 5px;
+  width: 20px;
+  margin-right: 5px;
 }
 
 /* Responsive: Trên mobile, nút Đặt Hẹn vẫn cần ở vị trí dễ bấm */
 @media (max-width: 576px) {
-    .advice-item {
-        grid-template-columns: 80px 1fr; /* Ảnh | Chi tiết + Nút */
-        grid-template-rows: auto auto auto;
-        padding: 10px;
-    }
-    .item-details {
-        grid-column: 2 / 3;
-        grid-row: 1 / 2;
-    }
-    .item-price-block {
-        grid-column: 2 / 3;
-        grid-row: 2 / 3;
-        margin-top: 0;
-        margin-bottom: 10px;
-    }
-    .btn-dat-hen {
-        grid-column: 1 / 3; /* Chiếm hết chiều rộng */
-        grid-row: 3 / 4;
-        width: 100%;
-        align-self: center;
-        height: 45px;
-    }
-
+  .advice-item {
+    grid-template-columns: 80px 1fr; /* Ảnh | Chi tiết + Nút */
+    grid-template-rows: auto auto auto;
+    padding: 10px;
+  }
+  .item-details {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+  .item-price-block {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  .btn-dat-hen {
+    grid-column: 1 / 3; /* Chiếm hết chiều rộng */
+    grid-row: 3 / 4;
+    width: 100%;
+    align-self: center;
+    height: 45px;
+  }
 }
 /* ================================================= */
 /* TRANG: Tôi nên tiêm gì? (TOI-NEN-TIEM-GI.HTML)    */
@@ -1691,315 +1734,312 @@ main.vaccine-detail {
 
 /* Banner Tư vấn */
 .advice-consult-hero {
-    background-color: #f1f9ff;
-    padding: 50px 0 100px; 
-    position: relative;
-    overflow: hidden;
-    border-bottom: 3px solid #b8ddfd;
+  background-color: #f1f9ff;
+  padding: 50px 0 100px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #b8ddfd;
 }
 .advice-consult-hero .hero-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #003b73;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #003b73;
 }
 .advice-consult-hero .hero-subtitle {
-    color: #4a5568;
+  color: #4a5568;
 }
 
 /* Ảnh Banner (sử dụng position absolute) */
 .advice-consult-hero .hero-image {
-    max-height: 250px;
-    width: auto;
-    object-fit: contain;
-    position: absolute;
-    right: 5%;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 5;
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.05));
+  max-height: 250px;
+  width: auto;
+  object-fit: contain;
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.05));
 }
 
 /* KHỐI LỌC (Filter Block) - Giao diện chính */
 .filter-block {
-    background-color: white;
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Đổ bóng sắc nét */
-    margin-top: -100px; 
-    position: relative;
-    z-index: 20; /* Đảm bảo khối lọc luôn nằm trên Banner và Ảnh */
-    border: 1px solid #cce7f2; 
+  background-color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Đổ bóng sắc nét */
+  margin-top: -100px;
+  position: relative;
+  z-index: 20; /* Đảm bảo khối lọc luôn nằm trên Banner và Ảnh */
+  border: 1px solid #cce7f2;
 }
 
 .filter-block label {
-    font-weight: 600;
-    color: #023e54;
-    margin-bottom: 8px;
+  font-weight: 600;
+  color: #023e54;
+  margin-bottom: 8px;
 }
 .age-select-wrapper .form-select {
-    height: 50px;
-    border-radius: 10px;
-    font-weight: 500;
-    font-size: 1rem;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 /* Nút Giới tính */
 .gender-select-btn {
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-weight: 600;
-    border: 2px solid #cce7f2;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s;
-    color: #555;
-    flex-grow: 1;
-    width: 100%;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  border: 2px solid #cce7f2;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+  color: #555;
+  flex-grow: 1;
+  width: 100%;
 }
 .gender-select-btn.active {
-    background-color: #e6f9ff;
-    border-color: #0077b6; /* Viền xanh đậm khi active */
-    color: #0077b6;
-    box-shadow: 0 2px 5px rgba(0, 119, 182, 0.3);
+  background-color: #e6f9ff;
+  border-color: #0077b6; /* Viền xanh đậm khi active */
+  color: #0077b6;
+  box-shadow: 0 2px 5px rgba(0, 119, 182, 0.3);
 }
 .gender-select-btn:hover:not(.active) {
-    border-color: #a3d9f7;
-    color: #0077b6;
+  border-color: #a3d9f7;
+  color: #0077b6;
 }
 
 /* Nút Nhận Kết Quả */
 .btn-get-result {
-    background-color: #0aa889; /* Màu xanh lá cây nổi bật */
-    color: white;
-    font-weight: 700;
-    height: 50px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 168, 137, 0.4);
-    font-size: 1.1rem;
-    transition: all 0.2s;
+  background-color: #0aa889; /* Màu xanh lá cây nổi bật */
+  color: white;
+  font-weight: 700;
+  height: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 168, 137, 0.4);
+  font-size: 1.1rem;
+  transition: all 0.2s;
 }
 .btn-get-result:hover {
-    background-color: #088b73;
-    transform: translateY(-1px);
+  background-color: #088b73;
+  transform: translateY(-1px);
 }
-
 
 /* Khối Kết quả Tư vấn */
 .advice-section {
-    background-color: #f8f9fa; /* Nền xám nhạt */
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin-top: 40px !important; 
+  background-color: #f8f9fa; /* Nền xám nhạt */
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 40px !important;
 }
 .advice-section .section-title {
-    color: #0077b6;
+  color: #0077b6;
 }
 .advice-section .section-title-icon {
-    color: #dc3545; /* Màu đỏ nổi bật cho icon */
-    font-size: 1.2em;
+  color: #dc3545; /* Màu đỏ nổi bật cho icon */
+  font-size: 1.2em;
 }
 .advice-card-list {
-    background-color: white;
-    border-radius: 10px;
-    padding: 15px;
-    height: 100%;
-    border: 1px solid #cce7f2;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  height: 100%;
+  border: 1px solid #cce7f2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 .advice-card-list h3 {
-    color: #0077b6;
-    font-size: 1.3rem;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e0e0e0;
-    margin-bottom: 15px !important;
+  color: #0077b6;
+  font-size: 1.3rem;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 15px !important;
 }
 
 /* Chi tiết Item (Sử dụng Grid cho bố cục gọn) */
 .advice-item {
-    display: grid;
-    grid-template-columns: 80px 1fr auto; 
-    grid-template-rows: auto auto; 
-    align-items: center;
-    gap: 5px 10px;
-    padding: 10px 0;
-    border-bottom: 1px dashed #e0e0e0; 
-    position: relative;
-    transition: background-color 0.1s ease;
-    cursor: default;
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 5px 10px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e0e0e0;
+  position: relative;
+  transition: background-color 0.1s ease;
+  cursor: default;
 }
 .advice-item:hover {
-    background-color: #fcfcfc;
+  background-color: #fcfcfc;
 }
 .advice-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .item-image-wrapper {
-    grid-column: 1 / 2;
-    grid-row: 1 / 3;
-    width: 80px;
-    height: 80px;
-    min-width: 80px;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .item-details {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    align-self: flex-start;
-    margin-top: 5px;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  align-self: flex-start;
+  margin-top: 5px;
 }
 .item-price-block {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    align-self: flex-end;
-    margin-top: -5px;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  align-self: flex-end;
+  margin-top: -5px;
 }
 .item-name {
-    font-weight: 700;
-    color: #003b73;
-    font-size: 1rem;
-    margin-bottom: 0;
+  font-weight: 700;
+  color: #003b73;
+  font-size: 1rem;
+  margin-bottom: 0;
 }
 .item-disease {
-    color: #555;
-    font-size: 0.85rem; 
-    font-style: italic;
-    margin-top: 2px;
+  color: #555;
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 2px;
 }
 .item-price {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: #d4a000;
-    display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #d4a000;
+  display: inline-block;
 }
 .original-price {
-    font-size: 0.8rem;
-    color: #999;
+  font-size: 0.8rem;
+  color: #999;
 }
 .discount-badge {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #ff5722;
-    color: white;
-    padding: 2px 8px;
-    border-radius: 5px 0 5px 0;
-    font-weight: 600;
-    z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ff5722;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 5px 0 5px 0;
+  font-weight: 600;
+  z-index: 10;
 }
 .item-flag-icon {
-    width: 20px;
-    margin-right: 5px;
+  width: 20px;
+  margin-right: 5px;
 }
 
 /* Nút Đặt Hẹn (Nhỏ) */
 .btn-dat-hen {
-    grid-column: 3 / 4;
-    grid-row: 1 / 3;
-    align-self: center;
-    height: 40px;
-    padding: 0 15px;
-    font-weight: 600;
-    border-radius: 50px;
-    background-color: #0077b6;
-    color: white;
-    border: none;
-    transition: all 0.2s;
-    font-size: 0.9rem;
-    min-width: 90px;
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+  align-self: center;
+  height: 40px;
+  padding: 0 15px;
+  font-weight: 600;
+  border-radius: 50px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  min-width: 90px;
 }
 .btn-dat-hen:hover {
-    background-color: #023e54;
-    transform: scale(1.05);
+  background-color: #023e54;
+  transform: scale(1.05);
 }
 
 /* Nút CTA dưới cùng */
 .cta-bottom-row .btn-cta {
-    font-size: 1.1rem;
-    font-weight: 700;
-    border-radius: 10px;
-    padding: 15px 30px;
-    width: 100%;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 15px 30px;
+  width: 100%;
 }
 .btn-consult {
-    background-color: #0077b6;
-    color: white;
-    border: none;
+  background-color: #0077b6;
+  color: white;
+  border: none;
 }
 .btn-chat {
-    background-color: white;
-    color: #0077b6;
-    border: 2px solid #0077b6;
+  background-color: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
 }
 .cta-bottom-row .btn-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
-    .advice-consult-hero {
-        padding: 20px 0;
-    }
-    .advice-consult-hero .hero-image {
-        display: none !important;
-    }
-    .filter-block {
-        margin-top: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
+  .advice-consult-hero {
+    padding: 20px 0;
+  }
+  .advice-consult-hero .hero-image {
+    display: none !important;
+  }
+  .filter-block {
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
 }
 @media (max-width: 576px) {
-    .gender-options {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .gender-select-btn {
-        width: 48%;
-    }
-    .age-select-wrapper {
-        margin-bottom: 15px;
-    }
-    
-    /* Cấu trúc Item trên Mobile */
-    .advice-item {
-        grid-template-columns: 80px 1fr;
-        grid-template-rows: auto auto auto;
-        padding: 15px 0;
-    }
-    .item-image-wrapper {
-        grid-column: 1 / 2;
-        grid-row: 1 / 3;
-    }
-    .item-details {
-        grid-column: 2 / 3;
-        grid-row: 1 / 2;
-    }
-    .item-price-block {
-        grid-column: 2 / 3;
-        grid-row: 2 / 3;
-        align-self: flex-start;
-        margin-top: 0;
-    }
-    .btn-dat-hen {
-        grid-column: 1 / 3;
-        grid-row: 3 / 4;
-        width: 100%;
-        margin-top: 10px;
-    }
+  .gender-options {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .gender-select-btn {
+    width: 48%;
+  }
+  .age-select-wrapper {
+    margin-bottom: 15px;
+  }
+
+  /* Cấu trúc Item trên Mobile */
+  .advice-item {
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto auto;
+    padding: 15px 0;
+  }
+  .item-image-wrapper {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+  }
+  .item-details {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+  .item-price-block {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    align-self: flex-start;
+    margin-top: 0;
+  }
+  .btn-dat-hen {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+    width: 100%;
+    margin-top: 10px;
+  }
 }
 /* ======================================================================================================================= */
 /* END HOME PAGE */
 /* ====================================================================================================================== */
-
 
 /* ======================================================================================================================= */
 /* LAYOUT PAGE - NEW FEATURES (Competitive Analysis from Long Châu)
@@ -2095,7 +2135,8 @@ main.vaccine-detail {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -2574,13 +2615,17 @@ main.vaccine-detail {
 }
 
 .package-commitment::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   right: -20%;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
 }
 
@@ -2644,7 +2689,7 @@ main.vaccine-detail {
 }
 
 .package-card::before {
-  content: '⭐';
+  content: "⭐";
   position: absolute;
   top: 15px;
   right: 15px;
@@ -2756,8 +2801,12 @@ main.vaccine-detail {
    Thiết kế: FULL-WIDTH IMAGE BANNER với overlay + CTA
    ============================================ */
 .travel-vaccine-banner {
-  background: linear-gradient(135deg, rgba(0, 69, 122, 0.95) 0%, rgba(0, 119, 182, 0.9) 100%),
-              url('Assets/Images/banner1.jpg') center/cover;
+  background: linear-gradient(
+      135deg,
+      rgba(0, 69, 122, 0.95) 0%,
+      rgba(0, 119, 182, 0.9) 100%
+    ),
+    url("Assets/Images/banner1.jpg") center/cover;
   padding: 100px 0;
   position: relative;
   overflow: hidden;
@@ -2765,7 +2814,7 @@ main.vaccine-detail {
 
 /* Animated plane */
 .travel-vaccine-banner::before {
-  content: '✈️';
+  content: "✈️";
   position: absolute;
   font-size: 120px;
   opacity: 0.15;
@@ -2775,21 +2824,26 @@ main.vaccine-detail {
 }
 
 @keyframes float-plane {
-  0%, 100% { 
-    transform: translateY(0px) translateX(0px) rotate(-5deg); 
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(-5deg);
   }
-  50% { 
-    transform: translateY(-30px) translateX(20px) rotate(5deg); 
+  50% {
+    transform: translateY(-30px) translateX(20px) rotate(5deg);
   }
 }
 
 /* Decorative circles */
 .travel-vaccine-banner::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(186, 231, 255, 0.2) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(186, 231, 255, 0.2) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
   left: -100px;
   bottom: -100px;
@@ -2797,12 +2851,13 @@ main.vaccine-detail {
 }
 
 @keyframes pulse-circle {
-  0%, 100% { 
-    transform: scale(1); 
+  0%,
+  100% {
+    transform: scale(1);
     opacity: 0.3;
   }
-  50% { 
-    transform: scale(1.1); 
+  50% {
+    transform: scale(1.1);
     opacity: 0.5;
   }
 }
@@ -2830,11 +2885,12 @@ main.vaccine-detail {
 }
 
 @keyframes bounce-icon {
-  0%, 100% { 
-    transform: translateY(0); 
+  0%,
+  100% {
+    transform: translateY(0);
   }
-  50% { 
-    transform: translateY(-15px); 
+  50% {
+    transform: translateY(-15px);
   }
 }
 
@@ -2875,7 +2931,7 @@ main.vaccine-detail {
 }
 
 .travel-banner-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2946,7 +3002,7 @@ main.vaccine-detail {
 }
 
 .trust-badges-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -3061,63 +3117,63 @@ main.vaccine-detail {
     bottom: 20px;
     right: 20px;
   }
-  
+
   .floating-contact {
     bottom: 80px;
     right: 20px;
   }
-  
+
   .floating-btn {
     width: 50px;
     height: 50px;
   }
-  
+
   .floating-btn img {
     width: 28px;
     height: 28px;
   }
-  
+
   /* Package grid */
   .package-cards-grid {
     grid-template-columns: 1fr;
   }
-  
+
   /* Travel banner */
   .travel-vaccine-banner {
     padding: 60px 0;
   }
-  
+
   .travel-banner-content h2 {
     font-size: 28px;
   }
-  
+
   .travel-banner-content p {
     font-size: 16px;
   }
-  
+
   .travel-banner-btn {
     padding: 14px 35px;
     font-size: 16px;
   }
-  
+
   .travel-features {
     gap: 20px;
   }
-  
+
   .travel-feature-item {
     font-size: 14px;
     padding: 10px 18px;
   }
-  
+
   /* Trust badges */
   .trust-badge-card {
     margin-bottom: 20px;
   }
-  
+
   .section-title-trust h2 {
     font-size: 24px;
   }
-  
+
   .partner-logo {
     height: 40px;
     margin: 10px;
@@ -3538,37 +3594,37 @@ main.vaccine-detail {
   .category-card-title {
     font-size: 14px;
   }
-  
+
   .category-card-desc {
     font-size: 11px;
   }
-  
+
   .category-card-icon-wrapper {
     width: 60px;
     height: 60px;
   }
-  
+
   .category-card-icon-wrapper img {
     width: 35px;
     height: 35px;
   }
-  
+
   .article-title-large {
     font-size: 18px;
   }
-  
+
   .featured-content {
     padding: 30px 20px;
   }
-  
+
   .article-title-featured {
     font-size: 22px;
   }
-  
+
   .article-excerpt {
     font-size: 14px;
   }
-  
+
   /* Category Filter Buttons Responsive */
   .category-filter-btn {
     min-width: 120px;
@@ -3590,16 +3646,16 @@ main.vaccine-detail {
 
 /* Print styles for Knowledge Base */
 @media print {
-  .toolbar-section, 
-  .main-navbar, 
-  .breadcrumb, 
-  .scroll-to-top-btn, 
+  .toolbar-section,
+  .main-navbar,
+  .breadcrumb,
+  .scroll-to-top-btn,
   .floating-contact,
   .category-card-modern,
   .disease-filter-bar {
     display: none !important;
   }
-  
+
   .article-card,
   .article-card-featured {
     box-shadow: none;
@@ -3692,20 +3748,20 @@ main.vaccine-detail {
     padding: 15px;
     gap: 8px;
   }
-  
+
   .disease-filter-btn {
     padding: 10px 18px;
     font-size: 13px;
   }
-  
+
   .disease-filter-btn i {
     font-size: 14px;
   }
-  
+
   .disease-filter-btn span {
     display: none;
   }
-  
+
   .disease-filter-btn i {
     margin-right: 0;
   }
@@ -3731,13 +3787,17 @@ main.vaccine-detail {
 }
 
 .advice-consult-hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   right: -10%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(0, 119, 182, 0.08) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(0, 119, 182, 0.08) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
 }
 
@@ -3814,8 +3874,8 @@ main.vaccine-detail {
 }
 
 .age-select-wrapper::after {
-  content: '\f107';
-  font-family: 'Font Awesome 6 Free';
+  content: "\f107";
+  font-family: "Font Awesome 6 Free";
   font-weight: 900;
   position: absolute;
   right: 20px;
@@ -4157,37 +4217,37 @@ main.vaccine-detail {
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.15rem;
   }
-  
+
   .advice-consult-hero .hero-image {
     max-width: 350px;
     opacity: 0.1;
   }
-  
+
   .filter-block {
     padding: 30px 25px;
   }
-  
+
   .advice-section .section-title {
     font-size: 1.75rem;
   }
-  
+
   .advice-card-list {
     margin-bottom: 20px;
   }
-  
+
   .item-image-wrapper {
     width: 80px;
     height: 80px;
   }
-  
+
   .item-name {
     font-size: 1rem;
   }
-  
+
   .item-price {
     font-size: 1.1rem;
   }
@@ -4198,134 +4258,134 @@ main.vaccine-detail {
   .advice-consult-hero {
     padding: 40px 0 30px;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .advice-consult-hero .hero-image {
     display: none !important;
   }
-  
+
   .filter-block {
     padding: 25px 20px;
     margin-top: -20px;
     border-radius: 16px;
   }
-  
+
   .filter-block .form-label {
     font-size: 0.95rem;
     margin-bottom: 8px;
   }
-  
+
   .filter-block .form-select {
     padding: 12px 40px 12px 15px;
     font-size: 0.95rem;
   }
-  
+
   .age-select-wrapper::after {
     right: 15px;
     font-size: 18px;
   }
-  
+
   .gender-select-btn {
     padding: 12px 15px;
     font-size: 0.95rem;
   }
-  
+
   .gender-select-btn i {
     font-size: 1.1rem;
   }
-  
+
   .btn-get-result {
     padding: 12px 20px;
     font-size: 1rem;
   }
-  
+
   .advice-section {
     padding: 30px 15px;
   }
-  
+
   .advice-section .section-title {
     font-size: 1.4rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .advice-card-list {
     padding: 20px 15px;
   }
-  
+
   .advice-card-list h3 {
     font-size: 1.2rem;
   }
-  
+
   .advice-item {
     flex-direction: column;
     align-items: flex-start;
     padding: 15px;
     gap: 15px;
   }
-  
+
   .item-image-wrapper {
     width: 100%;
     max-width: 120px;
     height: 120px;
     margin: 0 auto;
   }
-  
+
   .item-details {
     width: 100%;
     text-align: center;
   }
-  
+
   .item-name {
     font-size: 1.05rem;
     justify-content: center;
   }
-  
+
   .item-flag-icon {
     margin-right: 8px;
     width: 20px;
     height: 14px;
   }
-  
+
   .item-disease {
     font-size: 0.9rem;
   }
-  
+
   .item-price {
     font-size: 1.15rem;
     justify-content: center;
   }
-  
+
   .btn-dat-hen {
     width: 100%;
     padding: 12px 20px;
   }
-  
+
   .discount-badge {
     top: 5px;
     right: 5px;
     font-size: 0.75rem;
     padding: 5px 10px;
   }
-  
+
   .cta-bottom-row {
     margin-top: 30px;
     padding-top: 20px;
   }
-  
+
   .btn-cta {
     padding: 15px 20px;
     font-size: 1rem;
   }
-  
+
   .btn-cta i {
     font-size: 1.1rem;
   }
@@ -4336,24 +4396,24 @@ main.vaccine-detail {
   .filter-block .row {
     gap: 15px;
   }
-  
+
   .gender-options {
     gap: 8px;
   }
-  
+
   .gender-select-btn {
     padding: 10px 12px;
     font-size: 0.9rem;
   }
-  
+
   .hero-title {
     font-size: 1.75rem;
   }
-  
+
   .advice-section .section-title {
     font-size: 1.2rem;
   }
-  
+
   .advice-card-list h3 {
     font-size: 1.1rem;
   }
@@ -4367,7 +4427,7 @@ main.vaccine-detail {
   .floating-contact {
     display: none !important;
   }
-  
+
   .advice-item {
     page-break-inside: avoid;
     box-shadow: none;
@@ -4398,13 +4458,17 @@ main.vaccine-detail {
 }
 
 .promo-hero-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -150px;
   right: -150px;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
 }
 
@@ -4502,7 +4566,8 @@ main.vaccine-detail {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -4605,7 +4670,8 @@ main.vaccine-detail {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -4740,7 +4806,8 @@ main.vaccine-detail {
 }
 
 @keyframes blink {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -4792,13 +4859,17 @@ main.vaccine-detail {
 }
 
 .promo-cta-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -100px;
   left: -100px;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
 }
 
@@ -4829,13 +4900,16 @@ main.vaccine-detail {
 }
 
 @keyframes ring {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(0deg);
   }
-  10%, 30% {
+  10%,
+  30% {
     transform: rotate(-15deg);
   }
-  20%, 40% {
+  20%,
+  40% {
     transform: rotate(15deg);
   }
 }
@@ -4931,35 +5005,35 @@ main.vaccine-detail {
   .promo-hero-section {
     padding: 60px 0 40px;
   }
-  
+
   .promo-page-title {
     font-size: 2.8rem;
   }
-  
+
   .promo-subtitle {
     font-size: 1.15rem;
   }
-  
+
   .promo-stats-wrapper {
     gap: 15px;
   }
-  
+
   .promo-stat-item {
     padding: 16px 24px;
   }
-  
+
   .stat-number {
     font-size: 1.4rem;
   }
-  
+
   .promo-card-title {
     font-size: 1.15rem;
   }
-  
+
   .promo-cta-title {
     font-size: 2rem;
   }
-  
+
   .promo-faq-section h2 {
     font-size: 2.2rem;
   }
@@ -4970,95 +5044,95 @@ main.vaccine-detail {
   .promo-hero-section {
     padding: 50px 0 35px;
   }
-  
+
   .promo-page-title {
     font-size: 2.2rem;
   }
-  
+
   .promo-subtitle {
     font-size: 1.05rem;
   }
-  
+
   .promo-stats-wrapper {
     flex-direction: column;
   }
-  
+
   .promo-stat-item {
     width: 100%;
     justify-content: center;
   }
-  
+
   .promo-filter-section {
     padding: 20px 0;
   }
-  
+
   .promo-filter-buttons {
     flex-wrap: wrap;
   }
-  
+
   .promo-grid-section {
     padding: 50px 0;
   }
-  
+
   .promo-card-body {
     padding: 25px;
   }
-  
+
   .promo-card-title {
     font-size: 1.1rem;
     min-height: auto;
   }
-  
+
   .promo-card-desc {
     font-size: 0.95rem;
   }
-  
+
   .promo-card-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .promo-cta-section {
     padding: 50px 0;
   }
-  
+
   .promo-cta-box {
     padding: 35px 25px;
   }
-  
+
   .promo-cta-title {
     font-size: 1.75rem;
     margin-bottom: 20px;
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .promo-cta-desc {
     font-size: 1.05rem;
     margin-bottom: 25px;
   }
-  
+
   .btn-cta-promo {
     width: 100%;
     justify-content: center;
     padding: 14px 35px;
     font-size: 1.05rem;
   }
-  
+
   .promo-faq-section {
     padding: 50px 0;
   }
-  
+
   .promo-faq-section h2 {
     font-size: 1.9rem;
   }
-  
+
   .promo-accordion .accordion-button {
     font-size: 1.05rem;
     padding: 16px 20px;
   }
-  
+
   .promo-accordion .accordion-body {
     padding: 20px;
     font-size: 1rem;
@@ -5070,19 +5144,19 @@ main.vaccine-detail {
   .promo-page-title {
     font-size: 1.85rem;
   }
-  
+
   .promo-page-title i {
     display: block;
     margin-bottom: 10px;
   }
-  
+
   .promo-badge {
     top: 12px;
     left: 12px;
     padding: 8px 14px;
     font-size: 0.75rem;
   }
-  
+
   .promo-discount-badge {
     top: 12px;
     right: 12px;
@@ -5091,12 +5165,12 @@ main.vaccine-detail {
     min-width: 50px;
     min-height: 50px;
   }
-  
+
   .promo-category {
     font-size: 0.85rem;
     padding: 6px 12px;
   }
-  
+
   .promo-cta-title {
     font-size: 1.5rem;
   }
@@ -5112,13 +5186,13 @@ main.vaccine-detail {
   .floating-contact {
     display: none !important;
   }
-  
+
   .promo-card {
     page-break-inside: avoid;
     box-shadow: none;
     border: 1px solid #ddd;
   }
-  
+
   .btn-promo-detail {
     color: #0077b6 !important;
     background: none;
@@ -5129,8 +5203,6 @@ main.vaccine-detail {
 /* ===================================================================
    END KHUYẾN MÃI HOT - PROMOTIONS PAGE
    =================================================================== */
-
-
 
 /* ===================================================================
    END KHUYẾN MÃI HOT PAGE
@@ -5147,7 +5219,7 @@ main.vaccine-detail {
 }
 
 .promo-hero-modern::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   right: -10%;
@@ -5158,7 +5230,7 @@ main.vaccine-detail {
 }
 
 .breadcrumb-modern {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   padding: 0.5rem 1rem;
   border-radius: 25px;
   backdrop-filter: blur(10px);
@@ -5182,7 +5254,7 @@ main.vaccine-detail {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .hero-subtitle {
@@ -5199,7 +5271,7 @@ main.vaccine-detail {
 }
 
 .stat-item {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   border-radius: 15px;
   padding: 1.5rem;
@@ -5213,7 +5285,7 @@ main.vaccine-detail {
 
 .stat-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .stat-icon {
@@ -5232,13 +5304,18 @@ main.vaccine-detail {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .hero-img-float {
   animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 }
 
 /* Promo Cards Section */
@@ -5256,7 +5333,7 @@ main.vaccine-detail {
 }
 
 .section-title-modern::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -5278,7 +5355,7 @@ main.vaccine-detail {
   background: white;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   height: 100%;
   display: flex;
@@ -5287,7 +5364,7 @@ main.vaccine-detail {
 
 .promo-card-new:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .card-img-wrapper {
@@ -5333,8 +5410,13 @@ main.vaccine-detail {
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .badge-discount-new {
@@ -5369,13 +5451,34 @@ main.vaccine-detail {
   width: fit-content;
 }
 
-.card-tag-green { background: #e8f5e9; color: #2e7d32; }
-.card-tag-purple { background: #f3e5f5; color: #7b1fa2; }
-.card-tag-orange { background: #fff3e0; color: #e65100; }
-.card-tag-red { background: #ffebee; color: #c62828; }
-.card-tag-rainbow { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-.card-tag-blue { background: #e1f5fe; color: #01579b; }
-.card-tag-gold { background: #fff8e1; color: #f57f17; }
+.card-tag-green {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.card-tag-purple {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+.card-tag-orange {
+  background: #fff3e0;
+  color: #e65100;
+}
+.card-tag-red {
+  background: #ffebee;
+  color: #c62828;
+}
+.card-tag-rainbow {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+.card-tag-blue {
+  background: #e1f5fe;
+  color: #01579b;
+}
+.card-tag-gold {
+  background: #fff8e1;
+  color: #f57f17;
+}
 
 .card-title-new {
   font-size: 1.25rem;
@@ -5431,11 +5534,11 @@ main.vaccine-detail {
 }
 
 .cta-box-modern {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 3rem;
-  border: 2px solid rgba(255,255,255,0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .cta-icon-large {
@@ -5452,7 +5555,7 @@ main.vaccine-detail {
 }
 
 .cta-desc-large {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -5467,12 +5570,12 @@ main.vaccine-detail {
   font-size: 1.1rem;
   display: inline-block;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn-cta-large-new:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
   color: #667eea;
 }
 
@@ -5481,31 +5584,31 @@ main.vaccine-detail {
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .stats-row {
     flex-direction: column;
   }
-  
+
   .stat-item {
     min-width: 100%;
   }
-  
+
   .section-title-modern {
     font-size: 2rem;
   }
-  
+
   .card-img-wrapper {
     height: 200px;
   }
-  
+
   .cta-title-large {
     font-size: 1.5rem;
   }
-  
+
   .cta-desc-large {
     font-size: 1rem;
   }
@@ -5519,14 +5622,14 @@ main.vaccine-detail {
 .package-card {
   border: none;
   border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   overflow: hidden;
 }
 
 .package-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .package-icon {
@@ -5677,7 +5780,6 @@ main.vaccine-detail {
   margin-bottom: 20px;
 }
 
-
 /* ============================================
    VACCINE LIST PAGE STYLES (vacxinphongbenh.html)
    ============================================ */
@@ -5700,7 +5802,7 @@ main.vaccine-detail {
 }
 
 .page-hero-banner::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -5713,8 +5815,12 @@ main.vaccine-detail {
 }
 
 @keyframes wave {
-  0% { background-position: 0 bottom; }
-  100% { background-position: 1440px bottom; }
+  0% {
+    background-position: 0 bottom;
+  }
+  100% {
+    background-position: 1440px bottom;
+  }
 }
 
 .page-hero-banner .container {
@@ -5734,14 +5840,14 @@ main.vaccine-detail {
   border-radius: 16px;
   padding: 30px 20px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   border: 2px solid transparent;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0,119,182,0.15);
+  box-shadow: 0 8px 24px rgba(0, 119, 182, 0.15);
   border-color: #0077b6;
 }
 
@@ -5775,7 +5881,7 @@ main.vaccine-detail {
 .vaccine-card {
   border: none;
   border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   background: white;
@@ -5786,7 +5892,7 @@ main.vaccine-detail {
 }
 
 .vaccine-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -5803,7 +5909,7 @@ main.vaccine-detail {
 
 .vaccine-card:hover {
   transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 16px 32px rgba(0,119,182,0.2);
+  box-shadow: 0 16px 32px rgba(0, 119, 182, 0.2);
 }
 
 .vaccine-card .card-img-wrapper {
@@ -5818,11 +5924,15 @@ main.vaccine-detail {
 }
 
 .vaccine-card .card-img-wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(0,119,182,0.05) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(0, 119, 182, 0.05) 0%,
+    transparent 70%
+  );
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -5830,15 +5940,20 @@ main.vaccine-detail {
 }
 
 @keyframes pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
 }
 
 .vaccine-card .card-img-top {
   max-height: 160px;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
   position: relative;
   z-index: 1;
   transition: transform 0.3s ease;
@@ -5852,7 +5967,11 @@ main.vaccine-detail {
   position: absolute;
   top: 15px;
   left: 15px;
-  background: linear-gradient(135deg, rgba(0,119,182,0.95), rgba(0,180,216,0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 119, 182, 0.95),
+    rgba(0, 180, 216, 0.95)
+  );
   color: white;
   padding: 8px 16px;
   border-radius: 25px;
@@ -5862,7 +5981,7 @@ main.vaccine-detail {
   align-items: center;
   gap: 6px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 4px 12px rgba(0,119,182,0.3);
+  box-shadow: 0 4px 12px rgba(0, 119, 182, 0.3);
   z-index: 2;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -5901,7 +6020,7 @@ main.vaccine-detail {
   margin-bottom: 18px;
   font-weight: 600;
   border: 1px solid #90caf9;
-  box-shadow: 0 2px 6px rgba(0,119,182,0.1);
+  box-shadow: 0 2px 6px rgba(0, 119, 182, 0.1);
 }
 
 .vaccine-card .price-section {
@@ -5937,7 +6056,7 @@ main.vaccine-detail {
   padding: 14px 20px;
   border-radius: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 16px rgba(0,119,182,0.25);
+  box-shadow: 0 6px 16px rgba(0, 119, 182, 0.25);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 0.9rem;
@@ -5946,7 +6065,7 @@ main.vaccine-detail {
 .vaccine-card .btn-add-cart:hover {
   background: linear-gradient(135deg, #005f8f 0%, #0096c7 100%);
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,119,182,0.35);
+  box-shadow: 0 8px 20px rgba(0, 119, 182, 0.35);
 }
 
 .vaccine-card .btn-add-cart:active {
@@ -5954,162 +6073,7 @@ main.vaccine-detail {
 }
 
 /* Filter Sidebar - Enhanced với Animation */
-.filter-sidebar {
-  position: sticky;
-  top: 20px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  border: 2px solid #e9ecef;
-  overflow: hidden;
-}
-
-.filter-sidebar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, #0077b6, #00b4d8, #0096c7, #00b4d8, #0077b6);
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.filter-sidebar h5 {
-  background: linear-gradient(135deg, #0077b6, #00b4d8);
-  color: white;
-  padding: 20px;
-  margin: 0;
-  margin-bottom: 20px;
-  font-size: 1.1rem;
-  border: none;
-}
-
-.filter-group {
-  padding: 0 20px 20px;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #f0f0f0;
-  transition: all 0.3s ease;
-}
-
-.filter-group:hover {
-  background: #f8f9fa;
-}
-
-.filter-group:last-child {
-  border-bottom: none;
-}
-
-.filter-group h6 {
-  color: #0077b6;
-  font-size: 1rem;
-  margin-bottom: 15px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.filter-group .form-check {
-  margin-bottom: 12px;
-  padding-left: 1.85rem;
-  transition: all 0.2s ease;
-}
-
-.filter-group .form-check:hover {
-  padding-left: 2rem;
-}
-
-.filter-group .form-check-input {
-  width: 1.2rem;
-  height: 1.2rem;
-  margin-top: 0.2rem;
-  border: 2px solid #0077b6;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.filter-group .form-check-input:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 0 3px rgba(0,119,182,0.1);
-}
-
-.filter-group .form-check-input:checked {
-  background-color: #0077b6;
-  border-color: #0077b6;
-  box-shadow: 0 0 0 4px rgba(0,119,182,0.2);
-}
-
-.filter-group .form-check-label {
-  font-size: 0.9rem;
-  color: #495057;
-  cursor: pointer;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.filter-group .form-check-label:hover {
-  color: #0077b6;
-}
-
-.filter-group .btn-link {
-  color: #0077b6;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.filter-group .btn-link:hover {
-  color: #005f8f;
-  transform: translateX(3px);
-}
-
-.filter-group .form-control {
-  border: 2px solid #dee2e6;
-  border-radius: 10px;
-  padding: 10px 14px;
-  transition: all 0.3s ease;
-}
-
-.filter-group .form-control:focus {
-  border-color: #0077b6;
-  box-shadow: 0 0 0 4px rgba(0,119,182,0.15);
-  transform: scale(1.02);
-}
-
-/* Sort Dropdown - Enhanced */
-.sort-select {
-  border: 2px solid #dee2e6;
-  border-radius: 10px;
-  padding: 10px 18px;
-  font-size: 0.9rem;
-  color: #495057;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.sort-select:hover {
-  border-color: #0077b6;
-  box-shadow: 0 4px 12px rgba(0,119,182,0.15);
-}
-
-.sort-select:focus {
-  border-color: #0077b6;
-  box-shadow: 0 0 0 4px rgba(0,119,182,0.2);
-  outline: none;
-}
-
-/* Load More Button - Enhanced */
+/* Filter Controls - Simplified */
 .btn-load-more {
   background: white;
   border: 3px solid #0077b6;
@@ -6126,7 +6090,7 @@ main.vaccine-detail {
 }
 
 .btn-load-more::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -6140,7 +6104,7 @@ main.vaccine-detail {
 .btn-load-more:hover {
   color: white;
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,119,182,0.3);
+  box-shadow: 0 6px 20px rgba(0, 119, 182, 0.3);
 }
 
 .btn-load-more:hover::before {
@@ -6150,24 +6114,6 @@ main.vaccine-detail {
 .btn-load-more:active {
   transform: translateY(-1px);
 }
-
-/* Reset Filter Button */
-.filter-sidebar .btn-outline-primary {
-  border-width: 2px;
-  font-weight: 700;
-  padding: 12px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-}
-
-.filter-sidebar .btn-outline-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,119,182,0.2);
-}
-
 
 /* ============================================
    AUTHENTICATION PAGES (LOGIN & REGISTER)
@@ -6193,7 +6139,7 @@ main.vaccine-detail {
 }
 
 .auth-left::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -6224,8 +6170,13 @@ main.vaccine-detail {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .brand-logo i {
@@ -6528,7 +6479,7 @@ main.vaccine-detail {
 }
 
 .forgot-password::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -6642,13 +6593,18 @@ main.vaccine-detail {
 
 .btn-login::before,
 .btn-register::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -6688,7 +6644,7 @@ main.vaccine-detail {
 
 .btn-login.loading::after,
 .btn-register.loading::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 20px;
   height: 20px;
@@ -6703,7 +6659,9 @@ main.vaccine-detail {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Divider */
@@ -6717,7 +6675,7 @@ main.vaccine-detail {
 
 .auth-page .divider::before,
 .auth-page .divider::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
   background: linear-gradient(to right, transparent, #dee2e6, transparent);
@@ -6797,7 +6755,7 @@ main.vaccine-detail {
 }
 
 .auth-switch a::after {
-  content: ' →';
+  content: " →";
   transition: transform 0.3s ease;
   display: inline-block;
 }
@@ -6864,7 +6822,6 @@ main.vaccine-detail {
     margin-bottom: 20px;
   }
 }
-
 
 /* ============================================
    CART PAGE (SHOPPING CART & BOOKING)
@@ -7561,3 +7518,965 @@ main.vaccine-detail {
   }
 }
 
+/* ======================================================================================================================= */
+/* VACCINE PHONG BENH PAGE - ENHANCED STYLES */
+/* ======================================================================================================================= */
+
+/* Page Hero Banner */
+.page-hero-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.page-hero-banner h1 {
+  position: relative;
+  z-index: 1;
+  animation: slideDown 0.6s ease-out;
+}
+
+.page-hero-banner p {
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.6s ease-out 0.2s both;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stats Section */
+.stats-section {
+  background: #f8f9fa;
+  padding: 3rem 0;
+}
+
+.stat-card {
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.5s ease;
+}
+
+.stat-card:hover::before {
+  left: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 119, 182, 0.3);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  transition: transform 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.2) rotate(5deg);
+  /* Page Hero Banner */
+  .page-hero-banner {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero-banner h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+    animation: slideDown 0.6s ease-out;
+  }
+
+  .page-hero-banner p {
+    font-size: 1.3rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.6s ease-out 0.2s both;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Stats Section */
+  .stats-section {
+    background: #f8f9fa;
+    padding: 3rem 0;
+  }
+
+  .stat-card {
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    background: white;
+    padding: 2rem;
+    border: 1px solid #e9ecef;
+  }
+
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: left 0.5s ease;
+  }
+
+  .stat-card:hover::before {
+    left: 100%;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0, 119, 182, 0.3);
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    transition: transform 0.4s ease;
+    position: relative;
+    z-index: 1;
+    color: #0077b6;
+  }
+
+  .stat-card:hover .stat-icon {
+    transform: scale(1.2) rotate(5deg);
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    color: #0077b6;
+  }
+
+  .stat-label {
+    font-size: 0.95rem;
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+    color: #495057;
+    font-weight: 500;
+  }
+
+  /* Vaccine Catalog Section */
+  .vaccine-catalog-heading {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+  }
+
+  .vaccine-catalog-heading .text-primary {
+    background: linear-gradient(135deg, #0077b6 0%, #0096c7 50%, #00b4d8 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 4s ease infinite;
+  }
+
+  @keyframes gradientFlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Filter Bar */
+  .filter-bar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .filter-bar .form-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0077b6;
+    margin-bottom: 8px;
+  }
+
+  /* Filter Sidebar */
+  /* Form Controls - Simple */
+  .form-select-sm,
+  .form-control-sm {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    background-color: white;
+  }
+
+  .form-select-sm:focus,
+  .form-control-sm:focus {
+    border-color: #0077b6;
+    box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.15);
+    background-color: #f8fbfd;
+  }
+
+  .form-select-sm:hover,
+  .form-control-sm:hover {
+    border-color: #0096c7;
+  }
+
+  .input-group {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .input-group:focus-within {
+    box-shadow: 0 4px 16px rgba(0, 119, 182, 0.15);
+  }
+
+  .input-group .form-control {
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+
+  .input-group .form-control:focus {
+    border-color: #0077b6;
+    box-shadow: none;
+    font-size: 1rem;
+  }
+
+  .input-group .form-control::placeholder {
+    font-size: 1rem;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: 1rem;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid #dee2e6;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #0077b6;
+    box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.15);
+    font-size: 1rem;
+  }
+
+  .form-control:hover,
+  .form-select:hover {
+    border-color: #0096c7;
+  }
+
+  .input-group .btn {
+    border: 2px solid #0077b6;
+    transition: all 0.3s ease;
+  }
+
+  .input-group .btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+
+  .btn-outline-primary {
+    border-radius: 8px;
+    border-width: 2px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+  }
+
+  .btn-outline-primary:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 119, 182, 0.2);
+  }
+
+  /* Product Card Enhanced */
+  .product-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    height: 100%;
+  }
+
+  .product-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 119, 182, 0) 0%,
+      rgba(0, 119, 182, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .product-card:hover::before {
+    opacity: 1;
+  }
+
+  .product-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 16px 48px rgba(0, 119, 182, 0.25);
+  }
+
+  .product-card img {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    z-index: 0;
+  }
+
+  .product-card:hover img {
+    transform: scale(1.12);
+  }
+
+  .product-card .card-body {
+    position: relative;
+    z-index: 2;
+  }
+
+  .product-card .card-title {
+    color: #00457a;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+    line-height: 1.4;
+  }
+
+  .product-card:hover .card-title {
+    color: #0077b6;
+  }
+
+  .product-card .card-subtitle {
+    color: #6c757d;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+  }
+
+  .product-card:hover .card-subtitle {
+    color: #0077b6;
+  }
+
+  /* Button Styles */
+  .btn-addcart-custom-card {
+    border-radius: 20px;
+    border: 2px solid #148e63;
+    background-color: transparent;
+    color: #148e63;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-addcart-custom-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #148e63;
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .btn-addcart-custom-card:hover::before {
+    left: 0;
+  }
+
+  .btn-addcart-custom-card:hover {
+    color: #ffffff;
+    border-color: #148e63;
+    box-shadow: 0 4px 12px rgba(20, 142, 99, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .btn-price-custom-card {
+    background: linear-gradient(135deg, #148e63 0%, #0f6b47 100%);
+    color: white;
+    border-radius: 20px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-price-custom-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f6b47 0%, #05522d 100%);
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .btn-price-custom-card:hover::before {
+    left: 0;
+  }
+
+  .btn-price-custom-card:hover {
+    color: white;
+    box-shadow: 0 6px 20px rgba(20, 142, 99, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .btn-addcart-custom-card:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Pagination Styles */
+  .pagination-lg {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pagination-lg .page-link {
+    padding: 14px 22px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: 3px solid #e3e6ea;
+    border-radius: 12px !important;
+    color: #495057;
+    background: white;
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pagination-lg .page-link:hover:not(.disabled) {
+    background: linear-gradient(135deg, #0077b6 0%, #0056b3 100%);
+    border-color: #0056b3;
+    color: white;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 119, 182, 0.4);
+  }
+
+  .pagination-lg .page-item.active .page-link {
+    background: linear-gradient(135deg, #0077b6 0%, #0056b3 100%);
+    border-color: #0056b3;
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 6px 16px rgba(0, 119, 182, 0.5);
+  }
+
+  .pagination-lg .page-item.disabled .page-link {
+    background-color: #f8f9fa;
+    border-color: #e3e6ea;
+    color: #adb5bd;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 0;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cta-section h2,
+  .cta-section p,
+  .cta-section a {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-section h2 {
+    animation: slideDown 0.6s ease-out;
+  }
+
+  .cta-section p {
+    animation: slideUp 0.6s ease-out 0.15s both;
+  }
+
+  .cta-section .d-flex {
+    animation: slideUp 0.6s ease-out 0.3s both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .page-hero-banner {
+      padding: 50px 0 40px !important;
+    }
+
+    .page-hero-banner h1 {
+      font-size: 2.5rem;
+    }
+
+    .page-hero-banner p {
+      font-size: 1.1rem;
+    }
+
+    .stats-section {
+      padding: 2rem 0;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .pagination-lg {
+      gap: 4px;
+    }
+
+    .pagination-lg .page-link {
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      min-width: 40px;
+    }
+
+    .cta-section {
+      padding: 2.5rem 0;
+    }
+
+    .cta-section h2 {
+      font-size: 1.8rem;
+    }
+
+    .cta-section p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .page-hero-banner h1 {
+      font-size: 2rem;
+    }
+
+    .page-hero-banner p {
+      font-size: 1rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem 1rem;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+    }
+
+    .product-card {
+      border-radius: 12px;
+    }
+
+    .pagination-lg .page-link {
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      min-width: 36px;
+    }
+
+    .cta-section .d-flex {
+      flex-direction: column;
+      gap: 1rem !important;
+    }
+
+    .cta-section .btn {
+      width: 100%;
+    }
+  }
+
+  /* ======================================================================================================================= */
+  /* GOI VACCINE & KHUYEN MAI - ADDITIONAL STYLES */
+  /* ======================================================================================================================= */
+
+  /* Package Hero Banner */
+  .package-hero-banner {
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+    padding: 60px 0;
+    margin-bottom: 3rem;
+  }
+
+  .package-hero-banner h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .package-hero-banner p {
+    color: white;
+    font-size: 1.2rem;
+    opacity: 0.95;
+  }
+
+  /* Package Card Styles */
+  .package-card.h-100 {
+    display: flex !important;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+
+  .package-card.h-100:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 119, 182, 0.2);
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6c757d;
+  }
+
+  .empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .empty-state p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Filter Section Styles */
+  .filter-section {
+    background: #f8f9fa;
+    padding: 2rem 0;
+    margin-bottom: 3rem;
+    border-radius: 12px;
+  }
+
+  .filter-section label {
+    font-weight: 600;
+    color: #0077b6;
+    margin-bottom: 0.5rem;
+  }
+
+  .filter-section .form-control,
+  .filter-section .form-select {
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px 16px;
+    height: 44px;
+    transition: border-color 0.3s ease;
+  }
+
+  .filter-section .form-control:focus,
+  .filter-section .form-select:focus {
+    border-color: #0077b6;
+    box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.25);
+  }
+
+  /* Pagination Styles */
+  .pagination {
+    margin-top: 2rem;
+  }
+
+  .pagination .page-link {
+    color: #0077b6;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    margin: 0 4px;
+    padding: 10px 16px;
+    transition: all 0.3s ease;
+  }
+
+  .pagination .page-link:hover {
+    background-color: #0077b6;
+    border-color: #0077b6;
+    color: white;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: #0077b6;
+    border-color: #0077b6;
+    color: white;
+  }
+
+  /* Promo Hero Modern */
+  .promo-hero-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 60px 0;
+    margin-bottom: 3rem;
+  }
+
+  .breadcrumb-modern {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  .breadcrumb-modern .breadcrumb-item a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .breadcrumb-modern .breadcrumb-item.active {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .promo-hero-modern h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  .promo-hero-modern p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+  }
+
+  /* Section Title Modern */
+  .section-title-modern {
+    color: #0a2157;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle-modern {
+    color: #6c757d;
+    font-size: 1.1rem;
+  }
+
+  /* Card Tag Colors */
+  .card-tag-purple {
+    background: #e8e1ff;
+    color: #7c3aed;
+  }
+
+  .card-tag-orange {
+    background: #fff3e0;
+    color: #f57c00;
+  }
+
+  .card-tag-green {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .card-tag-blue {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+
+  .card-tag-red {
+    background: #ffebee;
+    color: #c62828;
+  }
+
+  .card-tag-gold {
+    background: #fff9e6;
+    color: #f9a825;
+  }
+
+  .card-tag-rainbow {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    color: white;
+  }
+
+  /* Card Footer */
+  .card-footer-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+    margin-top: auto;
+  }
+
+  .card-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+
+  .btn-detail-new {
+    background: linear-gradient(135deg, #0077b6 0%, #00457a 100%);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .btn-detail-new:hover {
+    background: linear-gradient(135deg, #00457a 0%, #0a2157 100%);
+    color: white;
+    transform: translateX(5px);
+  }
+
+  /* Card Title */
+  .card-title-new {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0a2157;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    min-height: 60px;
+  }
+
+  .card-desc-new {
+    color: #4c5a6b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .package-hero-banner h1,
+    .promo-hero-modern h1 {
+      font-size: 2rem;
+    }
+
+    .package-hero-banner p,
+    .promo-hero-modern p {
+      font-size: 1rem;
+    }
+
+    .section-title-modern {
+      font-size: 1.5rem;
+    }
+
+    .card-img-wrapper {
+      height: 200px;
+    }
+
+    .filter-section {
+      padding: 1.5rem;
+    }
+
+    .card-footer-new {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .btn-detail-new {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

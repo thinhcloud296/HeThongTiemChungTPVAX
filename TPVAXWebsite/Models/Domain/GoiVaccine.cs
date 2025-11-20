@@ -26,6 +26,9 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(50)]
         public string TrangThai { get; set; }
 
+        [StringLength(255)]
+        public string HinhAnh { get; set; }
+
         // Navigation properties
         public virtual ICollection<ChiTietGoiVaccine> ChiTietGoiVaccine { get; set; }
     }

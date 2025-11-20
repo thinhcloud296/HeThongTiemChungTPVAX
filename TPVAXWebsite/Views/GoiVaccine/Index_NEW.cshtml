@@ -1,0 +1,242 @@
+@model IEnumerable<TPVAXWebsite.Models.Domain.GoiVaccine>
+@{
+    ViewBag.Title = "Gói Vắc Xin Bảo Vệ Toàn Diện";
+    int totalPackages = ViewBag.TotalCount ?? 0;
+    int activePackages = ViewBag.ActivePackages ?? 0;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Content/goivaccine_style.css")" rel="stylesheet" />
+}
+
+<!-- Hero Banner với Wave Effect -->
+<section class="goivaccine-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="hero-badge">
+                    <i class="fas fa-shield-virus me-2"></i>Bảo vệ toàn diện
+                </div>
+                <h1 class="goivaccine-title">Gói Vắc Xin <span class="highlight-text">Tiết Kiệm & An Toàn</span></h1>
+                <p class="goivaccine-subtitle">Lựa chọn thông minh cho sức khỏe gia đình - Giảm 10-15% so với tiêm lẻ</p>
+                <div class="hero-stats-row">
+                    <div class="hero-stat-item">
+                        <div class="stat-value">@totalPackages+</div>
+                        <div class="stat-label">Gói vắc xin</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="stat-value">@activePackages</div>
+                        <div class="stat-label">Đang áp dụng</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="stat-value">15%</div>
+                        <div class="stat-label">Tiết kiệm tối đa</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="hero-image-wrapper">
+                    <div class="floating-icon floating-icon-1"><i class="fas fa-syringe"></i></div>
+                    <div class="floating-icon floating-icon-2"><i class="fas fa-shield-alt"></i></div>
+                    <div class="floating-icon floating-icon-3"><i class="fas fa-heart"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wave-decoration">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Quick Filter Pills -->
+<section class="container my-4">
+    <div class="goivaccine-filter-pills">
+        <form method="get" action="@Url.Action("Index", "GoiVaccine")" class="d-flex flex-wrap gap-3 align-items-center">
+            <div class="filter-search-box flex-grow-1">
+                <i class="fas fa-search"></i>
+                <input type="text" name="search" class="filter-search-input" placeholder="Tìm kiếm gói vaccine..." value="@(ViewBag.Search ?? "")" />
+            </div>
+            <select name="doiTuong" class="filter-select" onchange="this.form.submit()">
+                <option value="">👥 Tất cả đối tượng</option>
+                <option value="Trẻ em" @(ViewBag.DoiTuong == "Trẻ em" ? "selected" : "")>👶 Trẻ em</option>
+                <option value="Thanh thiếu niên" @(ViewBag.DoiTuong == "Thanh thiếu niên" ? "selected" : "")>🧒 Thanh thiếu niên</option>
+                <option value="Người lớn" @(ViewBag.DoiTuong == "Người lớn" ? "selected" : "")>🧑 Người lớn</option>
+                <option value="Phụ nữ" @(ViewBag.DoiTuong == "Phụ nữ" ? "selected" : "")>👩 Phụ nữ mang thai</option>
+            </select>
+            <button type="submit" class="btn-filter-search">
+                <i class="fas fa-search me-2"></i>Tìm kiếm
+            </button>
+            <a href="@Url.Action("Index", "GoiVaccine")" class="btn-filter-reset">
+                <i class="fas fa-redo me-2"></i>Đặt lại
+            </a>
+        </form>
+    </div>
+</section>
+
+<!-- Package Cards - Pricing Style -->
+<section class="container my-5">
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var goi in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card-goi">
+                        @if (!string.IsNullOrEmpty(goi.HinhAnh))
+                        {
+                            <div class="pricing-card-image">
+                                <img src="@Url.Content("~/Content/Images/GoiVaccine/" + goi.HinhAnh)" alt="@goi.TenGoi" />
+                                <div class="pricing-badge">
+                                    <i class="fas fa-award"></i> Phổ biến
+                                </div>
+                            </div>
+                        }
+                        <div class="pricing-card-body">
+                            @if (!string.IsNullOrEmpty(goi.DoiTuongApDung))
+                            {
+                                <div class="pricing-target-badge">
+                                    <i class="fas fa-users me-1"></i>@goi.DoiTuongApDung
+                                </div>
+                            }
+                            <h3 class="pricing-card-title">@goi.TenGoi</h3>
+                            @if (!string.IsNullOrEmpty(goi.MoTa))
+                            {
+                                <p class="pricing-card-desc">
+                                    @(goi.MoTa.Length > 80 ? goi.MoTa.Substring(0, 80) + "..." : goi.MoTa)
+                                </p>
+                            }
+                            <div class="pricing-divider"></div>
+                            <div class="pricing-price-section">
+                                <div class="pricing-label">Giá trọn gói</div>
+                                <div class="pricing-price">
+                                    <span class="price-amount">@string.Format("{0:N0}", goi.GiaGoi)</span>
+                                    <span class="price-currency">đ</span>
+                                </div>
+                                <div class="pricing-save-badge">
+                                    <i class="fas fa-tag me-1"></i>Tiết kiệm 10-15%
+                                </div>
+                            </div>
+                            <div class="pricing-features">
+                                <div class="pricing-feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Lịch tiêm khoa học</span>
+                                </div>
+                                <div class="pricing-feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Vaccine chính hãng</span>
+                                </div>
+                                <div class="pricing-feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Tư vấn miễn phí</span>
+                                </div>
+                            </div>
+                            <div class="pricing-actions">
+                                <a href="@Url.Action("Detail", "GoiVaccine", new { id = goi.MaGoi })" class="btn-pricing-detail">
+                                    <i class="fas fa-file-medical me-2"></i>Xem chi tiết
+                                </a>
+                                <button class="btn-pricing-book" onclick="alert('Chức năng đặt lịch đang phát triển')">
+                                    <i class="fas fa-calendar-check me-2"></i>Đặt lịch ngay
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="empty-state-goi">
+                    <div class="empty-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>Không tìm thấy gói vaccine</h3>
+                    <p>@(ViewBag.Error ?? "Hiện tại chưa có gói vắc xin phù hợp với bộ lọc của bạn")</p>
+                    <a href="@Url.Action("Index", "GoiVaccine")" class="btn-empty-reset">
+                        <i class="fas fa-redo me-2"></i>Xem tất cả gói
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+    @* Pagination *@
+    @if (totalPages > 1)
+    {
+        <div class="row mt-5">
+            <div class="col-12">
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center">
+                        @if (currentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, doiTuong = ViewBag.DoiTuong, page = 1 })">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, doiTuong = ViewBag.DoiTuong, page = currentPage - 1 })">
+                                    <i class="fas fa-angle-left"></i>
+                                </a>
+                            </li>
+                        }
+
+                        @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, doiTuong = ViewBag.DoiTuong, page = i })">@i</a>
+                            </li>
+                        }
+
+                        @if (currentPage < totalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, doiTuong = ViewBag.DoiTuong, page = currentPage + 1 })">
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, doiTuong = ViewBag.DoiTuong, page = totalPages })">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+                <div class="text-center mt-3">
+                    <p class="text-muted">
+                        Trang <strong class="text-primary fs-5">@currentPage</strong> / <strong>@totalPages</strong>
+                        <span class="mx-2">|</span>
+                        Tổng cộng <strong class="text-success">@totalPackages</strong> gói vaccine
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+<!-- CTA Section -->
+<section class="container my-5">
+    <div class="cta-section text-center p-5 rounded-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <h2 class="text-white mb-3">
+            <i class="fas fa-headset me-3"></i>Cần tư vấn chọn gói phù hợp?
+        </h2>
+        <p class="text-white mb-4" style="font-size: 1.1rem;">
+            Đội ngũ chuyên gia của chúng tôi sẵn sàng hỗ trợ bạn 24/7
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="tel:0973085626" class="btn btn-light btn-lg px-4" style="border-radius: 50px;">
+                <i class="fas fa-phone me-2"></i>Gọi ngay: 0973.085.626
+            </a>
+            <a href="@Url.Action("Index", "TuVan")" class="btn btn-outline-light btn-lg px-4" style="border-radius: 50px; border-width: 2px;">
+                <i class="fas fa-comment-medical me-2"></i>Tư vấn online
+            </a>
+        </div>
+    </div>
+</section>

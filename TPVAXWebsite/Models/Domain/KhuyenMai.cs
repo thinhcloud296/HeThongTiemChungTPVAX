@@ -35,6 +35,9 @@ namespace TPVAXWebsite.Models.Domain
 
         public bool TrangThai { get; set; } = false;
 
+        [StringLength(255)]
+        public string HinhAnh { get; set; }
+
         // Navigation properties
         public virtual ICollection<HoaDon> HoaDon { get; set; }
         public virtual ICollection<ChiTietKhuyenMai> ChiTietKhuyenMai { get; set; }
