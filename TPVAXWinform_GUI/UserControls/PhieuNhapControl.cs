@@ -26,8 +26,25 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void PhieuNhapControl_Load(object sender, EventArgs e)
         {
+            bool canManage = RoleManager.RoleNVKho();
+
+            // Ẩn/Hiện nút Thêm Mới
+            btnThemMoi.Visible = canManage;
+
+            // Ẩn/Hiện menu Xác nhận nhập kho (Giả sử tên menu item là toolStripMenuItemXacNhanNhap)
+            // Lưu ý: Bạn cần đảm bảo menu này đã được tạo trong Designer và có Name đúng
+            if (dgvPhieuNhap.ContextMenuStrip != null)
+            {
+                var itemXacNhan = dgvPhieuNhap.ContextMenuStrip.Items["toolStripMenuItemXacNhanNhap"];
+                if (itemXacNhan != null)
+                {
+                    itemXacNhan.Visible = canManage;
+                }
+            }
+            // 2. Tải dữ liệu
             LoadPhieuNhap();
-            // Thêm event handler để tô màu trạng thái
+
+            // 3. Gán event format
             dgvPhieuNhap.CellFormatting += dgvPhieuNhap_CellFormatting;
         }
 
@@ -251,31 +268,40 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void dgvPhieuNhap_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Bỏ qua hàng tiêu đề
-            if (e.RowIndex < 0)
-                return;
-
-            // Format cột Trạng thái
-            if (e.ColumnIndex == dgvPhieuNhap.Columns["colTrangThai"].Index && e.Value != null)
+            // 1. Kiểm tra xem có phải đang ở cột "colTrangThai" không
+            // Lưu ý: Đảm bảo "colTrangThai" là (Name) của cột trong Designer
+            if (dgvPhieuNhap.Columns[e.ColumnIndex].Name == "colTrangThai")
             {
-                string trangThaiValue = e.Value.ToString();
-                DataGridViewCellStyle style = e.CellStyle;
-                style.Font = new Font(e.CellStyle.Font, FontStyle.Regular);
-
-                if (trangThaiValue.Equals("True", StringComparison.OrdinalIgnoreCase) || trangThaiValue.Equals("1"))
+                // 2. Kiểm tra null và DBNull
+                if (e.Value != null && e.Value != DBNull.Value)
                 {
-                    e.Value = "Đã xác nhận";
-                    style.BackColor = Color.FromArgb(200, 230, 201); // Xanh lá
-                    style.ForeColor = Color.Black;
-                }
-                else
-                {
-                    e.Value = "Chưa xác nhận";
-                    style.BackColor = Color.FromArgb(255, 224, 178); // Cam
-                    style.ForeColor = Color.Black;
-                }
+                    // 3. Ép kiểu sang bool trực tiếp (An toàn hơn so sánh chuỗi)
+                    bool trangThai = false;
 
-                e.FormattingApplied = true;
+                    // Thử ép kiểu, nếu lỗi thì mặc định là false
+                    try
+                    {
+                        trangThai = Convert.ToBoolean(e.Value);
+                    }
+                    catch { }
+
+                    // 4. Set hiển thị
+                    e.Value = trangThai ? "Đã xác nhận" : "Chưa xác nhận";
+
+                    // 5. Set màu sắc
+                    if (trangThai)
+                    {
+                        e.CellStyle.BackColor = Color.FromArgb(200, 230, 201); // Xanh lá
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        e.CellStyle.BackColor = Color.FromArgb(255, 224, 178); // Cam
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
+
+                    e.FormattingApplied = true;
+                }
             }
         }
     }

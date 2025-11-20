@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace TPVAXWinform_DAL
 {
     public static class DBConnect
     {
-        private static readonly string _cs =
-            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=QLTIEMCHUNG;";
+        private static string strConnect = ConfigurationManager.ConnectionStrings["TPVAX_DB"].ConnectionString;
 
         private const int DefaultTimeout = 30;
 
-        public static SqlConnection GetConnection() => new SqlConnection(_cs);
+        public static SqlConnection GetConnection() => new SqlConnection(strConnect);
 
         public static SqlParameter Param(string name, object value, SqlDbType? type = null, int? size = null)
         {
@@ -50,7 +50,7 @@ namespace TPVAXWinform_DAL
             /// </param>
             public EditableBuffer(string selectSql)
             {
-                _adapter = new SqlDataAdapter(selectSql, _cs)
+                _adapter = new SqlDataAdapter(selectSql, strConnect)
                 {
                     MissingSchemaAction = MissingSchemaAction.AddWithKey,
                     // Nếu muốn giữ RowState sau Fill:
