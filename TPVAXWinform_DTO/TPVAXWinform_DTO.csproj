@@ -47,12 +47,14 @@
   <ItemGroup>
     <Compile Include="ChiTietGoiVaccineDTO.cs" />
     <Compile Include="ChiTietHoaDonDTO.cs" />
+    <Compile Include="ChiTietKhuyenMaiDTO.cs" />
     <Compile Include="ChiTietPhieuNhapDTO.cs" />
     <Compile Include="GoiVaccineDTO.cs" />
     <Compile Include="HoaDonDTO.cs" />
     <Compile Include="HoaDonInDTO.cs" />
     <Compile Include="HoSoTiemChungDTO.cs" />
     <Compile Include="KhachHangDTO.cs" />
+    <Compile Include="KhuyenMaiDTO.cs" />
     <Compile Include="LichTiemDTO.cs" />
     <Compile Include="LienKetHoSoDTO.cs" />
     <Compile Include="LoaiBenhDTO.cs" />

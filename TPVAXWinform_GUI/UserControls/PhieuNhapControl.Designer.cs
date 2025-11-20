@@ -47,6 +47,7 @@
             this.colNgayLap = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenNV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenNCC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTrangThai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemXemChiTiet = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInPhieuNhap = new System.Windows.Forms.ToolStripMenuItem();
@@ -228,7 +229,8 @@
             this.colMaPN,
             this.colNgayLap,
             this.colTenNV,
-            this.colTenNCC});
+            this.colTenNCC,
+            this.colTrangThai});
             this.dgvPhieuNhap.ContextMenuStrip = this.contextMenuStrip1;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -282,6 +284,13 @@
             this.colTenNCC.MinimumWidth = 8;
             this.colTenNCC.Name = "colTenNCC";
             this.colTenNCC.ReadOnly = true;
+            // 
+            // colTrangThai
+            // 
+            this.colTrangThai.HeaderText = "Trạng Thái";
+            this.colTrangThai.MinimumWidth = 8;
+            this.colTrangThai.Name = "colTrangThai";
+            this.colTrangThai.ReadOnly = true;
             // 
             // contextMenuStrip1
             // 
@@ -353,6 +362,7 @@ private System.Windows.Forms.Panel pnlLoc;
  private System.Windows.Forms.DataGridViewTextBoxColumn colNgayLap;
    private System.Windows.Forms.DataGridViewTextBoxColumn colTenNV;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenNCC;
+ private System.Windows.Forms.DataGridViewTextBoxColumn colTrangThai;
  private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemChiTiet;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInPhieuNhap;

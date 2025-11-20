@@ -59,6 +59,7 @@
             this.hoaDonControl1 = new TPVAXWinform_GUI.UserControls.HoaDonControl();
             this.nhanVienControl1 = new TPVAXWinform_GUI.UserControls.NhanVienControl();
             this.phieuNhapControl1 = new TPVAXWinform_GUI.UserControls.PhieuNhapControl();
+            this.khuyenMaiControl1 = new TPVAXWinform_GUI.UserControls.KhuyenMaiControl();
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -521,6 +522,7 @@
             this.panel3.Controls.Add(this.hoaDonControl1);
             this.panel3.Controls.Add(this.nhanVienControl1);
             this.panel3.Controls.Add(this.phieuNhapControl1);
+            this.panel3.Controls.Add(this.khuyenMaiControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -603,6 +605,16 @@
             this.phieuNhapControl1.Name = "phieuNhapControl1";
             this.phieuNhapControl1.Size = new System.Drawing.Size(1408, 1284);
             this.phieuNhapControl1.TabIndex = 6;
+            // 
+            // khuyenMaiControl1
+            // 
+            this.khuyenMaiControl1.BackColor = System.Drawing.Color.White;
+            this.khuyenMaiControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.khuyenMaiControl1.Location = new System.Drawing.Point(10, 10);
+            this.khuyenMaiControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.khuyenMaiControl1.Name = "khuyenMaiControl1";
+            this.khuyenMaiControl1.Size = new System.Drawing.Size(1408, 1284);
+            this.khuyenMaiControl1.TabIndex = 8;
             // 
             // btnDangXuat
             // 
@@ -688,6 +700,7 @@
         private TPVAXWinform_GUI.UserControls.HoaDonControl hoaDonControl1;
         private TPVAXWinform_GUI.UserControls.NhanVienControl nhanVienControl1;
         private TPVAXWinform_GUI.UserControls.PhieuNhapControl phieuNhapControl1;
+        private TPVAXWinform_GUI.UserControls.KhuyenMaiControl khuyenMaiControl1;
         private System.Windows.Forms.Button btnDangXuat;
         private System.Windows.Forms.Label label2;
     }

@@ -209,6 +209,12 @@
     <Compile Include="Forms\frmThemPhieuNhap.Designer.cs">
       <DependentUpon>frmThemPhieuNhap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmThemSuaKhuyenMai.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmThemSuaKhuyenMai.Designer.cs">
+      <DependentUpon>frmThemSuaKhuyenMai.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\XacNhanTiemForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -283,6 +289,12 @@
     </Compile>
     <Compile Include="UserControls\HoSoTiemChungControl.Designer.cs">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\KhuyenMaiControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\KhuyenMaiControl.Designer.cs">
+      <DependentUpon>KhuyenMaiControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\LichTiemControl.cs">
       <SubType>UserControl</SubType>
@@ -386,6 +398,9 @@
     <EmbeddedResource Include="UserControls\HoSoTiemChungControl.resx">
       <DependentUpon>HoSoTiemChungControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\KhuyenMaiControl.resx">
+      <DependentUpon>KhuyenMaiControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LichTiemControl.resx">
       <DependentUpon>LichTiemControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -442,7 +457,6 @@
     <Content Include="Assets\Images\logo.png" />
     <None Include="Resources\Doctor Hospital GIF.gif" />
     <None Include="Resources\Doctor Hospital GIF1.gif" />
-    <Content Include="Forms\frmMain_ThongKe_Integration_Guide.txt" />
     <Content Include="Resources\logo.png" />
     <Content Include="vaccine.ico" />
   </ItemGroup>

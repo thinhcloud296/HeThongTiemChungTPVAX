@@ -63,12 +63,14 @@
   <ItemGroup>
     <Compile Include="ChiTietGoiVaccineBLL.cs" />
     <Compile Include="ChiTietHoaDonBLL.cs" />
+    <Compile Include="ChiTietKhuyenMaiBLL.cs" />
     <Compile Include="ChiTietPhieuNhapBLL.cs" />
     <Compile Include="GoiVaccineBLL.cs" />
     <Compile Include="HoaDonBLL.cs" />
     <Compile Include="HoaDonInBLL.cs" />
     <Compile Include="HoSoTiemChungBLL.cs" />
     <Compile Include="KhachHangBLL.cs" />
+    <Compile Include="KhuyenMaiBLL.cs" />
     <Compile Include="LichTiemBLL.cs" />
     <Compile Include="LienKetHoSoBLL.cs" />
     <Compile Include="LoaiBenhBLL.cs" />

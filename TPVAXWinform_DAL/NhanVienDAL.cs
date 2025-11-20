@@ -17,7 +17,10 @@ namespace TPVAXWinform_DAL
         {
             return DBConnect.ExecuteQuery(selectAll);
         }
-
+        public DataTable GetDSNVKho()
+        {
+            return DBConnect.ExecuteQuery("SELECT MaNV, HoTen FROM NhanVien WHERE ChucVu = 3 OR ChucVu = 1 AND TrangThai = 1");
+        }
         public string GetLastMaNV()
         {
             const string sql = "SELECT TOP 1 MaNV FROM dbo.NhanVien ORDER BY MaNV DESC";

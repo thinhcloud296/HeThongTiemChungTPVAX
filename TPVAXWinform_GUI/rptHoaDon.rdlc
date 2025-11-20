@@ -53,15 +53,23 @@
           <DataField>DonGia</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ThanhTien">
-          <DataField>ThanhTien</DataField>
+        <Field Name="GiaGoc">
+          <DataField>GiaGoc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="TongTienHoaDon">
-          <DataField>TongTienHoaDon</DataField>
+        <Field Name="TienGiam">
+          <DataField>TienGiam</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsHoaDon</rd:DataSetName>
+        <rd:SchemaPath>C:\srcKhoaLuan\TPVAXWinform_GUI\dsHoaDon.xsd</rd:SchemaPath>
+        <rd:TableName>dtHoaDon</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
     </DataSet>
   </DataSets>
   <ReportSections>
@@ -601,14 +609,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="DonGia">
+                        <Textbox Name="GiaGoc">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!DonGia.Value</Value>
+                                  <Value>=Fields!GiaGoc.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>#,##0</Format>
@@ -620,7 +628,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>DonGia</rd:DefaultName>
+                          <rd:DefaultName>GiaGoc</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -636,14 +644,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ThanhTien">
+                        <Textbox Name="GiaGoc1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Format(CDec(Fields!ThanhTien.Value), "N0")</Value>
+                                  <Value>=Fields!GiaGoc.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>#,##0</Format>
@@ -655,7 +663,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ThanhTien</rd:DefaultName>
+                          <rd:DefaultName>GiaGoc1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -719,7 +727,7 @@
                         </Style>
                       </TextRun>
                       <TextRun>
-                        <Value>=First(Fields!TongTienHoaDon.Value, "DataSet1")</Value>
+                        <Value>=First(Fields!DonGia.Value, "DataSet1")</Value>
                         <Style>
                           <FontSize>14pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -754,9 +762,21 @@
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
+              <Line Name="Line1">
+                <Top>1.1cm</Top>
+                <Left>0cm</Left>
+                <Height>0cm</Height>
+                <Width>19cm</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Dotted</Style>
+                  </Border>
+                </Style>
+              </Line>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>7.5cm</Top>
+            <Top>8.9cm</Top>
             <Left>0.5cm</Left>
             <Height>1.5cm</Height>
             <Width>19cm</Width>
@@ -790,7 +810,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox18</rd:DefaultName>
-            <Top>9.5cm</Top>
+            <Top>10.64653cm</Top>
             <Left>0.5cm</Left>
             <Height>0.8cm</Height>
             <Width>19cm</Width>
@@ -805,18 +825,6 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-          <Line Name="Line1">
-            <Top>9.2cm</Top>
-            <Left>0.5cm</Left>
-            <Height>0cm</Height>
-            <Width>19cm</Width>
-            <ZIndex>6</ZIndex>
-            <Style>
-              <Border>
-                <Style>Dotted</Style>
-              </Border>
-            </Style>
-          </Line>
           <Image Name="Image1">
             <Source>Embedded</Source>
             <Value>logo</Value>
@@ -825,7 +833,7 @@
             <Left>0.19685in</Left>
             <Height>0.61806in</Height>
             <Width>1.83333in</Width>
-            <ZIndex>7</ZIndex>
+            <ZIndex>6</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -853,6 +861,52 @@
             <Left>1.41987cm</Left>
             <Height>0.6cm</Height>
             <Width>3.16023cm</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox12">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Khuyến mãi: </Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=First(Fields!TienGiam.Value, "DataSet1")</Value>
+                    <Style>
+                      <Format>#,##0</Format>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value> VNĐ</Value>
+                    <Style>
+                      <Format>#,##0</Format>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox6</rd:DefaultName>
+            <Top>7.77153cm</Top>
+            <Left>11.51153cm</Left>
+            <Height>0.6cm</Height>
+            <Width>7.98847cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -865,7 +919,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>10.5cm</Height>
+        <Height>11.75236cm</Height>
         <Style />
       </Body>
       <Width>20cm</Width>

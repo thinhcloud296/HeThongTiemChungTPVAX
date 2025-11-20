@@ -17,7 +17,12 @@ namespace TPVAXWinform_DTO
         public string TenThuNgan { get; set; }
         public string TenSanPham { get; set; }
         public int SoLuong { get; set; }
-        public decimal DonGia { get; set; }
-        public decimal ThanhTien { get; set; }
+
+        // --- THÊM MỚI: Hiển thị giá gốc và giá khuyến mãi ---
+        public decimal GiaGoc { get; set; }        // Giá gốc (chưa giảm)
+        public decimal DonGia { get; set; } // Giá sau khuyến mãi (giá thực tế)
+        public decimal TienGiam { get; set; }        // Số tiền được giảm
+        // --- KẾT THÚC THÊM MỚI ---
+
     }
 }

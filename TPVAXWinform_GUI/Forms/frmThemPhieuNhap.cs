@@ -66,7 +66,7 @@ namespace TPVAXWinform_GUI.Forms
         private void LoadComboBoxes()
         {
             // Load Nhân viên
-            DataTable dtNhanVien = nhanVienBLL.GetData();
+            DataTable dtNhanVien = nhanVienBLL.GetDSNVKho();
             cboNhanVien.DataSource = dtNhanVien;
             cboNhanVien.DisplayMember = "HoTen";
             cboNhanVien.ValueMember = "MaNV";

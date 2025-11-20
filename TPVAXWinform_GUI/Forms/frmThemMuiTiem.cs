@@ -383,8 +383,9 @@ namespace TPVAXWinform_GUI
         {
             DataRowView drv;
             string maVC, tenVC, nuocSX, loaiBenh, loaiVC;
-            decimal giaBan;
+            decimal giaBanGoc; // Sửa tên biến để rõ ràng: đây là Giá Gốc
 
+            // 1. Lấy dữ liệu từ Grid
             try
             {
                 drv = (DataRowView)dgvVaccine.Rows[rowIndex].DataBoundItem;
@@ -393,7 +394,7 @@ namespace TPVAXWinform_GUI
                 nuocSX = drv["Nước sản xuất"].ToString();
                 loaiBenh = drv["CacBenhPhongNgua"].ToString();
                 loaiVC = drv["TenLoaiVaccine"].ToString();
-                giaBan = Convert.ToDecimal(drv["GiaBan"]);
+                giaBanGoc = Convert.ToDecimal(drv["GiaBan"]);
             }
             catch (Exception ex)
             {
@@ -401,9 +402,51 @@ namespace TPVAXWinform_GUI
                 return;
             }
 
-            string ngayTiem = dtpNgayTiem.Value.ToString("dd/MM/yyyy"); // --- SỬA: Định dạng ngày tháng
+            // 2. --- TÍNH TOÁN KHUYẾN MÃI ---
+            decimal giaBanThucTe = giaBanGoc; // Mặc định bằng giá gốc
+            string ghiChuKM = ""; // Chuỗi ghi chú thêm vào tên
+
+            try
+            {
+                // Gọi BLL để tìm khuyến mãi tốt nhất cho vaccine này
+                DataTable dtPromo = new KhuyenMaiBLL().GetPromotionForProduct(maVC, "VACCINE");
+
+                if (dtPromo.Rows.Count>=0)
+                {
+                    DataRow promo=dtPromo.Rows[0]; 
+                    // Lấy thông tin khuyến mãi
+                    string kieuGiam = promo["KieuGiam"].ToString();
+                    decimal giaTriGiam = Convert.ToDecimal(promo["GiaTriGiam"]);
+                    decimal tienGiam = 0;
+
+                    // Tính số tiền được giảm
+                    if (kieuGiam == "PhanTram")
+                    {
+                        tienGiam = giaBanGoc * (giaTriGiam / 100);
+                        ghiChuKM = $" (KM -{giaTriGiam:N0}%)";
+                    }
+                    else if (kieuGiam == "SoTien")
+                    {
+                        tienGiam = giaTriGiam;
+                        ghiChuKM = $" (KM -{giaTriGiam:N0}đ)";
+                    }
+
+                    // Tính giá cuối cùng
+                    giaBanThucTe = giaBanGoc - tienGiam;
+                    if (giaBanThucTe < 0) giaBanThucTe = 0; // Không được âm
+                }
+            }
+            catch (Exception ex)
+            {
+                // Nếu lỗi tính KM thì vẫn cho bán giá gốc, log lỗi ra console
+                Console.WriteLine("Lỗi tính khuyến mãi: " + ex.Message);
+            }
+            // -------------------------------
+
+            string ngayTiem = dtpNgayTiem.Value.ToString("dd/MM/yyyy");
             string ghiChu = txtGhiChu.Text.Trim();
 
+            // 3. Kiểm tra trùng lặp
             foreach (DataGridViewRow row in dgvVaccineWait.Rows)
             {
                 if (row.IsNewRow) continue;
@@ -414,19 +457,19 @@ namespace TPVAXWinform_GUI
                 }
             }
 
+            // 4. Thêm vào danh sách chờ
             try
             {
-                // --- SỬA: Lỗi Crash ToString("N0") ---
                 dgvVaccineWait.Rows.Add(
                     maVC,
-                    tenVC,
+                    tenVC + ghiChuKM,   // Hiển thị tên kèm ghi chú KM
                     loaiBenh,
                     loaiVC,
                     ngayTiem,
-                    1, // Mũi lẻ luôn là 1
+                    1,                  // Mũi lẻ luôn là 1
                     nuocSX,
-                    giaBan, // <-- SỬA: Lưu giá trị decimal thô
-                    ghiChu
+                    giaBanThucTe,       // <-- QUAN TRỌNG: Lưu giá ĐÃ GIẢM (decimal)
+                    ghiChu + ghiChuKM   // Ghi chú kèm KM
                 );
             }
             catch (Exception ex)

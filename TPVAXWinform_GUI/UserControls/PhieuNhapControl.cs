@@ -27,6 +27,8 @@ namespace TPVAXWinform_GUI.UserControls
         private void PhieuNhapControl_Load(object sender, EventArgs e)
         {
             LoadPhieuNhap();
+            // Thêm event handler để tô màu trạng thái
+            dgvPhieuNhap.CellFormatting += dgvPhieuNhap_CellFormatting;
         }
 
         private void LoadPhieuNhap()
@@ -51,10 +53,11 @@ namespace TPVAXWinform_GUI.UserControls
             colNgayLap.DataPropertyName = "Ngày Lập";
             colTenNV.DataPropertyName = "Tên Nhân Viên Lập";
             colTenNCC.DataPropertyName = "Tên Nhà Cung Cấp";
+            colTrangThai.DataPropertyName = "TrangThai";
 
             dgvPhieuNhap.DataSource = dt.DefaultView;
 
-            string[] centerColumns = { "colMaPN", "colNgayLap" };
+            string[] centerColumns = { "colMaPN", "colNgayLap", "colTrangThai" };
             foreach (var name in centerColumns)
             {
                 if (dgvPhieuNhap.Columns[name] != null)
@@ -220,15 +223,10 @@ namespace TPVAXWinform_GUI.UserControls
         {
             try
             {
-                // Bạn không cần TransactionScope ở đây nữa
-                // vì Stored Procedure đã xử lý Transaction rồi.
-
-                // --- SỬA LẠI HOÀN TOÀN ---
-
-                // 1. Gọi hàm BLL (đã tạo ở Bước 2)
+                // Gọi hàm BLL để xác nhận nhập kho
                 chiTietPhieuNhapBLL.XacNhanNhapKho(maPN);
 
-                // 2. Thông báo thành công
+                // Thông báo thành công
                 MessageBox.Show(
                     $"Đã xác nhận nhập kho thành công phiếu '{maPN}'!\n" +
                     $"Số lượng vaccine đã được cập nhật vào kho.",
@@ -236,7 +234,7 @@ namespace TPVAXWinform_GUI.UserControls
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                // 3. Refresh lại danh sách
+                // Refresh lại danh sách
                 LoadPhieuNhap();
             }
             catch (Exception ex)
@@ -249,6 +247,36 @@ namespace TPVAXWinform_GUI.UserControls
         public void RefreshData()
         {
             LoadPhieuNhap();
+        }
+
+        private void dgvPhieuNhap_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Bỏ qua hàng tiêu đề
+            if (e.RowIndex < 0)
+                return;
+
+            // Format cột Trạng thái
+            if (e.ColumnIndex == dgvPhieuNhap.Columns["colTrangThai"].Index && e.Value != null)
+            {
+                string trangThaiValue = e.Value.ToString();
+                DataGridViewCellStyle style = e.CellStyle;
+                style.Font = new Font(e.CellStyle.Font, FontStyle.Regular);
+
+                if (trangThaiValue.Equals("True", StringComparison.OrdinalIgnoreCase) || trangThaiValue.Equals("1"))
+                {
+                    e.Value = "Đã xác nhận";
+                    style.BackColor = Color.FromArgb(200, 230, 201); // Xanh lá
+                    style.ForeColor = Color.Black;
+                }
+                else
+                {
+                    e.Value = "Chưa xác nhận";
+                    style.BackColor = Color.FromArgb(255, 224, 178); // Cam
+                    style.ForeColor = Color.Black;
+                }
+
+                e.FormattingApplied = true;
+            }
         }
     }
 }

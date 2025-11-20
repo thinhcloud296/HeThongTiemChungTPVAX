@@ -86,7 +86,7 @@ namespace TPVAXWinform
             button4.Click += (s, e) => ShowPhieuNhapControl();
             button5.Click += (s, e) => ShowNhanVienControl();
             button6.Click += (s, e) => ShowHoaDonControl();
-            button7.Click += (s, e) => MessageBox.Show("Khuyến mãi - Đang phát triển", "Thông báo");
+            button7.Click += (s, e) => ShowKhuyenMaiControl();
             button8.Click += (s, e) => ShowThongKeControl();
 
             // Logo click để về Dashboard
@@ -115,196 +115,231 @@ namespace TPVAXWinform
             thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = false;
-            vaccineControl1.Visible = false;
-            hoaDonControl1.Visible = false;
-            nhanVienControl1.Visible = false;
+         vaccineControl1.Visible = false;
+     hoaDonControl1.Visible = false;
+     nhanVienControl1.Visible = false;
             phieuNhapControl1.Visible = false;
+            khuyenMaiControl1.Visible = false;
 
-            // Bring dashboard to front
-            bangDieuKhienControl1.BringToFront();
+ // Bring dashboard to front
+        bangDieuKhienControl1.BringToFront();
 
             // Reset button styles
             ResetMenuButtons();
-            // Không highlight button8 vì đây là dashboard cũ (BangDieuKhienControl)
-        }
+   // Không highlight button8 vì đây là dashboard cũ (BangDieuKhienControl)
+     }
 
-        private void ShowThongKeControl()
+      private void ShowThongKeControl()
         {
-            // Đóng tất cả các form con
-            CloseAllChildForms();
+// Đóng tất cả các form con
+     CloseAllChildForms();
 
-            // Hide all user controls
-            bangDieuKhienControl1.Visible = false;
+         // Hide all user controls
+ bangDieuKhienControl1.Visible = false;
             thongKeControl1.Visible = true;
-            hoSoTiemChungControl1.Visible = false;
-            lichTiemControl1.Visible = false;
-            vaccineControl1.Visible = false;
-            hoaDonControl1.Visible = false;
+    hoSoTiemChungControl1.Visible = false;
+    lichTiemControl1.Visible = false;
+        vaccineControl1.Visible = false;
+     hoaDonControl1.Visible = false;
             nhanVienControl1.Visible = false;
-            phieuNhapControl1.Visible = false;
+       phieuNhapControl1.Visible = false;
+            khuyenMaiControl1.Visible = false;
 
             // Bring Thong Ke control to front
-            thongKeControl1.BringToFront();
+   thongKeControl1.BringToFront();
 
             thongKeControl1.RefreshData();
-            // TODO: Load data for ThongKeControl
-            // LoadThongKeData();
+          // TODO: Load data for ThongKeControl
+    // LoadThongKeData();
 
-            // Reset button styles
-            ResetMenuButtons();
-            button8.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+ // Reset button styles
+        ResetMenuButtons();
+   button8.BackColor = Color.FromArgb(52, 152, 219); // Highlight
         }
 
         private void ShowHoSoTiemChungControl()
-        {
+    {
             // Đóng tất cả các form con
             CloseAllChildForms();
 
-            // Hide all user controls
+        // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = true;
-            lichTiemControl1.Visible = false;
+   lichTiemControl1.Visible = false;
             vaccineControl1.Visible = false;
-            hoaDonControl1.Visible = false;
+      hoaDonControl1.Visible = false;
             nhanVienControl1.Visible = false;
             phieuNhapControl1.Visible = false;
+            khuyenMaiControl1.Visible = false;
 
             // Bring immunization record to front
-            hoSoTiemChungControl1.BringToFront();
+       hoSoTiemChungControl1.BringToFront();
 
-            // Refresh data if needed
-            hoSoTiemChungControl1.RefreshData();
+         // Refresh data if needed
+        hoSoTiemChungControl1.RefreshData();
 
-            // Reset button styles
-            ResetMenuButtons();
-            button1.BackColor = Color.FromArgb(52, 152, 219); // Highlight
-        }
+     // Reset button styles
+    ResetMenuButtons();
+        button1.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+      }
 
         private void ShowLichTiemControl()
-        {
-            // Đóng tất cả các form con
-            CloseAllChildForms();
+    {
+    // Đóng tất cả các form con
+  CloseAllChildForms();
 
             // Hide all user controls
-            bangDieuKhienControl1.Visible = false;
-            thongKeControl1.Visible = false;
-            hoSoTiemChungControl1.Visible = false;
+     bangDieuKhienControl1.Visible = false;
+          thongKeControl1.Visible = false;
+      hoSoTiemChungControl1.Visible = false;
             lichTiemControl1.Visible = true;
-            vaccineControl1.Visible = false;
-            hoaDonControl1.Visible = false;
+    vaccineControl1.Visible = false;
+          hoaDonControl1.Visible = false;
             nhanVienControl1.Visible = false;
             phieuNhapControl1.Visible = false;
+       khuyenMaiControl1.Visible = false;
 
-            // Bring Lich Tiem control to front
+         // Bring Lich Tiem control to front
             lichTiemControl1.BringToFront();
 
-            // Refresh data để load lại dữ liệu mới nhất
-            lichTiemControl1.RefreshData();
+    // Refresh data để load lại dữ liệu mới nhất
+          lichTiemControl1.RefreshData();
 
             // Reset button styles
             ResetMenuButtons();
-            button2.BackColor = Color.FromArgb(52, 152, 219); // Highlight
-        }
+    button2.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+    }
 
         private void ShowVaccineControl()
         {
-            // Đóng tất cả các form con
+   // Đóng tất cả các form con
             CloseAllChildForms();
 
-            // Hide all user controls
+    // Hide all user controls
             bangDieuKhienControl1.Visible = false;
-            thongKeControl1.Visible = false;
-            hoSoTiemChungControl1.Visible = false;
-            lichTiemControl1.Visible = false;
+ thongKeControl1.Visible = false;
+    hoSoTiemChungControl1.Visible = false;
+   lichTiemControl1.Visible = false;
             vaccineControl1.Visible = true;
-            hoaDonControl1.Visible = false;
-            nhanVienControl1.Visible = false;
-            phieuNhapControl1.Visible = false;
+       hoaDonControl1.Visible = false;
+          nhanVienControl1.Visible = false;
+    phieuNhapControl1.Visible = false;
+            khuyenMaiControl1.Visible = false;
 
-            // Bring Vaccine control to front
-            vaccineControl1.BringToFront();
+         // Bring Vaccine control to front
+  vaccineControl1.BringToFront();
 
-            vaccineControl1.RefreshData();
+ vaccineControl1.RefreshData();
             // Reset button styles
-            ResetMenuButtons();
+        ResetMenuButtons();
             button3.BackColor = Color.FromArgb(52, 152, 219); // Highlight
-        }
+     }
 
         private void ShowPhieuNhapControl()
         {
             // Đóng tất cả các form con
             CloseAllChildForms();
 
-            // Hide all user controls
-            bangDieuKhienControl1.Visible = false;
+    // Hide all user controls
+   bangDieuKhienControl1.Visible = false;
             thongKeControl1.Visible = false;
-            hoSoTiemChungControl1.Visible = false;
-            lichTiemControl1.Visible = false;
+      hoSoTiemChungControl1.Visible = false;
+      lichTiemControl1.Visible = false;
             vaccineControl1.Visible = false;
             hoaDonControl1.Visible = false;
             nhanVienControl1.Visible = false;
-            phieuNhapControl1.Visible = true;
+  phieuNhapControl1.Visible = true;
+  khuyenMaiControl1.Visible = false;
 
             // Bring Phieu Nhap control to front
-            phieuNhapControl1.BringToFront();
+   phieuNhapControl1.BringToFront();
 
-            phieuNhapControl1.RefreshData();
-            // Reset button styles
-            ResetMenuButtons();
-            button4.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+         phieuNhapControl1.RefreshData();
+       // Reset button styles
+          ResetMenuButtons();
+       button4.BackColor = Color.FromArgb(52, 152, 219); // Highlight
         }
 
         private void ShowNhanVienControl()
-        {
-            // Đóng tất cả các form con
+ {
+          // Đóng tất cả các form con
             CloseAllChildForms();
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
-            thongKeControl1.Visible = false;
+   thongKeControl1.Visible = false;
             hoSoTiemChungControl1.Visible = false;
-            lichTiemControl1.Visible = false;
-            vaccineControl1.Visible = false;
+ lichTiemControl1.Visible = false;
+        vaccineControl1.Visible = false;
             hoaDonControl1.Visible = false;
             nhanVienControl1.Visible = true;
-            phieuNhapControl1.Visible = false;
+         phieuNhapControl1.Visible = false;
+            khuyenMaiControl1.Visible = false;
 
-            // Bring Nhan Vien control to front
+   // Bring Nhan Vien control to front
             nhanVienControl1.BringToFront();
 
-            // Refresh data để load lại dữ liệu mới nhất
-            nhanVienControl1.RefreshData();
+// Refresh data để load lại dữ liệu mới nhất
+   nhanVienControl1.RefreshData();
 
-            // Reset button styles
+   // Reset button styles
             ResetMenuButtons();
-            button5.BackColor = Color.FromArgb(52, 152, 219); // Highlight
-        }
+          button5.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+      }
 
         private void ShowHoaDonControl()
         {
             // Đóng tất cả các form con
-            CloseAllChildForms();
+   CloseAllChildForms();
 
             // Hide all user controls
             bangDieuKhienControl1.Visible = false;
             thongKeControl1.Visible = false;
-            hoSoTiemChungControl1.Visible = false;
-            lichTiemControl1.Visible = false;
-            vaccineControl1.Visible = false;
-            hoaDonControl1.Visible = true;
-            nhanVienControl1.Visible = false;
+         hoSoTiemChungControl1.Visible = false;
+        lichTiemControl1.Visible = false;
+        vaccineControl1.Visible = false;
+       hoaDonControl1.Visible = true;
+  nhanVienControl1.Visible = false;
             phieuNhapControl1.Visible = false;
+            khuyenMaiControl1.Visible = false;
 
-            // Bring Hoa Don control to front
-            hoaDonControl1.BringToFront();
+          // Bring Hoa Don control to front
+     hoaDonControl1.BringToFront();
 
-            // Refresh data để load lại dữ liệu mới nhất
+   // Refresh data để load lại dữ liệu mới nhất
             hoaDonControl1.RefreshData();
 
-            // Reset button styles
-            ResetMenuButtons();
-            button6.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+   // Reset button styles
+   ResetMenuButtons();
+button6.BackColor = Color.FromArgb(52, 152, 219); // Highlight
+        }
+
+        private void ShowKhuyenMaiControl()
+        {
+            // Đóng tất cả các form con
+    CloseAllChildForms();
+
+            // Hide all user controls
+            bangDieuKhienControl1.Visible = false;
+    thongKeControl1.Visible = false;
+  hoSoTiemChungControl1.Visible = false;
+    lichTiemControl1.Visible = false;
+        vaccineControl1.Visible = false;
+            hoaDonControl1.Visible = false;
+            nhanVienControl1.Visible = false;
+       phieuNhapControl1.Visible = false;
+ khuyenMaiControl1.Visible = true;
+
+         // Bring Khuyen Mai control to front
+            khuyenMaiControl1.BringToFront();
+
+    // Refresh data để load lại dữ liệu mới nhất
+            khuyenMaiControl1.RefreshData();
+
+  // Reset button styles
+         ResetMenuButtons();
+        button7.BackColor = Color.FromArgb(52, 152, 219); // Highlight
         }
 
         private void ResetMenuButtons()
