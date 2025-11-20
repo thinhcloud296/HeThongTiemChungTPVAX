@@ -162,11 +162,10 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Dashboard\Controls\KpiCard.Designer.cs" />
-    <Compile Include="dsHoaDon.cs">
-      <DependentUpon>dsHoaDon.xsd</DependentUpon>
-    </Compile>
     <Compile Include="dsHoaDon.Designer.cs">
-      <DependentUpon>dsHoaDon.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsHoaDon.xsd</DependentUpon>
     </Compile>
     <Compile Include="dsPhieuNhap.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -423,7 +422,7 @@
     <None Include="dsHoaDon.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsHoaDon1.Designer.cs</LastGenOutput>
+      <LastGenOutput>dsHoaDon.Designer.cs</LastGenOutput>
     </None>
     <None Include="dsHoaDon.xss">
       <DependentUpon>dsHoaDon.xsd</DependentUpon>

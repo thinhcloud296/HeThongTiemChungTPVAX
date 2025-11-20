@@ -552,23 +552,7 @@ namespace TPVAXWinform_GUI
 
         private void btnLuuTatCa_Click(object sender, EventArgs e)
         {
-            if (dgvVaccineWait.Rows.Count == 0 || (dgvVaccineWait.Rows.Count == 1 && dgvVaccineWait.Rows[0].IsNewRow))
-            {
-                MessageBox.Show("Không có mũi tiêm nào trong danh sách chờ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if(dgvVaccineWait.Rows.Count > 1)
-            {
-                MessageBox.Show("Chỉ được đăng ký 1 mũi tiêm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             string maVC = dgvVaccineWait.Rows[0].Cells["colMaVCW"].Value.ToString();
-            int soMui = Convert.ToInt32(dgvVaccineWait.Rows[0].Cells["colSoLuongW"].Value);
-            DateTime ngayHen = DateTime.ParseExact(dgvVaccineWait.Rows[0].Cells["colNgayTiemW"].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
-            string ghiChu = dgvVaccineWait.Rows[0].Cells["colGhiChuW"].Value.ToString();
-            string maHSTC_HienTai = MaHSTC;
-            decimal giaBan = Convert.ToDecimal(dgvVaccineWait.Rows[0].Cells["colGiaBanW"].Value);
             int soLuongTonThucTe = vaccineBLL.GetSoLuongTonThucTe(maVC);
             // Check tồn kho
             if (soLuongTonThucTe <= 0)
@@ -581,6 +565,23 @@ namespace TPVAXWinform_GUI
                     MessageBoxIcon.Warning);
                 return;
             }
+            if (dgvVaccineWait.Rows.Count == 0 || (dgvVaccineWait.Rows.Count == 1 && dgvVaccineWait.Rows[0].IsNewRow))
+            {
+                MessageBox.Show("Không có mũi tiêm nào trong danh sách chờ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(dgvVaccineWait.Rows.Count > 1)
+            {
+                MessageBox.Show("Chỉ được đăng ký 1 mũi tiêm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int soMui = Convert.ToInt32(dgvVaccineWait.Rows[0].Cells["colSoLuongW"].Value);
+            DateTime ngayHen = DateTime.ParseExact(dgvVaccineWait.Rows[0].Cells["colNgayTiemW"].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            string ghiChu = dgvVaccineWait.Rows[0].Cells["colGhiChuW"].Value.ToString();
+            string maHSTC_HienTai = MaHSTC;
+            decimal giaBan = Convert.ToDecimal(dgvVaccineWait.Rows[0].Cells["colGiaBanW"].Value);
             try
             {
                 using (TransactionScope scope = new TransactionScope())

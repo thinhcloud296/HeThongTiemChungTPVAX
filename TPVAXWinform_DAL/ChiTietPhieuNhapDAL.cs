@@ -66,7 +66,11 @@ namespace TPVAXWinform_DAL
                     row["MaCTPN"] = ctpn.MaCTPN;
                     row["NuocSanXuat"] = (object)ctpn.NuocSanXuat ?? DBNull.Value;
                     row["SoLuong"] = ctpn.SoLuong;
-                    row["SoLuongTonKho"] = ctpn.SoLuong;
+                    
+                    // === SỬA: Sử dụng giá trị từ DTO thay vì tự động gán ===
+                    row["SoLuongTonKho"] = ctpn.SoLuongTonKho; // Lấy từ DTO (đã set = 0 trong GUI)
+                    // === KẾT THÚC SỬA ===
+                    
                     row["GiaNhap"] = ctpn.GiaNhap;
                     row["HanSuDung"] = (object)ctpn.HanSuDung ?? DBNull.Value;
                     row["MaPN"] = ctpn.MaPN;

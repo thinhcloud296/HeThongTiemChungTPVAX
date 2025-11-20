@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPVAXWebsite", "TPVAXWebsit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPVAXWebsiteTemp", "TPVAXWebsiteTemp\TPVAXWebsiteTemp.csproj", "{896023F1-94B0-432E-AD6E-021238A389B2}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TPVAX_Setup", "TPVAX_Setup\TPVAX_Setup.vdproj", "{D6635C67-6247-777F-AC9D-E8A46C38A5B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,8 @@ Global
 		{896023F1-94B0-432E-AD6E-021238A389B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{896023F1-94B0-432E-AD6E-021238A389B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{896023F1-94B0-432E-AD6E-021238A389B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6635C67-6247-777F-AC9D-E8A46C38A5B2}.Debug|Any CPU.ActiveCfg = Debug
+		{D6635C67-6247-777F-AC9D-E8A46C38A5B2}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
