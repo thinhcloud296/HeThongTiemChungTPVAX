@@ -4,7 +4,7 @@
         <div class="container d-flex align-items-center justify-content-between py-3 flex-wrap gap-3">
             <!-- Search Bar -->
             <div class="search-bar-wrapper" style="flex: 1; min-width: 250px; max-width: 400px">
-                <form action="@Url.Action("Index", "Vaccine")" method="get" role="search" aria-label="Tim kiem vaccine" class="position-relative h-100">
+                <form action="@Url.Action("Index", "Home")" method="get" role="search" aria-label="Tim kiem vaccine" class="position-relative h-100">
                     <label for="search-vaccine" class="visually-hidden">Tim kiem vac xin</label>
                     <input id="search-vaccine" name="search" placeholder="Tim kiem vac xin..." type="search" 
                            class="form-control h-100 rounded-pill pe-5 border border-primary" 
@@ -20,7 +20,7 @@
                     <img src="@Url.Content("~/Content/Assets/Icons/telephone.png")" alt="" aria-hidden="true" class="toolbar-icon" loading="lazy" />
                     <span class="fw-bold fs-5 text-warning">0975 088 626</span>
                 </a>
-                <a href="@Url.Action("Index", "Vaccine")" class="d-flex align-items-center toolbar-link" aria-label="Xem danh sach vaccine de dat mua">
+                <a href="@Url.Action("Index", "Home")#vaccine-catalog" class="d-flex align-items-center toolbar-link" aria-label="Xem danh sach vaccine de dat mua">
                     <img src="@Url.Content("~/Content/Assets/Icons/shopping-basket.png")" alt="" aria-hidden="true" class="toolbar-icon" loading="lazy" />
                     <span class="fw-bold fs-5 text-warning">Dat mua vac xin</span>
                 </a>

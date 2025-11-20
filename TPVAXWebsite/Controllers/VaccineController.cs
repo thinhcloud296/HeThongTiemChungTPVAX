@@ -18,41 +18,22 @@ namespace TPVAXWebsite.Controllers
             _vaccineService = new VaccineService();
         }
 
-        // GET: Vaccine/Index
-        public ActionResult Index(string search, string loaiBenh)
-        {
-            try
-            {
-                // Load danh sách vaccine từ database
-                var vaccines = _vaccineService.SearchAndFilter(search, null, loaiBenh);
-
-                // Truyền dữ liệu sang View
-                ViewBag.Search = search;
-                ViewBag.LoaiBenh = loaiBenh;
-                ViewBag.TotalCount = vaccines.Count();
-
-                return View(vaccines);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = "Lỗi tải danh sách vaccine: " + ex.Message;
-                return View();
-            }
-        }
-
-        // GET: Vaccine/Detail/VCxxx
-        public ActionResult Detail(string id)
+        // GET: Vaccine/VC00000001 (Chi tiết vaccine)
+        public ActionResult Index(string id)
         {
             try
             {
                 if (string.IsNullOrEmpty(id))
-                    return RedirectToAction("Index");
+                {
+                    // Nếu không có id, chuyển về trang danh sách tất cả vaccine
+                    return RedirectToAction("Index", "VaccinePhongBenh");
+                }
 
                 var vaccine = _vaccineService.GetById(id);
                 if (vaccine == null)
                 {
                     ViewBag.Error = "Không tìm thấy vaccine";
-                    return View();
+                    return RedirectToAction("Index", "VaccinePhongBenh");
                 }
 
                 // Tạo ViewModel
@@ -82,15 +63,8 @@ namespace TPVAXWebsite.Controllers
             catch (Exception ex)
             {
                 ViewBag.Error = "Lỗi tải thông tin vaccine: " + ex.Message;
-                return View();
+                return RedirectToAction("Index", "VaccinePhongBenh");
             }
-        }
-
-        // GET: Vaccine/ChiTiet/VCxxx
-        public ActionResult ChiTiet(string id)
-        {
-            // Redirect to Detail action
-            return RedirectToAction("Detail", new { id });
         }
 
         protected override void Dispose(bool disposing)

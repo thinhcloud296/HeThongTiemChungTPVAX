@@ -3,6 +3,57 @@
     ViewBag.Title = "Trang chủ";
 }
 
+@section styles {
+    <style>
+        /* Pagination Custom Styles */
+        .pagination-lg {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .pagination-lg .page-link {
+            padding: 14px 22px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: 3px solid #e3e6ea;
+            border-radius: 12px !important;
+            color: #495057;
+            background: white;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .pagination-lg .page-link:hover:not(.disabled) {
+            background: linear-gradient(135deg, #0d6efd 0%, #0056d2 100%);
+            border-color: #0056d2;
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+        }
+
+        .pagination-lg .page-item.active .page-link {
+            background: linear-gradient(135deg, #0d6efd 0%, #0056d2 100%);
+            border-color: #0056d2;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.5);
+        }
+
+        .pagination-lg .page-item.disabled .page-link {
+            background-color: #f8f9fa;
+            border-color: #e3e6ea;
+            color: #adb5bd;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+}
+
 <!-- Hero Carousel Banner -->
       <section aria-label="Khuyến mãi nổi bật">
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -92,17 +143,19 @@
           <h2 id="vaccine-catalog-heading" class="mb-0">
             <strong class="text-primary">DANH MỤC VẮC XIN</strong>
           </h2>
-          <a href="@Url.Action("Index", "Home")#all-vaccines" class="view-all-link">Xem tất cả</a>
+          <a href="@Url.Action("Index", "VaccinePhongBenh")" class="btn btn-outline-primary rounded-pill px-4">
+            <i class="fas fa-list me-2"></i>Xem tất cả @(ViewBag.TotalVaccines ?? 0) vắc xin
+          </a>
         </div>
 
         <div class="row g-4">
           @if (Model != null && Model.Any())
           {
-              foreach (var vaccine in Model.Take(6))
+              foreach (var vaccine in Model)
               {
                   <div class="col-lg-4 col-md-6">
                     <article class="product-card h-100">
-                      <a href="@Url.Action("Detail", "Vaccine", new { id = vaccine.MaVC })" class="text-decoration-none">
+                      <a href="@Url.Action("Index", "Vaccine", new { id = vaccine.MaVC })" class="text-decoration-none">
                         <div class="position-relative">
                           <img
                             src="@Url.Content(string.IsNullOrEmpty(vaccine.HinhAnh) ? "~/Designs/Assets/Images/hexaxim.png" : "~/" + vaccine.HinhAnh)"
@@ -145,7 +198,7 @@
                           Thêm vào giỏ
                         </button>
                         <a
-                          href="@Url.Action("Detail", "Vaccine", new { id = vaccine.MaVC })"
+                          href="@Url.Action("Index", "Vaccine", new { id = vaccine.MaVC })"
                           class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
                           aria-label="Đặt lịch tiêm @vaccine.TenVC"
                         >
@@ -156,13 +209,116 @@
                   </div>
               }
           }
-          }
           else
           {
               <div class="col-12 text-center py-5">
                   <p class="text-muted">@(ViewBag.Error ?? "Chưa có dữ liệu vaccine")</p>
               </div>
           }
+        </div>
+
+        @* Pagination *@
+        @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 1)
+        {
+            int currentPage = ViewBag.CurrentPage;
+            int totalPages = ViewBag.TotalPages;
+            int startPage = Math.Max(1, currentPage - 2);
+            int endPage = Math.Min(totalPages, currentPage + 2);
+
+            <div class="row mt-5">
+                <div class="col-12">
+                    <nav aria-label="Vaccine pagination">
+                        <ul class="pagination justify-content-center pagination-lg">
+                            @* First + Previous *@
+                            @if (currentPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link rounded-start" href="@Url.Action("Index", new { search = ViewBag.Search, page = 1 })#vaccine-catalog" title="Trang đầu">
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, page = currentPage - 1 })#vaccine-catalog" title="Trang trước">
+                                        <i class="fas fa-angle-left"></i>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link rounded-start"><i class="fas fa-angle-double-left"></i></span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link"><i class="fas fa-angle-left"></i></span>
+                                </li>
+                            }
+
+                            @* Page Numbers with ellipsis *@
+                            @if (startPage > 1)
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            }
+
+                            @for (int i = startPage; i <= endPage; i++)
+                            {
+                                <li class="page-item @(i == currentPage ? "active" : "")">
+                                    @if (i == currentPage)
+                                    {
+                                        <span class="page-link bg-primary border-primary text-white">@i</span>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, page = i })#vaccine-catalog">@i</a>
+                                    }
+                                </li>
+                            }
+
+                            @if (endPage < totalPages)
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            }
+
+                            @* Next + Last *@
+                            @if (currentPage < totalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, page = currentPage + 1 })#vaccine-catalog" title="Trang tiếp">
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link rounded-end" href="@Url.Action("Index", new { search = ViewBag.Search, page = totalPages })#vaccine-catalog" title="Trang cuối">
+                                        <i class="fas fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link"><i class="fas fa-angle-right"></i></span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link rounded-end"><i class="fas fa-angle-double-right"></i></span>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                    <div class="text-center mt-3">
+                        <p class="text-muted mb-0">
+                            Trang <strong class="text-primary fs-5">@currentPage</strong> / <strong>@totalPages</strong>
+                            <span class="mx-2">|</span>
+                            Tổng cộng <strong class="text-success">@ViewBag.TotalVaccines</strong> vắc xin
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="d-none">
           <!-- Fallback cards (6 vaccine giống nhau để dự phòng) -->
           @* <div class="col-lg-4 col-md-6">
             <article class="product-card h-100">
