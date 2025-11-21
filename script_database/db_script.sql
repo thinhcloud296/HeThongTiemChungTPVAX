@@ -1,8 +1,4 @@
---CREATE DATABASE QLTIEMCHUNG
---GO
 
-USE QLTIEMCHUNG
-GO
 DROP TABLE IF EXISTS ChiTietHoaDon;
 DROP TABLE IF EXISTS ChiTietKhuyenMai;
 DROP TABLE IF EXISTS ChiTietPhieuNhap;
@@ -81,12 +77,19 @@ CREATE TABLE KhuyenMai (
     MaKM CHAR(10) PRIMARY KEY,
     TenKM NVARCHAR(255) NOT NULL,
     MoTa NVARCHAR(MAX),
-    LoaiKM NVARCHAR(100),
-    KieuGiam NVARCHAR(50), -- 'PhanTram', 'SoTien'
-    GiaTriGiam DECIMAL(18, 2) NOT NULL,
+    
+    -- Loại KM: Dùng để phân loại quản lý (vd: "Lễ Tết", "Sinh Nhật")
+    LoaiKM NVARCHAR(100), 
+    
+    -- Kiểu Giảm: 'PhanTram' (ví dụ giảm 10%) hoặc 'SoTien' (ví dụ giảm 50k)
+    KieuGiam NVARCHAR(50) NOT NULL, 
+    
+    -- Giá trị: Lưu số 10 (nếu là %) hoặc 50000 (nếu là tiền)
+    GiaTriGiam DECIMAL(18, 2) NOT NULL, 
+    
     NgayBatDau DATETIME NOT NULL,
     NgayKetThuc DATETIME NOT NULL,
-    TrangThai BIT DEFAULT (0)
+    TrangThai BIT DEFAULT (1) -- 1: Đang chạy, 0: Tạm dừng/Hết hạn
 );
 
 -- 5. Bảng LoaiVaccine
@@ -123,7 +126,7 @@ CREATE TABLE Vaccine (
     MaVC CHAR(10) PRIMARY KEY, -- VCCN0001
     TenVC NVARCHAR(255) NOT NULL,
     GiaBan DECIMAL(18, 0) NOT NULL,
-    SoLuongTon INT NOT NULL DEFAULT 0,
+    SoLuong INT NOT NULL DEFAULT 0,
     SoMuiToiDa INT,
     SoThangCho INT,
     MaLoai CHAR(10),
@@ -166,6 +169,7 @@ CREATE TABLE PhieuNhapVaccine (
     NgayLap DATETIME NOT NULL DEFAULT GETDATE(),
     MaNV CHAR(10),
     MaNCC CHAR(10),
+    TrangThai BIT DEFAULT 0,
     CONSTRAINT FK_PhieuNhap_NhanVien FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV),
     CONSTRAINT FK_PhieuNhap_NhaCungCap FOREIGN KEY (MaNCC) REFERENCES NhaCungCap(MaNCC)
 );
@@ -263,13 +267,16 @@ CREATE TABLE ChiTietHoaDon (
 -- 20. ChiTietKhuyenMai
 CREATE TABLE ChiTietKhuyenMai (
     MaCTKM INT PRIMARY KEY IDENTITY(1,1),
-    LoaiSanPham NVARCHAR(50), -- 'GOIVACCINE', 'VACCINE'
-    MaSanPham VARCHAR(20),
-    NgayApDung DATE,
-    NgayKetThuc DATE,
-    GhiChu NVARCHAR(MAX),
     MaKM CHAR(10) NOT NULL,
+    
+    -- Loại sản phẩm: 'VACCINE' hoặc 'GOIVACCINE'
+    LoaiSanPham NVARCHAR(50) NOT NULL, 
+    
+    -- Mã sản phẩm: Lưu MaVC hoặc MaGoi tùy theo LoaiSanPham
+    MaSanPham CHAR(10) NOT NULL, 
+    
     CONSTRAINT FK_CTKM_KhuyenMai FOREIGN KEY (MaKM) REFERENCES KhuyenMai(MaKM)
+    -- Lưu ý: Không thể tạo FK trực tiếp tới Vaccine/GoiVaccine vì cột này động.
 );
 GO
 
@@ -302,7 +309,7 @@ BEGIN
     SET
         -- Tính toán lại TỔNG TỒN KHO bằng cách SUM tất cả
         -- các lô (SoLuongTonKho) của vaccine này
-        V.SoLuongTon = ISNULL(CTPN.TotalStock, 0)
+        V.SoLuong = ISNULL(CTPN.TotalStock, 0)
     FROM
         dbo.Vaccine AS V
     INNER JOIN
@@ -421,7 +428,7 @@ BEGIN
               AND ctpn.HanSuDung > GETDATE()
         ) AS SoLuongTonThucTe,
         
-        v.SoLuongTon AS TongSoLuongTon, 
+        V.SoLuong AS TongSoLuongTon, 
         v.SoMuiToiDa,
         v.SoThangCho,
         v.MoTa AS MoTaVaccine,
@@ -450,7 +457,7 @@ BEGIN
     LEFT JOIN
         dbo.LoaiBenh AS lb ON vpb.MaLoaiBenh = lb.MaLoaiBenh
     GROUP BY
-        v.MaVC, v.TenVC, v.GiaBan, v.SoLuongTon, v.SoMuiToiDa,
+        v.MaVC, v.TenVC, v.GiaBan, V.SoLuong, v.SoMuiToiDa,
         v.SoThangCho, v.MoTa, v.HinhAnh, lv.TenLoai, v.MaLoai
     ORDER BY
         v.TenVC;
@@ -564,17 +571,25 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-        MaCTHD, 
-        SoLuong, 
-        DonGia, 
-        MaSanPham, 
-        LoaiSanPham, 
-        MaHD,
-        (SoLuong * DonGia) AS ThanhTien
+        cthd.MaCTHD, 
+        cthd.SoLuong, 
+        cthd.DonGia,
+        cthd.MaSanPham,
+        cthd.LoaiSanPham, 
+        cthd.MaHD,
+        (cthd.SoLuong * cthd.DonGia) AS ThanhTien,
+        
+        COALESCE(v.TenVC, g.TenGoi) AS TenSanPham
     FROM 
-        dbo.ChiTietHoaDon 
+        dbo.ChiTietHoaDon AS cthd
+    LEFT JOIN 
+        dbo.Vaccine AS v ON cthd.MaSanPham = v.MaVC 
+                        AND cthd.LoaiSanPham = 'VACCINE'
+    LEFT JOIN 
+        dbo.GoiVaccine AS g ON cthd.MaSanPham = g.MaGoi 
+                           AND cthd.LoaiSanPham = 'GOIVACCINE'
     WHERE 
-        MaHD = @MaHD;
+        cthd.MaHD = @MaHD;
 END
 GO
 
@@ -622,7 +637,8 @@ BEGIN
         
         -- Thông tin Nhà Cung Cấp
         ncc.MaNCC AS [MaNCC],
-        ncc.TenNCC AS [Tên Nhà Cung Cấp]
+        ncc.TenNCC AS [Tên Nhà Cung Cấp],
+        pn.TrangThai
         
     FROM
         dbo.PhieuNhapVaccine AS pn
@@ -730,7 +746,7 @@ BEGIN
               AND ctpn.HanSuDung > GETDATE()
         ) AS SoLuongTonThucTe,
         
-        v.SoLuongTon AS TongSoLuongTon, 
+        V.SoLuong AS TongSoLuongTon, 
         v.SoMuiToiDa,
         -- ... (Phần còn lại của proc giữ nguyên) ...
         v.SoThangCho,
@@ -763,7 +779,7 @@ BEGIN
         (ISNULL(v.SoMuiToiDa, 0) = 1)
         OR (ISNULL(v.SoMuiToiDa, 0) = 99)
     GROUP BY
-        v.MaVC, v.TenVC, v.GiaBan, v.SoLuongTon, v.SoMuiToiDa,
+        v.MaVC, v.TenVC, v.GiaBan, V.SoLuong, v.SoMuiToiDa,
         v.SoThangCho, v.MoTa, v.HinhAnh, lv.TenLoai, v.MaLoai
     ORDER BY
         v.TenVC;
@@ -834,36 +850,455 @@ GO
 IF OBJECT_ID('dbo.usp_XacNhanNhapKho', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_XacNhanNhapKho;
 GO
-/**
- * Xác nhận nhập kho cho TOÀN BỘ phiếu nhập.
- * 1. Cập nhật SoLuongTonKho = SoLuongNhap trong ChiTietPhieuNhap.
- * 2. Cộng SoLuongNhap vào Vaccine.SoLuongTon (bảng tổng).
- */
+
 CREATE OR ALTER PROCEDURE dbo.usp_XacNhanNhapKho
     @MaPN CHAR(10)
 AS
 BEGIN
     SET NOCOUNT ON;
-    BEGIN TRANSACTION;
+    
     BEGIN TRY
+        BEGIN TRANSACTION;
         
-        -- Chỉ cần cập nhật TỒN KHO LÔ
-        -- Trigger sẽ tự động cập nhật TỒN KHO TỔNG (Vaccine)
+        -- 1. Kiểm tra phiếu nhập tồn tại
+        IF NOT EXISTS (SELECT 1 FROM dbo.PhieuNhapVaccine WHERE MaPN = @MaPN)
+        BEGIN
+            RAISERROR(N'Phiếu nhập không tồn tại!', 16, 1);
+        END
+        
+        -- 2. Kiểm tra phiếu nhập đã được xác nhận chưa
+        IF EXISTS (SELECT 1 FROM dbo.PhieuNhapVaccine WHERE MaPN = @MaPN AND TrangThai = 1)
+        BEGIN
+            RAISERROR(N'Phiếu nhập đã được xác nhận trước đó!', 16, 1);
+        END
+
+        -- 3. Cập nhật tổng số lượng tồn kho vào bảng Vaccine (Kho tổng)
+        UPDATE V
+        SET V.SoLuong = V.SoLuong + CTPN.SoLuong
+        FROM dbo.Vaccine V
+        INNER JOIN dbo.ChiTietPhieuNhap CTPN ON V.MaVC = CTPN.MaVC
+        WHERE CTPN.MaPN = @MaPN;
+        
+        -- 4. (MỚI) Cập nhật Số lượng tồn cho từng lô trong ChiTietPhieuNhap
+        -- Logic: Khi mới nhập kho, Số lượng tồn của lô này chính bằng Số lượng nhập
         UPDATE dbo.ChiTietPhieuNhap
-        SET 
-            SoLuongTonKho = SoLuong -- Set Tồn kho = Số lượng đã nhập
-        WHERE 
-            MaPN = @MaPN
-            AND SoLuongTonKho = 0; -- Chỉ cập nhật các phiếu chưa được xác nhận
+        SET SoLuongTonKho = SoLuong
+        WHERE MaPN = @MaPN;
 
-        -- === ĐÃ XÓA PHẦN 'MERGE INTO dbo.Vaccine' ===
-
+        -- 5. Cập nhật trạng thái phiếu nhập thành "Đã xác nhận"
+        UPDATE dbo.PhieuNhapVaccine
+        SET TrangThai = 1
+        WHERE MaPN = @MaPN;
+        
         COMMIT TRANSACTION;
+        
     END TRY
     BEGIN CATCH
-        ROLLBACK TRANSACTION;
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        
         DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
-        RAISERROR(@ErrorMessage, 16, 1);
+        DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+        DECLARE @ErrorState INT = ERROR_STATE();
+        
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
 END
 GO
+
+
+/* ================================================================= */
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetDashboardKPI', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetDashboardKPI;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetDashboardKPI
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @StartOfMonth DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+    DECLARE @EndOfMonth DATE = EOMONTH(GETDATE());
+
+    -- 1. Tổng Doanh Thu Tháng Này (Chỉ tính hóa đơn đã thanh toán)
+    DECLARE @DoanhThu DECIMAL(18,0);
+    SELECT @DoanhThu = ISNULL(SUM(TongTien), 0)
+    FROM dbo.HoaDon
+    WHERE TrangThai = 1 -- Đã thanh toán
+      AND CAST(NgayLap AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth;
+
+    -- 2. Tổng Lượt Tiêm Tháng Này
+    DECLARE @LuotTiem INT;
+    SELECT @LuotTiem = COUNT(*)
+    FROM dbo.LichTiem
+    WHERE TrangThai = N'Đã tiêm'
+      AND CAST(NgayTiemThucTe AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth;
+
+    -- 3. Khách Hàng Mới (Dựa trên ngày liên kết hồ sơ)
+    DECLARE @KhachMoi INT;
+    SELECT @KhachMoi = COUNT(*)
+    FROM dbo.LienKetHoSo
+    WHERE CAST(NgayLienKet AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth;
+
+    -- 4. Số Lô Vaccine Sắp Hết Hạn (Trong 60 ngày tới)
+    DECLARE @SapHetHan INT;
+    SELECT @SapHetHan = COUNT(*)
+    FROM dbo.ChiTietPhieuNhap
+    WHERE SoLuongTonKho > 0
+      AND HanSuDung <= DATEADD(day, 60, GETDATE());
+
+    -- Trả về kết quả 1 dòng
+    SELECT 
+        @DoanhThu AS DoanhThu,
+        @LuotTiem AS LuotTiem,
+        @KhachMoi AS KhachMoi,
+        @SapHetHan AS SapHetHan;
+END
+GO
+
+/* ================================================================= */
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetDoanhThu7Ngay', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetDoanhThu7Ngay;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetDoanhThu7Ngay
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy doanh thu của 7 ngày gần nhất (tính cả hôm nay)
+    SELECT TOP 7
+        CAST(NgayLap AS DATE) AS Ngay,
+        SUM(TongTien) AS TongTien
+    FROM dbo.HoaDon
+    WHERE TrangThai = 1 -- Đã thanh toán
+    GROUP BY CAST(NgayLap AS DATE)
+    ORDER BY CAST(NgayLap AS DATE) ASC;
+END
+GO
+
+/* ================================================================= */
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetTyLeDoanhThu', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetTyLeDoanhThu;
+GO
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetTyLeDoanhThu
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        CASE 
+            WHEN LoaiSanPham = 'GOIVACCINE' THEN N'Gói Vaccine'
+            WHEN LoaiSanPham = 'VACCINE' THEN N'Vaccine Lẻ'
+            ELSE N'Khác'
+        END AS LoaiHinh,
+        SUM(SoLuong * DonGia) AS TongGiaTri
+    FROM dbo.ChiTietHoaDon cthd
+    JOIN dbo.HoaDon hd ON cthd.MaHD = hd.MaHD
+    WHERE hd.TrangThai = 1 -- Chỉ tính hóa đơn đã thanh toán
+    GROUP BY LoaiSanPham;
+END
+GO
+
+/* ================================================================= */
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetVaccineSapHetHan', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetVaccineSapHetHan;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetVaccineSapHetHan
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        v.MaVC,
+        v.TenVC AS [Tên Vaccine],
+        ctpn.MaCTPN AS [Mã Lô],
+        ctpn.SoLuongTonKho AS [Tồn Kho],
+        ctpn.HanSuDung AS [Hạn Sử Dụng],
+        DATEDIFF(day, GETDATE(), ctpn.HanSuDung) AS [Số Ngày Còn Lại],
+        CASE 
+            WHEN ctpn.HanSuDung < GETDATE() THEN N'Đã hết hạn'
+            ELSE N'Sắp hết hạn'
+        END AS [Trạng Thái]
+    FROM dbo.ChiTietPhieuNhap ctpn
+    JOIN dbo.Vaccine v ON ctpn.MaVC = v.MaVC
+    WHERE 
+        ctpn.SoLuongTonKho > 0 -- Vẫn còn hàng trong kho
+        AND ctpn.HanSuDung <= DATEADD(day, 60, GETDATE()) -- Hết hạn trong 60 ngày tới (hoặc đã qua)
+    ORDER BY 
+        ctpn.HanSuDung ASC; -- Ưu tiên hiển thị cái nào hết hạn trước
+END
+GO
+
+/* ================================================================= */
+
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetDoanhThuChiTiet', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetDoanhThuChiTiet;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetDoanhThuChiTiet
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Lấy dữ liệu từ đầu tháng đến cuối tháng hiện tại
+    DECLARE @StartOfMonth DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+    DECLARE @EndOfMonth DATE = EOMONTH(GETDATE());
+
+    SELECT 
+        hd.MaHD AS [Mã Hóa Đơn],
+        hd.NgayLap AS [Ngày Lập],
+        kh.HoTen AS [Khách Hàng],
+        nv.HoTen AS [Thu Ngân],
+        hd.TongTien AS [Tổng Tiền]
+    FROM dbo.HoaDon hd
+    LEFT JOIN dbo.KhachHang kh ON hd.MaKH = kh.MaKH
+    LEFT JOIN dbo.NhanVien nv ON hd.MaNV = nv.MaNV
+    WHERE hd.TrangThai = 1 
+      AND CAST(hd.NgayLap AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth
+    ORDER BY hd.NgayLap DESC;
+END
+GO
+
+/* ================================================================= */
+
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetXuatNhapTon', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetXuatNhapTon;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetXuatNhapTon
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @StartOfMonth DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+    DECLARE @EndOfMonth DATE = EOMONTH(GETDATE());
+
+    SELECT 
+        v.MaVC AS [Mã Vaccine],
+        v.TenVC AS [Tên Vaccine],
+        
+        -- 1. Tổng Nhập trong tháng
+        ISNULL((
+            SELECT SUM(ctpn.SoLuong) 
+            FROM dbo.ChiTietPhieuNhap ctpn
+            JOIN dbo.PhieuNhapVaccine pn ON ctpn.MaPN = pn.MaPN
+            WHERE ctpn.MaVC = v.MaVC 
+              AND CAST(pn.NgayLap AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth
+        ), 0) AS [SL Nhập],
+
+        -- 2. Tổng Xuất (Đã tiêm) trong tháng
+        ISNULL((
+            SELECT COUNT(*)
+            FROM dbo.LichTiem lt
+            WHERE lt.MaVC = v.MaVC
+              AND lt.TrangThai = N'Đã tiêm'
+              AND CAST(lt.NgayTiemThucTe AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth
+        ), 0) AS [SL Xuất],
+
+        -- 3. Tồn Kho Hiện Tại (Tổng)
+        V.SoLuong AS [Tồn Cuối Kỳ]
+
+    FROM dbo.Vaccine v
+    ORDER BY v.TenVC;
+END
+GO
+
+/* ================================================================= report */
+
+
+IF OBJECT_ID('dbo.usp_Report_GetHoaDonIn', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Report_GetHoaDonIn;
+GO
+
+-- =============================================
+-- Stored Procedure: Lấy dữ liệu in hóa đơn
+-- Bao gồm: Giá gốc, Giá sau KM, Tiền giảm
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.usp_Report_GetHoaDonIn
+    @MaHD CHAR(10)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        -- Thông tin hóa đơn
+      hd.MaHD,
+    hd.NgayLap,
+  hd.TongTien AS TongTienHoaDon,
+        
+        -- Thông tin khách hàng
+        kh.HoTen AS TenKhachHang,
+        kh.SoDT AS SDTKhachHang,
+        kh.DiaChi AS DiaChiKhachHang,
+      
+   -- Thông tin thu ngân
+        nv.HoTen AS TenThuNgan,
+        
+   -- Thông tin chi tiết sản phẩm
+      CASE 
+          WHEN cthd.LoaiSanPham = 'VACCINE' THEN vc.TenVC
+      WHEN cthd.LoaiSanPham = 'GOIVACCINE' THEN gvc.TenGoi
+ ELSE N'Không xác định'
+     END AS TenSanPham,
+        
+        cthd.SoLuong,
+        
+        -- === THÊM MỚI: Tính giá gốc và giá sau khuyến mãi ===
+        
+      -- 1. GiaGoc: Lấy giá gốc từ bảng Vaccine hoặc GoiVaccine
+        CASE 
+         WHEN cthd.LoaiSanPham = 'VACCINE' THEN vc.GiaBan
+            WHEN cthd.LoaiSanPham = 'GOIVACCINE' THEN gvc.GiaGoi
+    ELSE 0
+        END AS GiaGoc,
+        
+        -- 2. DonGia: Giá ĐÃ ĐƯỢC LƯU trong ChiTietHoaDon (giá sau KM)
+      cthd.DonGia AS DonGia,
+        
+        -- 3. TienGiam: Số tiền được giảm = (GiaGoc - DonGia)
+        (
+    CASE 
+   WHEN cthd.LoaiSanPham = 'VACCINE' THEN vc.GiaBan
+         WHEN cthd.LoaiSanPham = 'GOIVACCINE' THEN gvc.GiaGoi
+   ELSE 0
+            END - cthd.DonGia
+   ) AS TienGiam,
+        
+  -- === KẾT THÚC THÊM MỚI ===
+      
+   -- 4. ThanhTien: Tính từ giá sau KM * số lượng
+        (cthd.SoLuong * cthd.DonGia) AS ThanhTien
+   
+    FROM 
+        dbo.HoaDon hd
+    
+    -- Join bảng khách hàng
+  LEFT JOIN dbo.KhachHang kh ON hd.MaKH = kh.MaKH
+    
+    -- Join bảng nhân viên (thu ngân)
+    LEFT JOIN dbo.NhanVien nv ON hd.MaNV = nv.MaNV
+    
+    -- Join chi tiết hóa đơn
+    INNER JOIN dbo.ChiTietHoaDon cthd ON hd.MaHD = cthd.MaHD
+    
+    -- Join Vaccine (nếu là vaccine lẻ)
+    LEFT JOIN dbo.Vaccine vc ON cthd.LoaiSanPham = 'VACCINE' 
+        AND cthd.MaSanPham = vc.MaVC
+    
+    -- Join GoiVaccine (nếu là gói)
+    LEFT JOIN dbo.GoiVaccine gvc ON cthd.LoaiSanPham = 'GOIVACCINE' 
+        AND cthd.MaSanPham = gvc.MaGoi
+    
+    WHERE 
+        hd.MaHD = @MaHD
+    
+    ORDER BY 
+        cthd.MaCTHD; -- Sắp xếp theo thứ tự chi tiết hóa đơn
+END
+GO
+
+/* =================================================================  */
+
+IF OBJECT_ID('dbo.usp_Vaccine_GetSoLuongTonThucTe', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Vaccine_GetSoLuongTonThucTe;
+GO
+
+/**
+ * Lấy số lượng tồn kho THỰC TẾ (còn hạn sử dụng) của 1 vaccine cụ thể.
+ * Trả về 1 con số duy nhất (INT).
+ */
+CREATE PROCEDURE dbo.usp_Vaccine_GetSoLuongTonThucTe
+    @MaVC CHAR(10)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Tính tổng tồn kho của các lô còn hạn
+    SELECT 
+        ISNULL(SUM(ctpn.SoLuongTonKho), 0) AS SoLuongTonThucTe
+    FROM 
+        dbo.ChiTietPhieuNhap AS ctpn
+    WHERE 
+        ctpn.MaVC = @MaVC
+        AND ctpn.HanSuDung > GETDATE() -- Chỉ lấy lô còn hạn
+        AND ctpn.SoLuongTonKho > 0;    -- Chỉ lấy lô còn hàng
+END
+GO
+
+/* ================================================================= report */
+
+
+IF OBJECT_ID('dbo.usp_Report_GetPhieuNhapIn', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Report_GetPhieuNhapIn;
+GO
+CREATE PROCEDURE dbo.usp_Report_GetPhieuNhapIn
+    @MaPN CHAR(10)
+AS
+BEGIN
+    SELECT 
+        pn.MaPN, pn.NgayLap, ISNULL(nv.HoTen, N'Admin') AS TenNhanVien,
+        ncc.TenNCC AS TenNhaCungCap, ncc.DiaChi AS DiaChiNCC, ncc.SoDT AS SDTNCC,
+        v.TenVC AS TenVaccine, ctpn.NuocSanXuat, ctpn.HanSuDung,
+        ctpn.SoLuong AS SoLuong, ctpn.GiaNhap,
+        (ctpn.SoLuong * ctpn.GiaNhap) AS ThanhTien,SUM(ctpn.SoLuong * ctpn.GiaNhap) OVER () AS TongTienPhieuNhap
+    FROM dbo.PhieuNhapVaccine pn
+    LEFT JOIN dbo.NhanVien nv ON pn.MaNV = nv.MaNV
+    LEFT JOIN dbo.NhaCungCap ncc ON pn.MaNCC = ncc.MaNCC
+    JOIN dbo.ChiTietPhieuNhap ctpn ON pn.MaPN = ctpn.MaPN
+    LEFT JOIN dbo.Vaccine v ON ctpn.MaVC = v.MaVC
+    WHERE pn.MaPN = @MaPN;
+END
+
+
+/* =================================================================  */
+
+
+IF OBJECT_ID('dbo.usp_KhuyenMai_GetActive', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_KhuyenMai_GetActive;
+GO
+-- Proc 1: Lấy danh sách khuyến mãi đang chạy (Còn hạn & TrangThai=1)
+CREATE OR ALTER PROCEDURE dbo.usp_KhuyenMai_GetActive
+AS
+BEGIN
+    SELECT * FROM KhuyenMai
+    WHERE TrangThai = 1 
+      AND GETDATE() BETWEEN NgayBatDau AND NgayKetThuc
+    ORDER BY NgayKetThuc ASC;
+END
+GO
+/* =================================================================  */
+
+IF OBJECT_ID('dbo.usp_KhuyenMai_GetForProduct', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_KhuyenMai_GetForProduct;
+GO
+
+-- Proc 2: Kiểm tra giá giảm cho 1 sản phẩm cụ thể (Dùng khi tính tiền)
+-- Trả về: KieuGiam và GiaTriGiam tốt nhất (nếu có nhiều KM chồng chéo)
+CREATE OR ALTER PROCEDURE dbo.usp_KhuyenMai_GetForProduct
+    @MaSanPham CHAR(10),
+    @LoaiSanPham NVARCHAR(50) -- 'VACCINE' hoặc 'GOIVACCINE'
+AS
+BEGIN
+    SELECT TOP 1 
+        km.TenKM,
+        km.KieuGiam,
+        km.GiaTriGiam
+    FROM ChiTietKhuyenMai ct
+    JOIN KhuyenMai km ON ct.MaKM = km.MaKM
+    WHERE ct.MaSanPham = @MaSanPham 
+      AND ct.LoaiSanPham = @LoaiSanPham
+      AND km.TrangThai = 1
+      AND CAST(GETDATE() AS DATE) >= CAST(km.NgayBatDau AS DATE)
+      AND CAST(GETDATE() AS DATE) <= CAST(km.NgayKetThuc AS DATE)
+    ORDER BY km.NgayBatDau DESC; 
+END
+GO
+/* =================================================================  */

@@ -1,5 +1,3 @@
-USE QLTIEMCHUNG
-GO
 
 -- =================================================================================
 -- PHẦN 1: INSERT DỮ LIỆU CƠ SỞ
@@ -59,7 +57,7 @@ GO
 -- =================================================================================
 
 -- 2.1. Bảng Vaccine 
-INSERT INTO Vaccine (MaVC, TenVC, GiaBan, SoLuongTon, MaLoai, MoTa) 
+INSERT INTO Vaccine (MaVC, TenVC, GiaBan, SoLuong, MaLoai, MoTa) 
 VALUES
 -- SỬA: Bắt đầu bằng 0
 ('VC00000001', N'Infanrix Hexa (6 trong 1)', 1098000, 0, 'LVC0000001', N'Phác đồ 4 mũi: 3 mũi cơ bản (lúc 2, 3, 4 tháng tuổi) và 1 mũi nhắc lại (lúc 18-24 tháng).'),
@@ -221,19 +219,22 @@ PRINT N'-> Đã bổ sung chi tiết cho GOI00002 và GOI00004.';
 GO
 
 INSERT INTO TaiKhoan (MaTK, MatKhau) VALUES
+('TK00000001', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
+('TK00000002', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
+('TK00000003', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
 ('TK00000004', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
-('TK00000005', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
-('TK00000006', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
-('TK00000007', '123'),
-('TK00000008', '123');
+('TK00000005', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG');
 GO
 -- =================================================================================
 -- BỔ SUNG NHÂN VIÊN MỚI THEO YÊU CẦU 
 -- =================================================================================
 INSERT INTO NhanVien (MaNV, HoTen, GioiTinh, NgaySinh, CCCD, NgayVaoLam, SoDT, DiaChi, Email, ChucVu, TrangThai,MaTK) VALUES
-('NV00000004', N'Nguyễn Hoàng Thịnh', N'Nam', '2004-10-15', '079204001122', '2024-03-01', '0915111222', N'10 An Dương Vương, Quận 5, TP.HCM', 'thinh.nh@tpvax.com', 1, '1','TK00000004'),
-('NV00000005', N'Trần Tấn Tài', N'Nam', '2004-07-22', '079204003344', '2024-03-01', '0915333444', N'20 Ngô Quyền, Quận 10, TP.HCM', 'tai.tt@tpvax.com', 1, '1','TK00000005'),
-('NV00000006', N'Phạm Văn Phi', N'Nam', '2004-09-05', '079204005566', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 2, '1','TK00000006');
+('NV00000001', N'Tên Quản Lý', N'Nam', '2004-10-15', '079204001122', '2024-03-01', '0915111222', N'10 An Dương Vương, Quận 5, TP.HCM', 'thinh.nh@tpvax.com', 1, '1','TK00000001'),
+('NV00000002', N'Tên Tiếp Nhận', N'Nam', '2004-07-22', '079204003344', '2024-03-01', '0915333444', N'20 Ngô Quyền, Quận 10, TP.HCM', 'tai.tt@tpvax.com', 2, '1','TK00000002'),
+('NV00000003', N'Tên Kho', N'Nam', '2004-09-05', '079204005466', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 3, '1','TK00000003'),
+('NV00000004', N'Tên Y Tế', N'Nam', '2004-09-05', '079203005566', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 4, '1','TK00000004'),
+('NV00000005', N'Tên Thu Ngân', N'Nam', '2004-09-05', '079203005566', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 5, '1','TK00000005');
+
 GO
 
 PRINT '-> Đã thêm 3 nhân viên mới: Thịnh, Tài, Phi.';
@@ -266,36 +267,64 @@ VALUES
 ('KH00000017', N'Nguyễn Hải Yến',  '079600000009', '1993-10-21', N'Nữ',  N'77 Phạm Văn Đồng, TP.Thủ Đức, TP.HCM', '0989012345', 'yen.nguyen@email.com'),
 ('KH00000018', N'Trần Văn Phúc',   '079600000010', '1986-01-30', N'Nam', N'200 Quang Trung, Q.Gò Vấp, TP.HCM', '0990123456', 'phuc.tran@email.com');
 GO
-
--- Cập nhật khóa ngoại đã đệm
-UPDATE KhachHang SET MaTK = 'TK00000007' WHERE MaKH = 'KH00000007';
-UPDATE KhachHang SET MaTK = 'TK00000008' WHERE MaKH = 'KH00000008';
-GO
-
 PRINT '-> Đã thêm 15 khách hàng mới và 5 tài khoản tương ứng.';
 GO
 
 -- =================================================================================
 -- DỮ LIỆU KHUYẾN MÃI 
 -- =================================================================================
-INSERT INTO KhuyenMai (MaKM, TenKM, MoTa, LoaiKM, KieuGiam, GiaTriGiam, NgayBatDau, NgayKetThuc, TrangThai) VALUES
-('KM00000001', N'Giảm 10% gói vắc xin 0-24 tháng', N'Ưu đãi đặc biệt cho các bé trong dịp hè 2025. Áp dụng cho gói GOI00000002.', N'Sản phẩm', 'PhanTram', 10.00, '2025-06-01 00:00:00', '2025-06-30 23:59:59', 1),
-('KM00000002', N'Giảm 50k phòng cúm mùa thu', N'Chủ động phòng cúm với ưu đãi giảm 50,000đ cho vắc xin Vaxigrip Tetra.', N'Sản phẩm', 'SoTien', 50000, '2025-09-01 00:00:00', '2025-09-30 23:59:59', 0);
+-- 1. Xóa dữ liệu cũ (để tránh trùng lặp khi chạy lại)
+
+
+-- 2. Chèn dữ liệu bảng KHUYENMAI (Header)
+INSERT INTO KhuyenMai (MaKM, TenKM, MoTa, LoaiKM, KieuGiam, GiaTriGiam, NgayBatDau, NgayKetThuc, TrangThai) 
+VALUES
+(
+    'KM00000001', 
+    N'Giảm 10% gói vắc xin 0-24 tháng', 
+    N'Ưu đãi đặc biệt cho các bé trong dịp hè 2025. Áp dụng cho gói GOI00000002.', 
+    N'Khuyến Mãi Hè', -- (Loại KM để quản lý)
+    'PhanTram',      -- (Giảm theo %)
+    10.00,           -- (Giá trị giảm: 10%)
+    '2025-06-01 00:00:00', 
+    '2025-06-30 23:59:59', 
+    1                -- (Đang chạy)
+),
+(
+    'KM00000002', 
+    N'Giảm 50k phòng cúm mùa thu', 
+    N'Chủ động phòng cúm với ưu đãi giảm 50,000đ cho vắc xin Vaxigrip Tetra.', 
+    N'Khuyến Mãi Mùa', 
+    'SoTien',        -- (Giảm tiền mặt)
+    50000.00,        -- (Giá trị giảm: 50k)
+    '2025-09-01 00:00:00', 
+    '2025-09-30 23:59:59', 
+    0                -- (Chưa kích hoạt/Tạm dừng)
+);
 GO
 
-PRINT '-> Đã chèn thành công 2 chương trình khuyến mãi.';
-GO
 
 -- =================================================================================
 -- DỮ LIỆU CHI TIẾT KHUYẾN MÃI 
 -- =================================================================================
-INSERT INTO ChiTietKhuyenMai (MaKM, LoaiSanPham, MaSanPham, GhiChu) VALUES
-('KM00000001', 'GOIVACCINE', 'GOI0000002', N'Áp dụng cho khách hàng mua trọn gói 0-24 tháng'),
-('KM00000002', 'VACCINE', 'VC00000020', N'Áp dụng cho vắc xin cúm của Sanofi');
+-- 3. Chèn dữ liệu bảng CHITIETKHUYENMAI (Details)
+-- Lưu ý: Đã chuẩn hóa mã GOI00000002 cho đủ 10 ký tự
+INSERT INTO ChiTietKhuyenMai (MaKM, LoaiSanPham, MaSanPham) 
+VALUES
+(
+    'KM00000001', 
+    'GOIVACCINE', 
+    'GOI0000002' -- (Đã sửa lại mã cho đúng chuẩn CHAR(10))
+),
+(
+    'KM00000002', 
+    'VACCINE', 
+    'VC00000034'  -- (Vaxigrip Tetra)
+);
 GO
 
-PRINT '-> Đã liên kết thành công khuyến mãi với các sản phẩm cụ thể.';
-GO
+PRINT '-> Đã thêm dữ liệu khuyến mãi thành công.';
+
 
 -- =================================================================================
 -- TẠO THÊM HỒ SƠ TIÊM CHỦNG (CHAR(10)) VÀ LỊCH TIÊM (CHAR(8))
@@ -378,29 +407,24 @@ WHERE MaLT IN ('LT00000011', 'LT00000012') AND GhiChu LIKE N'%dại%';
 
 GO
 
-PRINT N'Bước 2: Cập nhật [MaNV] (Người tiêm) cho các mũi đã tiêm (TrangThai = 1)...';
-GO
 
--- Tạm thời gán tất cả các mũi ĐÃ TIÊM (TrangThai = 1) cho nhân viên 'NV00000004'
+
+-- Tạm thời gán tất cả các mũi ĐÃ TIÊM (TrangThai = 1) cho nhân viên 'NV00000001'
 UPDATE LichTiem
-SET MaNV = 'NV00000004'
+SET MaNV = 'NV00000001'
 WHERE TrangThai = N'Đã tiêm' AND MaNV IS NULL;
 GO
 
-PRINT N'Hoàn tất cập nhật MaVC và MaNV cho bảng LichTiem.';
-GO
-PRINT '-> Đã thêm hồ sơ tiêm chủng và lịch tiêm mới.';
-GO
 
 -- =================================================================================
 -- TẠO THÊM DỮ LIỆU HÓA ĐƠN 
 -- =================================================================================
 INSERT INTO HoaDon (MaHD, NgayLap, TongTien, TrangThai, MaKH, MaNV, MaKM) VALUES
-('HD00000004', '2024-05-10 10:20:00', 2492000, 1, 'KH00000004', 'NV00000004', NULL),
-('HD00000005', '2024-03-01 09:40:00', 1763000, 1, 'KH00000006', 'NV00000005', NULL),
-('HD00000006', '2024-04-01 10:05:00', 1763000, 1, 'KH00000006', 'NV00000004', NULL),
-('HD00000007', '2024-07-20 08:15:00', 538000, 1, 'KH00000008', 'NV00000005', NULL),
-('HD00000008', '2025-06-20 11:00:00', 11584800, 1, 'KH00000005', 'NV00000004', 'KM00000001');
+('HD00000004', '2024-05-10 10:20:00', 2492000, 1, 'KH00000004', 'NV00000001', NULL),
+('HD00000005', '2024-03-01 09:40:00', 1763000, 1, 'KH00000006', 'NV00000002', NULL),
+('HD00000006', '2024-04-01 10:05:00', 1763000, 1, 'KH00000006', 'NV00000001', NULL),
+('HD00000007', '2024-07-20 08:15:00', 538000, 1, 'KH00000008', 'NV00000002', NULL),
+('HD00000008', '2025-06-20 11:00:00', 11584800, 1, 'KH00000005', 'NV00000001',NULL);
 GO
 
 -- Chi tiết cho các hóa đơn mới 
@@ -414,15 +438,12 @@ INSERT INTO ChiTietHoaDon (MaCTHD, MaHD, MaSanPham, LoaiSanPham, SoLuong, DonGia
 ('CTHD000007', 'HD00000008', 'GOI0000002', 'GOIVACCINE', 1, 12872000);
 GO
 
-PRINT '-> Đã thêm nhiều hóa đơn và chi tiết hóa đơn mới.';
-GO
-
 -- =================================================================================
 -- TẠO THÊM DỮ LIỆU NHẬP KHO 
 -- =================================================================================
-INSERT INTO PhieuNhapVaccine (MaPN, NgayLap, MaNV, MaNCC) VALUES
-('PN00000003', '2024-05-05 09:00:00', 'NV00000006', 'NCC0000002'), -- SANOFI
-('PN00000004', '2024-06-10 14:30:00', 'NV00000006', 'NCC0000004'); -- PFIZER
+INSERT INTO PhieuNhapVaccine (MaPN, NgayLap, MaNV, MaNCC,TrangThai) VALUES
+('PN00000003', '2024-05-05 09:00:00', 'NV00000003', 'NCC0000002',1), -- SANOFI
+('PN00000004', '2024-06-10 14:30:00', 'NV00000003', 'NCC0000004',1); -- PFIZER
 GO
 
 -- Chi tiết phiếu nhập mới 
@@ -430,10 +451,4 @@ INSERT INTO ChiTietPhieuNhap (MaCTPN, MaPN, MaVC, NuocSanXuat, SoLuong,SoLuongTo
 ('CTPN000001', 'PN00000003', 'VC00000002', N'Pháp', 100,100, 850000, '2027-04-30'),
 ('CTPN000002', 'PN00000003', 'VC00000020', N'Pháp', 200,200, 280000, '2026-05-31'),
 ('CTPN000003', 'PN00000004', 'VC00000007', N'Mỹ', 150,150, 1050000, '2027-06-30');
-GO
-
-PRINT '-> Đã thêm phiếu nhập kho mới do nhân viên Phi thực hiện.';
-GO
-
-PRINT 'Hoàn tất việc chèn dữ liệu nâng cao (ĐÃ SỬA LỖI ĐỘ DÀI KHÓA)!';
 GO
