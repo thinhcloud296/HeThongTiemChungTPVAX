@@ -41,12 +41,11 @@ namespace TPVAXWebsite.Models.Domain
         public string TrangThai { get; set; }
 
         [StringLength(10)]
-        public string MaTK { get; set; }
+        public string MaTK { get; set; } // chỉ là string, không ForeignKey
 
-        // Navigation properties
-        [ForeignKey("MaTK")]
-        public virtual TaiKhoan TaiKhoan { get; set; }
+        // ❌ Bỏ navigation sang TaiKhoan để tránh lỗi multiplicity
 
+        // Các quan hệ khác vẫn giữ nguyên
         public virtual ICollection<PhieuNhapVaccine> PhieuNhapVaccine { get; set; }
         public virtual ICollection<HoaDon> HoaDon { get; set; }
         public virtual ICollection<LichTiem> LichTiem { get; set; }
