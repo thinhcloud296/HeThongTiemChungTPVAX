@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<AdminNhaCungCapViewModel>
+
+@{
     ViewBag.Title = "Quản lý Nhà cung cấp";
 }
 
@@ -105,121 +107,35 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>NCC001</td>
-                      <td><strong>Pfizer Vietnam Co., Ltd</strong></td>
-                      <td>Mr. John Smith</td>
-                      <td>(028) 3827 8900</td>
-                      <td>contact@pfizer.vn</td>
-                      <td>Tầng 10, Bitexco Financial Tower, Q.1, TP.HCM</td>
-                      <td><span class="badge bg-success">Hoạt động</span></td>
-                      <td>
-                        <button
-                          class="btn btn-primary btn-sm btn-edit"
-                          title="Sửa"
-                        >
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button
-                          class="btn btn-danger btn-sm btn-delete"
-                          title="Xóa"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>NCC002</td>
-                      <td><strong>AstraZeneca Vietnam</strong></td>
-                      <td>Ms. Sarah Johnson</td>
-                      <td>(028) 3910 2525</td>
-                      <td>info@astrazeneca.vn</td>
-                      <td>Lầu 15, Tòa nhà Vietcombank, Q.1, TP.HCM</td>
-                      <td><span class="badge bg-success">Hoạt động</span></td>
-                      <td>
-                        <button
-                          class="btn btn-primary btn-sm btn-edit"
-                          title="Sửa"
-                        >
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button
-                          class="btn btn-danger btn-sm btn-delete"
-                          title="Xóa"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>NCC003</td>
-                      <td><strong>Moderna Inc.</strong></td>
-                      <td>Dr. Michael Chen</td>
-                      <td>(028) 3825 6789</td>
-                      <td>sales@moderna.com</td>
-                      <td>146 Nguyễn Cơ Thạch, Q.2, TP.HCM</td>
-                      <td><span class="badge bg-success">Hoạt động</span></td>
-                      <td>
-                        <button
-                          class="btn btn-primary btn-sm btn-edit"
-                          title="Sửa"
-                        >
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button
-                          class="btn btn-danger btn-sm btn-delete"
-                          title="Xóa"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>NCC004</td>
-                      <td><strong>Sanofi Pasteur Vietnam</strong></td>
-                      <td>Mrs. Nguyễn Thu Hà</td>
-                      <td>(024) 3936 0808</td>
-                      <td>contact@sanofi.vn</td>
-                      <td>Tầng 18, Keangnam Landmark, Hà Nội</td>
-                      <td><span class="badge bg-success">Hoạt động</span></td>
-                      <td>
-                        <button
-                          class="btn btn-primary btn-sm btn-edit"
-                          title="Sửa"
-                        >
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button
-                          class="btn btn-danger btn-sm btn-delete"
-                          title="Xóa"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>NCC005</td>
-                      <td><strong>GlaxoSmithKline Vietnam</strong></td>
-                      <td>Mr. David Williams</td>
-                      <td>(028) 3824 5678</td>
-                      <td>info@gsk.vn</td>
-                      <td>Lầu 9, Capital Place, Q.Ba Đình, Hà Nội</td>
-                      <td><span class="badge bg-warning">Tạm ngưng</span></td>
-                      <td>
-                        <button
-                          class="btn btn-primary btn-sm btn-edit"
-                          title="Sửa"
-                        >
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button
-                          class="btn btn-danger btn-sm btn-delete"
-                          title="Xóa"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var supplier in Model)
+                        {
+                            <tr>
+                                <td>@supplier.MaNCC</td>
+                                <td><strong>@supplier.TenNCC</strong></td>
+                                <td>@supplier.TenNganHang</td>
+                                <td>@supplier.SoDT</td>
+                                <td>@supplier.Email</td>
+                                <td>@supplier.DiaChi</td>
+                                <td><span class="badge bg-success">Hoạt động</span></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm btn-edit" data-supplier-id="@supplier.MaNCC" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm btn-delete" data-supplier-id="@supplier.MaNCC" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center">Không có dữ liệu nhà cung cấp</td>
+                        </tr>
+                    }
                   </tbody>
                 </table>
               </div>

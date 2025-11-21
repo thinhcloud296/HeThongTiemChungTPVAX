@@ -1,4 +1,7 @@
-﻿@{
+﻿@using TPVAXWebsite.Models.ViewModels
+@model List<AdminVaccineViewModel>
+
+@{
     ViewBag.Title = "Quản lý Vắc xin";
 }
 
@@ -51,94 +54,47 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>VC001</td>
-                          <td>Vắc xin 6 trong 1</td>
-                          <td>Bạch hầu, ho gà, uốn ván...</td>
-                          <td>250</td>
-                          <td>1.015.000</td>
-                          <td>
-                            <span class="badge bg-success">Đang hoạt động</span>
-                          </td>
-                          <td>
-                            <button class="btn btn-info btn-sm btn-edit">
-                              <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm btn-delete">
-                              <i class="fas fa-trash"></i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>VC002</td>
-                          <td>Vắc xin Cúm Tứ Giá</td>
-                          <td>Cúm mùa</td>
-                          <td>1500</td>
-                          <td>356.000</td>
-                          <td>
-                            <span class="badge bg-success">Đang hoạt động</span>
-                          </td>
-                          <td>
-                            <button class="btn btn-info btn-sm btn-edit">
-                              <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm btn-delete">
-                              <i class="fas fa-trash"></i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>VC003</td>
-                          <td>Prevenar 13</td>
-                          <td>Viêm phổi, viêm màng não...</td>
-                          <td>80</td>
-                          <td>1.280.000</td>
-                          <td>
-                            <span class="badge bg-warning">Sắp hết hàng</span>
-                          </td>
-                          <td>
-                            <button class="btn btn-info btn-sm btn-edit">
-                              <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm btn-delete">
-                              <i class="fas fa-trash"></i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>VC004</td>
-                          <td>Gardasil 9 (Mỹ)</td>
-                          <td>Ung thư cổ tử cung, sùi mào gà</td>
-                          <td>310</td>
-                          <td>2.950.000</td>
-                          <td>
-                            <span class="badge bg-success">Đang hoạt động</span>
-                          </td>
-                          <td>
-                            <button class="btn btn-info btn-sm btn-edit">
-                              <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm btn-delete">
-                              <i class="fas fa-trash"></i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>VC005</td>
-                          <td>MMR II</td>
-                          <td>Sởi - Quai bị - Rubella</td>
-                          <td>0</td>
-                          <td>280.000</td>
-                          <td><span class="badge bg-danger">Hết hàng</span></td>
-                          <td>
-                            <button class="btn btn-info btn-sm btn-edit">
-                              <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm btn-delete">
-                              <i class="fas fa-trash"></i>
-                            </button>
-                          </td>
-                        </tr>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            foreach (var vaccine in Model)
+                            {
+                                <tr>
+                                    <td>@vaccine.MaVC</td>
+                                    <td>@vaccine.TenVC</td>
+                                    <td>@vaccine.TenLoai</td>
+                                    <td>@vaccine.SoLuongTon</td>
+                                    <td>@vaccine.GiaBan.ToString("N0")</td>
+                                    <td>
+                                        @if (vaccine.SoLuongTon > 50)
+                                        {
+                                            <span class="badge bg-success">Đang hoạt động</span>
+                                        }
+                                        else if (vaccine.SoLuongTon > 0)
+                                        {
+                                            <span class="badge bg-warning">Sắp hết hàng</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Hết hàng</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm btn-edit" data-vaccine-id="@vaccine.MaVC">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm btn-delete" data-vaccine-id="@vaccine.MaVC">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center">Không có dữ liệu vaccine</td>
+                            </tr>
+                        }
                       </tbody>
                     </table>
                   </div>
