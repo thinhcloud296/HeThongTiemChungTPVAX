@@ -455,3 +455,23 @@ GO
 
 UPDATE Vaccine
 SET HinhAnh = MaVC + '.jpg';
+
+ALTER TABLE GoiVaccine
+ADD HinhAnh NVARCHAR(255) NULL;
+GO
+UPDATE GoiVaccine
+SET HinhAnh = NULL;
+GO
+UPDATE GoiVaccine
+SET HinhAnh = MaGoi + '.jpg';
+GO
+
+ALTER TABLE KhuyenMai
+ADD HinhAnh NVARCHAR(255) NULL;
+GO
+UPDATE KhuyenMai
+SET HinhAnh = MaKM + '.jpg';
+GO
+SELECT MaKM, TenKM, HinhAnh
+FROM KhuyenMai;
+GO
