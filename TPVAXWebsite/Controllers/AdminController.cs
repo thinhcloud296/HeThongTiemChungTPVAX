@@ -49,7 +49,7 @@ namespace TPVAXWebsite.Controllers
                     MaVC = v.MaVC,
                     TenVC = v.TenVC,
                     GiaBan = v.GiaBan,
-                    SoLuongTon = v.SoLuongTon,
+                    SoLuongTon = v.SoLuong,
                     SoMuiToiDa = v.SoMuiToiDa,
                     SoThangCho = v.SoThangCho,
                     MaLoai = v.MaLoai,
@@ -221,7 +221,7 @@ namespace TPVAXWebsite.Controllers
         }
 
         // GET: Admin/Profile
-        public ActionResult Profile()
+        public new ActionResult Profile()
         {
             // TODO: Hiển thị profile admin
             return View();

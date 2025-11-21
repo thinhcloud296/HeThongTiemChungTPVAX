@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using TPVAXWebsite.DAL;
 using TPVAXWebsite.Models.Domain;
+using TPVAXWebsite.Models.ViewModels;
 
 namespace TPVAXWebsite.Services
 {
@@ -32,6 +33,93 @@ namespace TPVAXWebsite.Services
         public IEnumerable<Vaccine> GetAll()
         {
             return _unitOfWork.Vaccines.GetAll();
+        }
+
+        /// <summary>
+        /// Lấy full thông tin vaccine trừ số lượng
+        /// </summary>
+
+        public VaccineDetailViewModel GetVaccineDetail(string maVC)
+        {
+            if (string.IsNullOrEmpty(maVC)) return null;
+
+            // BƯỚC 1: Lấy dữ liệu thô (Raw Data) từ Database
+            // Ta chưa map thẳng vào ViewModel ngay mà lấy các List string về trước để xử lý nối chuỗi
+            var rawData = _unitOfWork.Vaccines.Query()
+                .Where(v => v.MaVC == maVC)
+                .Select(v => new
+                {
+                    // Lấy thông tin cơ bản
+                    v.MaVC,
+                    v.TenVC,    // Lưu ý: Trong Entity tên là TenVC, ViewModel là TenVaccine
+                    v.GiaBan,
+                    v.SoLuong,  // Tồn kho tổng
+                    v.SoMuiToiDa,
+                    v.SoThangCho,
+                    v.MoTa,
+                    v.HinhAnh,
+                    v.MaLoai,   // Lấy để tìm vaccine liên quan
+                    v.LoaiVaccine.TenLoai,
+
+                    // SỬA ĐỔI: Lấy 1 giá trị Nước SX từ lần nhập mới nhất
+                    NuocSanXuat = v.ChiTietPhieuNhap
+                       .OrderByDescending(ct => ct.PhieuNhapVaccine.NgayLap) // Sắp xếp ngày nhập mới nhất
+                       .Select(ct => ct.NuocSanXuat)
+                       .FirstOrDefault(), // Chỉ lấy 1 dòng đầu tiên
+
+                    // SỬA ĐỔI: Lấy 1 Tên Nhà Cung Cấp từ lần nhập mới nhất
+                    NhaCungCap = v.ChiTietPhieuNhap
+                      .OrderByDescending(ct => ct.PhieuNhapVaccine.NgayLap)
+                      .Select(ct => ct.PhieuNhapVaccine.NhaCungCap.TenNCC)
+                      .FirstOrDefault(),
+
+                    // Lấy danh sách Bệnh phòng ngừa
+                    ListBenh = v.VaccinePhongBenh
+                                .Select(vp => vp.LoaiBenh.TenBenh)
+                                .ToList()
+                })
+                .FirstOrDefault();
+
+            if (rawData == null) return null;
+
+            // BƯỚC 2: Xử lý nối chuỗi (Concatenation) trong bộ nhớ (In-Memory)
+            // EF6 không hỗ trợ string.Join trực tiếp trong SQL, nên ta làm ở đây
+            string strNuocSX = rawData.NuocSanXuat ?? "Đang cập nhật";
+
+            string strTenNCC = rawData.NhaCungCap ?? "Đang cập nhật";
+
+            // BƯỚC 3: Lấy danh sách Vaccine liên quan (Cùng loại)
+            // Chỉ lấy những trường cần thiết để hiển thị (Projection)
+            var relatedVaccines = _unitOfWork.Vaccines.Query()
+                .Where(v => v.MaLoai == rawData.MaLoai && v.MaVC != maVC)
+                .OrderBy(v => v.TenVC)
+                .Take(4)
+                .ToList(); // Lấy List<Domain.Vaccine> theo yêu cầu ViewModel của bạn
+
+            // BƯỚC 4: Đổ dữ liệu vào ViewModel
+            var model = new VaccineDetailViewModel
+            {
+                Vaccine = new VaccineDetailViewModel.VaccineInfo
+                {
+                    MaVC = rawData.MaVC,
+                    TenVaccine = rawData.TenVC, // Map đúng tên cột
+                    GiaBan = rawData.GiaBan,   
+                    SoMuiToiDa = rawData.SoMuiToiDa,
+                    SoThangCho = rawData.SoThangCho,
+
+                    // Hai cột này đã được xử lý đầy đủ
+                    NuocSanXuat = strNuocSX,
+                    TenNCC = strTenNCC,
+
+                    MoTa = rawData.MoTa,
+                    HinhAnh = rawData.HinhAnh,
+                    TenLoaiVaccine = rawData.TenLoai
+                },
+                CacBenhPhong = rawData.ListBenh,
+                VaccinesLienQuan = relatedVaccines
+            };
+
+            return model;
         }
 
         /// <summary>
@@ -209,7 +297,7 @@ namespace TPVAXWebsite.Services
         public bool IsAvailable(string maVC)
         {
             var vaccine = _unitOfWork.Vaccines.GetById(maVC);
-            return vaccine != null && vaccine.SoLuongTon > 0;
+            return vaccine != null && vaccine.SoLuong > 0;
         }
 
         /// <summary>
@@ -218,7 +306,7 @@ namespace TPVAXWebsite.Services
         public bool CheckStock(string maVC, int soLuong)
         {
             var vaccine = _unitOfWork.Vaccines.GetById(maVC);
-            return vaccine != null && vaccine.SoLuongTon >= soLuong;
+            return vaccine != null && vaccine.SoLuong >= soLuong;
         }
 
         /// <summary>
@@ -232,10 +320,10 @@ namespace TPVAXWebsite.Services
                 if (vaccine == null)
                     return false;
 
-                vaccine.SoLuongTon += soLuongThayDoi;
+                vaccine.SoLuong += soLuongThayDoi;
 
-                if (vaccine.SoLuongTon < 0)
-                    vaccine.SoLuongTon = 0;
+                if (vaccine.SoLuong < 0)
+                    vaccine.SoLuong = 0;
 
                 _unitOfWork.Vaccines.Update(vaccine);
                 _unitOfWork.SaveChanges();
@@ -283,7 +371,7 @@ namespace TPVAXWebsite.Services
         {
             return _unitOfWork.Vaccines.Query()
                 .Include(v => v.LoaiVaccine)
-                .Where(v => v.SoLuongTon < threshold)
+                .Where(v => v.SoLuong < threshold)
                 .ToList();
         }
 

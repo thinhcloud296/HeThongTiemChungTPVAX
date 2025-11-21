@@ -145,6 +145,7 @@
     <Content Include="Content\Assets\Images\banner2.jpg" />
     <Content Include="Content\Assets\Images\banner3.png" />
     <Content Include="Content\Assets\Images\bgbluegradient.jpg" />
+    <Content Include="Content\Assets\Images\default.png" />
     <Content Include="Content\Assets\Images\hexaxim.png" />
     <Content Include="Content\Assets\Images\hinh-hop-vac-xin-abrysvo-hover.jpg" />
     <Content Include="Content\Assets\Images\logo.png" />
@@ -175,8 +176,39 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Views\Account\Dashboard.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Admin\Appointments.cshtml" />
+    <Content Include="Views\Admin\Customers.cshtml" />
+    <Content Include="Views\Admin\GoiVaccine.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\InvoiceDetails.cshtml" />
+    <Content Include="Views\Admin\NhaCungCap.cshtml" />
+    <Content Include="Views\Admin\NhanVien.cshtml" />
+    <Content Include="Views\Admin\Profile.cshtml" />
+    <Content Include="Views\Admin\Reports.cshtml" />
+    <Content Include="Views\Admin\Vaccines.cshtml" />
+    <Content Include="Views\Admin\_AdminFooter.cshtml" />
+    <Content Include="Views\Admin\_AdminHeader.cshtml" />
+    <Content Include="Views\Admin\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\_AdminSidebar.cshtml" />
+    <Content Include="Views\Admin\_ViewStart.cshtml" />
+    <Content Include="Views\BaiViet\Detail.cshtml" />
+    <Content Include="Views\BenhTruyenNhiem\Index.cshtml" />
+    <Content Include="Views\GoiVaccine\Index.cshtml" />
+    <Content Include="Views\GoiVaccine\Index_NEW.cshtml" />
+    <Content Include="Views\GoiVaccine\Index_old.cshtml.bak" />
+    <Content Include="Views\KhuyenMai\Index.cshtml" />
+    <Content Include="Views\KienThucTiemChung\Index.cshtml" />
+    <Content Include="Views\MeVaBe\Index.cshtml" />
     <Content Include="Views\Test\CheckConnection.cshtml" />
+    <Content Include="Views\TheoDoiTuong\Index.cshtml" />
+    <Content Include="Views\ToiNenTiemGi\Index.cshtml" />
+    <Content Include="Views\VaccinePhongBenh\Index.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -247,7 +279,6 @@
     <Compile Include="Models\ViewModels\BenhViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
@@ -271,6 +302,18 @@
     <Content Include="Scripts\bootstrap.esm.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Views\GioHang\Cart.cshtml" />
+    <Content Include="Views\GioHang\Index.cshtml" />
+    <Content Include="Views\HoaDon\Checkout.cshtml" />
+    <Content Include="Views\HoaDon\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\LichTiem\DatLich.cshtml" />
+    <Content Include="Views\LichTiem\Index.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Vaccine\ChiTiet.cshtml" />
+    <Content Include="Views\Vaccine\Index.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -280,14 +323,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
     <Folder Include="Views\Default\" />
-    <Folder Include="Views\GioHang\" />
-    <Folder Include="Views\HoaDon\" />
-    <Folder Include="Views\Home\" />
-    <Folder Include="Views\LichTiem\" />
-    <Folder Include="Views\Shared\" />
-    <Folder Include="Views\Vaccine\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

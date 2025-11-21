@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TPVAXWebsite.Models.Domain;
 
 namespace TPVAXWebsite.Models.ViewModels
@@ -14,12 +14,15 @@ namespace TPVAXWebsite.Models.ViewModels
             public string MaVC { get; set; }
             public string TenVaccine { get; set; }
             public decimal GiaBan { get; set; }
-            public int SoLuongTon { get; set; }
             public int? SoMuiToiDa { get; set; }
             public int? SoThangCho { get; set; }
+            public string NuocSanXuat { get; set; }
+            public string TenNCC { get; set; }
+
             public string MoTa { get; set; }
             public string HinhAnh { get; set; }
             public string TenLoaiVaccine { get; set; }
         }
+
     }
 }

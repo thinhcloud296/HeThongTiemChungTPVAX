@@ -19,7 +19,7 @@ namespace TPVAXWebsite.Models.Domain
         public decimal GiaBan { get; set; }
 
         [Required]
-        public int SoLuongTon { get; set; } = 0;
+        public int SoLuong { get; set; } = 0;
 
         public int? SoMuiToiDa { get; set; }
 

@@ -1,10 +1,9 @@
-@model TPVAXWebsite.Models.ViewModels.VaccineDetailViewModel
+﻿@model TPVAXWebsite.Models.ViewModels.VaccineDetailViewModel
 
 @{
     ViewBag.Title = Model.Vaccine.TenVaccine;
 }
 
-<!-- Breadcrumb -->
 <nav aria-label="breadcrumb" class="bg-light py-3">
     <div class="container">
         <ol class="breadcrumb mb-0">
@@ -15,41 +14,26 @@
     </div>
 </nav>
 
-<!-- Vaccine Detail Section -->
 <section class="container my-5">
     <div class="row">
-        <!-- Left Column: Image -->
+
         <div class="col-lg-5 mb-4">
             <div class="sticky-top" style="top: 100px;">
                 <div class="card shadow-sm">
-                    <img src="@Url.Content("~/Content/Assets/Images/" + (Model.Vaccine.HinhAnh ?? "hexaxim.png"))" 
-                         alt="@Model.Vaccine.TenVaccine" 
-                         class="card-img-top" 
+                    <img src="@Url.Content("~/Content/Images/Vaccines/" + (Model.Vaccine.HinhAnh ?? "hexaxim.png"))"
+                         alt="@Model.Vaccine.TenVaccine"
+                         class="card-img-top"
                          style="width: 100%; height: 400px; object-fit: cover;" />
-                    <div class="card-body">
-                        @if (Model.Vaccine.SoLuongTon != null && Model.Vaccine.SoLuongTon > 0)
-                        {
-                            <div class="alert alert-success mb-0">
-                                <i class="fas fa-check-circle me-2"></i><strong>Còn hàng</strong> - Sẵn sàng tiêm ngay
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="alert alert-danger mb-0">
-                                <i class="fas fa-times-circle me-2"></i><strong>Hết hàng</strong> - Vui lòng liên hệ
-                            </div>
-                        }
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right Column: Info -->
         <div class="col-lg-7">
+
             <h1 class="h2 fw-bold text-primary mb-3">@Model.Vaccine.TenVaccine</h1>
-            
+
             <div class="d-flex align-items-center gap-3 mb-4">
-                <span class="badge bg-primary fs-6">@(Model.Vaccine.LoaiVaccine?.TenLoaiVaccine ?? "Vắc xin")</span>
+                <span class="badge bg-primary fs-6">@(Model.Vaccine.TenLoaiVaccine ?? "Vắc xin")</span>
                 @if (!string.IsNullOrEmpty(Model.Vaccine.NuocSanXuat))
                 {
                     <span class="text-muted">
@@ -58,33 +42,30 @@
                 }
             </div>
 
-            <!-- Price -->
             <div class="card border-warning shadow-sm mb-4">
                 <div class="card-body">
                     <h3 class="h4 text-warning fw-bold mb-0">
-                        @string.Format("{0:N0}₫", Model.Vaccine.GiaTien)
+                        @string.Format("{0:N0}₫", Model.Vaccine.GiaBan)
                         <small class="text-muted fs-6">/ liều</small>
                     </h3>
                 </div>
             </div>
 
-            <!-- Description -->
             <div class="mb-4">
                 <h4 class="h5 fw-bold mb-3"><i class="fas fa-info-circle me-2 text-primary"></i>Mô tả</h4>
                 <p class="text-secondary">@Html.Raw(Model.Vaccine.MoTa)</p>
             </div>
 
-            <!-- Diseases Prevention -->
-            @if (Model.DanhSachBenh != null && Model.DanhSachBenh.Any())
+            @if (Model.CacBenhPhong != null && Model.CacBenhPhong.Any())
             {
                 <div class="mb-4">
                     <h4 class="h5 fw-bold mb-3"><i class="fas fa-shield-virus me-2 text-primary"></i>Phòng chống các bệnh</h4>
                     <div class="row g-2">
-                        @foreach (var benh in Model.DanhSachBenh)
+                        @foreach (var benh in Model.CacBenhPhong)
                         {
                             <div class="col-md-6">
                                 <div class="alert alert-light border mb-0">
-                                    <i class="fas fa-check text-success me-2"></i>@benh.TenBenh
+                                    <i class="fas fa-check text-success me-2"></i>@benh
                                 </div>
                             </div>
                         }
@@ -92,66 +73,29 @@
                 </div>
             }
 
-            <!-- Vaccine Info -->
             <div class="card border-0 bg-light mb-4">
                 <div class="card-body">
                     <h5 class="fw-bold mb-3"><i class="fas fa-clipboard-list me-2"></i>Thông tin chi tiết</h5>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <p class="mb-2"><strong>Hãng sản xuất:</strong></p>
-                            <p class="text-muted">@(Model.Vaccine.HangSanXuat ?? "Đang cập nhật")</p>
+                            <p class="text-muted">@(Model.Vaccine.TenNCC ?? "Đang cập nhật")</p>
                         </div>
                         <div class="col-md-6">
                             <p class="mb-2"><strong>Nước sản xuất:</strong></p>
                             <p class="text-muted">@(Model.Vaccine.NuocSanXuat ?? "Đang cập nhật")</p>
                         </div>
-                        @if (Model.Vaccine.SoLieuTiemToiThieu != null)
-                        {
-                            <div class="col-md-6">
-                                <p class="mb-2"><strong>Số liều tiêm tối thiểu:</strong></p>
-                                <p class="text-muted">@Model.Vaccine.SoLieuTiemToiThieu liều</p>
-                            </div>
-                        }
-                        @if (Model.Vaccine.ThoiGianBaoVe != null)
-                        {
-                            <div class="col-md-6">
-                                <p class="mb-2"><strong>Thời gian bảo vệ:</strong></p>
-                                <p class="text-muted">@Model.Vaccine.ThoiGianBaoVe</p>
-                            </div>
-                        }
                     </div>
                 </div>
             </div>
 
-            <!-- Action Buttons -->
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Số lượng:</label>
-                            <div class="input-group">
-                                <button class="btn btn-outline-secondary" type="button" id="btnDecrease">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="10" />
-                                <button class="btn btn-outline-secondary" type="button" id="btnIncrease">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex align-items-end">
-                            <button class="btn btn-outline-success w-100" id="btnAddToCart" 
-                                    @(Model.Vaccine.SoLuongTon == null || Model.Vaccine.SoLuongTon <= 0 ? "disabled" : "")>
-                                <i class="fas fa-cart-plus me-2"></i>Them vao gio hang
-                            </button>
-                        </div>
-                    </div>
                     <hr class="my-3" />
                     <div class="d-grid gap-2">
-                        <a href="@Url.Action("DatLich", "LichTiem", new { vaccineId = Model.Vaccine.MaVaccine })" 
-                           class="btn btn-primary btn-lg"
-                           @(Model.Vaccine.SoLuongTon == null || Model.Vaccine.SoLuongTon <= 0 ? "disabled" : "")>
-                            <i class="fas fa-calendar-check me-2"></i>Dat lich tiem ngay
+                        <a href="@Url.Action("DatLich", "LichTiem", new { vaccineId = Model.Vaccine.MaVC })"
+                           class="btn btn-primary btn-lg">
+                            <i class="fas fa-calendar-check me-2"></i>Đặt lịch tiêm ngay
                         </a>
                         <a href="tel:0975088626" class="btn btn-outline-primary btn-lg">
                             <i class="fas fa-phone me-2"></i>Gọi tư vấn: 0975 088 626
@@ -163,7 +107,6 @@
     </div>
 </section>
 
-<!-- Related Vaccines -->
 @if (Model.VaccinesLienQuan != null && Model.VaccinesLienQuan.Any())
 {
     <section class="bg-light py-5">
@@ -176,14 +119,14 @@
                 {
                     <div class="col-lg-4 col-md-6">
                         <div class="card h-100 shadow-sm">
-                            <img src="@Url.Content("~/Content/Assets/Images/" + (vaccine.HinhAnh ?? "hexaxim.png"))" 
-                                 class="card-img-top" 
-                                 style="height: 200px; object-fit: cover;" 
-                                 alt="@vaccine.TenVaccine" />
+                            <img src="@Url.Content("~/Content/Images/Vaccines/" + (vaccine.HinhAnh ?? "hexaxim.png"))"
+                                 class="card-img-top"
+                                 style="height: 200px; object-fit: cover;"
+                                 alt="@vaccine.TenVC" />
                             <div class="card-body">
-                                <h5 class="card-title">@vaccine.TenVaccine</h5>
-                                <p class="text-warning fw-bold">@string.Format("{0:N0}₫", vaccine.GiaTien)</p>
-                                <a href="@Url.Action("Detail", "Vaccine", new { id = vaccine.MaVaccine })" 
+                                <h5 class="card-title">@vaccine.TenVC</h5>
+                                <p class="text-warning fw-bold">@string.Format("{0:N0}₫", vaccine.GiaBan)</p>
+                                <a href="@Url.Action("Index", "Vaccine", new { id = vaccine.MaVC })"
                                    class="btn btn-outline-primary w-100">
                                     Xem chi tiết
                                 </a>
@@ -199,9 +142,9 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            const vaccineId = '@Model.Vaccine.MaVaccine';
+            const vaccineId = '@Model.Vaccine.MaVC';
             const vaccineName = '@Model.Vaccine.TenVaccine';
-            const vaccinePrice = @Model.Vaccine.GiaTien;
+            const vaccinePrice = @Model.Vaccine.GiaBan;
 
             // Quantity controls
             $('#btnIncrease').click(function () {
@@ -224,23 +167,29 @@
             $('#btnAddToCart').click(function () {
                 const quantity = parseInt($('#quantity').val());
                 const button = $(this);
-                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Dang them...');
+
+                // SỬA: Đổi thành tiếng Việt có dấu
+                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Đang thêm...');
 
                 $.post('@Url.Action("Add", "GioHang")', { vaccineId: vaccineId, soLuong: quantity }, function (data) {
                     if (data.success) {
                         $('#cart-count').text(data.cartCount);
-                        alert('Da them ' + quantity + ' lieu "' + vaccineName + '" vao gio hang!');
-                        button.html('<i class="fas fa-check me-2"></i>Da them vao gio');
+                        // SỬA: Đổi thành tiếng Việt có dấu
+                        alert('Đã thêm ' + quantity + ' liều "' + vaccineName + '" vào giỏ hàng!');
+
+                        button.html('<i class="fas fa-check me-2"></i>Đã thêm vào giỏ');
                         setTimeout(() => {
-                            button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Them vao gio hang');
+                            button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
                         }, 2000);
                     } else {
-                        alert('Loi: ' + (data.message || 'Khong the them vao gio hang'));
-                        button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Them vao gio hang');
+                        // SỬA: Đổi thành tiếng Việt có dấu
+                        alert('Lỗi: ' + (data.message || 'Không thể thêm vào giỏ hàng'));
+                        button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
                     }
                 }).fail(function () {
-                    alert('Vui long dang nhap de them vao gio hang');
-                    button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Them vao gio hang');
+                    // SỬA: Đổi thành tiếng Việt có dấu
+                    alert('Vui lòng đăng nhập để thêm vào giỏ hàng');
+                    button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
                 });
             });
         });

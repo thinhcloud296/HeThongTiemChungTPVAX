@@ -29,36 +29,13 @@ namespace TPVAXWebsite.Controllers
                     return RedirectToAction("Index", "VaccinePhongBenh");
                 }
 
-                var vaccine = _vaccineService.GetById(id);
-                if (vaccine == null)
+                var vaccineModel = _vaccineService.GetVaccineDetail(id);
+                if (vaccineModel == null)
                 {
                     ViewBag.Error = "Không tìm thấy vaccine";
                     return RedirectToAction("Index", "VaccinePhongBenh");
                 }
-
-                // Tạo ViewModel
-                var viewModel = new VaccineDetailViewModel
-                {
-                    Vaccine = new VaccineDetailViewModel.VaccineInfo
-                    {
-                        MaVC = vaccine.MaVC,
-                        TenVaccine = vaccine.TenVC,
-                        GiaBan = vaccine.GiaBan,
-                        SoLuongTon = vaccine.SoLuongTon,
-                        SoMuiToiDa = vaccine.SoMuiToiDa,
-                        SoThangCho = vaccine.SoThangCho,
-                        MoTa = vaccine.MoTa,
-                        HinhAnh = vaccine.HinhAnh,
-                        TenLoaiVaccine = vaccine.LoaiVaccine?.TenLoai
-                    },
-                    CacBenhPhong = _vaccineService.GetDiseasesByVaccine(id)
-                        .Select(b => b.TenBenh)
-                        .ToList(),
-                    VaccinesLienQuan = _vaccineService.GetRelatedVaccines(id, 4)
-                        .ToList()
-                };
-
-                return View(viewModel);
+                return View(vaccineModel);
             }
             catch (Exception ex)
             {

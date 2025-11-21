@@ -49,7 +49,7 @@ namespace TPVAXWebsite.Controllers
                 ViewBag.PageSize = pageSize;
                 ViewBag.Search = search;
                 
-                return View(vaccines); // Truyền dữ liệu đã phân trang
+                return View(vaccines); 
             }
             catch (Exception ex)
             {
