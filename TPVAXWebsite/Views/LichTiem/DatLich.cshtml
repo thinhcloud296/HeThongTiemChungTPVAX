@@ -2,130 +2,121 @@
 
 @{
     ViewBag.Title = "Đặt lịch tiêm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Page Header -->
 <section class="page-header bg-primary bg-gradient text-white py-4">
     <div class="container">
-        <h1 class="h3 mb-0">
-            <i class="fas fa-calendar-plus me-2"></i>Đặt Lịch Tiêm Chủng
-        </h1>
+        <div class="d-flex align-items-center justify-content-between">
+            <h1 class="h3 mb-0">
+                <i class="fas fa-calendar-plus me-2"></i>Đặt Lịch Tiêm Chủng
+            </h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")" class="text-white text-decoration-none">Trang chủ</a></li>
+                    <li class="breadcrumb-item active text-white-50" aria-current="page">Đặt lịch</li>
+                </ol>
+            </nav>
+        </div>
     </div>
 </section>
 
-<!-- Booking Form -->
 <section class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            @if (ViewBag.SuccessMessage != null)
-            {
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle me-2"></i>@ViewBag.SuccessMessage
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            }
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="fas fa-check-circle me-2"></i>@ViewBag.SuccessMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
 
-            <div class="card shadow-sm">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-light fw-bold">
+                    <i class="fas fa-info-circle me-2 text-primary"></i>Thông tin Vắc xin
+                </div>
+                <img src="@Url.Content("~/" + (Model.HinhAnh ?? "Content/Assets/Images/default.png"))"
+                     class="card-img-top" alt="@Model.TenVaccine"
+                     style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title text-primary fw-bold">@Model.TenVaccine</h5>
+                    <p class="card-text text-warning fw-bold fs-4 mb-2">
+                        @string.Format("{0:N0}₫", Model.GiaBan)
+                    </p>
+                    <div class="alert alert-info small mb-0">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Vắc xin này yêu cầu đặt trước. Vui lòng chọn người tiêm và thời gian bên cạnh.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-body p-4">
-                    <h4 class="card-title mb-4">
-                        <i class="fas fa-clipboard-list me-2 text-primary"></i>Thông tin đặt lịch
+                    <h4 class="card-title mb-4 border-bottom pb-2">
+                        <i class="fas fa-clipboard-list me-2 text-primary"></i>Phiếu đăng ký
                     </h4>
 
-                    @using (Html.BeginForm("DatLich", "LichTiem", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    @using (Html.BeginForm("DatLich", "LichTiem", FormMethod.Post, new { @class = "needs-validation" }))
                     {
                         @Html.AntiForgeryToken()
-                        @Html.HiddenFor(m => m.MaVaccine)
+                        @Html.HiddenFor(m => m.MaVC) @* Giữ mã Vaccine *@
+                        @Html.HiddenFor(m => m.TenVaccine) @* Giữ tên để nếu lỗi reload lại vẫn hiện *@
+                        @Html.HiddenFor(m => m.HinhAnh)
+                        @Html.HiddenFor(m => m.GiaBan)
 
-                        <!-- Personal Info -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-user me-1"></i>Họ và tên <span class="text-danger">*</span>
-                                </label>
-                                @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Nguyễn Văn A", required = "required" })
-                                @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger small" })
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-phone me-1"></i>Số điện thoại <span class="text-danger">*</span>
-                                </label>
-                                @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control", placeholder = "0912345678", required = "required" })
-                                @Html.ValidationMessageFor(m => m.SoDienThoai, "", new { @class = "text-danger small" })
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-envelope me-1"></i>Email
-                                </label>
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "example@email.com" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-birthday-cake me-1"></i>Ngày sinh
-                                </label>
-                                @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-                                @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger small" })
-                            </div>
-                        </div>
-
-                        <!-- Appointment Info -->
-                        <hr class="my-4" />
-                        <h5 class="mb-3"><i class="fas fa-calendar-check me-2"></i>Thông tin lịch hẹn</h5>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-calendar-day me-1"></i>Ngày tiêm <span class="text-danger">*</span>
-                                </label>
-                                @Html.TextBoxFor(m => m.NgayTiem, new { @class = "form-control", type = "date", required = "required", min = DateTime.Now.ToString("yyyy-MM-dd") })
-                                @Html.ValidationMessageFor(m => m.NgayTiem, "", new { @class = "text-danger small" })
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-clock me-1"></i>Giờ tiêm <span class="text-danger">*</span>
-                                </label>
-                                @Html.DropDownListFor(m => m.GioTiem, 
-                                    new SelectList(new[] { "08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00" }), 
-                                    "-- Chọn giờ --", 
-                                    new { @class = "form-select", required = "required" })
-                                @Html.ValidationMessageFor(m => m.GioTiem, "", new { @class = "text-danger small" })
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-syringe me-1"></i>Vắc xin cần tiêm
+                                <i class="fas fa-user-injured me-1"></i>Chọn người tiêm (Hồ sơ) <span class="text-danger">*</span>
                             </label>
-                            @Html.DropDownListFor(m => m.MaVaccine, 
-                                (SelectList)ViewBag.DanhSachVaccine, 
-                                "-- Chọn vắc xin --", 
-                                new { @class = "form-select" })
-                            @Html.ValidationMessageFor(m => m.MaVaccine, "", new { @class = "text-danger small" })
+                            <div class="input-group">
+                                @Html.DropDownListFor(m => m.MaHSTC,
+                                    Model.DanhSachHoSo,
+                                    "-- Vui lòng chọn người thân --",
+                                    new { @class = "form-select form-select-lg" })
+                                <a href="@Url.Action("Create", "HoSoTiemChung")" class="btn btn-outline-primary" title="Thêm hồ sơ mới">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.MaHSTC, "", new { @class = "text-danger small mt-1" })
+                            <div class="form-text">
+                                Nếu chưa có tên trong danh sách, hãy nhấn dấu (+) để tạo hồ sơ mới.
+                            </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-comment me-1"></i>Ghi chú
+                                <i class="fas fa-clock me-1"></i>Thời gian mong muốn <span class="text-danger">*</span>
                             </label>
-                            @Html.TextAreaFor(m => m.GhiChu, new { @class = "form-control", rows = "3", placeholder = "Ghi chú thêm (nếu có)..." })
+                            @Html.TextBoxFor(m => m.NgayHenTiem,
+                                "{0:yyyy-MM-ddTHH:mm}",
+                                new { @class = "form-control form-control-lg", type = "datetime-local", required = "required" })
+                            @Html.ValidationMessageFor(m => m.NgayHenTiem, "", new { @class = "text-danger small mt-1" })
                         </div>
 
-                        <!-- Submit -->
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i>
-                            <small>Sau khi đặt lịch thành công, chúng tôi sẽ liên hệ xác nhận trong vòng 24h</small>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                <i class="fas fa-comment-medical me-1"></i>Ghi chú thêm
+                            </label>
+                            @Html.TextAreaFor(m => m.GhiChu, new { @class = "form-control", rows = "3", placeholder = "Ví dụ: Bé đang bị ho nhẹ, hoặc dị ứng thuốc..." })
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg flex-fill">
-                                <i class="fas fa-check me-2"></i>Xác nhận đặt lịch
-                            </button>
-                            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary btn-lg">
-                                Hủy
+                        <div class="alert alert-warning d-flex align-items-center" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2 fs-4"></i>
+                            <div>
+                                <small>Vui lòng đến trước giờ hẹn <strong>15 phút</strong> để làm thủ tục khám sàng lọc.</small>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="@Url.Action("Detail", "Vaccine", new { id = Model.MaVC })" class="btn btn-outline-secondary btn-lg px-4">
+                                <i class="fas fa-arrow-left me-2"></i>Quay lại
                             </a>
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-check-circle me-2"></i>Xác nhận đặt lịch
+                            </button>
                         </div>
                     }
                 </div>
@@ -135,5 +126,12 @@
 </section>
 
 @section scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+        });
+    </script>
 }

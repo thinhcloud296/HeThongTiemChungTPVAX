@@ -213,9 +213,12 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Common\KeyGenerator.cs" />
+    <Compile Include="Controllers\HoSoTiemChungController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\CreateHoSoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <!-- Controllers -->
     <Compile Include="Controllers\HomeController.cs" />
@@ -314,6 +317,7 @@
     <Content Include="Views\Vaccine\ChiTiet.cshtml" />
     <Content Include="Views\Vaccine\Index.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\HoSoTiemChung\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

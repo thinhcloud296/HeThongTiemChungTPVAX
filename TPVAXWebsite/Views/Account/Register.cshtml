@@ -452,55 +452,73 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.TenDangNhap, "Ten dang nhap")
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "Ten dang nhap (toi da 10 ky tu)", id = "register-username" })
-                        <i class="fas fa-id-card input-icon"></i>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HoTen, "Họ và tên")
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Nguyễn Văn A" })
+                                <i class="fas fa-user input-icon"></i>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.SoDT, "Số điện thoại (Là tên đăng nhập)")
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.SoDT, new { @class = "form-control", placeholder = "098..." })
+                                <i class="fas fa-phone input-icon"></i>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.SoDT, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.HoTen, "Ho va ten")
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "VD: Nguyen Van A", id = "register-name" })
-                        <i class="fas fa-user input-icon"></i>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CCCD, "Số CCCD/CMND")
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.CCCD, new { @class = "form-control", placeholder = "Nhập CCCD" })
+                                <i class="fas fa-id-card input-icon"></i>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.CCCD, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoDT, "So dien thoai")
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.SoDT, new { @class = "form-control", placeholder = "VD: 0912345678", id = "register-phone" })
-                        <i class="fas fa-phone input-icon"></i>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.NgaySinh, "Ngày sinh")
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    @Html.ValidationMessageFor(m => m.SoDT, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, "Email")
                     <div class="input-group">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "example@email.com (khong bat buoc)", id = "register-email" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "example@email.com" })
                         <i class="fas fa-envelope input-icon"></i>
                     </div>
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.MatKhau, "Mat khau")
+                    @Html.LabelFor(m => m.MatKhau, "Mật khẩu")
                     <div class="input-group">
-                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Toi thieu 6 ky tu", id = "register-password" })
+                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Tối thiểu 6 ký tự", id = "register-password" })
                         <button type="button" class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></button>
                     </div>
                     @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.XacNhanMatKhau, "Xac nhan mat khau")
+                    @Html.LabelFor(m => m.XacNhanMatKhau, "Xác nhận mật khẩu")
                     <div class="input-group">
-                        @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhap lai mat khau", id = "register-confirm-password" })
+                        @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhập lại mật khẩu", id = "register-confirm-password" })
                         <button type="button" class="password-toggle" id="toggleConfirmPassword"><i class="far fa-eye"></i></button>
                     </div>
                     @Html.ValidationMessageFor(m => m.XacNhanMatKhau, "", new { @class = "text-danger" })
@@ -510,13 +528,13 @@
                     <div class="terms-checkbox">
                         <input type="checkbox" id="agreeTerms" name="agreeTerms" required />
                         <label for="agreeTerms">
-                            Toi dong y voi Dieu khoan dich vu va Chinh sach bao mat cua TPVAX
+                            Tôi đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của TPVAX
                         </label>
                     </div>
                 </div>
 
                 <button type="submit" class="btn-register" id="registerBtn">
-                    <i class="fas fa-user-plus"></i> Dang Ky Mien Phi
+                    <i class="fas fa-user-plus"></i> Đăng Ký Miễn Phí
                 </button>
             }
 

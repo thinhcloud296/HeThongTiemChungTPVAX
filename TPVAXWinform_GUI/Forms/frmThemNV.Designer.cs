@@ -243,7 +243,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(150, 45);
             this.btnCancel.TabIndex = 20;
-            this.btnCancel.Text = "H?y";
+            this.btnCancel.Text = "Hủy";
             this.btnCancel.UseVisualStyleBackColor = false;
             // 
             // errorProvider1

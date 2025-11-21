@@ -136,5 +136,7 @@ namespace TPVAXWinform_GUI
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+
     }
 }
