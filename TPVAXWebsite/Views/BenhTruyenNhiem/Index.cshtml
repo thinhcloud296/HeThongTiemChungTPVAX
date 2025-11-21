@@ -1,11 +1,12 @@
-@{
+﻿@{
     ViewBag.Title = "Bệnh Truyền Nhiễm";
 }
 
 @section Styles {
 <style>
 .btn-hero {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    /* Đã sửa: Thay thế gradient đỏ/cam bằng gradient xanh dương */
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
     padding: 60px 0;
     color: white;
     text-align: center;
@@ -27,15 +28,17 @@
 }
 
 .disease-filter-btn:hover {
-    border-color: #e74c3c;
+    /* Đã sửa: Đổi màu viền và đổ bóng sang xanh dương đậm */
+    border-color: #0077b6; /* Xanh dương đậm */
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.2); /* Sử dụng #0077b6 với độ mờ */
 }
 
 .disease-filter-btn.active {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    /* Đã sửa: Đổi màu nền gradient và viền sang xanh dương */
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
     color: white;
-    border-color: #e74c3c;
+    border-color: #0077b6; /* Xanh dương đậm */
 }
 
 .search-box-modern input {
@@ -48,8 +51,9 @@
 
 .search-box-modern input:focus {
     outline: none;
-    border-color: #e74c3c;
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    /* Đã sửa: Đổi màu viền và đổ bóng sang xanh dương đậm */
+    border-color: #0077b6; /* Xanh dương đậm */
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1); /* Sử dụng #0077b6 với độ mờ */
 }
 
 .article-card {
@@ -63,7 +67,8 @@
 
 .article-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(231, 76, 60, 0.25);
+    /* Đã sửa: Đổi màu đổ bóng sang xanh dương sáng */
+    box-shadow: 0 15px 40px rgba(0, 180, 216, 0.25); /* Sử dụng #00b4d8 với độ mờ */
 }
 
 .article-image-wrapper {
@@ -82,7 +87,8 @@
     position: absolute;
     top: 15px;
     left: 15px;
-    background: rgba(231, 76, 60, 0.9);
+    /* Đã sửa: Đổi màu nền sang xanh dương đậm */
+    background: rgba(0, 119, 182, 0.9); /* Sử dụng #0077b6 với độ mờ */
     color: white;
     padding: 6px 15px;
     border-radius: 20px;
@@ -108,13 +114,15 @@
 }
 
 .article-link {
-    color: #e74c3c;
+    /* Đã sửa: Đổi màu chữ sang xanh dương đậm */
+    color: #0077b6; /* Xanh dương đậm */
     text-decoration: none;
     font-weight: 600;
 }
 
 .article-link:hover {
-    color: #c0392b;
+    /* Đã sửa: Đổi màu chữ hover sang xanh dương sáng */
+    color: #00b4d8; /* Xanh dương sáng */
 }
 
 .d-none {
@@ -123,13 +131,15 @@
 
 /* Kiểu dáng cho Pagination */
 .pagination .page-item .page-link {
-    color: #e74c3c;
-    border-color: #e74c3c;
+    /* Đã sửa: Đổi màu chữ và viền sang xanh dương đậm */
+    color: #0077b6; /* Xanh dương đậm */
+    border-color: #0077b6; /* Xanh dương đậm */
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #e74c3c;
-    border-color: #e74c3c;
+    /* Đã sửa: Đổi màu nền và viền sang xanh dương đậm */
+    background-color: #0077b6; /* Xanh dương đậm */
+    border-color: #0077b6; /* Xanh dương đậm */
     color: white;
 }
 </style>

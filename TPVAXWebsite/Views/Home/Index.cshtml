@@ -54,8 +54,7 @@
     </style>
 }
 
-<!-- Hero Carousel Banner -->
-      <section aria-label="Khuyến mãi nổi bật">
+<section aria-label="Khuyến mãi nổi bật">
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-indicators">
             <button
@@ -129,9 +128,6 @@
           </button>
         </div>
       </section>
-      <!-- END Banner -->
-
-      <!-- Vaccine Catalog Section -->
       <section
         class="container my-5"
         id="vaccine-catalog"
@@ -224,56 +220,33 @@
           }
         </div>
 
-        @* Pagination *@
+        @* Pagination - UPDATED to remove << < > >> and use Mẹ & Bé UI logic (max 5 pages) *@
         @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 1)
         {
             int currentPage = ViewBag.CurrentPage;
             int totalPages = ViewBag.TotalPages;
-            int startPage = Math.Max(1, currentPage - 2);
-            int endPage = Math.Min(totalPages, currentPage + 2);
+            
+            // Tính toán trang bắt đầu và kết thúc để hiển thị tối đa 5 số trang
+            int startPage = Math.Max(1, currentPage - 2); 
+            int endPage = Math.Min(totalPages, startPage + 4); 
+
+            // Điều chỉnh startPage nếu endPage bị cắt (ví dụ: totalPages=3, currentPage=3, endPage=3 -> startPage phải là 1)
+            if (endPage - startPage < 4) {
+                startPage = Math.Max(1, endPage - 4);
+            }
 
             <div class="row mt-5">
-                <div class="col-12">
+                <div class="col-12 d-flex justify-content-center">
                     <nav aria-label="Vaccine pagination">
-                        <ul class="pagination justify-content-center pagination-lg">
-                            @* First + Previous *@
-                            @if (currentPage > 1)
-                            {
-                                <li class="page-item">
-                                    <a class="page-link rounded-start" href="@Url.Action("Index", new { search = ViewBag.Search, page = 1 })#vaccine-catalog" title="Trang đầu">
-                                        <i class="fas fa-angle-double-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, page = currentPage - 1 })#vaccine-catalog" title="Trang trước">
-                                        <i class="fas fa-angle-left"></i>
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="page-item disabled">
-                                    <span class="page-link rounded-start"><i class="fas fa-angle-double-left"></i></span>
-                                </li>
-                                <li class="page-item disabled">
-                                    <span class="page-link"><i class="fas fa-angle-left"></i></span>
-                                </li>
-                            }
-
-                            @* Page Numbers with ellipsis *@
-                            @if (startPage > 1)
-                            {
-                                <li class="page-item disabled">
-                                    <span class="page-link">...</span>
-                                </li>
-                            }
-
+                        <ul class="pagination pagination-lg">
+                            
+                            @* Hiển thị số trang *@
                             @for (int i = startPage; i <= endPage; i++)
                             {
                                 <li class="page-item @(i == currentPage ? "active" : "")">
                                     @if (i == currentPage)
                                     {
-                                        <span class="page-link bg-primary border-primary text-white">@i</span>
+                                        <span class="page-link">@i</span>
                                     }
                                     else
                                     {
@@ -282,51 +255,20 @@
                                 </li>
                             }
 
-                            @if (endPage < totalPages)
-                            {
-                                <li class="page-item disabled">
-                                    <span class="page-link">...</span>
-                                </li>
-                            }
-
-                            @* Next + Last *@
-                            @if (currentPage < totalPages)
-                            {
-                                <li class="page-item">
-                                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.Search, page = currentPage + 1 })#vaccine-catalog" title="Trang tiếp">
-                                        <i class="fas fa-angle-right"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link rounded-end" href="@Url.Action("Index", new { search = ViewBag.Search, page = totalPages })#vaccine-catalog" title="Trang cuối">
-                                        <i class="fas fa-angle-double-right"></i>
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="page-item disabled">
-                                    <span class="page-link"><i class="fas fa-angle-right"></i></span>
-                                </li>
-                                <li class="page-item disabled">
-                                    <span class="page-link rounded-end"><i class="fas fa-angle-double-right"></i></span>
-                                </li>
-                            }
                         </ul>
                     </nav>
-                    <div class="text-center mt-3">
-                        <p class="text-muted mb-0">
-                            Trang <strong class="text-primary fs-5">@currentPage</strong> / <strong>@totalPages</strong>
-                            <span class="mx-2">|</span>
-                            Tổng cộng <strong class="text-success">@ViewBag.TotalVaccines</strong> vắc xin
-                        </p>
-                    </div>
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <p class="text-muted mb-0">
+                        Trang <strong class="text-primary fs-5">@currentPage</strong> / <strong>@totalPages</strong>
+                        <span class="mx-2">|</span>
+                        Tổng cộng <strong class="text-success">@ViewBag.TotalVaccines</strong> vắc xin
+                    </p>
                 </div>
             </div>
         }
 
         <div class="d-none">
-          <!-- Fallback cards (6 vaccine giống nhau để dự phòng) -->
           @* <div class="col-lg-4 col-md-6">
             <article class="product-card h-100">
               <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
@@ -568,25 +510,73 @@
                 <button
                   class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
                   onclick="addToCart('hexaxim')"
-                  aria-label="Them Hexaxim vao gio hang"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
                 >
-                  Them vao gio
+                  Thêm vào giỏ
                 </button>
                 <a
                   href="@Url.Action("Detail", "Vaccine")"
                   class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
-                  aria-label="Dat lich tiem Hexaxim"
+                  aria-label="Đặt lịch tiêm Hexaxim"
                 >
-                  Dat lich tiem
+                  Đặt lịch tiêm
+                </a>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <article class="product-card h-100">
+              <a href="@Url.Action("Detail", "Vaccine")" class="text-decoration-none">
+                <div class="position-relative">
+                  <img
+                    src="@Url.Content("~/Content/Assets/Images/hexaxim.png")"
+                    alt="Vắc xin Hexaxim 6 trong 1"
+                    class="img-fluid mb-3 rounded"
+                    loading="lazy"
+                  />
+                  <div
+                    class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white bg-opacity-75 rounded d-flex align-items-center gap-1"
+                  >
+                    <img
+                      src="@Url.Content("~/Content/Assets/Icons/flag/vietnam.png")"
+                      alt="Cờ Việt Nam"
+                      style="width: 20px"
+                      loading="lazy"
+                    />
+                    <small class="text-muted fw-bold">Việt Nam</small>
+                  </div>
+                </div>
+                <div class="card-body px-0">
+                  <h6 class="card-subtitle text-muted small mb-2">
+                    Phòng 6 bệnh nguy hiểm
+                  </h6>
+                  <h3 class="card-title h5 mb-3">Vắc xin Hexaxim</h3>
+                  <p class="text-warning fw-bold fs-4 mb-0 text-center">
+                    1.500.000₫
+                    <small class="text-muted fs-6">/ liều</small>
+                  </p>
+                </div>
+              </a>
+              <div class="d-flex gap-2 mt-3">
+                <button
+                  class="btn btn-outline-success flex-fill rounded-pill btn-addcart-custom-card"
+                  onclick="addToCart('hexaxim')"
+                  aria-label="Thêm Hexaxim vào giỏ hàng"
+                >
+                  Thêm vào giỏ
+                </button>
+                <a
+                  href="@Url.Action("Detail", "Vaccine")"
+                  class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                  aria-label="Đặt lịch tiêm Hexaxim"
+                >
+                  Đặt lịch tiêm
                 </a>
               </div>
             </article>
           </div> *@
         </div>
       </section>
-      <!-- END Vaccine Catalog -->
-
-      <!-- Services Section -->
       <section class="cac-dich-vu py-5" aria-labelledby="services-heading">
         <div class="container">
           <h2 id="services-heading" class="visually-hidden">
@@ -664,9 +654,6 @@
           </div>
         </div>
       </section>
-      <!-- END Services Section -->
-
-      <!-- Seasonal Vaccine Section - "Mùa này cần tiêm gì?" -->
       <section
         class="seasonal-vaccine-section"
         aria-labelledby="seasonal-vaccine-heading"
@@ -681,7 +668,6 @@
           </div>
 
           <div class="row">
-            <!-- Left Column: Filter Sidebar -->
             <div class="col-lg-3 col-md-4 mb-4">
               <div class="seasonal-filter-sidebar">
                 <h3 class="seasonal-filter-title">🦠 Loại bệnh</h3>
@@ -713,16 +699,14 @@
                 </div>
 
                 <div class="seasonal-filter-item" data-disease="hpv">
-                  <div class="filter-icon">�</div>
+                  <div class="filter-icon"></div>
                   <div class="filter-label">HPV (Ung thư cổ tử cung)</div>
                 </div>
               </div>
             </div>
 
-            <!-- Right Column: Content Area -->
             <div class="col-lg-9 col-md-8">
               <div class="seasonal-content-area">
-                <!-- Disease Info: Dengue (Active by default) -->
                 <div class="disease-info-section" id="disease-dengue">
                   <h3 class="disease-title">
                     <span class="disease-title-icon">🦟</span>
@@ -790,7 +774,6 @@
                   </div>
                 </div>
 
-                <!-- Disease Info: Meningococcal ACYW -->
                 <div
                   class="disease-info-section"
                   id="disease-meningococcal-acyw"
@@ -862,7 +845,6 @@
                   </div>
                 </div>
 
-                <!-- Disease Info: Meningococcal B (Bexsero) -->
                 <div
                   class="disease-info-section"
                   id="disease-meningococcal-b"
@@ -936,7 +918,6 @@
                   </div>
                 </div>
 
-                <!-- Disease Info: Influenza (Flu) -->
                 <div
                   class="disease-info-section"
                   id="disease-flu"
@@ -1010,7 +991,6 @@
                   </div>
                 </div>
 
-                <!-- Disease Info: HPV -->
                 <div
                   class="disease-info-section"
                   id="disease-hpv"
@@ -1084,15 +1064,11 @@
                   </div>
                 </div>
 
-                <!-- More disease sections can be added here with JavaScript toggle -->
-              </div>
+                </div>
             </div>
           </div>
         </div>
       </section>
-      <!-- END Seasonal Vaccine Section -->
-
-      <!-- Vaccine Package Section - "Vaccine bảo vệ toàn diện" -->
       <section
         class="vaccine-package-section"
         aria-labelledby="package-heading"
@@ -1106,7 +1082,6 @@
             </p>
           </div>
 
-          <!-- Package Commitments -->
           <div class="package-commitment mb-4">
             <div class="row">
               <div class="col-lg-4 col-md-4">
@@ -1134,10 +1109,8 @@
           </div>
 
           <div class="row">
-            <!-- Left Column: Filter Sidebar -->
             <div class="col-lg-3 col-md-4 mb-4">
               <div class="package-filter-sidebar">
-                <!-- Filter Category 1: By Age -->
                 <div class="package-filter-category">
                   <h4 class="package-filter-category-title">
                     <span class="package-filter-category-icon">👶</span>
@@ -1169,7 +1142,6 @@
                   </div>
                 </div>
 
-                <!-- Filter Category 2: By Target Group -->
                 <div class="package-filter-category">
                   <h4 class="package-filter-category-title">
                     <span class="package-filter-category-icon">👥</span>
@@ -1197,10 +1169,8 @@
               </div>
             </div>
 
-            <!-- Right Column: Package Cards Grid -->
             <div class="col-lg-9 col-md-8">
               <div class="package-cards-grid">
-                <!-- Package 1: 6 months -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1221,7 +1191,6 @@
                   </div>
                 </div>
 
-                <!-- Package 2: 12 months -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1242,7 +1211,6 @@
                   </div>
                 </div>
 
-                <!-- Package 3: 24 months -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1263,7 +1231,6 @@
                   </div>
                 </div>
 
-                <!-- Package 4: Preschool -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1284,7 +1251,6 @@
                   </div>
                 </div>
 
-                <!-- Package 5: Teenagers -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1305,7 +1271,6 @@
                   </div>
                 </div>
 
-                <!-- Package 6: Adults -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1326,7 +1291,6 @@
                   </div>
                 </div>
 
-                <!-- Package 7: Pre-wedding -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1347,7 +1311,6 @@
                   </div>
                 </div>
 
-                <!-- Package 8: Before pregnancy -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1368,7 +1331,6 @@
                   </div>
                 </div>
 
-                <!-- Package 9: 50+ chronic disease -->
                 <div class="package-card">
                   <div class="package-card-header">
                     <div class="package-icon-wrapper">
@@ -1393,9 +1355,6 @@
           </div>
         </div>
       </section>
-      <!-- END Vaccine Package Section -->
-
-      <!-- Travel Vaccine Banner - "Bạn có kế hoạch đi nước ngoài?" -->
       <section
         class="travel-vaccine-banner"
         aria-labelledby="travel-vaccine-heading"
@@ -1450,12 +1409,8 @@
           </div>
         </div>
       </section>
-      <!-- END Travel Vaccine Banner -->
-
-      <!-- Trust Badges Section -->
       <section class="trust-badges-section" aria-labelledby="trust-heading">
         <div class="container">
-          <!-- Section Title -->
           <div class="section-title-trust">
             <h2 id="trust-heading">
               <strong>ĐỐI TÁC & CHỨNG NHẬN UY TÍN</strong>
@@ -1466,9 +1421,7 @@
             </p>
           </div>
 
-          <!-- Trust Badges Grid -->
           <div class="row g-4 justify-content-center">
-            <!-- Badge 1: Bộ Y Tế -->
             <div class="col-lg-3 col-md-6">
               <div class="trust-badge-card">
                 <div class="trust-badge-icon">
@@ -1480,7 +1433,7 @@
                     viewBox="0 0 16 16"
                   >
                     <path
-                      d="M8.864 2.318a.5.5 0 0 0-.728 0L7.75 2.72 6.869 1.84a.5.5 0 0 0-.708 0l-.881.88-.88-.88a.5.5 0 0 0-.708 0l-.88.88-.881-.88a.5.5 0 0 0-.708 0l-1.028 1.028a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l1.028 1.028a.5.5 0 0 0 .708 0l.881-.88.88.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l1.028-1.028a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708L8.864 2.318zM8 12.293l-3.146-3.147a.5.5 0 0 1 .708-.708L8 10.877l2.438-2.439a.5.5 0 0 1 .708.708L8 12.293z"
+                      d="M8.864 2.318a.5.5 0 0 0-.728 0L7.75 2.72 6.869 1.84a.5.5 0 0 0-.708 0l-.881.88-.88-.88a.5.5 0 0 0-.708 0l-1.028 1.028a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l.88.88-.88.881a.5.5 0 0 0 0 .708l1.028 1.028a.5.5 0 0 0 .708 0l.881-.88.88.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l.88-.88.881.88a.5.5 0 0 0 .708 0l1.028-1.028a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708l-.88-.88.88-.881a.5.5 0 0 0 0-.708L8.864 2.318zM8 12.293l-3.146-3.147a.5.5 0 0 1 .708-.708L8 10.877l2.438-2.439a.5.5 0 0 1 .708.708L8 12.293z"
                     />
                   </svg>
                 </div>
@@ -1493,7 +1446,6 @@
               </div>
             </div>
 
-            <!-- Badge 2: ISO Certification -->
             <div class="col-lg-3 col-md-6">
               <div class="trust-badge-card">
                 <div class="trust-badge-icon">
@@ -1521,7 +1473,6 @@
               </div>
             </div>
 
-            <!-- Badge 3: GMP Certification -->
             <div class="col-lg-3 col-md-6">
               <div class="trust-badge-card">
                 <div class="trust-badge-icon">
@@ -1549,7 +1500,6 @@
               </div>
             </div>
 
-            <!-- Badge 4: Authorized Partner -->
             <div class="col-lg-3 col-md-6">
               <div class="trust-badge-card">
                 <div class="trust-badge-icon">
@@ -1575,7 +1525,6 @@
             </div>
           </div>
 
-          <!-- Partners Logo Section -->
           <div class="partners-logo-wrapper">
             <div class="row align-items-center justify-content-center g-4">
               <div class="col-6 col-md-3 text-center">
@@ -1664,9 +1613,6 @@
           </div>
         </div>
       </section>
-      <!-- END Trust Badges Section -->
-
-      <!-- News & Articles Section -->
       <section class="container my-5" aria-labelledby="news-heading">
         <div
           class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-primary border-5"
@@ -1678,7 +1624,6 @@
         </div>
 
         <div class="parent_tintuc">
-          <!-- Featured Article -->
           <article class="div1_tintuc">
             <a href="@Url.Action("Detail", "News")" class="text-decoration-none">
               <img
@@ -1715,7 +1660,6 @@
             </a>
           </article>
 
-          <!-- Small Article 1 -->
           <article class="div2_tintuc tin-nho">
             <a
               href="@Url.Action("Detail", "News")"
@@ -1755,7 +1699,6 @@
             </a>
           </article>
 
-          <!-- Small Article 2 -->
           <article class="div3_tintuc tin-nho">
             <a
               href="@Url.Action("Detail", "News")"
@@ -1795,7 +1738,6 @@
             </a>
           </article>
 
-          <!-- Small Article 3 -->
           <article class="div4_tintuc tin-nho">
             <a
               href="@Url.Action("Detail", "News")"
@@ -1835,10 +1777,7 @@
             </a>
           </article>
         </div>
-    </div>
-</section>
-<!-- END News Section -->
-
+      </section>
 @section scripts {
     <script>
         function addToCart(productId) {

@@ -5,7 +5,8 @@
 @section Styles {
 <style>
 .mvb-hero {
-    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    /* Đã đồng bộ với trang Vắc xin */
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
     padding: 60px 0;
     color: white;
     text-align: center;
@@ -27,15 +28,17 @@
 }
 
 .category-filter-btn:hover {
-    border-color: #ff6b9d;
+    border-color: #0077b6;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.2);
+    /* Đã sửa: Đổi đổ bóng từ Hồng sang Xanh dương đậm */
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.2); 
 }
 
 .category-filter-btn.active {
-    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    /* Đã đồng bộ với trang Vắc xin */
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%); /* Thay #0077b6 100% bằng #00b4d8 để đồng bộ với hero */
     color: white;
-    border-color: #ff6b9d;
+    border-color: #0077b6;
 }
 
 .search-box-modern input {
@@ -48,8 +51,9 @@
 
 .search-box-modern input:focus {
     outline: none;
-    border-color: #ff6b9d;
-    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+    border-color: #0077b6;
+    /* Đã sửa: Đổi đổ bóng từ Hồng sang Xanh dương đậm */
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
 }
 
 .article-card {
@@ -65,7 +69,8 @@
 
 .article-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.25);
+    /* Đã sửa: Đổi đổ bóng từ Hồng sang Xanh dương sáng */
+    box-shadow: 0 15px 40px rgba(0, 180, 216, 0.25); 
 }
 
 .article-image-wrapper {
@@ -84,7 +89,8 @@
     position: absolute;
     top: 15px;
     left: 15px;
-    background: rgba(255, 107, 157, 0.9);
+    /* Đã sửa: Đổi màu nền từ Hồng sang Xanh dương đậm */
+    background: rgba(0, 119, 182, 0.9); 
     color: white;
     padding: 6px 15px;
     border-radius: 20px;
@@ -115,7 +121,7 @@
 }
 
 .article-link {
-    color: #ff6b9d;
+    color: #0077b6;
     text-decoration: none;
     font-weight: 600;
     display: inline-flex;
@@ -125,7 +131,8 @@
 }
 
 .article-link:hover {
-    color: #c06c84;
+    /* Đã sửa: Đồng bộ hover với màu xanh dương sáng */
+    color: #00b4d8; 
 }
 
 .article-meta-small {
@@ -139,13 +146,13 @@
 
 /* Kiểu dáng cho Pagination */
 .pagination .page-item .page-link {
-    color: #ff6b9d;
-    border-color: #ff6b9d;
+    color: #0077b6;
+    border-color: #0077b6;
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #ff6b9d;
-    border-color: #ff6b9d;
+    background-color: #0077b6;
+    border-color: #0077b6;
     color: white;
 }
 </style>
