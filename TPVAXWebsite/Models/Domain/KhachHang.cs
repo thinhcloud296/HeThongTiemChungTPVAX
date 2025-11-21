@@ -36,12 +36,11 @@ namespace TPVAXWebsite.Models.Domain
         public string Email { get; set; }
 
         [StringLength(10)]
-        public string MaTK { get; set; }
+        public string MaTK { get; set; } // chỉ là string, không ForeignKey
 
-        // Navigation properties
-        [ForeignKey("MaTK")]
-        public virtual TaiKhoan TaiKhoan { get; set; }
+        // ❌ Bỏ navigation sang TaiKhoan để tránh lỗi multiplicity
 
+        // Các quan hệ khác vẫn giữ nguyên
         public virtual ICollection<LienKetHoSo> LienKetHoSo { get; set; }
         public virtual ICollection<GioHang> GioHang { get; set; }
         public virtual ICollection<HoaDon> HoaDon { get; set; }
