@@ -14,8 +14,6 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(255)]
         public string MatKhau { get; set; }
 
-        // Navigation properties
-        public virtual KhachHang KhachHang { get; set; }
-        public virtual NhanVien NhanVien { get; set; }
+     
     }
 }

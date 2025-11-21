@@ -1,4 +1,4 @@
-﻿@model TPVAXWebsite.Models.ViewModels.LoginViewModel
+@model TPVAXWebsite.Models.ViewModels.LoginViewModel
 
 @{
     ViewBag.Title = "Đăng nhập";
@@ -464,12 +464,12 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.TenDangNhap, "Email hoac So dien thoai")
+                    @Html.LabelFor(m => m.Identifier, "Email hoac So dien thoai")
                     <div class="input-group">
-                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "VD: example@email.com hoac 0912345678", autocomplete = "username", id = "login-email" })
+                        @Html.TextBoxFor(m => m.Identifier, new { @class = "form-control", placeholder = "VD: example@email.com hoac 0912345678", autocomplete = "username", id = "login-email" })
                         <i class="fas fa-envelope input-icon"></i>
                     </div>
-                    @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Identifier, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
