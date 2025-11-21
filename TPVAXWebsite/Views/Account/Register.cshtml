@@ -1,4 +1,4 @@
-﻿@model TPVAXWebsite.Models.ViewModels.RegisterViewModel
+@model TPVAXWebsite.Models.ViewModels.RegisterViewModel
 
 @{
     ViewBag.Title = "Đăng ký";
@@ -452,14 +452,7 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.TenDangNhap, "Ten dang nhap")
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "Ten dang nhap (toi da 10 ky tu)", id = "register-username" })
-                        <i class="fas fa-id-card input-icon"></i>
-                    </div>
-                    @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
-                </div>
+              
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.HoTen, "Ho va ten")
