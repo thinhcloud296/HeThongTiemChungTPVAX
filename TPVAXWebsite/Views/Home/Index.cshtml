@@ -174,12 +174,18 @@
                               style="width: 20px"
                               loading="lazy"
                             />
-                            <small class="text-muted fw-bold">@(vaccine.LoaiVaccine?.TenLoai ?? "Vắc xin")</small>
+                              <small class="text-muted fw-bold">
+                                  @(vaccine.LoaiVaccine != null && !string.IsNullOrEmpty(vaccine.LoaiVaccine.TenLoai)
+                                      ? vaccine.LoaiVaccine.TenLoai
+                                      : "Vắc xin")
+                              </small>
                           </div>
                         </div>
                         <div class="card-body px-0">
                           <h6 class="card-subtitle text-muted small mb-2">
-                            @(vaccine.LoaiVaccine?.TenLoai ?? "Vaccine")
+                            @(vaccine.LoaiVaccine != null && !string.IsNullOrEmpty(vaccine.LoaiVaccine.TenLoai)
+                                ? vaccine.LoaiVaccine.TenLoai
+                                : "Vaccine")
                           </h6>
                           <h3 class="card-title h5 mb-3">@vaccine.TenVC</h3>
                           <p class="text-warning fw-bold fs-4 mb-0 text-center">
