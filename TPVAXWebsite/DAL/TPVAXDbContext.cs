@@ -8,6 +8,8 @@ namespace TPVAXWebsite.DAL
     {
         public TPVAXDbContext() : base("name=TPVAXConnection")
         {
+            // Tắt kiểm tra model với database
+            Database.SetInitializer<TPVAXDbContext>(null);
             // Tắt Lazy Loading và Proxy để tránh lỗi serialization
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
@@ -84,17 +86,16 @@ namespace TPVAXWebsite.DAL
         private void ConfigureRelationships(DbModelBuilder modelBuilder)
         {
             // TaiKhoan
-            modelBuilder.Entity<KhachHang>()
-                        .HasOptional(k => k.TaiKhoan)
-                        .WithMany()
-                        .HasForeignKey(k => k.MaTK)
-                        .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<TaiKhoan>()
+            //    .HasOptional(t => t.KhachHang)
+            //    .WithRequired(k => k.TaiKhoan)
+            //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<NhanVien>()
-                        .HasOptional(n => n.TaiKhoan)
-                        .WithMany()
-                        .HasForeignKey(n => n.MaTK)
-                        .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<TaiKhoan>()
+            //    .HasOptional(t => t.NhanVien)
+            //    .WithRequired(n => n.TaiKhoan)
+            //    .WillCascadeOnDelete(false);
+
 
             // Vaccine
             modelBuilder.Entity<Vaccine>()
