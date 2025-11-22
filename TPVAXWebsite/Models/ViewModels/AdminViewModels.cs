@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace TPVAXWebsite.Models.ViewModels
 {
@@ -89,4 +91,97 @@ namespace TPVAXWebsite.Models.ViewModels
         public string MaNV { get; set; }
         public string TenNhanVien { get; set; }
     }
+
+    /// <summary>
+    /// ViewModel cho tạo/sửa vaccine
+    /// </summary>
+    public class AdminVaccineCreateEditViewModel
+    {
+        [StringLength(10)]
+        public string MaVC { get; set; }
+
+        [Required(ErrorMessage = "Tên vaccine không được để trống")]
+        [StringLength(255, ErrorMessage = "Tên vaccine không quá 255 ký tự")]
+        public string TenVC { get; set; }
+
+        [Required(ErrorMessage = "Giá bán không được để trống")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Giá bán phải lớn hơn 0")]
+        public decimal GiaBan { get; set; }
+
+        [Required(ErrorMessage = "Số lượng không được để trống")]
+        [Range(0, int.MaxValue, ErrorMessage = "Số lượng không được âm")]
+        public int SoLuong { get; set; }
+
+        [Range(1, 10, ErrorMessage = "Số mũi tối đa phải từ 1-10")]
+        public int? SoMuiToiDa { get; set; }
+
+        [Range(0, 120, ErrorMessage = "Số tháng chờ phải từ 0-120")]
+        public int? SoThangCho { get; set; }
+
+        [Required(ErrorMessage = "Loại vaccine không được để trống")]
+        [StringLength(10)]
+        public string MaLoai { get; set; }
+
+        [StringLength(255)]
+        public string TenLoai { get; set; }
+
+        [StringLength(int.MaxValue)]
+        public string MoTa { get; set; }
+
+        [StringLength(255)]
+        public string HinhAnh { get; set; }
+
+        [StringLength(255)]
+        public string HinhAnhCu { get; set; }
+
+        /// <summary>
+        /// File upload hình ảnh từ form
+        /// </summary>
+        public HttpPostedFileBase ImageFile { get; set; }
+
+        /// <summary>
+        /// Danh sách ID loại bệnh được chọn
+        /// </summary>
+        public List<string> SelectedLoaiBenhIds { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Danh sách loại bệnh để hiển thị dropdown
+        /// </summary>
+        public List<LoaiBenhDropdownItem> AvailableLoaiBenhs { get; set; } = new List<LoaiBenhDropdownItem>();
+
+        /// <summary>
+        /// Danh sách loại vaccine để dropdown
+        /// </summary>
+        public List<LoaiVaccineDropdownItem> AvailableLoaiVaccines { get; set; } = new List<LoaiVaccineDropdownItem>();
+    }
+
+    /// <summary>
+    /// Dropdown item cho loại vaccine
+    /// </summary>
+    public class LoaiVaccineDropdownItem
+    {
+        public string MaLoai { get; set; }
+        public string TenLoai { get; set; }
+    }
+
+    /// <summary>
+    /// Dropdown item cho loại bệnh
+    /// </summary>
+    public class LoaiBenhDropdownItem
+    {
+        public string MaLoaiBenh { get; set; }
+        public string TenBenh { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
+    /// <summary>
+    /// Response API cho delete vaccine
+    /// </summary>
+    public class VaccineDeleteResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public string ErrorType { get; set; } // "CannotDelete", "NotFound", "Error"
+    }
 }
+
