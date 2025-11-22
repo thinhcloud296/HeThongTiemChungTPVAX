@@ -86,7 +86,6 @@ namespace TPVAXWebsite.Controllers
                 _uow.BeginTransaction();
                 try
                 {
-
                     // --- BƯỚC 1: TẠO TÀI KHOẢN ---
                     string maTK;
                     do
@@ -94,9 +93,10 @@ namespace TPVAXWebsite.Controllers
                         // Gọi hàm từ thư viện Common của Web
                         maTK = TPVAXWebsite.Common.KeyGenerator.GenMaTK();
                     } while (_uow.TaiKhoans.Any(k => k.MaTK == maTK));
+
                     var taiKhoan = new TaiKhoan
                     {
-                        MaTK = maTK, // Dùng SĐT làm username
+                        MaTK = maTK,
                         MatKhau = model.MatKhau // Nên mã hóa MD5 ở đây
                     };
                     _uow.TaiKhoans.Add(taiKhoan);
@@ -108,6 +108,7 @@ namespace TPVAXWebsite.Controllers
                         // Gọi hàm từ thư viện Common của Web
                         maKH = TPVAXWebsite.Common.KeyGenerator.GenMaKH(model.CCCD);
                     } while (_uow.KhachHangs.Any(k => k.MaKH == maKH));
+
                     var khachHang = new KhachHang
                     {
                         MaKH = maKH,
@@ -121,17 +122,13 @@ namespace TPVAXWebsite.Controllers
                     _uow.KhachHangs.Add(khachHang);
 
                     // --- BƯỚC 3: XỬ LÝ LIÊN KẾT HỒ SƠ (LOGIC THÔNG MINH) ---
-
-                    // Kiểm tra xem CCCD này đã từng tiêm chủng chưa?
                     var hoSoCu = _uow.HoSoTiemChungs
                         .FirstOrDefault(h => h.CCCD == model.CCCD);
 
                     string maHSTC_CanLienKet;
-
                     if (hoSoCu != null)
                     {
                         // CASE A: ĐÃ CÓ HỒ SƠ -> LIÊN KẾT LẠI
-                        // Đây là logic bạn yêu cầu: Khách đã có hồ sơ thì link vào, không tạo mới
                         maHSTC_CanLienKet = hoSoCu.MaHSTC;
                     }
                     else
@@ -144,7 +141,7 @@ namespace TPVAXWebsite.Controllers
                             HoTen = model.HoTen,
                             CCCD = model.CCCD,
                             NgaySinh = model.NgaySinh,
-                            GioiTinh = "Chưa rõ", // Hoặc thêm dropdown chọn giới tính ở View
+                            GioiTinh = "Chưa rõ",
                             TrangThai = true
                         };
                         _uow.HoSoTiemChungs.Add(hoSoMoi);
@@ -156,7 +153,7 @@ namespace TPVAXWebsite.Controllers
                         MaLK = "LK" + DateTime.Now.Ticks.ToString().Substring(12),
                         MaKH = maKH,
                         MaHSTC = maHSTC_CanLienKet,
-                        VaiTro = "Bản thân", // Đánh dấu đây là hồ sơ chính chủ
+                        VaiTro = "Bản thân",
                         NgayLienKet = DateTime.Now
                     };
                     _uow.LienKetHoSos.Add(lienKet);
@@ -178,55 +175,126 @@ namespace TPVAXWebsite.Controllers
             return View(model);
         }
 
-            if (string.IsNullOrEmpty(model.SoDT) || model.SoDT.Length < 4)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CapNhatThongTin(KhachHang model)
+        {
+            var khSession = Session["KH"] as KhachHang;
+            if (khSession == null) return RedirectToAction("Login");
+
+            var kh = _context.KhachHangs.Find(khSession.MaKH);
+            if (kh == null) return HttpNotFound();
+
+            kh.HoTen = model.HoTen;
+            kh.Email = model.Email;
+            kh.SoDT = model.SoDT;
+            kh.NgaySinh = model.NgaySinh;
+            kh.DiaChi = model.DiaChi;
+
+            _context.SaveChanges();
+            Session["KH"] = kh;
+
+            TempData["SuccessMessage"] = "Thông tin đã được cập nhật.";
+            return RedirectToAction("Dashboard");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DoiMatKhau(string MatKhauCu, string MatKhauMoi, string XacNhanMatKhauMoi)
+        {
+            var khSession = Session["KH"] as KhachHang;
+            if (khSession == null) return RedirectToAction("Login");
+
+            var tk = _context.TaiKhoans.Find(khSession.MaTK);
+            if (tk == null) return HttpNotFound();
+
+            if (tk.MatKhau != MatKhauCu)
             {
-                ModelState.AddModelError("", "Số điện thoại không hợp lệ.");
-                return View(model);
+                TempData["ErrorMessage"] = "Mật khẩu hiện tại không đúng.";
+                return RedirectToAction("Dashboard");
             }
 
-            var maTK = "TK" + model.SoDT.Substring(model.SoDT.Length - 4);
-            var maKH = "KH" + maTK.Substring(2);
-
-            var tk = new TaiKhoan
+            if (MatKhauMoi != XacNhanMatKhauMoi)
             {
-                MaTK = maTK,
-                MatKhau = model.MatKhau
-            };
-
-            var kh = new KhachHang
-            {
-                MaKH = maKH,
-                HoTen = model.HoTen,
-                CCCD = model.CCCD,
-                NgaySinh = model.NgaySinh,
-                GioiTinh = model.GioiTinh,
-                DiaChi = model.DiaChi,
-                SoDT = model.SoDT,
-                Email = model.Email,
-                MaTK = maTK
-            };
-
-            try
-            {
-                _context.TaiKhoans.Add(tk);
-                _context.KhachHangs.Add(kh);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", "Lỗi khi lưu dữ liệu: " + ex.Message);
-                return View(model);
+                TempData["ErrorMessage"] = "Xác nhận mật khẩu mới không khớp.";
+                return RedirectToAction("Dashboard");
             }
 
-            ViewBag.SuccessMessage = "Đăng ký thành công! Vui lòng đăng nhập để sử dụng hệ thống.";
-            return View();
+            tk.MatKhau = MatKhauMoi;
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Mật khẩu đã được thay đổi.";
+            return RedirectToAction("Dashboard");
         }
 
         // GET: Account/Logout
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
+        }
+
+        [HttpGet]
+        public ActionResult Dashboard()
+        {
+            var kh = Session["KH"] as KhachHang;
+            if (kh == null) return RedirectToAction("Login");
+
+            var maKH = kh.MaKH;
+
+            // Lấy danh sách hồ sơ liên kết với khách hàng
+            var maHSTCs = _context.LienKetHoSos
+                .Where(lk => lk.MaKH == maKH)
+                .Select(lk => lk.MaHSTC)
+                .ToList();
+
+            var hoSos = _context.HoSoTiemChungs
+                .Where(h => maHSTCs.Contains(h.MaHSTC))
+                .ToList();
+
+            // Lấy toàn bộ lịch tiêm liên quan
+            var allLichTiems = _context.LichTiems
+                .Where(l => maHSTCs.Contains(l.MaHSTC))
+                .Include(l => l.Vaccine)
+                .Include(l => l.HoSoTiemChung)
+                .ToList();
+
+            // Phân loại lịch tiêm
+            var lichDaTiem = allLichTiems
+                .Where(l => l.NgayTiemThucTe != null && l.TrangThai == "Đã tiêm")
+                .OrderByDescending(l => l.NgayTiemThucTe)
+                .ToList();
+
+            var lichSapToi = allLichTiems
+                .Where(l => l.NgayTiemThucTe == null && l.TrangThai == "Chưa tiêm" && l.NgayHenTiem >= DateTime.Now)
+                .OrderBy(l => l.NgayHenTiem)
+                .ToList();
+
+            var lichDaHuy = allLichTiems
+                .Where(l => l.TrangThai == "Đã hủy")
+                .OrderByDescending(l => l.NgayHenTiem)
+                .ToList();
+
+            var soMuiHoanThanh = lichDaTiem.Count;
+
+            var vaiTroChinh = _context.LienKetHoSos
+                .Where(lk => lk.MaKH == maKH && maHSTCs.Contains(lk.MaHSTC))
+                .Select(lk => lk.VaiTro)
+                .FirstOrDefault();
+
+            ViewBag.VaiTroChinh = vaiTroChinh;
+
+            var model = new DashboardViewModel
+            {
+                KhachHang = kh,
+                HoSoTiemChungs = hoSos,
+                SoMuiHoanThanh = soMuiHoanThanh,
+                LichTiems = lichDaTiem,
+                LichHenSapToi = lichSapToi,
+                LichDaHuy = lichDaHuy
+            };
+
+            return View(model);
         }
     }
 }
