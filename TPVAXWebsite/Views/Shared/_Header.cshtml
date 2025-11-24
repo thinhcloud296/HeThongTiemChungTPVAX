@@ -28,15 +28,23 @@
 
             <!-- Auth & Cart -->
             <div class="d-flex align-items-center gap-2 flex-wrap">
-                @if (Session["TaiKhoanID"] == null)
+                @if (Session["User"] == null)
                 {
                     <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary rounded-pill mx-1 login-btn" aria-label="Đăng nhập tài khoản">Đăng nhập</a>
                     <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary rounded-pill mx-1 login-btn" aria-label="Đăng ký tài khoản mới">Đăng ký</a>
                 }
                 else
                 {
+                    @{
+                        var kh = Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang;
+                        var nv = Session["NV"] as TPVAXWebsite.Models.Domain.NhanVien;
+                        var userName = kh != null ? kh.HoTen : (nv != null ? nv.HoTen : "Người dùng");
+                    }
                     <a href="@Url.Action("Dashboard", "Account")" class="btn btn-primary rounded-pill mx-1" id="dashboardBtn" aria-label="Tài khoản của tôi">
-                        <i class="fas fa-user-circle me-1"></i>Tài khoản
+                        <i class="fas fa-user-circle me-1"></i>@userName
+                    </a>
+                    <a href="@Url.Action("Logout", "Account")" class="btn btn-outline-danger rounded-pill mx-1" aria-label="Đăng xuất">
+                        <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
                     </a>
                 }
                 <div class="vr mx-2 d-none d-lg-block"></div>

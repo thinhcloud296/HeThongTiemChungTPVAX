@@ -1,4 +1,4 @@
-@model TPVAXWebsite.Models.ViewModels.DashboardViewModel
+﻿@model TPVAXWebsite.Models.ViewModels.DashboardViewModel
 
 
 @{
@@ -218,6 +218,48 @@
     </a>
 </div>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '@TempData["SuccessMessage"]',
+                confirmButtonColor: '#0077b6'
+            });
+        });
+    </script>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: '@TempData["ErrorMessage"]',
+                confirmButtonColor: '#dc3545'
+            });
+        });
+    </script>
+}
+
+@if (TempData["ThongBao"] != null)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'info',
+                title: 'Thông báo',
+                text: '@TempData["ThongBao"]',
+                confirmButtonColor: '#0077b6'
+            });
+        });
+    </script>
+}
+
 <!-- Dashboard Container -->
 <div class="dashboard-container">
     <div class="container">
@@ -380,7 +422,7 @@
                             <i class="fas fa-bolt me-2 text-primary"></i>Thao tác nhanh
                         </h5>
                         <div class="d-flex flex-wrap gap-3">
-                            <a href="vacxinphongbenh.html" class="quick-action-btn">
+                            <a href="@Url.Action("Index", "VaccinePhongBenh")" class="quick-action-btn">
                                 <i class="fas fa-plus-circle me-2"></i>Đặt lịch mới
                             </a>
                             <a href="#profiles"
@@ -1111,30 +1153,103 @@
             window.location.href = "@Url.Action("Index", "Home")";
         }
 
-        // Đổi lịch: hiện date picker
-        function showDatePicker(maLT) {
-            document.getElementById("picker-" + maLT).style.display = "inline-block";
-        }
-
-        // Gửi request đổi lịch
+        // Đổi lịch với SweetAlert2
         function updateSchedule(maLT) {
-            var newDate = document.getElementById("picker-" + maLT).value;
-            if (!newDate) {
-                alert("Vui lòng chọn ngày mới!");
-                return;
-            }
-
-            $.post("/LichTiem/DoiLichNgay", { MaLT: maLT, NgayHenTiem: newDate }, function () {
-                alert("✓ Đổi lịch thành công!");
-                location.reload();
+            Swal.fire({
+                title: 'Đổi lịch hẹn',
+                html: '<input type="datetime-local" id="newDateInput" class="swal2-input" min="' + new Date().toISOString().slice(0, 16) + '">',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#0077b6',
+                preConfirm: () => {
+                    const newDate = document.getElementById('newDateInput').value;
+                    if (!newDate) {
+                        Swal.showValidationMessage('Vui lòng chọn ngày giờ mới!');
+                        return false;
+                    }
+                    return newDate;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("DoiLichNgay", "LichTiem")',
+                        type: 'POST',
+                        data: { MaLT: maLT, NgayHenTiem: result.value },
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công!',
+                                    text: response.message,
+                                    confirmButtonColor: '#0077b6'
+                                }).then(() => location.reload());
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi!',
+                                    text: response.message,
+                                    confirmButtonColor: '#dc3545'
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: 'Không thể kết nối đến server.',
+                                confirmButtonColor: '#dc3545'
+                            });
+                        }
+                    });
+                }
             });
         }
 
-        // Gửi request hủy lịch
+        // Hủy lịch với SweetAlert2
         function cancelSchedule(maLT) {
-            $.post("/LichTiem/HuyLich", { id: maLT }, function () {
-                alert("✓ Đã hủy lịch!");
-                location.reload();
+            Swal.fire({
+                title: 'Xác nhận hủy lịch?',
+                text: 'Bạn có chắc chắn muốn hủy lịch hẹn này?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hủy lịch',
+                cancelButtonText: 'Không',
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("HuyLich", "LichTiem")',
+                        type: 'POST',
+                        data: { id: maLT },
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Đã hủy!',
+                                    text: response.message,
+                                    confirmButtonColor: '#0077b6'
+                                }).then(() => location.reload());
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi!',
+                                    text: response.message,
+                                    confirmButtonColor: '#dc3545'
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: 'Không thể kết nối đến server.',
+                                confirmButtonColor: '#dc3545'
+                            });
+                        }
+                    });
+                }
             });
         }
         document.addEventListener("DOMContentLoaded", function () {

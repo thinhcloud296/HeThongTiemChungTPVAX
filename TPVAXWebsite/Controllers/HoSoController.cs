@@ -51,24 +51,52 @@ namespace TPVAXWebsite.Controllers
 
         private string GenerateMaHSTC()
         {
-            var last = _context.HoSoTiemChungs
-                .OrderByDescending(h => h.MaHSTC)
-                .Select(h => h.MaHSTC)
-                .FirstOrDefault();
+            string maHSTC;
+            do
+            {
+                var last = _context.HoSoTiemChungs
+                    .OrderByDescending(h => h.MaHSTC)
+                    .Select(h => h.MaHSTC)
+                    .FirstOrDefault();
 
-            int next = last != null ? int.Parse(last.Substring(5)) + 1 : 1;
-            return "HSTC" + next.ToString("D6");
+                int next = 1;
+                if (!string.IsNullOrEmpty(last) && last.Length > 2)
+                {
+                    string numPart = last.Substring(2);
+                    if (int.TryParse(numPart, out int lastNum))
+                    {
+                        next = lastNum + 1;
+                    }
+                }
+                maHSTC = "HS" + next.ToString("D8");
+            } while (_context.HoSoTiemChungs.Any(h => h.MaHSTC == maHSTC));
+            
+            return maHSTC;
         }
 
         private string GenerateMaLK()
         {
-            var last = _context.LienKetHoSos
-                .OrderByDescending(lk => lk.MaLK)
-                .Select(lk => lk.MaLK)
-                .FirstOrDefault();
+            string maLK;
+            do
+            {
+                var last = _context.LienKetHoSos
+                    .OrderByDescending(lk => lk.MaLK)
+                    .Select(lk => lk.MaLK)
+                    .FirstOrDefault();
 
-            int next = last != null ? int.Parse(last.Substring(4)) + 1 : 1;
-            return "LKHS" + next.ToString("D6");
+                int next = 1;
+                if (!string.IsNullOrEmpty(last) && last.Length > 2)
+                {
+                    string numPart = last.Substring(2);
+                    if (int.TryParse(numPart, out int lastNum))
+                    {
+                        next = lastNum + 1;
+                    }
+                }
+                maLK = "LK" + next.ToString("D8");
+            } while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK));
+            
+            return maLK;
         }
       
         [HttpGet]

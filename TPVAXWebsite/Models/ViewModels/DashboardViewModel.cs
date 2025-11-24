@@ -13,11 +13,8 @@ namespace TPVAXWebsite.Models.ViewModels
         public int SoMuiHoanThanh { get; set; }
         public List<LichTiem> LichHenSapToi { get; set; }
         public List<LichTiem> LichTiems { get; set; }
-        // ✅ Đã hủy — thêm dòng này
-        public List<LichTiem> LichDaHuy { get; set; } = new List<LichTiem>();
-
-
+        public List<LichTiem> LichDaHuy { get; set; }
+        public List<HoaDon> HoaDons { get; set; }
+        public List<KhuyenMai> KhuyenMais { get; set; }
     }
-
-
 }
