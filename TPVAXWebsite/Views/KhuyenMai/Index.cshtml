@@ -136,9 +136,20 @@
                       <div class="promo-card-new">
                           <div class="card-img-wrapper">
                               @{
-                                  var imagePath = !string.IsNullOrEmpty(km.HinhAnh) 
-                                      ? Url.Content("~/Content/Images/KhuyenMai/" + km.HinhAnh)
-                                      : Url.Content("~/Content/Assets/Images/hexaxim.png");
+                                  var imagePath = Url.Content("~/Content/Assets/Images/hexaxim.png");
+                                  if (!string.IsNullOrEmpty(km.HinhAnh))
+                                  {
+                                      // Nếu HinhAnh đã có path đầy đủ (bắt đầu bằng / hoặc ~) thì dùng luôn
+                                      if (km.HinhAnh.StartsWith("/") || km.HinhAnh.StartsWith("~"))
+                                      {
+                                          imagePath = Url.Content(km.HinhAnh);
+                                      }
+                                      else
+                                      {
+                                          // Nếu chỉ là tên file, thêm path đầy đủ
+                                          imagePath = Url.Content("~/Content/Images/KhuyenMai/" + km.HinhAnh);
+                                      }
+                                  }
                               }
                               <img src="@imagePath" 
                                    alt="@km.TenKM"

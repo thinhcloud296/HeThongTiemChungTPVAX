@@ -358,11 +358,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
-        const BASE_URL = '@Url.Content("~")';
+        // BASE_URL is already defined in app.js
         const CSRF_TOKEN = $('[name="__RequestVerificationToken"]').val();
 
         $(document).ready(function () {
-            console.log('Page loaded, CSRF Token:', CSRF_TOKEN?.substring(0, 20) + '...');
+            console.log('Page loaded, BASE_URL:', BASE_URL);
+            console.log('CSRF Token:', CSRF_TOKEN?.substring(0, 20) + '...');
 
             // Load dữ liệu dropdown trước
             loadLoaiVaccine();
@@ -394,11 +395,19 @@
             }
 
             // Event handlers - Sử dụng on() để support dynamic content
-            $(document).on('click', '#btnAddVaccine', onAddVaccine);
+            console.log('Setting up event handlers...');
+            
+            $(document).on('click', '#btnAddVaccine', function(e) {
+                console.log('btnAddVaccine clicked (delegated)');
+                onAddVaccine(e);
+            });
+            
             $('#vaccineForm').on('submit', onFormSubmit);
             $(document).on('click', '.btn-edit', onEditVaccine);
             $(document).on('click', '.btn-delete', onDeleteVaccine);
             $('#vaccineImage').on('change', onImageSelected);
+            
+            console.log('Event handlers set up complete');
         });
         
         // =====================================================
@@ -488,11 +497,35 @@
         // Form Handlers
         // =====================================================
         function onAddVaccine(e) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             console.log('Add vaccine clicked');
-            clearForm();
-            $('#modalTitle').text('Thêm Vắc xin Mới');
-            $('#vaccineModal').modal('show');
+            
+            try {
+                clearForm();
+                $('#modalTitle').text('Thêm Vắc xin Mới');
+                
+                // Try Bootstrap 5 first, then Bootstrap 4
+                const modal = document.getElementById('vaccineModal');
+                if (modal) {
+                    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                        // Bootstrap 5
+                        const bsModal = new bootstrap.Modal(modal);
+                        bsModal.show();
+                    } else if (typeof $.fn.modal !== 'undefined') {
+                        // Bootstrap 4 / jQuery
+                        $('#vaccineModal').modal('show');
+                    } else {
+                        console.error('Bootstrap modal not found');
+                        alert('Không thể mở form. Vui lòng refresh trang.');
+                    }
+                } else {
+                    console.error('Modal element not found');
+                }
+            } catch (err) {
+                console.error('Error opening modal:', err);
+                alert('Lỗi: ' + err.message);
+            }
+            
             return false;
         }
 

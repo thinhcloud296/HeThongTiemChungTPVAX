@@ -776,37 +776,73 @@ namespace TPVAXWebsite.Controllers
         {
             try
             {
-                var khuyenMais = _unitOfWork.KhuyenMais.Query()
-                    .ToList()
-                    .Select(km => new
+                if (_unitOfWork == null)
+                {
+                    return Json(new { success = false, message = "UnitOfWork is null" }, JsonRequestBehavior.AllowGet);
+                }
+
+                if (_unitOfWork.KhuyenMais == null)
+                {
+                    return Json(new { success = false, message = "KhuyenMais repository is null" }, JsonRequestBehavior.AllowGet);
+                }
+
+                // Lấy danh sách khuyến mãi 
+                var khuyenMaiList = _unitOfWork.KhuyenMais.Query().ToList();
+                
+                if (khuyenMaiList == null)
+                {
+                    return Json(new { success = true, data = new List<object>() }, JsonRequestBehavior.AllowGet);
+                }
+
+                var result = new List<object>();
+                
+                foreach (var km in khuyenMaiList)
+                {
+                    if (km == null) continue;
+
+                    // Xử lý đường dẫn hình ảnh
+                    string hinhAnhPath = "";
+                    if (!string.IsNullOrEmpty(km.HinhAnh))
                     {
-                        km.MaKM,
-                        km.TenKM,
-                        km.MoTa,
-                        km.LoaiKM,
-                        km.KieuGiam,
-                        km.GiaTriGiam,
+                        // Nếu đường dẫn đã có dấu / hoặc http thì giữ nguyên
+                        if (km.HinhAnh.StartsWith("/") || km.HinhAnh.StartsWith("http"))
+                        {
+                            hinhAnhPath = km.HinhAnh;
+                        }
+                        else
+                        {
+                            // Nếu chỉ là tên file, thêm path đầy đủ
+                            hinhAnhPath = "/Content/images/khuyenmai/" + km.HinhAnh;
+                        }
+                    }
+
+                    result.Add(new
+                    {
+                        MaKM = km.MaKM ?? "",
+                        TenKM = km.TenKM ?? "",
+                        MoTa = km.MoTa ?? "",
+                        LoaiKM = km.LoaiKM ?? "",
+                        KieuGiam = km.KieuGiam ?? "",
+                        GiaTriGiam = km.GiaTriGiam,
                         NgayBatDau = km.NgayBatDau.ToString("dd/MM/yyyy"),
                         NgayKetThuc = km.NgayKetThuc.ToString("dd/MM/yyyy"),
-                        km.TrangThai,
-                        // Xử lý đường dẫn hình ảnh
-                        HinhAnh = string.IsNullOrEmpty(km.HinhAnh)
-                            ? null
-                            : (km.HinhAnh.StartsWith("/") || km.HinhAnh.StartsWith("http")
-                                ? km.HinhAnh
-                                : "/Content/images/khuyenmai/" + km.HinhAnh),
-                        SoLuongSanPham = km.ChiTietKhuyenMai.Count
-                    })
-                    .OrderByDescending(km => km.NgayBatDau)
-                    .ToList();
+                        TrangThai = km.TrangThai,
+                        HinhAnh = hinhAnhPath,
+                        SoLuongSanPham = 0
+                    });
+                }
 
-                return Json(new { success = true, data = khuyenMais }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, data = result }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error getting khuyến mãi list: " + ex.Message);
-                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
-                    JsonRequestBehavior.AllowGet);
+                System.Diagnostics.Debug.WriteLine("Error in GetKhuyenMaiList: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("StackTrace: " + ex.StackTrace);
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Inner Exception: " + ex.InnerException.Message);
+                }
+                return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -906,46 +942,38 @@ namespace TPVAXWebsite.Controllers
         {
             try
             {
-                var khuyenMai = _unitOfWork.KhuyenMais.Query()
-                    .Where(km => km.MaKM == id)
-                    .FirstOrDefault();
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Json(new { success = false, message = "Mã khuyến mãi không hợp lệ" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var khuyenMai = _unitOfWork.KhuyenMais.GetById(id);
 
                 if (khuyenMai == null)
                 {
-                    return Json(new { success = false, message = "Khuyến mãi không tồn tại" },
-                        JsonRequestBehavior.AllowGet);
-                }
-
-                // Xử lý đường dẫn hình ảnh
-                string hinhAnhPath = null;
-                if (!string.IsNullOrEmpty(khuyenMai.HinhAnh))
-                {
-                    hinhAnhPath = khuyenMai.HinhAnh.StartsWith("/") || khuyenMai.HinhAnh.StartsWith("http")
-                        ? khuyenMai.HinhAnh
-                        : "/Content/images/khuyenmai/" + khuyenMai.HinhAnh;
+                    return Json(new { success = false, message = "Khuyến mãi không tồn tại" }, JsonRequestBehavior.AllowGet);
                 }
 
                 var viewModel = new
                 {
-                    khuyenMai.MaKM,
-                    khuyenMai.TenKM,
-                    khuyenMai.MoTa,
-                    khuyenMai.LoaiKM,
-                    khuyenMai.KieuGiam,
-                    khuyenMai.GiaTriGiam,
+                    MaKM = khuyenMai.MaKM,
+                    TenKM = khuyenMai.TenKM ?? "",
+                    MoTa = khuyenMai.MoTa ?? "",
+                    LoaiKM = khuyenMai.LoaiKM ?? "",
+                    KieuGiam = khuyenMai.KieuGiam ?? "",
+                    GiaTriGiam = khuyenMai.GiaTriGiam,
                     NgayBatDau = khuyenMai.NgayBatDau.ToString("yyyy-MM-dd"),
                     NgayKetThuc = khuyenMai.NgayKetThuc.ToString("yyyy-MM-dd"),
-                    khuyenMai.TrangThai,
-                    HinhAnh = hinhAnhPath
+                    TrangThai = khuyenMai.TrangThai,
+                    HinhAnh = khuyenMai.HinhAnh ?? ""
                 };
 
                 return Json(new { success = true, data = viewModel }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error getting khuyến mãi: " + ex.Message);
-                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
-                    JsonRequestBehavior.AllowGet);
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -1043,41 +1071,18 @@ namespace TPVAXWebsite.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Json(new { success = false, message = "Mã khuyến mãi không hợp lệ" });
+                }
+
                 var khuyenMai = _unitOfWork.KhuyenMais.GetById(id);
                 if (khuyenMai == null)
                 {
                     return Json(new { success = false, message = "Khuyến mãi không tồn tại" });
                 }
 
-                // Kiểm tra xem có hóa đơn nào sử dụng khuyến mãi này không
-                var hasHoaDon = _unitOfWork.HoaDons.Query()
-                    .Any(hd => hd.MaKM == id);
-
-                if (hasHoaDon)
-                {
-                    return Json(new { success = false, message = "Không thể xóa khuyến mãi đã được sử dụng trong hóa đơn" });
-                }
-
-                // Xóa chi tiết khuyến mãi trước
-                var chiTiets = _unitOfWork.ChiTietKhuyenMais.Query()
-                    .Where(ct => ct.MaKM == id)
-                    .ToList();
-
-                foreach (var ct in chiTiets)
-                {
-                    _unitOfWork.ChiTietKhuyenMais.Remove(ct);
-                }
-
-                // Xóa hình ảnh nếu có
-                if (!string.IsNullOrEmpty(khuyenMai.HinhAnh))
-                {
-                    var imagePath = Server.MapPath("~" + khuyenMai.HinhAnh);
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
-                }
-
+                // Xóa khuyến mãi
                 _unitOfWork.KhuyenMais.Remove(khuyenMai);
                 _unitOfWork.SaveChanges();
 
@@ -1085,8 +1090,8 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error deleting khuyến mãi: " + ex.Message);
-                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi: " + ex.Message });
             }
         }
 
@@ -1108,6 +1113,15 @@ namespace TPVAXWebsite.Controllers
             }
 
             return "KM00000001";
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _unitOfWork?.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

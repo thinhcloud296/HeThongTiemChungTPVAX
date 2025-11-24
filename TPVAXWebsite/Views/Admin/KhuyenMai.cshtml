@@ -165,7 +165,7 @@
 
 @section scripts {
 <script>
-    const BASE_URL = '@Url.Content("~/")';
+    // BASE_URL is already defined in app.js
     
     $(document).ready(function () {
         // Initialize DataTable
@@ -220,13 +220,11 @@
     });
 
     function loadKhuyenMaiList() {
-        console.log('Loading khuyến mãi list from:', BASE_URL + 'Admin/GetKhuyenMaiList');
         $.ajax({
             url: BASE_URL + 'Admin/GetKhuyenMaiList',
             type: 'GET',
             dataType: 'json',
             success: function (response) {
-                console.log('GetKhuyenMaiList response:', response);
                 if (response.success && response.data) {
                     renderKhuyenMaiTable(response.data);
                 } else {
@@ -255,7 +253,7 @@
                 : formatCurrency(km.GiaTriGiam) + ' VNĐ';
 
             const imageHtml = km.HinhAnh
-                ? '<img src="' + km.HinhAnh + '?t=' + new Date().getTime() + '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" />'
+                ? '<img src="' + km.HinhAnh + '?t=' + new Date().getTime() + '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" onerror="this.onerror=null; this.src=\'/Content/images/no-image.png\'; this.title=\'Không tìm thấy ảnh: ' + km.HinhAnh + '\';" />'
                 : '<i class="fas fa-image text-muted"></i>';
 
             table.row.add([
