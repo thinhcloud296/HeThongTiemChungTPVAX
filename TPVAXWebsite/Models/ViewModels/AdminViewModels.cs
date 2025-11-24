@@ -219,5 +219,51 @@ namespace TPVAXWebsite.Models.ViewModels
         public bool Success { get; set; }
         public string Message { get; set; }
     }
+
+    /// <summary>
+    /// ViewModel cho tạo/sửa khuyến mãi
+    /// </summary>
+    public class AdminKhuyenMaiCreateEditViewModel
+    {
+        [StringLength(10)]
+        public string MaKM { get; set; }
+
+        [Required(ErrorMessage = "Tên khuyến mãi không được để trống")]
+        [StringLength(255, ErrorMessage = "Tên khuyến mãi không quá 255 ký tự")]
+        public string TenKM { get; set; }
+
+        [StringLength(int.MaxValue)]
+        public string MoTa { get; set; }
+
+        [StringLength(50)]
+        public string LoaiKM { get; set; }
+
+        [Required(ErrorMessage = "Kiểu giảm không được để trống")]
+        [StringLength(50)]
+        public string KieuGiam { get; set; }
+
+        [Required(ErrorMessage = "Giá trị giảm không được để trống")]
+        [Range(0, double.MaxValue, ErrorMessage = "Giá trị giảm phải lớn hơn hoặc bằng 0")]
+        public decimal GiaTriGiam { get; set; }
+
+        [Required(ErrorMessage = "Ngày bắt đầu không được để trống")]
+        public DateTime NgayBatDau { get; set; }
+
+        [Required(ErrorMessage = "Ngày kết thúc không được để trống")]
+        public DateTime NgayKetThuc { get; set; }
+
+        public bool TrangThai { get; set; }
+
+        [StringLength(255)]
+        public string HinhAnh { get; set; }
+
+        [StringLength(255)]
+        public string HinhAnhCu { get; set; }
+
+        /// <summary>
+        /// File upload hình ảnh từ form
+        /// </summary>
+        public HttpPostedFileBase ImageFile { get; set; }
+    }
 }
 

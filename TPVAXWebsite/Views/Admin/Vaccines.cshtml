@@ -362,14 +362,11 @@
         const CSRF_TOKEN = $('[name="__RequestVerificationToken"]').val();
 
         $(document).ready(function () {
-            console.log('Page loaded, BASE_URL:', BASE_URL);
-            console.log('CSRF Token:', CSRF_TOKEN?.substring(0, 20) + '...');
-
             // Load dữ liệu dropdown trước
             loadLoaiVaccine();
             loadLoaiBenh();
 
-            // Khởi tạo DataTable sau khi DOM render
+            // Khởi tạo DataTable
             try {
                 if ($.fn.dataTable.isDataTable('#vaccineTable')) {
                     $('#vaccineTable').DataTable().destroy();
@@ -391,14 +388,11 @@
                     info: true
                 });
             } catch (e) {
-                console.error('DataTable error:', e);
+                console.error('DataTable initialization error:', e);
             }
 
-            // Event handlers - Sử dụng on() để support dynamic content
-            console.log('Setting up event handlers...');
-            
+            // Event handlers
             $(document).on('click', '#btnAddVaccine', function(e) {
-                console.log('btnAddVaccine clicked (delegated)');
                 onAddVaccine(e);
             });
             
@@ -406,25 +400,17 @@
             $(document).on('click', '.btn-edit', onEditVaccine);
             $(document).on('click', '.btn-delete', onDeleteVaccine);
             $('#vaccineImage').on('change', onImageSelected);
-            
-            console.log('Event handlers set up complete');
         });
         
         // =====================================================
         // Load Dropdown Data
         // =====================================================
         function loadLoaiVaccine() {
-            console.log('Loading loại vaccine from:', BASE_URL + 'Admin/GetLoaiVaccineList');
             $.ajax({
                 url: BASE_URL + 'Admin/GetLoaiVaccineList',
                 type: 'GET',
                 dataType: 'json',
-                timeout: 10000,
                 success: function (response) {
-                    console.log('✓ Loại vaccine loaded successfully');
-                    console.log('  Response:', response);
-                    console.log('  Response type:', typeof response);
-                    
                     if (response && response.success && response.data) {
                         const select = $('#vaccineType');
                         select.empty();
@@ -432,36 +418,26 @@
                         response.data.forEach(function (item) {
                             select.append(`<option value="${item.id}">${item.text}</option>`);
                         });
-                        console.log('  ✓ Dropdown populated with', response.data.length, 'items');
                     } else {
-                        console.warn('  Response structure invalid:', response);
                         $('#vaccineType').html('<option value="">-- Lỗi tải dữ liệu --</option>');
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('✗ Error loading loại vaccine');
-                    console.error('  Status:', status);
-                    console.error('  Error:', error);
-                    console.error('  Response:', xhr.responseText);
+                    console.error('Error loading loại vaccine:', error);
                     $('#vaccineType').html('<option value="">-- Lỗi tải dữ liệu --</option>');
                     if (status !== 'abort') {
-                        Swal.fire('Lỗi', 'Không thể tải danh sách loại vaccine. Vui lòng kiểm tra Console (F12) để chi tiết.', 'error');
+                        Swal.fire('Lỗi', 'Không thể tải danh sách loại vaccine', 'error');
                     }
                 }
             });
         }
 
         function loadLoaiBenh() {
-            console.log('Loading loại bệnh from:', BASE_URL + 'Admin/GetLoaiBenhList');
             $.ajax({
                 url: BASE_URL + 'Admin/GetLoaiBenhList',
                 type: 'GET',
                 dataType: 'json',
-                timeout: 10000,
                 success: function (response) {
-                    console.log('✓ Loại bệnh loaded successfully');
-                    console.log('  Response:', response);
-                    
                     if (response && response.success && response.data && response.data.length > 0) {
                         const container = $('#diseaseList');
                         container.empty();
@@ -477,17 +453,12 @@
                             `;
                             container.append(checkboxHtml);
                         });
-                        console.log('  ✓ Disease list populated with', response.data.length, 'items');
                     } else {
-                        console.warn('  No disease data received or empty:', response);
                         $('#diseaseList').html('<p class="text-muted">Không có bệnh để chọn</p>');
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('✗ Error loading loại bệnh');
-                    console.error('  Status:', status);
-                    console.error('  Error:', error);
-                    console.error('  Response:', xhr.responseText);
+                    console.error('Error loading loại bệnh:', error);
                     $('#diseaseList').html('<p class="text-danger">Lỗi tải danh sách bệnh</p>');
                 }
             });
@@ -498,7 +469,6 @@
         // =====================================================
         function onAddVaccine(e) {
             if (e) e.preventDefault();
-            console.log('Add vaccine clicked');
             
             try {
                 clearForm();
@@ -532,7 +502,6 @@
         function onEditVaccine(e) {
             e.preventDefault();
             const vaccineId = $(this).data('vaccine-id');
-            console.log('Edit vaccine clicked:', vaccineId);
             if (!vaccineId) {
                 Swal.fire('Lỗi', 'ID vaccine không hợp lệ', 'error');
                 return false;
@@ -543,14 +512,11 @@
 
         function onFormSubmit(e) {
             e.preventDefault();
-            console.log('Form submitted');
 
             // Validate selected diseases
             const selectedDiseases = $('.vaccine-disease:checked').map(function () {
                 return $(this).val();
             }).get();
-
-            console.log('Selected diseases:', selectedDiseases);
 
             if (selectedDiseases.length === 0) {
                 Swal.fire('Thông báo', 'Vui lòng chọn ít nhất một bệnh phòng ngừa', 'warning');
@@ -572,8 +538,6 @@
                 ? BASE_URL + 'Admin/EditVaccine' 
                 : BASE_URL + 'Admin/CreateVaccine';
 
-            console.log('Submitting to:', url);
-
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -581,7 +545,6 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    console.log('Response:', response);
                     if (response.success) {
                         Swal.fire('Thành công', response.message || 'Lưu thành công', 'success').then(function () {
                             location.reload();
@@ -609,7 +572,6 @@
         function onDeleteVaccine(e) {
             e.preventDefault();
             const vaccineId = $(this).data('vaccine-id');
-            console.log('Delete vaccine clicked:', vaccineId);
             
             if (!vaccineId) {
                 Swal.fire('Lỗi', 'ID vaccine không hợp lệ', 'error');
@@ -638,15 +600,12 @@
         // API Calls
         // =====================================================
         function loadVaccineData(vaccineId) {
-            console.log('loadVaccineData called with:', vaccineId);
             $.ajax({
                 url: BASE_URL + 'Admin/GetVaccine',
                 type: 'GET',
                 data: { id: vaccineId },
                 dataType: 'json',
-                timeout: 10000,
                 success: function (response) {
-                    console.log('GetVaccine response:', response);
                     if (response.success && response.data) {
                         fillFormData(response.data);
                         $('#modalTitle').text('Chỉnh sửa Vắc xin');
@@ -663,18 +622,19 @@
         }
 
         function deleteVaccine(vaccineId) {
-            console.log('deleteVaccine called with:', vaccineId);
+            const token = $('input[name="__RequestVerificationToken"]').val();
+            
             $.ajax({
                 url: BASE_URL + 'Admin/DeleteVaccine',
                 type: 'POST',
-                data: { id: vaccineId },
-                headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
+                data: { 
+                    id: vaccineId,
+                    __RequestVerificationToken: token
+                },
                 dataType: 'json',
-                timeout: 10000,
                 success: function (response) {
-                    console.log('DeleteVaccine response:', response);
-                    if (response.success) {
-                        Swal.fire('Thành công', response.message || 'Xóa thành công', 'success').then(function () {
+                    if (response && response.success) {
+                        Swal.fire('Thành công', response.message || 'Xóa vaccine thành công!', 'success').then(function () {
                             location.reload();
                         });
                     } else {
@@ -683,7 +643,7 @@
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('deleteVaccine error:', status, error, xhr);
+                    console.error('deleteVaccine error:', status, error);
                     let errorMsg = 'Lỗi xóa vaccine: ' + error;
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMsg = xhr.responseJSON.message;

@@ -18,7 +18,9 @@ namespace TPVAXWebsite.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private const string VACCINE_IMAGE_PATH = "~/Content/Images/vaccines/";
+        private const string KHUYENMAI_IMAGE_PATH = "~/Content/images/khuyenmai/";
         private const int MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+        private static readonly string[] ALLOWED_IMAGE_EXTENSIONS = { ".jpg", ".jpeg", ".png", ".gif" };
 
         public AdminController()
         {
@@ -517,7 +519,7 @@ namespace TPVAXWebsite.Controllers
         // ============================================================================
 
         /// <summary>
-        /// Validate hình ảnh upload
+        /// Validate hình ảnh upload (dùng chung cho vaccine và khuyến mãi)
         /// </summary>
         private Tuple<bool, string> ValidateImage(HttpPostedFileBase imageFile)
         {
@@ -525,10 +527,9 @@ namespace TPVAXWebsite.Controllers
                 return new Tuple<bool, string>(false, "File hình ảnh không hợp lệ");
 
             // Kiểm tra extension
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
             var fileExtension = Path.GetExtension(imageFile.FileName).ToLower();
 
-            if (!allowedExtensions.Contains(fileExtension))
+            if (!ALLOWED_IMAGE_EXTENSIONS.Contains(fileExtension))
             {
                 return new Tuple<bool, string>(false, "Chỉ cho phép file ảnh: .jpg, .jpeg, .png, .gif");
             }
@@ -850,14 +851,40 @@ namespace TPVAXWebsite.Controllers
         /// POST: Admin/CreateKhuyenMai - Tạo khuyến mãi mới
         /// </summary>
         [HttpPost]
-        public ActionResult CreateKhuyenMai(string TenKM, string MoTa, string LoaiKM, string KieuGiam, 
-            decimal GiaTriGiam, string NgayBatDau, string NgayKetThuc, bool TrangThai, HttpPostedFileBase HinhAnh)
+        public ActionResult CreateKhuyenMai(AdminKhuyenMaiCreateEditViewModel model)
         {
             try
             {
-                if (string.IsNullOrEmpty(TenKM))
+                // Validate ModelState
+                if (!ModelState.IsValid)
                 {
-                    return Json(new { success = false, message = "Tên khuyến mãi không được để trống" });
+                    var errors = GetModelStateErrors();
+                    System.Diagnostics.Debug.WriteLine("ModelState errors: " + string.Join(", ", errors));
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ",
+                        errors = errors
+                    });
+                }
+
+                // Validate ngày
+                if (model.NgayKetThuc < model.NgayBatDau)
+                {
+                    return Json(new { success = false, message = "Ngày kết thúc phải sau ngày bắt đầu" });
+                }
+
+                // Xử lý upload hình ảnh
+                string imagePath = null;
+                if (model.ImageFile != null && model.ImageFile.ContentLength > 0)
+                {
+                    var validateImageResult = ValidateImage(model.ImageFile);
+                    if (!validateImageResult.Item1)
+                    {
+                        return Json(new { success = false, message = validateImageResult.Item2 });
+                    }
+
+                    imagePath = SaveKhuyenMaiImage(model.ImageFile, null); // null = generate new filename
                 }
 
                 // Generate MaKM
@@ -867,53 +894,18 @@ namespace TPVAXWebsite.Controllers
 
                 string newMaKM = GenerateKhuyenMaiMa(lastKM?.MaKM);
 
-                // Parse dates
-                DateTime batDau = DateTime.ParseExact(NgayBatDau, "yyyy-MM-dd", null);
-                DateTime ketThuc = DateTime.ParseExact(NgayKetThuc, "yyyy-MM-dd", null);
-
-                if (ketThuc < batDau)
-                {
-                    return Json(new { success = false, message = "Ngày kết thúc phải sau ngày bắt đầu" });
-                }
-
-                // Xử lý upload hình ảnh
-                string imagePath = null;
-                if (HinhAnh != null && HinhAnh.ContentLength > 0)
-                {
-                    if (HinhAnh.ContentLength > 5 * 1024 * 1024)
-                    {
-                        return Json(new { success = false, message = "Kích thước ảnh không được vượt quá 5MB" });
-                    }
-
-                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                    var extension = System.IO.Path.GetExtension(HinhAnh.FileName).ToLower();
-                    if (!allowedExtensions.Contains(extension))
-                    {
-                        return Json(new { success = false, message = "Chỉ chấp nhận file ảnh: .jpg, .jpeg, .png, .gif" });
-                    }
-
-                    var fileName = newMaKM + extension;
-                    var uploadPath = Server.MapPath("~/Content/images/khuyenmai/");
-                    if (!System.IO.Directory.Exists(uploadPath))
-                    {
-                        System.IO.Directory.CreateDirectory(uploadPath);
-                    }
-                    var filePath = System.IO.Path.Combine(uploadPath, fileName);
-                    HinhAnh.SaveAs(filePath);
-                    imagePath = "/Content/images/khuyenmai/" + fileName;
-                }
-
+                // Tạo entity KhuyenMai mới
                 var khuyenMai = new KhuyenMai
                 {
                     MaKM = newMaKM,
-                    TenKM = TenKM,
-                    MoTa = MoTa,
-                    LoaiKM = LoaiKM,
-                    KieuGiam = KieuGiam,
-                    GiaTriGiam = GiaTriGiam,
-                    NgayBatDau = batDau,
-                    NgayKetThuc = ketThuc,
-                    TrangThai = TrangThai,
+                    TenKM = model.TenKM,
+                    MoTa = model.MoTa,
+                    LoaiKM = model.LoaiKM,
+                    KieuGiam = model.KieuGiam,
+                    GiaTriGiam = model.GiaTriGiam,
+                    NgayBatDau = model.NgayBatDau,
+                    NgayKetThuc = model.NgayKetThuc,
+                    TrangThai = model.TrangThai,
                     HinhAnh = imagePath
                 };
 
@@ -930,6 +922,10 @@ namespace TPVAXWebsite.Controllers
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Error creating khuyến mãi: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("InnerException: " + ex.InnerException.Message);
+                }
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
@@ -981,75 +977,57 @@ namespace TPVAXWebsite.Controllers
         /// POST: Admin/EditKhuyenMai - Cập nhật khuyến mãi
         /// </summary>
         [HttpPost]
-        public ActionResult EditKhuyenMai(string MaKM, string TenKM, string MoTa, string LoaiKM, string KieuGiam,
-            decimal GiaTriGiam, string NgayBatDau, string NgayKetThuc, bool TrangThai, HttpPostedFileBase HinhAnh)
+        public ActionResult EditKhuyenMai(AdminKhuyenMaiCreateEditViewModel model)
         {
             try
             {
-                if (string.IsNullOrEmpty(MaKM))
+                // Validate MaKM
+                if (string.IsNullOrEmpty(model.MaKM))
                 {
                     return Json(new { success = false, message = "Mã khuyến mãi không hợp lệ" });
                 }
 
-                var khuyenMai = _unitOfWork.KhuyenMais.GetById(MaKM);
+                // Lấy khuyến mãi từ database
+                var khuyenMai = _unitOfWork.KhuyenMais.GetById(model.MaKM);
                 if (khuyenMai == null)
                 {
                     return Json(new { success = false, message = "Khuyến mãi không tồn tại" });
                 }
 
-                // Parse dates
-                DateTime batDau = DateTime.ParseExact(NgayBatDau, "yyyy-MM-dd", null);
-                DateTime ketThuc = DateTime.ParseExact(NgayKetThuc, "yyyy-MM-dd", null);
-
-                if (ketThuc < batDau)
+                // Validate ngày
+                if (model.NgayKetThuc < model.NgayBatDau)
                 {
                     return Json(new { success = false, message = "Ngày kết thúc phải sau ngày bắt đầu" });
                 }
 
                 // Xử lý upload hình ảnh mới
-                if (HinhAnh != null && HinhAnh.ContentLength > 0)
+                if (model.ImageFile != null && model.ImageFile.ContentLength > 0)
                 {
-                    if (HinhAnh.ContentLength > 5 * 1024 * 1024)
+                    var validateImageResult = ValidateImage(model.ImageFile);
+                    if (!validateImageResult.Item1)
                     {
-                        return Json(new { success = false, message = "Kích thước ảnh không được vượt quá 5MB" });
-                    }
-
-                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                    var extension = System.IO.Path.GetExtension(HinhAnh.FileName).ToLower();
-                    if (!allowedExtensions.Contains(extension))
-                    {
-                        return Json(new { success = false, message = "Chỉ chấp nhận file ảnh: .jpg, .jpeg, .png, .gif" });
+                        return Json(new { success = false, message = validateImageResult.Item2 });
                     }
 
                     // Xóa ảnh cũ nếu có
                     if (!string.IsNullOrEmpty(khuyenMai.HinhAnh))
                     {
-                        var oldImagePath = Server.MapPath("~" + khuyenMai.HinhAnh);
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
+                        DeleteKhuyenMaiImage(khuyenMai.HinhAnh);
                     }
 
-                    var fileName = MaKM + extension;
-                    var uploadPath = Server.MapPath("~/Content/images/khuyenmai/");
-                    if (!System.IO.Directory.Exists(uploadPath))
-                    {
-                        System.IO.Directory.CreateDirectory(uploadPath);
-                    }
-                    var filePath = System.IO.Path.Combine(uploadPath, fileName);
-                    HinhAnh.SaveAs(filePath);
-                    khuyenMai.HinhAnh = "/Content/images/khuyenmai/" + fileName;
+                    // Lưu ảnh mới
+                    khuyenMai.HinhAnh = SaveKhuyenMaiImage(model.ImageFile, model.MaKM);
                 }
 
-                khuyenMai.TenKM = TenKM;
-                khuyenMai.MoTa = MoTa;
-                khuyenMai.LoaiKM = LoaiKM;
-                khuyenMai.KieuGiam = KieuGiam;
-                khuyenMai.GiaTriGiam = GiaTriGiam;
-                khuyenMai.NgayBatDau = batDau;
-                khuyenMai.NgayKetThuc = ketThuc;
-                khuyenMai.TrangThai = TrangThai;
+                // Cập nhật thông tin
+                khuyenMai.TenKM = model.TenKM;
+                khuyenMai.MoTa = model.MoTa;
+                khuyenMai.LoaiKM = model.LoaiKM;
+                khuyenMai.KieuGiam = model.KieuGiam;
+                khuyenMai.GiaTriGiam = model.GiaTriGiam;
+                khuyenMai.NgayBatDau = model.NgayBatDau;
+                khuyenMai.NgayKetThuc = model.NgayKetThuc;
+                khuyenMai.TrangThai = model.TrangThai;
 
                 _unitOfWork.KhuyenMais.Update(khuyenMai);
                 _unitOfWork.SaveChanges();
@@ -1059,6 +1037,10 @@ namespace TPVAXWebsite.Controllers
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Error editing khuyến mãi: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("InnerException: " + ex.InnerException.Message);
+                }
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
@@ -1082,6 +1064,12 @@ namespace TPVAXWebsite.Controllers
                     return Json(new { success = false, message = "Khuyến mãi không tồn tại" });
                 }
 
+                // Xóa hình ảnh nếu có
+                if (!string.IsNullOrEmpty(khuyenMai.HinhAnh))
+                {
+                    DeleteKhuyenMaiImage(khuyenMai.HinhAnh);
+                }
+
                 // Xóa khuyến mãi
                 _unitOfWork.KhuyenMais.Remove(khuyenMai);
                 _unitOfWork.SaveChanges();
@@ -1090,8 +1078,12 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
-                return Json(new { success = false, message = "Lỗi: " + ex.Message });
+                System.Diagnostics.Debug.WriteLine("Error deleting khuyến mãi: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("InnerException: " + ex.InnerException.Message);
+                }
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
 
@@ -1099,6 +1091,9 @@ namespace TPVAXWebsite.Controllers
         // KHUYẾN MÃI CRUD - Helper Methods
         // ============================================================================
 
+        /// <summary>
+        /// Generate MaKM mới (KM00000001, KM00000002, ...)
+        /// </summary>
         private string GenerateKhuyenMaiMa(string lastMaKM)
         {
             if (string.IsNullOrEmpty(lastMaKM))
@@ -1106,13 +1101,78 @@ namespace TPVAXWebsite.Controllers
                 return "KM00000001";
             }
 
-            if (lastMaKM.Length >= 2 && int.TryParse(lastMaKM.Substring(2), out int number))
+            // Extract số từ mã cuối cùng
+            string numberPart = lastMaKM.Substring(2); // Lấy phần số (bỏ "KM")
+            
+            if (int.TryParse(numberPart, out int number))
             {
                 number++;
-                return "KM" + number.ToString("D8");
+                return "KM" + number.ToString().PadLeft(8, '0');
             }
 
             return "KM00000001";
+        }
+
+        /// <summary>
+        /// Lưu hình ảnh khuyến mãi
+        /// </summary>
+        /// <param name="imageFile">File upload</param>
+        /// <param name="maKM">Mã khuyến mãi (null nếu tạo mới)</param>
+        /// <returns>Đường dẫn tương đối của ảnh</returns>
+        private string SaveKhuyenMaiImage(HttpPostedFileBase imageFile, string maKM)
+        {
+            try
+            {
+                // Tạo tên file: MaKM + extension
+                string fileExtension = Path.GetExtension(imageFile.FileName).ToLower();
+                string fileName = (maKM ?? Guid.NewGuid().ToString()) + fileExtension;
+
+                // Đường dẫn thư mục
+                string folderPath = Server.MapPath(KHUYENMAI_IMAGE_PATH);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                // Lưu file
+                string filePath = Path.Combine(folderPath, fileName);
+                imageFile.SaveAs(filePath);
+
+                // Trả về path tuyệt đối để lưu vào DB (để tương thích với data cũ)
+                return "/Content/images/khuyenmai/" + fileName;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error saving khuyến mãi image: " + ex.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Xóa hình ảnh khuyến mãi
+        /// </summary>
+        /// <param name="imagePath">Đường dẫn ảnh (có thể là tuyệt đối hoặc tương đối)</param>
+        private void DeleteKhuyenMaiImage(string imagePath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(imagePath))
+                    return;
+
+                // Xử lý path: nếu bắt đầu bằng / thì bỏ đi để dùng với Server.MapPath
+                string relativePath = imagePath.StartsWith("/") ? "~" + imagePath : imagePath;
+                string filePath = Server.MapPath(relativePath);
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                    System.Diagnostics.Debug.WriteLine("Deleted khuyến mãi image: " + filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error deleting khuyến mãi image: " + ex.Message);
+            }
         }
 
         protected override void Dispose(bool disposing)

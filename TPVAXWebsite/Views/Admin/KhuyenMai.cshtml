@@ -228,13 +228,12 @@
                 if (response.success && response.data) {
                     renderKhuyenMaiTable(response.data);
                 } else {
-                    console.error('Invalid response:', response);
                     Swal.fire('Lỗi', response.message || 'Không thể tải danh sách khuyến mãi', 'error');
                 }
             },
             error: function (xhr, status, error) {
-                console.error('AJAX error:', status, error, xhr.responseText);
-                Swal.fire('Lỗi', 'Lỗi kết nối server: ' + error, 'error');
+                console.error('Error loading khuyến mãi:', error);
+                Swal.fire('Lỗi', 'Lỗi kết nối server', 'error');
             }
         });
     }
@@ -357,7 +356,7 @@
 
         const fileInput = document.getElementById('hinhAnh');
         if (fileInput && fileInput.files.length > 0) {
-            formData.append('HinhAnh', fileInput.files[0]);
+            formData.append('ImageFile', fileInput.files[0]);
         }
 
         $.ajax({
