@@ -1,0 +1,432 @@
+﻿@{
+    ViewBag.Title = "Quản lý Khuyến mãi";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-tags mr-2"></i>Quản lý Khuyến mãi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Admin")">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Khuyến mãi</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách Khuyến mãi</h3>
+                        <div class="card-tools">
+                            <button class="btn btn-primary btn-sm" id="btnAddKM">
+                                <i class="fas fa-plus"></i> Tạo khuyến mãi
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="kmTable" class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 8%">Mã KM</th>
+                                    <th style="width: 20%">Tên khuyến mãi</th>
+                                    <th style="width: 10%">Loại</th>
+                                    <th style="width: 12%">Giảm giá</th>
+                                    <th style="width: 10%">Ngày bắt đầu</th>
+                                    <th style="width: 10%">Ngày kết thúc</th>
+                                    <th style="width: 8%">Trạng thái</th>
+                                    <th style="width: 8%">SP áp dụng</th>
+                                    <th style="width: 14%">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Thêm/Sửa Khuyến mãi -->
+<div class="modal fade" id="kmModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="kmModalTitle">Tạo Khuyến mãi Mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="kmForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="hidden" id="kmId" name="MaKM" />
+
+                    <!-- Tên khuyến mãi -->
+                    <div class="form-group">
+                        <label for="tenKM">Tên khuyến mãi <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="tenKM" name="TenKM"
+                            placeholder="VD: Giảm giá 50% cho vaccine cúm" required />
+                        <small class="form-text text-muted">Tối đa 255 ký tự</small>
+                    </div>
+
+                    <!-- Mô tả -->
+                    <div class="form-group">
+                        <label for="moTa">Mô tả</label>
+                        <textarea class="form-control" id="moTa" name="MoTa" rows="3"
+                            placeholder="Nhập mô tả chi tiết về khuyến mãi..."></textarea>
+                    </div>
+
+                    <!-- Row: Loại KM và Kiểu giảm -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="loaiKM">Loại khuyến mãi</label>
+                                <select class="form-control" id="loaiKM" name="LoaiKM">
+                                    <option value="">-- Chọn loại --</option>
+                                    <option value="Lễ Tết">Lễ Tết</option>
+                                    <option value="Sinh nhật">Sinh nhật</option>
+                                    <option value="Khai trương">Khai trương</option>
+                                    <option value="Mùa">Theo mùa</option>
+                                    <option value="Đặc biệt">Đặc biệt</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="kieuGiam">Kiểu giảm <span class="text-danger">*</span></label>
+                                <select class="form-control" id="kieuGiam" name="KieuGiam" required>
+                                    <option value="PhanTram">Phần trăm (%)</option>
+                                    <option value="SoTien">Số tiền (VNĐ)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Giá trị giảm -->
+                    <div class="form-group">
+                        <label for="giaTriGiam">Giá trị giảm <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="giaTriGiam" name="GiaTriGiam"
+                            min="0" step="0.01" placeholder="VD: 10 (nếu %), 50000 (nếu tiền)" required />
+                        <small class="form-text text-muted" id="giamHelper">Nhập số % (0-100) hoặc số tiền</small>
+                    </div>
+
+                    <!-- Row: Ngày bắt đầu và kết thúc -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ngayBatDau">Ngày bắt đầu <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="ngayBatDau" name="NgayBatDau" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ngayKetThuc">Ngày kết thúc <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="ngayKetThuc" name="NgayKetThuc" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trạng thái -->
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="trangThai" name="TrangThai" checked />
+                            <label class="custom-control-label" for="trangThai">Kích hoạt khuyến mãi</label>
+                        </div>
+                    </div>
+
+                    <!-- Hình ảnh -->
+                    <div class="form-group">
+                        <label for="hinhAnh">Hình ảnh</label>
+                        <input type="file" class="form-control-file" id="hinhAnh" name="HinhAnh" accept="image/*" />
+                        <small class="form-text text-muted">Cho phép: .jpg, .jpeg, .png, .gif (tối đa 5MB)</small>
+                        <div id="imagePreview" class="mt-2"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save mr-2"></i>Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    const BASE_URL = '@Url.Content("~/")';
+    
+    $(document).ready(function () {
+        // Initialize DataTable
+        const table = $('#kmTable').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+            },
+            order: [[4, 'desc']], // Sort by Ngày bắt đầu
+            columnDefs: [
+                { orderable: false, targets: -1 } // Disable sort on Actions column
+            ]
+        });
+
+        // Load data
+        loadKhuyenMaiList();
+
+        // Event handlers
+        $('#btnAddKM').on('click', onAddKM);
+        $('#kmForm').on('submit', onKMFormSubmit);
+        $(document).on('click', '.btn-edit-km', onEditKM);
+        $(document).on('click', '.btn-delete-km', onDeleteKM);
+
+        // Kiểu giảm change
+        $('#kieuGiam').on('change', function() {
+            const kieuGiam = $(this).val();
+            if (kieuGiam === 'PhanTram') {
+                $('#giamHelper').text('Nhập số % (0-100)');
+                $('#giaTriGiam').attr('max', '100');
+            } else {
+                $('#giamHelper').text('Nhập số tiền (VNĐ)');
+                $('#giaTriGiam').removeAttr('max');
+            }
+        });
+
+        // Preview hình ảnh
+        $('#hinhAnh').on('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    Swal.fire('Lỗi', 'Kích thước ảnh không được vượt quá 5MB', 'error');
+                    $(this).val('');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').html('<img src="' + e.target.result + '" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
+    function loadKhuyenMaiList() {
+        console.log('Loading khuyến mãi list from:', BASE_URL + 'Admin/GetKhuyenMaiList');
+        $.ajax({
+            url: BASE_URL + 'Admin/GetKhuyenMaiList',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                console.log('GetKhuyenMaiList response:', response);
+                if (response.success && response.data) {
+                    renderKhuyenMaiTable(response.data);
+                } else {
+                    console.error('Invalid response:', response);
+                    Swal.fire('Lỗi', response.message || 'Không thể tải danh sách khuyến mãi', 'error');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX error:', status, error, xhr.responseText);
+                Swal.fire('Lỗi', 'Lỗi kết nối server: ' + error, 'error');
+            }
+        });
+    }
+
+    function renderKhuyenMaiTable(data) {
+        const table = $('#kmTable').DataTable();
+        table.clear();
+
+        data.forEach(function (km) {
+            const trangThaiBadge = km.TrangThai
+                ? '<span class="badge bg-success">Đang chạy</span>'
+                : '<span class="badge bg-secondary">Tạm dừng</span>';
+
+            const giamText = km.KieuGiam === 'PhanTram'
+                ? km.GiaTriGiam + '%'
+                : formatCurrency(km.GiaTriGiam) + ' VNĐ';
+
+            const imageHtml = km.HinhAnh
+                ? '<img src="' + km.HinhAnh + '?t=' + new Date().getTime() + '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" />'
+                : '<i class="fas fa-image text-muted"></i>';
+
+            table.row.add([
+                km.MaKM,
+                '<div class="d-flex align-items-center"><div class="mr-2">' + imageHtml + '</div><div>' + km.TenKM + '</div></div>',
+                km.LoaiKM || '<span class="text-muted">-</span>',
+                '<strong class="text-danger">' + giamText + '</strong>',
+                km.NgayBatDau,
+                km.NgayKetThuc,
+                trangThaiBadge,
+                '<span class="badge bg-info">' + (km.SoLuongSanPham || 0) + '</span>',
+                `<button class="btn btn-sm btn-primary btn-edit-km" data-id="${km.MaKM}">
+                    <i class="fas fa-edit"></i> Sửa
+                </button>
+                <button class="btn btn-sm btn-danger btn-delete-km" data-id="${km.MaKM}">
+                    <i class="fas fa-trash"></i> Xóa
+                </button>`
+            ]);
+        });
+
+        table.draw();
+    }
+
+    function onAddKM(e) {
+        e.preventDefault();
+        $('#kmModalTitle').text('Tạo Khuyến mãi Mới');
+        $('#kmId').val('');
+        $('#kmForm')[0].reset();
+        $('#imagePreview').html('');
+        $('#trangThai').prop('checked', true);
+        
+        // Set ngày mặc định
+        const today = new Date().toISOString().split('T')[0];
+        $('#ngayBatDau').val(today);
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        $('#ngayKetThuc').val(nextMonth.toISOString().split('T')[0]);
+        
+        $('#kmModal').modal('show');
+    }
+
+    function onEditKM(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+
+        $.ajax({
+            url: BASE_URL + 'Admin/GetKhuyenMai',
+            type: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    const data = response.data;
+                    $('#kmModalTitle').text('Sửa Khuyến mãi');
+                    $('#kmId').val(data.MaKM);
+                    $('#tenKM').val(data.TenKM);
+                    $('#moTa').val(data.MoTa);
+                    $('#loaiKM').val(data.LoaiKM);
+                    $('#kieuGiam').val(data.KieuGiam).trigger('change');
+                    $('#giaTriGiam').val(data.GiaTriGiam);
+                    $('#ngayBatDau').val(data.NgayBatDau);
+                    $('#ngayKetThuc').val(data.NgayKetThuc);
+                    $('#trangThai').prop('checked', data.TrangThai);
+
+                    if (data.HinhAnh) {
+                        $('#imagePreview').html('<img src="' + data.HinhAnh + '?t=' + new Date().getTime() + '" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" /><br><small class="text-muted">Ảnh hiện tại</small>');
+                    } else {
+                        $('#imagePreview').html('');
+                    }
+
+                    $('#kmModal').modal('show');
+                } else {
+                    Swal.fire('Lỗi', response.message, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Lỗi', 'Không thể tải dữ liệu khuyến mãi', 'error');
+            }
+        });
+    }
+
+    function onKMFormSubmit(e) {
+        e.preventDefault();
+
+        const kmId = $('#kmId').val();
+        const url = kmId
+            ? BASE_URL + 'Admin/EditKhuyenMai'
+            : BASE_URL + 'Admin/CreateKhuyenMai';
+
+        const formData = new FormData();
+        formData.append('MaKM', kmId);
+        formData.append('TenKM', $('#tenKM').val());
+        formData.append('MoTa', $('#moTa').val());
+        formData.append('LoaiKM', $('#loaiKM').val());
+        formData.append('KieuGiam', $('#kieuGiam').val());
+        formData.append('GiaTriGiam', $('#giaTriGiam').val());
+        formData.append('NgayBatDau', $('#ngayBatDau').val());
+        formData.append('NgayKetThuc', $('#ngayKetThuc').val());
+        formData.append('TrangThai', $('#trangThai').is(':checked'));
+        formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+
+        const fileInput = document.getElementById('hinhAnh');
+        if (fileInput && fileInput.files.length > 0) {
+            formData.append('HinhAnh', fileInput.files[0]);
+        }
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire('Thành công', response.message, 'success').then(() => {
+                        $('#kmModal').modal('hide');
+                        loadKhuyenMaiList();
+                    });
+                } else {
+                    Swal.fire('Lỗi', response.message, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Lỗi', 'Lỗi hệ thống', 'error');
+            }
+        });
+    }
+
+    function onDeleteKM(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+
+        Swal.fire({
+            title: 'Xác nhận xóa',
+            text: 'Bạn chắc chắn muốn xóa khuyến mãi này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const token = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: BASE_URL + 'Admin/DeleteKhuyenMai',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire('Thành công', response.message, 'success').then(() => {
+                                loadKhuyenMaiList();
+                            });
+                        } else {
+                            Swal.fire('Lỗi', response.message, 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Lỗi', 'Lỗi hệ thống', 'error');
+                    }
+                });
+            }
+        });
+    }
+
+    function formatCurrency(number) {
+        return new Intl.NumberFormat('vi-VN').format(number);
+    }
+</script>
+}

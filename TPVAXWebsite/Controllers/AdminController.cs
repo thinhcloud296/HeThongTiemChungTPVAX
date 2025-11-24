@@ -405,18 +405,6 @@ namespace TPVAXWebsite.Controllers
                     });
                 }
 
-                // Kiểm tra ràng buộc: Có trong ChiTietGoiVaccine?
-                var hasGoiVaccine = _unitOfWork.ChiTietGoiVaccines.Any(ctgv => ctgv.MaVC == id);
-                if (hasGoiVaccine)
-                {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Không thể xóa vaccine này vì đã có trong gói vaccine",
-                        errorType = "CannotDelete"
-                    });
-                }
-
                 // Xóa VaccinePhongBenh liên quan
                 var vaccinePhongBenhs = _unitOfWork.VaccinePhongBenhs.Query()
                     .Where(vpb => vpb.MaVC == id)
@@ -647,7 +635,7 @@ namespace TPVAXWebsite.Controllers
         }
 
         // ============================================================================
-        // PAGES: Customers, Appointments, GoiVaccine, etc.
+        // PAGES: Customers, Appointments, etc.
         // ============================================================================
 
         // GET: Admin/Customers
@@ -713,63 +701,11 @@ namespace TPVAXWebsite.Controllers
             }
         }
 
-        // GET: Admin/GoiVaccine
-        public ActionResult GoiVaccine()
-        {
-            try
-            {
-                var goiVaccines = _unitOfWork.GoiVaccines.GetAll().ToList();
-                var viewModels = goiVaccines.Select(g => new AdminGoiVaccineViewModel
-                {
-                    MaGoi = g.MaGoi,
-                    TenGoi = g.TenGoi,
-                    MoTa = g.MoTa,
-                    DoiTuongApDung = g.DoiTuongApDung,
-                    GiaGoi = g.GiaGoi,
-                    TrangThai = g.TrangThai,
-                    HinhAnh = g.HinhAnh
-                }).ToList();
-
-                return View(viewModels);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Error loading vaccine packages: " + ex.Message);
-                return View(new List<AdminGoiVaccineViewModel>());
-            }
-        }
-
         // GET: Admin/InvoiceDetails
         public ActionResult InvoiceDetails(string id)
         {
             // TODO: Load chi tiết hóa đơn
             return View();
-        }
-
-        // GET: Admin/NhaCungCap
-        public ActionResult NhaCungCap()
-        {
-            try
-            {
-                var suppliers = _unitOfWork.NhaCungCaps.GetAll().ToList();
-                var viewModels = suppliers.Select(s => new AdminNhaCungCapViewModel
-                {
-                    MaNCC = s.MaNCC,
-                    TenNCC = s.TenNCC,
-                    DiaChi = s.DiaChi,
-                    Email = s.Email,
-                    SoDT = s.SoDT,
-                    TenNganHang = s.TenNganHang,
-                    SoTK = s.SoTK
-                }).ToList();
-
-                return View(viewModels);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Error loading suppliers: " + ex.Message);
-                return View(new List<AdminNhaCungCapViewModel>());
-            }
         }
 
         // GET: Admin/NhanVien
@@ -809,270 +745,369 @@ namespace TPVAXWebsite.Controllers
             return View();
         }
 
+        // GET: Admin/Reports
+        public ActionResult Reports()
+        {
+            // TODO: Hiển thị báo cáo thống kê
+            return View();
+        }
+
         // ============================================================================
-        // NHA CUNG CẤP CRUD - API Methods
+        // KHUYẾN MÃI CRUD - View Actions
         // ============================================================================
 
         /// <summary>
-        /// POST: Admin/CreateNhaCungCap - Tạo nhà cung cấp mới
+        /// GET: Admin/KhuyenMai - Trang quản lý khuyến mãi
         /// </summary>
-        [HttpPost]
-        public ActionResult CreateNhaCungCap(AdminNhaCungCapCreateEditViewModel model)
+        public ActionResult KhuyenMai()
+        {
+            return View();
+        }
+
+        // ============================================================================
+        // KHUYẾN MÃI CRUD - API Methods
+        // ============================================================================
+
+        /// <summary>
+        /// GET: Admin/GetKhuyenMaiList - Lấy danh sách khuyến mãi
+        /// </summary>
+        [HttpGet]
+        public ActionResult GetKhuyenMaiList()
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return Json(new
+                var khuyenMais = _unitOfWork.KhuyenMais.Query()
+                    .ToList()
+                    .Select(km => new
                     {
-                        success = false,
-                        message = "Dữ liệu không hợp lệ",
-                        errors = GetModelStateErrors()
-                    });
+                        km.MaKM,
+                        km.TenKM,
+                        km.MoTa,
+                        km.LoaiKM,
+                        km.KieuGiam,
+                        km.GiaTriGiam,
+                        NgayBatDau = km.NgayBatDau.ToString("dd/MM/yyyy"),
+                        NgayKetThuc = km.NgayKetThuc.ToString("dd/MM/yyyy"),
+                        km.TrangThai,
+                        // Xử lý đường dẫn hình ảnh
+                        HinhAnh = string.IsNullOrEmpty(km.HinhAnh)
+                            ? null
+                            : (km.HinhAnh.StartsWith("/") || km.HinhAnh.StartsWith("http")
+                                ? km.HinhAnh
+                                : "/Content/images/khuyenmai/" + km.HinhAnh),
+                        SoLuongSanPham = km.ChiTietKhuyenMai.Count
+                    })
+                    .OrderByDescending(km => km.NgayBatDau)
+                    .ToList();
+
+                return Json(new { success = true, data = khuyenMais }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error getting khuyến mãi list: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
+                    JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/CreateKhuyenMai - Tạo khuyến mãi mới
+        /// </summary>
+        [HttpPost]
+        public ActionResult CreateKhuyenMai(string TenKM, string MoTa, string LoaiKM, string KieuGiam, 
+            decimal GiaTriGiam, string NgayBatDau, string NgayKetThuc, bool TrangThai, HttpPostedFileBase HinhAnh)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(TenKM))
+                {
+                    return Json(new { success = false, message = "Tên khuyến mãi không được để trống" });
                 }
 
-                // Generate MaNCC
-                var lastNCC = _unitOfWork.NhaCungCaps.Query()
-                    .OrderByDescending(n => n.MaNCC)
+                // Generate MaKM
+                var lastKM = _unitOfWork.KhuyenMais.Query()
+                    .OrderByDescending(km => km.MaKM)
                     .FirstOrDefault();
 
-                string newMaNCC = GenerateNhaCungCapMa(lastNCC?.MaNCC);
+                string newMaKM = GenerateKhuyenMaiMa(lastKM?.MaKM);
 
-                // Tạo entity NhaCungCap mới
-                var nhaCungCap = new NhaCungCap
+                // Parse dates
+                DateTime batDau = DateTime.ParseExact(NgayBatDau, "yyyy-MM-dd", null);
+                DateTime ketThuc = DateTime.ParseExact(NgayKetThuc, "yyyy-MM-dd", null);
+
+                if (ketThuc < batDau)
                 {
-                    MaNCC = newMaNCC,
-                    TenNCC = model.TenNCC,
-                    DiaChi = model.DiaChi,
-                    Email = model.Email,
-                    SoDT = model.SoDT,
-                    TenNganHang = model.TenNganHang,
-                    SoTK = model.SoTK
+                    return Json(new { success = false, message = "Ngày kết thúc phải sau ngày bắt đầu" });
+                }
+
+                // Xử lý upload hình ảnh
+                string imagePath = null;
+                if (HinhAnh != null && HinhAnh.ContentLength > 0)
+                {
+                    if (HinhAnh.ContentLength > 5 * 1024 * 1024)
+                    {
+                        return Json(new { success = false, message = "Kích thước ảnh không được vượt quá 5MB" });
+                    }
+
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    var extension = System.IO.Path.GetExtension(HinhAnh.FileName).ToLower();
+                    if (!allowedExtensions.Contains(extension))
+                    {
+                        return Json(new { success = false, message = "Chỉ chấp nhận file ảnh: .jpg, .jpeg, .png, .gif" });
+                    }
+
+                    var fileName = newMaKM + extension;
+                    var uploadPath = Server.MapPath("~/Content/images/khuyenmai/");
+                    if (!System.IO.Directory.Exists(uploadPath))
+                    {
+                        System.IO.Directory.CreateDirectory(uploadPath);
+                    }
+                    var filePath = System.IO.Path.Combine(uploadPath, fileName);
+                    HinhAnh.SaveAs(filePath);
+                    imagePath = "/Content/images/khuyenmai/" + fileName;
+                }
+
+                var khuyenMai = new KhuyenMai
+                {
+                    MaKM = newMaKM,
+                    TenKM = TenKM,
+                    MoTa = MoTa,
+                    LoaiKM = LoaiKM,
+                    KieuGiam = KieuGiam,
+                    GiaTriGiam = GiaTriGiam,
+                    NgayBatDau = batDau,
+                    NgayKetThuc = ketThuc,
+                    TrangThai = TrangThai,
+                    HinhAnh = imagePath
                 };
 
-                _unitOfWork.NhaCungCaps.Add(nhaCungCap);
+                _unitOfWork.KhuyenMais.Add(khuyenMai);
                 _unitOfWork.SaveChanges();
 
                 return Json(new
                 {
                     success = true,
-                    message = "Thêm nhà cung cấp thành công!",
-                    data = new { MaNCC = newMaNCC }
+                    message = "Thêm khuyến mãi thành công!",
+                    data = new { MaKM = newMaKM }
                 });
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error creating nhà cung cấp: " + ex.Message);
-                System.Diagnostics.Debug.WriteLine("Stack trace: " + ex.StackTrace);
-                return Json(new
-                {
-                    success = false,
-                    message = "Lỗi hệ thống: " + ex.Message
-                });
+                System.Diagnostics.Debug.WriteLine("Error creating khuyến mãi: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
 
         /// <summary>
-        /// GET: Admin/GetNhaCungCap - Lấy thông tin nhà cung cấp để chỉnh sửa
+        /// GET: Admin/GetKhuyenMai - Lấy thông tin khuyến mãi để chỉnh sửa
         /// </summary>
         [HttpGet]
-        public ActionResult GetNhaCungCap(string id)
+        public ActionResult GetKhuyenMai(string id)
         {
             try
             {
-                var nhaCungCap = _unitOfWork.NhaCungCaps.GetById(id);
-                if (nhaCungCap == null)
+                var khuyenMai = _unitOfWork.KhuyenMais.Query()
+                    .Where(km => km.MaKM == id)
+                    .FirstOrDefault();
+
+                if (khuyenMai == null)
                 {
-                    return Json(new { success = false, message = "Nhà cung cấp không tồn tại" },
+                    return Json(new { success = false, message = "Khuyến mãi không tồn tại" },
                         JsonRequestBehavior.AllowGet);
                 }
 
-                var viewModel = new AdminNhaCungCapCreateEditViewModel
+                // Xử lý đường dẫn hình ảnh
+                string hinhAnhPath = null;
+                if (!string.IsNullOrEmpty(khuyenMai.HinhAnh))
                 {
-                    MaNCC = nhaCungCap.MaNCC,
-                    TenNCC = nhaCungCap.TenNCC,
-                    DiaChi = nhaCungCap.DiaChi,
-                    Email = nhaCungCap.Email,
-                    SoDT = nhaCungCap.SoDT,
-                    TenNganHang = nhaCungCap.TenNganHang,
-                    SoTK = nhaCungCap.SoTK
+                    hinhAnhPath = khuyenMai.HinhAnh.StartsWith("/") || khuyenMai.HinhAnh.StartsWith("http")
+                        ? khuyenMai.HinhAnh
+                        : "/Content/images/khuyenmai/" + khuyenMai.HinhAnh;
+                }
+
+                var viewModel = new
+                {
+                    khuyenMai.MaKM,
+                    khuyenMai.TenKM,
+                    khuyenMai.MoTa,
+                    khuyenMai.LoaiKM,
+                    khuyenMai.KieuGiam,
+                    khuyenMai.GiaTriGiam,
+                    NgayBatDau = khuyenMai.NgayBatDau.ToString("yyyy-MM-dd"),
+                    NgayKetThuc = khuyenMai.NgayKetThuc.ToString("yyyy-MM-dd"),
+                    khuyenMai.TrangThai,
+                    HinhAnh = hinhAnhPath
                 };
 
                 return Json(new { success = true, data = viewModel }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error getting nhà cung cấp: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Error getting khuyến mãi: " + ex.Message);
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
                     JsonRequestBehavior.AllowGet);
             }
         }
 
         /// <summary>
-        /// POST: Admin/EditNhaCungCap - Cập nhật nhà cung cấp
+        /// POST: Admin/EditKhuyenMai - Cập nhật khuyến mãi
         /// </summary>
         [HttpPost]
-        public ActionResult EditNhaCungCap(AdminNhaCungCapCreateEditViewModel model)
+        public ActionResult EditKhuyenMai(string MaKM, string TenKM, string MoTa, string LoaiKM, string KieuGiam,
+            decimal GiaTriGiam, string NgayBatDau, string NgayKetThuc, bool TrangThai, HttpPostedFileBase HinhAnh)
         {
             try
             {
-                if (string.IsNullOrEmpty(model.MaNCC))
+                if (string.IsNullOrEmpty(MaKM))
                 {
-                    return Json(new { success = false, message = "Mã nhà cung cấp không hợp lệ" });
+                    return Json(new { success = false, message = "Mã khuyến mãi không hợp lệ" });
                 }
 
-                var nhaCungCap = _unitOfWork.NhaCungCaps.GetById(model.MaNCC);
-                if (nhaCungCap == null)
+                var khuyenMai = _unitOfWork.KhuyenMais.GetById(MaKM);
+                if (khuyenMai == null)
                 {
-                    return Json(new { success = false, message = "Nhà cung cấp không tồn tại" });
+                    return Json(new { success = false, message = "Khuyến mãi không tồn tại" });
                 }
 
-                // Update các field
-                nhaCungCap.TenNCC = model.TenNCC;
-                nhaCungCap.DiaChi = model.DiaChi;
-                nhaCungCap.Email = model.Email;
-                nhaCungCap.SoDT = model.SoDT;
-                nhaCungCap.TenNganHang = model.TenNganHang;
-                nhaCungCap.SoTK = model.SoTK;
+                // Parse dates
+                DateTime batDau = DateTime.ParseExact(NgayBatDau, "yyyy-MM-dd", null);
+                DateTime ketThuc = DateTime.ParseExact(NgayKetThuc, "yyyy-MM-dd", null);
 
-                _unitOfWork.NhaCungCaps.Update(nhaCungCap);
+                if (ketThuc < batDau)
+                {
+                    return Json(new { success = false, message = "Ngày kết thúc phải sau ngày bắt đầu" });
+                }
+
+                // Xử lý upload hình ảnh mới
+                if (HinhAnh != null && HinhAnh.ContentLength > 0)
+                {
+                    if (HinhAnh.ContentLength > 5 * 1024 * 1024)
+                    {
+                        return Json(new { success = false, message = "Kích thước ảnh không được vượt quá 5MB" });
+                    }
+
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    var extension = System.IO.Path.GetExtension(HinhAnh.FileName).ToLower();
+                    if (!allowedExtensions.Contains(extension))
+                    {
+                        return Json(new { success = false, message = "Chỉ chấp nhận file ảnh: .jpg, .jpeg, .png, .gif" });
+                    }
+
+                    // Xóa ảnh cũ nếu có
+                    if (!string.IsNullOrEmpty(khuyenMai.HinhAnh))
+                    {
+                        var oldImagePath = Server.MapPath("~" + khuyenMai.HinhAnh);
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    var fileName = MaKM + extension;
+                    var uploadPath = Server.MapPath("~/Content/images/khuyenmai/");
+                    if (!System.IO.Directory.Exists(uploadPath))
+                    {
+                        System.IO.Directory.CreateDirectory(uploadPath);
+                    }
+                    var filePath = System.IO.Path.Combine(uploadPath, fileName);
+                    HinhAnh.SaveAs(filePath);
+                    khuyenMai.HinhAnh = "/Content/images/khuyenmai/" + fileName;
+                }
+
+                khuyenMai.TenKM = TenKM;
+                khuyenMai.MoTa = MoTa;
+                khuyenMai.LoaiKM = LoaiKM;
+                khuyenMai.KieuGiam = KieuGiam;
+                khuyenMai.GiaTriGiam = GiaTriGiam;
+                khuyenMai.NgayBatDau = batDau;
+                khuyenMai.NgayKetThuc = ketThuc;
+                khuyenMai.TrangThai = TrangThai;
+
+                _unitOfWork.KhuyenMais.Update(khuyenMai);
                 _unitOfWork.SaveChanges();
 
-                return Json(new
-                {
-                    success = true,
-                    message = "Cập nhật nhà cung cấp thành công!"
-                });
+                return Json(new { success = true, message = "Cập nhật khuyến mãi thành công!" });
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error updating nhà cung cấp: " + ex.Message);
-                return Json(new
-                {
-                    success = false,
-                    message = "Lỗi hệ thống: " + ex.Message
-                });
+                System.Diagnostics.Debug.WriteLine("Error editing khuyến mãi: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
 
         /// <summary>
-        /// POST: Admin/DeleteNhaCungCap - Xóa nhà cung cấp
+        /// POST: Admin/DeleteKhuyenMai - Xóa khuyến mãi
         /// </summary>
         [HttpPost]
-        public ActionResult DeleteNhaCungCap(string id)
+        public ActionResult DeleteKhuyenMai(string id)
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                var khuyenMai = _unitOfWork.KhuyenMais.GetById(id);
+                if (khuyenMai == null)
                 {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Mã nhà cung cấp không hợp lệ"
-                    });
+                    return Json(new { success = false, message = "Khuyến mãi không tồn tại" });
                 }
 
-                var nhaCungCap = _unitOfWork.NhaCungCaps.GetById(id);
-                if (nhaCungCap == null)
+                // Kiểm tra xem có hóa đơn nào sử dụng khuyến mãi này không
+                var hasHoaDon = _unitOfWork.HoaDons.Query()
+                    .Any(hd => hd.MaKM == id);
+
+                if (hasHoaDon)
                 {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Nhà cung cấp không tồn tại"
-                    });
+                    return Json(new { success = false, message = "Không thể xóa khuyến mãi đã được sử dụng trong hóa đơn" });
                 }
 
-                // Kiểm tra xem có PhieuNhap nào liên quan không
-                var hasPhieuNhap = _unitOfWork.PhieuNhapVaccines.Query()
-                    .Any(pn => pn.MaNCC == id);
-
-                if (hasPhieuNhap)
-                {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Không thể xóa nhà cung cấp này vì đã có phiếu nhập liên quan"
-                    });
-                }
-
-                _unitOfWork.NhaCungCaps.Remove(nhaCungCap);
-                _unitOfWork.SaveChanges();
-
-                return Json(new
-                {
-                    success = true,
-                    message = "Xóa nhà cung cấp thành công!"
-                });
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Error deleting nhà cung cấp: " + ex.Message);
-                return Json(new
-                {
-                    success = false,
-                    message = "Lỗi hệ thống: " + ex.Message
-                });
-            }
-        }
-
-        /// <summary>
-        /// GET: Admin/GetNhaCungCapList - Lấy danh sách nhà cung cấp
-        /// </summary>
-        [HttpGet]
-        public ActionResult GetNhaCungCapList()
-        {
-            try
-            {
-                var nhaCungCaps = _unitOfWork.NhaCungCaps.Query()
-                    .OrderBy(n => n.TenNCC)
-                    .Select(n => new
-                    {
-                        n.MaNCC,
-                        n.TenNCC,
-                        n.DiaChi,
-                        n.Email,
-                        n.SoDT,
-                        n.TenNganHang,
-                        n.SoTK
-                    })
+                // Xóa chi tiết khuyến mãi trước
+                var chiTiets = _unitOfWork.ChiTietKhuyenMais.Query()
+                    .Where(ct => ct.MaKM == id)
                     .ToList();
 
-                return Json(new { success = true, data = nhaCungCaps }, JsonRequestBehavior.AllowGet);
+                foreach (var ct in chiTiets)
+                {
+                    _unitOfWork.ChiTietKhuyenMais.Remove(ct);
+                }
+
+                // Xóa hình ảnh nếu có
+                if (!string.IsNullOrEmpty(khuyenMai.HinhAnh))
+                {
+                    var imagePath = Server.MapPath("~" + khuyenMai.HinhAnh);
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                }
+
+                _unitOfWork.KhuyenMais.Remove(khuyenMai);
+                _unitOfWork.SaveChanges();
+
+                return Json(new { success = true, message = "Xóa khuyến mãi thành công!" });
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error getting nhà cung cấp list: " + ex.Message);
-                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
-                    JsonRequestBehavior.AllowGet);
+                System.Diagnostics.Debug.WriteLine("Error deleting khuyến mãi: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
 
         // ============================================================================
-        // NHA CUNG CẤP CRUD - Helper methods
+        // KHUYẾN MÃI CRUD - Helper Methods
         // ============================================================================
 
-        private string GenerateNhaCungCapMa(string lastMaNCC)
+        private string GenerateKhuyenMaiMa(string lastMaKM)
         {
-            if (string.IsNullOrEmpty(lastMaNCC))
+            if (string.IsNullOrEmpty(lastMaKM))
             {
-                return "NCC0000001";
+                return "KM00000001";
             }
 
-            // Giả sử format: NCC + 7 digits (NCC0000001)
-            if (lastMaNCC.Length >= 3 && int.TryParse(lastMaNCC.Substring(3), out int number))
+            if (lastMaKM.Length >= 2 && int.TryParse(lastMaKM.Substring(2), out int number))
             {
                 number++;
-                return "NCC" + number.ToString("D7");
+                return "KM" + number.ToString("D8");
             }
 
-            return "NCC0000001";
-        }
-
-        // GET: Admin/Reports
-        public ActionResult Reports()
-        {
-            // TODO: Hiển thị báo cáo thống kê
-            return View();
+            return "KM00000001";
         }
     }
 }
