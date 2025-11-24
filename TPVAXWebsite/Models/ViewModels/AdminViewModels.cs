@@ -183,5 +183,41 @@ namespace TPVAXWebsite.Models.ViewModels
         public string Message { get; set; }
         public string ErrorType { get; set; } // "CannotDelete", "NotFound", "Error"
     }
+
+    /// <summary>
+    /// ViewModel cho tạo/sửa nhà cung cấp
+    /// </summary>
+    public class AdminNhaCungCapCreateEditViewModel
+    {
+        [StringLength(10)]
+        public string MaNCC { get; set; }
+
+        [Required(ErrorMessage = "Tên nhà cung cấp là bắt buộc")]
+        [StringLength(255, ErrorMessage = "Tên nhà cung cấp tối đa 255 ký tự")]
+        public string TenNCC { get; set; }
+
+        [StringLength(500, ErrorMessage = "Địa chỉ tối đa 500 ký tự")]
+        public string DiaChi { get; set; }
+
+        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
+        [StringLength(100)]
+        public string Email { get; set; }
+
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Số điện thoại phải là 10 chữ số")]
+        [StringLength(10)]
+        public string SoDT { get; set; }
+
+        [StringLength(100)]
+        public string TenNganHang { get; set; }
+
+        [StringLength(30)]
+        public string SoTK { get; set; }
+    }
+
+    public class NhaCungCapDeleteResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
 }
 

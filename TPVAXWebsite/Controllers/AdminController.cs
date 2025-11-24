@@ -809,6 +809,265 @@ namespace TPVAXWebsite.Controllers
             return View();
         }
 
+        // ============================================================================
+        // NHA CUNG CẤP CRUD - API Methods
+        // ============================================================================
+
+        /// <summary>
+        /// POST: Admin/CreateNhaCungCap - Tạo nhà cung cấp mới
+        /// </summary>
+        [HttpPost]
+        public ActionResult CreateNhaCungCap(AdminNhaCungCapCreateEditViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ",
+                        errors = GetModelStateErrors()
+                    });
+                }
+
+                // Generate MaNCC
+                var lastNCC = _unitOfWork.NhaCungCaps.Query()
+                    .OrderByDescending(n => n.MaNCC)
+                    .FirstOrDefault();
+
+                string newMaNCC = GenerateNhaCungCapMa(lastNCC?.MaNCC);
+
+                // Tạo entity NhaCungCap mới
+                var nhaCungCap = new NhaCungCap
+                {
+                    MaNCC = newMaNCC,
+                    TenNCC = model.TenNCC,
+                    DiaChi = model.DiaChi,
+                    Email = model.Email,
+                    SoDT = model.SoDT,
+                    TenNganHang = model.TenNganHang,
+                    SoTK = model.SoTK
+                };
+
+                _unitOfWork.NhaCungCaps.Add(nhaCungCap);
+                _unitOfWork.SaveChanges();
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Thêm nhà cung cấp thành công!",
+                    data = new { MaNCC = newMaNCC }
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error creating nhà cung cấp: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Stack trace: " + ex.StackTrace);
+                return Json(new
+                {
+                    success = false,
+                    message = "Lỗi hệ thống: " + ex.Message
+                });
+            }
+        }
+
+        /// <summary>
+        /// GET: Admin/GetNhaCungCap - Lấy thông tin nhà cung cấp để chỉnh sửa
+        /// </summary>
+        [HttpGet]
+        public ActionResult GetNhaCungCap(string id)
+        {
+            try
+            {
+                var nhaCungCap = _unitOfWork.NhaCungCaps.GetById(id);
+                if (nhaCungCap == null)
+                {
+                    return Json(new { success = false, message = "Nhà cung cấp không tồn tại" },
+                        JsonRequestBehavior.AllowGet);
+                }
+
+                var viewModel = new AdminNhaCungCapCreateEditViewModel
+                {
+                    MaNCC = nhaCungCap.MaNCC,
+                    TenNCC = nhaCungCap.TenNCC,
+                    DiaChi = nhaCungCap.DiaChi,
+                    Email = nhaCungCap.Email,
+                    SoDT = nhaCungCap.SoDT,
+                    TenNganHang = nhaCungCap.TenNganHang,
+                    SoTK = nhaCungCap.SoTK
+                };
+
+                return Json(new { success = true, data = viewModel }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error getting nhà cung cấp: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
+                    JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/EditNhaCungCap - Cập nhật nhà cung cấp
+        /// </summary>
+        [HttpPost]
+        public ActionResult EditNhaCungCap(AdminNhaCungCapCreateEditViewModel model)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(model.MaNCC))
+                {
+                    return Json(new { success = false, message = "Mã nhà cung cấp không hợp lệ" });
+                }
+
+                var nhaCungCap = _unitOfWork.NhaCungCaps.GetById(model.MaNCC);
+                if (nhaCungCap == null)
+                {
+                    return Json(new { success = false, message = "Nhà cung cấp không tồn tại" });
+                }
+
+                // Update các field
+                nhaCungCap.TenNCC = model.TenNCC;
+                nhaCungCap.DiaChi = model.DiaChi;
+                nhaCungCap.Email = model.Email;
+                nhaCungCap.SoDT = model.SoDT;
+                nhaCungCap.TenNganHang = model.TenNganHang;
+                nhaCungCap.SoTK = model.SoTK;
+
+                _unitOfWork.NhaCungCaps.Update(nhaCungCap);
+                _unitOfWork.SaveChanges();
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Cập nhật nhà cung cấp thành công!"
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error updating nhà cung cấp: " + ex.Message);
+                return Json(new
+                {
+                    success = false,
+                    message = "Lỗi hệ thống: " + ex.Message
+                });
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/DeleteNhaCungCap - Xóa nhà cung cấp
+        /// </summary>
+        [HttpPost]
+        public ActionResult DeleteNhaCungCap(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Mã nhà cung cấp không hợp lệ"
+                    });
+                }
+
+                var nhaCungCap = _unitOfWork.NhaCungCaps.GetById(id);
+                if (nhaCungCap == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Nhà cung cấp không tồn tại"
+                    });
+                }
+
+                // Kiểm tra xem có PhieuNhap nào liên quan không
+                var hasPhieuNhap = _unitOfWork.PhieuNhapVaccines.Query()
+                    .Any(pn => pn.MaNCC == id);
+
+                if (hasPhieuNhap)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Không thể xóa nhà cung cấp này vì đã có phiếu nhập liên quan"
+                    });
+                }
+
+                _unitOfWork.NhaCungCaps.Remove(nhaCungCap);
+                _unitOfWork.SaveChanges();
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Xóa nhà cung cấp thành công!"
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error deleting nhà cung cấp: " + ex.Message);
+                return Json(new
+                {
+                    success = false,
+                    message = "Lỗi hệ thống: " + ex.Message
+                });
+            }
+        }
+
+        /// <summary>
+        /// GET: Admin/GetNhaCungCapList - Lấy danh sách nhà cung cấp
+        /// </summary>
+        [HttpGet]
+        public ActionResult GetNhaCungCapList()
+        {
+            try
+            {
+                var nhaCungCaps = _unitOfWork.NhaCungCaps.Query()
+                    .OrderBy(n => n.TenNCC)
+                    .Select(n => new
+                    {
+                        n.MaNCC,
+                        n.TenNCC,
+                        n.DiaChi,
+                        n.Email,
+                        n.SoDT,
+                        n.TenNganHang,
+                        n.SoTK
+                    })
+                    .ToList();
+
+                return Json(new { success = true, data = nhaCungCaps }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error getting nhà cung cấp list: " + ex.Message);
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
+                    JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // ============================================================================
+        // NHA CUNG CẤP CRUD - Helper methods
+        // ============================================================================
+
+        private string GenerateNhaCungCapMa(string lastMaNCC)
+        {
+            if (string.IsNullOrEmpty(lastMaNCC))
+            {
+                return "NCC0000001";
+            }
+
+            // Giả sử format: NCC + 7 digits (NCC0000001)
+            if (lastMaNCC.Length >= 3 && int.TryParse(lastMaNCC.Substring(3), out int number))
+            {
+                number++;
+                return "NCC" + number.ToString("D7");
+            }
+
+            return "NCC0000001";
+        }
+
         // GET: Admin/Reports
         public ActionResult Reports()
         {
