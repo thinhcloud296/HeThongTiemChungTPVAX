@@ -720,48 +720,65 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>#HD001234</strong></td>
-                                    <td>15/10/2025</td>
-                                    <td>Vaccine HPV - Mũi 1</td>
-                                    <td><strong class="text-primary">1.750.000đ</strong></td>
-                                    <td>
-                                        <span class="badge-status badge-completed">Đã thanh toán</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#HD001235</strong></td>
-                                    <td>20/08/2025</td>
-                                    <td>Vaccine Phế cầu</td>
-                                    <td><strong class="text-primary">1.200.000đ</strong></td>
-                                    <td>
-                                        <span class="badge-status badge-completed">Đã thanh toán</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#HD001236</strong></td>
-                                    <td>25/11/2025</td>
-                                    <td>Vaccine HPV - Mũi 2</td>
-                                    <td><strong class="text-danger">1.750.000đ</strong></td>
-                                    <td>
-                                        <span class="badge-status badge-pending">Chưa thanh toán</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary">
-                                            <i class="fas fa-credit-card me-1"></i>Thanh toán
-                                        </button>
-                                    </td>
-                                </tr>
+                                @if (Model.HoaDons != null && Model.HoaDons.Any())
+                                {
+                                    foreach (var hd in Model.HoaDons)
+                                    {
+                                        <tr>
+                                            <td><strong>@hd.MaHD</strong></td>
+                                            <td>@hd.NgayLap.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                @if (hd.ChiTietHoaDon != null && hd.ChiTietHoaDon.Any())
+                                                {
+                                                    var firstItem = hd.ChiTietHoaDon.First();
+                                                    @(firstItem.LoaiSanPham == "VACCINE" ? "Vaccine" : "Gói vaccine")
+                                                    @if (hd.ChiTietHoaDon.Count > 1)
+                                                    {
+                                                        <text> và @(hd.ChiTietHoaDon.Count - 1) sản phẩm khác</text>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <text>Chi tiết hóa đơn</text>
+                                                }
+                                            </td>
+                                            <td><strong class="@(hd.TrangThai == true ? "text-primary" : "text-danger")">@hd.TongTien.ToString("N0")đ</strong></td>
+                                            <td>
+                                                @if (hd.TrangThai == true)
+                                                {
+                                                    <span class="badge-status badge-completed">Đã thanh toán</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge-status badge-pending">Chưa thanh toán</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (hd.TrangThai == true)
+                                                {
+                                                    <a href="@Url.Action("ChiTietHoaDon", "Account", new { maHD = hd.MaHD })" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-sm btn-primary">
+                                                        <i class="fas fa-credit-card me-1"></i>Thanh toán
+                                                    </button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted py-4">
+                                            <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                                            Chưa có hóa đơn nào
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -776,47 +793,60 @@
                     </h3>
 
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="card border-primary">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <h5 class="text-primary mb-2">Giảm 100.000đ</h5>
-                                            <p class="mb-2 small">Cho đơn hàng từ 1.000.000đ</p>
-                                            <p class="mb-0 text-muted small">
-                                                <i class="fas fa-clock me-1"></i>HSD: 31/12/2025
-                                            </p>
-                                        </div>
-                                        <span class="badge bg-success">Có thể dùng</span>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm mt-3 w-100">
-                                        <i class="fas fa-copy me-1"></i>Sao chép mã
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        @if (Model.KhuyenMais != null && Model.KhuyenMais.Any())
+                        {
+                            foreach (var km in Model.KhuyenMais)
+                            {
+                                var isExpiringSoon = (km.NgayKetThuc - DateTime.Now).TotalDays <= 7;
+                                var borderColor = isExpiringSoon ? "border-warning" : "border-primary";
+                                var textColor = isExpiringSoon ? "text-warning" : "text-primary";
+                                var btnColor = isExpiringSoon ? "btn-warning" : "btn-primary";
 
-                        <div class="col-md-6 mb-3">
-                            <div class="card border-warning">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <h5 class="text-warning mb-2">Giảm 15%</h5>
-                                            <p class="mb-2 small">
-                                                Cho gói vaccine từ 5.000.000đ
-                                            </p>
-                                            <p class="mb-0 text-muted small">
-                                                <i class="fas fa-clock me-1"></i>HSD: 25/11/2025
-                                            </p>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card @borderColor">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h5 class="@textColor mb-2">
+                                                        @if (km.KieuGiam == "PhanTram")
+                                                        {
+                                                            <text>Giảm @km.GiaTriGiam%</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>Giảm @km.GiaTriGiam.ToString("N0")đ</text>
+                                                        }
+                                                    </h5>
+                                                    <p class="mb-2 small">@km.TenKM</p>
+                                                    <p class="mb-0 text-muted small">
+                                                        <i class="fas fa-clock me-1"></i>HSD: @km.NgayKetThuc.ToString("dd/MM/yyyy")
+                                                    </p>
+                                                    @if (isExpiringSoon)
+                                                    {
+                                                        <span class="badge bg-warning text-dark mt-2">
+                                                            <i class="fas fa-exclamation-triangle"></i> Sắp hết hạn
+                                                        </span>
+                                                    }
+                                                </div>
+                                                <span class="badge bg-success">Có thể dùng</span>
+                                            </div>
+                                            <button class="btn @btnColor btn-sm mt-3 w-100" onclick="copyVoucherCode('@km.MaKM')">
+                                                <i class="fas fa-copy me-1"></i>Sao chép mã: @km.MaKM
+                                            </button>
                                         </div>
-                                        <span class="badge bg-success">Có thể dùng</span>
                                     </div>
-                                    <button class="btn btn-warning btn-sm mt-3 w-100">
-                                        <i class="fas fa-copy me-1"></i>Sao chép mã
-                                    </button>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Hiện tại không có khuyến mãi nào. Vui lòng quay lại sau!
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
 
                     <!-- Loyalty Points -->
@@ -1252,6 +1282,35 @@
                 }
             });
         }
+        // Copy voucher code
+        function copyVoucherCode(code) {
+            navigator.clipboard.writeText(code).then(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã sao chép!',
+                    text: 'Mã khuyến mãi: ' + code,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }).catch(function() {
+                // Fallback for older browsers
+                var textArea = document.createElement("textarea");
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã sao chép!',
+                    text: 'Mã khuyến mãi: ' + code,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const activeTab = document.querySelector(".nav-link.active");
             if (activeTab) {

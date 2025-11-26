@@ -102,7 +102,14 @@ namespace TPVAXWebsite.Controllers
 
             try
             {
-                // Kiểm tra trùng lặp TRƯỚC KHI bắt đầu transaction
+                // B2: Dò CCCD trong bảng KhachHang - kiểm tra tài khoản đã tồn tại chưa
+                if (_context.KhachHangs.Any(k => k.CCCD == model.CCCD))
+                {
+                    ModelState.AddModelError("CCCD", "CCCD này đã được đăng ký tài khoản. Vui lòng đăng nhập.");
+                    return View(model);
+                }
+
+                // Kiểm tra SĐT và Email trùng
                 if (_context.KhachHangs.Any(k => k.SoDT == model.SoDT))
                 {
                     ModelState.AddModelError("SoDT", "Số điện thoại này đã được đăng ký.");
@@ -116,12 +123,9 @@ namespace TPVAXWebsite.Controllers
                     return View(model);
                 }
 
-                if (_context.KhachHangs.Any(k => k.CCCD == model.CCCD))
-                {
-                    ModelState.AddModelError("CCCD", "CCCD này đã được đăng ký.");
-                    return View(model);
-                }
-
+                // B2: Dò CCCD trong bảng HoSoTiemChung - kiểm tra hồ sơ đã có sẵn chưa
+                var hoSoCu = _context.HoSoTiemChungs.FirstOrDefault(h => h.CCCD == model.CCCD);
+                
                 _uow.BeginTransaction();
 
                 string maTK;
@@ -157,19 +161,22 @@ namespace TPVAXWebsite.Controllers
                     MaTK = taiKhoan.MaTK
                 };
                 _uow.KhachHangs.Add(khachHang);
+                _uow.SaveChanges(); // Save KhachHang
 
-                var hoSoCu = _uow.HoSoTiemChungs
-                    .FirstOrDefault(h => h.CCCD == model.CCCD);
-
+                // Xử lý Hồ sơ tiêm chủng và Liên kết
                 string maHSTC_CanLienKet;
                 bool isNewProfile = false;
+                string messageDetail = "";
 
                 if (hoSoCu != null)
                 {
+                    // TRƯỜNG HỢP ĐẶC BIỆT: Hồ sơ đã tồn tại, tự động liên kết
                     maHSTC_CanLienKet = hoSoCu.MaHSTC;
+                    messageDetail = $"Hệ thống đã tìm thấy và tự động liên kết với hồ sơ tiêm chủng có sẵn (Họ tên: {hoSoCu.HoTen}).";
                 }
                 else
                 {
+                    // TRƯỜNG HỢP 1: Tạo hồ sơ tiêm chủng mới
                     maHSTC_CanLienKet = TPVAXWebsite.Common.KeyGenerator.GenMaHSTC(model.CCCD);
                     var hoSoMoi = new HoSoTiemChung
                     {
@@ -181,9 +188,12 @@ namespace TPVAXWebsite.Controllers
                         TrangThai = true
                     };
                     _uow.HoSoTiemChungs.Add(hoSoMoi);
+                    _uow.SaveChanges(); // Save HoSoTiemChung
                     isNewProfile = true;
+                    messageDetail = "Hệ thống đã tạo hồ sơ tiêm chủng mới cho bạn.";
                 }
 
+                // Tạo liên kết giữa KhachHang và HoSoTiemChung
                 string maLK;
                 do
                 {
@@ -195,16 +205,15 @@ namespace TPVAXWebsite.Controllers
                     MaLK = maLK,
                     MaKH = maKH,
                     MaHSTC = maHSTC_CanLienKet,
-                    VaiTro = "Bản thân",
+                    VaiTro = "Bản thân", // Khi đăng ký, mặc định là "Bản thân"
                     NgayLienKet = DateTime.Now
                 };
                 _uow.LienKetHoSos.Add(lienKet);
+                _uow.SaveChanges(); // Save LienKetHoSo
 
                 _uow.Commit();
 
-                TempData["SuccessMessage"] = "Đăng ký thành công! " +
-                    (isNewProfile ? "Hệ thống đã tạo hồ sơ tiêm chủng mới cho bạn." 
-                                  : "Hệ thống đã tìm thấy và liên kết hồ sơ tiêm chủng cũ của bạn.");
+                TempData["SuccessMessage"] = $"Đăng ký thành công! {messageDetail}";
 
                 return RedirectToAction("Login");
             }
@@ -280,6 +289,20 @@ namespace TPVAXWebsite.Controllers
 
             ViewBag.VaiTroChinh = lienKetList.FirstOrDefault()?.VaiTro ?? "Bản thân";
 
+            // Load hóa đơn
+            var hoaDons = _context.HoaDons
+                .Where(hd => hd.MaKH == maKH)
+                .OrderByDescending(hd => hd.NgayLap)
+                .Take(10)
+                .ToList();
+
+            // Load khuyến mãi đang hoạt động
+            var khuyenMais = _context.KhuyenMais
+                .Where(km => km.NgayBatDau <= DateTime.Now && km.NgayKetThuc >= DateTime.Now)
+                .OrderByDescending(km => km.NgayBatDau)
+                .Take(5)
+                .ToList();
+
             var model = new DashboardViewModel
             {
                 KhachHang = kh,
@@ -287,7 +310,9 @@ namespace TPVAXWebsite.Controllers
                 SoMuiHoanThanh = lichDaTiem.Count,
                 LichTiems = lichDaTiem,
                 LichHenSapToi = lichSapToi,
-                LichDaHuy = lichDaHuy
+                LichDaHuy = lichDaHuy,
+                HoaDons = hoaDons,
+                KhuyenMais = khuyenMais
             };
 
             return View(model);
