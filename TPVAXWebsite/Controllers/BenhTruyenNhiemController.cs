@@ -1,17 +1,37 @@
+using System.Linq;
 using System.Web.Mvc;
+using TPVAXWebsite.Services;
 
 namespace TPVAXWebsite.Controllers
 {
     /// <summary>
-    /// Controller xử lý thông tin Bệnh truyền nhiễm
+    /// Controller xử lý trang Bệnh truyền nhiễm
     /// </summary>
     public class BenhTruyenNhiemController : Controller
     {
-        // GET: BenhTruyenNhiem/Index
-        public ActionResult Index(string filter = null)
+        private readonly BaiVietService _service = new BaiVietService();
+
+        public ActionResult Index()
         {
-            // TODO: Load danh sách bệnh truyền nhiễm
-            return View();
+            var ds = _service.LayTheoDanhMuc("Bệnh truyền nhiễm");
+            return View(ds);
         }
+
+        public ActionResult ChiTiet(int id)
+        {
+            var bv = _service.LayChiTiet(id);
+            if (bv == null) return HttpNotFound();
+
+            var lienQuan = _service.LayTheoDanhMuc("Bệnh truyền nhiễm")
+                                   .Where(x => x.Id != id)
+                                   .OrderByDescending(x => x.NgayDang)
+                                   .Take(5)
+                                   .ToList();
+
+            ViewBag.LienQuan = lienQuan;
+
+            return View(bv);
+        }
+
     }
 }
