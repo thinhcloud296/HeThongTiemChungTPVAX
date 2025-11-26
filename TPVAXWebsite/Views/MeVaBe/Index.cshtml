@@ -1,171 +1,32 @@
-﻿@{
+@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
+
+@{
     ViewBag.Title = "Mẹ Và Bé - Kiến Thức Tiêm Chủng";
 }
 
-@section Styles {
-<style>
-.mvb-hero {
-    /* Đã đồng bộ với trang Vắc xin */
-    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
-    padding: 60px 0;
-    color: white;
-    text-align: center;
-    margin-bottom: 40px;
+@functions {
+    public string GetTagGroup(string tag)
+    {
+        if (string.IsNullOrEmpty(tag)) return "article";
+
+        var lower = tag.ToLower();
+        if (lower.Contains("mang thai")) return "pregnancy";
+        if (lower.Contains("sau sinh") || lower.Contains("nuôi con")) return "postpartum";
+        return "article";
+    }
 }
 
-.category-filter-btn {
-    background: white;
-    border: 2px solid #dee2e6;
-    padding: 12px 25px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    margin: 5px;
-}
-
-.category-filter-btn:hover {
-    border-color: #0077b6;
-    transform: translateY(-2px);
-    /* Đã sửa: Đổi đổ bóng từ Hồng sang Xanh dương đậm */
-    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.2); 
-}
-
-.category-filter-btn.active {
-    /* Đã đồng bộ với trang Vắc xin */
-    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%); /* Thay #0077b6 100% bằng #00b4d8 để đồng bộ với hero */
-    color: white;
-    border-color: #0077b6;
-}
-
-.search-box-modern input {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid #dee2e6;
-    border-radius: 50px;
-    font-size: 1rem;
-}
-
-.search-box-modern input:focus {
-    outline: none;
-    border-color: #0077b6;
-    /* Đã sửa: Đổi đổ bóng từ Hồng sang Xanh dương đậm */
-    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
-}
-
-.article-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.article-card:hover {
-    transform: translateY(-10px);
-    /* Đã sửa: Đổi đổ bóng từ Hồng sang Xanh dương sáng */
-    box-shadow: 0 15px 40px rgba(0, 180, 216, 0.25); 
-}
-
-.article-image-wrapper {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-}
-
-.article-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.article-category-badge {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    /* Đã sửa: Đổi màu nền từ Hồng sang Xanh dương đậm */
-    background: rgba(0, 119, 182, 0.9); 
-    color: white;
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.article-body {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.article-title-medium {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 10px;
-    line-height: 1.4;
-}
-
-.article-description {
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 15px;
-    flex: 1;
-}
-
-.article-link {
-    color: #0077b6;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: auto;
-}
-
-.article-link:hover {
-    /* Đã sửa: Đồng bộ hover với màu xanh dương sáng */
-    color: #00b4d8; 
-}
-
-.article-meta-small {
-    font-size: 0.85rem;
-    color: #999;
-}
-
-.d-none {
-    display: none !important;
-}
-
-/* Kiểu dáng cho Pagination */
-.pagination .page-item .page-link {
-    color: #0077b6;
-    border-color: #0077b6;
-}
-
-.pagination .page-item.active .page-link {
-    background-color: #0077b6;
-    border-color: #0077b6;
-    color: white;
-}
-</style>
-}
-
-<div class="mvb-hero">
-    <div class="container">
-        <h1 class="display-4 fw-bold mb-3">👶 MẸ VÀ BÉ</h1>
-        <p class="lead">Cùng TPVAX tìm hiểu các thông tin hữu ích về sức khỏe, chăm sóc và tiêm chủng cho mẹ và bé</p>
+<!-- Hero banner -->
+<div class="mvb-hero bg-light py-5 border-bottom">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold text-primary mb-3">👶 MẸ VÀ BÉ</h1>
+        <p class="lead text-dark">Cùng TPVAX tìm hiểu các thông tin hữu ích về sức khỏe, chăm sóc và tiêm chủng cho mẹ và bé</p>
     </div>
 </div>
 
+
 <main class="container my-5">
+    <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">🏠 Trang chủ</a></li>
@@ -174,388 +35,179 @@
         </ol>
     </nav>
 
-    <div class="mb-5">
-        <div class="text-center">
-            <button class="category-filter-btn active" data-filter="all">
-                <span>📚 Tất cả</span>
-            </button>
-            <button class="category-filter-btn" data-filter="pregnancy">
-                <span>🤰 Chuẩn bị mang thai</span>
-            </button>
-            <button class="category-filter-btn" data-filter="postpartum">
-                <span>👶 Sau sinh & Nuôi con</span>
-            </button>
-            <button class="category-filter-btn" data-filter="article">
-                <span>📝 Bài viết thông tin</span>
-            </button>
+    <!-- Bộ lọc danh mục -->
+    <div class="mb-5 text-center">
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+            <button class="category-filter-btn active" data-filter="all"><span>📚 Tất cả</span></button>
+            <button class="category-filter-btn" data-filter="pregnancy"><span>🤰 Chuẩn bị mang thai</span></button>
+            <button class="category-filter-btn" data-filter="postpartum"><span>👶 Sau sinh & Nuôi con</span></button>
+            <button class="category-filter-btn" data-filter="article"><span>📝 Bài viết thông tin</span></button>
         </div>
     </div>
 
+    <!-- Ô tìm kiếm -->
     <div class="mb-5">
         <div class="search-box-modern">
-            <input 
-                type="text" 
-                id="articleSearchInput"
-                class="form-control form-control-lg rounded-pill" 
-                placeholder="🔍 Tìm kiếm bài viết về mẹ và bé..."
-            />
+            <input type="text" id="articleSearchInput" class="form-control form-control-lg rounded-pill"
+                   placeholder="🔍 Tìm kiếm bài viết về mẹ và bé..." />
         </div>
     </div>
 
+    <!-- Thông báo không tìm thấy -->
     <div id="noResultsMessage" class="alert alert-info text-center d-none">
         <h5>🔍 Không tìm thấy bài viết phù hợp</h5>
         <p class="mb-0">Vui lòng thử lại với từ khóa khác hoặc chọn danh mục khác.</p>
     </div>
 
+    <!-- Danh sách bài viết -->
     <div class="row g-4 article-container">
-        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="mang thai ngoài tử cung kinh nguyệt dấu hiệu">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb1.png")" class="img-fluid" alt="Mang thai ngoài tử cung" />
-                    <div class="article-category-badge">🤰 Mang thai</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 25/10/2025</span> <span class="ms-3">👁️ 2.1K</span>
+        @foreach (var article in Model)
+        {
+            var tagGroup = GetTagGroup(article.Tag);
+            <div class="col-lg-4 col-md-6 article-item" data-tags="@tagGroup" data-keywords="@article.Tag.ToLower()">
+                <article class="article-card">
+                    <div class="article-image-wrapper">
+                        <img src="@Url.Content("~/Content/Images/MeVaBe/" + (article.HinhAnh ?? "default.jpg"))"
+                             class="img-fluid" alt="@article.TieuDe" />
+                        <div class="article-category-badge">@article.DanhMuc</div>
                     </div>
-                    <h3 class="article-title-medium">Mang thai ngoài tử cung có kinh nguyệt không?</h3>
-                    <p class="article-description">Tìm hiểu về hiện tượng mang thai ngoài tử cung, các dấu hiệu nhận biết sớm...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
+                    <div class="article-body">
+                        <div class="article-meta-small mb-2">
+                            <span>📅 @article.NgayDang.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <h3 class="article-title-medium">@article.TieuDe</h3>
+                        <p class="article-description">@article.TomTat</p>
 
-        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="nguyên tắc kiêng cữ mổ phục hồi">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb2.png")" class="img-fluid" alt="Nguyên tắc kiêng cữ" />
-                    <div class="article-category-badge">🏥 Chăm sóc</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 24/10/2025</span> <span class="ms-3">👁️ 1.8K</span>
-                    </div>
-                    <h3 class="article-title-medium">Nguyên tắc kiêng cữ sau mổ thai ngoài tử cung</h3>
-                    <p class="article-description">Hướng dẫn chế độ ăn uống, sinh hoạt sau phẫu thuật để phục hồi tốt...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
+                        @if (!string.IsNullOrEmpty(article.Tag))
+                        {
+                            var tags = article.Tag.Split(',').Select(t => t.Trim()).ToList();
+                            <div class="article-tags mt-2">
+                                @foreach (var tag in tags)
+                                {
+                                    <span class="tag-badge">@tag</span>
+                                }
+                            </div>
+                        }
 
-        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="mổ nội soi thai ngoài">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb3.png")" class="img-fluid" alt="Mổ nội soi" />
-                    <div class="article-category-badge">⚕️ Y tế</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 23/10/2025</span> <span class="ms-3">👁️ 1.5K</span>
+                        <a href="@Url.Action("ChiTiet", "MeVaBe", new { id = article.Id })" class="article-link">Xem chi tiết →</a>
                     </div>
-                    <h3 class="article-title-medium">Mổ nội soi thai ngoài tử cung là gì?</h3>
-                    <p class="article-description">Thông tin về phương pháp mổ nội soi, quy trình và ưu điểm...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="dấu hiệu tự tiêu thai">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb4.png")" class="img-fluid" alt="Dấu hiệu tự tiêu" />
-                    <div class="article-category-badge">🩺 Triệu chứng</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 22/10/2025</span> <span class="ms-3">👁️ 1.9K</span>
-                    </div>
-                    <h3 class="article-title-medium">Dấu hiệu thai ngoài tử cung tự tiêu</h3>
-                    <p class="article-description">Nhận biết các dấu hiệu thai tự tiêu và cách theo dõi...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="thai ngoài tử cung vỡ tuần">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb5.png")" class="img-fluid" alt="Thai ngoài tử cung" />
-                    <div class="article-category-badge">⚠️ Cảnh báo</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 21/10/2025</span> <span class="ms-3">👁️ 2.3K</span>
-                    </div>
-                    <h3 class="article-title-medium">Thai ngoài tử cung mấy tuần thì vỡ?</h3>
-                    <p class="article-description">Thông tin về nguy cơ vỡ thai và cách phòng tránh biến chứng...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="vỡ ối sinh dấu hiệu">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb6.png")" class="img-fluid" alt="Vỡ ối" />
-                    <div class="article-category-badge">🤱 Sinh nở</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 20/10/2025</span> <span class="ms-3">👁️ 3.1K</span>
-                    </div>
-                    <h3 class="article-title-medium">Vỡ ối bao lâu thì sinh?</h3>
-                    <p class="article-description">Hướng dẫn nhận biết vỡ ối và những việc cần làm ngay...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="trẻ phát ban không sốt chăm sóc">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb7.png")" class="img-fluid" alt="Trẻ phát ban" />
-                    <div class="article-category-badge">👶 Chăm bé</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 19/10/2025</span> <span class="ms-3">👁️ 2.7K</span>
-                    </div>
-                    <h3 class="article-title-medium">Trẻ bị phát ban nhưng không sốt</h3>
-                    <p class="article-description">Phân biệt các loại phát ban ở trẻ và cách xử lý đúng cách...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="dạy trẻ tập nói phát triển">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb8.png")" class="img-fluid" alt="Dạy trẻ tập nói" />
-                    <div class="article-category-badge">🗣️ Phát triển</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 18/10/2025</span> <span class="ms-3">👁️ 3.5K</span>
-                    </div>
-                    <h3 class="article-title-medium">Hướng dẫn dạy trẻ tập nói hiệu quả</h3>
-                    <p class="article-description">Phương pháp kích thích phát triển ngôn ngữ cho trẻ 0-3 tuổi...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="pregnancy" data-keywords="gò sinh lý chuyển dạ thai máy">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb9.png")" class="img-fluid" alt="Gò sinh lý" />
-                    <div class="article-category-badge">🤰 Mang thai</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 17/10/2025</span> <span class="ms-3">👁️ 2.9K</span>
-                    </div>
-                    <h3 class="article-title-medium">Phân biệt cơn gò sinh lý và gò chuyển dạ</h3>
-                    <p class="article-description">Nhận biết chính xác các loại cơn gò để xử lý đúng cách...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="postpartum" data-keywords="vaccine trẻ sơ sinh lịch tiêm">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb10.png")" class="img-fluid" alt="Lịch tiêm vaccine" />
-                    <div class="article-category-badge">💉 Vaccine</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 15/10/2025</span> <span class="ms-3">👁️ 4.8K</span>
-                    </div>
-                    <h3 class="article-title-medium">Lịch tiêm chủng cho trẻ 0-24 tháng tuổi</h3>
-                    <p class="article-description">Cập nhật lịch tiêm vaccine mới nhất theo Bộ Y Tế...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="article" data-keywords="dinh dưỡng mẹ bầu thai nhi">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/MeVaBe/mvb11.png")" class="img-fluid" alt="Dinh dưỡng mẹ bầu" />
-                    <div class="article-category-badge">🥗 Dinh dưỡng</div>
-                </div>
-                <div class="article-body">
-                    <div class="article-meta-small mb-2">
-                        <span>📅 12/10/2025</span> <span class="ms-3">👁️ 5.2K</span>
-                    </div>
-                    <h3 class="article-title-medium">Chế độ dinh dưỡng cho mẹ bầu</h3>
-                    <p class="article-description">Hướng dẫn dinh dưỡng theo từng giai đoạn thai kỳ...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-        
+                </article>
+            </div>
+        }
     </div>
 
+    <!-- Phân trang -->
     <div class="d-flex justify-content-center mt-4">
-        <nav>
-            <ul id="pagination" class="pagination"></ul>
-        </nav>
+        <nav><ul id="pagination" class="pagination"></ul></nav>
     </div>
 </main>
 
+@section Styles {
+    <style>
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag-badge {
+            background-color: #e0f7fa;
+            color: #0077b6;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+    </style>
+}
+
 @section Scripts {
-<script>
-// --- LOGIC PHÂN TRANG VÀ LỌC/TÌM KIẾM ---
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterBtns = document.querySelectorAll('.category-filter-btn');
+            const articleItems = document.querySelectorAll('.article-item');
+            const searchInput = document.getElementById('articleSearchInput');
+            const noResultsMsg = document.getElementById('noResultsMessage');
+            const pagination = document.getElementById('pagination');
+            const itemsPerPage = 6;
+            let currentPage = 1;
 
-document.addEventListener('DOMContentLoaded', function() {
-    const filterBtns = document.querySelectorAll('.category-filter-btn');
-    const articleItems = document.querySelectorAll('.article-item');
-    const searchInput = document.getElementById('articleSearchInput');
-    const noResultsMsg = document.getElementById('noResultsMessage');
+            function getVisibleArticles() {
+                const activeFilter = document.querySelector('.category-filter-btn.active').dataset.filter;
+                const searchTerm = searchInput.value.toLowerCase();
 
-    // Cài đặt Phân trang
-    const itemsPerPage = 6; // số bài viết mỗi trang
-    const pagination = document.getElementById('pagination');
-    let currentPage = 1;
+                return [...articleItems].filter(item => {
+                    const tags = item.dataset.tags?.toLowerCase() || "";
+                    const keywords = item.dataset.keywords?.toLowerCase() || "";
+                    const text = item.textContent.toLowerCase();
 
-    // Lấy tất cả bài viết đang hiển thị (sau khi lọc/tìm kiếm)
-    function getVisibleArticles() {
-        // Lấy tất cả bài viết và lọc ra những bài không có style display="none"
-        // Dựa vào logic lọc của filterArticles() bên dưới
-        return [...document.querySelectorAll('.article-item')].filter(item => {
-            const currentCategory = document.querySelector('.category-filter-btn.active').dataset.filter;
-            const currentSearchTerm = searchInput.value.toLowerCase();
+                    const matchCategory = activeFilter === 'all' || tags.includes(activeFilter);
+                    const matchSearch = searchTerm === '' || keywords.includes(searchTerm) || text.includes(searchTerm);
 
-            const tags = item.dataset.tags;
-            const keywords = item.dataset.keywords.toLowerCase();
-            const text = item.textContent.toLowerCase();
-
-            const matchCategory = currentCategory === 'all' || tags.includes(currentCategory);
-            const matchSearch = currentSearchTerm === '' || keywords.includes(currentSearchTerm) || text.includes(currentSearchTerm);
-
-            return matchCategory && matchSearch;
-        });
-    }
-
-    // Hiển thị bài theo trang hiện tại
-    function showPage() {
-        const visibleItems = getVisibleArticles();
-        const totalItems = visibleItems.length;
-
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-
-        // Chỉ hiển thị các bài viết trên trang hiện tại
-        articleItems.forEach(item => {
-            // Ẩn tất cả bài viết trước
-            item.style.display = "none";
-        });
-        
-        visibleItems.forEach((item, index) => {
-            if (index >= start && index < end) {
-                item.style.display = "block";
+                    return matchCategory && matchSearch;
+                });
             }
-        });
 
-        renderPagination(totalItems);
-    }
+            function showPage() {
+                const visibleItems = getVisibleArticles();
+                const totalItems = visibleItems.length;
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
 
-    // Tạo thanh pagination
-    function renderPagination(totalItems) {
-        pagination.innerHTML = "";
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
+                articleItems.forEach(item => item.style.display = 'none');
+                visibleItems.forEach((item, index) => {
+                    if (index >= start && index < end) {
+                        item.style.display = 'block';
+                    }
+                });
 
-        if (totalPages <= 1) return;
+                renderPagination(totalItems);
+                noResultsMsg.classList.toggle('d-none', visibleItems.length > 0);
+            }
 
-        // Tạo nút trang
-        for (let i = 1; i <= totalPages; i++) {
-            let li = document.createElement("li");
-            li.classList.add("page-item");
-            if (i === currentPage) li.classList.add("active");
+            function renderPagination(totalItems) {
+                pagination.innerHTML = '';
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                if (totalPages <= 1) return;
 
-            let a = document.createElement("a");
-            a.classList.add("page-link");
-            a.href = "#";
-            a.innerText = i;
+                for (let i = 1; i <= totalPages; i++) {
+                    const li = document.createElement('li');
+                    li.classList.add('page-item');
+                    if (i === currentPage) li.classList.add('active');
 
-            a.addEventListener("click", function (e) {
-                e.preventDefault();
-                currentPage = i;
-                showPage(); // Cập nhật bài viết trên trang
+                    const a = document.createElement('a');
+                    a.classList.add('page-link');
+                    a.href = '#';
+                    a.innerText = i;
+                    a.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        showPage();
+                    });
+
+                    li.appendChild(a);
+                    pagination.appendChild(li);
+                }
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    searchInput.value = '';
+                    currentPage = 1;
+                    showPage();
+                });
             });
 
-            li.appendChild(a);
-            pagination.appendChild(li);
-        }
-    }
-    // ---------------------------
-    // LOGIC LỌC/TÌM KIẾM
-    // ---------------------------
-    
-    // Gắn sự kiện cho nút lọc
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            const filter = this.dataset.filter;
-            searchInput.value = '';
-            
-            // Gọi hàm lọc mới để xử lý phân trang
-            filterArticles(filter, '');
+            searchInput.addEventListener('input', function () {
+                currentPage = 1;
+                showPage();
+            });
+
+            showPage(); // Khởi động lần đầu
         });
-    });
-
-    // Gắn sự kiện cho ô tìm kiếm
-    searchInput.addEventListener('input', function() {
-        const activeFilter = document.querySelector('.category-filter-btn.active').dataset.filter;
-        
-        // Gọi hàm lọc mới để xử lý phân trang
-        filterArticles(activeFilter, this.value.toLowerCase());
-    });
-
-    // Hàm lọc chính, được CẬP NHẬT để tích hợp Phân trang
-    window.filterArticles = function (category, searchTerm) {
-        let visibleCount = 0;
-
-        articleItems.forEach(item => {
-            const tags = item.dataset.tags;
-            const keywords = item.dataset.keywords.toLowerCase();
-            const text = item.textContent.toLowerCase();
-
-            const matchCategory = category === 'all' || tags.includes(category);
-            const matchSearch = searchTerm === '' || keywords.includes(searchTerm) || text.includes(searchTerm);
-
-            // Ghi đè style.display để ẩn những bài KHÔNG khớp với tiêu chí lọc/tìm kiếm
-            // Sau đó showPage() sẽ chịu trách nhiệm ẩn/hiện các bài viết theo trang.
-            if (matchCategory && matchSearch) {
-                // Đặt style.display về 'initial' hoặc 'block' trước khi showPage() chạy
-                // Tuy nhiên, việc tính toán `getVisibleArticles` sẽ dựa trên logic này.
-                // Để đơn giản, ta sẽ chỉ ẩn những cái không khớp.
-                item.style.display = 'block'; // Tạm thời để nó tính là "có thể nhìn thấy"
-                visibleCount++;
-            } else {
-                item.style.display = 'none';
-            }
-        });
-
-        if (visibleCount === 0) {
-            noResultsMsg.classList.remove('d-none');
-        } else {
-            noResultsMsg.classList.add('d-none');
-        }
-
-        // --- BƯỚC TÍCH HỢP PHÂN TRANG ---
-        currentPage = 1; // reset về trang 1 khi lọc/tìm
-        showPage(); // áp dụng phân trang cho các bài viết đã được lọc
-    }
-    
-    // Lần đầu load trang
-    // Vì hàm filterArticles đã bị ghi đè, ta cần đảm bảo nó chạy để hiển thị trang 1
-    const initialFilter = document.querySelector('.category-filter-btn.active').dataset.filter;
-    window.filterArticles(initialFilter, '');
-
-});
-</script>
+    </script>
 }
