@@ -6,7 +6,7 @@ namespace TPVAXWebsite.Models.ViewModels
     {
         [Required(ErrorMessage = "Vui lòng nhập email hoặc số điện thoại")]
         [Display(Name = "Email hoặc SĐT")]
-        public string Identifier { get; set; } // dùng chung cho email hoặc SĐT
+        public string TenDangNhap { get; set; } // dùng chung cho email hoặc SĐT
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]

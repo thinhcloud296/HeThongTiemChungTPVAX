@@ -165,8 +165,7 @@ namespace TPVAXWebsite.Controllers
 
                 // Xử lý Hồ sơ tiêm chủng và Liên kết
                 string maHSTC_CanLienKet;
-                bool isNewProfile = false;
-                string messageDetail = "";
+                string messageDetail;
 
                 if (hoSoCu != null)
                 {
@@ -189,7 +188,6 @@ namespace TPVAXWebsite.Controllers
                     };
                     _uow.HoSoTiemChungs.Add(hoSoMoi);
                     _uow.SaveChanges(); // Save HoSoTiemChung
-                    isNewProfile = true;
                     messageDetail = "Hệ thống đã tạo hồ sơ tiêm chủng mới cho bạn.";
                 }
 
