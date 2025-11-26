@@ -501,4 +501,5 @@ VALUES
 (N'Viêm màng não do vi khuẩn', N'Tìm hiểu về viêm màng não và vaccine phòng ngừa.', N'Nội dung chi tiết về nguyên nhân, triệu chứng và cách phòng ngừa viêm màng não do vi khuẩn...', 'viem_mang_nao.jpg', N'Bệnh truyền nhiễm', N'Vi khuẩn, viêm màng não, vaccine', '2025-11-26 23:40:22.520', 1),
 (N'Những điều cần biết trước khi tiêm chủng', N'Chuẩn bị trước khi tiêm cho mẹ bầu...', N'<p>Chi tiết các bước chuẩn bị...</p>', 'mevabe_tiemchung.jpg', N'Mẹ và bé', N'Mang thai, tiêm chủng, chuẩn bị', '2025-11-27 00:20:05.430', 1),
 (N'Chăm sóc trẻ sau tiêm chủng', N'Hướng dẫn chăm sóc trẻ sau tiêm vaccine.', N'<p>Cách theo dõi phản ứng sau tiêm...</p>', 'mevabe_sautiem.jpg', N'Mẹ và bé', N'Sau sinh, nuôi con, chăm sóc', '2025-11-27 00:20:05.430', 1),
-(N'Dinh dưỡng cho mẹ bầu', N'Chế độ ăn uống hợp lý cho mẹ bầu.', N'<p>Thực phẩm nên ăn và tránh...</p>', 'mevabe_dinhduong.jpg', N'Mẹ và bé', N'Mang thai
+
+
