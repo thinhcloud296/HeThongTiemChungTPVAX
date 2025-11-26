@@ -85,6 +85,10 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void NhanVienControl_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+            {
+                return;
+            }
             LoadDSNhanVien();
             SetupEventHandlers();
             AdjustTitlePosition();

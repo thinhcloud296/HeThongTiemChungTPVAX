@@ -14,7 +14,10 @@ namespace TPVAXWinform.UserControls
         }
         private void BangDieuKhienControl_Load(object sender, EventArgs e)
         {
-            // InitializeSearchHandlers();
+            if (this.DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+            {
+                return;
+            }
             SetupLiveCharts();
         }
         private void SetupLiveCharts()

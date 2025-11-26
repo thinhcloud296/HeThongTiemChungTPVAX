@@ -30,6 +30,10 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void LichTiemControl_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+            {
+                return;
+            }
             LoadDSLT();
             InitializeFilters();
             contextMenuStripLichTiem.Items["toolStripMenuItemXemThongTin"].Visible = roleNVTiepNhan || roleNVYTe;

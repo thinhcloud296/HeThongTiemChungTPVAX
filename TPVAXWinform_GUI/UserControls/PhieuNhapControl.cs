@@ -26,6 +26,10 @@ namespace TPVAXWinform_GUI.UserControls
 
         private void PhieuNhapControl_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+            {
+                return;
+            }
             bool canManage = RoleManager.RoleNVKho();
 
             // Ẩn/Hiện nút Thêm Mới

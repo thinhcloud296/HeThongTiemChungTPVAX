@@ -108,6 +108,10 @@ namespace TPVAXWinform.UserControls
 
         private void HoSoTiemChungControl_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+            {
+                return;
+            }
             InitializeFilters();
             LoadDSHSTC();
             LoadDSKHHG();

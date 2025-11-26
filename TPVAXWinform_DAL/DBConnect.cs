@@ -8,7 +8,28 @@ namespace TPVAXWinform_DAL
 {
     public static class DBConnect
     {
-        private static string strConnect = ConfigurationManager.ConnectionStrings["TPVAX_DB"].ConnectionString;
+        private static string strConnect;
+        static DBConnect()
+        {
+            try
+            {
+                var config = ConfigurationManager.ConnectionStrings["TPVAX_DB"];
+                if (config != null)
+                {
+                    strConnect = config.ConnectionString;
+                }
+                else
+                {
+                    // Nếu không tìm thấy, gán chuỗi rỗng hoặc ném lỗi rõ ràng
+                    throw new Exception("Không tìm thấy chuỗi kết nối 'TPVAX_DB' trong App.config.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ghi log hoặc ném tiếp lỗi để debug
+                throw new Exception("Lỗi khởi tạo DBConnect: " + ex.Message);
+            }
+        }
 
         private const int DefaultTimeout = 30;
 
