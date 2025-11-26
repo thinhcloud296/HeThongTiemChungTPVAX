@@ -1,476 +1,218 @@
-﻿@{
+@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
+
+@{
     ViewBag.Title = "Bệnh Truyền Nhiễm";
 }
 
-@section Styles {
-<style>
-.btn-hero {
-    /* Đã sửa: Thay thế gradient đỏ/cam bằng gradient xanh dương */
-    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
-    padding: 60px 0;
-    color: white;
-    text-align: center;
-    margin-bottom: 40px;
+@functions {
+    public string GetTagGroup(string tag)
+    {
+        if (string.IsNullOrEmpty(tag)) return "article";
+
+        var lower = tag.ToLower();
+        if (lower.Contains("virus")) return "virus";
+        if (lower.Contains("vi khuẩn") || lower.Contains("bacteria")) return "bacteria";
+        return "article";
+    }
 }
 
-.disease-filter-btn {
-    background: white;
-    border: 2px solid #dee2e6;
-    padding: 12px 25px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    margin: 5px;
-}
-
-.disease-filter-btn:hover {
-    /* Đã sửa: Đổi màu viền và đổ bóng sang xanh dương đậm */
-    border-color: #0077b6; /* Xanh dương đậm */
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.2); /* Sử dụng #0077b6 với độ mờ */
-}
-
-.disease-filter-btn.active {
-    /* Đã sửa: Đổi màu nền gradient và viền sang xanh dương */
-    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
-    color: white;
-    border-color: #0077b6; /* Xanh dương đậm */
-}
-
-.search-box-modern input {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid #dee2e6;
-    border-radius: 50px;
-    font-size: 1rem;
-}
-
-.search-box-modern input:focus {
-    outline: none;
-    /* Đã sửa: Đổi màu viền và đổ bóng sang xanh dương đậm */
-    border-color: #0077b6; /* Xanh dương đậm */
-    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1); /* Sử dụng #0077b6 với độ mờ */
-}
-
-.article-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s;
-    height: 100%;
-}
-
-.article-card:hover {
-    transform: translateY(-10px);
-    /* Đã sửa: Đổi màu đổ bóng sang xanh dương sáng */
-    box-shadow: 0 15px 40px rgba(0, 180, 216, 0.25); /* Sử dụng #00b4d8 với độ mờ */
-}
-
-.article-image-wrapper {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-}
-
-.article-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.article-category-badge {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    /* Đã sửa: Đổi màu nền sang xanh dương đậm */
-    background: rgba(0, 119, 182, 0.9); /* Sử dụng #0077b6 với độ mờ */
-    color: white;
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.article-body {
-    padding: 20px;
-}
-
-.article-title-medium {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-.article-description {
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 15px;
-}
-
-.article-link {
-    /* Đã sửa: Đổi màu chữ sang xanh dương đậm */
-    color: #0077b6; /* Xanh dương đậm */
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.article-link:hover {
-    /* Đã sửa: Đổi màu chữ hover sang xanh dương sáng */
-    color: #00b4d8; /* Xanh dương sáng */
-}
-
-.d-none {
-    display: none !important;
-}
-
-/* Kiểu dáng cho Pagination */
-.pagination .page-item .page-link {
-    /* Đã sửa: Đổi màu chữ và viền sang xanh dương đậm */
-    color: #0077b6; /* Xanh dương đậm */
-    border-color: #0077b6; /* Xanh dương đậm */
-}
-
-.pagination .page-item.active .page-link {
-    /* Đã sửa: Đổi màu nền và viền sang xanh dương đậm */
-    background-color: #0077b6; /* Xanh dương đậm */
-    border-color: #0077b6; /* Xanh dương đậm */
-    color: white;
-}
-</style>
-}
-
-<div class="btn-hero">
-    <div class="container">
-        <h1 class="display-4 fw-bold mb-3">🦠 BỆNH TRUYỀN NHIỄM</h1>
+<!-- Hero banner -->
+<div class="btn-hero bg-light py-5">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold mb-3">🦠 BỆNH TRUYỀN NHIỄM</h1>
         <p class="lead">Tìm hiểu thông tin chi tiết về các bệnh truyền nhiễm phổ biến và vaccine bảo vệ</p>
     </div>
 </div>
 
-<div class="container my-5">
+<main class="container my-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">🏠 Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">🦠 Bệnh truyền nhiễm</li>
+        </ol>
+    </nav>
+
+    <!-- Bộ lọc danh mục -->
     <div class="mb-5 text-center">
-        <button class="disease-filter-btn active" data-filter="all">
-            <i class="fas fa-th-large"></i> <span>Tất cả</span>
-        </button>
-        <button class="disease-filter-btn" data-filter="article">
-            <i class="fas fa-file-alt"></i> <span>Bài viết</span>
-        </button>
-        <button class="disease-filter-btn" data-filter="virus">
-            <i class="fas fa-viruses"></i> <span>Do Virus</span>
-        </button>
-        <button class="disease-filter-btn" data-filter="bacteria">
-            <i class="fas fa-bacterium"></i> <span>Do Vi khuẩn</span>
-        </button>
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+            <button class="category-filter-btn active" data-filter="all"><span>📚 Tất cả</span></button>
+            <button class="category-filter-btn" data-filter="article"><span>📝 Bài viết</span></button>
+            <button class="category-filter-btn" data-filter="virus"><span>🧬 Do Virus</span></button>
+            <button class="category-filter-btn" data-filter="bacteria"><span>🧫 Do Vi khuẩn</span></button>
+        </div>
     </div>
 
+    <!-- Ô tìm kiếm -->
     <div class="mb-5">
         <div class="search-box-modern">
-            <input 
-                type="text" 
-                id="diseaseSearchInput"
-                class="form-control form-control-lg rounded-pill" 
-                placeholder="🔍 Tìm kiếm bệnh truyền nhiễm (VD: Sốt xuất huyết, Thủy đậu...)"
-            />
+            <input type="text" id="articleSearchInput" class="form-control form-control-lg rounded-pill"
+                   placeholder="🔍 Tìm kiếm bệnh truyền nhiễm (VD: Sốt xuất huyết, Thủy đậu...)" />
         </div>
     </div>
 
-    <div id="noResultsMessage" class="alert alert-warning text-center d-none">
-        <h3>🔍 Không tìm thấy bài viết nào</h3>
-        <p>Vui lòng thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác.</p>
+    <!-- Thông báo không tìm thấy -->
+    <div id="noResultsMessage" class="alert alert-info text-center d-none">
+        <h5>🔍 Không tìm thấy bài viết phù hợp</h5>
+        <p class="mb-0">Vui lòng thử lại với từ khóa khác hoặc chọn danh mục khác.</p>
     </div>
 
+    <!-- Danh sách bài viết -->
     <div class="row g-4 article-container">
-        <div class="col-lg-4 col-md-6 article-item" data-tags="article virus" data-keywords="thủy đậu nốt trắng điều trị vaccine">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn1.png")" alt="Thủy đậu" />
-                    <div class="article-category-badge">🦠 Virus</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Bệnh thủy đậu - Triệu chứng và cách phòng ngừa</h3>
-                    <p class="article-description">Thủy đậu là bệnh truyền nhiễm do virus varicella-zoster gây ra, dễ lây lan...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
+        @foreach (var article in Model)
+        {
+            var tagGroup = GetTagGroup(article.Tag);
+            <div class="col-lg-4 col-md-6 article-item" data-tags="@tagGroup" data-keywords="@article.Tag.ToLower()">
+                <article class="article-card">
+                    <div class="article-image-wrapper">
+                        <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/" + (article.HinhAnh ?? "default.jpg"))"
+                             class="img-fluid" alt="@article.TieuDe" />
+                        <div class="article-category-badge">@article.DanhMuc</div>
+                    </div>
+                    <div class="article-body">
+                        <div class="article-meta-small mb-2">
+                            <span>📅 @article.NgayDang.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <h3 class="article-title-medium">@article.TieuDe</h3>
+                        <p class="article-description">@article.TomTat</p>
 
-        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="sốt xuất huyết dengue muỗi vaccine">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn2.png")" alt="Sốt xuất huyết" />
-                    <div class="article-category-badge">🦟 Muỗi</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Sốt xuất huyết Dengue - Nguy hiểm và cách phòng tránh</h3>
-                    <p class="article-description">Sốt xuất huyết do muỗi Aedes truyền, có thể gây biến chứng nguy hiểm...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
+                        @if (!string.IsNullOrEmpty(article.Tag))
+                        {
+                            var tags = article.Tag.Split(',').Select(t => t.Trim()).ToList();
+                            <div class="article-tags mt-2">
+                                @foreach (var tag in tags)
+                                {
+                                    <span class="tag-badge">@tag</span>
+                                }
+                            </div>
+                        }
 
-        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="viêm màng não não mô cầu vaccine">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn3.png")" alt="Viêm màng não" />
-                    <div class="article-category-badge">⚠️ Vi khuẩn</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Viêm màng não do não mô cầu - Bệnh cấp cứu</h3>
-                    <p class="article-description">Viêm màng não cực kỳ nguy hiểm, có thể tử vong trong 24-48 giờ nếu không điều trị...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="cúm influenza vaccine phòng bệnh">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn4.png")" alt="Cúm mùa" />
-                    <div class="article-category-badge">🤧 Cúm</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Cúm mùa (Influenza) - Không chỉ là cảm lạnh thông thường</h3>
-                    <p class="article-description">Cúm có thể gây biến chứng nghiêm trọng ở trẻ nhỏ, người già...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="HPV ung thư vaccine gardasil">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn5.png")" alt="Virus HPV" />
-                    <div class="article-category-badge">🎗️ HPV</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Virus HPV - Nguyên nhân gây ung thư cổ tử cung</h3>
-                    <p class="article-description">HPV là virus phổ biến, gây ung thư cổ tử cung, hầu họng...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="viêm gan B virus vaccine">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn6.png")" alt="Viêm gan B" />
-                    <div class="article-category-badge">🫀 Gan</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Viêm gan B - Bệnh lây truyền qua đường máu</h3>
-                    <p class="article-description">Viêm gan B gây xơ gan, ung thư gan nếu không điều trị...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="bạch hầu hô hấp vaccine">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn7.png")" alt="Bạch hầu" />
-                    <div class="article-category-badge">🦠 Vi khuẩn</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Bạch hầu - Bệnh nguy hiểm đường hô hấp</h3>
-                    <p class="article-description">Bạch hầu gây màng giả ở họng, có thể gây tắc nghẽn đường thở...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="ho gà pertussis trẻ em vaccine">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn8.png")" alt="Ho gà" />
-                    <div class="article-category-badge">😷 Ho gà</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Ho gà (Pertussis) - Nguy hiểm với trẻ nhỏ</h3>
-                    <p class="article-description">Ho gà gây ho dữ dội, trẻ sơ sinh có thể tử vong do ngạt thở...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="sởi rubella vaccine mmr">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn9.png")" alt="Sởi" />
-                    <div class="article-category-badge">🔴 Sởi</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Bệnh sởi - Dễ lây lan và có biến chứng nặng</h3>
-                    <p class="article-description">Sởi lây rất nhanh, gây viêm phổi, viêm não nguy hiểm...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="bacteria" data-keywords="phế cầu viêm phổi vaccine">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn10.png")" alt="Phế cầu khuẩn" />
-                    <div class="article-category-badge">🫁 Phế cầu</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">Nhiễm khuẩn phế cầu - Nguyên nhân viêm phổi</h3>
-                    <p class="article-description">Phế cầu gây viêm phổi, viêm màng não, nhiễm trùng huyết...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 col-md-6 article-item" data-tags="virus" data-keywords="covid19 coronavirus vaccine pfizer">
-            <article class="article-card">
-                <div class="article-image-wrapper">
-                    <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/btn11.png")" alt="COVID-19" />
-                    <div class="article-category-badge">😷 COVID-19</div>
-                </div>
-                <div class="article-body">
-                    <h3 class="article-title-medium">COVID-19 - Đại dịch thế kỷ và vaccine phòng bệnh</h3>
-                    <p class="article-description">COVID-19 do SARS-CoV-2, lây qua đường hô hấp với nhiều biến chủng...</p>
-                    <a href="#" class="article-link">Xem chi tiết →</a>
-                </div>
-            </article>
-        </div>
+                        <a href="@Url.Action("ChiTiet", "BenhTruyenNhiem", new { id = article.Id })" class="article-link">Xem chi tiết →</a>
+                    </div>
+                </article>
+            </div>
+        }
     </div>
-    
+
+    <!-- Phân trang -->
     <div class="d-flex justify-content-center mt-4">
-        <nav>
-            <ul id="pagination" class="pagination"></ul>
-        </nav>
+        <nav><ul id="pagination" class="pagination"></ul></nav>
     </div>
-</div>
+</main>
+
+@section Styles {
+    <style>
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag-badge {
+            background-color: #f0f9ff;
+            color: #0077b6;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+    </style>
+}
 
 @section Scripts {
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterBtns = document.querySelectorAll('.disease-filter-btn');
-    const articleItems = document.querySelectorAll('.article-item');
-    const searchInput = document.getElementById('diseaseSearchInput');
-    const noResultsMsg = document.getElementById('noResultsMessage');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterBtns = document.querySelectorAll('.category-filter-btn');
+            const articleItems = document.querySelectorAll('.article-item');
+            const searchInput = document.getElementById('articleSearchInput');
+            const noResultsMsg = document.getElementById('noResultsMessage');
+            const pagination = document.getElementById('pagination');
+            const itemsPerPage = 6;
+            let currentPage = 1;
 
-    // Cài đặt Phân trang
-    const itemsPerPage = 6; // số bài viết mỗi trang
-    const pagination = document.getElementById('pagination');
-    let currentPage = 1;
+            function getVisibleArticles() {
+                const activeFilter = document.querySelector('.category-filter-btn.active')?.dataset.filter || 'all';
+                const searchTerm = (searchInput.value || '').toLowerCase();
 
-    // Lấy tất cả bài viết đang hiển thị (sau khi lọc/tìm kiếm)
-    function getVisibleArticles() {
-        // Lọc các bài viết dựa trên tiêu chí lọc và tìm kiếm hiện tại
-        return [...document.querySelectorAll('.article-item')].filter(item => {
-            const activeFilterButton = document.querySelector('.disease-filter-btn.active');
-            const currentCategory = activeFilterButton ? activeFilterButton.dataset.filter : 'all';
-            const currentSearchTerm = searchInput.value.toLowerCase();
+                return [...articleItems].filter(item => {
+                    const tags = (item.dataset.tags || '').toLowerCase();
+                    const keywords = (item.dataset.keywords || '').toLowerCase();
+                    const text = item.textContent.toLowerCase();
 
-            const tags = item.dataset.tags;
-            const keywords = item.dataset.keywords.toLowerCase();
-            const text = item.textContent.toLowerCase();
+                    const matchCategory = activeFilter === 'all' || tags.includes(activeFilter);
+                    const matchSearch = !searchTerm || keywords.includes(searchTerm) || text.includes(searchTerm);
 
-            const matchCategory = currentCategory === 'all' || tags.includes(currentCategory);
-            const matchSearch = currentSearchTerm === '' || keywords.includes(currentSearchTerm) || text.includes(currentSearchTerm);
-
-            return matchCategory && matchSearch;
-        });
-    }
-
-    // Hiển thị bài theo trang hiện tại
-    function showPage() {
-        const visibleItems = getVisibleArticles();
-        const totalItems = visibleItems.length;
-
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-
-        // Ẩn tất cả bài viết
-        articleItems.forEach(item => {
-            item.style.display = "none";
-        });
-        
-        // Chỉ hiển thị các bài viết trên trang hiện tại
-        visibleItems.forEach((item, index) => {
-            if (index >= start && index < end) {
-                item.style.display = "block";
+                    return matchCategory && matchSearch;
+                });
             }
-        });
 
-        renderPagination(totalItems);
-        
-        // Cập nhật thông báo kết quả (nếu visibleItems là 0)
-        if (totalItems === 0) {
-            noResultsMsg.classList.remove('d-none');
-        } else {
-            noResultsMsg.classList.add('d-none');
-        }
-    }
+            function renderPagination(totalItems) {
+                pagination.innerHTML = '';
+                const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
 
-    // Tạo thanh pagination
-    function renderPagination(totalItems) {
-        pagination.innerHTML = "";
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
+                if (currentPage > totalPages) currentPage = totalPages;
+                if (currentPage < 1) currentPage = 1;
 
-        if (totalPages <= 1) return;
+                if (totalPages <= 1) return;
 
-        // Tạo nút trang
-        for (let i = 1; i <= totalPages; i++) {
-            let li = document.createElement("li");
-            li.classList.add("page-item");
-            if (i === currentPage) li.classList.add("active");
+                for (let i = 1; i <= totalPages; i++) {
+                    const li = document.createElement('li');
+                    li.classList.add('page-item');
+                    if (i === currentPage) li.classList.add('active');
 
-            let a = document.createElement("a");
-            a.classList.add("page-link");
-            a.href = "#";
-            a.innerText = i;
+                    const a = document.createElement('a');
+                    a.classList.add('page-link');
+                    a.href = '#';
+                    a.innerText = i;
+                    a.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        showPage();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
 
-            a.addEventListener("click", function (e) {
-                e.preventDefault();
-                currentPage = i;
-                window.scrollTo(0, 0); // Cuộn lên đầu trang (tùy chọn)
-                showPage(); // Cập nhật bài viết trên trang
+                    li.appendChild(a);
+                    pagination.appendChild(li);
+                }
+            }
+
+            function showPage() {
+                const visibleItems = getVisibleArticles();
+                const totalItems = visibleItems.length;
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+
+                articleItems.forEach(item => { item.style.display = 'none'; });
+
+                visibleItems.forEach((item, index) => {
+                    if (index >= start && index < end) {
+                        item.style.display = '';
+                    }
+                });
+
+                renderPagination(totalItems);
+                noResultsMsg.classList.toggle('d-none', totalItems > 0);
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    searchInput.value = '';
+                    currentPage = 1;
+                    showPage();
+                });
             });
 
-            li.appendChild(a);
-            pagination.appendChild(li);
-        }
-    }
+            searchInput.addEventListener('input', function () {
+                currentPage = 1;
+                showPage();
+            });
 
-    // ---------------------------
-    // LOGIC LỌC/TÌM KIẾM (Đã tích hợp Phân trang)
-    // ---------------------------
-
-    // Hàm lọc/tìm kiếm được sử dụng trong sự kiện và được gọi lần đầu
-    function filterArticles(category, searchTerm) {
-        currentPage = 1; 
-        showPage();
-    }
-    
-    // Gắn sự kiện cho nút lọc
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            const filter = this.dataset.filter;
-            searchInput.value = '';
-            
-            filterArticles(filter, '');
+            showPage(); // Khởi động lần đầu
         });
-    });
-
-    // Gắn sự kiện cho ô tìm kiếm
-    searchInput.addEventListener('input', function() {
-        const activeFilter = document.querySelector('.disease-filter-btn.active').dataset.filter;
-        filterArticles(activeFilter, this.value.toLowerCase());
-    });
-
-    // Lần đầu load trang
-    const initialFilter = document.querySelector('.disease-filter-btn.active').dataset.filter;
-    filterArticles(initialFilter, ''); 
-});
-</script>
+    </script>
 }
