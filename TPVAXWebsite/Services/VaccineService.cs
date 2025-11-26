@@ -381,5 +381,58 @@ namespace TPVAXWebsite.Services
         {
             _unitOfWork?.Dispose();
         }
+        #region Recommendations
+
+        /// <summary>
+        /// Gợi ý vaccine theo độ tuổi và giới tính
+        /// </summary>
+        public IEnumerable<VaccineRecommendationViewModel> GetRecommendations(string ageGroup, string gender)
+        {
+            var query = _unitOfWork.Vaccines.Query()
+                .Include(v => v.LoaiVaccine)
+                .Include(v => v.VaccinePhongBenh.Select(vp => vp.LoaiBenh));
+
+            // Lọc theo độ tuổi (nếu có cột DoiTuongApDung hoặc mô tả)
+            if (!string.IsNullOrEmpty(ageGroup))
+            {
+                query = query.Where(v => v.MoTa.Contains(ageGroup) || v.LoaiVaccine.TenLoai.Contains(ageGroup));
+            }
+
+            // Lọc theo giới tính (nếu dữ liệu có phân loại)
+            if (!string.IsNullOrEmpty(gender))
+            {
+                query = query.Where(v => v.MoTa.Contains(gender));
+            }
+
+            return query.Select(v => new VaccineRecommendationViewModel
+            {
+                MaVC = v.MaVC,
+                TenVC = v.TenVC,
+                MoTa = v.MoTa,
+                GiaBan = v.GiaBan,
+                HinhAnh = v.HinhAnh
+            }).ToList();
+        }
+
+        /// <summary>
+        /// Lấy chi tiết vaccine theo mã (cho trang Detail)
+        /// </summary>
+        public VaccineRecommendationViewModel GetDetail(string maVC)
+        {
+            var vaccine = _unitOfWork.Vaccines.GetById(maVC);
+            if (vaccine == null) return null;
+
+            return new VaccineRecommendationViewModel
+            {
+                MaVC = vaccine.MaVC,
+                TenVC = vaccine.TenVC,
+                MoTa = vaccine.MoTa,
+                GiaBan = vaccine.GiaBan,
+                HinhAnh = vaccine.HinhAnh
+            };
+        }
+
+        #endregion
+
     }
 }
