@@ -1,7 +1,8 @@
-﻿@model List<AdminGoiVaccineViewModel>
+﻿@model List<TPVAXWebsite.Models.ViewModels.AdminGoiVaccineViewModel>
 
 @{
     ViewBag.Title = "Quản lý Gói Vắc xin";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
 }
 
 <section class="content-header">
@@ -24,367 +25,658 @@
 
 <section class="content">
     <div class="container-fluid">
-        <!-- Statistics Cards -->
-        <div class="row mb-4">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>15</h3>
-                        <p>Tổng gói vắc xin</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-boxes"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>8</h3>
-                        <p>Gói trẻ em</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-baby"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>5</h3>
-                        <p>Gói người lớn</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-primary">
-                    <div class="inner">
-                        <h3>256</h3>
-                        <p>Gói đã bán</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
+        <!-- Main Card -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">
-                    <i class="fas fa-list mr-2"></i>Danh sách Gói Vắc xin
-                </h3>
+                <h3 class="card-title">Danh sách Gói Vắc xin</h3>
                 <div class="card-tools">
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#goiVaccineModal" onclick="resetForm()">
+                    <button class="btn btn-primary btn-sm" id="btnAddGoi">
                         <i class="fas fa-plus"></i> Tạo gói mới
                     </button>
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    @if (Model != null && Model.Count > 0)
-                    {
-                        foreach (var package in Model)
-                        {
-                            <div class="col-md-6 col-lg-4 mb-4">
-                                <div class="card h-100 shadow-sm package-card">
-                                    <div class="card-header bg-gradient-primary text-white">
-                                        <h5 class="mb-0">
-                                            <i class="fas fa-box-open mr-2"></i>@package.TenGoi
-                                        </h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <span class="badge bg-info">@package.MaGoi</span>
-                                            <span class="badge @(package.TrangThai == "1" ? "bg-success" : "bg-warning") float-end">
-                                                @(package.TrangThai == "1" ? "Đang bán" : "Tạm dừng")
-                                            </span>
-                                        </div>
-                                        <p class="text-muted mb-3">@package.MoTa</p>
-
-                                        <h6>
-                                            <i class="fas fa-syringe mr-2 text-primary"></i>Đối tượng áp dụng:
-                                        </h6>
-                                        <p class="mb-3">@package.DoiTuongApDung</p>
-
-                                        <div class="price-box bg-light p-3 rounded mb-3">
-                                            <div class="d-flex justify-content-between">
-                                                <span><strong>Giá:</strong></span>
-                                                <span class="text-danger"><strong>@package.GiaGoi.ToString("N0") VNĐ</strong></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <button class="btn btn-primary btn-sm btn-edit" data-package-id="@package.MaGoi">
-                                            <i class="fas fa-edit"></i> Sửa
-                                        </button>
-                                        <button class="btn btn-info btn-sm">
-                                            <i class="fas fa-eye"></i> Chi tiết
-                                        </button>
-                                        <button class="btn btn-danger btn-sm btn-delete float-end" data-package-id="@package.MaGoi">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                    else
-                    {
-                        <div class="col-12">
-                            <div class="alert alert-info text-center">Không có gói vắc xin nào</div>
-                        </div>
-                    }
+                <div class="row" id="goiVaccineList">
+                    <!-- Sẽ được load động qua AJAX -->
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Modal Tạo/Sửa Gói Vắc xin -->
-<div class="modal fade" id="goiVaccineModal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+<!-- Modal Thêm/Sửa Gói Vắc xin -->
+<div class="modal fade" id="goiModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalTitle">Tạo Gói Vắc xin Mới</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="goiModalTitle">Tạo Gói Vắc xin Mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="goiForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="hidden" id="goiId" name="MaGoi" />
+
+                    <!-- Tên gói -->
+                    <div class="form-group">
+                        <label for="tenGoi">Tên gói <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="tenGoi" name="TenGoi" 
+                            placeholder="VD: Gói vắc xin cho trẻ từ 0-12 tháng" required />
+                        <small class="form-text text-muted">Tối đa 255 ký tự</small>
+                    </div>
+
+                    <!-- Mô tả -->
+                    <div class="form-group">
+                        <label for="moTa">Mô tả <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="moTa" name="MoTa" rows="3"
+                            placeholder="Nhập mô tả chi tiết về gói vắc xin..." required></textarea>
+                        <small class="form-text text-muted">Tối đa 500 ký tự</small>
+                    </div>
+
+                    <!-- Row: Đối tượng và Giá -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doiTuongApDung">Đối tượng áp dụng</label>
+                                <input type="text" class="form-control" id="doiTuongApDung" name="DoiTuongApDung" 
+                                    placeholder="VD: Trẻ từ 0 đến 12 tháng tuổi" />
+                                <small class="form-text text-muted">Tối đa 255 ký tự</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="giaGoi">Giá gói (VNĐ) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="giaGoi" name="GiaGoi" 
+                                    placeholder="0" min="0" step="1000" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trạng thái -->
+                    <div class="form-group">
+                        <label for="trangThai">Trạng thái</label>
+                        <select class="form-control" id="trangThai" name="TrangThai">
+                            <option value="Đang áp dụng">Đang áp dụng</option>
+                            <option value="Ngừng áp dụng">Ngừng áp dụng</option>
+                        </select>
+                    </div>
+
+                    <!-- Hình ảnh -->
+                    <div class="form-group">
+                        <label for="hinhAnh">Hình ảnh</label>
+                        <input type="file" class="form-control-file" id="hinhAnh" name="HinhAnh" accept="image/*" />
+                        <small class="form-text text-muted">Cho phép: .jpg, .jpeg, .png, .gif (tối đa 5MB)</small>
+                        <div id="imagePreview" class="mt-2"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save mr-2"></i>Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Chi tiết Gói (Quản lý Vaccine trong gói) -->
+<div class="modal fade" id="chiTietModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white" id="chiTietModalTitle">Chi tiết Gói Vắc xin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <form id="goiVaccineForm" class="needs-validation" novalidate>
-                    <input type="hidden" id="goiId" />
+                <input type="hidden" id="chiTietMaGoi" />
+                
+                <!-- Thông tin gói -->
+                <div class="alert alert-info">
+                    <h6 id="chiTietTenGoi"></h6>
+                    <p id="chiTietMoTa" class="mb-0"></p>
+                </div>
 
-                    <h5 class="mb-3">
-                        <i class="fas fa-info-circle mr-2"></i>Thông tin gói
-                    </h5>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Mã gói <span class="text-danger">*</span></label>
-                            <input type="text" id="maGoi" class="form-control" placeholder="VD: GOI001" required />
-                            <div class="invalid-feedback">Vui lòng nhập mã gói.</div>
-                        </div>
-                        <div class="col-md-8 mb-3">
-                            <label class="form-label">Tên gói <span class="text-danger">*</span></label>
-                            <input type="text" id="tenGoi" class="form-control" placeholder="VD: Gói Tiêm Chủng Trẻ Em Cơ Bản" required />
-                            <div class="invalid-feedback">Vui lòng nhập tên gói.</div>
-                        </div>
+                <!-- Thêm vaccine vào gói -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="mb-0">Thêm Vắc xin vào Gói</h6>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Mô tả <span class="text-danger">*</span></label>
-                        <textarea id="moTa" class="form-control" rows="2" placeholder="Mô tả chi tiết về gói vắc xin..." required></textarea>
-                        <div class="invalid-feedback">Vui lòng nhập mô tả.</div>
+                    <div class="card-body">
+                        <form id="addVaccineForm" class="row g-3">
+                            <div class="col-md-5">
+                                <label for="selectVaccine">Chọn vắc xin <span class="text-danger">*</span></label>
+                                <select class="form-control" id="selectVaccine" required>
+                                    <option value="">-- Chọn vắc xin --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="soMui">Số mũi <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="soMui" min="1" value="1" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ghiChu">Ghi chú</label>
+                                <input type="text" class="form-control" id="ghiChu" placeholder="VD: Tiêm mũi 1" />
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-plus mr-2"></i>Thêm vào gói
+                                </button>
+                            </div>
+                        </form>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Đối tượng áp dụng</label>
-                            <select id="doiTuong" class="form-select">
-                                <option value="Trẻ em">Trẻ em</option>
-                                <option value="Người lớn">Người lớn</option>
-                                <option value="Gia đình">Gia đình</option>
-                                <option value="Tất cả">Tất cả</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Độ tuổi áp dụng</label>
-                            <input type="text" id="doTuoi" class="form-control" placeholder="VD: 0-12 tháng" />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Thời gian thực hiện</label>
-                            <input type="text" id="thoiGian" class="form-control" placeholder="VD: 12 tháng" />
-                        </div>
-                    </div>
-
-                    <h5 class="mt-4 mb-3">
-                        <i class="fas fa-syringe mr-2"></i>Vắc xin trong gói
-                    </h5>
-                    <table class="table table-bordered">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Tên vắc xin</th>
-                                <th>Số mũi tiêm</th>
-                                <th>Đơn giá</th>
-                                <th>Thành tiền</th>
-                                <th>
-                                    <button type="button" class="btn btn-success btn-sm" id="addVaccineRow">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="vaccineTableBody">
-                            <tr>
-                                <td>
-                                    <select class="form-select vaccine-select" required>
-                                        <option value="">Chọn vắc xin</option>
-                                        <option value="1">Vắc xin 6 trong 1</option>
-                                        <option value="2">Vắc xin Cúm Tứ Giá</option>
-                                        <option value="3">Prevenar 13</option>
-                                        <option value="4">Rotavirus</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control quantity" min="1" value="1" required />
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control price" min="0" value="850000" required />
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control total" value="850,000" readonly />
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger btn-sm remove-row">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="table-light">
-                                <td colspan="3" class="text-end"><strong>Tổng giá gốc:</strong></td>
-                                <td colspan="2"><strong id="tongGiaGoc">850,000 VNĐ</strong></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-
-                    <h5 class="mt-4 mb-3">
-                        <i class="fas fa-dollar-sign mr-2"></i>Giá bán
-                    </h5>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Giá gốc (VNĐ)</label>
-                            <input type="number" id="giaGoc" class="form-control" value="850000" readonly />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Giảm giá (%)</label>
-                            <input type="number" id="giamGia" class="form-control" min="0" max="100" value="15" />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Giá bán (VNĐ)</label>
-                            <input type="number" id="giaBan" class="form-control" readonly />
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Trạng thái</label>
-                            <select id="trangThai" class="form-select">
-                                <option value="active">Đang bán</option>
-                                <option value="inactive">Ngừng bán</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Màu hiển thị</label>
-                            <select id="mauHienThi" class="form-select">
-                                <option value="primary">Xanh dương</option>
-                                <option value="success">Xanh lá</option>
-                                <option value="warning">Vàng cam</option>
-                                <option value="info">Xanh nhạt</option>
-                                <option value="danger">Đỏ</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
+                <!-- Danh sách vaccine trong gói -->
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%">Mã VC</th>
+                            <th style="width: 35%">Tên Vắc xin</th>
+                            <th style="width: 10%">Số mũi</th>
+                            <th style="width: 15%">Giá (VNĐ)</th>
+                            <th style="width: 20%">Ghi chú</th>
+                            <th style="width: 10%">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="chiTietVaccineList">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Chưa có vắc xin nào trong gói</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="submit" form="goiVaccineForm" class="btn btn-primary">Lưu gói vắc xin</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
 </div>
 
-@section styles {
 <style>
     .package-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
     }
+
     .package-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2) !important;
+        box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2);
     }
+
+    .package-card .card-header {
+        background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
+        border-radius: 8px 8px 0 0;
+    }
+
     .price-box {
-        border-left: 4px solid var(--tpvax-primary, #0077b6);
+        border-left: 4px solid #0077b6;
+        background-color: #f8f9fa;
+    }
+
+    .modal-header.bg-primary,
+    .modal-header.bg-info {
+        color: white;
+    }
+
+    .modal-header .close {
+        color: white;
     }
 </style>
-}
 
-@section scripts {
+@section Scripts {
 <script>
-    // Add vaccine row
-    document.getElementById('addVaccineRow').addEventListener('click', function() {
-        const tbody = document.getElementById('vaccineTableBody');
-        const newRow = tbody.rows[0].cloneNode(true);
-        tbody.appendChild(newRow);
+    const BASE_URL = '@Url.Content("~")';
+    let currentGoiData = null;
+
+    $(document).ready(function () {
+        console.log('GoiVaccine page loaded');
+        
+        // Load danh sách gói
+        loadGoiVaccineList();
+        
+        // Event handlers
+        $('#btnAddGoi').on('click', onAddGoi);
+        $('#goiForm').on('submit', onGoiFormSubmit);
+        $(document).on('click', '.btn-edit-goi', onEditGoi);
+        $(document).on('click', '.btn-delete-goi', onDeleteGoi);
+        $(document).on('click', '.btn-chi-tiet', onShowChiTiet);
+        $('#addVaccineForm').on('submit', onAddVaccineToGoi);
+        $(document).on('click', '.btn-remove-vaccine', onRemoveVaccineFromGoi);
     });
 
-    // Remove vaccine row
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.remove-row')) {
-            const tbody = document.getElementById('vaccineTableBody');
-            if (tbody.rows.length > 1) {
-                e.target.closest('tr').remove();
-            } else {
-                Swal.fire('Lỗi', 'Phải có ít nhất một vắc xin trong gói!', 'error');
+    function loadGoiVaccineList() {
+        console.log('Loading goi vaccine list...');
+        
+        $.ajax({
+            url: BASE_URL + 'Admin/GetGoiVaccineList',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                console.log('Response received:', response);
+                
+                if (response.success && response.data) {
+                    if (response.data.length > 0) {
+                        renderGoiVaccineList(response.data);
+                    } else {
+                        $('#goiVaccineList').html('<div class="col-12"><div class="alert alert-info text-center">Chưa có gói vắc xin nào. Nhấn "Tạo gói mới" để thêm.</div></div>');
+                    }
+                } else {
+                    $('#goiVaccineList').html('<div class="col-12"><div class="alert alert-warning text-center">Không có dữ liệu</div></div>');
+                }
+            },
+            error: function (xhr, status, errorMsg) {
+                console.error('AJAX Error:', status, errorMsg);
+                console.error('Response:', xhr.responseText);
+                $('#goiVaccineList').html('<div class="col-12"><div class="alert alert-danger text-center">Lỗi tải dữ liệu. Vui lòng kiểm tra console để biết chi tiết.</div></div>');
             }
-        }
-    });
+        });
+    }
 
-    // Calculate discount price
-    document.getElementById('giamGia').addEventListener('input', function() {
-        const giaGoc = parseFloat(document.getElementById('giaGoc').value) || 0;
-        const giamGia = parseFloat(this.value) || 0;
-        const giaBan = giaGoc - (giaGoc * giamGia / 100);
-        document.getElementById('giaBan').value = Math.round(giaBan);
-    });
+    function renderGoiVaccineList(data) {
+        let html = '';
+        
+        data.forEach(function (goi) {
+            const trangThaiBadge = goi.TrangThai === 'Đang áp dụng' 
+                ? '<span class="badge bg-success">Đang áp dụng</span>'
+                : '<span class="badge bg-secondary">Ngừng áp dụng</span>';
+            
+            // Hiển thị hình ảnh nếu có
+            const imageHtml = goi.HinhAnh 
+                ? `<img src="${goi.HinhAnh}?t=${new Date().getTime()}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="${goi.TenGoi}" />`
+                : '<div class="bg-secondary text-white text-center" style="height: 200px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-image fa-3x"></i></div>';
+            
+            html += `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 package-card">
+                        ${imageHtml}
+                        <div class="card-header">
+                            <h6 class="mb-0 text-white">
+                                <i class="fas fa-box-open mr-2"></i>${goi.TenGoi}
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <span class="badge bg-info">${goi.MaGoi}</span>
+                                ${trangThaiBadge}
+                            </div>
+                            <p class="text-muted mb-3">${goi.MoTa || 'Không có mô tả'}</p>
+                            
+                            ${goi.DoiTuongApDung ? `
+                            <h6><i class="fas fa-users mr-2 text-primary"></i>Đối tượng:</h6>
+                            <p class="mb-3">${goi.DoiTuongApDung}</p>
+                            ` : ''}
+                            
+                            <div class="price-box p-3 rounded mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span><strong>Giá:</strong></span>
+                                    <span class="text-danger"><strong>${formatCurrency(goi.GiaGoi)} VNĐ</strong></span>
+                                </div>
+                            </div>
+                            
+                            <div class="text-muted">
+                                <small><i class="fas fa-syringe mr-1"></i>${goi.SoLuongVaccine || 0} vắc xin</small>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <button class="btn btn-primary btn-sm btn-edit-goi" data-id="${goi.MaGoi}">
+                                <i class="fas fa-edit"></i> Sửa
+                            </button>
+                            <button class="btn btn-info btn-sm btn-chi-tiet" data-id="${goi.MaGoi}">
+                                <i class="fas fa-list"></i> Chi tiết
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete-goi float-end" data-id="${goi.MaGoi}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        $('#goiVaccineList').html(html);
+        console.log('✓ Rendered ' + data.length + ' gói vắc xin');
+    }
 
-    // Form validation
-    document.getElementById('goiVaccineForm').addEventListener('submit', function(e) {
+    function onAddGoi(e) {
         e.preventDefault();
-        if (this.checkValidity()) {
-            Swal.fire({
-                title: 'Thành công!',
-                text: 'Đã lưu thông tin gói vắc xin.',
-                icon: 'success',
-                timer: 2000
-            });
-            bootstrap.Modal.getInstance(document.getElementById('goiVaccineModal')).hide();
-        }
-        this.classList.add('was-validated');
-    });
+        console.log('Add gói clicked');
+        $('#goiModalTitle').text('Tạo Gói Vắc xin Mới');
+        $('#goiId').val('');
+        $('#goiForm')[0].reset();
+        $('#imagePreview').html(''); // Clear image preview
+        $('#goiModal').modal('show');
+    }
 
-    // Delete handler
-    $(document).on('click', '.btn-delete', function() {
+    function onEditGoi(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        console.log('Edit gói clicked:', id);
+        
+        $.ajax({
+            url: BASE_URL + 'Admin/GetGoiVaccine',
+            type: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                console.log('✓ Edit data:', response);
+                if (response.success) {
+                    const data = response.data;
+                    $('#goiModalTitle').text('Sửa Gói Vắc xin');
+                    $('#goiId').val(data.MaGoi);
+                    $('#tenGoi').val(data.TenGoi);
+                    $('#moTa').val(data.MoTa);
+                    $('#doiTuongApDung').val(data.DoiTuongApDung);
+                    $('#giaGoi').val(data.GiaGoi);
+                    $('#trangThai').val(data.TrangThai);
+                    
+                    // Hiển thị ảnh hiện tại nếu có
+                    if (data.HinhAnh) {
+                        $('#imagePreview').html('<img src="' + data.HinhAnh + '?t=' + new Date().getTime() + '" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" /><br><small class="text-muted">Ảnh hiện tại</small>');
+                    } else {
+                        $('#imagePreview').html('');
+                    }
+                    
+                    $('#goiModal').modal('show');
+                } else {
+                    Swal.fire('Lỗi', response.message, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Lỗi', 'Không thể tải dữ liệu gói vắc xin', 'error');
+            }
+        });
+    }
+
+    function onGoiFormSubmit(e) {
+        e.preventDefault();
+        console.log('Form submitted');
+        
+        const goiId = $('#goiId').val();
+        const url = goiId 
+            ? BASE_URL + 'Admin/EditGoiVaccine'
+            : BASE_URL + 'Admin/CreateGoiVaccine';
+        
+        const formData = new FormData();
+        formData.append('MaGoi', goiId);
+        formData.append('TenGoi', $('#tenGoi').val());
+        formData.append('MoTa', $('#moTa').val());
+        formData.append('DoiTuongApDung', $('#doiTuongApDung').val());
+        formData.append('GiaGoi', $('#giaGoi').val());
+        formData.append('TrangThai', $('#trangThai').val());
+        formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+        
+        // Thêm file hình ảnh nếu có
+        const fileInput = document.getElementById('hinhAnh');
+        if (fileInput && fileInput.files.length > 0) {
+            formData.append('HinhAnh', fileInput.files[0]);
+        }
+        
+        console.log('Submitting to:', url);
+        
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log('✓ Response:', response);
+                if (response.success) {
+                    Swal.fire('Thành công', response.message, 'success').then(() => {
+                        $('#goiModal').modal('hide');
+                        loadGoiVaccineList();
+                    });
+                } else {
+                    Swal.fire('Lỗi', response.message || 'Có lỗi xảy ra', 'error');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('✗ Error:', status, error);
+                Swal.fire('Lỗi', 'Lỗi hệ thống', 'error');
+            }
+        });
+    }
+
+    function onDeleteGoi(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        console.log('Delete gói clicked:', id);
+        
         Swal.fire({
-            title: 'Xác nhận xóa?',
-            text: 'Bạn có chắc muốn xóa gói vắc xin này?',
+            title: 'Xác nhận xóa',
+            text: 'Bạn chắc chắn muốn xóa gói vắc xin này?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
+            cancelButtonColor: '#3085d6',
             confirmButtonText: 'Xóa',
             cancelButtonText: 'Hủy'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire('Đã xóa!', 'Gói vắc xin đã được xóa.', 'success');
+                const token = $('input[name="__RequestVerificationToken"]').val();
+                
+                $.ajax({
+                    url: BASE_URL + 'Admin/DeleteGoiVaccine',
+                    type: 'POST',
+                    data: { 
+                        id: id,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (response) {
+                        console.log('✓ Delete response:', response);
+                        if (response.success) {
+                            Swal.fire('Thành công', response.message, 'success').then(() => {
+                                loadGoiVaccineList();
+                            });
+                        } else {
+                            Swal.fire('Lỗi', response.message, 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Lỗi', 'Lỗi hệ thống', 'error');
+                    }
+                });
             }
         });
-    });
-
-    function resetForm() {
-        document.getElementById('goiVaccineForm').reset();
-        document.getElementById('goiVaccineForm').classList.remove('was-validated');
-        document.getElementById('modalTitle').innerText = 'Tạo Gói Vắc xin Mới';
     }
 
-    // Initialize
+    function onShowChiTiet(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        console.log('Show chi tiết clicked:', id);
+        
+        $('#chiTietMaGoi').val(id);
+        
+        // Load thông tin gói và danh sách vaccine trong gói
+        $.ajax({
+            url: BASE_URL + 'Admin/GetGoiVaccine',
+            type: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    const data = response.data;
+                    currentGoiData = data;
+                    
+                    $('#chiTietModalTitle').text('Chi tiết: ' + data.TenGoi);
+                    $('#chiTietTenGoi').text(data.TenGoi + ' (' + data.MaGoi + ')');
+                    $('#chiTietMoTa').text(data.MoTa || 'Không có mô tả');
+                    
+                    // Render danh sách vaccine trong gói
+                    renderChiTietVaccineList(data.ChiTietList || []);
+                    
+                    // Load danh sách vaccine để thêm
+                    loadVaccineListForGoi();
+                    
+                    $('#chiTietModal').modal('show');
+                } else {
+                    Swal.fire('Lỗi', response.message, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Lỗi', 'Không thể tải chi tiết gói vắc xin', 'error');
+            }
+        });
+    }
+
+    function renderChiTietVaccineList(list) {
+        if (list.length === 0) {
+            $('#chiTietVaccineList').html('<tr><td colspan="6" class="text-center text-muted">Chưa có vắc xin nào trong gói</td></tr>');
+            return;
+        }
+        
+        let html = '';
+        list.forEach(function (item) {
+            html += `
+                <tr>
+                    <td>${item.MaVC}</td>
+                    <td>${item.TenVC}</td>
+                    <td class="text-center">${item.SoMui || 1}</td>
+                    <td class="text-right">${formatCurrency(item.GiaVC || 0)}</td>
+                    <td>${item.GhiChu || '-'}</td>
+                    <td class="text-center">
+                        <button class="btn btn-danger btn-sm btn-remove-vaccine" data-id="${item.MaCTGoi}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        $('#chiTietVaccineList').html(html);
+    }
+
+    function loadVaccineListForGoi() {
+        $.ajax({
+            url: BASE_URL + 'Admin/GetVaccineListForGoi',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if (response.success && response.data) {
+                    let html = '<option value="">-- Chọn vắc xin --</option>';
+                    response.data.forEach(function (vc) {
+                        html += `<option value="${vc.MaVC}">${vc.TenVC} - ${formatCurrency(vc.GiaBan)} VNĐ</option>`;
+                    });
+                    $('#selectVaccine').html(html);
+                }
+            },
+            error: function () {
+                console.error('Error loading vaccine list');
+            }
+        });
+    }
+
+    function onAddVaccineToGoi(e) {
+        e.preventDefault();
+        
+        const maGoi = $('#chiTietMaGoi').val();
+        const maVC = $('#selectVaccine').val();
+        const soMui = $('#soMui').val();
+        const ghiChu = $('#ghiChu').val();
+        
+        if (!maVC) {
+            Swal.fire('Lỗi', 'Vui lòng chọn vắc xin', 'error');
+            return;
+        }
+        
+        const token = $('input[name="__RequestVerificationToken"]').val();
+        
+        $.ajax({
+            url: BASE_URL + 'Admin/AddVaccineToGoi',
+            type: 'POST',
+            data: {
+                MaGoi: maGoi,
+                MaVC: maVC,
+                SoMui: soMui,
+                GhiChu: ghiChu,
+                __RequestVerificationToken: token
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire('Thành công', response.message, 'success');
+                    $('#addVaccineForm')[0].reset();
+                    // Reload chi tiết
+                    $('.btn-chi-tiet[data-id="' + maGoi + '"]').trigger('click');
+                } else {
+                    Swal.fire('Lỗi', response.message, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Lỗi', 'Lỗi hệ thống', 'error');
+            }
+        });
+    }
+
+    function onRemoveVaccineFromGoi(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        
+        Swal.fire({
+            title: 'Xác nhận xóa',
+            text: 'Bạn muốn xóa vắc xin này khỏi gói?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const token = $('input[name="__RequestVerificationToken"]').val();
+                
+                $.ajax({
+                    url: BASE_URL + 'Admin/RemoveVaccineFromGoi',
+                    type: 'POST',
+                    data: { 
+                        id: id,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire('Thành công', response.message, 'success');
+                            // Reload chi tiết
+                            const maGoi = $('#chiTietMaGoi').val();
+                            $('.btn-chi-tiet[data-id="' + maGoi + '"]').trigger('click');
+                        } else {
+                            Swal.fire('Lỗi', response.message, 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Lỗi', 'Lỗi hệ thống', 'error');
+                    }
+                });
+            }
+        });
+    }
+
+    function formatCurrency(number) {
+        return new Intl.NumberFormat('vi-VN').format(number);
+    }
+
+    // Preview hình ảnh khi chọn file
     $(document).ready(function() {
-        // Calculate initial discount price
-        $('#giamGia').trigger('input');
+        $('#hinhAnh').on('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    Swal.fire('Lỗi', 'Kích thước ảnh không được vượt quá 5MB', 'error');
+                    $(this).val('');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').html('<img src="' + e.target.result + '" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     });
 </script>
 }

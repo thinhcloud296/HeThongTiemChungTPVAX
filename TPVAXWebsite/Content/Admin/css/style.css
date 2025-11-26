@@ -1,0 +1,60 @@
+/* Custom Admin Styles */
+
+/* Override AdminLTE styles if needed */
+
+/* Sidebar custom styling */
+.main-sidebar {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card styling */
+.card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Button custom styling */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+/* DataTables custom styling */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: #007bff !important;
+  border-color: #007bff !important;
+}
+
+/* Image preview styling */
+.image-preview {
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+/* Modal styling */
+.modal-content {
+  border-radius: 0.5rem;
+}
+
+/* Status badge styling */
+.badge-active {
+  background-color: #28a745;
+}
+
+.badge-inactive {
+  background-color: #dc3545;
+}
+
+/* Vietnamese font support */
+body {
+  font-family: "Source Sans Pro", "Segoe UI", Tahoma, Geneva, Verdana,
+    sans-serif;
+}

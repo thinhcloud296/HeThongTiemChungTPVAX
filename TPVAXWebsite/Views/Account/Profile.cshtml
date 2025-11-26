@@ -1,0 +1,404 @@
+@model TPVAXWebsite.Models.Domain.KhachHang
+
+@{
+    ViewBag.Title = "Thông Tin Cá Nhân";
+}
+
+@section styles {
+    <style>
+        .profile-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-info h2 {
+            margin: 0;
+            color: #0077b6;
+            font-weight: 700;
+        }
+
+        .profile-info p {
+            margin: 5px 0 0;
+            color: #666;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h4 {
+            color: #0077b6;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e7f3ff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #0077b6;
+            box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #0077b6;
+            color: #0077b6;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-primary:hover {
+            background: #0077b6;
+            color: white;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-card .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .info-card .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .alert {
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+    </style>
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            @(Model.HoTen != null ? Model.HoTen.Substring(0, 1).ToUpper() : "U")
+        </div>
+        <div class="profile-info">
+            <h2>@Model.HoTen</h2>
+            <p><i class="fas fa-envelope"></i> @Model.Email</p>
+            <p><i class="fas fa-phone"></i> @Model.SoDT</p>
+        </div>
+        <div class="ms-auto">
+            <a href="@Url.Action("Dashboard", "Account")" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Quay lại Dashboard
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <!-- Thông tin không thể thay đổi -->
+    <div class="form-section">
+        <h4><i class="fas fa-id-card"></i> Thông Tin Tài Khoản</h4>
+        <div class="info-card">
+            <div class="info-item">
+                <span class="info-label">Mã khách hàng:</span>
+                <span class="info-value">@Model.MaKH</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">CCCD/CMND:</span>
+                <span class="info-value">@Model.CCCD</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Số điện thoại:</span>
+                <span class="info-value">@Model.SoDT</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form cập nhật thông tin -->
+    <form id="updateProfileForm" method="post" action="@Url.Action("CapNhatThongTin", "Account")">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaKH)
+        @Html.HiddenFor(m => m.CCCD)
+        @Html.HiddenFor(m => m.SoDT)
+        @Html.HiddenFor(m => m.MaTK)
+
+        <div class="form-section">
+            <h4><i class="fas fa-user-edit"></i> Thông Tin Cá Nhân</h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="HoTen">Họ và tên <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", required = "required" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="NgaySinh">Ngày sinh</label>
+                        @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="GioiTinh">Giới tính</label>
+                        @Html.DropDownListFor(m => m.GioiTinh, new SelectList(new[] { "Nam", "Nữ", "Khác" }, Model.GioiTinh), "-- Chọn giới tính --", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="DiaChi">Địa chỉ</label>
+                @Html.TextAreaFor(m => m.DiaChi, new { @class = "form-control", rows = 3, placeholder = "Nhập địa chỉ đầy đủ..." })
+            </div>
+
+            <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Lưu thay đổi
+                </button>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                    <i class="fas fa-key"></i> Đổi mật khẩu
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Đổi Mật Khẩu -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-key"></i> Đổi Mật Khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="MatKhauCu">Mật khẩu hiện tại <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="MatKhauCu" name="MatKhauCu" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="MatKhauMoi">Mật khẩu mới <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="MatKhauMoi" name="MatKhauMoi" required minlength="6" />
+                        <small class="text-muted">Tối thiểu 6 ký tự</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="XacNhanMatKhauMoi">Xác nhận mật khẩu mới <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="XacNhanMatKhauMoi" name="XacNhanMatKhauMoi" required />
+                    </div>
+                    <div id="passwordMessage" class="alert" style="display: none;"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="changePassword()">
+                    <i class="fas fa-save"></i> Đổi mật khẩu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        // Xử lý cập nhật thông tin
+        $('#updateProfileForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '@Url.Action("CapNhatThongTin", "Account")',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(function () {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Có lỗi xảy ra. Vui lòng thử lại sau.'
+                    });
+                }
+            });
+        });
+
+        // Xử lý đổi mật khẩu
+        function changePassword() {
+            var form = $('#changePasswordForm');
+            var matKhauMoi = $('#MatKhauMoi').val();
+            var xacNhan = $('#XacNhanMatKhauMoi').val();
+
+            if (matKhauMoi !== xacNhan) {
+                $('#passwordMessage')
+                    .removeClass('alert-success')
+                    .addClass('alert-danger')
+                    .text('Xác nhận mật khẩu không khớp!')
+                    .show();
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("DoiMatKhau", "Account")',
+                type: 'POST',
+                data: form.serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        $('#changePasswordModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(function () {
+                            form[0].reset();
+                        });
+                    } else {
+                        $('#passwordMessage')
+                            .removeClass('alert-success')
+                            .addClass('alert-danger')
+                            .text(response.message)
+                            .show();
+                    }
+                },
+                error: function () {
+                    $('#passwordMessage')
+                        .removeClass('alert-success')
+                        .addClass('alert-danger')
+                        .text('Có lỗi xảy ra. Vui lòng thử lại sau.')
+                        .show();
+                }
+            });
+        }
+
+        // Reset message khi đóng modal
+        $('#changePasswordModal').on('hidden.bs.modal', function () {
+            $('#changePasswordForm')[0].reset();
+            $('#passwordMessage').hide();
+        });
+    </script>
+}

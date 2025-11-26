@@ -11,18 +11,30 @@ namespace TPVAXWebsite.Common
 
         public static string GenMaKH(string CCCD)
         {
-            string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;
-            return string.Equals(cccdSuffix, string.Empty) ? string.Empty : "KHHG" + cccdSuffix;
+            if (string.IsNullOrEmpty(CCCD) || CCCD.Length < 12)
+                return "KH" + _random.Next(10000000, 99999999).ToString();
+            
+            string cccdSuffix = CCCD.Substring(CCCD.Length - 6);
+            return "KH" + cccdSuffix;
         }
+        
         public static string GenMaLK(string CCCD)
         {
-            string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;
-            return string.Equals(cccdSuffix, string.Empty) ? string.Empty : "LKHS" + cccdSuffix;
+            if (string.IsNullOrEmpty(CCCD) || CCCD.Length < 12)
+                return "LK" + _random.Next(10000000, 99999999).ToString();
+            
+            string cccdSuffix = CCCD.Substring(CCCD.Length - 6);
+            string timestamp = DateTime.Now.ToString("HHmmss");
+            return "LK" + cccdSuffix;
         }
+        
         public static string GenMaHSTC(string CCCD)
         {
-            string cccdSuffix = CCCD.Length == 12 ? CCCD.Substring(6, 6) : string.Empty;
-            return string.Equals(cccdSuffix, string.Empty) ? string.Empty : "HSTC" + cccdSuffix;
+            if (string.IsNullOrEmpty(CCCD) || CCCD.Length < 12)
+                return "HS" + _random.Next(10000000, 99999999).ToString();
+            
+            string cccdSuffix = CCCD.Substring(CCCD.Length - 6);
+            return "HS" + cccdSuffix;
         }
         public static string GenMaTK()
         {

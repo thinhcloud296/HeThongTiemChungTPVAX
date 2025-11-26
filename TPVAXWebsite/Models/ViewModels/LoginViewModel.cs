@@ -4,9 +4,9 @@ namespace TPVAXWebsite.Models.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập")]
-        [Display(Name = "Tên đăng nhập")]
-        public string TenDangNhap { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập email hoặc số điện thoại")]
+        [Display(Name = "Email hoặc SĐT")]
+        public string Identifier { get; set; } // dùng chung cho email hoặc SĐT
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]
