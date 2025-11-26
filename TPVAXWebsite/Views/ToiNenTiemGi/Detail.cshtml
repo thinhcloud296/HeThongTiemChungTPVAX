@@ -1,0 +1,154 @@
+﻿@model TPVAXWebsite.Models.ViewModels.VaccineDetailViewModel
+@{
+    ViewBag.Title = Model.Vaccine.TenVaccine;
+}
+
+<nav aria-label="breadcrumb" class="bg-light py-3">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "ToiNenTiemGi")">Tôi nên tiêm gì?</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Vaccine.TenVaccine</li>
+        </ol>
+    </div>
+</nav>
+
+<section class="container my-5">
+    <div class="row">
+        <!-- Hình ảnh vaccine -->
+        <div class="col-lg-5 mb-4">
+            <div class="sticky-top" style="top: 100px;">
+                <div class="card shadow-sm">
+                    <img src="@Url.Content("~/Content/Images/Vaccines/" + (Model.Vaccine.HinhAnh ?? "hexaxim.png"))"
+                         alt="@Model.Vaccine.TenVaccine"
+                         class="card-img-top"
+                         style="width: 100%; height: 400px; object-fit: cover;" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin vaccine -->
+        <div class="col-lg-7">
+            <h1 class="h2 fw-bold text-primary mb-3">@Model.Vaccine.TenVaccine</h1>
+
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <span class="badge bg-primary fs-6">@(Model.Vaccine.TenLoaiVaccine ?? "Vắc xin")</span>
+                @if (!string.IsNullOrEmpty(Model.Vaccine.NuocSanXuat))
+                {
+                    <span class="text-muted">
+                        <i class="fas fa-globe me-1"></i>Xuất xứ: <strong>@Model.Vaccine.NuocSanXuat</strong>
+                    </span>
+                }
+            </div>
+
+            <div class="card border-warning shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="h4 text-warning fw-bold mb-0">
+                        @string.Format("{0:N0}₫", Model.Vaccine.GiaBan)
+                        <small class="text-muted fs-6">/ liều</small>
+                    </h3>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="h5 fw-bold mb-3"><i class="fas fa-info-circle me-2 text-primary"></i>Mô tả</h4>
+                <p class="text-secondary">@Html.Raw(Model.Vaccine.MoTa)</p>
+            </div>
+
+            @if (Model.CacBenhPhong != null && Model.CacBenhPhong.Any())
+            {
+                <div class="mb-4">
+                    <h4 class="h5 fw-bold mb-3"><i class="fas fa-shield-virus me-2 text-primary"></i>Phòng chống các bệnh</h4>
+                    <div class="row g-2">
+                        @foreach (var benh in Model.CacBenhPhong)
+                        {
+                            <div class="col-md-6">
+                                <div class="alert alert-light border mb-0">
+                                    <i class="fas fa-check text-success me-2"></i>@benh
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="card border-0 bg-light mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-clipboard-list me-2"></i>Thông tin chi tiết</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <p class="mb-2"><strong>Hãng sản xuất:</strong></p>
+                            <p class="text-muted">@(Model.Vaccine.TenNCC ?? "Đang cập nhật")</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2"><strong>Nước sản xuất:</strong></p>
+                            <p class="text-muted">@(Model.Vaccine.NuocSanXuat ?? "Đang cập nhật")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút hành động -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button id="btnDatLich" class="btn btn-primary btn-lg">
+                            <i class="fas fa-calendar-check me-2"></i>Đặt lịch tiêm ngay
+                        </button>
+
+                        <a href="tel:0975088626" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-phone me-2"></i>Gọi tư vấn: 0975 088 626
+                        </a>
+                        <a href="@Url.Action("Index","ToiNenTiemGi")" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách gợi ý
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (Model.VaccinesLienQuan != null && Model.VaccinesLienQuan.Any())
+{
+    <section class="bg-light py-5">
+        <div class="container">
+            <h3 class="h4 fw-bold mb-4">
+                <i class="fas fa-syringe me-2 text-primary"></i>Một vài vaccine khác bạn có thể quan tâm
+            </h3>
+            <div class="row g-4">
+                @foreach (var vaccine in Model.VaccinesLienQuan.Take(3))
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 shadow-sm">
+                            <img src="@Url.Content("~/Content/Images/Vaccines/" + (vaccine.HinhAnh ?? "hexaxim.png"))"
+                                 class="card-img-top"
+                                 style="height: 200px; object-fit: cover;"
+                                 alt="@vaccine.TenVC" />
+                            <div class="card-body">
+                                <h5 class="card-title">@vaccine.TenVC</h5>
+                                <p class="text-warning fw-bold">@string.Format("{0:N0}₫", vaccine.GiaBan)</p>
+                                <a href="@Url.Action("Detail", "ToiNenTiemGi", new { id = vaccine.MaVC })"
+                                   class="btn btn-outline-primary w-100">
+                                    Xem chi tiết
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Script inline để không cần RenderSection -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("btnDatLich");
+        if (btn) {
+            btn.addEventListener("click", function () {
+                alert("Tính năng đặt lịch tiêm ngay đang được phát triển. Vui lòng quay lại sau!");
+            });
+        }
+    });
+</script>
