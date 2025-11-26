@@ -1346,4 +1346,18 @@ BEGIN
     ORDER BY km.NgayBatDau DESC; 
 END
 GO
+
+-- 21. Bảng BaiViet (Kiến thức tiêm chủng)
+CREATE TABLE BaiViet (
+    MaBV INT PRIMARY KEY IDENTITY(1,1),
+    TieuDe NVARCHAR(255) NOT NULL,       -- Tiêu đề bài viết
+    TomTat NVARCHAR(500),                -- Tóm tắt ngắn
+    NoiDung NVARCHAR(MAX) NOT NULL,      -- Nội dung chi tiết
+    HinhAnh VARCHAR(255),                -- Ảnh minh họa
+    DanhMuc NVARCHAR(100),               -- Chuyên mục (Mẹ và bé, Bệnh truyền nhiễm…)
+    Tag NVARCHAR(255),                   -- Từ khóa SEO
+    NgayDang DATETIME DEFAULT GETDATE(), -- Ngày đăng
+    TrangThai BIT DEFAULT 1              -- 1: Hiển thị, 0: Ẩn
+);
 /* =================================================================  */
+
