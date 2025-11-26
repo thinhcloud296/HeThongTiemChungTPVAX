@@ -297,6 +297,8 @@
     <Compile Include="Models\ViewModels\AdminViewModels.cs" />
     <Compile Include="Models\ViewModels\BaiVietViewModel.cs" />
     <Compile Include="Models\ViewModels\BenhViewModel.cs" />
+    <Compile Include="Models\ViewModels\CheckoutViewModel.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css.map" />

@@ -21,6 +21,8 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(10)]
         public string MaNCC { get; set; }
 
+        public bool TrangThai { get; set; } = false;
+
         // Navigation properties
         [ForeignKey("MaNV")]
         public virtual NhanVien NhanVien { get; set; }

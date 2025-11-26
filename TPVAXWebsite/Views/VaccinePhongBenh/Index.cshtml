@@ -165,15 +165,14 @@
                   >
                     <i class="fas fa-info-circle me-1"></i> Chi tiết
                   </a>
-                  <button
-                    class="btn btn-outline-success flex-fill rounded-pill btn-price-custom-card"
-                    onclick="addToCart('@vaccine.MaVC')"
+                  <a
+                    href="@Url.Action("DatLich", "LichTiem", new { maVC = vaccine.MaVC })"
+                    class="btn btn-outline-success flex-fill rounded-pill btn-price-custom-card @(vaccine.SoLuong <= 0 ? "disabled" : "")"
                     aria-label="Đặt lịch tiêm @vaccine.TenVC"
-                    @(vaccine.SoLuong <= 0 ? "disabled" : "")
                     style="font-weight: 600; background: transparent;"
                   >
                     <i class="fas fa-calendar-check me-1"></i> Đặt lịch
-                  </button>
+                  </a>
                 </div>
               </article>
             </div>
@@ -258,9 +257,36 @@
   </div>
 </section>
 
+@section scripts {
 <script>
     function addToCart(productId) {
-        // TODO: Implement AJAX call to add to cart
-        alert('Đã thêm vào giỏ hàng: ' + productId);
+        $.ajax({
+            url: '@Url.Action("ThemVaoGio", "GioHang")',
+            type: 'POST',
+            data: { 
+                MaSanPham: productId, 
+                LoaiSanPham: 'VACCINE', 
+                SoLuong: 1 
+            },
+            success: function (data) {
+                if (data.success) {
+                    $('.cart-count').text(data.cartCount);
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: data.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    Swal.fire('Lỗi', data.message, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Lỗi', 'Vui lòng đăng nhập để thêm vào giỏ hàng', 'error');
+            }
+        });
     }
 </script>
+}

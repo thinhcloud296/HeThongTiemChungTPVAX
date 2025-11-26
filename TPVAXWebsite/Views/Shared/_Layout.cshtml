@@ -46,6 +46,7 @@
     
     @Html.Partial("_Footer")
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.bundle.min.js")"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -54,6 +55,26 @@
             scrollToTopBtn.classList.toggle("show", window.pageYOffset > 300);
         });
         scrollToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        // Load cart count on page load
+        $(document).ready(function() {
+            @if (Session["User"] != null)
+            {
+                <text>
+                $.ajax({
+                    url: '@Url.Action("GetCartCount", "GioHang")',
+                    type: 'GET',
+                    success: function(data) {
+                        if (data.count > 0) {
+                            $('.cart-count').text(data.count).show();
+                        } else {
+                            $('.cart-count').hide();
+                        }
+                    }
+                });
+                </text>
+            }
+        });
     </script>
     @RenderSection("scripts", required: false)
 </body>

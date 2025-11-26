@@ -156,8 +156,8 @@ namespace TPVAXWebsite.Controllers
                     NgaySinh = model.NgaySinh,
                     SoDT = model.SoDT,
                     Email = model.Email,
-                    GioiTinh = null,
-                    DiaChi = null,
+                    GioiTinh = model.GioiTinh,
+                    DiaChi = model.DiaChi,
                     MaTK = taiKhoan.MaTK
                 };
                 _uow.KhachHangs.Add(khachHang);
@@ -183,7 +183,7 @@ namespace TPVAXWebsite.Controllers
                         HoTen = model.HoTen,
                         CCCD = model.CCCD,
                         NgaySinh = model.NgaySinh,
-                        GioiTinh = "Khác",
+                        GioiTinh = model.GioiTinh,
                         TrangThai = true
                     };
                     _uow.HoSoTiemChungs.Add(hoSoMoi);
@@ -416,7 +416,7 @@ namespace TPVAXWebsite.Controllers
 
         // GET: Account/Profile
         [HttpGet]
-        public ActionResult Profile()
+        public new ActionResult Profile()
         {
             var kh = Session["KH"] as KhachHang;
             if (kh == null) 

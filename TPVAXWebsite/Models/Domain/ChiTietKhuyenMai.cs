@@ -11,17 +11,13 @@ namespace TPVAXWebsite.Models.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MaCTKM { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string LoaiSanPham { get; set; }
 
-        [StringLength(20)]
+        [Required]
+        [StringLength(10)]
         public string MaSanPham { get; set; }
-
-        public DateTime? NgayApDung { get; set; }
-
-        public DateTime? NgayKetThuc { get; set; }
-
-        public string GhiChu { get; set; }
 
         [Required]
         [StringLength(10)]

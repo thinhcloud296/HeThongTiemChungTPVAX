@@ -35,11 +35,10 @@
                 }
                 else
                 {
-                    @{
-                        var kh = Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang;
-                        var nv = Session["NV"] as TPVAXWebsite.Models.Domain.NhanVien;
-                        var userName = kh != null ? kh.HoTen : (nv != null ? nv.HoTen : "Người dùng");
-                    }
+                    var kh = Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang;
+                    var nv = Session["NV"] as TPVAXWebsite.Models.Domain.NhanVien;
+                    var userName = kh != null ? kh.HoTen : (nv != null ? nv.HoTen : "Người dùng");
+                    
                     <a href="@Url.Action("Dashboard", "Account")" class="btn btn-primary rounded-pill mx-1" id="dashboardBtn" aria-label="Tài khoản của tôi">
                         <i class="fas fa-user-circle me-1"></i>@userName
                     </a>
@@ -47,17 +46,18 @@
                         <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
                     </a>
                 }
-                <div class="vr mx-2 d-none d-lg-block"></div>
-                <a href="@Url.Action("Dashboard", "Account")" class="btn btn-outline-primary rounded-pill d-flex align-items-center" id="profileBtn" aria-label="Hồ sơ của tôi">
-                    <i class="fas fa-user-circle me-1"></i><span>Hồ sơ</span>
-                </a>
-                <div class="position-relative">
-                    <a href="@Url.Action("Index", "GioHang")" class="btn d-flex align-items-center btn-cart-custom" aria-label="Giỏ hàng có 3 sản phẩm">
-                        <img src="@Url.Content("~/Content/Assets/Icons/cart.png")" alt="" aria-hidden="true" class="toolbar-icon-small" loading="lazy" />
-                        <span class="ms-2">Giỏ hàng</span>
-                    </a>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" aria-label="3 Sản phẩm trong giỏ">3</span>
-                </div>
+                
+                @if (Session["User"] != null)
+                {
+                    <div class="vr mx-2 d-none d-lg-block"></div>
+                    <div class="position-relative">
+                        <a href="@Url.Action("Index", "GioHang")" class="btn d-flex align-items-center btn-cart-custom" aria-label="Giỏ hàng">
+                            <img src="@Url.Content("~/Content/Assets/Icons/cart.png")" alt="" aria-hidden="true" class="toolbar-icon-small" loading="lazy" />
+                            <span class="ms-2">Giỏ hàng</span>
+                        </a>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-count" style="display: none;">0</span>
+                    </div>
+                }
             </div>
         </div>
     </div>

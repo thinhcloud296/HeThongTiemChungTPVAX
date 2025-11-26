@@ -168,28 +168,42 @@
                 const quantity = parseInt($('#quantity').val());
                 const button = $(this);
 
-                // SỬA: Đổi thành tiếng Việt có dấu
                 button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Đang thêm...');
 
-                $.post('@Url.Action("Add", "GioHang")', { vaccineId: vaccineId, soLuong: quantity }, function (data) {
-                    if (data.success) {
-                        $('#cart-count').text(data.cartCount);
-                        // SỬA: Đổi thành tiếng Việt có dấu
-                        alert('Đã thêm ' + quantity + ' liều "' + vaccineName + '" vào giỏ hàng!');
+                $.ajax({
+                    url: '@Url.Action("ThemVaoGio", "GioHang")',
+                    type: 'POST',
+                    data: { 
+                        MaSanPham: vaccineId, 
+                        LoaiSanPham: 'VACCINE', 
+                        SoLuong: quantity 
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            // Cập nhật số lượng giỏ hàng trên header
+                            $('.cart-count').text(data.cartCount);
+                            
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: 'Đã thêm ' + quantity + ' liều "' + vaccineName + '" vào giỏ hàng!',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
 
-                        button.html('<i class="fas fa-check me-2"></i>Đã thêm vào giỏ');
-                        setTimeout(() => {
+                            button.html('<i class="fas fa-check me-2"></i>Đã thêm vào giỏ');
+                            setTimeout(() => {
+                                button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
+                            }, 2000);
+                        } else {
+                            Swal.fire('Lỗi', data.message, 'error');
                             button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
-                        }, 2000);
-                    } else {
-                        // SỬA: Đổi thành tiếng Việt có dấu
-                        alert('Lỗi: ' + (data.message || 'Không thể thêm vào giỏ hàng'));
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Lỗi', 'Vui lòng đăng nhập để thêm vào giỏ hàng', 'error');
                         button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
                     }
-                }).fail(function () {
-                    // SỬA: Đổi thành tiếng Việt có dấu
-                    alert('Vui lòng đăng nhập để thêm vào giỏ hàng');
-                    button.prop('disabled', false).html('<i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng');
                 });
             });
         });

@@ -124,8 +124,8 @@
                             <a href="@Url.Action("Detail", "GoiVaccine", new { id = goi.MaGoi })" class="btn btn-primary flex-fill rounded-pill">
                                 <i class="fas fa-info-circle me-2"></i>Chi tiết
                             </a>
-                            <button class="btn btn-success flex-fill rounded-pill" onclick="alert('Chức năng đặt lịch đang phát triển')">
-                                <i class="fas fa-calendar-check me-2"></i>Đặt hẹn
+                            <button class="btn btn-success flex-fill rounded-pill" onclick="addToCartPackage('@goi.MaGoi')">
+                                <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
                             </button>
                         </div>
                         @if (goi.TrangThai == "Hoạt động" || goi.TrangThai == "Đang bán")
@@ -283,3 +283,37 @@
         border-color: #0077b6;
     }
 </style>
+
+@section scripts {
+    <script>
+        function addToCartPackage(packageId) {
+            $.ajax({
+                url: '@Url.Action("ThemVaoGio", "GioHang")',
+                type: 'POST',
+                data: { 
+                    MaSanPham: packageId, 
+                    LoaiSanPham: 'GOIVACCINE', 
+                    SoLuong: 1 
+                },
+                success: function (data) {
+                    if (data.success) {
+                        $('.cart-count').text(data.cartCount);
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire('Lỗi', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Lỗi', 'Vui lòng đăng nhập để thêm vào giỏ hàng', 'error');
+                }
+            });
+        }
+    </script>
+}

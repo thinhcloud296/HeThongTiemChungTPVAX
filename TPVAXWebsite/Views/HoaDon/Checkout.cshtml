@@ -1,4 +1,4 @@
-@model TPVAXWebsite.Models.ViewModels.GioHangViewModel
+@model TPVAXWebsite.Models.ViewModels.CheckoutViewModel
 @{
     ViewBag.Title = "Thanh toan";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -317,83 +317,52 @@
                         </h4>
 
                         <!-- Customer Info -->
-                        <div class="info-card selected">
-                            <h6 class="mb-3">
-                                <i class="fas fa-user me-2"></i>Thong tin nguoi dat
-                            </h6>
-                            <div class="row">
-                                <div class="col-md-6 mb-2">
-                                    <strong>Ho ten:</strong> Tran Tan Tai
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>SDT:</strong> 0975088626
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Email:</strong> tantai@example.com
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Ngay sinh:</strong> 01/02/2004
-                                </div>
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary mt-2">
-                                <i class="fas fa-edit me-1"></i>Chinh sua
-                            </button>
-                        </div>
-
-                        <!-- Vaccination Person -->
-                        <div class="info-card selected">
-                            <h6 class="mb-3">
-                                <i class="fas fa-syringe me-2"></i>Nguoi duoc tiem
-                            </h6>
-                            <div class="row">
-                                <div class="col-md-6 mb-2">
-                                    <strong>Ho ten:</strong> Tran Minh Anh
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Quan he:</strong> Con gai
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Ngay sinh:</strong> 15/08/2020
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Gioi tinh:</strong> Nu
+                        @if (Model != null && Model.KhachHang != null)
+                        {
+                            <div class="info-card selected">
+                                <h6 class="mb-3">
+                                    <i class="fas fa-user me-2"></i>Thong tin nguoi dat
+                                </h6>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <strong>Ho ten:</strong> @Model.KhachHang.HoTen
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <strong>SDT:</strong> @Model.KhachHang.SoDT
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <strong>Email:</strong> @Model.KhachHang.Email
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <strong>Ngay sinh:</strong> @(Model.KhachHang.NgaySinh?.ToString("dd/MM/yyyy") ?? "--")
+                                    </div>
                                 </div>
                             </div>
-                            <button class="btn btn-sm btn-outline-primary mt-2">
-                                <i class="fas fa-sync-alt me-1"></i>Doi nguoi tiem
-                            </button>
-                        </div>
+                        }
 
-                        <!-- Appointment Details -->
+                        <!-- Lich hen tiem -->
                         <div class="info-card">
                             <h6 class="mb-3">
-                                <i class="fas fa-calendar-alt me-2"></i>Thong tin lich hen
+                                <i class="fas fa-calendar-check me-2"></i>Chon lich hen tiem
                             </h6>
                             <div class="mb-3">
-                                <label class="form-label"><strong>Chon ngay tiem</strong></label>
-                                <input type="date" class="form-control" id="appointmentDate" min="2025-11-18" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label"><strong>Chon gio tiem</strong></label>
-                                <select class="form-select" id="appointmentTime">
-                                    <option value="">-- Chon khung gio --</option>
-                                    <option>08:00 - 09:00</option>
-                                    <option>09:00 - 10:00</option>
-                                    <option>10:00 - 11:00</option>
-                                    <option>13:00 - 14:00</option>
-                                    <option>14:00 - 15:00</option>
-                                    <option>15:00 - 16:00</option>
-                                </select>
+                                <label class="form-label"><strong>Ngay hen tiem <span class="text-danger">*</span></strong></label>
+                                <input type="date" class="form-control" id="ngayHenTiem" required />
+                                <small class="text-muted">Chon ngay ban muon den trung tam tiem chung</small>
                             </div>
                             <div>
-                                <label class="form-label"><strong>Chon trung tam</strong></label>
-                                <select class="form-select" id="center">
-                                    <option value="">-- Chon trung tam tiem chung --</option>
-                                    <option>Trung tam TPVAX Quan 1 - 123 Nguyen Hue, Q1, TP.HCM</option>
-                                    <option>Trung tam TPVAX Tan Phu - 140 Le Trong Tan, Tan Phu, TP.HCM</option>
-                                    <option>Trung tam TPVAX Binh Thanh - 456 Xo Viet Nghe Tinh, Binh Thanh, TP.HCM</option>
-                                    <option>Trung tam TPVAX Thu Duc - 789 Vo Van Ngan, Thu Duc, TP.HCM</option>
+                                <label class="form-label"><strong>Gio hen tiem <span class="text-danger">*</span></strong></label>
+                                <select class="form-select" id="gioHenTiem" required>
+                                    <option value="">-- Chon khung gio --</option>
+                                    <option value="08:00">08:00 - 09:00</option>
+                                    <option value="09:00">09:00 - 10:00</option>
+                                    <option value="10:00">10:00 - 11:00</option>
+                                    <option value="13:00">13:00 - 14:00</option>
+                                    <option value="14:00">14:00 - 15:00</option>
+                                    <option value="15:00">15:00 - 16:00</option>
+                                    <option value="16:00">16:00 - 17:00</option>
                                 </select>
+                                <small class="text-muted">Vui long den dung gio de tranh cho doi</small>
                             </div>
                         </div>
 
@@ -407,22 +376,6 @@
                         <h4 class="mb-4">
                             <i class="fas fa-credit-card me-2 text-primary"></i>Chon phuong thuc thanh toan
                         </h4>
-
-                        <!-- Cash Payment -->
-                        <div class="payment-method" onclick="selectPayment('cash')">
-                            <div class="d-flex align-items-center">
-                                <input type="radio" name="payment" id="payment-cash" class="me-3" />
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">
-                                        <i class="fas fa-money-bill-wave me-2 text-success"></i>
-                                        Thanh toan tien mat tai trung tam
-                                    </h6>
-                                    <p class="mb-0 text-muted small">
-                                        Thanh toan khi den trung tam tiem chung
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Bank Transfer -->
                         <div class="payment-method" onclick="selectPayment('transfer')">
@@ -534,9 +487,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (Model != null && Model.Items != null)
+                                        @if (Model != null && Model.GioHang != null)
                                         {
-                                            foreach (var item in Model.Items)
+                                            foreach (var item in Model.GioHang)
                                             {
                                                 <tr>
                                                     <td>@item.TenSanPham</td>
@@ -546,39 +499,22 @@
                                                 </tr>
                                             }
                                         }
-                                        else
-                                        {
-                                            <tr>
-                                                <td>Vaccine HPV (Gardasil 9)</td>
-                                                <td>1</td>
-                                                <td>1.750.000d</td>
-                                                <td><strong>1.750.000d</strong></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Vaccine Phe cau (Prevenar 13)</td>
-                                                <td>1</td>
-                                                <td>1.200.000d</td>
-                                                <td><strong>1.200.000d</strong></td>
-                                            </tr>
-                                        }
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <!-- Appointment Info -->
+                        <!-- Lich hen tiem -->
                         <div class="info-card">
                             <h6 class="mb-3">Thong tin lich hen</h6>
                             <p class="mb-2">
-                                <strong>Ngay gio:</strong>
-                                <span id="confirmDate">--</span> -
-                                <span id="confirmTime">--</span>
+                                <strong>Ngay hen:</strong>
+                                <span id="confirmNgayHen">--</span>
                             </p>
-                            <p class="mb-2">
-                                <strong>Trung tam:</strong>
-                                <span id="confirmCenter">--</span>
+                            <p class="mb-0">
+                                <strong>Gio hen:</strong>
+                                <span id="confirmGioHen">--</span>
                             </p>
-                            <p class="mb-0"><strong>Nguoi tiem:</strong> Tran Minh Anh</p>
                         </div>
 
                         <!-- Payment Info -->
@@ -603,7 +539,7 @@
                                 <i class="fas fa-arrow-left me-2"></i>Quay lai
                             </button>
                             <button class="btn btn-success btn-lg flex-grow-1" onclick="confirmOrder()">
-                                <i class="fas fa-check-circle me-2"></i>Xac nhan dat hen
+                                <i class="fas fa-check-circle me-2"></i>Xac nhan thanh toan
                             </button>
                         </div>
                     </div>
@@ -614,98 +550,31 @@
                             <div class="success-icon">
                                 <i class="fas fa-check-circle"></i>
                             </div>
-                            <h2 class="mt-4 mb-3 text-success">Dat lich thanh cong!</h2>
+                            <h2 class="mt-4 mb-3 text-success">Dat hang thanh cong!</h2>
                             <p class="lead mb-4">
                                 Ma don hang cua ban:
-                                <strong class="text-primary">#DH123456</strong>
+                                <strong class="text-primary" id="orderCode">--</strong>
                             </p>
 
-                            <div class="alert alert-info mb-4">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Thong tin chi tiet da duoc gui den email
-                                <strong>tantai@example.com</strong>
-                            </div>
+                            @if (Model != null && Model.KhachHang != null && !string.IsNullOrEmpty(Model.KhachHang.Email))
+                            {
+                                <div class="alert alert-info mb-4">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Thong tin chi tiet da duoc gui den email
+                                    <strong>@Model.KhachHang.Email</strong>
+                                </div>
+                            }
 
                             <div class="d-flex flex-column gap-3 mx-auto" style="max-width: 400px">
-                                <a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-calendar-check me-2"></i>Xem lich hen cua toi
+                                <a href="@Url.Action("Index", "HoaDon")" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-receipt me-2"></i>Xem don hang cua toi
                                 </a>
                                 <a href="@Url.Action("Index", "VaccinePhongBenh")" class="btn btn-outline-primary btn-lg">
-                                    <i class="fas fa-redo me-2"></i>Dat lich moi
+                                    <i class="fas fa-shopping-cart me-2"></i>Tiep tuc mua sam
                                 </a>
                                 <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary btn-lg">
                                     <i class="fas fa-home me-2"></i>Ve trang chu
                                 </a>
-                            </div>
-
-                            <div class="mt-5">
-                                <h5 class="mb-3">Huong dan tiep theo</h5>
-                                <div class="row text-start">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="d-flex gap-3">
-                                            <div class="flex-shrink-0">
-                                                <div class="bg-primary text-white rounded-circle"
-                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                                    1
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h6>Chuan bi truoc khi tiem</h6>
-                                                <p class="small mb-0">
-                                                    Dam bao nguoi tiem khoe manh, khong sot, khong om
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="d-flex gap-3">
-                                            <div class="flex-shrink-0">
-                                                <div class="bg-primary text-white rounded-circle"
-                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                                    2
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h6>Mang theo giay to</h6>
-                                                <p class="small mb-0">
-                                                    CCCD/CMND, giay khai sinh (neu tiem cho tre)
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="d-flex gap-3">
-                                            <div class="flex-shrink-0">
-                                                <div class="bg-primary text-white rounded-circle"
-                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                                    3
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h6>Den dung gio</h6>
-                                                <p class="small mb-0">
-                                                    Co mat truoc 15 phut de lam thu tuc
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="d-flex gap-3">
-                                            <div class="flex-shrink-0">
-                                                <div class="bg-primary text-white rounded-circle"
-                                                     style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                                    4
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h6>Sau khi tiem</h6>
-                                                <p class="small mb-0">
-                                                    O lai trung tam 30 phut de theo doi
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -719,9 +588,9 @@
                         <i class="fas fa-receipt me-2"></i>Tom tat don hang
                     </h5>
 
-                    @if (Model != null && Model.Items != null)
+                    @if (Model != null && Model.GioHang != null)
                     {
-                        foreach (var item in Model.Items)
+                        foreach (var item in Model.GioHang)
                         {
                             <div class="summary-item">
                                 <span>@item.TenSanPham</span>
@@ -730,47 +599,25 @@
                         }
 
                         <div class="summary-item">
-                            <span>Phi dich vu</span>
-                            <strong>50.000d</strong>
+                            <span>Tam tinh</span>
+                            <strong>@string.Format("{0:N0}d", Model.TongTienTruocGiam)</strong>
                         </div>
-                        <div class="summary-item">
-                            <span class="text-success">Giam gia</span>
-                            <strong class="text-success">-@string.Format("{0:N0}d", Model.TienGiam)</strong>
-                        </div>
+                        if (Model.TienGiam > 0)
+                        {
+                            <div class="summary-item">
+                                <span class="text-success">Giam gia</span>
+                                <strong class="text-success">-@string.Format("{0:N0}d", Model.TienGiam)</strong>
+                            </div>
+                        }
 
                         <hr class="my-3" />
 
                         <div class="summary-item summary-total">
                             <span>Tong cong</span>
-                            <span>@string.Format("{0:N0}d", Model.ThanhToan)</span>
+                            <span>@string.Format("{0:N0}d", Model.TongTienSauGiam)</span>
                         </div>
                     }
-                    else
-                    {
-                        <div class="summary-item">
-                            <span>Vaccine HPV</span>
-                            <strong>1.750.000d</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Vaccine Phe cau</span>
-                            <strong>1.200.000d</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Phi dich vu</span>
-                            <strong>50.000d</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span class="text-success">Giam gia</span>
-                            <strong class="text-success">-200.000d</strong>
-                        </div>
 
-                        <hr class="my-3" />
-
-                        <div class="summary-item summary-total">
-                            <span>Tong cong</span>
-                            <span>2.800.000d</span>
-                        </div>
-                    }
 
                     <div class="mt-4">
                         <div class="input-group mb-3">
@@ -781,10 +628,7 @@
                         </div>
                     </div>
 
-                    <div class="alert alert-success mt-3">
-                        <i class="fas fa-gift me-2"></i>
-                        <small><strong>Uu dai:</strong> Giam 200.000d cho don hang dau tien</small>
-                    </div>
+
 
                     <div class="mt-4 text-center">
                         <p class="small text-muted mb-0">
@@ -837,19 +681,29 @@
     function nextStep() {
         // Validation for each step
         if (currentStep === 1) {
-            const date = document.getElementById("appointmentDate").value;
-            const time = document.getElementById("appointmentTime").value;
-            const center = document.getElementById("center").value;
+            const ngayHen = document.getElementById("ngayHenTiem").value;
+            const gioHen = document.getElementById("gioHenTiem").value;
 
-            if (!date || !time || !center) {
-                alert("Vui long chon day du thong tin lich hen!");
+            if (!ngayHen || !gioHen) {
+                alert("Vui long chon ngay va gio hen tiem!");
                 return;
             }
 
-            // Store values for confirmation
-            document.getElementById("confirmDate").textContent = new Date(date).toLocaleDateString("vi-VN");
-            document.getElementById("confirmTime").textContent = time;
-            document.getElementById("confirmCenter").textContent = center;
+            // Kiem tra ngay hen phai tu ngay mai tro di
+            const selectedDate = new Date(ngayHen);
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+
+            if (selectedDate < tomorrow) {
+                alert("Ngay hen tiem phai tu ngay mai tro di!");
+                return;
+            }
+
+            // Luu thong tin de xac nhan sau
+            document.getElementById("confirmNgayHen").textContent = 
+                new Date(ngayHen).toLocaleDateString("vi-VN");
+            document.getElementById("confirmGioHen").textContent = gioHen;
         }
 
         if (currentStep === 2) {
@@ -895,16 +749,48 @@
             return;
         }
 
-        // Simulate API call
+        const selectedPayment = document.querySelector('input[name="payment"]:checked');
+        if (!selectedPayment) {
+            alert("Vui long chon phuong thuc thanh toan!");
+            return;
+        }
+
+        // Call payment API
         const btn = event.target;
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Dang xu ly...';
 
-        setTimeout(() => {
-            nextStep();
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xac nhan dat hen';
-        }, 2000);
+        const ngayHen = document.getElementById("ngayHenTiem").value;
+        const gioHen = document.getElementById("gioHenTiem").value;
+
+        $.ajax({
+            url: '@Url.Action("XacNhanThanhToan", "HoaDon")',
+            type: 'POST',
+            data: {
+                MaKM: '@(Model?.MaKMApDung ?? "")',
+                NgayHenTiem: ngayHen,
+                GioHenTiem: gioHen
+            },
+            success: function (response) {
+                if (response.success) {
+                    // Show order code
+                    document.getElementById('orderCode').textContent = response.maHD;
+                    
+                    // Move to success step
+                    currentStep = 4;
+                    updateProgress();
+                } else {
+                    alert(response.message || 'Co loi xay ra!');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xac nhan thanh toan';
+                }
+            },
+            error: function () {
+                alert('Co loi xay ra khi thanh toan!');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xac nhan thanh toan';
+            }
+        });
     }
 
     function applyCoupon() {
@@ -914,12 +800,14 @@
         }
     }
 
-    // Set minimum date to today
-    const today = new Date().toISOString().split("T")[0];
-    document.getElementById("appointmentDate").setAttribute("min", today);
-
     // Initialize
     updateProgress();
+
+    // Set ngay hen tiem toi thieu la ngay mai
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    document.getElementById("ngayHenTiem").setAttribute("min", tomorrowStr);
 
     console.log("Checkout page loaded successfully");
 </script>

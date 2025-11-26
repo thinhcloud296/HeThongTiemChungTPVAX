@@ -22,25 +22,168 @@ namespace TPVAXWebsite.Controllers
             return View(lichTiems);
         }
 
-        // Đặt lịch mới
+        // GET: LichTiem/DatLich
         public ActionResult DatLich(string maVC)
         {
-            ViewBag.MaVC = maVC;
-            return View();
+            var kh = Session["KH"] as KhachHang;
+            if (kh == null)
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập để đặt lịch tiêm.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (string.IsNullOrEmpty(maVC))
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy thông tin văc xin.";
+                return RedirectToAction("Index", "VaccinePhongBenh");
+            }
+
+            var vaccine = _context.Vaccines.Find(maVC);
+            if (vaccine == null)
+            {
+                TempData["ErrorMessage"] = "Văc xin không tồn tại.";
+                return RedirectToAction("Index", "VaccinePhongBenh");
+            }
+
+            // Lấy danh sách hồ sơ tiêm chủng của khách hàng
+            var hoSosData = (from lk in _context.LienKetHoSos
+                             join hs in _context.HoSoTiemChungs on lk.MaHSTC equals hs.MaHSTC
+                             where lk.MaKH == kh.MaKH && hs.TrangThai == true
+                             select new
+                             {
+                                 hs.MaHSTC,
+                                 hs.HoTen,
+                                 hs.NgaySinh,
+                                 lk.VaiTro
+                             }).ToList();
+
+            var hoSos = hoSosData.Select(x => new SelectListItem
+            {
+                Value = x.MaHSTC,
+                Text = $"{x.HoTen} - {x.NgaySinh:dd/MM/yyyy} ({x.VaiTro})"
+            }).ToList();
+
+            var model = new TPVAXWebsite.Models.ViewModels.DatLichTiemViewModel
+            {
+                MaVC = vaccine.MaVC,
+                TenVaccine = vaccine.TenVC,
+                GiaBan = vaccine.GiaBan,
+                HinhAnh = vaccine.HinhAnh,
+                DanhSachHoSo = hoSos,
+                NgayHenTiem = DateTime.Now.AddDays(1).Date.AddHours(9) // Mặc định ngày mai 9h sáng
+            };
+
+            return View(model);
         }
 
+        // POST: LichTiem/DatLich
         [HttpPost]
-        public ActionResult DatLich(LichTiem model)
+        [ValidateAntiForgeryToken]
+        public ActionResult DatLich(TPVAXWebsite.Models.ViewModels.DatLichTiemViewModel model)
         {
-            if (ModelState.IsValid)
+            var kh = Session["KH"] as KhachHang;
+            if (kh == null)
             {
-                model.MaLT = "LT" + DateTime.Now.Ticks.ToString();
-                model.TrangThai = "Chưa tiêm";
-                _context.LichTiems.Add(model);
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                // Reload danh sách hồ sơ nếu lỗi
+                var hoSosData = (from lk in _context.LienKetHoSos
+                                 join hs in _context.HoSoTiemChungs on lk.MaHSTC equals hs.MaHSTC
+                                 where lk.MaKH == kh.MaKH && hs.TrangThai == true
+                                 select new
+                                 {
+                                     hs.MaHSTC,
+                                     hs.HoTen,
+                                     hs.NgaySinh,
+                                     lk.VaiTro
+                                 }).ToList();
+
+                model.DanhSachHoSo = hoSosData.Select(x => new SelectListItem
+                {
+                    Value = x.MaHSTC,
+                    Text = $"{x.HoTen} - {x.NgaySinh:dd/MM/yyyy} ({x.VaiTro})"
+                }).ToList();
+                return View(model);
+            }
+
+            try
+            {
+                // Validate ngày hẹn phải là tương lai
+                if (model.NgayHenTiem < DateTime.Now)
+                {
+                    ModelState.AddModelError("NgayHenTiem", "Ngày hẹn phải lớn hơn thời điểm hiện tại.");
+                    return View(model);
+                }
+
+                // Kiểm tra hồ sơ có thuộc về khách hàng không
+                var lienKet = _context.LienKetHoSos
+                    .FirstOrDefault(lk => lk.MaKH == kh.MaKH && lk.MaHSTC == model.MaHSTC);
+                if (lienKet == null)
+                {
+                    ModelState.AddModelError("MaHSTC", "Hồ sơ không hợp lệ.");
+                    return View(model);
+                }
+
+                // Tạo mã lịch tiêm tự động
+                string maLT;
+                var lastLichTiem = _context.LichTiems
+                    .OrderByDescending(lt => lt.MaLT)
+                    .FirstOrDefault();
+
+                if (lastLichTiem != null && lastLichTiem.MaLT.Length >= 10)
+                {
+                    int lastNumber = int.Parse(lastLichTiem.MaLT.Substring(2));
+                    maLT = "LT" + (lastNumber + 1).ToString("D8");
+                }
+                else
+                {
+                    maLT = "LT00000001";
+                }
+
+                // Tạo lịch tiêm mới
+                var lichTiem = new LichTiem
+                {
+                    MaLT = maLT,
+                    MaHSTC = model.MaHSTC,
+                    MaVC = model.MaVC,
+                    NgayHenTiem = model.NgayHenTiem,
+                    SoMui = 1, // Mặc định mũi 1
+                    TrangThai = "Chưa tiêm",
+                    GhiChu = model.GhiChu
+                };
+
+                _context.LichTiems.Add(lichTiem);
                 _context.SaveChanges();
+
+                TempData["SuccessMessage"] = "Đặt lịch tiêm thành công! Chúng tôi sẽ liên hệ xác nhận sớm.";
                 return RedirectToAction("Dashboard", "Account");
             }
-            return View(model);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Lỗi: " + ex.Message);
+                // Reload danh sách hồ sơ
+                var hoSosData = (from lk in _context.LienKetHoSos
+                                 join hs in _context.HoSoTiemChungs on lk.MaHSTC equals hs.MaHSTC
+                                 where lk.MaKH == kh.MaKH && hs.TrangThai == true
+                                 select new
+                                 {
+                                     hs.MaHSTC,
+                                     hs.HoTen,
+                                     hs.NgaySinh,
+                                     lk.VaiTro
+                                 }).ToList();
+
+                model.DanhSachHoSo = hoSosData.Select(x => new SelectListItem
+                {
+                    Value = x.MaHSTC,
+                    Text = $"{x.HoTen} - {x.NgaySinh:dd/MM/yyyy} ({x.VaiTro})"
+                }).ToList();
+                return View(model);
+            }
         }
 
         // Đổi lịch (cập nhật ngày hẹn)

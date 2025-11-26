@@ -33,10 +33,13 @@
                     @foreach (var hd in Model)
                     {
                         <tr>
-                            <td class="fw-bold">#@hd.MaHoaDon</td>
+                            <td class="fw-bold">#@hd.MaHD</td>
                             <td>@hd.NgayLap.ToString("dd/MM/yyyy HH:mm")</td>
                             <td>
-                                <small class="text-muted">@hd.SoLuongSanPham sản phẩm</small>
+                                @if (hd.ChiTietHoaDon != null && hd.ChiTietHoaDon.Any())
+                                {
+                                    <small class="text-muted">@hd.ChiTietHoaDon.Sum(ct => ct.SoLuong) sản phẩm</small>
+                                }
                             </td>
                             <td class="fw-bold text-warning">@string.Format("{0:N0}₫", hd.TongTien)</td>
                             <td>
@@ -54,7 +57,7 @@
                                 }
                             </td>
                             <td class="text-center">
-                                <a href="@Url.Action("Detail", "HoaDon", new { id = hd.MaHoaDon })" class="btn btn-sm btn-outline-primary">
+                                <a href="@Url.Action("ChiTiet", "HoaDon", new { id = hd.MaHD })" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye me-1"></i>Chi tiết
                                 </a>
                             </td>

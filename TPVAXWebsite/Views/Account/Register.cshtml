@@ -497,13 +497,36 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, "Email")
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "example@email.com" })
-                        <i class="fas fa-envelope input-icon"></i>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.GioiTinh, "Giới tính")
+                            <div class="input-group">
+                                @Html.DropDownListFor(m => m.GioiTinh, new SelectList(new[] { "Nam", "Nữ", "Khác" }), "-- Chọn giới tính --", new { @class = "form-control" })
+                                <i class="fas fa-venus-mars input-icon"></i>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.GioiTinh, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, "Email")
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "example@email.com" })
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DiaChi, "Địa chỉ")
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", placeholder = "Số nhà, tên đường, quận/huyện, tỉnh/thành phố" })
+                        <i class="fas fa-map-marker-alt input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.DiaChi, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">

@@ -728,18 +728,20 @@
                                             <td><strong>@hd.MaHD</strong></td>
                                             <td>@hd.NgayLap.ToString("dd/MM/yyyy")</td>
                                             <td>
-                                                @if (hd.ChiTietHoaDon != null && hd.ChiTietHoaDon.Any())
-                                                {
-                                                    var firstItem = hd.ChiTietHoaDon.First();
-                                                    @(firstItem.LoaiSanPham == "VACCINE" ? "Vaccine" : "Gói vaccine")
-                                                    @if (hd.ChiTietHoaDon.Count > 1)
+                                                @{
+                                                    if (hd.ChiTietHoaDon != null && hd.ChiTietHoaDon.Any())
                                                     {
-                                                        <text> và @(hd.ChiTietHoaDon.Count - 1) sản phẩm khác</text>
+                                                        var firstItem = hd.ChiTietHoaDon.First();
+                                                        @(firstItem.LoaiSanPham == "VACCINE" ? "Vaccine" : "Gói vaccine")
+                                                        if (hd.ChiTietHoaDon.Count > 1)
+                                                        {
+                                                            <text> và @(hd.ChiTietHoaDon.Count - 1) sản phẩm khác</text>
+                                                        }
                                                     }
-                                                }
-                                                else
-                                                {
-                                                    <text>Chi tiết hóa đơn</text>
+                                                    else
+                                                    {
+                                                        <text>Chi tiết hóa đơn</text>
+                                                    }
                                                 }
                                             </td>
                                             <td><strong class="@(hd.TrangThai == true ? "text-primary" : "text-danger")">@hd.TongTien.ToString("N0")đ</strong></td>

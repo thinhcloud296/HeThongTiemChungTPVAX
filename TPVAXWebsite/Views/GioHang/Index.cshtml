@@ -1,4 +1,4 @@
-@model IEnumerable<TPVAXWebsite.Models.ViewModels.GioHangItemViewModel>
+@model TPVAXWebsite.Models.ViewModels.GioHangViewModel
 
 @{
     ViewBag.Title = "Gio Hang & Dat Lich Tiem";
@@ -7,6 +7,10 @@
 @section styles {
 <style>
     /* Cart Page - Full cart_backup.html styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
     .back-home-cart {
         position: fixed;
         top: 80px;
@@ -245,7 +249,7 @@
         <p class="text-muted">Kiem tra va chinh sua vaccine truoc khi dat lich</p>
     </div>
 
-    @if (Model != null && Model.Any())
+    @if (Model != null && Model.Items != null && Model.Items.Any())
     {
         <!-- Cart Content -->
         <div class="cart-content-wrapper" id="cartContent">
@@ -287,7 +291,7 @@
                     <div class="vaccine-list-header mb-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
                             <i class="fas fa-syringe me-2 text-success"></i>
-                            Danh sach vaccine (<span id="vaccineCount">@Model.Count()</span>)
+                            Danh sach vaccine (<span id="vaccineCount">@Model.Items.Count()</span>)
                         </h5>
                         <button class="btn btn-link text-danger" id="clearCartBtn">
                             <i class="fas fa-trash me-1"></i>
@@ -297,17 +301,17 @@
 
                     <!-- Vaccine Items -->
                     <div class="vaccine-list" id="vaccineList">
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Items)
                         {
                             <div class="vaccine-item-card card mb-3" data-id="@item.MaGH" data-price="@item.DonGia">
                                 <div class="card-body">
                                     <div class="vaccine-item-layout">
                                         <!-- Vaccine Image -->
                                         <div class="vaccine-image-wrapper">
-                                            <img src="@Url.Content("~/Content/Assets/Images/" + (item.HinhAnh ?? "hexaxim.png"))"
+                                            <img src="@Url.Content(string.IsNullOrEmpty(item.HinhAnh) ? "~/Content/Assets/Images/default.png" : "~/Content/Images/Vaccines/" + item.HinhAnh)"
                                                  alt="@item.TenSanPham"
                                                  class="vaccine-thumb"
-                                                 onerror="this.src='@Url.Content("~/Content/Assets/Images/logo.png")'" />
+                                                 onerror="this.src='@Url.Content("~/Content/Assets/Images/default.png")'"/>
                                             <div class="vaccine-badge">
                                                 <i class="fas fa-check-circle"></i>
                                             </div>
@@ -333,19 +337,8 @@
 
                                             <p class="text-muted mb-2">
                                                 <i class="fas fa-tags me-1 text-primary"></i>
-                                                <strong>Loai:</strong> @item.LoaiSanPham
+                                                <strong>Loai:</strong> @(item.LoaiSanPham == "VACCINE" ? "Vaccine" : "Gói vaccine")
                                             </p>
-
-                                            <div class="vaccine-benefits">
-                                                <div class="small-offer">
-                                                    <i class="fas fa-gift text-success me-1"></i>
-                                                    Giam 3% khi mua goi
-                                                </div>
-                                                <div class="small-offer">
-                                                    <i class="fas fa-award text-warning me-1"></i>
-                                                    Tich luy diem thuong
-                                                </div>
-                                            </div>
                                         </div>
 
                                         <!-- Vaccine Actions -->
