@@ -475,3 +475,30 @@ GO
 SELECT MaKM, TenKM, HinhAnh
 FROM KhuyenMai;
 GO
+
+
+
+-- Dữ liệu mẫu cho bảng BaiViet (Kiến thức tiêm chủng)
+INSERT INTO BaiViet (TieuDe, TomTat, NoiDung, HinhAnh, DanhMuc, Tag, NgayDang, TrangThai)
+VALUES
+(N'Những điều cần biết trước khi tiêm chủng', N'Tóm tắt ngắn gọn về chuẩn bị trước khi tiêm', N'Nội dung chi tiết về các bước chuẩn bị...', 'tiemchung.jpg', N'Mẹ và bé', N'tiem chung, me va be', '2025-11-26 22:40:43.233', 1),
+(N'Lịch tiêm chủng cho trẻ 0-24 tháng', N'Cập nhật lịch tiêm vaccine mới nhất theo Bộ Y Tế', N'Nội dung chi tiết về lịch tiêm chủng cho trẻ từ sơ sinh đến 2 tuổi...', 'tiemchung3.jpg', N'Mẹ và bé', N'Thông tin, vaccine, lịch tiêm', '2025-11-26 23:04:02.130', 1),
+(N'Lịch tiêm chủng cho trẻ sơ sinh', N'Cập nhật lịch tiêm vaccine mới nhất', N'Nội dung chi tiết về lịch tiêm chủng cho trẻ sơ sinh theo Bộ Y Tế...', 'lich_tiem.jpg', N'Mẹ và bé', N'Thông tin, vaccine, lịch tiêm', '2025-11-26 23:06:15.547', 1),
+(N'Những điều cần biết trước khi tiêm chủng', N'Tóm tắt ngắn gọn về chuẩn bị trước khi tiêm', N'Nội dung chi tiết về các bước chuẩn bị...', 'tiemchung.jpg', N'Mẹ và bé', N'tiem chung, me va be', '2025-11-26 23:07:04.407', 1),
+(N'Những điều cần biết trước khi tiêm chủng', N'Tóm tắt ngắn gọn về chuẩn bị trước khi tiêm', N'Nội dung chi tiết về các bước chuẩn bị trước khi tiêm chủng cho mẹ bầu...', 'tiemchung1.jpg', N'Mẹ và bé', N'Mang thai, tiêm chủng, chuẩn bị', '2025-11-26 23:07:04.410', 1),
+(N'Chăm sóc trẻ sơ sinh sau tiêm vaccine', N'Hướng dẫn cách chăm sóc trẻ sau khi tiêm chủng', N'Nội dung chi tiết về các lưu ý khi chăm sóc trẻ sau tiêm vaccine...', 'tiemchung2.jpg', N'Mẹ và bé', N'Sau sinh, nuôi con, vaccine', '2025-11-26 23:07:04.410', 1),
+(N'Những dấu hiệu cần biết khi mang thai', N'Tóm tắt về các dấu hiệu mang thai sớm', N'Nội dung chi tiết về các dấu hiệu nhận biết mang thai, chế độ dinh dưỡng cần thiết...', 'mangthai.jpg', N'Mẹ và bé', N'Mang thai, chuẩn bị, sức khỏe', '2025-11-26 23:07:04.410', 1),
+(N'Chăm sóc mẹ sau sinh mổ', N'Hướng dẫn chế độ ăn uống và nghỉ ngơi sau sinh mổ', N'Nội dung chi tiết về cách chăm sóc mẹ sau sinh mổ, kiêng cữ và phục hồi sức khỏe...', 'sausinh.jpg', N'Mẹ và bé', N'Sau sinh, nuôi con, chăm sóc', '2025-11-26 23:07:04.410', 1),
+(N'Những dấu hiệu cần biết khi mang thai', N'Tóm tắt về các dấu hiệu mang thai sớm', N'Nội dung chi tiết về các dấu hiệu nhận biết mang thai, chế độ dinh dưỡng cần thiết...', 'mangthai.jpg', N'Mẹ và bé', N'Mang thai, chuẩn bị, sức khỏe', '2025-11-26 23:07:04.410', 1),
+(N'Chăm sóc mẹ sau sinh mổ', N'Hướng dẫn chế độ ăn uống và nghỉ ngơi sau sinh mổ', N'Nội dung chi tiết về cách chăm sóc mẹ sau sinh mổ, kiêng cữ và phục hồi sức khỏe...', 'sausinh.jpg', N'Mẹ và bé', N'Sau sinh, nuôi con, chăm sóc', '2025-11-26 23:07:04.410', 1),
+(N'Lịch tiêm chủng cho trẻ sơ sinh', N'Cập nhật lịch tiêm vaccine mới nhất', N'Nội dung chi tiết về lịch tiêm chủng cho trẻ sơ sinh theo Bộ Y Tế...', 'lich_tiem.jpg', N'Mẹ và bé', N'Thông tin, vaccine, lịch tiêm', '2025-11-26 23:07:04.410', 1),
+(N'Lịch tiêm chủng cho trẻ sơ sinh', N'Cập nhật lịch tiêm chủng đầy đủ của trẻ từ 0 đến 12 tháng tuổi.', N'Nội dung chi tiết về lịch tiêm chủng cho trẻ sơ sinh theo khuyến cáo của Bộ Y Tế...', 'lich_tiem_nhi.jpg', N'Theo đối tượng', N'Nhi, trẻ sơ sinh, vaccine', '2025-11-26 23:30:23.167', 1),
+(N'Vaccine HPV cho trẻ vị thành niên', N'Tại sao trẻ vị thành niên cần tiêm HPV?', N'Giải thích về lợi ích của vaccine HPV cho trẻ từ 9 đến 18 tuổi...', 'hpv_teen.jpg', N'Theo đối tượng', N'Teen, vị thành niên, HPV', '2025-11-26 23:30:23.170', 1),
+(N'Vaccine cần thiết khi đi du lịch nước ngoài', N'Danh sách các loại vaccine nên tiêm trước khi đi du lịch quốc tế.', N'Nội dung chi tiết về các vaccine phòng bệnh phổ biến khi đi du lịch...', 'du_lich_vaccine.jpg', N'Theo đối tượng', N'Du lịch, vaccine, phòng bệnh', '2025-11-26 23:30:23.170', 1),
+(N'Vaccine cần tiêm trước khi kết hôn', N'Chuẩn bị sức khỏe sinh sản trước khi lập gia đình.', N'Nội dung chi tiết về các loại vaccine cần tiêm trước khi kết hôn để bảo vệ sức khỏe sinh sản...', 'hon_nhan_vaccine.jpg', N'Theo đối tượng', N'Hôn nhân, sức khỏe sinh sản, vaccine', '2025-11-26 23:30:23.170', 1),
+(N'Vaccine cần tiêm cho người trưởng thành', N'Những loại vaccine người lớn nên tiêm định kỳ.', N'Nội dung chi tiết về các vaccine phòng bệnh cho người trưởng thành như cúm, viêm gan, uốn ván...', 'nguoi_lon_vaccine.jpg', N'Theo đối tượng', N'Người lớn, trưởng thành, vaccine', '2025-11-26 23:30:23.170', 1),
+(N'Thủy đậu và vaccine phòng ngừa', N'Thông tin về bệnh thủy đậu và cách tiêm vaccine phòng ngừa.', N'Nội dung chi tiết về triệu chứng, lây lan và vaccine phòng bệnh thủy đậu...', 'thuy_dau.jpg', N'Bệnh truyền nhiễm', N'Virus, thủy đậu, vaccine', '2025-11-26 23:40:22.520', 1),
+(N'Viêm màng não do vi khuẩn', N'Tìm hiểu về viêm màng não và vaccine phòng ngừa.', N'Nội dung chi tiết về nguyên nhân, triệu chứng và cách phòng ngừa viêm màng não do vi khuẩn...', 'viem_mang_nao.jpg', N'Bệnh truyền nhiễm', N'Vi khuẩn, viêm màng não, vaccine', '2025-11-26 23:40:22.520', 1),
+(N'Những điều cần biết trước khi tiêm chủng', N'Chuẩn bị trước khi tiêm cho mẹ bầu...', N'<p>Chi tiết các bước chuẩn bị...</p>', 'mevabe_tiemchung.jpg', N'Mẹ và bé', N'Mang thai, tiêm chủng, chuẩn bị', '2025-11-27 00:20:05.430', 1),
+(N'Chăm sóc trẻ sau tiêm chủng', N'Hướng dẫn chăm sóc trẻ sau tiêm vaccine.', N'<p>Cách theo dõi phản ứng sau tiêm...</p>', 'mevabe_sautiem.jpg', N'Mẹ và bé', N'Sau sinh, nuôi con, chăm sóc', '2025-11-27 00:20:05.430', 1),
+(N'Dinh dưỡng cho mẹ bầu', N'Chế độ ăn uống hợp lý cho mẹ bầu.', N'<p>Thực phẩm nên ăn và tránh...</p>', 'mevabe_dinhduong.jpg', N'Mẹ và bé', N'Mang thai
