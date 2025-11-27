@@ -1,4 +1,4 @@
-    public DbSet<BaiViet> BaiViets { get; set; }using System;
+using System;
 using System.Data.Entity;
 using TPVAXWebsite.Models.Domain;
 
