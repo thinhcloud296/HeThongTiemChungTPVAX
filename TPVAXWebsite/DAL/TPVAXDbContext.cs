@@ -1,4 +1,4 @@
-using System;
+    public DbSet<BaiViet> BaiViets { get; set; }using System;
 using System.Data.Entity;
 using TPVAXWebsite.Models.Domain;
 
@@ -36,7 +36,7 @@ namespace TPVAXWebsite.DAL
         public virtual DbSet<NhaCungCap> NhaCungCaps { get; set; }
         public virtual DbSet<PhieuNhapVaccine> PhieuNhapVaccines { get; set; }
         public virtual DbSet<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
-
+        public DbSet<BaiViet> BaiViets { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
