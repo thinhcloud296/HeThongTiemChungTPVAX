@@ -15,6 +15,8 @@ namespace TPVAXWebsite.Controllers
         [HttpGet]
         public ActionResult ThemHoSo()
         {
+            // Xóa thông báo lỗi cũ
+            TempData.Remove("ErrorMessage");
             return View();
         }
 
@@ -104,6 +106,9 @@ namespace TPVAXWebsite.Controllers
         {
             var kh = Session["KH"] as KhachHang;
             if (kh == null) return RedirectToAction("Login", "Account");
+
+            // Xóa thông báo lỗi cũ
+            TempData.Remove("ErrorMessage");
 
             // Kiểm tra quyền quản lý hồ sơ
             var lienKet = _context.LienKetHoSos

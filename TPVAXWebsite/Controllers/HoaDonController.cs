@@ -73,6 +73,10 @@ namespace TPVAXWebsite.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
+            // Xóa thông báo lỗi cũ khi vào trang checkout
+            TempData.Remove("ErrorMessage");
+            TempData.Remove("SuccessMessage");
+
             // Load giỏ hàng
             var gioHangItems = LoadGioHangItems(kh.MaKH);
 

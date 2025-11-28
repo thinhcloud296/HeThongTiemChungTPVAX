@@ -255,6 +255,10 @@ namespace TPVAXWebsite.Controllers
                 return RedirectToAction("Login");
             }
 
+            // Xóa các thông báo cũ khi vào Dashboard
+            TempData.Remove("SuccessMessage");
+            TempData.Remove("ErrorMessage");
+
             var maKH = kh.MaKH;
             var lienKetList = _context.LienKetHoSos.Where(lk => lk.MaKH == maKH).ToList();
             var maHSTCs = lienKetList.Select(lk => lk.MaHSTC).ToList();
