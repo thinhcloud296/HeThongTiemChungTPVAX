@@ -92,9 +92,9 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-grid gap-2">
-                        <button id="btnDatLich" class="btn btn-primary btn-lg">
+                        <a href="@Url.Action("DatLich", "LichTiem", new { maVC = Model.Vaccine.MaVC })" class="btn btn-primary btn-lg">
                             <i class="fas fa-calendar-check me-2"></i>Đặt lịch tiêm ngay
-                        </button>
+                        </a>
 
                         <a href="tel:0975088626" class="btn btn-outline-primary btn-lg">
                             <i class="fas fa-phone me-2"></i>Gọi tư vấn: 0975 088 626
@@ -140,15 +140,3 @@
         </div>
     </section>
 }
-
-<!-- Script inline để không cần RenderSection -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const btn = document.getElementById("btnDatLich");
-        if (btn) {
-            btn.addEventListener("click", function () {
-                alert("Tính năng đặt lịch tiêm ngay đang được phát triển. Vui lòng quay lại sau!");
-            });
-        }
-    });
-</script>

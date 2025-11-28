@@ -1,4 +1,4 @@
-@model IEnumerable<TPVAXWebsite.Models.ViewModels.VaccineRecommendationViewModel>
+﻿@model IEnumerable<TPVAXWebsite.Models.ViewModels.VaccineRecommendationViewModel>
 @{
     ViewBag.Title = "Tôi Nên Tiêm Gì?";
 }
@@ -33,11 +33,11 @@
 
     <!-- Filter Form -->
     <section class="container filter-block mt-4">
-        <form method="get" class="row g-3 align-items-end">
+        <form method="get" action="@Url.Action("Index", "ToiNenTiemGi")" class="row g-3 align-items-end">
             <div class="col-md-5">
-                <label for="ageSelect" class="form-label">Độ tuổi</label>
-                <select class="form-select" id="ageSelect" name="ageGroup">
-                    <option value="">-- Chọn độ tuổi --</option>
+                <label for="ageSelect" class="form-label fw-bold">Độ tuổi</label>
+                <select class="form-select form-select-lg" id="ageSelect" name="ageGroup">
+                    <option value="">-- Tất cả độ tuổi --</option>
                     <option value="6-12 tháng" @(ViewBag.AgeGroup == "6-12 tháng" ? "selected" : "")>6-12 tháng</option>
                     <option value="1-5 tuổi" @(ViewBag.AgeGroup == "1-5 tuổi" ? "selected" : "")>1-5 tuổi</option>
                     <option value="Người lớn" @(ViewBag.AgeGroup == "Người lớn" ? "selected" : "")>Người lớn</option>
@@ -45,16 +45,18 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label d-block">Chọn giới tính</label>
-                <select class="form-select" name="gender">
-                    <option value="">-- Giới tính --</option>
+                <label class="form-label fw-bold d-block">Chọn giới tính</label>
+                <select class="form-select form-select-lg" name="gender">
+                    <option value="">-- Tất cả --</option>
                     <option value="Nam" @(ViewBag.Gender == "Nam" ? "selected" : "")>Nam</option>
                     <option value="Nữ" @(ViewBag.Gender == "Nữ" ? "selected" : "")>Nữ</option>
                 </select>
             </div>
 
             <div class="col-md-3">
-                <button type="submit" class="btn btn-primary w-100">Nhận kết quả</button>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fas fa-search me-2"></i>Tìm kiếm
+                </button>
             </div>
         </form>
     </section>
@@ -74,14 +76,27 @@
             {
                 <div class="col-lg-4">
                     <div class="card h-100">
-                        <img src="@Url.Content("~/Content/Images/" + vaccine.HinhAnh)"
-                             class="card-img-top" alt="@vaccine.TenVC" />
+                        <img src="@Url.Content("~/Content/Images/Vaccines/" + vaccine.HinhAnh)"
+                             class="card-img-top" alt="@vaccine.TenVC"
+                             style="height: 250px; object-fit: cover;"
+                             onerror="this.src='@Url.Content("~/Content/Assets/Images/default.png")'"
+                             loading="lazy" />
                         <div class="card-body">
                             <h5 class="card-title">@vaccine.TenVC</h5>
                             <p class="card-text">@vaccine.MoTa</p>
-                            <p class="fw-bold text-danger">@vaccine.GiaBan.ToString("N0") VNĐ</p>
-                            <a href="@Url.Action("Detail", "ToiNenTiemGi", new { id = vaccine.MaVC })"
-                               class="btn btn-outline-primary">Chi tiết</a>
+                            <p class="fw-bold text-warning fs-4 mb-3">@vaccine.GiaBan.ToString("N0")₫ <small class="text-muted fs-6">/ liều</small></p>
+                            <div class="d-flex gap-2">
+                                <a href="@Url.Action("Detail", "ToiNenTiemGi", new { id = vaccine.MaVC })"
+                                   class="btn btn-primary flex-fill rounded-pill btn-addcart-custom-card"
+                                   style="font-weight: 600;">
+                                    <i class="fas fa-info-circle me-1"></i> Chi tiết
+                                </a>
+                                <a href="@Url.Action("DatLich", "LichTiem", new { maVC = vaccine.MaVC })"
+                                   class="btn btn-success flex-fill rounded-pill btn-price-custom-card"
+                                   style="font-weight: 600;">
+                                    <i class="fas fa-calendar-check me-1"></i> Đặt lịch
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

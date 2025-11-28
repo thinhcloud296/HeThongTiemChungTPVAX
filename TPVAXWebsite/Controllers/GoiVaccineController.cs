@@ -66,12 +66,12 @@ namespace TPVAXWebsite.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var goiVaccine = _goiVaccineService.GetDetailViewModel(id);
+                var goiVaccine = _goiVaccineService.GetDetailViewModelNew(id);
                 
                 if (goiVaccine == null)
                 {
                     ViewBag.Error = "Không tìm thấy gói vaccine với mã: " + id;
-                    return View("Error");
+                    return RedirectToAction("Index");
                 }
 
                 // Get related packages
@@ -85,7 +85,7 @@ namespace TPVAXWebsite.Controllers
             catch (Exception ex)
             {
                 ViewBag.Error = "Đã xảy ra lỗi khi tải dữ liệu: " + ex.Message;
-                return View("Error");
+                return RedirectToAction("Index");
             }
         }
 

@@ -237,6 +237,60 @@ namespace TPVAXWebsite.Services
 
         #endregion
 
+        #region Detail ViewModel
+
+        /// <summary>
+        /// Lấy chi tiết gói vaccine cho trang Detail
+        /// </summary>
+        public GoiVaccineDetailViewModel GetDetailViewModelNew(string maGoi)
+        {
+            var goiVaccine = GetById(maGoi);
+            if (goiVaccine == null)
+                return null;
+
+            // Tính tổng giá gốc từ các vaccine
+            decimal tongGiaGoc = 0;
+            var chiTietVaccines = new List<VaccineInPackage>();
+
+            if (goiVaccine.ChiTietGoiVaccine != null)
+            {
+                foreach (var ct in goiVaccine.ChiTietGoiVaccine)
+                {
+                    var vaccine = ct.Vaccine;
+                    if (vaccine != null)
+                    {
+                        tongGiaGoc += vaccine.GiaBan * (ct.SoMui ?? 1);
+                        chiTietVaccines.Add(new VaccineInPackage
+                        {
+                            MaVC = vaccine.MaVC,
+                            TenVC = vaccine.TenVC,
+                            SoLieu = ct.SoMui ?? 1,
+                            DonGia = vaccine.GiaBan,
+                            HinhAnh = vaccine.HinhAnh
+                        });
+                    }
+                }
+            }
+
+            return new GoiVaccineDetailViewModel
+            {
+                GoiVaccine = new GoiVaccineInfo
+                {
+                    MaGoi = goiVaccine.MaGoi,
+                    TenGoi = goiVaccine.TenGoi,
+                    MoTa = goiVaccine.MoTa,
+                    DoiTuongApDung = goiVaccine.DoiTuongApDung,
+                    GiaBan = goiVaccine.GiaGoi,
+                    GiaGoc = tongGiaGoc,
+                    TrangThai = goiVaccine.TrangThai,
+                    HinhAnh = goiVaccine.HinhAnh
+                },
+                ChiTietVaccines = chiTietVaccines
+            };
+        }
+
+        #endregion
+
         #region Dispose
 
         public void Dispose()
