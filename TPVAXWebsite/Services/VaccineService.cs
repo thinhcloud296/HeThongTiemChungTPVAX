@@ -384,24 +384,32 @@ namespace TPVAXWebsite.Services
         #region Recommendations
 
         /// <summary>
-        /// Gợi ý vaccine theo độ tuổi và giới tính
+        /// Gợi ý vaccine theo loại vaccine, loại bệnh và từ khóa
         /// </summary>
-        public IEnumerable<VaccineRecommendationViewModel> GetRecommendations(string ageGroup, string gender)
+        public IEnumerable<VaccineRecommendationViewModel> GetRecommendations(string maLoaiVaccine, string maLoaiBenh, string keyword)
         {
             var query = _unitOfWork.Vaccines.Query()
                 .Include(v => v.LoaiVaccine)
                 .Include(v => v.VaccinePhongBenh.Select(vp => vp.LoaiBenh));
 
-            // Lọc theo độ tuổi (nếu có cột DoiTuongApDung hoặc mô tả)
-            if (!string.IsNullOrEmpty(ageGroup))
+            // Lọc theo loại vaccine (ví dụ: Trẻ em, Người lớn, v.v.)
+            if (!string.IsNullOrEmpty(maLoaiVaccine))
             {
-                query = query.Where(v => v.MoTa.Contains(ageGroup) || v.LoaiVaccine.TenLoai.Contains(ageGroup));
+                query = query.Where(v => v.MaLoai == maLoaiVaccine);
             }
 
-            // Lọc theo giới tính (nếu dữ liệu có phân loại)
-            if (!string.IsNullOrEmpty(gender))
+            // Lọc theo loại bệnh phòng ngừa
+            if (!string.IsNullOrEmpty(maLoaiBenh))
             {
-                query = query.Where(v => v.MoTa.Contains(gender));
+                query = query.Where(v => v.VaccinePhongBenh.Any(vp => vp.MaLoaiBenh == maLoaiBenh));
+            }
+
+            // Tìm kiếm theo từ khóa
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                keyword = keyword.ToLower().Trim();
+                query = query.Where(v => v.TenVC.ToLower().Contains(keyword) || 
+                                        v.MoTa.ToLower().Contains(keyword));
             }
 
             return query.Select(v => new VaccineRecommendationViewModel

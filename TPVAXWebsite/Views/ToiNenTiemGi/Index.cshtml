@@ -34,29 +34,50 @@
     <!-- Filter Form -->
     <section class="container filter-block mt-4">
         <form method="get" action="@Url.Action("Index", "ToiNenTiemGi")" class="row g-3 align-items-end">
-            <div class="col-md-5">
-                <label for="ageSelect" class="form-label fw-bold">Độ tuổi</label>
-                <select class="form-select form-select-lg" id="ageSelect" name="ageGroup">
-                    <option value="">-- Tất cả độ tuổi --</option>
-                    <option value="6-12 tháng" @(ViewBag.AgeGroup == "6-12 tháng" ? "selected" : "")>6-12 tháng</option>
-                    <option value="1-5 tuổi" @(ViewBag.AgeGroup == "1-5 tuổi" ? "selected" : "")>1-5 tuổi</option>
-                    <option value="Người lớn" @(ViewBag.AgeGroup == "Người lớn" ? "selected" : "")>Người lớn</option>
+            <div class="col-md-4">
+                <label for="searchInput" class="form-label fw-bold">Tìm kiếm vaccine</label>
+                <input type="text" class="form-control form-control-lg" id="searchInput" name="search" 
+                       placeholder="Nhập tên vaccine..." value="@(ViewBag.Search ?? "")" />
+            </div>
+
+            <div class="col-md-4">
+                <label for="loaiVaccineSelect" class="form-label fw-bold">Loại vaccine (Đối tượng)</label>
+                <select class="form-select form-select-lg" id="loaiVaccineSelect" name="loaiVaccine">
+                    <option value="">-- Tất cả loại --</option>
+                    @if (ViewBag.LoaiVaccines != null)
+                    {
+                        foreach (var lv in ViewBag.LoaiVaccines as IEnumerable<TPVAXWebsite.Models.Domain.LoaiVaccine>)
+                        {
+                            <option value="@lv.MaLoai" @(ViewBag.LoaiVaccine == lv.MaLoai ? "selected" : "")>@lv.TenLoai</option>
+                        }
+                    }
                 </select>
             </div>
 
             <div class="col-md-4">
-                <label class="form-label fw-bold d-block">Chọn giới tính</label>
-                <select class="form-select form-select-lg" name="gender">
-                    <option value="">-- Tất cả --</option>
-                    <option value="Nam" @(ViewBag.Gender == "Nam" ? "selected" : "")>Nam</option>
-                    <option value="Nữ" @(ViewBag.Gender == "Nữ" ? "selected" : "")>Nữ</option>
+                <label for="loaiBenhSelect" class="form-label fw-bold">Phòng ngừa bệnh</label>
+                <select class="form-select form-select-lg" id="loaiBenhSelect" name="loaiBenh">
+                    <option value="">-- Tất cả bệnh --</option>
+                    @if (ViewBag.LoaiBenhs != null)
+                    {
+                        foreach (var lb in ViewBag.LoaiBenhs as IEnumerable<TPVAXWebsite.Models.Domain.LoaiBenh>)
+                        {
+                            <option value="@lb.MaLoaiBenh" @(ViewBag.LoaiBenh == lb.MaLoaiBenh ? "selected" : "")>@lb.TenBenh</option>
+                        }
+                    }
                 </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <button type="submit" class="btn btn-primary btn-lg w-100">
                     <i class="fas fa-search me-2"></i>Tìm kiếm
                 </button>
+            </div>
+            
+            <div class="col-md-6">
+                <a href="@Url.Action("Index", "ToiNenTiemGi")" class="btn btn-outline-secondary btn-lg w-100">
+                    <i class="fas fa-redo me-2"></i>Đặt lại
+                </a>
             </div>
         </form>
     </section>
@@ -67,8 +88,8 @@
         <section class="advice-section row g-4 mt-5">
             <div class="col-12">
                 <h2 class="section-title fw-bold">
-                    <i class="fas fa-star section-title-icon me-2"></i>
-                    Đề xuất cho: @ViewBag.AgeGroup - @ViewBag.Gender
+                    <i class="fas fa-syringe section-title-icon me-2"></i>
+                    Kết quả tìm kiếm (@Model.Count() vaccine)
                 </h2>
             </div>
 
@@ -103,8 +124,16 @@
             }
         </section>
     }
-    else if (ViewBag.AgeGroup != null || ViewBag.Gender != null)
+    else if (!string.IsNullOrEmpty(ViewBag.LoaiVaccine as string) || !string.IsNullOrEmpty(ViewBag.LoaiBenh as string) || !string.IsNullOrEmpty(ViewBag.Search as string))
     {
-        <p class="mt-4">Không tìm thấy vaccine phù hợp với lựa chọn của bạn.</p>
+        <div class="alert alert-info mt-4" role="alert">
+            <i class="fas fa-info-circle me-2"></i>Không tìm thấy vaccine phù hợp với lựa chọn của bạn. Vui lòng thử lại với bộ lọc khác.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-primary mt-4" role="alert">
+            <i class="fas fa-hand-point-up me-2"></i>Vui lòng chọn bộ lọc phía trên để tìm vaccine phù hợp với bạn.
+        </div>
     }
 </main>

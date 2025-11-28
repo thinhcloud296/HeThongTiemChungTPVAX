@@ -11,10 +11,12 @@ namespace TPVAXWebsite.Controllers
     public class VaccinePhongBenhController : Controller
     {
         private readonly VaccineService _vaccineService;
+        private readonly DAL.IUnitOfWork _unitOfWork;
 
         public VaccinePhongBenhController()
         {
             _vaccineService = new VaccineService();
+            _unitOfWork = new DAL.UnitOfWork(new DAL.TPVAXDbContext());
         }
 
         // GET: VaccinePhongBenh/Index
@@ -41,9 +43,15 @@ namespace TPVAXWebsite.Controllers
                     .Take(pageSize)
                     .ToList();
 
+                // Load danh sách loại bệnh từ database
+                var loaiBenhs = _unitOfWork.LoaiBenhs.GetAll()
+                    .OrderBy(lb => lb.TenBenh)
+                    .ToList();
+
                 // Truyền dữ liệu sang View
                 ViewBag.Search = search;
                 ViewBag.LoaiBenh = loaiBenh;
+                ViewBag.LoaiBenhs = loaiBenhs;
                 ViewBag.TotalCount = totalVaccines;
                 ViewBag.CurrentPage = page;
                 ViewBag.TotalPages = totalPages;
@@ -63,6 +71,7 @@ namespace TPVAXWebsite.Controllers
             if (disposing)
             {
                 _vaccineService?.Dispose();
+                _unitOfWork?.Dispose();
             }
             base.Dispose(disposing);
         }

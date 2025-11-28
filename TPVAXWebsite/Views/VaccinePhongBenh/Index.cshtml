@@ -100,9 +100,12 @@
         <form method="get" action="@Url.Action("Index", "VaccinePhongBenh")">
           <select name="loaiBenh" class="form-select" style="border-radius: 8px; padding: 10px 16px; border: 2px solid #dee2e6; font-size: 1rem; height: 44px;" onchange="this.form.submit()">
             <option value="">-- Tất cả loại bệnh --</option>
-            @if (ViewBag.LoaiBenh != null)
+            @if (ViewBag.LoaiBenhs != null)
             {
-                <option value="@ViewBag.LoaiBenh" selected>@ViewBag.LoaiBenh</option>
+                foreach (var loaiBenh in ViewBag.LoaiBenhs as IEnumerable<TPVAXWebsite.Models.Domain.LoaiBenh>)
+                {
+                    <option value="@loaiBenh.MaLoaiBenh" @(ViewBag.LoaiBenh == loaiBenh.MaLoaiBenh ? "selected" : "")>@loaiBenh.TenBenh</option>
+                }
             }
           </select>
         </form>

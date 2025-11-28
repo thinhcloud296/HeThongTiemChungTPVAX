@@ -39,9 +39,18 @@ namespace TPVAXWebsite.Controllers
                 ViewBag.TotalCount = totalRecords;
                 ViewBag.PageSize = pageSize;
 
+                // Load danh sách đối tượng áp dụng từ database
+                var doiTuongs = _goiVaccineService.GetAll()
+                    .Where(g => !string.IsNullOrEmpty(g.DoiTuongApDung))
+                    .Select(g => g.DoiTuongApDung)
+                    .Distinct()
+                    .OrderBy(dt => dt)
+                    .ToList();
+
                 // Filter data
                 ViewBag.Search = search;
                 ViewBag.DoiTuong = doiTuong;
+                ViewBag.DoiTuongs = doiTuongs;
 
                 // Stats
                 ViewBag.TotalPackages = _goiVaccineService.GetCount();

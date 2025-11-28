@@ -65,10 +65,13 @@
             </div>
             <select name="doiTuong" class="filter-select" onchange="this.form.submit()">
                 <option value="">👥 Tất cả đối tượng</option>
-                <option value="Trẻ em" @(ViewBag.DoiTuong == "Trẻ em" ? "selected" : "")>👶 Trẻ em</option>
-                <option value="Thanh thiếu niên" @(ViewBag.DoiTuong == "Thanh thiếu niên" ? "selected" : "")>🧒 Thanh thiếu niên</option>
-                <option value="Người lớn" @(ViewBag.DoiTuong == "Người lớn" ? "selected" : "")>🧑 Người lớn</option>
-                <option value="Phụ nữ" @(ViewBag.DoiTuong == "Phụ nữ" ? "selected" : "")>👩 Phụ nữ mang thai</option>
+                @if (ViewBag.DoiTuongs != null)
+                {
+                    foreach (var dt in ViewBag.DoiTuongs as IEnumerable<string>)
+                    {
+                        <option value="@dt" @(ViewBag.DoiTuong == dt ? "selected" : "")>@dt</option>
+                    }
+                }
             </select>
             <button type="submit" class="btn-filter-search">
                 <i class="fas fa-search me-2"></i>Tìm kiếm
