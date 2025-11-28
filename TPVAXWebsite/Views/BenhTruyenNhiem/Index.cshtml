@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
+@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
 
 @{
     ViewBag.Title = "Bệnh Truyền Nhiễm";
@@ -13,6 +13,15 @@
         if (lower.Contains("virus")) return "virus";
         if (lower.Contains("vi khuẩn") || lower.Contains("bacteria")) return "bacteria";
         return "article";
+    }
+    public string GetTagImage(string tag)
+    {
+        if (string.IsNullOrEmpty(tag)) return "btn6.png";
+
+        var lower = tag.ToLower();
+        if (lower.Contains("virus")) return "btn2.png";
+        if (lower.Contains("vi khuẩn") || lower.Contains("bacteria")) return "btn3.png";
+        return "btn11.png"; // fallback cho bài viết chung
     }
 }
 
@@ -65,8 +74,9 @@
             <div class="col-lg-4 col-md-6 article-item" data-tags="@tagGroup" data-keywords="@article.Tag.ToLower()">
                 <article class="article-card">
                     <div class="article-image-wrapper">
-                        <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/" + (article.HinhAnh ?? "default.jpg"))"
+                        <img src="@Url.Content("~/Content/Images/BenhTruyenNhiem/" + GetTagImage(article.Tag))"
                              class="img-fluid" alt="@article.TieuDe" />
+
                         <div class="article-category-badge">@article.DanhMuc</div>
                     </div>
                     <div class="article-body">
