@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
+@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
 
 @{
     ViewBag.Title = "Thông Tin Vắc Xin Theo Đối Tượng";
@@ -16,6 +16,19 @@
         if (lower.Contains("hôn nhân")) return "marriage";
         if (lower.Contains("người lớn")) return "adult";
         return "other";
+    }
+    // Hàm ánh xạ tag -> tên file ảnh
+    public string GetTagImage(string tag)
+    {
+        if (string.IsNullOrEmpty(tag)) return "injection.png";
+
+        var lower = tag.ToLower();
+        if (lower.Contains("Nhi") || lower.Contains("trẻ")) return "baby-boy.png";
+        if (lower.Contains("Teen") || lower.Contains("Vị Thành Niên")) return "teener.png";
+        if (lower.Contains("Du Lịch")) return "travel.png";
+        if (lower.Contains("hôn nhân")) return "marriage.png";
+        if (lower.Contains("người lớn")) return "adults.png";
+        return "ttvacine.png"; // fallback nếu không khớp
     }
 }
 
@@ -70,8 +83,9 @@
             <div class="col-lg-4 col-md-6 article-item" data-tags="@tagGroup" data-keywords="@article.Tag.ToLower()">
                 <article class="article-card">
                     <div class="article-image-wrapper">
-                        <img src="@Url.Content("~/Content/Images/TheoDoiTuong/" + (article.HinhAnh ?? "default.jpg"))"
+                        <img src="@Url.Content("~/Content/Images/TheoDoiTuong/" + GetTagImage(article.Tag))"
                              class="img-fluid" alt="@article.TieuDe" />
+
                         <div class="article-category-badge">@article.DanhMuc</div>
                     </div>
                     <div class="article-body">
