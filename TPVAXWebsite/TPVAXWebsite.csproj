@@ -231,6 +231,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Common\KeyGenerator.cs" />
     <Compile Include="Controllers\HoSoTiemChungController.cs" />
+    <Compile Include="Controllers\HoSoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

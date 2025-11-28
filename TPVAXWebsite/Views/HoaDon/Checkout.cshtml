@@ -1,4 +1,4 @@
-@model TPVAXWebsite.Models.ViewModels.CheckoutViewModel
+﻿@model TPVAXWebsite.Models.ViewModels.CheckoutViewModel
 @{
     ViewBag.Title = "Thanh toan";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -266,7 +266,7 @@
 <!-- Back Button -->
 <div class="container mt-3">
     <a href="@Url.Action("Index", "GioHang")" class="btn btn-outline-primary">
-        <i class="fas fa-arrow-left me-2"></i>Quay lai gio hang
+        <i class="fas fa-arrow-left me-2"></i>Quay lại giỏ hàng
     </a>
 </div>
 
@@ -281,28 +281,28 @@
                 <div class="step-circle">
                     <i class="fas fa-clipboard-check"></i>
                 </div>
-                <div class="step-label">Xac nhan<br />thong tin</div>
+                <div class="step-label">Xác nhận<br />thông tin</div>
             </div>
 
             <div class="step" data-step="2">
                 <div class="step-circle">
                     <i class="fas fa-credit-card"></i>
                 </div>
-                <div class="step-label">Phuong thuc<br />thanh toan</div>
+                <div class="step-label">Phương thức<br />thanh toán</div>
             </div>
 
             <div class="step" data-step="3">
                 <div class="step-circle">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <div class="step-label">Xac nhan<br />don hang</div>
+                <div class="step-label">Xác nhận<br />đơn hàng</div>
             </div>
 
             <div class="step" data-step="4">
                 <div class="step-circle">
                     <i class="fas fa-smile"></i>
                 </div>
-                <div class="step-label">Hoan tat</div>
+                <div class="step-label">Hoàn tất</div>
             </div>
         </div>
 
@@ -313,7 +313,7 @@
                     <!-- Step 1: Confirm Information -->
                     <div class="step-content active" id="step-1">
                         <h4 class="mb-4">
-                            <i class="fas fa-clipboard-check me-2 text-primary"></i>Xac nhan thong tin
+                            <i class="fas fa-clipboard-check me-2 text-primary"></i>Xác nhận thông tin
                         </h4>
 
                         <!-- Customer Info -->
@@ -321,39 +321,39 @@
                         {
                             <div class="info-card selected">
                                 <h6 class="mb-3">
-                                    <i class="fas fa-user me-2"></i>Thong tin nguoi dat
+                                    <i class="fas fa-user me-2"></i>Thông tin người đặt
                                 </h6>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
-                                        <strong>Ho ten:</strong> @Model.KhachHang.HoTen
+                                        <strong>Họ tên:</strong> @Model.KhachHang.HoTen
                                     </div>
                                     <div class="col-md-6 mb-2">
-                                        <strong>SDT:</strong> @Model.KhachHang.SoDT
+                                        <strong>SĐT:</strong> @Model.KhachHang.SoDT
                                     </div>
                                     <div class="col-md-6 mb-2">
                                         <strong>Email:</strong> @Model.KhachHang.Email
                                     </div>
                                     <div class="col-md-6 mb-2">
-                                        <strong>Ngay sinh:</strong> @(Model.KhachHang.NgaySinh?.ToString("dd/MM/yyyy") ?? "--")
+                                        <strong>Ngày sinh:</strong> @(Model.KhachHang.NgaySinh?.ToString("dd/MM/yyyy") ?? "--")
                                     </div>
                                 </div>
                             </div>
                         }
 
-                        <!-- Lich hen tiem -->
+                        <!-- Lịch hẹn tiêm -->
                         <div class="info-card">
                             <h6 class="mb-3">
-                                <i class="fas fa-calendar-check me-2"></i>Chon lich hen tiem
+                                <i class="fas fa-calendar-check me-2"></i>Chọn lịch hẹn tiêm
                             </h6>
                             <div class="mb-3">
-                                <label class="form-label"><strong>Ngay hen tiem <span class="text-danger">*</span></strong></label>
+                                <label class="form-label"><strong>Ngày hẹn tiêm <span class="text-danger">*</span></strong></label>
                                 <input type="date" class="form-control" id="ngayHenTiem" required />
-                                <small class="text-muted">Chon ngay ban muon den trung tam tiem chung</small>
+                                <small class="text-muted">Chọn ngày bạn muốn đến trung tâm tiêm chủng</small>
                             </div>
                             <div>
-                                <label class="form-label"><strong>Gio hen tiem <span class="text-danger">*</span></strong></label>
+                                <label class="form-label"><strong>Giờ hẹn tiêm <span class="text-danger">*</span></strong></label>
                                 <select class="form-select" id="gioHenTiem" required>
-                                    <option value="">-- Chon khung gio --</option>
+                                    <option value="">-- Chọn khung giờ --</option>
                                     <option value="08:00">08:00 - 09:00</option>
                                     <option value="09:00">09:00 - 10:00</option>
                                     <option value="10:00">10:00 - 11:00</option>
@@ -362,19 +362,19 @@
                                     <option value="15:00">15:00 - 16:00</option>
                                     <option value="16:00">16:00 - 17:00</option>
                                 </select>
-                                <small class="text-muted">Vui long den dung gio de tranh cho doi</small>
+                                <small class="text-muted">Vui lòng đến đúng giờ để tránh chờ đợi</small>
                             </div>
                         </div>
 
                         <button class="btn btn-primary btn-lg w-100" onclick="nextStep()">
-                            <i class="fas fa-arrow-right me-2"></i>Tiep tuc
+                            <i class="fas fa-arrow-right me-2"></i>Tiếp tục
                         </button>
                     </div>
 
                     <!-- Step 2: Payment Method -->
                     <div class="step-content" id="step-2">
                         <h4 class="mb-4">
-                            <i class="fas fa-credit-card me-2 text-primary"></i>Chon phuong thuc thanh toan
+                            <i class="fas fa-credit-card me-2 text-primary"></i>Chọn phương thức thanh toán
                         </h4>
 
                         <!-- Bank Transfer -->
@@ -384,10 +384,10 @@
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">
                                         <i class="fas fa-university me-2 text-primary"></i>
-                                        Chuyen khoan ngan hang
+                                        Chuyển khoản ngân hàng
                                     </h6>
                                     <p class="mb-0 text-muted small">
-                                        Chuyen khoan truoc, xac nhan sau
+                                        Chuyển khoản trước, xác nhận sau
                                     </p>
                                 </div>
                             </div>
@@ -400,7 +400,7 @@
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">
                                         <i class="fas fa-credit-card me-2 text-info"></i>
-                                        Thanh toan bang the
+                                        Thanh toán bằng thẻ
                                     </h6>
                                     <p class="mb-0 text-muted small">
                                         Visa, Mastercard, JCB, Amex
@@ -416,10 +416,10 @@
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">
                                         <i class="fab fa-bity me-2" style="color: #d82d8b"></i>
-                                        Vi MoMo
+                                        Ví MoMo
                                     </h6>
                                     <p class="mb-0 text-muted small">
-                                        Thanh toan qua vi dien tu MoMo
+                                        Thanh toán qua ví điện tử MoMo
                                     </p>
                                 </div>
                             </div>
@@ -435,7 +435,7 @@
                                         ZaloPay
                                     </h6>
                                     <p class="mb-0 text-muted small">
-                                        Thanh toan qua vi dien tu ZaloPay
+                                        Thanh toán qua ví điện tử ZaloPay
                                     </p>
                                 </div>
                             </div>
@@ -451,7 +451,7 @@
                                         VNPay QR
                                     </h6>
                                     <p class="mb-0 text-muted small">
-                                        Quet ma QR de thanh toan
+                                        Quét mã QR để thanh toán
                                     </p>
                                 </div>
                             </div>
@@ -459,10 +459,10 @@
 
                         <div class="d-flex gap-2 mt-4">
                             <button class="btn btn-outline-secondary btn-lg" onclick="prevStep()">
-                                <i class="fas fa-arrow-left me-2"></i>Quay lai
+                                <i class="fas fa-arrow-left me-2"></i>Quay lại
                             </button>
                             <button class="btn btn-primary btn-lg flex-grow-1" onclick="nextStep()">
-                                <i class="fas fa-arrow-right me-2"></i>Tiep tuc
+                                <i class="fas fa-arrow-right me-2"></i>Tiếp tục
                             </button>
                         </div>
                     </div>
@@ -470,20 +470,20 @@
                     <!-- Step 3: Confirm Order -->
                     <div class="step-content" id="step-3">
                         <h4 class="mb-4">
-                            <i class="fas fa-check-circle me-2 text-primary"></i>Xac nhan don hang
+                            <i class="fas fa-check-circle me-2 text-primary"></i>Xác nhận đơn hàng
                         </h4>
 
                         <!-- Order Summary -->
                         <div class="info-card">
-                            <h6 class="mb-3">Chi tiet don hang</h6>
+                            <h6 class="mb-3">Chi tiết đơn hàng</h6>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>San pham</th>
-                                            <th>So luong</th>
-                                            <th>Don gia</th>
-                                            <th>Thanh tien</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -504,22 +504,22 @@
                             </div>
                         </div>
 
-                        <!-- Lich hen tiem -->
+                        <!-- Lịch hẹn tiêm -->
                         <div class="info-card">
-                            <h6 class="mb-3">Thong tin lich hen</h6>
+                            <h6 class="mb-3">Thông tin lịch hẹn</h6>
                             <p class="mb-2">
-                                <strong>Ngay hen:</strong>
+                                <strong>Ngày hẹn:</strong>
                                 <span id="confirmNgayHen">--</span>
                             </p>
                             <p class="mb-0">
-                                <strong>Gio hen:</strong>
+                                <strong>Giờ hẹn:</strong>
                                 <span id="confirmGioHen">--</span>
                             </p>
                         </div>
 
                         <!-- Payment Info -->
                         <div class="info-card">
-                            <h6 class="mb-3">Phuong thuc thanh toan</h6>
+                            <h6 class="mb-3">Phương thức thanh toán</h6>
                             <p class="mb-0" id="confirmPayment">--</p>
                         </div>
 
@@ -527,19 +527,19 @@
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="agreeTerms" required />
                             <label class="form-check-label" for="agreeTerms">
-                                Toi da doc va dong y voi
-                                <a href="#" class="text-primary">dieu khoan dich vu</a> va
-                                <a href="#" class="text-primary">chinh sach bao mat</a> cua
+                                Tôi đã đọc và đồng ý với
+                                <a href="#" class="text-primary">điều khoản dịch vụ</a> và
+                                <a href="#" class="text-primary">chính sách bảo mật</a> của
                                 TPVAX
                             </label>
                         </div>
 
                         <div class="d-flex gap-2">
                             <button class="btn btn-outline-secondary btn-lg" onclick="prevStep()">
-                                <i class="fas fa-arrow-left me-2"></i>Quay lai
+                                <i class="fas fa-arrow-left me-2"></i>Quay lại
                             </button>
                             <button class="btn btn-success btn-lg flex-grow-1" onclick="confirmOrder()">
-                                <i class="fas fa-check-circle me-2"></i>Xac nhan thanh toan
+                                <i class="fas fa-check-circle me-2"></i>Xác nhận thanh toán
                             </button>
                         </div>
                     </div>
@@ -550,9 +550,9 @@
                             <div class="success-icon">
                                 <i class="fas fa-check-circle"></i>
                             </div>
-                            <h2 class="mt-4 mb-3 text-success">Dat hang thanh cong!</h2>
+                            <h2 class="mt-4 mb-3 text-success">Đặt hàng thành công!</h2>
                             <p class="lead mb-4">
-                                Ma don hang cua ban:
+                                Mã đơn hàng của bạn:
                                 <strong class="text-primary" id="orderCode">--</strong>
                             </p>
 
@@ -560,20 +560,20 @@
                             {
                                 <div class="alert alert-info mb-4">
                                     <i class="fas fa-info-circle me-2"></i>
-                                    Thong tin chi tiet da duoc gui den email
+                                    Thông tin chi tiết đã được gửi đến email
                                     <strong>@Model.KhachHang.Email</strong>
                                 </div>
                             }
 
                             <div class="d-flex flex-column gap-3 mx-auto" style="max-width: 400px">
                                 <a href="@Url.Action("Index", "HoaDon")" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-receipt me-2"></i>Xem don hang cua toi
+                                    <i class="fas fa-receipt me-2"></i>Xem đơn hàng của tôi
                                 </a>
                                 <a href="@Url.Action("Index", "VaccinePhongBenh")" class="btn btn-outline-primary btn-lg">
-                                    <i class="fas fa-shopping-cart me-2"></i>Tiep tuc mua sam
+                                    <i class="fas fa-shopping-cart me-2"></i>Tiếp tục mua sắm
                                 </a>
                                 <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary btn-lg">
-                                    <i class="fas fa-home me-2"></i>Ve trang chu
+                                    <i class="fas fa-home me-2"></i>Về trang chủ
                                 </a>
                             </div>
                         </div>
@@ -585,7 +585,7 @@
             <div class="col-lg-4">
                 <div class="order-summary">
                     <h5 class="mb-4">
-                        <i class="fas fa-receipt me-2"></i>Tom tat don hang
+                        <i class="fas fa-receipt me-2"></i>Tóm tắt đơn hàng
                     </h5>
 
                     @if (Model != null && Model.GioHang != null)
@@ -709,7 +709,7 @@
         if (currentStep === 2) {
             const selectedPayment = document.querySelector('input[name="payment"]:checked');
             if (!selectedPayment) {
-                alert("Vui long chon phuong thuc thanh toan!");
+                alert("Vui lòng chọn phương thức thanh toán!");
                 return;
             }
 
@@ -745,20 +745,20 @@
     function confirmOrder() {
         const agreeTerms = document.getElementById("agreeTerms").checked;
         if (!agreeTerms) {
-            alert("Vui long dong y voi dieu khoan dich vu!");
+            alert("Vui lòng đồng ý với điều khoản dịch vụ!");
             return;
         }
 
         const selectedPayment = document.querySelector('input[name="payment"]:checked');
         if (!selectedPayment) {
-            alert("Vui long chon phuong thuc thanh toan!");
+            alert("Vui lòng chọn phương thức thanh toán!");
             return;
         }
 
         // Call payment API
         const btn = event.target;
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Dang xu ly...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
 
         const ngayHen = document.getElementById("ngayHenTiem").value;
         const gioHen = document.getElementById("gioHenTiem").value;
@@ -815,14 +815,14 @@
     function applyCoupon() {
         const code = document.getElementById("couponInput").value;
         if (code) {
-            alert("Chuc nang dang phat trien!");
+            alert("Chức năng đang phát triển!");
         }
     }
 
     // Initialize
     updateProgress();
 
-    // Set ngay hen tiem toi thieu la ngay mai
+    // Set ngày hẹn tiêm tối thiểu là ngày mai
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowStr = tomorrow.toISOString().split('T')[0];

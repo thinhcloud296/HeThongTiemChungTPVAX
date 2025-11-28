@@ -16,13 +16,13 @@ namespace TPVAXWebsite.Models.Domain
         [StringLength(100)]
         public string HoTen { get; set; }
 
+        [Required]
         [StringLength(10)]
         public string GioiTinh { get; set; }
 
         [Required]
         public DateTime NgaySinh { get; set; }
 
-        [Required]
         [StringLength(12)]
         public string CCCD { get; set; }
 

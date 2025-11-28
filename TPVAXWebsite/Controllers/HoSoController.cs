@@ -23,31 +23,93 @@ namespace TPVAXWebsite.Controllers
         // POST: HoSo/ThemHoSo
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemHoSo(HoSoTiemChung hoSoMoi, string VaiTro)
+        public ActionResult ThemHoSo(string HoTen, string GioiTinh, DateTime? NgaySinh, string CCCD, string VaiTro, string GhiChu)
         {
-            var kh = Session["KH"] as KhachHang;
-            if (kh == null) return RedirectToAction("Login", "Account");
-
-            hoSoMoi.MaHSTC = GenerateMaHSTC();
-            hoSoMoi.TrangThai = true;
-
-            _context.HoSoTiemChungs.Add(hoSoMoi);
-            _context.SaveChanges();
-
-            var lienKet = new LienKetHoSo
+            try
             {
-                MaLK = GenerateMaLK(),
-                MaKH = kh.MaKH,
-                MaHSTC = hoSoMoi.MaHSTC,
-                VaiTro = VaiTro,
-                NgayLienKet = DateTime.Now
-            };
+                var kh = Session["KH"] as KhachHang;
+                if (kh == null)
+                {
+                    TempData["ErrorMessage"] = "Vui lòng đăng nhập để thêm hồ sơ.";
+                    return RedirectToAction("Login", "Account");
+                }
 
-            _context.LienKetHoSos.Add(lienKet);
-            _context.SaveChanges();
+                // Kiểm tra dữ liệu đầu vào
+                if (string.IsNullOrWhiteSpace(HoTen))
+                {
+                    TempData["ErrorMessage"] = "Họ tên không được để trống.";
+                    return RedirectToAction("Dashboard", "Account");
+                }
 
-            TempData["ThongBao"] = "Đã thêm hồ sơ mới thành công!";
-            return RedirectToAction("Dashboard", "Account");
+                if (string.IsNullOrWhiteSpace(GioiTinh))
+                {
+                    TempData["ErrorMessage"] = "Giới tính không được để trống.";
+                    return RedirectToAction("Dashboard", "Account");
+                }
+
+                if (!NgaySinh.HasValue)
+                {
+                    TempData["ErrorMessage"] = "Ngày sinh không được để trống.";
+                    return RedirectToAction("Dashboard", "Account");
+                }
+
+                if (string.IsNullOrWhiteSpace(VaiTro))
+                {
+                    TempData["ErrorMessage"] = "Quan hệ không được để trống.";
+                    return RedirectToAction("Dashboard", "Account");
+                }
+
+                // Xử lý CCCD: bắt buộc cho người lớn, không bắt buộc cho con
+                if (VaiTro != "Con" && string.IsNullOrWhiteSpace(CCCD))
+                {
+                    TempData["ErrorMessage"] = "CCCD/CMND là bắt buộc đối với người thân (không phải con).";
+                    return RedirectToAction("Dashboard", "Account");
+                }
+
+                // Nếu không nhập CCCD, set thành N/A
+                if (string.IsNullOrWhiteSpace(CCCD))
+                {
+                    CCCD = "N/A";
+                }
+
+                // Tạo đối tượng HoSoTiemChung
+                var hoSoMoi = new HoSoTiemChung
+                {
+                    MaHSTC = GenerateMaHSTC(),
+                    HoTen = HoTen.Trim(),
+                    GioiTinh = GioiTinh.Trim(),
+                    NgaySinh = NgaySinh.Value,
+                    CCCD = CCCD.Trim(),
+                    GhiChu = GhiChu,
+                    TrangThai = true
+                };
+
+                _context.HoSoTiemChungs.Add(hoSoMoi);
+                _context.SaveChanges();
+
+                var lienKet = new LienKetHoSo
+                {
+                    MaLK = GenerateMaLK(),
+                    MaKH = kh.MaKH,
+                    MaHSTC = hoSoMoi.MaHSTC,
+                    VaiTro = VaiTro.Trim(),
+                    NgayLienKet = DateTime.Now
+                };
+
+                _context.LienKetHoSos.Add(lienKet);
+                _context.SaveChanges();
+
+                TempData["ThongBao"] = "Đã thêm hồ sơ mới thành công!";
+                return RedirectToAction("Dashboard", "Account");
+            }
+            catch (Exception ex)
+            {
+                // Log chi tiết lỗi
+                var innerException = ex.InnerException != null ? ex.InnerException.Message : "";
+                var stackTrace = ex.StackTrace;
+                TempData["ErrorMessage"] = $"Có lỗi xảy ra: {ex.Message} | Inner: {innerException}";
+                return RedirectToAction("Dashboard", "Account");
+            }
         }
 
 

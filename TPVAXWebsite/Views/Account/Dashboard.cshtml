@@ -970,7 +970,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 
-                            <form method="post" action="@Url.Action("ThemHoSo", "HoSo")">
+                            <form method="post" action="@Url.Action("ThemHoSo", "HoSo")" id="formThemHoSo">
                                 @Html.AntiForgeryToken()
 
                                 <div class="modal-body">
@@ -992,8 +992,8 @@
                                             <input type="date" name="NgaySinh" class="form-control" required />
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">CCCD/CMND</label>
-                                            <input type="text" name="CCCD" class="form-control" />
+                                            <label class="form-label">CCCD/CMND <span class="text-muted">(Không bắt buộc với con)</span></label>
+                                            <input type="text" name="CCCD" class="form-control" minlength="9" maxlength="12" placeholder="Nhập CCCD/CMND nếu có" />
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label">Quan hệ <span class="text-danger">*</span></label>
@@ -1321,6 +1321,20 @@
                 if (tabPane) {
                     tabPane.classList.add("show", "active");
                 }
+            }
+
+            // Debug form submit
+            const formThemHoSo = document.getElementById('formThemHoSo');
+            if (formThemHoSo) {
+                formThemHoSo.addEventListener('submit', function(e) {
+                    console.log('Form submitting to:', this.action);
+                    console.log('Method:', this.method);
+                    console.log('Form data:');
+                    const formData = new FormData(this);
+                    for (let [key, value] of formData.entries()) {
+                        console.log(key + ':', value);
+                    }
+                });
             }
         });
 
