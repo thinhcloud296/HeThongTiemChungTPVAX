@@ -773,22 +773,41 @@
             },
             success: function (response) {
                 if (response.success) {
-                    // Show order code
-                    document.getElementById('orderCode').textContent = response.maHD;
-                    
-                    // Move to success step
-                    currentStep = 4;
-                    updateProgress();
+                    // Show success message with SweetAlert
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thanh toán thành công!',
+                        html: 'Mã hóa đơn: <strong>' + response.maHD + '</strong><br>Cảm ơn bạn đã sử dụng dịch vụ!',
+                        confirmButtonColor: '#0077b6',
+                        allowOutsideClick: false
+                    }).then(() => {
+                        // Redirect to invoice detail page
+                        if (response.redirectUrl) {
+                            window.location.href = response.redirectUrl;
+                        } else {
+                            window.location.href = '@Url.Action("Dashboard", "Account")';
+                        }
+                    });
                 } else {
-                    alert(response.message || 'Co loi xay ra!');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: response.message || 'Có lỗi xảy ra!',
+                        confirmButtonColor: '#dc3545'
+                    });
                     btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xac nhan thanh toan';
+                    btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xác nhận thanh toán';
                 }
             },
             error: function () {
-                alert('Co loi xay ra khi thanh toan!');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Có lỗi xảy ra khi thanh toán!',
+                    confirmButtonColor: '#dc3545'
+                });
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xac nhan thanh toan';
+                btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Xác nhận thanh toán';
             }
         });
     }

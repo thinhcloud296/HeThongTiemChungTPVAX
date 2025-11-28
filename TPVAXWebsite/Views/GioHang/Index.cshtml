@@ -1,7 +1,7 @@
 @model TPVAXWebsite.Models.ViewModels.GioHangViewModel
 
 @{
-    ViewBag.Title = "Gio Hang & Dat Lich Tiem";
+    ViewBag.Title = "Giỏ Hàng & Đặt Lịch Tiêm";
 }
 
 @section styles {
@@ -235,7 +235,7 @@
 <div class="back-home-cart">
     <a href="@Url.Action("Index", "Home")">
         <i class="fas fa-arrow-left"></i>
-        <span>Tiep tuc mua sam</span>
+        <span>Tiếp tục mua sắm</span>
     </a>
 </div>
 
@@ -244,9 +244,9 @@
     <div class="cart-header mb-4">
         <h1 class="page-heading">
             <i class="fas fa-shopping-cart me-3"></i>
-            Gio hang cua ban
+            Giỏ hàng của bạn
         </h1>
-        <p class="text-muted">Kiem tra va chinh sua vaccine truoc khi dat lich</p>
+        <p class="text-muted">Kiểm tra và chỉnh sửa vaccine trước khi đặt lịch</p>
     </div>
 
     @if (Model != null && Model.Items != null && Model.Items.Any())
@@ -262,26 +262,22 @@
                                 <div class="person-details">
                                     <div class="person-header mb-2">
                                         <i class="fas fa-user-circle text-primary me-2 fs-5"></i>
-                                        <span class="person-name-age fw-bold fs-5">Tran Tan Tai</span>
-                                        <span class="badge bg-primary ms-2">Nguoi duoc tiem</span>
+                                        <span class="person-name-age fw-bold fs-5">@(Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang)?.HoTen</span>
+                                        <span class="badge bg-primary ms-2">Người được tiêm</span>
                                     </div>
                                     <div class="person-info-details">
                                         <span class="text-muted">
-                                            <i class="fas fa-venus-mars me-1"></i>Nam
+                                            <i class="fas fa-venus-mars me-1"></i>@(Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang)?.GioiTinh
                                         </span>
                                         <span class="text-muted mx-2">|</span>
                                         <span class="text-muted">
-                                            <i class="fas fa-birthday-cake me-1"></i>01/02/2004
-                                        </span>
-                                        <span class="text-muted mx-2">|</span>
-                                        <span class="text-muted">
-                                            <i class="fas fa-calendar-alt me-1"></i>21 Tuoi 10 Thang
+                                            <i class="fas fa-birthday-cake me-1"></i>@((Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang)?.NgaySinh?.ToString("dd/MM/yyyy"))
                                         </span>
                                     </div>
                                 </div>
                                 <button class="btn btn-outline-primary btn-sm">
                                     <i class="fas fa-edit me-1"></i>
-                                    Thay doi
+                                    Thay đổi
                                 </button>
                             </div>
                         </div>
@@ -347,25 +343,25 @@
                                                 </h6>
                                                 <span class="badge bg-success-soft text-success">
                                                     <i class="fas fa-shield-alt me-1"></i>
-                                                    Chinh hang
+                                                    Chính hãng
                                                 </span>
                                             </div>
 
                                             <p class="text-muted mb-2">
                                                 <i class="fas fa-money-bill-wave me-1 text-success"></i>
-                                                <strong>Don gia:</strong> @string.Format("{0:N0}d", item.DonGia)
+                                                <strong>Đơn giá:</strong> @string.Format("{0:N0}₫", item.DonGia)
                                             </p>
 
                                             <p class="text-muted mb-2">
                                                 <i class="fas fa-tags me-1 text-primary"></i>
-                                                <strong>Loai:</strong> @(item.LoaiSanPham == "VACCINE" ? "Vaccine" : "Gói vaccine")
+                                                <strong>Loại:</strong> @(item.LoaiSanPham == "VACCINE" ? "Vaccine" : "Gói vaccine")
                                             </p>
                                         </div>
 
                                         <!-- Vaccine Actions -->
                                         <div class="vaccine-actions d-flex align-items-center gap-3">
                                             <div class="quantity-section">
-                                                <label class="small text-muted mb-1 d-block">So luong:</label>
+                                                <label class="small text-muted mb-1 d-block">Số lượng:</label>
                                                 <div class="quantity-control">
                                                     <button class="qty-btn qty-minus" data-id="@item.MaGH">
                                                         <i class="fas fa-minus"></i>
@@ -385,7 +381,7 @@
 
                                             <button class="btn btn-outline-danger btn-sm delete-btn" data-id="@item.MaGH">
                                                 <i class="fas fa-trash-alt me-1"></i>
-                                                Xoa
+                                                Xóa
                                             </button>
                                         </div>
                                     </div>
@@ -398,7 +394,7 @@
                     <div class="text-center mt-4">
                         <a href="@Url.Action("Checkout", "HoaDon")" class="btn btn-lg btn-confirm px-5" id="continueBtn">
                             <i class="fas fa-arrow-right me-2"></i>
-                            Tiep tuc
+                            Tiếp tục
                         </a>
                     </div>
                 </div>
@@ -413,11 +409,11 @@
                 <div class="empty-cart-icon">
                     <i class="fas fa-shopping-cart"></i>
                 </div>
-                <h3>Gio hang trong</h3>
-                <p>Ban chua them vaccine nao vao gio hang</p>
+                <h3>Giỏ hàng trống</h3>
+                <p>Bạn chưa thêm vaccine nào vào giỏ hàng</p>
                 <a href="@Url.Action("Index", "Vaccine")" class="btn btn-primary btn-lg">
                     <i class="fas fa-search me-2"></i>
-                    Kham pha vaccine
+                    Khám phá vaccine
                 </a>
             </div>
         </div>
@@ -459,7 +455,7 @@
         // Delete vaccine item
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                if (confirm('Ban co chac muon xoa vaccine nay?')) {
+                if (confirm('Bạn có chắc muốn xóa vaccine này?')) {
                     const id = this.dataset.id;
                     deleteCartItem(id);
                 }

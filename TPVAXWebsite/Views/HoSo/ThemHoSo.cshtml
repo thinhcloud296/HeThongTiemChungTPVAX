@@ -1,0 +1,163 @@
+@model TPVAXWebsite.Models.Domain.HoSoTiemChung
+
+@{
+    ViewBag.Title = "Thêm Hồ Sơ Tiêm Chủng Mới";
+}
+
+@section styles {
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #0077b6;
+        }
+
+        .form-header h2 {
+            color: #0077b6;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #0077b6;
+            box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+        }
+
+        .required-mark {
+            color: red;
+        }
+    </style>
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h2>
+            <i class="fas fa-file-medical me-2"></i>
+            Thêm Hồ Sơ Tiêm Chủng Mới
+        </h2>
+        <p class="text-muted mb-0">Vui lòng điền đầy đủ thông tin để tạo hồ sơ tiêm chủng</p>
+    </div>
+
+    @using (Html.BeginForm("ThemHoSo", "HoSo", FormMethod.Post, new { @class = "needs-validation" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="HoTen">Họ và tên <span class="required-mark">*</span></label>
+                @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Nhập họ và tên đầy đủ", required = "required" })
+                @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="GioiTinh">Giới tính <span class="required-mark">*</span></label>
+                @Html.DropDownListFor(m => m.GioiTinh, new SelectList(new[] { "Nam", "Nữ", "Khác" }), "-- Chọn giới tính --", new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(m => m.GioiTinh, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label for="NgaySinh">Ngày sinh <span class="required-mark">*</span></label>
+                @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="CCCD">CCCD/CMND <span class="required-mark">*</span></label>
+                @Html.TextBoxFor(m => m.CCCD, new { @class = "form-control", placeholder = "Nhập số CCCD/CMND (12 số)", maxlength = "12", required = "required" })
+                @Html.ValidationMessageFor(m => m.CCCD, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="VaiTro">Vai trò <span class="required-mark">*</span></label>
+                <select name="VaiTro" class="form-control" required>
+                    <option value="">-- Chọn vai trò --</option>
+                    <option value="Bản thân">Bản thân</option>
+                    <option value="Con">Con</option>
+                    <option value="Cha">Cha</option>
+                    <option value="Mẹ">Mẹ</option>
+                    <option value="Vợ">Vợ</option>
+                    <option value="Chồng">Chồng</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="GhiChu">Ghi chú</label>
+                @Html.TextAreaFor(m => m.GhiChu, new { @class = "form-control", rows = "3", placeholder = "Nhập ghi chú nếu có (không bắt buộc)" })
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+                <i class="fas fa-save me-2"></i>
+                Lưu Hồ Sơ
+            </button>
+            <a href="@Url.Action("Dashboard", "Account")" class="btn btn-outline-secondary btn-lg px-5 ms-3">
+                <i class="fas fa-times me-2"></i>
+                Hủy
+            </a>
+        </div>
+    }
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            // Validate CCCD
+            $('input[name="CCCD"]').on('input', function () {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        });
+    </script>
+}

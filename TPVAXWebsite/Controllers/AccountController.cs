@@ -428,6 +428,9 @@ namespace TPVAXWebsite.Controllers
             var khFromDb = _context.KhachHangs.Find(kh.MaKH);
             Session["KH"] = khFromDb;
 
+            // Xóa TempData["SuccessMessage"] nếu có để tránh hiển thị lại thông báo cũ
+            TempData.Remove("SuccessMessage");
+
             return View(khFromDb);
         }
 
