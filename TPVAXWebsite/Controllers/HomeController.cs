@@ -11,10 +11,12 @@ namespace TPVAXWebsite.Controllers
     public class HomeController : Controller
     {
         private readonly VaccineService _vaccineService;
+        private readonly GoiVaccineService _goiVaccineService;
 
         public HomeController()
         {
             _vaccineService = new VaccineService();
+            _goiVaccineService = new GoiVaccineService();
         }
 
         // GET: Home/Index
@@ -28,6 +30,39 @@ namespace TPVAXWebsite.Controllers
                 var allVaccines = string.IsNullOrEmpty(search) 
                     ? _vaccineService.GetAll().ToList()
                     : _vaccineService.Search(search).ToList();
+
+                // Lấy danh sách gói vaccine
+                try 
+                {
+                    var goiVaccines = _goiVaccineService.GetAll()
+                        .Where(g => g.TrangThai == "Đang áp dụng")
+                        .ToList();
+                    ViewBag.GoiVaccines = goiVaccines;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error loading packages: " + ex.Message);
+                    ViewBag.GoiVaccines = new System.Collections.Generic.List<TPVAXWebsite.Models.Domain.GoiVaccine>();
+                }
+
+                // Lấy 4 vaccine ngẫu nhiên cho phần "Mùa này cần tiêm gì?"
+                try
+                {
+                    if (allVaccines != null && allVaccines.Any())
+                    {
+                        var seasonalVaccines = allVaccines.OrderBy(x => Guid.NewGuid()).Take(4).ToList();
+                        ViewBag.SeasonalVaccines = seasonalVaccines;
+                    }
+                    else
+                    {
+                        ViewBag.SeasonalVaccines = new System.Collections.Generic.List<TPVAXWebsite.Models.Domain.Vaccine>();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error loading seasonal vaccines: " + ex.Message);
+                    ViewBag.SeasonalVaccines = new System.Collections.Generic.List<TPVAXWebsite.Models.Domain.Vaccine>();
+                }
                 
                 // Tính toán phân trang
                 int totalVaccines = allVaccines.Count();
@@ -75,6 +110,7 @@ namespace TPVAXWebsite.Controllers
             if (disposing)
             {
                 _vaccineService?.Dispose();
+                _goiVaccineService?.Dispose();
             }
             base.Dispose(disposing);
         }
