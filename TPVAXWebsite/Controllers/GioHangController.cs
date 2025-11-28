@@ -233,6 +233,30 @@ namespace TPVAXWebsite.Controllers
             return Json(new { count = count }, JsonRequestBehavior.AllowGet);
         }
 
+        // POST: GioHang/XoaToanBo
+        [HttpPost]
+        public JsonResult XoaToanBo()
+        {
+            try
+            {
+                var kh = Session["KH"] as KhachHang;
+                if (kh == null)
+                {
+                    return Json(new { success = false, message = "Vui lòng đăng nhập." });
+                }
+
+                var items = _context.GioHangs.Where(g => g.MaKH == kh.MaKH).ToList();
+                _context.GioHangs.RemoveRange(items);
+                _context.SaveChanges();
+
+                return Json(new { success = true, message = "Đã xóa toàn bộ giỏ hàng." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi: " + ex.Message });
+            }
+        }
+
         // Helper method: Load giỏ hàng
         private GioHangViewModel LoadGioHang(string maKH)
         {

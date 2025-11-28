@@ -291,12 +291,33 @@
                     <div class="vaccine-list-header mb-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
                             <i class="fas fa-syringe me-2 text-success"></i>
-                            Danh sach vaccine (<span id="vaccineCount">@Model.Items.Count()</span>)
+                            Danh sách vaccine (<span id="vaccineCount">@Model.Items.Count()</span>)
                         </h5>
                         <button class="btn btn-link text-danger" id="clearCartBtn">
                             <i class="fas fa-trash me-1"></i>
-                            Xoa tat ca
+                            Xóa tất cả
                         </button>
+                    </div>
+
+                    <!-- Total Summary Card -->
+                    <div class="card border-primary mb-4">
+                        <div class="card-body bg-light">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h5 class="mb-2 text-primary">
+                                        <i class="fas fa-calculator me-2"></i>Tổng thanh toán
+                                    </h5>
+                                    <p class="text-muted mb-0">
+                                        <small>Tổng số lượng: <strong id="totalQuantity">@Model.TongSoLuong</strong> liều</small>
+                                    </p>
+                                </div>
+                                <div class="col-md-6 text-md-end">
+                                    <h3 class="text-danger fw-bold mb-0" id="totalAmount">
+                                        @string.Format("{0:N0}₫", Model.TongTien)
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Vaccine Items -->
@@ -449,56 +470,91 @@
         const clearBtn = document.getElementById('clearCartBtn');
         if (clearBtn) {
             clearBtn.addEventListener('click', function() {
-                if (confirm('Ban co chac muon xoa tat ca vaccine trong gio hang?')) {
-                    window.location.href = '@Url.Action("XoaToanBo", "GioHang")';
-                }
+                Swal.fire({
+                    title: 'Xác nhận xóa?',
+                    text: 'Bạn có chắc muốn xóa tất cả vaccine trong giỏ hàng?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Xóa tất cả',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '@Url.Action("XoaToanBo", "GioHang")',
+                            type: 'POST',
+                            success: function(data) {
+                                if (data.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Thành công!',
+                                        text: data.message,
+                                        timer: 1500,
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire('Lỗi', data.message, 'error');
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Lỗi', 'Không thể xóa giỏ hàng', 'error');
+                            }
+                        });
+                    }
+                });
             });
         }
 
         // Update cart quantity via AJAX
         function updateCartQuantity(maGH, soLuong) {
-            fetch('@Url.Action("CapNhatSoLuong", "GioHang")', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ maGH: maGH, soLuong: soLuong })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Cap nhat thanh cong');
-                } else {
-                    alert(data.message || 'Co loi xay ra');
+            $.ajax({
+                url: '@Url.Action("CapNhatSoLuong", "GioHang")',
+                type: 'POST',
+                data: { MaGH: maGH, SoLuong: soLuong },
+                success: function(data) {
+                    if (data.success) {
+                        // Reload trang để cập nhật tổng tiền
+                        location.reload();
+                    } else {
+                        Swal.fire('Lỗi', data.message || 'Có lỗi xảy ra', 'error');
+                        location.reload();
+                    }
+                },
+                error: function() {
+                    Swal.fire('Lỗi', 'Không thể cập nhật số lượng', 'error');
                 }
-            })
-            .catch(error => console.error('Error:', error));
+            });
         }
 
         // Delete cart item via AJAX
         function deleteCartItem(maGH) {
-            fetch('@Url.Action("Xoa", "GioHang")', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ maGH: maGH })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const card = document.querySelector(`.vaccine-item-card[data-id="${maGH}"]`);
-                    card.style.opacity = '0';
-                    setTimeout(() => {
-                        card.remove();
-                        const count = document.querySelectorAll('.vaccine-item-card').length;
-                        document.getElementById('vaccineCount').textContent = count;
-
-                        if (count === 0) {
+            $.ajax({
+                url: '@Url.Action("XoaKhoiGio", "GioHang")',
+                type: 'POST',
+                data: { MaGH: maGH },
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: data.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            // Reload để cập nhật tổng tiền
                             location.reload();
-                        }
-                    }, 300);
-                } else {
-                    alert(data.message || 'Co loi xay ra');
+                        });
+                    } else {
+                        Swal.fire('Lỗi', data.message || 'Có lỗi xảy ra', 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Lỗi', 'Không thể xóa sản phẩm', 'error');
                 }
-            })
-            .catch(error => console.error('Error:', error));
+            });
         }
     })();
 </script>

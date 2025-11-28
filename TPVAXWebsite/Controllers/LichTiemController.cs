@@ -112,55 +112,69 @@ namespace TPVAXWebsite.Controllers
 
             try
             {
-                // Validate ngày hẹn phải là tương lai
-                if (model.NgayHenTiem < DateTime.Now)
-                {
-                    ModelState.AddModelError("NgayHenTiem", "Ngày hẹn phải lớn hơn thời điểm hiện tại.");
-                    return View(model);
-                }
-
                 // Kiểm tra hồ sơ có thuộc về khách hàng không
                 var lienKet = _context.LienKetHoSos
                     .FirstOrDefault(lk => lk.MaKH == kh.MaKH && lk.MaHSTC == model.MaHSTC);
                 if (lienKet == null)
                 {
                     ModelState.AddModelError("MaHSTC", "Hồ sơ không hợp lệ.");
+                    
+                    // Reload danh sách hồ sơ
+                    var hoSosData = (from lk in _context.LienKetHoSos
+                                     join hs in _context.HoSoTiemChungs on lk.MaHSTC equals hs.MaHSTC
+                                     where lk.MaKH == kh.MaKH && hs.TrangThai == true
+                                     select new
+                                     {
+                                         hs.MaHSTC,
+                                         hs.HoTen,
+                                         hs.NgaySinh,
+                                         lk.VaiTro
+                                     }).ToList();
+
+                    model.DanhSachHoSo = hoSosData.Select(x => new SelectListItem
+                    {
+                        Value = x.MaHSTC,
+                        Text = $"{x.HoTen} - {x.NgaySinh:dd/MM/yyyy} ({x.VaiTro})"
+                    }).ToList();
                     return View(model);
                 }
 
-                // Tạo mã lịch tiêm tự động
-                string maLT;
-                var lastLichTiem = _context.LichTiems
-                    .OrderByDescending(lt => lt.MaLT)
-                    .FirstOrDefault();
-
-                if (lastLichTiem != null && lastLichTiem.MaLT.Length >= 10)
+                // Kiểm tra vaccine tồn tại
+                var vaccine = _context.Vaccines.Find(model.MaVC);
+                if (vaccine == null)
                 {
-                    int lastNumber = int.Parse(lastLichTiem.MaLT.Substring(2));
-                    maLT = "LT" + (lastNumber + 1).ToString("D8");
+                    TempData["ErrorMessage"] = "Vaccine không tồn tại.";
+                    return RedirectToAction("Index", "VaccinePhongBenh");
+                }
+
+                // Kiểm tra vaccine đã có trong giỏ hàng chưa
+                var itemTrongGio = _context.GioHangs
+                    .FirstOrDefault(g => g.MaKH == kh.MaKH
+                                      && g.MaSanPham == model.MaVC
+                                      && g.LoaiSanPham == "VACCINE");
+
+                if (itemTrongGio != null)
+                {
+                    // Tăng số lượng nếu đã có
+                    itemTrongGio.SoLuong += 1;
                 }
                 else
                 {
-                    maLT = "LT00000001";
+                    // Thêm mới vào giỏ hàng
+                    var itemMoi = new GioHang
+                    {
+                        MaKH = kh.MaKH,
+                        MaSanPham = model.MaVC,
+                        LoaiSanPham = "VACCINE",
+                        SoLuong = 1
+                    };
+                    _context.GioHangs.Add(itemMoi);
                 }
 
-                // Tạo lịch tiêm mới
-                var lichTiem = new LichTiem
-                {
-                    MaLT = maLT,
-                    MaHSTC = model.MaHSTC,
-                    MaVC = model.MaVC,
-                    NgayHenTiem = model.NgayHenTiem,
-                    SoMui = 1, // Mặc định mũi 1
-                    TrangThai = "Chưa tiêm",
-                    GhiChu = model.GhiChu
-                };
-
-                _context.LichTiems.Add(lichTiem);
                 _context.SaveChanges();
 
-                TempData["SuccessMessage"] = "Đặt lịch tiêm thành công! Chúng tôi sẽ liên hệ xác nhận sớm.";
-                return RedirectToAction("Dashboard", "Account");
+                TempData["SuccessMessage"] = "Đã thêm vaccine vào giỏ hàng! Vui lòng chọn thời gian tiêm và thanh toán.";
+                return RedirectToAction("Index", "GioHang");
             }
             catch (Exception ex)
             {

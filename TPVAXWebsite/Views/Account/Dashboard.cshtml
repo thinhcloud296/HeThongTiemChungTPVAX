@@ -225,7 +225,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Thành công!',
-                text: '@TempData["SuccessMessage"]',
+                text: '@Html.Raw(TempData["SuccessMessage"])',
                 confirmButtonColor: '#0077b6'
             });
         });

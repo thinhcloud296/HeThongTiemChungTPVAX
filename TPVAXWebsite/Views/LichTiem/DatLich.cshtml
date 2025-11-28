@@ -1,4 +1,4 @@
-@model TPVAXWebsite.Models.ViewModels.DatLichTiemViewModel
+﻿@model TPVAXWebsite.Models.ViewModels.DatLichTiemViewModel
 
 @{
     ViewBag.Title = "Đặt lịch tiêm";
@@ -36,9 +36,10 @@
                 <div class="card-header bg-light fw-bold">
                     <i class="fas fa-info-circle me-2 text-primary"></i>Thông tin Vắc xin
                 </div>
-                <img src="@Url.Content("~/" + (Model.HinhAnh ?? "Content/Assets/Images/default.png"))"
+                <img src="@Url.Content(string.IsNullOrEmpty(Model.HinhAnh) ? "~/Content/Assets/Images/default.png" : "~/Content/Images/Vaccines/" + Model.HinhAnh)"
                      class="card-img-top" alt="@Model.TenVaccine"
-                     style="height: 250px; object-fit: cover;">
+                     style="height: 250px; object-fit: cover;"
+                     onerror="this.src='@Url.Content("~/Content/Assets/Images/default.png")'"/>
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold">@Model.TenVaccine</h5>
                     <p class="card-text text-warning fw-bold fs-4 mb-2">
@@ -46,7 +47,7 @@
                     </p>
                     <div class="alert alert-info small mb-0">
                         <i class="fas fa-shield-alt me-1"></i>
-                        Vắc xin này yêu cầu đặt trước. Vui lòng chọn người tiêm và thời gian bên cạnh.
+                        Thêm vào giỏ hàng để tiến hành thanh toán và đặt lịch.
                     </div>
                 </div>
             </div>
@@ -86,36 +87,19 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">
-                                <i class="fas fa-clock me-1"></i>Thời gian mong muốn <span class="text-danger">*</span>
-                            </label>
-                            @Html.TextBoxFor(m => m.NgayHenTiem,
-                                "{0:yyyy-MM-ddTHH:mm}",
-                                new { @class = "form-control form-control-lg", type = "datetime-local", required = "required" })
-                            @Html.ValidationMessageFor(m => m.NgayHenTiem, "", new { @class = "text-danger small mt-1" })
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">
-                                <i class="fas fa-comment-medical me-1"></i>Ghi chú thêm
-                            </label>
-                            @Html.TextAreaFor(m => m.GhiChu, new { @class = "form-control", rows = "3", placeholder = "Ví dụ: Bé đang bị ho nhẹ, hoặc dị ứng thuốc..." })
-                        </div>
-
-                        <div class="alert alert-warning d-flex align-items-center" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2 fs-4"></i>
+                        <div class="alert alert-info d-flex align-items-center" role="alert">
+                            <i class="fas fa-info-circle me-2 fs-4"></i>
                             <div>
-                                <small>Vui lòng đến trước giờ hẹn <strong>15 phút</strong> để làm thủ tục khám sàng lọc.</small>
+                                <small>Sau khi thêm vào giỏ hàng, bạn sẽ chọn <strong>thời gian tiêm</strong> và <strong>thanh toán</strong> tại bước tiếp theo.</small>
                             </div>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                            <a href="@Url.Action("Detail", "Vaccine", new { id = Model.MaVC })" class="btn btn-outline-secondary btn-lg px-4">
+                            <a href="@Url.Action("Index", "Vaccine", new { id = Model.MaVC })" class="btn btn-outline-secondary btn-lg px-4">
                                 <i class="fas fa-arrow-left me-2"></i>Quay lại
                             </a>
-                            <button type="submit" class="btn btn-primary btn-lg px-5">
-                                <i class="fas fa-check-circle me-2"></i>Xác nhận đặt lịch
+                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng
                             </button>
                         </div>
                     }
