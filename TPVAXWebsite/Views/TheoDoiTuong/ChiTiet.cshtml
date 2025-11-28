@@ -20,10 +20,7 @@
         <div class="col-lg-8">
             <h1 class="fw-bold display-5 text-primary mb-4 border-bottom pb-2">@Model.TieuDe</h1>
 
-            <div class="mb-4 text-center">
-                <img src="@Url.Content("~/Content/Images/TheoDoiTuong/" + (Model.HinhAnh ?? "default.jpg"))"
-                     class="img-fluid rounded shadow-sm" alt="@Model.TieuDe" style="max-height:400px;object-fit:cover;" />
-            </div>
+ 
 
             <div class="d-flex align-items-center gap-3 text-muted mb-4">
                 <span>📅 @Model.NgayDang.ToString("dd/MM/yyyy")</span>
@@ -100,3 +97,4 @@
         }
     </script>
 }
+
