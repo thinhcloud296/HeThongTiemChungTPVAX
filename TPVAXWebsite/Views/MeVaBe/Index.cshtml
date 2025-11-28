@@ -1,10 +1,11 @@
-﻿@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
+@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
 
 @{
     ViewBag.Title = "Mẹ Và Bé - Kiến Thức Tiêm Chủng";
 }
 
 @functions {
+    // Hàm nhóm tag (phân loại để lọc)
     public string GetTagGroup(string tag)
     {
         if (string.IsNullOrEmpty(tag)) return "article";
@@ -13,6 +14,22 @@
         if (lower.Contains("mang thai")) return "pregnancy";
         if (lower.Contains("sau sinh") || lower.Contains("nuôi con")) return "postpartum";
         return "article";
+    }
+
+    // Hàm ánh xạ tag -> hình ảnh
+    public string GetTagImage(string tag)
+    {
+        if (string.IsNullOrEmpty(tag)) return "mvb9.png";
+
+        var lower = tag.ToLower();
+        if (lower.Contains("mang thai")) return "mvb1.png";
+        if (lower.Contains("sau sinh") || lower.Contains("nuôi con")) return "mvb2.png";
+        if (lower.Contains("thông tin")) return "mvb3.png";
+        if (lower.Contains("me va be")) return "mvb4.png";
+        if (lower.Contains("lịch tiêm")) return "mvb5.png";
+        if (lower.Contains("phòng bệnh")) return "mvb7.png";
+        if (lower.Contains("vaccine")) return "mvb3.png";
+        return "mvb6.png";
     }
 }
 
@@ -23,7 +40,6 @@
         <p class="lead text-dark">Cùng TPVAX tìm hiểu các thông tin hữu ích về sức khỏe, chăm sóc và tiêm chủng cho mẹ và bé</p>
     </div>
 </div>
-
 
 <main class="container my-5">
     <!-- Breadcrumb -->
@@ -64,11 +80,14 @@
         @foreach (var article in Model)
         {
             var tagGroup = GetTagGroup(article.Tag);
+            var tagImage = GetTagImage(article.Tag);
+
             <div class="col-lg-4 col-md-6 article-item" data-tags="@tagGroup" data-keywords="@article.Tag.ToLower()">
                 <article class="article-card">
                     <div class="article-image-wrapper">
-                        <img src="@Url.Content("~/Content/Images/MeVaBe/" + (article.HinhAnh ?? "default.jpg"))"
-                             class="img-fluid" alt="@article.TieuDe" />
+                            <!-- Ảnh chọn theo tag -->
+                            <img src="@Url.Content("~/Content/Images/MeVaBe/" + tagImage)"
+                                 class="img-fluid" alt="@article.TieuDe" />
                         <div class="article-category-badge">@article.DanhMuc</div>
                     </div>
                     <div class="article-body">
