@@ -1,5 +1,7 @@
 ﻿@{
     ViewBag.Title = "Báo cáo & Thống kê";
+    var vaccineRevenue = ViewBag.VaccineRevenue ?? new List<dynamic>();
+    var appointmentTrends = ViewBag.AppointmentTrends ?? new List<dynamic>();
 }
 
 
@@ -106,35 +108,34 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>VC001</td>
-                      <td>Vắc xin 6 trong 1</td>
-                      <td>150</td>
-                      <td>152,250,000</td>
-                    </tr>
-                    <tr>
-                      <td>VC002</td>
-                      <td>Vắc xin Cúm Tứ Giá</td>
-                      <td>520</td>
-                      <td>185,120,000</td>
-                    </tr>
-                    <tr>
-                      <td>VC003</td>
-                      <td>Prevenar 13</td>
-                      <td>95</td>
-                      <td>121,600,000</td>
-                    </tr>
-                    <tr>
-                      <td>VC004</td>
-                      <td>Gardasil 9</td>
-                      <td>120</td>
-                      <td>354,000,000</td>
-                    </tr>
+                    @if (vaccineRevenue != null && ((IEnumerable<dynamic>)vaccineRevenue).Any())
+                    {
+                        foreach (var item in vaccineRevenue)
+                        {
+                            <tr>
+                                <td>@item.MaVC</td>
+                                <td>@item.TenVC</td>
+                                <td>@item.SoLuotTiem</td>
+                                <td>@string.Format("{0:N0}", item.TongDoanhThu)</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr class="no-data">
+                            <td></td>
+                            <td class="text-center">Chưa có dữ liệu doanh thu</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th colspan="3" class="text-right">Tổng cộng:</th>
-                      <th>812,970,000</th>
+                      <th></th>
+                      <th></th>
+                      <th class="text-right">Tổng cộng:</th>
+                      <th>@string.Format("{0:N0}", vaccineRevenue != null && ((IEnumerable<dynamic>)vaccineRevenue).Any() ? ((IEnumerable<dynamic>)vaccineRevenue).Sum(x => (decimal)x.TongDoanhThu) : 0)</th>
                     </tr>
                   </tfoot>
                 </table>
@@ -144,16 +145,138 @@
         </section>
       </div>
 
-      
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/js/app.js"></script>
-  
+
+@section scripts {
+    <script>
+        // Dữ liệu xu hướng tiêm chủng
+        var trendsData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.AppointmentTrends ?? new List<object>()));
+        console.log('Trends Data:', trendsData);
+
+        // Tạo nhãn và dữ liệu cho biểu đồ xu hướng
+        var labels = [];
+        var data = [];
+        
+        // Tạo mảng 6 tháng gần nhất
+        var currentDate = new Date();
+        var months = [];
+        for (var i = 5; i >= 0; i--) {
+            var d = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+            months.push({
+                year: d.getFullYear(),
+                month: d.getMonth() + 1,
+                label: 'Tháng ' + (d.getMonth() + 1) + '/' + d.getFullYear()
+            });
+        }
+        
+        // Map dữ liệu từ server với 6 tháng
+        months.forEach(function(m) {
+            labels.push(m.label);
+            var found = trendsData.find(function(r) {
+                return r.Year === m.year && r.Month === m.month;
+            });
+            data.push(found ? found.SoLuotTiem : 0);
+        });
+        
+        // Vẽ biểu đồ xu hướng
+        var ctx = document.getElementById('trendsChart');
+        if (ctx) {
+            var trendsChart = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Số lượt tiêm',
+                        data: data,
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Số lượt tiêm: ' + context.parsed.y;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // DataTable
+        $(document).ready(function() {
+            $('#reportsTable').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "Chưa có dữ liệu",
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                    "infoEmpty": "Hiển thị 0 đến 0 trong tổng số 0 mục",
+                    "infoFiltered": "(lọc từ _MAX_ mục)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Hiển thị _MENU_ mục",
+                    "loadingRecords": "Đang tải...",
+                    "processing": "Đang xử lý...",
+                    "search": "Tìm kiếm:",
+                    "zeroRecords": "Không tìm thấy kết quả",
+                    "paginate": {
+                        "first": "Đầu",
+                        "last": "Cuối",
+                        "next": "Sau",
+                        "previous": "Trước"
+                    },
+                    "aria": {
+                        "sortAscending": ": sắp xếp tăng dần",
+                        "sortDescending": ": sắp xếp giảm dần"
+                    }
+                }
+            });
+
+            // Export Excel
+            $('#exportExcelBtn').click(function() {
+                // Simple CSV export
+                var csv = [];
+                var rows = document.querySelectorAll('#reportsTable tr');
+                
+                for (var i = 0; i < rows.length; i++) {
+                    var row = [], cols = rows[i].querySelectorAll('td, th');
+                    for (var j = 0; j < cols.length; j++) {
+                        row.push(cols[j].innerText);
+                    }
+                    csv.push(row.join(','));
+                }
+                
+                var csvString = csv.join('\n');
+                var link = document.createElement('a');
+                link.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csvString);
+                link.download = 'BaoCaoDoanhThu_' + new Date().toISOString().split('T')[0] + '.csv';
+                link.click();
+            });
+        });
+    </script>
+}

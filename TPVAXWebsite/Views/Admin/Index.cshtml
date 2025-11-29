@@ -1,5 +1,19 @@
 ﻿@{
     ViewBag.Title = "Bảng điều khiển";
+    var totalVaccines = ViewBag.TotalVaccines ?? 0;
+    var appointmentsToday = ViewBag.AppointmentsToday ?? 0;
+    var totalCustomers = ViewBag.TotalCustomers ?? 0;
+    var monthlyRevenue = ViewBag.MonthlyRevenue ?? 0M;
+    var lowStockVaccines = ViewBag.LowStockVaccines ?? new List<dynamic>();
+    var upcomingAppointments = ViewBag.UpcomingAppointments ?? new List<dynamic>();
+    var revenueByMonth = ViewBag.RevenueByMonth ?? new List<dynamic>();
+    
+    // Format doanh thu
+    string revenueDisplay = monthlyRevenue >= 1000000000 
+        ? string.Format("{0:0.##}B", monthlyRevenue / 1000000000)
+        : monthlyRevenue >= 1000000
+            ? string.Format("{0:0.##}M", monthlyRevenue / 1000000)
+            : string.Format("{0:0.##}K", monthlyRevenue / 1000);
 }
 
 
@@ -10,6 +24,13 @@
                 <h1 class="m-0">Bảng điều khiển</h1>
               </div>
             </div>
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Lỗi:</strong> @ViewBag.ErrorMessage
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
           </div>
         </div>
         <div class="content">
@@ -18,7 +39,7 @@
               <div class="col-12 col-sm-6 col-md-3">
                 <div class="small-box bg-primary">
                   <div class="inner">
-                    <h3>150+</h3>
+                    <h3>@totalVaccines</h3>
                     <p>Loại Vắc xin</p>
                   </div>
                   <div class="icon"><i class="fas fa-pills"></i></div>
@@ -30,7 +51,7 @@
               <div class="col-12 col-sm-6 col-md-3">
                 <div class="small-box bg-success">
                   <div class="inner">
-                    <h3>25</h3>
+                    <h3>@appointmentsToday</h3>
                     <p>Lịch tiêm hôm nay</p>
                   </div>
                   <div class="icon"><i class="fas fa-calendar-check"></i></div>
@@ -42,8 +63,8 @@
               <div class="col-12 col-sm-6 col-md-3">
                 <div class="small-box bg-warning">
                   <div class="inner">
-                    <h3>44</h3>
-                    <p>Khách hàng mới</p>
+                    <h3>@totalCustomers</h3>
+                    <p>Khách hàng</p>
                   </div>
                   <div class="icon"><i class="fas fa-user-plus"></i></div>
                   <a href="@Url.Action("Customers", "Admin")" class="small-box-footer"
@@ -54,7 +75,7 @@
               <div class="col-12 col-sm-6 col-md-3">
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h3>812M</h3>
+                    <h3>@revenueDisplay</h3>
                     <p>Doanh thu tháng</p>
                   </div>
                   <div class="icon"><i class="fas fa-dollar-sign"></i></div>
@@ -85,49 +106,6 @@
                     ></canvas>
                   </div>
                 </div>
-                <div class="card card-outline card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="fas fa-history mr-1"></i> Các Phiếu Tiêm Gần Đây
-                    </h3>
-                  </div>
-                  <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
-                      <thead>
-                        <tr>
-                          <th>Mã Phiếu</th>
-                          <th>Khách Hàng</th>
-                          <th>Ngày Tiêm</th>
-                          <th>Trạng Thái</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><a href="@Url.Action("InvoiceDetails", "Admin")">PT001</a></td>
-                          <td>Nguyễn Văn An</td>
-                          <td>21-10-2025</td>
-                          <td>
-                            <span class="badge bg-success">Hoàn thành</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><a href="@Url.Action("InvoiceDetails", "Admin")">PT002</a></td>
-                          <td>Trần Thị Bình</td>
-                          <td>21-10-2025</td>
-                          <td>
-                            <span class="badge bg-success">Hoàn thành</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><a href="@Url.Action("InvoiceDetails", "Admin")">PT003</a></td>
-                          <td>Lê Văn Cường</td>
-                          <td>20-10-2025</td>
-                          <td><span class="badge bg-info">Đang xử lý</span></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
               </section>
               <section class="col-lg-5 connectedSortable">
                 <div class="card card-warning card-outline">
@@ -138,29 +116,31 @@
                     </h3>
                   </div>
                   <div class="card-body p-0">
-                    <ul class="products-list product-list-in-card ps-2 pe-2">
-                      <li class="item">
-                        <div class="product-info ml-2">
-                          Prevenar 13<span class="badge bg-warning float-right"
-                            >Còn 80</span
-                          >
+                    @if (lowStockVaccines != null && ((IEnumerable<TPVAXWebsite.Models.Domain.Vaccine>)lowStockVaccines).Any())
+                    {
+                        <ul class="products-list product-list-in-card ps-2 pe-2">
+                            @foreach (TPVAXWebsite.Models.Domain.Vaccine vaccine in lowStockVaccines)
+                            {
+                                var badgeClass = vaccine.SoLuong == 0 ? "bg-danger" : vaccine.SoLuong < 50 ? "bg-danger" : "bg-warning";
+                                var statusText = vaccine.SoLuong == 0 ? "Hết hàng" : "Còn " + vaccine.SoLuong;
+                                <li class="item">
+                                    <div class="product-info ml-2">
+                                        @vaccine.TenVC<span class="badge @badgeClass float-right">@statusText</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="p-3 text-center text-muted">
+                            <i class="fas fa-check-circle fa-2x mb-2"></i>
+                            <p>Tất cả vaccine đều đủ hàng</p>
                         </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-info ml-2">
-                          MMR II<span class="badge bg-danger float-right"
-                            >Hết hàng</span
-                          >
-                        </div>
-                      </li>
-                    </ul>
+                    }
                   </div>
                   <div class="card-footer text-center">
-                    <a
-                      href="vaccines.html#content-vaccine-lots"
-                      class="uppercase"
-                      >Xem tất cả lô vắc xin</a
-                    >
+                    <a href="@Url.Action("Vaccines", "Admin")" class="uppercase">Xem tất cả vaccine</a>
                   </div>
                 </div>
                 <div class="card card-info card-outline">
@@ -170,22 +150,33 @@
                     </h3>
                   </div>
                   <div class="card-body p-0">
-                    <ul class="products-list product-list-in-card ps-2 pe-2">
-                      <li class="item">
-                        <div class="product-info ms-2">
-                          Nguyễn Văn An<span class="badge bg-info float-right"
-                            >09:30 - Hôm nay</span
-                          >
+                    @if (upcomingAppointments != null && ((IEnumerable<TPVAXWebsite.Models.Domain.LichTiem>)upcomingAppointments).Any())
+                    {
+                        <ul class="products-list product-list-in-card ps-2 pe-2">
+                            @foreach (TPVAXWebsite.Models.Domain.LichTiem appointment in upcomingAppointments)
+                            {
+                                var appointmentDate = appointment.NgayHenTiem;
+                                var isToday = appointmentDate.Date == DateTime.Today;
+                                var timeDisplay = isToday 
+                                    ? appointmentDate.ToString("HH:mm") + " - Hôm nay"
+                                    : appointmentDate.ToString("dd/MM/yyyy HH:mm");
+                                var tenNguoiTiem = appointment.HoSoTiemChung?.HoTen ?? "N/A";
+                                
+                                <li class="item">
+                                    <div class="product-info ms-2">
+                                        @tenNguoiTiem<span class="badge bg-info float-right">@timeDisplay</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="p-3 text-center text-muted">
+                            <i class="far fa-calendar-times fa-2x mb-2"></i>
+                            <p>Chưa có lịch tiêm sắp tới</p>
                         </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-info ms-2">
-                          Trần Thị Bình<span class="badge bg-info float-right"
-                            >10:00 - Hôm nay</span
-                          >
-                        </div>
-                      </li>
-                    </ul>
+                    }
                   </div>
                   <div class="card-footer text-center">
                     <a href="@Url.Action("Appointments", "Admin")">Xem tất cả lịch tiêm</a>
@@ -195,11 +186,91 @@
             </div>
           </div>
         </div>
-      </div>
-      
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="assets/js/app.js"></script>
-  
+
+@section scripts {
+    <script>
+        console.log('Dashboard loaded');
+        console.log('Total Vaccines:', @totalVaccines);
+        console.log('Total Customers:', @totalCustomers);
+        console.log('Appointments Today:', @appointmentsToday);
+        console.log('Monthly Revenue:', @monthlyRevenue);
+        
+        // Dữ liệu doanh thu 6 tháng
+        var revenueData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.RevenueByMonth ?? new List<object>()));
+        console.log('Revenue Data:', revenueData);
+        
+        // Tạo nhãn và dữ liệu cho biểu đồ
+        var labels = [];
+        var data = [];
+        
+        // Tạo mảng 6 tháng gần nhất
+        var currentDate = new Date();
+        var months = [];
+        for (var i = 5; i >= 0; i--) {
+            var d = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+            months.push({
+                year: d.getFullYear(),
+                month: d.getMonth() + 1,
+                label: 'Tháng ' + (d.getMonth() + 1) + '/' + d.getFullYear()
+            });
+        }
+        
+        // Map dữ liệu từ server với 6 tháng
+        months.forEach(function(m) {
+            labels.push(m.label);
+            var found = revenueData.find(function(r) {
+                return r.Year === m.year && r.Month === m.month;
+            });
+            data.push(found ? found.TotalRevenue / 1000000 : 0); // Chuyển sang triệu
+        });
+        
+        // Vẽ biểu đồ
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu (Triệu VNĐ)',
+                    data: data,
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += new Intl.NumberFormat('vi-VN').format(context.parsed.y) + ' triệu VNĐ';
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return new Intl.NumberFormat('vi-VN').format(value) + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

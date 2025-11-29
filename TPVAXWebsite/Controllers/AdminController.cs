@@ -31,11 +31,215 @@ namespace TPVAXWebsite.Controllers
         // DASHBOARD
         // ============================================================================
 
+        // GET: Admin/TestDatabase - Test connection và hiển thị dữ liệu thô
+        public ActionResult TestDatabase()
+        {
+            try
+            {
+                var result = new System.Text.StringBuilder();
+                result.AppendLine("=== DATABASE CONNECTION TEST ===\n");
+                
+                // Test connection
+                result.AppendLine($"Connection String: {_unitOfWork.GetType().Name}");
+                result.AppendLine($"Context Type: {System.Configuration.ConfigurationManager.ConnectionStrings["TPVAXConnection"]?.ConnectionString}\n");
+                
+                // Count tất cả bảng
+                var vaccineCount = _unitOfWork.Vaccines.Query().Count();
+                result.AppendLine($"Vaccine Count: {vaccineCount}");
+                
+                var customerCount = _unitOfWork.KhachHangs.Query().Count();
+                result.AppendLine($"KhachHang Count: {customerCount}");
+                
+                var appointmentCount = _unitOfWork.LichTiems.Query().Count();
+                result.AppendLine($"LichTiem Count: {appointmentCount}");
+                
+                var invoiceCount = _unitOfWork.HoaDons.Query().Count();
+                result.AppendLine($"HoaDon Count: {invoiceCount}\n");
+                
+                // Lấy sample data
+                if (vaccineCount > 0)
+                {
+                    result.AppendLine("Sample Vaccines:");
+                    var vaccines = _unitOfWork.Vaccines.Query().Take(5).ToList();
+                    foreach (var v in vaccines)
+                    {
+                        result.AppendLine($"  - {v.MaVC}: {v.TenVC}, Số lượng: {v.SoLuong}, Giá: {v.GiaBan:N0}đ");
+                    }
+                    result.AppendLine();
+                }
+                
+                if (customerCount > 0)
+                {
+                    result.AppendLine("Sample Khách hàng:");
+                    var customers = _unitOfWork.KhachHangs.Query().Take(5).ToList();
+                    foreach (var k in customers)
+                    {
+                        result.AppendLine($"  - {k.MaKH}: {k.HoTen}, SĐT: {k.SoDT}");
+                    }
+                    result.AppendLine();
+                }
+                
+                if (appointmentCount > 0)
+                {
+                    result.AppendLine("Sample Lịch tiêm:");
+                    var appointments = _unitOfWork.LichTiems.Query()
+                        .OrderByDescending(lt => lt.NgayHenTiem)
+                        .Take(5)
+                        .ToList();
+                    foreach (var lt in appointments)
+                    {
+                        result.AppendLine($"  - {lt.MaLT}: Ngày hẹn: {lt.NgayHenTiem:dd/MM/yyyy HH:mm}, Trạng thái: {lt.TrangThai}");
+                    }
+                    result.AppendLine();
+                }
+                
+                if (invoiceCount > 0)
+                {
+                    result.AppendLine("Sample Hóa đơn:");
+                    var invoices = _unitOfWork.HoaDons.Query()
+                        .OrderByDescending(hd => hd.NgayLap)
+                        .Take(5)
+                        .ToList();
+                    foreach (var hd in invoices)
+                    {
+                        result.AppendLine($"  - {hd.MaHD}: Ngày: {hd.NgayLap:dd/MM/yyyy}, Tổng: {hd.TongTien:N0}đ, Trạng thái: {(hd.TrangThai == true ? "Đã thanh toán" : "Chưa thanh toán")}");
+                    }
+                    result.AppendLine();
+                }
+                
+                result.AppendLine("=== TEST COMPLETED ===");
+                
+                return Content(result.ToString(), "text/plain");
+            }
+            catch (Exception ex)
+            {
+                var error = $"ERROR: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}";
+                if (ex.InnerException != null)
+                {
+                    error += $"\n\nInner Exception:\n{ex.InnerException.Message}";
+                }
+                return Content(error, "text/plain");
+            }
+        }
+
         // GET: Admin/Index
         public ActionResult Index()
         {
-            // TODO: Load dashboard data
-            return View();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("=== Dashboard Index Loading ===");
+                System.Diagnostics.Debug.WriteLine($"UnitOfWork Instance: {_unitOfWork?.GetHashCode()}");
+                
+                // Kiểm tra _unitOfWork có null không
+                if (_unitOfWork == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("ERROR: _unitOfWork is NULL!");
+                    throw new Exception("UnitOfWork is not initialized");
+                }
+                
+                // Test query trực tiếp
+                var vaccineList = _unitOfWork.Vaccines.GetAll();
+                System.Diagnostics.Debug.WriteLine($"Vaccines GetAll Count: {vaccineList.Count()}");
+                
+                // Tính toán thống kê cho dashboard - Sử dụng GetAll().Count() thay vì Query().Count()
+                var totalVaccines = _unitOfWork.Vaccines.GetAll().Count();
+                System.Diagnostics.Debug.WriteLine($"Total Vaccines (GetAll): {totalVaccines}");
+                
+                var totalCustomers = _unitOfWork.KhachHangs.GetAll().Count();
+                System.Diagnostics.Debug.WriteLine($"Total Customers: {totalCustomers}");
+                
+                // Lịch tiêm hôm nay
+                var today = DateTime.Today;
+                var allAppointments = _unitOfWork.LichTiems.Query()
+                    .Include(lt => lt.HoSoTiemChung)
+                    .ToList();
+                System.Diagnostics.Debug.WriteLine($"Total Appointments in DB: {allAppointments.Count}");
+                
+                var appointmentsToday = allAppointments
+                    .Where(lt => lt.NgayHenTiem.Date == today)
+                    .Count();
+                System.Diagnostics.Debug.WriteLine($"Appointments Today: {appointmentsToday}");
+                
+                // Doanh thu tháng này
+                var currentMonth = DateTime.Now.Month;
+                var currentYear = DateTime.Now.Year;
+                var allInvoices = _unitOfWork.HoaDons.GetAll().ToList();
+                System.Diagnostics.Debug.WriteLine($"Total Invoices in DB: {allInvoices.Count}");
+                
+                var monthlyRevenue = allInvoices
+                    .Where(hd => hd.NgayLap.Month == currentMonth && 
+                                 hd.NgayLap.Year == currentYear &&
+                                 hd.TrangThai == true)
+                    .Sum(hd => (decimal?)hd.TongTien) ?? 0;
+                System.Diagnostics.Debug.WriteLine($"Monthly Revenue: {monthlyRevenue}");
+                
+                // Vaccine sắp hết hàng (dưới 100)
+                var lowStockVaccines = vaccineList
+                    .Where(v => v.SoLuong < 100)
+                    .OrderBy(v => v.SoLuong)
+                    .Take(5)
+                    .ToList(); // Không select, giữ nguyên kiểu Vaccine
+                
+                // Lịch tiêm gần đây - lấy tất cả lịch có ngày hẹn >= hiện tại
+                var upcomingAppointments = allAppointments
+                    .Where(lt => lt.NgayHenTiem >= DateTime.Now && 
+                                 (lt.TrangThai == "Đã đặt" || lt.TrangThai == "Chưa tiêm"))
+                    .OrderBy(lt => lt.NgayHenTiem)
+                    .Take(5)
+                    .ToList(); // Không select, giữ nguyên kiểu LichTiem
+                
+                // Doanh thu 6 tháng gần nhất
+                var sixMonthsAgo = DateTime.Now.AddMonths(-5);
+                var revenueByMonth = allInvoices
+                    .Where(hd => hd.NgayLap >= sixMonthsAgo && hd.TrangThai == true)
+                    .GroupBy(hd => new { hd.NgayLap.Year, hd.NgayLap.Month })
+                    .Select(g => new
+                    {
+                        Year = g.Key.Year,
+                        Month = g.Key.Month,
+                        TotalRevenue = g.Sum(hd => hd.TongTien)
+                    })
+                    .OrderBy(r => r.Year).ThenBy(r => r.Month)
+                    .Cast<object>() // Cast sang object để tránh lỗi serialization
+                    .ToList();
+                
+                // Truyền dữ liệu qua ViewBag
+                ViewBag.TotalVaccines = totalVaccines;
+                ViewBag.TotalCustomers = totalCustomers;
+                ViewBag.AppointmentsToday = appointmentsToday;
+                ViewBag.MonthlyRevenue = monthlyRevenue;
+                ViewBag.LowStockVaccines = lowStockVaccines;
+                ViewBag.UpcomingAppointments = upcomingAppointments;
+                ViewBag.RevenueByMonth = revenueByMonth;
+                
+                System.Diagnostics.Debug.WriteLine($"Low Stock Vaccines Count: {lowStockVaccines.Count}");
+                System.Diagnostics.Debug.WriteLine($"Upcoming Appointments Count: {upcomingAppointments.Count}");
+                System.Diagnostics.Debug.WriteLine($"Revenue By Month Count: {revenueByMonth.Count}");
+                System.Diagnostics.Debug.WriteLine("=== Dashboard Index Loaded Successfully ===");
+                
+                return View();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error loading dashboard: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Stack trace: " + ex.StackTrace);
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Inner exception: " + ex.InnerException.Message);
+                }
+                
+                // Set default values nếu có lỗi
+                ViewBag.TotalVaccines = 0;
+                ViewBag.TotalCustomers = 0;
+                ViewBag.AppointmentsToday = 0;
+                ViewBag.MonthlyRevenue = 0;
+                ViewBag.LowStockVaccines = new List<object>();
+                ViewBag.UpcomingAppointments = new List<object>();
+                ViewBag.RevenueByMonth = new List<object>();
+                ViewBag.ErrorMessage = ex.Message;
+                
+                return View();
+            }
         }
 
         // ============================================================================
@@ -749,8 +953,59 @@ namespace TPVAXWebsite.Controllers
         // GET: Admin/Reports
         public ActionResult Reports()
         {
-            // TODO: Hiển thị báo cáo thống kê
-            return View();
+            try
+            {
+                // Báo cáo doanh thu theo vaccine
+                var revenueByVaccine = _unitOfWork.ChiTietHoaDons.Query()
+                    .Include(ct => ct.HoaDon)
+                    .Where(ct => ct.HoaDon.TrangThai == true && ct.LoaiSanPham == "VACCINE")
+                    .GroupBy(ct => ct.MaSanPham)
+                    .Select(g => new
+                    {
+                        MaVC = g.Key,
+                        SoLuotTiem = g.Sum(ct => ct.SoLuong),
+                        TongDoanhThu = g.Sum(ct => ct.SoLuong * ct.DonGia)
+                    })
+                    .ToList();
+
+                // Join với Vaccine để lấy tên
+                var vaccineRevenue = revenueByVaccine.Select(r => new
+                {
+                    MaVC = r.MaVC,
+                    TenVC = _unitOfWork.Vaccines.GetById(r.MaVC)?.TenVC ?? "N/A",
+                    SoLuotTiem = r.SoLuotTiem,
+                    TongDoanhThu = r.TongDoanhThu
+                }).OrderByDescending(r => r.TongDoanhThu).ToList();
+
+                ViewBag.VaccineRevenue = vaccineRevenue;
+
+                // Thống kê xu hướng tiêm chủng 6 tháng gần nhất
+                var sixMonthsAgo = DateTime.Now.AddMonths(-5).Date;
+                var appointmentTrends = _unitOfWork.LichTiems.Query()
+                    .Where(lt => lt.NgayTiemThucTe >= sixMonthsAgo && lt.TrangThai == "Đã tiêm")
+                    .GroupBy(lt => new { lt.NgayTiemThucTe.Value.Year, lt.NgayTiemThucTe.Value.Month })
+                    .Select(g => new
+                    {
+                        Year = g.Key.Year,
+                        Month = g.Key.Month,
+                        SoLuotTiem = g.Count()
+                    })
+                    .OrderBy(r => r.Year).ThenBy(r => r.Month)
+                    .Cast<object>()
+                    .ToList();
+
+                ViewBag.AppointmentTrends = appointmentTrends;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error loading reports: " + ex.Message);
+                ViewBag.VaccineRevenue = new List<object>();
+                ViewBag.AppointmentTrends = new List<object>();
+                ViewBag.ErrorMessage = ex.Message;
+                return View();
+            }
         }
 
         // ============================================================================
