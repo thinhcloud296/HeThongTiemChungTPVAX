@@ -45,7 +45,7 @@ namespace TPVAXWinform_DAL
                         vaccine.MaVC = row["MaVC"].ToString();
                         vaccine.TenVC = row["TenVC"].ToString();
                         vaccine.GiaBan = Convert.ToDecimal(row["GiaBan"]);
-                        vaccine.SoLuongTon = Convert.ToInt32(row["SoLuongTon"]);
+                        vaccine.SoLuong = Convert.ToInt32(row["SoLuong"]);
                         vaccine.MaLoai = row["MaLoai"].ToString();
                         vaccine.MoTa = row["MoTa"].ToString();
                         vaccine.HinhAnh = row["HinhAnh"].ToString();
@@ -168,7 +168,7 @@ namespace TPVAXWinform_DAL
                     row["SoMuiToiDa"] = (object)vaccine.SoMuiToiDa ?? DBNull.Value;
                     row["SoThangCho"] = (object)vaccine.SoThangCho ?? DBNull.Value;
                     row["GiaBan"] = vaccine.GiaBan;
-                    row["SoLuongTon"] = vaccine.SoLuongTon;
+                    row["SoLuong"] = vaccine.SoLuong;
                     row["MaLoai"] = vaccine.MaLoai;
                     row["MoTa"] = vaccine.MoTa;
                     row["HinhAnh"] = vaccine.HinhAnh;
@@ -196,7 +196,7 @@ namespace TPVAXWinform_DAL
                         row["SoMuiToiDa"] = (object)vaccine.SoMuiToiDa ?? DBNull.Value;
                         row["SoThangCho"] = (object)vaccine.SoThangCho ?? DBNull.Value;
                         row["GiaBan"] = vaccine.GiaBan;
-                        row["SoLuongTon"] = vaccine.SoLuongTon;
+                        row["SoLuong"] = vaccine.SoLuong;
                         row["MaLoai"] = vaccine.MaLoai;
                         row["MoTa"] = vaccine.MoTa;
                         row["HinhAnh"] = vaccine.HinhAnh;

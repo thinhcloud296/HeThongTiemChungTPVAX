@@ -46,6 +46,11 @@
             this.txtSearchMaHD = new System.Windows.Forms.TextBox();
             this.lblTimKiem = new System.Windows.Forms.Label();
             this.dgvHoaDon = new System.Windows.Forms.DataGridView();
+            this.contextMenuStripHoaDon = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemXemChiTiet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemInHoaDon = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemXacNhanThanhToan = new System.Windows.Forms.ToolStripMenuItem();
             this.colMaHD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNgayLap = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTongTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,11 +58,6 @@
             this.colMaKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMaNV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMaKM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contextMenuStripHoaDon = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemXemChiTiet = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemInHoaDon = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemXacNhanThanhToan = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTieuDe.SuspendLayout();
             this.pnlLoc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGiaDen)).BeginInit();
@@ -229,7 +229,7 @@
             this.btnDatLai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDatLai.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnDatLai.ForeColor = System.Drawing.Color.White;
-            this.btnDatLai.Location = new System.Drawing.Point(1650, 28);
+            this.btnDatLai.Location = new System.Drawing.Point(1656, 20);
             this.btnDatLai.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDatLai.Name = "btnDatLai";
             this.btnDatLai.Size = new System.Drawing.Size(120, 55);
@@ -309,6 +309,44 @@
             this.dgvHoaDon.Size = new System.Drawing.Size(1800, 769);
             this.dgvHoaDon.TabIndex = 2;
             // 
+            // contextMenuStripHoaDon
+            // 
+            this.contextMenuStripHoaDon.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStripHoaDon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemXemChiTiet,
+            this.toolStripMenuItemInHoaDon,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemXacNhanThanhToan});
+            this.contextMenuStripHoaDon.Name = "contextMenuStripHoaDon";
+            this.contextMenuStripHoaDon.Size = new System.Drawing.Size(280, 106);
+            this.contextMenuStripHoaDon.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripHoaDon_Opening);
+            // 
+            // toolStripMenuItemXemChiTiet
+            // 
+            this.toolStripMenuItemXemChiTiet.Name = "toolStripMenuItemXemChiTiet";
+            this.toolStripMenuItemXemChiTiet.Size = new System.Drawing.Size(279, 32);
+            this.toolStripMenuItemXemChiTiet.Text = "📋 Xem chi tiết hóa đơn";
+            this.toolStripMenuItemXemChiTiet.Click += new System.EventHandler(this.toolStripMenuItemXemChiTiet_Click);
+            // 
+            // toolStripMenuItemInHoaDon
+            // 
+            this.toolStripMenuItemInHoaDon.Name = "toolStripMenuItemInHoaDon";
+            this.toolStripMenuItemInHoaDon.Size = new System.Drawing.Size(279, 32);
+            this.toolStripMenuItemInHoaDon.Text = "🖨️ In hóa đơn";
+            this.toolStripMenuItemInHoaDon.Click += new System.EventHandler(this.toolStripMenuItemInHoaDon_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(276, 6);
+            // 
+            // toolStripMenuItemXacNhanThanhToan
+            // 
+            this.toolStripMenuItemXacNhanThanhToan.Name = "toolStripMenuItemXacNhanThanhToan";
+            this.toolStripMenuItemXacNhanThanhToan.Size = new System.Drawing.Size(279, 32);
+            this.toolStripMenuItemXacNhanThanhToan.Text = "💳 Xác nhận thanh toán";
+            this.toolStripMenuItemXacNhanThanhToan.Click += new System.EventHandler(this.toolStripMenuItemXacNhanThanhToan_Click);
+            // 
             // colMaHD
             // 
             this.colMaHD.DataPropertyName = "MaHD";
@@ -371,44 +409,7 @@
             this.colMaKM.MinimumWidth = 8;
             this.colMaKM.Name = "colMaKM";
             this.colMaKM.ReadOnly = true;
-            // 
-            // contextMenuStripHoaDon
-            // 
-            this.contextMenuStripHoaDon.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStripHoaDon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemXemChiTiet,
-            this.toolStripMenuItemInHoaDon,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemXacNhanThanhToan});
-            this.contextMenuStripHoaDon.Name = "contextMenuStripHoaDon";
-            this.contextMenuStripHoaDon.Size = new System.Drawing.Size(299, 106);
-            this.contextMenuStripHoaDon.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripHoaDon_Opening);
-            // 
-            // toolStripMenuItemXemChiTiet
-            // 
-            this.toolStripMenuItemXemChiTiet.Name = "toolStripMenuItemXemChiTiet";
-            this.toolStripMenuItemXemChiTiet.Size = new System.Drawing.Size(298, 32);
-            this.toolStripMenuItemXemChiTiet.Text = "📋 Xem chi tiết hóa đơn";
-            this.toolStripMenuItemXemChiTiet.Click += new System.EventHandler(this.toolStripMenuItemXemChiTiet_Click);
-            // 
-            // toolStripMenuItemInHoaDon
-            // 
-            this.toolStripMenuItemInHoaDon.Name = "toolStripMenuItemInHoaDon";
-            this.toolStripMenuItemInHoaDon.Size = new System.Drawing.Size(298, 32);
-            this.toolStripMenuItemInHoaDon.Text = "🖨️ In hóa đơn";
-            this.toolStripMenuItemInHoaDon.Click += new System.EventHandler(this.toolStripMenuItemInHoaDon_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(295, 6);
-            // 
-            // toolStripMenuItemXacNhanThanhToan
-            // 
-            this.toolStripMenuItemXacNhanThanhToan.Name = "toolStripMenuItemXacNhanThanhToan";
-            this.toolStripMenuItemXacNhanThanhToan.Size = new System.Drawing.Size(298, 32);
-            this.toolStripMenuItemXacNhanThanhToan.Text = "💳 Xác nhận thanh toán";
-            this.toolStripMenuItemXacNhanThanhToan.Click += new System.EventHandler(this.toolStripMenuItemXacNhanThanhToan_Click);
+            this.colMaKM.Visible = false;
             // 
             // HoaDonControl
             // 
@@ -450,6 +451,11 @@
         private System.Windows.Forms.TextBox txtSearchMaHD;
         private System.Windows.Forms.Label lblTimKiem;
         private System.Windows.Forms.DataGridView dgvHoaDon;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripHoaDon;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemChiTiet;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInHoaDon;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXacNhanThanhToan;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaHD;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNgayLap;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTongTien;
@@ -457,10 +463,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaKH;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaNV;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaKM;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripHoaDon;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemChiTiet;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInHoaDon;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXacNhanThanhToan;
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="TaiKhoanBLL.cs" />
     <Compile Include="ThongKeBLL.cs" />
     <Compile Include="VaccineBLL.cs" />
+    <Compile Include="VaccinePhongBenhBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TPVAXWinform_DAL\TPVAXWinform_DAL.csproj">

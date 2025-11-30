@@ -136,7 +136,7 @@
             this.grpDanhSachCho.Size = new System.Drawing.Size(1984, 226);
             this.grpDanhSachCho.TabIndex = 3;
             this.grpDanhSachCho.TabStop = false;
-            this.grpDanhSachCho.Text = "Danh sách mũi tiêm chờ lưu";
+            this.grpDanhSachCho.Text = "Thông tin chi tiết mũi tiêm";
             // 
             // dgvVaccineWait
             // 
@@ -276,6 +276,7 @@
             this.colTenGoi,
             this.colDoiTuongApDung,
             this.colGiaGoi});
+            this.dgvGoiVaccine.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvGoiVaccine.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dgvGoiVaccine.Location = new System.Drawing.Point(10, 149);
             this.dgvGoiVaccine.Name = "dgvGoiVaccine";

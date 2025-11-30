@@ -146,10 +146,8 @@ namespace TPVAXWinform_GUI
             // Đặt form ở 90% kích thước màn hình
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
             int formWidth = (int)(screenBounds.Width * 0.9);
-            int formHeight = (int)(screenBounds.Height * 0.9);
 
             this.Width = formWidth;
-            this.Height = formHeight;
 
             // Căn giữa form
             this.StartPosition = FormStartPosition.CenterScreen;

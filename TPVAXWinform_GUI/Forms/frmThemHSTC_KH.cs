@@ -382,6 +382,8 @@ namespace TPVAXWinform_GUI
             { MessageBox.Show("Số điện thoại đã tồn tại. Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            btnThemTatCa.Enabled = true;
+            btnThemHoSo.Enabled = true;
             List<String> DSHSTCLienKet = new List<String>();
             DataRow[] drDSHSTCLienKet;
             string makh;

@@ -154,9 +154,9 @@
             this.label6.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label6.Location = new System.Drawing.Point(30, 343);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 28);
+            this.label6.Size = new System.Drawing.Size(86, 28);
             this.label6.TabIndex = 11;
-            this.label6.Text = "Chứ vụ:";
+            this.label6.Text = "Chức vụ:";
             // 
             // cboChucVu
             // 

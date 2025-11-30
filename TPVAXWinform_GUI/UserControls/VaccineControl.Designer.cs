@@ -84,7 +84,7 @@
             this.lblTieuDe.Name = "lblTieuDe";
             this.lblTieuDe.Size = new System.Drawing.Size(1800, 108);
             this.lblTieuDe.TabIndex = 0;
-            this.lblTieuDe.Text = "QUẢN LÝ VACCINE";
+            this.lblTieuDe.Text = "QUẢN LÝ DANH MỤC VACCINE";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnlLoc
@@ -283,9 +283,9 @@
             this.btnQuanLyDanhMuc.Location = new System.Drawing.Point(50, 20);
             this.btnQuanLyDanhMuc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnQuanLyDanhMuc.Name = "btnQuanLyDanhMuc";
-            this.btnQuanLyDanhMuc.Size = new System.Drawing.Size(280, 50);
+            this.btnQuanLyDanhMuc.Size = new System.Drawing.Size(312, 50);
             this.btnQuanLyDanhMuc.TabIndex = 0;
-            this.btnQuanLyDanhMuc.Text = "Quản lý Danh mục";
+            this.btnQuanLyDanhMuc.Text = "Quản lý Danh mục Vaccine";
             this.btnQuanLyDanhMuc.UseVisualStyleBackColor = false;
             this.btnQuanLyDanhMuc.Visible = false;
             this.btnQuanLyDanhMuc.Click += new System.EventHandler(this.btnQuanLyDanhMuc_Click);

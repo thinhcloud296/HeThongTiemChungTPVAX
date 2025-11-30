@@ -18,6 +18,9 @@ namespace TPVAXWinform_GUI.Forms
         private LoaiVaccineBLL loaiVaccineBLL = new LoaiVaccineBLL();
         private NhaCungCapBLL nhaCungCapBLL = new NhaCungCapBLL();
         private VaccineBLL vaccineBLL = new VaccineBLL();
+        // THÊM MỚI: BLL cho VaccinePhongBenh
+        private VaccinePhongBenhBLL vaccinePhongBenhBLL = new VaccinePhongBenhBLL();
+
         private DataTable dtLoaiBenh;
         private DataTable dtLoaiVaccine;
         private DataTable dtNhaCungCap;
@@ -26,14 +29,6 @@ namespace TPVAXWinform_GUI.Forms
         public frmQuanLyDanhMuc()
         {
             InitializeComponent();
-            InitializeFormSettings();
-        }
-
-        private void InitializeFormSettings()
-        {
-            this.Width = 1200;
-            this.Height = 700;
-            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void frmQuanLyDanhMuc_Load(object sender, EventArgs e)
@@ -75,6 +70,7 @@ namespace TPVAXWinform_GUI.Forms
 
             DataView dv = dtLoaiBenh.DefaultView;
             dv.RowFilter = $"TenBenh LIKE '%{searchText.Replace("'", "''")}%'";
+
             dgvLoaiBenh.DataSource = dv.ToTable();
         }
 
@@ -82,7 +78,7 @@ namespace TPVAXWinform_GUI.Forms
         {
             if (string.IsNullOrWhiteSpace(txtTenBenh.Text))
             {
-                MessageBox.Show("Vui lòng nh?p tên b?nh.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên bệnh.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -97,13 +93,13 @@ namespace TPVAXWinform_GUI.Forms
                 };
 
                 loaiBenhBLL.Insert(loaiBenh);
-                MessageBox.Show("Thêm lo?i b?nh thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Thêm loại bệnh thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadLoaiBenh();
                 ClearLoaiBenhInputs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("L?i khi thêm lo?i b?nh: " + ex.Message, "L?i", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi thêm loại bệnh: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -111,13 +107,13 @@ namespace TPVAXWinform_GUI.Forms
         {
             if (dgvLoaiBenh.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Vui lòng ch?n lo?i b?nh c?n s?a.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn loại bệnh cần sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtTenBenh.Text))
             {
-                MessageBox.Show("Vui lòng nh?p tên b?nh.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên bệnh.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -133,13 +129,13 @@ namespace TPVAXWinform_GUI.Forms
                 };
 
                 loaiBenhBLL.Edit(loaiBenh);
-                MessageBox.Show("S?a lo?i b?nh thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Sửa loại bệnh thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadLoaiBenh();
                 ClearLoaiBenhInputs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("L?i khi s?a lo?i b?nh: " + ex.Message, "L?i", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi sửa loại bệnh: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -199,6 +195,7 @@ namespace TPVAXWinform_GUI.Forms
 
             DataView dv = dtLoaiVaccine.DefaultView;
             dv.RowFilter = $"TenLoai LIKE '%{searchText.Replace("'", "''")}%'";
+
             dgvLoaiVaccine.DataSource = dv.ToTable();
         }
 
@@ -206,7 +203,7 @@ namespace TPVAXWinform_GUI.Forms
         {
             if (string.IsNullOrWhiteSpace(txtTenLoai.Text))
             {
-                MessageBox.Show("Vui lòng nh?p tên lo?i vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên loại vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -220,13 +217,13 @@ namespace TPVAXWinform_GUI.Forms
                 };
 
                 loaiVaccineBLL.Insert(loaiVaccine);
-                MessageBox.Show("Thêm lo?i vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Thêm loại vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadLoaiVaccine();
                 ClearLoaiVaccineInputs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("L?i khi thêm lo?i vaccine: " + ex.Message, "L?i", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi thêm loại vaccine: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -234,13 +231,13 @@ namespace TPVAXWinform_GUI.Forms
         {
             if (dgvLoaiVaccine.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Vui lòng ch?n lo?i vaccine c?n s?a.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn loại vaccine cần sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtTenLoai.Text))
             {
-                MessageBox.Show("Vui lòng nh?p tên lo?i vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên loại vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -255,13 +252,13 @@ namespace TPVAXWinform_GUI.Forms
                 };
 
                 loaiVaccineBLL.Edit(loaiVaccine);
-                MessageBox.Show("S?a lo?i vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Sửa loại vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadLoaiVaccine();
                 ClearLoaiVaccineInputs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("L?i khi s?a lo?i vaccine: " + ex.Message, "L?i", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi sửa loại vaccine: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -325,6 +322,7 @@ namespace TPVAXWinform_GUI.Forms
 
             DataView dv = dtNhaCungCap.DefaultView;
             dv.RowFilter = $"TenNCC LIKE '%{searchText.Replace("'", "''")}%'";
+
             dgvNhaCungCap.DataSource = dv.ToTable();
         }
 
@@ -435,9 +433,11 @@ namespace TPVAXWinform_GUI.Forms
         #region Vaccine
         private void LoadVaccine()
         {
-            dtVaccine = vaccineBLL.GetData();
+            dtVaccine = vaccineBLL.GetDataVaccineDetail();
             BindDataToGridVaccine(dtVaccine);
             LoadLoaiVaccineComboBox();
+            // THÊM MỚI: Load danh sách bệnh vào CheckedListBox
+            LoadLoaiBenhCheckedListBox();
         }
 
         private void LoadLoaiVaccineComboBox()
@@ -449,6 +449,89 @@ namespace TPVAXWinform_GUI.Forms
             cboMaLoaiVC.SelectedIndex = -1;
         }
 
+        // THÊM MỚI: Hàm load danh sách bệnh vào CheckedListBox
+        private void LoadLoaiBenhCheckedListBox()
+        {
+            try
+            {
+                // Lấy danh sách loại bệnh từ BLL
+                DataTable dtLoaiBenh = loaiBenhBLL.GetData();
+
+                // Xóa các item cũ (nếu có)
+                clbLoaiBenh.Items.Clear();
+
+                // Thêm các item mới vào CheckedListBox
+                foreach (DataRow row in dtLoaiBenh.Rows)
+                {
+                    // Tạo một DisplayItem chứa cả MaLoaiBenh và TenBenh
+                    LoaiBenhDisplayItem item = new LoaiBenhDisplayItem
+                    {
+                        MaLoaiBenh = row["MaLoaiBenh"].ToString(),
+                        TenBenh = row["TenBenh"].ToString()
+                    };
+
+                    clbLoaiBenh.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi load danh sách bệnh: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // THÊM MỚI: Class hỗ trợ hiển thị trong CheckedListBox
+        private class LoaiBenhDisplayItem
+        {
+            public string MaLoaiBenh { get; set; }
+            public string TenBenh { get; set; }
+
+            public override string ToString()
+            {
+                return TenBenh;
+            }
+        }
+
+        // THÊM MỚI: Hàm lấy danh sách mã bệnh đã chọn
+        private List<string> GetSelectedLoaiBenhIds()
+        {
+            List<string> danhSachMaLoaiBenh = new List<string>();
+
+            foreach (object item in clbLoaiBenh.CheckedItems)
+            {
+                if (item is LoaiBenhDisplayItem displayItem)
+                {
+                    danhSachMaLoaiBenh.Add(displayItem.MaLoaiBenh);
+                }
+            }
+
+            return danhSachMaLoaiBenh;
+        }
+
+        // THÊM MỚI: Hàm set các item đã checked khi sửa
+        private void SetCheckedLoaiBenh(List<string> danhSachMaLoaiBenh)
+        {
+            // Bỏ check tất cả trước
+            for (int i = 0; i < clbLoaiBenh.Items.Count; i++)
+            {
+                clbLoaiBenh.SetItemChecked(i, false);
+            }
+
+            // Check các item theo danh sách
+            if (danhSachMaLoaiBenh == null || danhSachMaLoaiBenh.Count == 0)
+                return;
+
+            for (int i = 0; i < clbLoaiBenh.Items.Count; i++)
+            {
+                if (clbLoaiBenh.Items[i] is LoaiBenhDisplayItem displayItem)
+                {
+                    if (danhSachMaLoaiBenh.Contains(displayItem.MaLoaiBenh))
+                    {
+                        clbLoaiBenh.SetItemChecked(i, true);
+                    }
+                }
+            }
+        }
+
         private void BindDataToGridVaccine(DataTable dt)
         {
             dgvVaccine.AutoGenerateColumns = false;
@@ -457,7 +540,7 @@ namespace TPVAXWinform_GUI.Forms
             colSoMuiToiDa.DataPropertyName = "SoMuiToiDa";
             colSoThangCho.DataPropertyName = "SoThangCho";
             colGiaBan.DataPropertyName = "GiaBan";
-            colSoLuongTon.DataPropertyName = "SoLuongTon";
+            colSoLuongTon.DataPropertyName = "SoLuongTonThucTe";
             colMaLoaiVC.DataPropertyName = "MaLoai";
             dgvVaccine.DataSource = dt;
         }
@@ -475,6 +558,7 @@ namespace TPVAXWinform_GUI.Forms
 
             DataView dv = dtVaccine.DefaultView;
             dv.RowFilter = $"TenVC LIKE '%{searchText.Replace("'", "''")}%'";
+
             dgvVaccine.DataSource = dv.ToTable();
         }
 
@@ -492,22 +576,37 @@ namespace TPVAXWinform_GUI.Forms
                 return;
             }
 
+            // THÊM MỚI: Kiểm tra phải chọn ít nhất 1 bệnh
+            List<string> danhSachMaLoaiBenh = GetSelectedLoaiBenhIds();
+            if (danhSachMaLoaiBenh.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một loại bệnh mà vaccine này phòng được.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
+                string maVC = vaccineBLL.CreateNewMaVC();
+
                 VaccineDTO vaccine = new VaccineDTO
                 {
-                    MaVC = vaccineBLL.CreateNewMaVC(),
+                    MaVC = maVC,
                     TenVC = txtTenVC.Text.Trim(),
                     MoTa = txtMoTaVC.Text.Trim(),
                     SoMuiToiDa = string.IsNullOrWhiteSpace(txtSoMuiToiDaVC.Text) ? 0 : int.Parse(txtSoMuiToiDaVC.Text),
                     SoThangCho = string.IsNullOrWhiteSpace(txtSoThangChoVC.Text) ? 0 : int.Parse(txtSoThangChoVC.Text),
                     GiaBan = string.IsNullOrWhiteSpace(txtGiaBanVC.Text) ? 0 : decimal.Parse(txtGiaBanVC.Text),
-                    SoLuongTon = string.IsNullOrWhiteSpace(txtSoLuongTonVC.Text) ? 0 : int.Parse(txtSoLuongTonVC.Text),
+                    SoLuong = string.IsNullOrWhiteSpace(txtSoLuongTonVC.Text) ? 0 : int.Parse(txtSoLuongTonVC.Text),
                     MaLoai = cboMaLoaiVC.SelectedValue.ToString(),
                     HinhAnh = ""
                 };
 
+                // Thêm vaccine
                 vaccineBLL.Insert(vaccine);
+
+                // THÊM MỚI: Thêm quan hệ vaccine-bệnh
+                vaccinePhongBenhBLL.InsertMultiple(maVC, danhSachMaLoaiBenh);
+
                 MessageBox.Show("Thêm vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadVaccine();
                 ClearVaccineInputs();
@@ -542,6 +641,14 @@ namespace TPVAXWinform_GUI.Forms
                 return;
             }
 
+            // THÊM MỚI: Kiểm tra phải chọn ít nhất 1 bệnh
+            List<string> danhSachMaLoaiBenh = GetSelectedLoaiBenhIds();
+            if (danhSachMaLoaiBenh.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một loại bệnh mà vaccine này phòng được.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 string maVC = dgvVaccine.SelectedRows[0].Cells["colMaVC"].Value.ToString();
@@ -553,13 +660,18 @@ namespace TPVAXWinform_GUI.Forms
                     SoMuiToiDa = string.IsNullOrWhiteSpace(txtSoMuiToiDaVC.Text) ? 0 : int.Parse(txtSoMuiToiDaVC.Text),
                     SoThangCho = string.IsNullOrWhiteSpace(txtSoThangChoVC.Text) ? 0 : int.Parse(txtSoThangChoVC.Text),
                     GiaBan = string.IsNullOrWhiteSpace(txtGiaBanVC.Text) ? 0 : decimal.Parse(txtGiaBanVC.Text),
-                    SoLuongTon = string.IsNullOrWhiteSpace(txtSoLuongTonVC.Text) ? 0 : int.Parse(txtSoLuongTonVC.Text),
+                    SoLuong = string.IsNullOrWhiteSpace(txtSoLuongTonVC.Text) ? 0 : int.Parse(txtSoLuongTonVC.Text),
                     MaLoai = cboMaLoaiVC.SelectedValue.ToString(),
                     HinhAnh = dgvVaccine.SelectedRows[0].Cells["colMaVC"].Value != DBNull.Value ? 
- vaccineBLL.GetVaccineByMaVC(maVC)?.HinhAnh ?? "" : ""
+                        vaccineBLL.GetVaccineByMaVC(maVC)?.HinhAnh ?? "" : ""
                 };
 
+                // Cập nhật vaccine
                 vaccineBLL.Edit(vaccine);
+
+                // THÊM MỚI: Cập nhật quan hệ vaccine-bệnh (xóa cũ, thêm mới)
+                vaccinePhongBenhBLL.UpdateBenhChoVaccine(maVC, danhSachMaLoaiBenh);
+
                 MessageBox.Show("Sửa vaccine thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadVaccine();
                 ClearVaccineInputs();
@@ -608,13 +720,39 @@ namespace TPVAXWinform_GUI.Forms
                         {
                             txtMoTaVC.Text = vaccine.MoTa;
                         }
+
+                        // THÊM MỚI: Load danh sách bệnh đã chọn
+                        LoadBenhChoVaccine(maVC);
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Ignore error when loading details
                     Console.WriteLine("Error loading vaccine details: " + ex.Message);
                 }
+            }
+        }
+
+        // THÊM MỚI: Hàm load danh sách bệnh mà vaccine đang phòng
+        private void LoadBenhChoVaccine(string maVC)
+        {
+            try
+            {
+                // Lấy danh sách bệnh từ BLL
+                DataTable dtBenh = vaccinePhongBenhBLL.GetBenhByMaVC(maVC);
+
+                // Tạo danh sách mã bệnh
+                List<string> danhSachMaLoaiBenh = new List<string>();
+                foreach (DataRow row in dtBenh.Rows)
+                {
+                    danhSachMaLoaiBenh.Add(row["MaLoaiBenh"].ToString());
+                }
+
+                // Set checked cho CheckedListBox
+                SetCheckedLoaiBenh(danhSachMaLoaiBenh);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi load danh sách bệnh cho vaccine: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -635,6 +773,12 @@ namespace TPVAXWinform_GUI.Forms
             txtSoLuongTonVC.Clear();
             cboMaLoaiVC.SelectedIndex = -1;
             dgvVaccine.ClearSelection();
+
+            // THÊM MỚI: Bỏ check tất cả các bệnh
+            for (int i = 0; i < clbLoaiBenh.Items.Count; i++)
+            {
+                clbLoaiBenh.SetItemChecked(i, false);
+            }
         }
         #endregion
     }

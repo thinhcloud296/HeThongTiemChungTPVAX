@@ -148,7 +148,11 @@ namespace TPVAXWinform_GUI.UserControls
         private void HuyTiemClick(DataGridViewRow selectedRow)
         {
             string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "0";
-
+            if (trangThai.Equals("Chưa tiêm", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Không thể hủy lịch tiêm chưa được thực hiện!", "Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                return;
+            }
 
             // Xác nhận với người dùng
             string tenNguoiTiem = selectedRow.Cells["colTenNguoiTiem"].Value?.ToString() ?? "";

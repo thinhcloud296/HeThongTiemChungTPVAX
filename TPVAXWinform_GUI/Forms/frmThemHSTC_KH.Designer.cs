@@ -119,6 +119,7 @@
             // btnThemTatCa
             // 
             this.btnThemTatCa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnThemTatCa.Enabled = false;
             this.btnThemTatCa.FlatAppearance.BorderSize = 0;
             this.btnThemTatCa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemTatCa.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
@@ -157,7 +158,7 @@
             "Nam",
             "Nữ",
             "Khác"});
-            this.cboQuanHe.Location = new System.Drawing.Point(270, 246);
+            this.cboQuanHe.Location = new System.Drawing.Point(270, 205);
             this.cboQuanHe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboQuanHe.Name = "cboQuanHe";
             this.cboQuanHe.Size = new System.Drawing.Size(448, 36);
@@ -166,6 +167,7 @@
             // btnThemHoSo
             // 
             this.btnThemHoSo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnThemHoSo.Enabled = false;
             this.btnThemHoSo.FlatAppearance.BorderSize = 0;
             this.btnThemHoSo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
@@ -182,7 +184,7 @@
             // txtGhiChuHSTC
             // 
             this.txtGhiChuHSTC.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtGhiChuHSTC.Location = new System.Drawing.Point(270, 338);
+            this.txtGhiChuHSTC.Location = new System.Drawing.Point(270, 297);
             this.txtGhiChuHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtGhiChuHSTC.Multiline = true;
             this.txtGhiChuHSTC.Name = "txtGhiChuHSTC";
@@ -193,7 +195,7 @@
             // 
             this.lblGhiChu.AutoSize = true;
             this.lblGhiChu.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblGhiChu.Location = new System.Drawing.Point(45, 341);
+            this.lblGhiChu.Location = new System.Drawing.Point(45, 300);
             this.lblGhiChu.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGhiChu.Name = "lblGhiChu";
             this.lblGhiChu.Size = new System.Drawing.Size(89, 28);
@@ -203,7 +205,7 @@
             // txtCCCDHSTC
             // 
             this.txtCCCDHSTC.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtCCCDHSTC.Location = new System.Drawing.Point(270, 293);
+            this.txtCCCDHSTC.Location = new System.Drawing.Point(270, 252);
             this.txtCCCDHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtCCCDHSTC.Name = "txtCCCDHSTC";
             this.txtCCCDHSTC.Size = new System.Drawing.Size(448, 34);
@@ -213,7 +215,7 @@
             // 
             this.lblCCCDHoSo.AutoSize = true;
             this.lblCCCDHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblCCCDHoSo.Location = new System.Drawing.Point(45, 298);
+            this.lblCCCDHoSo.Location = new System.Drawing.Point(45, 257);
             this.lblCCCDHoSo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCCCDHoSo.Name = "lblCCCDHoSo";
             this.lblCCCDHoSo.Size = new System.Drawing.Size(66, 28);
@@ -224,7 +226,7 @@
             // 
             this.lblQuanHeKH.AutoSize = true;
             this.lblQuanHeKH.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblQuanHeKH.Location = new System.Drawing.Point(45, 250);
+            this.lblQuanHeKH.Location = new System.Drawing.Point(45, 209);
             this.lblQuanHeKH.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblQuanHeKH.Name = "lblQuanHeKH";
             this.lblQuanHeKH.Size = new System.Drawing.Size(211, 28);
@@ -236,7 +238,7 @@
             this.dtpNgaySinhHSTC.CustomFormat = "dd/MM/yyyy";
             this.dtpNgaySinhHSTC.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dtpNgaySinhHSTC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpNgaySinhHSTC.Location = new System.Drawing.Point(960, 201);
+            this.dtpNgaySinhHSTC.Location = new System.Drawing.Point(960, 160);
             this.dtpNgaySinhHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpNgaySinhHSTC.Name = "dtpNgaySinhHSTC";
             this.dtpNgaySinhHSTC.Size = new System.Drawing.Size(280, 34);
@@ -246,7 +248,7 @@
             // 
             this.lblNgaySinhHoSo.AutoSize = true;
             this.lblNgaySinhHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblNgaySinhHoSo.Location = new System.Drawing.Point(820, 206);
+            this.lblNgaySinhHoSo.Location = new System.Drawing.Point(820, 165);
             this.lblNgaySinhHoSo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNgaySinhHoSo.Name = "lblNgaySinhHoSo";
             this.lblNgaySinhHoSo.Size = new System.Drawing.Size(112, 28);
@@ -262,7 +264,7 @@
             "Nam",
             "Nữ",
             "Khác"});
-            this.cboGioiTinhHSTC.Location = new System.Drawing.Point(270, 201);
+            this.cboGioiTinhHSTC.Location = new System.Drawing.Point(270, 160);
             this.cboGioiTinhHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboGioiTinhHSTC.Name = "cboGioiTinhHSTC";
             this.cboGioiTinhHSTC.Size = new System.Drawing.Size(448, 36);
@@ -272,7 +274,7 @@
             // 
             this.lblGioiTinh.AutoSize = true;
             this.lblGioiTinh.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblGioiTinh.Location = new System.Drawing.Point(45, 206);
+            this.lblGioiTinh.Location = new System.Drawing.Point(45, 165);
             this.lblGioiTinh.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGioiTinh.Name = "lblGioiTinh";
             this.lblGioiTinh.Size = new System.Drawing.Size(100, 28);
@@ -282,7 +284,7 @@
             // txtHoTenHSTC
             // 
             this.txtHoTenHSTC.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtHoTenHSTC.Location = new System.Drawing.Point(270, 155);
+            this.txtHoTenHSTC.Location = new System.Drawing.Point(270, 114);
             this.txtHoTenHSTC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtHoTenHSTC.Name = "txtHoTenHSTC";
             this.txtHoTenHSTC.Size = new System.Drawing.Size(970, 34);
@@ -292,7 +294,7 @@
             // 
             this.lblHoTenHoSo.AutoSize = true;
             this.lblHoTenHoSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblHoTenHoSo.Location = new System.Drawing.Point(45, 160);
+            this.lblHoTenHoSo.Location = new System.Drawing.Point(45, 119);
             this.lblHoTenHoSo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHoTenHoSo.Name = "lblHoTenHoSo";
             this.lblHoTenHoSo.Size = new System.Drawing.Size(192, 28);
