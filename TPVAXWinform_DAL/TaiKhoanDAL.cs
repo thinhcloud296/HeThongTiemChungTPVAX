@@ -129,6 +129,54 @@ namespace TPVAXWinform_DAL
             }
         }
 
+        /// <summary>
+        /// Lấy mật khẩu đã băm theo MaTK
+        /// </summary>
+        public string GetHashedPasswordByMaTK(string maTK)
+        {
+            const string sql = "SELECT MatKhau FROM dbo.TaiKhoan WHERE MaTK = @MaTK";
+            DataTable dt = DBConnect.ExecuteQuery(
+                sql,
+                CommandType.Text,
+                DBConnect.Param("@MaTK", maTK, SqlDbType.Char, 10)
+            );
+
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0]["MatKhau"].ToString();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Cập nhật mật khẩu mới (đã băm) theo MaTK
+        /// </summary>
+        public void UpdatePassword(string maTK, string hashedNewPassword)
+        {
+            try
+            {
+                using (var buffer = DBConnect.CreateBuffer("SELECT * FROM dbo.TaiKhoan"))
+                {
+                    DataRow row = buffer.Table.Rows.Cast<DataRow>()
+                        .FirstOrDefault(r => r["MaTK"].ToString().Trim() == maTK.Trim());
+
+                    if (row != null)
+                    {
+                        row["MatKhau"] = hashedNewPassword;
+                        buffer.Save();
+                    }
+                    else
+                    {
+                        throw new Exception("Không tìm thấy tài khoản!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi cập nhật mật khẩu: " + ex.Message);
+            }
+        }
+
         // SỬA: Hàm Reset nhận mật khẩu đã băm
         public void ResetPassword(string maNVorMaKH, string hashedNewPassword)
         {

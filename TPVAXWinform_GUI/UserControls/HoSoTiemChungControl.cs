@@ -324,21 +324,23 @@ namespace TPVAXWinform.UserControls
                 string gt = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colGioiTinhHS"].Value?.ToString() ?? "";
                 var valNgaySinh = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colNgaySinhHS"].Value;
                 string ns =
-          valNgaySinh is DateTime dt ? dt.ToString("dd-MM-yyyy") :
-           DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd-MM-yyyy") :
-            "";
+                    valNgaySinh is DateTime dt ? dt.ToString("dd/MM/yyyy") :
+                    DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd/MM/yyyy") : "";
                 string quanhe = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colQuanHeHS"].Value?.ToString() ?? "";
                 string tenKH = dgvHSTC.Rows[selectedHSTCRowIndex].Cells["colHoTenKHHGHS"].Value?.ToString() ?? "";
 
-                MessageBox.Show(
-                     "📋 THÔNG TIN HỒ SƠ TIÊM CHỦNG\n\n" +
-                      $"Mã hồ sơ: {maHSTC}\n" +
-                       $"Họ tên: {hoTen}\n" +
-             $"Giới tính: {gt}\n" +
-              $"Ngày sinh: {ns}\n" +
-               $"Họ tên khách hàng : {tenKH}\n" +
-              $"Quan hệ với khách hàng: {quanhe}\n",
-           "Thông tin hồ sơ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var thongTin = new System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, string>>
+                {
+                    new System.Collections.Generic.KeyValuePair<string, string>("Mã hồ sơ", maHSTC),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Họ tên", hoTen),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Giới tính", gt),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Ngày sinh", ns),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Khách hàng", tenKH),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Quan hệ", quanhe)
+                };
+
+                var frm = new TPVAXWinform_GUI.Forms.frmXemThongTin("THÔNG TIN HỒ SƠ TIÊM CHỦNG", thongTin);
+                frm.ShowDialog();
             }
         }
 
@@ -460,20 +462,21 @@ namespace TPVAXWinform.UserControls
                 var valNgaySinh = dr["NgaySinh"];
                 string ngaySinh =
                     valNgaySinh is DateTime dt ? dt.ToString("dd/MM/yyyy") :
-               DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd/MM/yyyy") :
-            "";
-
+                    DateTime.TryParse(valNgaySinh?.ToString(), out var d) ? d.ToString("dd/MM/yyyy") : "";
                 string soDT = dgvKhachHang.Rows[selectedKHRowIndex].Cells["colSoDTKH"].Value?.ToString() ?? "";
 
-                MessageBox.Show(
-                 "📋 THÔNG TIN KHÁCH HÀNG\n\n" +
-             $"Mã khách hàng: {maKH}\n" +
-                $"Họ tên: {hoTen}\n" +
-                         $"Giới tính: {gioiTinh}\n" +
-               $"Ngày sinh: {ngaySinh}\n" +
-             $"CCCD: {cccd}\n" +
-           $"Số điện thoại: {soDT}\n",
-                      "Thông tin khách hàng", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var thongTin = new System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, string>>
+                {
+                    new System.Collections.Generic.KeyValuePair<string, string>("Mã khách hàng", maKH),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Họ tên", hoTen),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Giới tính", gioiTinh),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Ngày sinh", ngaySinh),
+                    new System.Collections.Generic.KeyValuePair<string, string>("CCCD", cccd),
+                    new System.Collections.Generic.KeyValuePair<string, string>("Số điện thoại", soDT)
+                };
+
+                var frm = new TPVAXWinform_GUI.Forms.frmXemThongTin("THÔNG TIN KHÁCH HÀNG", thongTin);
+                frm.ShowDialog();
             }
         }
 

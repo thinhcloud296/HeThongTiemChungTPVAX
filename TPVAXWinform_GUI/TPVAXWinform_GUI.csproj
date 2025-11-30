@@ -192,6 +192,12 @@
     <Compile Include="Forms\frmDangNhap.Designer.cs">
       <DependentUpon>frmDangNhap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmDoiMatKhau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDoiMatKhau.Designer.cs">
+      <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmEditNV.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,6 +245,12 @@
     </Compile>
     <Compile Include="Forms\frmThemGoiVaccine.Designer.cs">
       <DependentUpon>frmThemGoiVaccine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmXemThongTin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmXemThongTin.Designer.cs">
+      <DependentUpon>frmXemThongTin.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\XacNhanTiemForm.cs">
       <SubType>Form</SubType>
@@ -363,6 +375,9 @@
     <EmbeddedResource Include="Forms\frmDangNhap.resx">
       <DependentUpon>frmDangNhap.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDoiMatKhau.resx">
+      <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmEditNV.resx">
       <DependentUpon>frmEditNV.cs</DependentUpon>
     </EmbeddedResource>
@@ -375,6 +390,7 @@
     <EmbeddedResource Include="Forms\frmThemPhieuNhap.resx">
       <DependentUpon>frmThemPhieuNhap.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmXemThongTin.resx" />
     <EmbeddedResource Include="Forms\XacNhanTiemForm.resx">
       <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
     </EmbeddedResource>

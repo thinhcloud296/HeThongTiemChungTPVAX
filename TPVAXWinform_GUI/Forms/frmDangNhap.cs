@@ -116,6 +116,44 @@ namespace TPVAXWinform_GUI.Forms
                 txtMatKhau.PasswordChar = '●';
             }
         }
+
+        // Xử lý sự kiện click vào link "Đổi mật khẩu"
+        private void lnkDoiMatKhau_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string maNV = txtTenDangNhap.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(maNV))
+            {
+                MessageBox.Show("Vui lòng nhập mã nhân viên trước khi đổi mật khẩu!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenDangNhap.Focus();
+                return;
+            }
+
+            // Kiểm tra mã nhân viên có tồn tại không
+            try
+            {
+                DataTable dt = taiKhoanBLL.GetTaiKhoanByMaNV(maNV);
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Mã nhân viên không tồn tại!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtTenDangNhap.Focus();
+                    return;
+                }
+
+                string maTK = dt.Rows[0]["MaTK"].ToString().Trim();
+
+                // Mở form đổi mật khẩu
+                frmDoiMatKhau frm = new frmDoiMatKhau(maTK);
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
     // Class UserSession

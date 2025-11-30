@@ -90,5 +90,39 @@ namespace TPVAXWinform_BLL
 
             dal.ResetPassword(maNVorMaKH, hashedNewPassword);
         }
+
+        /// <summary>
+        /// Đổi mật khẩu (cần xác thực mật khẩu cũ)
+        /// </summary>
+        public void ChangePassword(string maTK, string oldPassword, string newPassword)
+        {
+            if (string.IsNullOrWhiteSpace(maTK))
+                throw new Exception("Mã tài khoản không hợp lệ!");
+
+            if (string.IsNullOrWhiteSpace(oldPassword))
+                throw new Exception("Vui lòng nhập mật khẩu cũ!");
+
+            if (string.IsNullOrWhiteSpace(newPassword))
+                throw new Exception("Vui lòng nhập mật khẩu mới!");
+
+            if (newPassword.Length < 6)
+                throw new Exception("Mật khẩu mới phải có ít nhất 6 ký tự!");
+
+            // Lấy mật khẩu đã băm từ DB
+            string hashedPasswordFromDB = dal.GetHashedPasswordByMaTK(maTK);
+
+            if (string.IsNullOrEmpty(hashedPasswordFromDB))
+                throw new Exception("Không tìm thấy tài khoản!");
+
+            // Xác thực mật khẩu cũ
+            bool isOldPasswordValid = BCrypt.Net.BCrypt.Verify(oldPassword, hashedPasswordFromDB);
+
+            if (!isOldPasswordValid)
+                throw new Exception("Mật khẩu cũ không đúng!");
+
+            // Băm mật khẩu mới và cập nhật
+            string hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            dal.UpdatePassword(maTK, hashedNewPassword);
+        }
     }
 }

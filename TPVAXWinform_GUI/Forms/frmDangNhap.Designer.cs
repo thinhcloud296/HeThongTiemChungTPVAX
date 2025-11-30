@@ -36,6 +36,7 @@
             this.chkHienMatKhau = new System.Windows.Forms.CheckBox();
             this.btnDangNhap = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.lnkDoiMatKhau = new System.Windows.Forms.LinkLabel();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,6 +106,19 @@
             this.chkHienMatKhau.UseVisualStyleBackColor = true;
             this.chkHienMatKhau.CheckedChanged += new System.EventHandler(this.chkHienMatKhau_CheckedChanged);
             // 
+            // lnkDoiMatKhau
+            // 
+            this.lnkDoiMatKhau.AutoSize = true;
+            this.lnkDoiMatKhau.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkDoiMatKhau.Location = new System.Drawing.Point(430, 348);
+            this.lnkDoiMatKhau.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkDoiMatKhau.Name = "lnkDoiMatKhau";
+            this.lnkDoiMatKhau.Size = new System.Drawing.Size(117, 25);
+            this.lnkDoiMatKhau.TabIndex = 8;
+            this.lnkDoiMatKhau.TabStop = true;
+            this.lnkDoiMatKhau.Text = "Đổi mật khẩu";
+            this.lnkDoiMatKhau.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDoiMatKhau_LinkClicked);
+            // 
             // btnDangNhap
             // 
             this.btnDangNhap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
@@ -125,6 +139,7 @@
             // panelMain
             // 
             this.panelMain.BackColor = System.Drawing.Color.White;
+            this.panelMain.Controls.Add(this.lnkDoiMatKhau);
             this.panelMain.Controls.Add(this.lblTitle);
             this.panelMain.Controls.Add(this.btnDangNhap);
             this.panelMain.Controls.Add(this.lblTenDangNhap);
@@ -167,5 +182,6 @@
         private System.Windows.Forms.CheckBox chkHienMatKhau;
         private System.Windows.Forms.Button btnDangNhap;
         private System.Windows.Forms.Panel panelMain;
+        private System.Windows.Forms.LinkLabel lnkDoiMatKhau;
     }
 }
