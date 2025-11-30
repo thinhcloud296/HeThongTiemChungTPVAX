@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TPVAXWinform_BLL;
@@ -38,6 +39,115 @@ namespace TPVAXWinform_GUI.Forms
             LoadLoaiVaccine();
             LoadNhaCungCap();
             LoadVaccine();
+
+            // Bỏ chọn tất cả các dòng khi load
+            dgvLoaiBenh.ClearSelection();
+            dgvLoaiVaccine.ClearSelection();
+            dgvNhaCungCap.ClearSelection();
+            dgvVaccine.ClearSelection();
+
+            // Setup Regex validation cho các textbox
+            SetupRegexValidation();
+        }
+
+        private void SetupRegexValidation()
+        {
+            // Email validation cho NCC
+            txtEmailNCC.Leave += (s, e) =>
+            {
+                if (!string.IsNullOrWhiteSpace(txtEmailNCC.Text))
+                {
+                    string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                    if (!Regex.IsMatch(txtEmailNCC.Text.Trim(), emailPattern))
+                    {
+                        MessageBox.Show("Email không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtEmailNCC.Focus();
+                    }
+                }
+            };
+
+            // Số điện thoại validation cho NCC (10-11 số)
+            txtSoDTNCC.KeyPress += OnlyNumberKeyPress;
+            txtSoDTNCC.Leave += (s, e) =>
+            {
+                if (!string.IsNullOrWhiteSpace(txtSoDTNCC.Text))
+                {
+                    string phonePattern = @"^0\d{9,10}$";
+                    if (!Regex.IsMatch(txtSoDTNCC.Text.Trim(), phonePattern))
+                    {
+                        MessageBox.Show("Số điện thoại phải bắt đầu bằng 0 và có 10-11 chữ số!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtSoDTNCC.Focus();
+                    }
+                }
+            };
+
+            // Số tài khoản ngân hàng (chỉ số, 8-20 ký tự)
+            txtSoTK.KeyPress += OnlyNumberKeyPress;
+            txtSoTK.Leave += (s, e) =>
+            {
+                if (!string.IsNullOrWhiteSpace(txtSoTK.Text))
+                {
+                    string accountPattern = @"^\d{8,20}$";
+                    if (!Regex.IsMatch(txtSoTK.Text.Trim(), accountPattern))
+                    {
+                        MessageBox.Show("Số tài khoản phải có 8-20 chữ số!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtSoTK.Focus();
+                    }
+                }
+            };
+
+            // Vaccine - Số mũi tối đa (chỉ số, 1-10)
+            txtSoMuiToiDaVC.KeyPress += OnlyNumberKeyPress;
+
+            // Vaccine - Số tháng chờ (chỉ số)
+            txtSoThangChoVC.KeyPress += OnlyNumberKeyPress;
+
+            // Vaccine - Giá bán (chỉ số và dấu phẩy/chấm)
+            txtGiaBanVC.KeyPress += OnlyDecimalKeyPress;
+
+            // Vaccine - Số lượng tồn (chỉ số)
+            txtSoLuongTonVC.KeyPress += OnlyNumberKeyPress;
+        }
+
+        private void OnlyNumberKeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Chỉ cho phép số và phím điều khiển (Backspace, Delete...)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void OnlyDecimalKeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            // Cho phép số, dấu chấm/phẩy (chỉ 1 lần), và phím điều khiển
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+            // Chỉ cho phép 1 dấu chấm hoặc phẩy
+            if ((e.KeyChar == '.' || e.KeyChar == ',') && (txt.Text.Contains(".") || txt.Text.Contains(",")))
+            {
+                e.Handled = true;
+            }
+        }
+
+        // Hàm kiểm tra trùng tên trong DataTable
+        private bool IsDuplicateName(DataTable dt, string columnName, string value)
+        {
+            if (dt == null || string.IsNullOrWhiteSpace(value))
+                return false;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string existingValue = row[columnName]?.ToString()?.Trim() ?? "";
+                if (existingValue.Equals(value, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         #region Loại Bệnh
@@ -45,6 +155,8 @@ namespace TPVAXWinform_GUI.Forms
         {
             dtLoaiBenh = loaiBenhBLL.GetData();
             BindDataToGridLoaiBenh(dtLoaiBenh);
+            dgvLoaiBenh.ClearSelection();
+            ClearLoaiBenhInputs();
         }
 
         private void BindDataToGridLoaiBenh(DataTable dt)
@@ -79,6 +191,14 @@ namespace TPVAXWinform_GUI.Forms
             if (string.IsNullOrWhiteSpace(txtTenBenh.Text))
             {
                 MessageBox.Show("Vui lòng nhập tên bệnh.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra trùng tên
+            if (IsDuplicateName(dtLoaiBenh, "TenBenh", txtTenBenh.Text.Trim()))
+            {
+                MessageBox.Show("Tên bệnh đã tồn tại! Vui lòng nhập tên khác.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenBenh.Focus();
                 return;
             }
 
@@ -171,6 +291,8 @@ namespace TPVAXWinform_GUI.Forms
         {
             dtLoaiVaccine = loaiVaccineBLL.GetData();
             BindDataToGridLoaiVaccine(dtLoaiVaccine);
+            dgvLoaiVaccine.ClearSelection();
+            ClearLoaiVaccineInputs();
         }
 
         private void BindDataToGridLoaiVaccine(DataTable dt)
@@ -204,6 +326,14 @@ namespace TPVAXWinform_GUI.Forms
             if (string.IsNullOrWhiteSpace(txtTenLoai.Text))
             {
                 MessageBox.Show("Vui lòng nhập tên loại vaccine.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra trùng tên
+            if (IsDuplicateName(dtLoaiVaccine, "TenLoai", txtTenLoai.Text.Trim()))
+            {
+                MessageBox.Show("Tên loại vaccine đã tồn tại! Vui lòng nhập tên khác.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenLoai.Focus();
                 return;
             }
 
@@ -292,6 +422,8 @@ namespace TPVAXWinform_GUI.Forms
         {
             dtNhaCungCap = nhaCungCapBLL.GetData();
             BindDataToGridNhaCungCap(dtNhaCungCap);
+            dgvNhaCungCap.ClearSelection();
+            ClearNhaCungCapInputs();
         }
 
         private void BindDataToGridNhaCungCap(DataTable dt)
@@ -331,6 +463,14 @@ namespace TPVAXWinform_GUI.Forms
             if (string.IsNullOrWhiteSpace(txtTenNCC.Text))
             {
                 MessageBox.Show("Vui lòng nhập tên nhà cung cấp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra trùng tên
+            if (IsDuplicateName(dtNhaCungCap, "TenNCC", txtTenNCC.Text.Trim()))
+            {
+                MessageBox.Show("Tên nhà cung cấp đã tồn tại! Vui lòng nhập tên khác.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenNCC.Focus();
                 return;
             }
 
@@ -438,6 +578,8 @@ namespace TPVAXWinform_GUI.Forms
             LoadLoaiVaccineComboBox();
             // THÊM MỚI: Load danh sách bệnh vào CheckedListBox
             LoadLoaiBenhCheckedListBox();
+            dgvVaccine.ClearSelection();
+            ClearVaccineInputs();
         }
 
         private void LoadLoaiVaccineComboBox()
@@ -581,6 +723,14 @@ namespace TPVAXWinform_GUI.Forms
             if (danhSachMaLoaiBenh.Count == 0)
             {
                 MessageBox.Show("Vui lòng chọn ít nhất một loại bệnh mà vaccine này phòng được.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra trùng tên
+            if (IsDuplicateName(dtVaccine, "TenVC", txtTenVC.Text.Trim()))
+            {
+                MessageBox.Show("Tên vaccine đã tồn tại! Vui lòng nhập tên khác.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenVC.Focus();
                 return;
             }
 
