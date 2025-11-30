@@ -246,6 +246,12 @@
     <Compile Include="Forms\frmThemGoiVaccine.Designer.cs">
       <DependentUpon>frmThemGoiVaccine.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmSuaGoiVaccine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSuaGoiVaccine.Designer.cs">
+      <DependentUpon>frmSuaGoiVaccine.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmXemThongTin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -390,7 +396,9 @@
     <EmbeddedResource Include="Forms\frmThemPhieuNhap.resx">
       <DependentUpon>frmThemPhieuNhap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmXemThongTin.resx" />
+    <EmbeddedResource Include="Forms\frmXemThongTin.resx">
+      <DependentUpon>frmXemThongTin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\XacNhanTiemForm.resx">
       <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -402,6 +410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmThemGoiVaccine.resx">
       <DependentUpon>frmThemGoiVaccine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSuaGoiVaccine.resx">
+      <DependentUpon>frmSuaGoiVaccine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmChiTietHoaDon.resx">
       <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>

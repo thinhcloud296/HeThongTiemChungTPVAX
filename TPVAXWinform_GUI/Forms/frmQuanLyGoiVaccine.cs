@@ -126,5 +126,22 @@ namespace TPVAXWinform_GUI.Forms
                 }
             }
         }
+
+        private void menuSuaGoi_Click(object sender, EventArgs e)
+        {
+            if (dgvGoiVaccine.SelectedRows.Count > 0)
+            {
+                string maGoi = dgvGoiVaccine.SelectedRows[0].Cells["colMaGoi"].Value?.ToString();
+
+                if (!string.IsNullOrEmpty(maGoi))
+                {
+                    frmSuaGoiVaccine frm = new frmSuaGoiVaccine(maGoi);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadGoiVaccine();
+                    }
+                }
+            }
+        }
     }
 }

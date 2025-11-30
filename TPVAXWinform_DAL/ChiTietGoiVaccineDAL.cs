@@ -101,5 +101,28 @@ namespace TPVAXWinform_DAL
             }
             return $"CTGV{(maxNum + 1).ToString("D6")}";
         }
+
+        /// <summary>
+        /// Xóa tất cả chi tiết gói vaccine theo mã gói
+        /// </summary>
+        public void DeleteByMaGoi(string maGoi)
+        {
+            try
+            {
+                // 1. Dùng tham số @MaGoi thay vì cộng chuỗi trực tiếp
+                string sql = "DELETE FROM dbo.ChiTietGoiVaccine WHERE MaGoi = @MaGoi";
+
+                // 2. Gọi hàm ExecuteNonQuery với đầy đủ tham số
+                DBConnect.ExecuteNonQuery(
+                    sql,
+                    CommandType.Text,
+                    DBConnect.Param("@MaGoi", maGoi, SqlDbType.Char, 10) // Giả sử MaGoi là CHAR(10)
+                );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi xóa chi tiết gói vaccine: " + ex.Message);
+            }
+        }
     }
 }

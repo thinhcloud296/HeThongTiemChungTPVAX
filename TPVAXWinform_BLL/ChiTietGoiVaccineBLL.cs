@@ -40,5 +40,13 @@ namespace TPVAXWinform_BLL
         {
             return _dal.GenerateMaCTGoi();
         }
+
+        /// <summary>
+        /// Xóa tất cả chi tiết gói vaccine theo mã gói
+        /// </summary>
+        public void DeleteByMaGoi(string maGoi)
+        {
+            _dal.DeleteByMaGoi(maGoi);
+        }
     }
 }

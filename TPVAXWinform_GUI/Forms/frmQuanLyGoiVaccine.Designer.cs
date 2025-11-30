@@ -37,6 +37,7 @@ namespace TPVAXWinform_GUI.Forms
             this.btnDong = new System.Windows.Forms.Button();
             this.contextMenuGoi = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuXemChiTiet = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSuaGoi = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTieuDe.SuspendLayout();
             this.pnlLoc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoiVaccine)).BeginInit();
@@ -253,17 +254,26 @@ namespace TPVAXWinform_GUI.Forms
             // 
             this.contextMenuGoi.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuGoi.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuXemChiTiet});
+            this.menuXemChiTiet,
+            this.menuSuaGoi});
             this.contextMenuGoi.Name = "contextMenuGoi";
-            this.contextMenuGoi.Size = new System.Drawing.Size(313, 38);
+            this.contextMenuGoi.Size = new System.Drawing.Size(313, 72);
             // 
             // menuXemChiTiet
             // 
             this.menuXemChiTiet.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.menuXemChiTiet.Name = "menuXemChiTiet";
             this.menuXemChiTiet.Size = new System.Drawing.Size(312, 34);
-            this.menuXemChiTiet.Text = "Xem thông tin gói vaccine";
+            this.menuXemChiTiet.Text = "📄 Xem thông tin gói vaccine";
             this.menuXemChiTiet.Click += new System.EventHandler(this.menuXemChiTiet_Click);
+            // 
+            // menuSuaGoi
+            // 
+            this.menuSuaGoi.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.menuSuaGoi.Name = "menuSuaGoi";
+            this.menuSuaGoi.Size = new System.Drawing.Size(312, 34);
+            this.menuSuaGoi.Text = "✏️ Sửa gói vaccine";
+            this.menuSuaGoi.Click += new System.EventHandler(this.menuSuaGoi_Click);
             // 
             // frmQuanLyGoiVaccine
             // 
@@ -306,6 +316,7 @@ namespace TPVAXWinform_GUI.Forms
         private System.Windows.Forms.Button btnDong;
         private System.Windows.Forms.ContextMenuStrip contextMenuGoi;
         private System.Windows.Forms.ToolStripMenuItem menuXemChiTiet;
+        private System.Windows.Forms.ToolStripMenuItem menuSuaGoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaGoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenGoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMoTa;
