@@ -12,6 +12,7 @@ namespace TPVAXWinform_DAL
     public class ChiTietGoiVaccineDAL
     {
         private string selectSql = "SELECT * FROM dbo.ChiTietGoiVaccine";
+
         public DataTable GetData()
         {
             return DBConnect.ExecuteQuery(selectSql);
@@ -78,6 +79,27 @@ namespace TPVAXWinform_DAL
             {
                 throw new Exception("Lỗi khi sửa chi tiết gói vaccine: " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Sinh mã chi tiết gói vaccine mới theo format CTGV000001 (10 ký tự)
+        /// </summary>
+        public string GenerateMaCTGoi()
+        {
+            DataTable dt = GetData();
+            int maxNum = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                string maCT = row["MaCTGoi"].ToString().Trim();
+                if (maCT.StartsWith("CTGV") && maCT.Length == 10)
+                {
+                    if (int.TryParse(maCT.Substring(4), out int num))
+                    {
+                        if (num > maxNum) maxNum = num;
+                    }
+                }
+            }
+            return $"CTGV{(maxNum + 1).ToString("D6")}";
         }
     }
 }

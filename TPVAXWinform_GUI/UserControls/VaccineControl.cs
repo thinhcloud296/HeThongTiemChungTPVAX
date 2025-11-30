@@ -39,6 +39,7 @@ namespace TPVAXWinform_GUI.UserControls
             LoadVaccines();
             LoadFilters();
             btnQuanLyDanhMuc.Visible = roleNVKho;
+            btnQLGoiVC.Visible = roleNVKho;
         }
 
         private void LoadVaccines()
@@ -214,6 +215,10 @@ namespace TPVAXWinform_GUI.UserControls
             ApplyFilters();
         }
 
-
+        private void btnQLGoiVC_Click(object sender, EventArgs e)
+        {
+            Forms.frmQuanLyGoiVaccine frm = new Forms.frmQuanLyGoiVaccine();
+            frm.ShowDialog();
+        }
     }
 }

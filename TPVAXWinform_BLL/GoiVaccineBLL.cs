@@ -11,19 +11,29 @@ namespace TPVAXWinform_BLL
 {
     public class GoiVaccineBLL
     {
-        GoiVaccineDAL _dal = new GoiVaccineDAL();
+        private GoiVaccineDAL _dal = new GoiVaccineDAL();
+
         public DataTable GetData()
         {
             return _dal.GetData();
         }
+
         public void Insert(GoiVaccineDTO goi)
         {
             _dal.Insert(goi);
         }
+
         public void Edit(GoiVaccineDTO goi)
         {
             _dal.Edit(goi);
         }
 
+        /// <summary>
+        /// Sinh mã gói vaccine mới theo format GVAC000001 (10 ký tự)
+        /// </summary>
+        public string GenerateMaGoi()
+        {
+            return _dal.GenerateMaGoi();
+        }
     }
 }

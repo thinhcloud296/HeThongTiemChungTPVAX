@@ -222,6 +222,24 @@
     <Compile Include="Forms\frmThemSuaKhuyenMai.Designer.cs">
       <DependentUpon>frmThemSuaKhuyenMai.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmQuanLyGoiVaccine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmQuanLyGoiVaccine.Designer.cs">
+      <DependentUpon>frmQuanLyGoiVaccine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmChiTietGoiVaccine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmChiTietGoiVaccine.Designer.cs">
+      <DependentUpon>frmChiTietGoiVaccine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmThemGoiVaccine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmThemGoiVaccine.Designer.cs">
+      <DependentUpon>frmThemGoiVaccine.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\XacNhanTiemForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -359,6 +377,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\XacNhanTiemForm.resx">
       <DependentUpon>XacNhanTiemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmQuanLyGoiVaccine.resx">
+      <DependentUpon>frmQuanLyGoiVaccine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmChiTietGoiVaccine.resx">
+      <DependentUpon>frmChiTietGoiVaccine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmThemGoiVaccine.resx">
+      <DependentUpon>frmThemGoiVaccine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmChiTietHoaDon.resx">
       <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>

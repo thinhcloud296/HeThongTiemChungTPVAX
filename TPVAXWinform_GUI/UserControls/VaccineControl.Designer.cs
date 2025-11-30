@@ -55,6 +55,7 @@
             this.colMaLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSoMuiToiDa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMoTa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnQLGoiVC = new System.Windows.Forms.Button();
             this.pnlTieuDe.SuspendLayout();
             this.pnlLoc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGiaMax)).BeginInit();
@@ -264,6 +265,7 @@
             // pnlHanhDong
             // 
             this.pnlHanhDong.BackColor = System.Drawing.Color.White;
+            this.pnlHanhDong.Controls.Add(this.btnQLGoiVC);
             this.pnlHanhDong.Controls.Add(this.btnQuanLyDanhMuc);
             this.pnlHanhDong.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHanhDong.Location = new System.Drawing.Point(0, 268);
@@ -405,6 +407,22 @@
             this.colMoTa.Name = "colMoTa";
             this.colMoTa.ReadOnly = true;
             // 
+            // btnQLGoiVC
+            // 
+            this.btnQLGoiVC.BackColor = System.Drawing.Color.DarkOliveGreen;
+            this.btnQLGoiVC.FlatAppearance.BorderSize = 0;
+            this.btnQLGoiVC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQLGoiVC.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnQLGoiVC.ForeColor = System.Drawing.Color.White;
+            this.btnQLGoiVC.Location = new System.Drawing.Point(393, 20);
+            this.btnQLGoiVC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnQLGoiVC.Name = "btnQLGoiVC";
+            this.btnQLGoiVC.Size = new System.Drawing.Size(312, 50);
+            this.btnQLGoiVC.TabIndex = 1;
+            this.btnQLGoiVC.Text = "Quản lý Gói Vaccine";
+            this.btnQLGoiVC.UseVisualStyleBackColor = false;
+            this.btnQLGoiVC.Click += new System.EventHandler(this.btnQLGoiVC_Click);
+            // 
             // VaccineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -456,5 +474,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaLoai;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSoMuiToiDa;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMoTa;
+        private System.Windows.Forms.Button btnQLGoiVC;
     }
 }

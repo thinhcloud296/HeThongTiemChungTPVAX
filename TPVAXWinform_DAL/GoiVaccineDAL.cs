@@ -11,10 +11,12 @@ namespace TPVAXWinform_DAL
     public class GoiVaccineDAL
     {
         private string selectSql = "SELECT * FROM dbo.GoiVaccine";
+
         public DataTable GetData()
         {
             return DBConnect.ExecuteQuery(selectSql);
         }
+
         public void Insert(GoiVaccineDTO goi)
         {
             try
@@ -67,6 +69,27 @@ namespace TPVAXWinform_DAL
             {
                 throw new Exception("Lỗi khi sửa gói vaccine: " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Sinh mã gói vaccine mới theo format GVAC000001 (10 ký tự)
+        /// </summary>
+        public string GenerateMaGoi()
+        {
+            DataTable dt = GetData();
+            int maxNum = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                string maGoi = row["MaGoi"].ToString().Trim();
+                if (maGoi.StartsWith("GVAC") && maGoi.Length == 10)
+                {
+                    if (int.TryParse(maGoi.Substring(4), out int num))
+                    {
+                        if (num > maxNum) maxNum = num;
+                    }
+                }
+            }
+            return $"GVAC{(maxNum + 1).ToString("D6")}";
         }
     }
 }
