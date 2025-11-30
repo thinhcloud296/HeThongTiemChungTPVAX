@@ -127,51 +127,40 @@ namespace TPVAXWebsite.Controllers
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("=== Dashboard Index Loading ===");
-                System.Diagnostics.Debug.WriteLine($"UnitOfWork Instance: {_unitOfWork?.GetHashCode()}");
-                
                 // Kiểm tra _unitOfWork có null không
                 if (_unitOfWork == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("ERROR: _unitOfWork is NULL!");
                     throw new Exception("UnitOfWork is not initialized");
                 }
                 
                 // Test query trực tiếp
                 var vaccineList = _unitOfWork.Vaccines.GetAll();
-                System.Diagnostics.Debug.WriteLine($"Vaccines GetAll Count: {vaccineList.Count()}");
                 
                 // Tính toán thống kê cho dashboard - Sử dụng GetAll().Count() thay vì Query().Count()
                 var totalVaccines = _unitOfWork.Vaccines.GetAll().Count();
-                System.Diagnostics.Debug.WriteLine($"Total Vaccines (GetAll): {totalVaccines}");
                 
                 var totalCustomers = _unitOfWork.KhachHangs.GetAll().Count();
-                System.Diagnostics.Debug.WriteLine($"Total Customers: {totalCustomers}");
                 
                 // Lịch tiêm hôm nay
                 var today = DateTime.Today;
                 var allAppointments = _unitOfWork.LichTiems.Query()
                     .Include(lt => lt.HoSoTiemChung)
                     .ToList();
-                System.Diagnostics.Debug.WriteLine($"Total Appointments in DB: {allAppointments.Count}");
                 
                 var appointmentsToday = allAppointments
                     .Where(lt => lt.NgayHenTiem.Date == today)
                     .Count();
-                System.Diagnostics.Debug.WriteLine($"Appointments Today: {appointmentsToday}");
                 
                 // Doanh thu tháng này
                 var currentMonth = DateTime.Now.Month;
                 var currentYear = DateTime.Now.Year;
                 var allInvoices = _unitOfWork.HoaDons.GetAll().ToList();
-                System.Diagnostics.Debug.WriteLine($"Total Invoices in DB: {allInvoices.Count}");
                 
                 var monthlyRevenue = allInvoices
                     .Where(hd => hd.NgayLap.Month == currentMonth && 
                                  hd.NgayLap.Year == currentYear &&
                                  hd.TrangThai == true)
                     .Sum(hd => (decimal?)hd.TongTien) ?? 0;
-                System.Diagnostics.Debug.WriteLine($"Monthly Revenue: {monthlyRevenue}");
                 
                 // Vaccine sắp hết hàng (dưới 100)
                 var lowStockVaccines = vaccineList
@@ -212,21 +201,10 @@ namespace TPVAXWebsite.Controllers
                 ViewBag.UpcomingAppointments = upcomingAppointments;
                 ViewBag.RevenueByMonth = revenueByMonth;
                 
-                System.Diagnostics.Debug.WriteLine($"Low Stock Vaccines Count: {lowStockVaccines.Count}");
-                System.Diagnostics.Debug.WriteLine($"Upcoming Appointments Count: {upcomingAppointments.Count}");
-                System.Diagnostics.Debug.WriteLine($"Revenue By Month Count: {revenueByMonth.Count}");
-                System.Diagnostics.Debug.WriteLine("=== Dashboard Index Loaded Successfully ===");
-                
                 return View();
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error loading dashboard: " + ex.Message);
-                System.Diagnostics.Debug.WriteLine("Stack trace: " + ex.StackTrace);
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("Inner exception: " + ex.InnerException.Message);
-                }
                 
                 // Set default values nếu có lỗi
                 ViewBag.TotalVaccines = 0;
@@ -282,7 +260,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error loading vaccines: " + ex.Message);
                 return View(new List<AdminVaccineViewModel>());
             }
         }
@@ -299,15 +276,10 @@ namespace TPVAXWebsite.Controllers
         {
             try
             {
-                // Debug
-                System.Diagnostics.Debug.WriteLine("CreateVaccine called");
-                System.Diagnostics.Debug.WriteLine("ModelState.IsValid: " + ModelState.IsValid);
-                
                 // Validate ModelState
                 if (!ModelState.IsValid)
                 {
                     var errors = GetModelStateErrors();
-                    System.Diagnostics.Debug.WriteLine("ModelState errors: " + string.Join(", ", errors));
                     return Json(new
                     {
                         success = false,
@@ -327,7 +299,7 @@ namespace TPVAXWebsite.Controllers
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine("Error parsing benehs: " + ex.Message);
+                        // Error parsing
                     }
                 }
 
@@ -401,12 +373,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error creating vaccine: " + ex.Message);
-                System.Diagnostics.Debug.WriteLine("Stack trace: " + ex.StackTrace);
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("Inner exception: " + ex.InnerException.Message);
-                }
                 return Json(new
                 {
                     success = false,
@@ -458,7 +424,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error getting vaccine: " + ex.Message);
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message },
                     JsonRequestBehavior.AllowGet);
             }
@@ -484,7 +449,7 @@ namespace TPVAXWebsite.Controllers
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine("Error parsing benhs in EditVaccine: " + ex.Message);
+                        // Error parsing
                     }
                 }
 
@@ -565,7 +530,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error editing vaccine: " + ex.Message);
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
@@ -639,7 +603,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error deleting vaccine: " + ex.Message);
                 return Json(new
                 {
                     success = false,
@@ -676,7 +639,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"GetLoaiVaccineList Error: {ex.Message}");
                 return Json(
                     new { success = false, message = "Lỗi khi tải danh sách loại vaccine: " + ex.Message }, 
                     JsonRequestBehavior.AllowGet
@@ -710,7 +672,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"GetLoaiBenhList Error: {ex.Message}");
                 return Json(
                     new { success = false, message = "Lỗi khi tải danh sách loại bệnh: " + ex.Message }, 
                     JsonRequestBehavior.AllowGet
@@ -772,7 +733,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error saving image: " + ex.Message);
                 throw;
             }
         }
@@ -796,7 +756,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error deleting image: " + ex.Message);
                 // Không throw để không ảnh hưởng đến logic chính
             }
         }
@@ -866,7 +825,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error loading customers: " + ex.Message);
                 return View(new List<AdminCustomerViewModel>());
             }
         }
@@ -901,7 +859,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error loading appointments: " + ex.Message);
                 return View(new List<AdminAppointmentViewModel>());
             }
         }
@@ -938,7 +895,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error loading employees: " + ex.Message);
                 return View(new List<AdminNhanVienViewModel>());
             }
         }
@@ -1000,7 +956,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error loading reports: " + ex.Message);
                 ViewBag.VaccineRevenue = new List<object>();
                 ViewBag.AppointmentTrends = new List<object>();
                 ViewBag.ErrorMessage = ex.Message;
@@ -1092,12 +1047,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error in GetKhuyenMaiList: " + ex.Message);
-                System.Diagnostics.Debug.WriteLine("StackTrace: " + ex.StackTrace);
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("Inner Exception: " + ex.InnerException.Message);
-                }
                 return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -1114,7 +1063,6 @@ namespace TPVAXWebsite.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = GetModelStateErrors();
-                    System.Diagnostics.Debug.WriteLine("ModelState errors: " + string.Join(", ", errors));
                     return Json(new
                     {
                         success = false,
@@ -1176,11 +1124,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error creating khuyến mãi: " + ex.Message);
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("InnerException: " + ex.InnerException.Message);
-                }
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
@@ -1223,7 +1166,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
                 return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -1291,11 +1233,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error editing khuyến mãi: " + ex.Message);
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("InnerException: " + ex.InnerException.Message);
-                }
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
@@ -1333,11 +1270,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error deleting khuyến mãi: " + ex.Message);
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("InnerException: " + ex.InnerException.Message);
-                }
                 return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
@@ -1398,7 +1330,6 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error saving khuyến mãi image: " + ex.Message);
                 return null;
             }
         }
@@ -1421,12 +1352,11 @@ namespace TPVAXWebsite.Controllers
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
-                    System.Diagnostics.Debug.WriteLine("Deleted khuyến mãi image: " + filePath);
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error deleting khuyến mãi image: " + ex.Message);
+                // Error deleting image
             }
         }
 
