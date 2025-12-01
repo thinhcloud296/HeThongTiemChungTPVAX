@@ -104,9 +104,7 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                // Log chi tiết lỗi
                 var innerException = ex.InnerException != null ? ex.InnerException.Message : "";
-                var stackTrace = ex.StackTrace;
                 TempData["ErrorMessage"] = $"Có lỗi xảy ra: {ex.Message} | Inner: {innerException}";
                 return RedirectToAction("Dashboard", "Account");
             }
@@ -115,52 +113,16 @@ namespace TPVAXWebsite.Controllers
 
         private string GenerateMaHSTC()
         {
-            string maHSTC;
-            do
-            {
-                var last = _context.HoSoTiemChungs
-                    .OrderByDescending(h => h.MaHSTC)
-                    .Select(h => h.MaHSTC)
-                    .FirstOrDefault();
-
-                int next = 1;
-                if (!string.IsNullOrEmpty(last) && last.Length > 2)
-                {
-                    string numPart = last.Substring(2);
-                    if (int.TryParse(numPart, out int lastNum))
-                    {
-                        next = lastNum + 1;
-                    }
-                }
-                maHSTC = "HS" + next.ToString("D8");
-            } while (_context.HoSoTiemChungs.Any(h => h.MaHSTC == maHSTC));
-            
-            return maHSTC;
+            // Đếm số lượng record hiện tại + 1 (nhanh hơn OrderByDescending)
+            int count = _context.HoSoTiemChungs.Count();
+            return "HSTC" + (count + 1).ToString("D6");
         }
 
         private string GenerateMaLK()
         {
-            string maLK;
-            do
-            {
-                var last = _context.LienKetHoSos
-                    .OrderByDescending(lk => lk.MaLK)
-                    .Select(lk => lk.MaLK)
-                    .FirstOrDefault();
-
-                int next = 1;
-                if (!string.IsNullOrEmpty(last) && last.Length > 2)
-                {
-                    string numPart = last.Substring(2);
-                    if (int.TryParse(numPart, out int lastNum))
-                    {
-                        next = lastNum + 1;
-                    }
-                }
-                maLK = "LK" + next.ToString("D8");
-            } while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK));
-            
-            return maLK;
+            // Đếm số lượng record hiện tại + 1 (nhanh hơn OrderByDescending)
+            int count = _context.LienKetHoSos.Count();
+            return "LKHS" + (count + 1).ToString("D6");
         }
       
         [HttpGet]

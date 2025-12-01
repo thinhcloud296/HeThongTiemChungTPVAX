@@ -340,11 +340,59 @@
                             </div>
                         }
 
+                        <!-- Chọn người tiêm cho từng sản phẩm -->
+                        <div class="info-card">
+                            <h6 class="mb-3">
+                                <i class="fas fa-users me-2"></i>Chọn người tiêm cho từng sản phẩm
+                            </h6>
+                            <p class="text-muted small mb-3">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Bạn có thể chọn người tiêm khác nhau cho từng vaccine/gói vaccine (ví dụ: tiêm cho con, người thân...)
+                            </p>
+                            @if (Model != null && Model.GioHang != null && Model.DanhSachHoSo != null && Model.DanhSachHoSo.Any())
+                            {
+                                foreach (var item in Model.GioHang)
+                                {
+                                    <div class="border rounded p-3 mb-2 bg-light">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-6">
+                                                <strong>@item.TenSanPham</strong>
+                                                <br />
+                                                <small class="text-muted">@(item.LoaiSanPham == "GOIVACCINE" ? "Gói vaccine" : "Vaccine lẻ")</small>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-select nguoi-tiem-select" 
+                                                        data-magh="@item.MaGH" 
+                                                        data-masanpham="@item.MaSanPham" 
+                                                        data-loaisanpham="@item.LoaiSanPham">
+                                                    @foreach (var hoSo in Model.DanhSachHoSo)
+                                                    {
+                                                        <option value="@hoSo.MaHSTC">@hoSo.DisplayText</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    Bạn chưa có hồ sơ tiêm chủng nào. Hệ thống sẽ tự động tạo hồ sơ cho bạn.
+                                </div>
+                            }
+                        </div>
+
                         <!-- Lịch hẹn tiêm -->
                         <div class="info-card">
                             <h6 class="mb-3">
-                                <i class="fas fa-calendar-check me-2"></i>Chọn lịch hẹn tiêm
+                                <i class="fas fa-calendar-check me-2"></i>Chọn lịch hẹn tiêm mũi đầu tiên
                             </h6>
+                            <p class="text-muted small mb-3">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Các mũi tiêm tiếp theo sẽ được tự động lên lịch theo phác đồ của từng vaccine
+                            </p>
                             <div class="mb-3">
                                 <label class="form-label"><strong>Ngày hẹn tiêm <span class="text-danger">*</span></strong></label>
                                 <input type="date" class="form-control" id="ngayHenTiem" required />
@@ -508,13 +556,25 @@
                         <div class="info-card">
                             <h6 class="mb-3">Thông tin lịch hẹn</h6>
                             <p class="mb-2">
-                                <strong>Ngày hẹn:</strong>
+                                <strong>Ngày hẹn mũi đầu:</strong>
                                 <span id="confirmNgayHen">--</span>
                             </p>
-                            <p class="mb-0">
+                            <p class="mb-2">
                                 <strong>Giờ hẹn:</strong>
                                 <span id="confirmGioHen">--</span>
                             </p>
+                            <p class="mb-0 text-info small">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Các mũi tiếp theo sẽ được tự động lên lịch theo phác đồ của từng vaccine
+                            </p>
+                        </div>
+
+                        <!-- Người tiêm -->
+                        <div class="info-card">
+                            <h6 class="mb-3">Người tiêm</h6>
+                            <div id="confirmNguoiTiem">
+                                <!-- Sẽ được điền bằng JavaScript -->
+                            </div>
                         </div>
 
                         <!-- Payment Info -->
@@ -704,6 +764,19 @@
             document.getElementById("confirmNgayHen").textContent = 
                 new Date(ngayHen).toLocaleDateString("vi-VN");
             document.getElementById("confirmGioHen").textContent = gioHen;
+
+            // Hiển thị thông tin người tiêm
+            var nguoiTiemHtml = '';
+            document.querySelectorAll('.nguoi-tiem-select').forEach(function(select) {
+                var tenSanPham = select.closest('.border').querySelector('strong').textContent;
+                var tenNguoiTiem = select.options[select.selectedIndex].text;
+                nguoiTiemHtml += '<p class="mb-2"><strong>' + tenSanPham + ':</strong> ' + tenNguoiTiem + '</p>';
+            });
+            if (nguoiTiemHtml) {
+                document.getElementById("confirmNguoiTiem").innerHTML = nguoiTiemHtml;
+            } else {
+                document.getElementById("confirmNguoiTiem").innerHTML = '<p class="text-muted">Hệ thống sẽ tự động tạo hồ sơ cho bạn</p>';
+            }
         }
 
         if (currentStep === 2) {
@@ -763,13 +836,25 @@
         const ngayHen = document.getElementById("ngayHenTiem").value;
         const gioHen = document.getElementById("gioHenTiem").value;
 
+        // Thu thập danh sách người tiêm cho từng sản phẩm
+        var danhSachNguoiTiem = [];
+        document.querySelectorAll('.nguoi-tiem-select').forEach(function(select) {
+            danhSachNguoiTiem.push({
+                MaGH: parseInt(select.getAttribute('data-magh')),
+                MaSanPham: select.getAttribute('data-masanpham'),
+                LoaiSanPham: select.getAttribute('data-loaisanpham'),
+                MaHSTC: select.value
+            });
+        });
+
         $.ajax({
             url: '@Url.Action("XacNhanThanhToan", "HoaDon")',
             type: 'POST',
             data: {
                 MaKM: '@(Model?.MaKMApDung ?? "")',
                 NgayHenTiem: ngayHen,
-                GioHenTiem: gioHen
+                GioHenTiem: gioHen,
+                DanhSachNguoiTiem: JSON.stringify(danhSachNguoiTiem)
             },
             success: function (response) {
                 if (response.success) {

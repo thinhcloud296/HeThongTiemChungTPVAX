@@ -19,5 +19,31 @@ namespace TPVAXWebsite.Models.ViewModels
         // Thông tin lịch hẹn tiêm
         public DateTime? NgayHenTiem { get; set; }
         public string GioHenTiem { get; set; }
+
+        // Danh sách hồ sơ tiêm chủng của khách hàng (để chọn người tiêm)
+        public List<HoSoTiemChungSelectItem> DanhSachHoSo { get; set; }
+    }
+
+    /// <summary>
+    /// Item để hiển thị trong dropdown chọn hồ sơ tiêm chủng
+    /// </summary>
+    public class HoSoTiemChungSelectItem
+    {
+        public string MaHSTC { get; set; }
+        public string HoTen { get; set; }
+        public DateTime NgaySinh { get; set; }
+        public string VaiTro { get; set; }
+        public string DisplayText => $"{HoTen} - {NgaySinh:dd/MM/yyyy} ({VaiTro})";
+    }
+
+    /// <summary>
+    /// Thông tin người tiêm cho từng sản phẩm trong giỏ hàng
+    /// </summary>
+    public class NguoiTiemItem
+    {
+        public int MaGH { get; set; }           // Mã giỏ hàng
+        public string MaSanPham { get; set; }   // Mã vaccine/gói
+        public string LoaiSanPham { get; set; } // VACCINE hoặc GOIVACCINE
+        public string MaHSTC { get; set; }      // Mã hồ sơ tiêm chủng được chọn
     }
 }
