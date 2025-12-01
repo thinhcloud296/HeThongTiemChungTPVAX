@@ -169,6 +169,7 @@ namespace TPVAXWinform_DAL
             this.Insert(lichHenMoi);
         }
         // Thêm tham số "DateTime ngayHen"
+        // Mỗi lịch hẹn sẽ cách nhau 2 tháng từ ngày hẹn đầu tiên
         public int TaoLichHenDauTienChoGoi(string maGoi, string maHSTC, DateTime ngayHen)
         {
             // 1. Lấy danh sách vaccine (chỉ Mũi 1) của gói
@@ -183,6 +184,10 @@ namespace TPVAXWinform_DAL
             }
 
             // 2. Lặp qua từng vaccine Mũi 1 và tạo lịch hẹn
+            // Mỗi lịch hẹn cách nhau 2 tháng
+            int soThangCachNhau = 2;
+            int index = 0;
+
             foreach (DataRow row in dtFirstDoses.Rows)
             {
                 try
@@ -194,9 +199,12 @@ namespace TPVAXWinform_DAL
                     lichHenMoi.MaHSTC = maHSTC;
                     lichHenMoi.MaVC = maVC;
 
-                    // --- SỬA Ở ĐÂY ---
-                    // Dùng ngày hẹn do người dùng chọn
-                    lichHenMoi.NgayHenTiem = ngayHen;
+                    // Ngày hẹn = ngày đầu tiên + (index * 2 tháng)
+                    // Vaccine đầu tiên: ngayHen
+                    // Vaccine thứ 2: ngayHen + 2 tháng
+                    // Vaccine thứ 3: ngayHen + 4 tháng
+                    // ...
+                    lichHenMoi.NgayHenTiem = ngayHen.AddMonths(index * soThangCachNhau);
 
                     lichHenMoi.SoMui = 1; // Vì đây là mũi đầu tiên
                     lichHenMoi.TrangThai = "Chưa tiêm"; // (Kiểu NVARCHAR)
@@ -204,11 +212,13 @@ namespace TPVAXWinform_DAL
 
                     this.Insert(lichHenMoi); // Gọi hàm Insert BLL
                     count++;
+                    index++; // Tăng index để vaccine tiếp theo cách thêm 2 tháng
                 }
                 catch (Exception ex)
                 {
                     // Bỏ qua nếu lỗi 1 mũi (ví dụ: trùng lặp) và tiếp tục mũi khác
                     Console.WriteLine("Lỗi tạo lịch hẹn tự động: " + ex.Message);
+                    index++; // Vẫn tăng index để giữ khoảng cách đúng
                 }
             }
             return count;
