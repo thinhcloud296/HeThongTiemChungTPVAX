@@ -69,18 +69,54 @@ namespace TPVAXWinform_GUI.Forms
                     // Đăng nhập thành công
                     DataRow row = dt.Rows[0];
                     string hoTen = row["HoTen"].ToString();
+                    string maTK = row["MaTK"].ToString().Trim();
                     int? chucVuId = null;
                     if (row["ChucVu"] != DBNull.Value)
                     {
                         chucVuId = Convert.ToInt32(row["ChucVu"]);
                     }
 
-                    MessageBox.Show($"Đăng nhập thành công!\nXin chào {hoTen}",
-                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // ========== KIỂM TRA YÊU CẦU ĐỔI MẬT KHẨU LẦN ĐẦU ==========
+                    bool yeuCauDoiMK = false;
+                    if (dt.Columns.Contains("YeuCauDoiMK") && row["YeuCauDoiMK"] != DBNull.Value)
+                    {
+                        yeuCauDoiMK = Convert.ToInt32(row["YeuCauDoiMK"]) == 1;
+                    }
+
+                    if (yeuCauDoiMK)
+                    {
+                        // Bắt buộc đổi mật khẩu lần đầu
+                        MessageBox.Show(
+                            "Đây là lần đăng nhập đầu tiên của bạn.\n" +
+                            "Vui lòng đổi mật khẩu để đảm bảo an toàn!",
+                            "Yêu cầu đổi mật khẩu",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Mở form đổi mật khẩu bắt buộc
+                        frmDoiMatKhauBatBuoc frmDoiMK = new frmDoiMatKhauBatBuoc(maTK, matKhau);
+                        if (frmDoiMK.ShowDialog() == DialogResult.OK)
+                        {
+                            // Đổi mật khẩu thành công, tiếp tục đăng nhập
+                            MessageBox.Show($"Đăng nhập thành công!\nXin chào {hoTen}",
+                                "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            // User hủy đổi mật khẩu -> không cho đăng nhập
+                            MessageBox.Show("Bạn phải đổi mật khẩu để tiếp tục sử dụng hệ thống!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Đăng nhập thành công!\nXin chào {hoTen}",
+                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
 
                     // LƯU THÔNG TIN PHIÊN
                     UserSession.MaNV = maNV;
-                    UserSession.MaTK = row["MaTK"].ToString(); // Lấy MaTK từ kết quả
+                    UserSession.MaTK = maTK;
                     UserSession.HoTen = hoTen;
                     UserSession.Email = row["Email"].ToString();
                     UserSession.SoDT = row["SoDT"].ToString();
@@ -117,43 +153,7 @@ namespace TPVAXWinform_GUI.Forms
             }
         }
 
-        // Xử lý sự kiện click vào link "Đổi mật khẩu"
-        private void lnkDoiMatKhau_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            string maNV = txtTenDangNhap.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(maNV))
-            {
-                MessageBox.Show("Vui lòng nhập mã nhân viên trước khi đổi mật khẩu!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtTenDangNhap.Focus();
-                return;
-            }
-
-            // Kiểm tra mã nhân viên có tồn tại không
-            try
-            {
-                DataTable dt = taiKhoanBLL.GetTaiKhoanByMaNV(maNV);
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("Mã nhân viên không tồn tại!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtTenDangNhap.Focus();
-                    return;
-                }
-
-                string maTK = dt.Rows[0]["MaTK"].ToString().Trim();
-
-                // Mở form đổi mật khẩu
-                frmDoiMatKhau frm = new frmDoiMatKhau(maTK);
-                frm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        
     }
 
     // Class UserSession

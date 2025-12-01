@@ -42,9 +42,10 @@ namespace TPVAXWinform_DAL
         // THÊM: Hàm chỉ lấy thông tin user và mật khẩu (đã băm)
         public DataTable GetLoginInfoByMaNV(string maNV)
         {
-            // (Bạn có thể đổi "dbo.usp_TaiKhoan_GetLoginInfoByMaNV" nếu bạn đã tạo proc)
+            // Thêm cột YeuCauDoiMK để kiểm tra đăng nhập lần đầu
             const string sql = @"
-              SELECT nv.MaNV, nv.HoTen, nv.Email, nv.SoDT, nv.ChucVu, tk.MaTK, tk.MatKhau
+              SELECT nv.MaNV, nv.HoTen, nv.Email, nv.SoDT, nv.ChucVu, 
+                     tk.MaTK, tk.MatKhau, ISNULL(tk.YeuCauDoiMK, 0) AS YeuCauDoiMK
               FROM dbo.NhanVien nv
                      INNER JOIN dbo.TaiKhoan tk ON nv.MaTK = tk.MaTK
             WHERE nv.MaNV = @MaNV AND nv.TrangThai = '1'";
@@ -68,23 +69,115 @@ namespace TPVAXWinform_DAL
             return (result != null && Convert.ToInt32(result) > 0);
         }
 
-        // THÊM: Hàm tạo mới (nhận mật khẩu đã băm)
-        public void CreateTaiKhoan(string maTK, string hashedPassword)
+        // THÊM: Hàm tạo mới (nhận mật khẩu đã băm) - có cờ YeuCauDoiMK
+        public void CreateTaiKhoan(string maTK, string hashedPassword, bool yeuCauDoiMK = true)
         {
             try
             {
-                using (var buffer = DBConnect.CreateBuffer("SELECT * FROM dbo.TaiKhoan"))
+                // Kiểm tra xem cột YeuCauDoiMK có tồn tại không
+                bool hasYeuCauDoiMKColumn = CheckColumnExists("TaiKhoan", "YeuCauDoiMK");
+
+                string sql;
+                SqlParameter[] parameters;
+
+                if (hasYeuCauDoiMKColumn)
                 {
-                    DataRow row = buffer.Table.NewRow();
-                    row["MaTK"] = maTK;
-                    row["MatKhau"] = hashedPassword;
-                    buffer.Table.Rows.Add(row);
-                    buffer.Save();
+                    sql = "INSERT INTO dbo.TaiKhoan (MaTK, MatKhau, YeuCauDoiMK) VALUES (@MaTK, @MatKhau, @YeuCauDoiMK)";
+                    parameters = new SqlParameter[]
+                    {
+                        DBConnect.Param("@MaTK", maTK, SqlDbType.Char, 10),
+                        DBConnect.Param("@MatKhau", hashedPassword, SqlDbType.VarChar, 255),
+                        DBConnect.Param("@YeuCauDoiMK", 1, SqlDbType.Bit)
+                    };
+                }
+                else
+                {
+                    // Nếu chưa có cột YeuCauDoiMK, chỉ insert 2 cột cơ bản
+                    sql = "INSERT INTO dbo.TaiKhoan (MaTK, MatKhau) VALUES (@MaTK, @MatKhau)";
+                    parameters = new SqlParameter[]
+                    {
+                        DBConnect.Param("@MaTK", maTK, SqlDbType.Char, 10),
+                        DBConnect.Param("@MatKhau", hashedPassword, SqlDbType.VarChar, 255)
+                    };
+                }
+
+                int rowsAffected = DBConnect.ExecuteNonQuery(sql, CommandType.Text, parameters);
+
+                if (rowsAffected == 0)
+                {
+                    throw new Exception("Không thể tạo tài khoản!");
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception("Lỗi khi tạo tài khoản DAL: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Kiểm tra xem cột có tồn tại trong bảng không
+        /// </summary>
+        private bool CheckColumnExists(string tableName, string columnName)
+        {
+            try
+            {
+                const string sql = @"
+                    SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
+                    WHERE TABLE_NAME = @TableName AND COLUMN_NAME = @ColumnName";
+
+                object result = DBConnect.ExecuteScalar(sql, CommandType.Text,
+                    new SqlParameter("@TableName", tableName),
+                    new SqlParameter("@ColumnName", columnName));
+
+                return result != null && Convert.ToInt32(result) > 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Cập nhật cờ YeuCauDoiMK sau khi user đổi mật khẩu thành công
+        /// </summary>
+        public void ClearYeuCauDoiMK(string maTK)
+        {
+            try
+            {
+                const string sql = "UPDATE dbo.TaiKhoan SET YeuCauDoiMK = 0 WHERE MaTK = @MaTK";
+                DBConnect.ExecuteNonQuery(sql, CommandType.Text,
+                    DBConnect.Param("@MaTK", maTK, SqlDbType.Char, 10));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi cập nhật YeuCauDoiMK: " + ex.Message);
+            }
+        }
+        public bool UpdateMatKhau(string maTK, string matKhauMoi)
+        {
+            // 1. Câu lệnh SQL
+            string query = "UPDATE TaiKhoan SET MatKhau = @MatKhau WHERE MaTK = @MaTK";
+
+            // 2. Tạo danh sách tham số (Parameters)
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MatKhau", matKhauMoi),
+                new SqlParameter("@MaTK", maTK)
+            };
+
+            try
+            {
+                // 3. Gọi hàm ExecuteNonQuery static của bạn
+                // LƯU Ý: Thay 'DataProvider' bằng tên Class chứa hàm ExecuteNonQuery của bạn
+                int rowsAffected = DBConnect.ExecuteNonQuery(query, CommandType.Text, parameters);
+
+                // 4. Trả về true nếu có ít nhất 1 dòng được cập nhật
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                // Ghi log lỗi nếu cần hoặc ném ra để BLL/GUI xử lý
+                throw new Exception("Lỗi DAL UpdateMatKhau: " + ex.Message);
             }
         }
         public void Delete(string maTK)

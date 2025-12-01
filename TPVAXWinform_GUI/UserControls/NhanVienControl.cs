@@ -23,7 +23,8 @@ namespace TPVAXWinform_GUI.UserControls
             { 1, "Quản lý" },
             { 2, "Nhân viên y tế" },
             { 3, "Nhân viên tiếp nhận" },
-            { 4, "Nhân viên kho" }
+            { 4, "Nhân viên kho" },
+            { 5, "Nhân viên thu ngân" }
         };
         public NhanVienControl()
         {
@@ -379,10 +380,10 @@ namespace TPVAXWinform_GUI.UserControls
             catch (Exception ex)
             {
                 MessageBox.Show(
-   $"Lỗi khi đặt lại mật khẩu: {ex.Message}",
-          "Lỗi",
-    MessageBoxButtons.OK,
-    MessageBoxIcon.Error);
+           $"Lỗi khi đặt lại mật khẩu: {ex.Message}",
+                  "Lỗi",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error);
             }
         }
 

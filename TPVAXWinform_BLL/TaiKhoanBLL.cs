@@ -58,6 +58,10 @@ namespace TPVAXWinform_BLL
         {
             return dal.CheckTaiKhoanExists(maTK);
         }
+        public bool UpdateMatKhau(string maTK, string matKhauMoi)
+        {
+            return dal.UpdateMatKhau(maTK, matKhauMoi);
+        }
 
         // THÊM: Hàm tạo mới (thực hiện băm)
         public void CreateTaiKhoan(string maTK, string matKhau)
@@ -74,7 +78,8 @@ namespace TPVAXWinform_BLL
             // Băm mật khẩu
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(matKhau);
 
-            dal.CreateTaiKhoan(maTK, hashedPassword);
+            // SỬA: Truyền đủ 3 tham số cho DAL (thêm tham số yeuCauDoiMK)
+            dal.CreateTaiKhoan(maTK, hashedPassword, yeuCauDoiMK: true);
         }
         public void Delete(string maTK)
         {
@@ -123,6 +128,36 @@ namespace TPVAXWinform_BLL
             // Băm mật khẩu mới và cập nhật
             string hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
             dal.UpdatePassword(maTK, hashedNewPassword);
+        }
+
+        /// <summary>
+        /// Xóa cờ yêu cầu đổi mật khẩu sau khi user đổi thành công
+        /// </summary>
+        public void ClearYeuCauDoiMK(string maTK)
+        {
+            dal.ClearYeuCauDoiMK(maTK);
+        }
+
+        /// <summary>
+        /// Đổi mật khẩu lần đầu (bắt buộc) - không cần xác thực mật khẩu cũ
+        /// </summary>
+        public void ChangePasswordFirstTime(string maTK, string newPassword)
+        {
+            if (string.IsNullOrWhiteSpace(maTK))
+                throw new Exception("Mã tài khoản không hợp lệ!");
+
+            if (string.IsNullOrWhiteSpace(newPassword))
+                throw new Exception("Vui lòng nhập mật khẩu mới!");
+
+            if (newPassword.Length < 6)
+                throw new Exception("Mật khẩu mới phải có ít nhất 6 ký tự!");
+
+            // Băm mật khẩu mới và cập nhật
+            string hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            dal.UpdatePassword(maTK, hashedNewPassword);
+
+            // Xóa cờ yêu cầu đổi mật khẩu
+            dal.ClearYeuCauDoiMK(maTK);
         }
     }
 }

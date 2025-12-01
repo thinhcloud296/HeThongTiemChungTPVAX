@@ -198,6 +198,12 @@
     <Compile Include="Forms\frmDoiMatKhau.Designer.cs">
       <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmDoiMatKhauBatBuoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDoiMatKhauBatBuoc.Designer.cs">
+      <DependentUpon>frmDoiMatKhauBatBuoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmEditNV.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -383,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmDoiMatKhau.resx">
       <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDoiMatKhauBatBuoc.resx">
+      <DependentUpon>frmDoiMatKhauBatBuoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmEditNV.resx">
       <DependentUpon>frmEditNV.cs</DependentUpon>

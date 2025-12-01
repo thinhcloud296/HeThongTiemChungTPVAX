@@ -6,10 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading.Tasks; // Bắt buộc có cái này
 using System.Windows.Forms;
 using TPVAXWinform_BLL;
 using TPVAXWinform_DTO;
+// Thêm thư viện Service chứa EmailService
+using TPVAXWinform_BLL.Services;
 
 namespace TPVAXWinform_GUI
 {
@@ -17,8 +19,10 @@ namespace TPVAXWinform_GUI
     {
         private NhanVienBLL nhanVienBLL = new NhanVienBLL();
         private TaiKhoanBLL taikhoanBLL = new TaiKhoanBLL();
-        string[] gioiTinhOptions = { "Nam", "Nữ", "Khác" };
+        // Khởi tạo Email Service
+        private EmailService _emailService = new EmailService();
 
+        string[] gioiTinhOptions = { "Nam", "Nữ", "Khác" };
 
         private const string REGEX_HOTEN = @"^[\p{L}\s']+$";
         private const string REGEX_SODT = @"^0\d{9}$";
@@ -26,7 +30,8 @@ namespace TPVAXWinform_GUI
         private const string REGEX_EMAIL = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
         private const string REGEX_DIACHI = @"^[\p{L}\d\s.,/-]+$";
 
-        string newMaTK = "";    
+        string newMaTK = "";
+
         public frmThemNV()
         {
             InitializeComponent();
@@ -38,25 +43,28 @@ namespace TPVAXWinform_GUI
             cboGioiTinh.DataSource = gioiTinhOptions;
 
             // --- SỬA: NẠP TỪ ROLEMANAGER ---
-            // Dùng BindingSource để nạp Dictionary
             cboChucVu.DataSource = new BindingSource(RoleManager.ChucVuOptions, null);
-            cboChucVu.DisplayMember = "Value"; // Hiển thị tên ("Quản Lý"...)
-            cboChucVu.ValueMember = "Key";     // Lưu giá trị ID (1, 2...)
-            cboChucVu.SelectedIndex = 0; // Chọn mặc định mục đầu tiên
+            cboChucVu.DisplayMember = "Value";
+            cboChucVu.ValueMember = "Key";
+            cboChucVu.SelectedIndex = 0;
             // --- KẾT THÚC SỬA ---
 
             dtpNgaySinh.Value = DateTime.Now.AddYears(-20);
             dtpNgayVaoLam.Value = DateTime.Now;
 
+            // Gán sự kiện click
             btnAdd.Click += BtnAdd_Click;
             btnCancel.Click += BtnCancel_Click;
         }
 
-        private void BtnAdd_Click(object sender, EventArgs e)
+        // ==========================================================
+        // QUAN TRỌNG: Thêm từ khóa 'async' vào đây
+        // ==========================================================
+        private async void BtnAdd_Click(object sender, EventArgs e)
         {
             try
             {
-                // Validation (Giữ nguyên code của bạn)
+                // ================== VALIDATION ==================
                 errorProvider1.Clear();
                 bool valid = true;
 
@@ -92,44 +100,110 @@ namespace TPVAXWinform_GUI
 
                 if (!valid) return;
 
-                string MaTK= "TK" + nhanVienBLL.CreateNewMaNV().Substring(2);
-                newMaTK = MaTK;
-                string MatKhau = "123456Aa@";
-                taikhoanBLL.CreateTaiKhoan(MaTK, MatKhau);
+                // ================== XỬ LÝ DATABASE ==================
 
-                // Tạo DTO
+                // 1. Lấy mã NV mới (Chỉ gọi 1 lần để đồng bộ)
+                string MaNV = nhanVienBLL.CreateNewMaNV();
+                // MaTK format: "TAIK" + 6 số cuối của MaNV
+                // VD: MaNV = "NVIE000001" => MaTK = "TAIK000001" (10 ký tự)
+                string MaTK = "TAIK" + MaNV.Substring(4);
+                newMaTK = MaTK; // Lưu lại để rollback nếu lỗi
+
+                // 2. Tạo mật khẩu ngẫu nhiên
+                string randomPass = GenerateRandomPassword(6);
+
+                // 3. Tạo Tài khoản trong DB (PHẢI THÀNH CÔNG TRƯỚC KHI TẠO NHÂN VIÊN)
+                // SỬA: Bỏ try-catch bên trong, để exception được throw ra ngoài
+                taikhoanBLL.CreateTaiKhoan(MaTK, randomPass);
+
+                // 4. Tạo DTO Nhân viên
                 NhanVienDTO newNV = new NhanVienDTO
                 {
-                    MaNV = nhanVienBLL.CreateNewMaNV(),
+                    MaNV = MaNV, // Dùng biến đã lấy ở trên
                     HoTen = txtHoTen.Text.Trim(),
                     GioiTinh = cboGioiTinh.SelectedItem.ToString(),
                     NgaySinh = dtpNgaySinh.Value,
                     CCCD = txtCCCD.Text.Trim(),
                     NgayVaoLam = dtpNgayVaoLam.Value,
-
-                    // --- SỬA: LẤY ID TỪ SELECTEDVALUE ---
                     ChucVu = (int)cboChucVu.SelectedValue,
-                    // --- KẾT THÚC SỬA ---
-
-                    TrangThai = "1", // Đang hoạt động
+                    TrangThai = "1",
                     SoDT = txtSoDT.Text.Trim(),
                     DiaChi = txtDiaChi.Text.Trim(),
                     Email = txtEmail.Text.Trim(),
                     MaTK = MaTK
                 };
 
+                // 5. Insert Nhân viên vào DB
                 nhanVienBLL.Insert(newNV);
 
-                MessageBox.Show("Thêm nhân viên thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // ================== GỬI EMAIL (PHẦN MỚI) ==================
+
+                // Khóa nút để tránh bấm nhiều lần
+                btnAdd.Enabled = false;
+                btnAdd.Text = "Đang gửi mail...";
+
+                string userEmail = txtEmail.Text.Trim();
+                string userName = txtHoTen.Text.Trim();
+
+                try
+                {
+                    // Gọi hàm gửi mail bất đồng bộ (await)
+                    // Lưu ý: Đảm bảo class EmailService đã có trong project
+                    await _emailService.SendAccountInfoAsync(userEmail, userName, randomPass);
+
+                    // Thông báo thành công trọn vẹn
+                    MessageBox.Show(
+                        $"Thêm nhân viên thành công!\nĐã gửi mật khẩu về email: {userEmail}",
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception emailEx)
+                {
+                    // ==========================================================
+                    // LOGIC MỚI: NẾU GỬI MAIL THẤT BẠI -> ĐỔI VỀ MẬT KHẨU MẶC ĐỊNH
+                    // ==========================================================
+
+                    string matKhauMacDinh = "123456Aa@";
+
+                    try
+                    {
+                        // Gọi BLL để update lại mật khẩu trong Database
+                        // Lưu ý: Bạn cần đảm bảo hàm UpdateMatKhau tồn tại trong BLL
+                        taikhoanBLL.UpdateMatKhau(MaTK, matKhauMacDinh);
+
+                        MessageBox.Show(
+                            $"Thêm nhân viên thành công nhưng GỬI MAIL THẤT BẠI.\n\n" +
+                            $"Lỗi email: {emailEx.Message}\n\n" +
+                            $"👉 Hệ thống đã đặt lại về mật khẩu mặc định: {matKhauMacDinh}",
+                            "Cảnh báo - Dùng mật khẩu mặc định",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (Exception)
+                    {
+                        // Trường hợp cực hiếm: Gửi mail lỗi VÀ Update lại DB cũng lỗi
+                        MessageBox.Show($"Lỗi kép nghiêm trọng: Gửi mail thất bại và không thể reset mật khẩu. \nMật khẩu hiện tại vẫn là: {randomPass}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+                // Đóng form
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                taikhoanBLL.Delete(newMaTK);
-                MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Nếu lỗi DB thì xóa tài khoản rác (Rollback)
+                if (!string.IsNullOrEmpty(newMaTK))
+                {
+                    taikhoanBLL.Delete(newMaTK);
+                }
+
+                MessageBox.Show("Lỗi khi thêm nhân viên (DB): " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Mở lại nút bấm nếu lỗi
+                btnAdd.Enabled = true;
+                btnAdd.Text = "Thêm";
             }
         }
+        
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
@@ -137,6 +211,13 @@ namespace TPVAXWinform_GUI
             this.Close();
         }
 
-
+        // Hàm tạo mật khẩu ngẫu nhiên đơn giản (nằm ngay trong form này cho tiện)
+        private string GenerateRandomPassword(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
     }
 }
