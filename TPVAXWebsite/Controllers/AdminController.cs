@@ -833,17 +833,47 @@ namespace TPVAXWebsite.Controllers
         }
 
         // GET: Admin/Appointments
-        public ActionResult Appointments()
+        public ActionResult Appointments(int page = 1, int pageSize = 10, string search = "", string status = "")
         {
             try
             {
-                var appointments = _unitOfWork.LichTiems.Query()
+                var query = _unitOfWork.LichTiems.Query()
                     .Include(lt => lt.HoSoTiemChung)
                     .Include(lt => lt.Vaccine)
                     .Include(lt => lt.NhanVien)
+                    .AsQueryable();
+
+                // Lọc theo trạng thái
+                if (!string.IsNullOrEmpty(status))
+                {
+                    query = query.Where(lt => lt.TrangThai == status);
+                }
+
+                var allAppointments = query.ToList();
+
+                // Lọc theo tên khách hàng hoặc mã lịch tiêm
+                if (!string.IsNullOrEmpty(search))
+                {
+                    search = search.ToLower();
+                    allAppointments = allAppointments.Where(lt => 
+                        (lt.HoSoTiemChung?.HoTen?.ToLower().Contains(search) ?? false) ||
+                        lt.MaLT.ToLower().Contains(search) ||
+                        (lt.Vaccine?.TenVC?.ToLower().Contains(search) ?? false)
+                    ).ToList();
+                }
+
+                // Tổng số bản ghi
+                var totalItems = allAppointments.Count;
+                var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+                // Phân trang
+                var pagedAppointments = allAppointments
+                    .OrderByDescending(lt => lt.NgayHenTiem)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .ToList();
 
-                var viewModels = appointments.Select(lt => new AdminAppointmentViewModel
+                var viewModels = pagedAppointments.Select(lt => new AdminAppointmentViewModel
                 {
                     MaLT = lt.MaLT,
                     MaHSTC = lt.MaHSTC,
@@ -856,13 +886,76 @@ namespace TPVAXWebsite.Controllers
                     GhiChu = lt.GhiChu,
                     MaNV = lt.MaNV,
                     TenNhanVien = lt.NhanVien?.HoTen ?? "Chưa phân công"
-                }).OrderByDescending(a => a.NgayHenTiem).ToList();
+                }).ToList();
+
+                // Truyền thông tin phân trang qua ViewBag
+                ViewBag.CurrentPage = page;
+                ViewBag.TotalPages = totalPages;
+                ViewBag.TotalItems = totalItems;
+                ViewBag.PageSize = pageSize;
+                ViewBag.Search = search;
+                ViewBag.Status = status;
 
                 return View(viewModels);
             }
             catch (Exception ex)
             {
+                ViewBag.CurrentPage = 1;
+                ViewBag.TotalPages = 1;
+                ViewBag.TotalItems = 0;
+                ViewBag.PageSize = pageSize;
+                ViewBag.Search = search;
+                ViewBag.Status = status;
                 return View(new List<AdminAppointmentViewModel>());
+            }
+        }
+
+        // GET: Admin/AppointmentDetails - Chi tiết lịch tiêm
+        [HttpGet]
+        public ActionResult AppointmentDetails(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Json(new { success = false, message = "Mã lịch tiêm không hợp lệ" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var appointment = _unitOfWork.LichTiems.Query()
+                    .Include(lt => lt.HoSoTiemChung)
+                    .Include(lt => lt.Vaccine)
+                    .Include(lt => lt.NhanVien)
+                    .FirstOrDefault(lt => lt.MaLT == id);
+
+                if (appointment == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy lịch tiêm" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var viewModel = new
+                {
+                    MaLT = appointment.MaLT,
+                    MaHSTC = appointment.MaHSTC,
+                    TenNguoiTiem = appointment.HoSoTiemChung?.HoTen ?? "Chưa xác định",
+                    NgaySinh = appointment.HoSoTiemChung != null ? appointment.HoSoTiemChung.NgaySinh.ToString("dd/MM/yyyy") : "N/A",
+                    GioiTinh = appointment.HoSoTiemChung?.GioiTinh ?? "N/A",
+                    MaVC = appointment.MaVC,
+                    TenVaccine = appointment.Vaccine?.TenVC ?? "Chưa xác định",
+                    GiaVaccine = appointment.Vaccine?.GiaBan ?? 0,
+                    NgayHenTiem = appointment.NgayHenTiem.ToString("dd/MM/yyyy HH:mm"),
+                    NgayTiemThucTe = appointment.NgayTiemThucTe.HasValue ? appointment.NgayTiemThucTe.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa tiêm",
+                    SoMui = appointment.SoMui ?? 1,
+                    TrangThai = appointment.TrangThai,
+                    GhiChu = appointment.GhiChu ?? "",
+                    MaNV = appointment.MaNV,
+                    TenNhanVien = appointment.NhanVien?.HoTen ?? "Chưa phân công"
+                };
+
+                return Json(new { success = true, data = viewModel }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
