@@ -37,6 +37,7 @@ namespace TPVAXWinform_GUI.UserControls
             LoadDSLT();
             InitializeFilters();
             contextMenuStripLichTiem.Items["toolStripMenuItemXemThongTin"].Visible = roleNVTiepNhan || roleNVYTe;
+            contextMenuStripLichTiem.Items["toolStripMenuItemSuaNgayHen"].Visible = roleNVTiepNhan || roleNVYTe;
             contextMenuStripLichTiem.Items["toolStripMenuItemHuyTiem"].Visible = roleNVYTe;
             contextMenuStripLichTiem.Items["toolStripMenuItemXacNhanTiem"].Visible = roleNVYTe;
             dgvLichTiem.Columns["colCheckIn"].Visible = roleNVYTe;
@@ -505,6 +506,168 @@ namespace TPVAXWinform_GUI.UserControls
 
             DataGridViewRow selectedRow = dgvLichTiem.SelectedRows[0];
             HuyTiemClick(selectedRow);
+        }
+
+        private void toolStripMenuItemSuaNgayHen_Click(object sender, EventArgs e)
+        {
+            if (dgvLichTiem.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một lịch tiêm để sửa ngày hẹn!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DataGridViewRow selectedRow = dgvLichTiem.SelectedRows[0];
+            SuaNgayHenClick(selectedRow);
+        }
+
+        private void SuaNgayHenClick(DataGridViewRow selectedRow)
+        {
+            string trangThai = selectedRow.Cells["colTrangThai"].Value?.ToString() ?? "";
+
+            // Chỉ cho phép sửa ngày hẹn khi trạng thái là "Chưa tiêm"
+            if (!trangThai.Equals("Chưa tiêm", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Chỉ có thể sửa ngày hẹn cho lịch tiêm chưa thực hiện!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                DataRowView drv = selectedRow.DataBoundItem as DataRowView;
+                if (drv != null)
+                {
+                    string maLT = drv.Row["MaLT"]?.ToString() ?? "";
+                    string maHSTC = drv.Row["MaHSTC"]?.ToString() ?? "";
+                    string maVC = drv.Row["MaVC"]?.ToString() ?? "";
+                    DateTime ngayHenHienTai = Convert.ToDateTime(drv.Row["Ngày hẹn"]);
+                    string tenNguoiTiem = drv.Row["Tên người tiêm"]?.ToString() ?? "";
+                    string tenVaccine = drv.Row["Tên Vaccine"]?.ToString() ?? "";
+
+                    // Tạo form sửa ngày hẹn
+                    using (Form frmSuaNgayHen = new Form())
+                    {
+                        frmSuaNgayHen.Text = "Sửa ngày hẹn tiêm";
+                        frmSuaNgayHen.Size = new Size(450, 320);
+                        frmSuaNgayHen.StartPosition = FormStartPosition.CenterParent;
+                        frmSuaNgayHen.FormBorderStyle = FormBorderStyle.FixedDialog;
+                        frmSuaNgayHen.MaximizeBox = false;
+                        frmSuaNgayHen.MinimizeBox = false;
+
+                        // Label thông tin
+                        Label lblInfo = new Label
+                        {
+                            Text = $"👤 Người tiêm: {tenNguoiTiem}\n💉 Vaccine: {tenVaccine}",
+                            Location = new Point(20, 20),
+                            Size = new Size(400, 60),
+                            Font = new Font("Segoe UI", 11F)
+                        };
+
+                        // Label ngày hẹn hiện tại
+                        Label lblNgayHienTai = new Label
+                        {
+                            Text = $"📅 Ngày hẹn hiện tại: {ngayHenHienTai:dd/MM/yyyy}",
+                            Location = new Point(20, 90),
+                            Size = new Size(400, 30),
+                            Font = new Font("Segoe UI", 10F, FontStyle.Bold)
+                        };
+
+                        // Label ngày hẹn mới
+                        Label lblNgayMoi = new Label
+                        {
+                            Text = "Chọn ngày hẹn mới:",
+                            Location = new Point(20, 130),
+                            Size = new Size(180, 30),
+                            Font = new Font("Segoe UI", 10F)
+                        };
+
+                        // DateTimePicker
+                        DateTimePicker dtpNgayHenMoi = new DateTimePicker
+                        {
+                            Location = new Point(200, 125),
+                            Size = new Size(200, 30),
+                            Format = DateTimePickerFormat.Custom,
+                            CustomFormat = "dd/MM/yyyy",
+                            Value = ngayHenHienTai,
+                            MinDate = DateTime.Today,
+                            Font = new Font("Segoe UI", 10F)
+                        };
+
+                        // Button Lưu
+                        Button btnLuu = new Button
+                        {
+                            Text = "💾 Lưu",
+                            Location = new Point(100, 200),
+                            Size = new Size(100, 40),
+                            BackColor = Color.FromArgb(46, 204, 113),
+                            ForeColor = Color.White,
+                            FlatStyle = FlatStyle.Flat,
+                            Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                            DialogResult = DialogResult.OK
+                        };
+                        btnLuu.FlatAppearance.BorderSize = 0;
+
+                        // Button Hủy
+                        Button btnHuy = new Button
+                        {
+                            Text = "❌ Hủy",
+                            Location = new Point(230, 200),
+                            Size = new Size(100, 40),
+                            BackColor = Color.Gray,
+                            ForeColor = Color.White,
+                            FlatStyle = FlatStyle.Flat,
+                            Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                            DialogResult = DialogResult.Cancel
+                        };
+                        btnHuy.FlatAppearance.BorderSize = 0;
+
+                        frmSuaNgayHen.Controls.AddRange(new Control[] { lblInfo, lblNgayHienTai, lblNgayMoi, dtpNgayHenMoi, btnLuu, btnHuy });
+                        frmSuaNgayHen.AcceptButton = btnLuu;
+                        frmSuaNgayHen.CancelButton = btnHuy;
+
+                        if (frmSuaNgayHen.ShowDialog() == DialogResult.OK)
+                        {
+                            DateTime ngayHenMoi = dtpNgayHenMoi.Value.Date;
+
+                            // Kiểm tra ngày hẹn mới có khác ngày cũ không
+                            if (ngayHenMoi.Date == ngayHenHienTai.Date)
+                            {
+                                MessageBox.Show("Ngày hẹn mới phải khác ngày hẹn hiện tại!", "Thông báo",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            // Cập nhật ngày hẹn
+                            LichTiemDTO lichTiem = new LichTiemDTO
+                            {
+                                MaLT = maLT,
+                                MaHSTC = maHSTC,
+                                MaVC = maVC,
+                                NgayHenTiem = ngayHenMoi,
+                                TrangThai = trangThai,
+                                NgayTiemThucTe = null,
+                                GhiChu = $"Đã đổi ngày hẹn từ {ngayHenHienTai:dd/MM/yyyy} sang {ngayHenMoi:dd/MM/yyyy}"
+                            };
+
+                            lichTiemBLL.Edit(lichTiem);
+
+                            MessageBox.Show($"Đã cập nhật ngày hẹn thành công!\n\n" +
+                                $"📅 Ngày hẹn cũ: {ngayHenHienTai:dd/MM/yyyy}\n" +
+                                $"📅 Ngày hẹn mới: {ngayHenMoi:dd/MM/yyyy}",
+                                "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Refresh lại dữ liệu
+                            LoadDSLT();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi sửa ngày hẹn: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #endregion

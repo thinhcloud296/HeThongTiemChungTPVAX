@@ -59,6 +59,7 @@
             this.colHuy = new System.Windows.Forms.DataGridViewButtonColumn();
             this.contextMenuStripLichTiem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemXemThongTin = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemSuaNgayHen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemXacNhanTiem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHuyTiem = new System.Windows.Forms.ToolStripMenuItem();
@@ -409,11 +410,12 @@
             this.contextMenuStripLichTiem.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStripLichTiem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemXemThongTin,
+            this.toolStripMenuItemSuaNgayHen,
             this.toolStripSeparator1,
             this.toolStripMenuItemXacNhanTiem,
             this.toolStripMenuItemHuyTiem});
             this.contextMenuStripLichTiem.Name = "contextMenuStripLichTiem";
-            this.contextMenuStripLichTiem.Size = new System.Drawing.Size(304, 106);
+            this.contextMenuStripLichTiem.Size = new System.Drawing.Size(304, 138);
             this.contextMenuStripLichTiem.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripLichTiem_Opening);
             // 
             // toolStripMenuItemXemThongTin
@@ -422,6 +424,13 @@
             this.toolStripMenuItemXemThongTin.Size = new System.Drawing.Size(303, 32);
             this.toolStripMenuItemXemThongTin.Text = "📋 Xem thông tin mũi tiêm";
             this.toolStripMenuItemXemThongTin.Click += new System.EventHandler(this.toolStripMenuItemXemThongTin_Click);
+            // 
+            // toolStripMenuItemSuaNgayHen
+            // 
+            this.toolStripMenuItemSuaNgayHen.Name = "toolStripMenuItemSuaNgayHen";
+            this.toolStripMenuItemSuaNgayHen.Size = new System.Drawing.Size(303, 32);
+            this.toolStripMenuItemSuaNgayHen.Text = "📅 Sửa ngày hẹn";
+            this.toolStripMenuItemSuaNgayHen.Click += new System.EventHandler(this.toolStripMenuItemSuaNgayHen_Click);
             // 
             // toolStripSeparator1
             // 
@@ -497,6 +506,7 @@
         private System.Windows.Forms.DataGridView dgvLichTiem;
   private System.Windows.Forms.ContextMenuStrip contextMenuStripLichTiem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXemThongTin;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSuaNgayHen;
 private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemXacNhanTiem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHuyTiem;
