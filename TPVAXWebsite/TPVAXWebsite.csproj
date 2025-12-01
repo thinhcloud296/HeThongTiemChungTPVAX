@@ -343,6 +343,7 @@
     <Content Include="Views\Vaccine\Index.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\HoSoTiemChung\Create.cshtml" />
+    <Content Include="Views\HoSo\XuatPDFSoTiemChung.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

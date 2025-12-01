@@ -111,6 +111,24 @@
                 box-shadow: 0 4px 12px rgba(0,119,182,0.1);
             }
 
+            .upcoming-appointment.border-danger {
+                border-color: #dc3545 !important;
+                background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+            }
+
+            .upcoming-appointment.border-warning {
+                border-color: #ffc107 !important;
+                background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
+            }
+
+            .upcoming-appointment.border-danger:hover {
+                box-shadow: 0 4px 12px rgba(220,53,69,0.2);
+            }
+
+            .upcoming-appointment.border-warning:hover {
+                box-shadow: 0 4px 12px rgba(255,193,7,0.2);
+            }
+
         .profile-card {
             border: 2px solid #e1e8ed;
             border-radius: 12px;
@@ -210,6 +228,9 @@
             }
     </style>
 }
+
+<!-- AntiForgeryToken for AJAX calls -->
+@Html.AntiForgeryToken()
 
 <!-- Back to Home -->
 <div class="container mt-3">
@@ -368,51 +389,97 @@
 
                         @if (Model.LichHenSapToi.Any())
                         {
-                            foreach (var lich in Model.LichHenSapToi)
+                            foreach (var lich in Model.LichHenSapToi.Take(3))
                             {
-                                <div class="upcoming-appointment mb-3">
+                                var soNgayConLai = (lich.NgayHenTiem.Date - DateTime.Now.Date).Days;
+                                var soGioConLai = (lich.NgayHenTiem - DateTime.Now).TotalHours;
+                                var isUrgent = soNgayConLai <= 1;
+                                var isSoon = soNgayConLai <= 3 && !isUrgent;
+                                var borderClass = isUrgent ? "border-danger" : (isSoon ? "border-warning" : "");
+                                
+                                <div class="upcoming-appointment mb-3 @borderClass">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <h6 class="mb-2 text-primary">
-                                                Vaccine @lich.Vaccine.TenVC - Mũi @lich.SoMui
+                                                <i class="fas fa-syringe me-1"></i>
+                                                Vaccine @(lich.Vaccine?.TenVC ?? "Không rõ") - Mũi @(lich.SoMui ?? 0)
                                             </h6>
                                             <p class="mb-1">
                                                 <i class="fas fa-user me-2"></i>Người tiêm:
-                                                <strong>@lich.HoSoTiemChung.HoTen</strong>
+                                                <strong>@(lich.HoSoTiemChung?.HoTen ?? "Không rõ")</strong>
                                             </p>
                                             <p class="mb-1">
                                                 <i class="fas fa-calendar me-2"></i>Ngày:
-                                                <strong>@lich.NgayHenTiem.ToString("dd/MM/yyyy - HH:mm")</strong>
+                                                <strong>@lich.NgayHenTiem.ToString("dd/MM/yyyy")</strong> lúc 
+                                                <strong>@lich.NgayHenTiem.ToString("HH:mm")</strong>
+                                                @if (isUrgent)
+                                                {
+                                                    <span class="badge bg-danger ms-2">
+                                                        <i class="fas fa-clock"></i> @(soNgayConLai == 0 ? "Hôm nay" : "Ngày mai")
+                                                    </span>
+                                                }
+                                                else if (isSoon)
+                                                {
+                                                    <span class="badge bg-warning text-dark ms-2">
+                                                        <i class="fas fa-clock"></i> Còn @soNgayConLai ngày
+                                                    </span>
+                                                }
                                             </p>
                                         </div>
                                         <span class="badge-status badge-pending">Chưa tiêm</span>
-                                        @* nút đổi lịch và hủy lịch *@
                                     </div>
                                     <div class="mt-3">
-                                        <!-- Nút đổi lịch: khi bấm sẽ hiện date picker -->
-                                        <button type="button" class="btn btn-primary btn-sm me-2"
-                                                onclick="showDatePicker('@lich.MaLT')">
-                                            <i class="fas fa-edit me-1"></i>Đổi lịch
-                                        </button>
+                                        @if (soNgayConLai > 0)
+                                        {
+                                            <button type="button" class="btn btn-primary btn-sm me-2"
+                                                    onclick="openDoiLichModal('@lich.MaLT')">
+                                                <i class="fas fa-edit me-1"></i>Đổi lịch
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-secondary btn-sm me-2" disabled
+                                                    title="Không thể đổi lịch khi còn dưới 24h">
+                                                <i class="fas fa-edit me-1"></i>Đổi lịch
+                                            </button>
+                                        }
 
-                                        <!-- Date picker: ẩn mặc định, hiện khi bấm nút -->
-                                        <input type="datetime-local" id="picker-@lich.MaLT" style="display:none;"
-                                               min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm")"
-                                               onchange="updateSchedule('@lich.MaLT')" />
-
-                                        <!-- Nút hủy: gọi action đổi trạng thái -->
-                                        <button type="button" class="btn btn-outline-danger btn-sm"
-                                                onclick="cancelSchedule('@lich.MaLT')">
-                                            <i class="fas fa-times me-1"></i>Hủy
-                                        </button>
+                                        @if (soGioConLai > 2)
+                                        {
+                                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                                    onclick="cancelSchedule('@lich.MaLT')">
+                                                <i class="fas fa-times me-1"></i>Hủy
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" disabled
+                                                    title="Không thể hủy khi còn dưới 2 giờ">
+                                                <i class="fas fa-times me-1"></i>Hủy
+                                            </button>
+                                        }
                                     </div>
                                 </div>
-
+                            }
+                            
+                            if (Model.LichHenSapToi.Count > 3)
+                            {
+                                <div class="text-center mt-3">
+                                    <a href="#appointments" onclick="switchSection('appointments')" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-list me-1"></i>Xem tất cả (@Model.LichHenSapToi.Count lịch hẹn)
+                                    </a>
+                                </div>
                             }
                         }
                         else
                         {
-                            <p class="text-muted">Không có lịch hẹn nào sắp tới.</p>
+                            <div class="text-center py-3">
+                                <i class="fas fa-calendar-plus fa-2x text-muted mb-2"></i>
+                                <p class="text-muted mb-2">Không có lịch hẹn nào sắp tới.</p>
+                                <a href="@Url.Action("Index", "VaccinePhongBenh")" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus me-1"></i>Đặt lịch ngay
+                                </a>
+                            </div>
                         }
                     </div>
 
@@ -477,17 +544,12 @@
                                 </p>
                             </div>
                             <div>
-                                <a class="btn btn-sm btn-outline-primary me-1"
-                                   href="@Url.Action("SoTiemChung", "HoSo", new { maHSTC = hoSo.MaHSTC })">
-                                    <i class="fas fa-book-medical"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-secondary"
+                                <button class="btn btn-sm btn-outline-primary me-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfileModal"
                                         onclick="loadHoSoVaoModal('@hoSo.MaHSTC', '@hoSo.HoTen', '@hoSo.GioiTinh', '@hoSo.NgaySinh.ToString("yyyy-MM-dd")', '@hoSo.CCCD', '@hoSo.GhiChu')">
                                     <i class="fas fa-edit"></i>
                                 </button>
-
                             </div>
                         </div>
                     }
@@ -504,7 +566,7 @@
                         <h3>
                             <i class="fas fa-book-medical me-2 text-primary"></i>Sổ tiêm chủng điện tử
                         </h3>
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" id="btnTaiPDF" onclick="xuatPDFSoTiemChung()">
                             <i class="fas fa-download me-2"></i>Tải PDF
                         </button>
                     </div>
@@ -594,20 +656,42 @@
                             {
                                 foreach (var hen in Model.LichHenSapToi)
                                 {
-                                    <div class="upcoming-appointment mb-3">
+                                    var soNgayConLai = (hen.NgayHenTiem.Date - DateTime.Now.Date).Days;
+                                    var isUrgent = soNgayConLai <= 1;
+                                    var isSoon = soNgayConLai <= 3 && !isUrgent;
+                                    var borderClass = isUrgent ? "border-danger" : (isSoon ? "border-warning" : "");
+                                    
+                                    <div class="upcoming-appointment mb-3 @borderClass">
                                         <div class="d-flex justify-content-between align-items-start">
                                             <div>
                                                 <h6 class="mb-2 text-primary">
+                                                    <i class="fas fa-syringe me-1"></i>
                                                     @(hen.Vaccine?.TenVC ?? "Không rõ vaccine") - Mũi @(hen.SoMui ?? 0)
                                                 </h6>
                                                 <p class="mb-1">
                                                     <i class="fas fa-user me-2"></i>Người tiêm:
                                                     <strong>@(hen.HoSoTiemChung?.HoTen ?? "Không rõ")</strong>
-
                                                 </p>
                                                 <p class="mb-1">
                                                     <i class="fas fa-calendar me-2"></i>Ngày:
-                                                    <strong>@hen.NgayHenTiem.ToString("dd/MM/yyyy - HH:mm")</strong>
+                                                    <strong>@hen.NgayHenTiem.ToString("dd/MM/yyyy")</strong> lúc 
+                                                    <strong>@hen.NgayHenTiem.ToString("HH:mm")</strong>
+                                                    @if (isUrgent)
+                                                    {
+                                                        <span class="badge bg-danger ms-2">
+                                                            <i class="fas fa-clock"></i> @(soNgayConLai == 0 ? "Hôm nay" : "Ngày mai")
+                                                        </span>
+                                                    }
+                                                    else if (isSoon)
+                                                    {
+                                                        <span class="badge bg-warning text-dark ms-2">
+                                                            <i class="fas fa-clock"></i> Còn @soNgayConLai ngày
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-info ms-2">Còn @soNgayConLai ngày</span>
+                                                    }
                                                 </p>
                                                 <p class="mb-0">
                                                     <i class="fas fa-map-marker-alt me-2"></i>Trung tâm TPVAX Tân Phú
@@ -616,28 +700,43 @@
                                             <span class="badge-status badge-pending">Chưa tiêm</span>
                                         </div>
                                         <div class="mt-3">
-                                            <!-- Nút đổi lịch: khi bấm sẽ hiện date picker -->
-                                            <button type="button"
-                                                    class="btn btn-primary btn-sm me-2"
-                                                    onclick="showDatePicker('@hen.MaLT')">
-                                                <i class="fas fa-edit me-1"></i>Đổi lịch
-                                            </button>
+                                            @if (soNgayConLai > 0)
+                                            {
+                                                <!-- Nút đổi lịch: chỉ hiện khi còn hơn 24h -->
+                                                <button type="button"
+                                                        class="btn btn-primary btn-sm me-2"
+                                                        onclick="openDoiLichModal('@hen.MaLT')">
+                                                    <i class="fas fa-edit me-1"></i>Đổi lịch
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-secondary btn-sm me-2" disabled
+                                                        title="Không thể đổi lịch khi còn dưới 24h">
+                                                    <i class="fas fa-edit me-1"></i>Đổi lịch
+                                                </button>
+                                            }
 
-                                            <!-- Date picker: ẩn mặc định, hiện khi bấm nút -->
-                                            <input type="datetime-local"
-                                                   id="picker-@hen.MaLT"
-                                                   style="display:none;"
-                                                   min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm")"
-                                                   onchange="updateSchedule('@hen.MaLT')" />
 
-
-                                            <!-- Nút hủy: gọi action đổi trạng thái -->
-                                            <button type="button"
-                                                    class="btn btn-outline-danger btn-sm"
-                                                    onclick="cancelSchedule('@hen.MaLT')">
-                                                <i class="fas fa-times me-1"></i>Hủy
-                                            </button>
-
+                                            @{
+                                                var soGioConLai = (hen.NgayHenTiem - DateTime.Now).TotalHours;
+                                            }
+                                            @if (soGioConLai > 2)
+                                            {
+                                                <!-- Nút hủy: chỉ hiện khi còn hơn 2h -->
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-sm"
+                                                        onclick="cancelSchedule('@hen.MaLT')">
+                                                    <i class="fas fa-times me-1"></i>Hủy
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-outline-secondary btn-sm" disabled
+                                                        title="Không thể hủy lịch khi còn dưới 2 giờ. Vui lòng liên hệ trung tâm.">
+                                                    <i class="fas fa-times me-1"></i>Hủy
+                                                </button>
+                                            }
                                         </div>
 
                                     </div>
@@ -645,7 +744,13 @@
                             }
                             else
                             {
-                                <p class="text-muted">Không có lịch hẹn sắp tới.</p>
+                                <div class="text-center py-4">
+                                    <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted mb-3">Không có lịch hẹn sắp tới.</p>
+                                    <a href="@Url.Action("Index", "VaccinePhongBenh")" class="btn btn-primary">
+                                        <i class="fas fa-plus me-1"></i>Đặt lịch tiêm ngay
+                                    </a>
+                                </div>
                             }
                         </div>
 
@@ -678,20 +783,46 @@
                             {
                                 foreach (var huy in Model.LichDaHuy)
                                 {
-                                    <div class="card mb-2">
+                                    <div class="card mb-2 border-secondary">
                                         <div class="card-body">
-                                            <strong>@(huy.Vaccine?.TenVC ?? "Không rõ vaccine") - Mũi @(huy.SoMui ?? 0)</strong><br />
-                                            Người tiêm: @(huy.HoSoTiemChung?.HoTen ?? "Không rõ")<br />
-
-                                            Ngày hẹn: @(huy.NgayHenTiem.ToString("dd/MM/yyyy - HH:mm"))<br />
-                                            <span class="badge bg-secondary">Đã hủy</span>
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-2 text-secondary">
+                                                        <i class="fas fa-syringe me-1"></i>
+                                                        @(huy.Vaccine?.TenVC ?? "Không rõ vaccine") - Mũi @(huy.SoMui ?? 0)
+                                                    </h6>
+                                                    <p class="mb-1 small">
+                                                        <i class="fas fa-user me-2"></i>Người tiêm: 
+                                                        <strong>@(huy.HoSoTiemChung?.HoTen ?? "Không rõ")</strong>
+                                                    </p>
+                                                    <p class="mb-1 small">
+                                                        <i class="fas fa-calendar me-2"></i>Ngày hẹn (đã hủy): 
+                                                        <span class="text-decoration-line-through">@(huy.NgayHenTiem.ToString("dd/MM/yyyy - HH:mm"))</span>
+                                                    </p>
+                                                    @if (!string.IsNullOrEmpty(huy.GhiChu) && huy.GhiChu.Contains("Lý do:"))
+                                                    {
+                                                        <p class="mb-0 small text-muted">
+                                                            <i class="fas fa-comment me-2"></i>@huy.GhiChu
+                                                        </p>
+                                                    }
+                                                </div>
+                                                <span class="badge bg-secondary">Đã hủy</span>
+                                            </div>
+                                            <div class="mt-2">
+                                                <a href="@Url.Action("Index", "VaccinePhongBenh")" class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-redo me-1"></i>Đặt lịch lại
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 }
                             }
                             else
                             {
-                                <p class="text-muted">Không có lịch hẹn đã hủy.</p>
+                                <div class="text-center py-4">
+                                    <i class="fas fa-calendar-check fa-3x text-success mb-3"></i>
+                                    <p class="text-muted">Không có lịch hẹn đã hủy. Tuyệt vời!</p>
+                                </div>
                             }
                         </div>
                     </div>
@@ -1185,51 +1316,128 @@
             window.location.href = "@Url.Action("Index", "Home")";
         }
 
-        // Đổi lịch với SweetAlert2
+        // Hiển thị date picker (cho nút đổi lịch cũ)
+        function showDatePicker(maLT) {
+            openDoiLichModal(maLT);
+        }
+
+        // Đổi lịch với SweetAlert2 (cho nút đổi lịch cũ)
         function updateSchedule(maLT) {
+            openDoiLichModal(maLT);
+        }
+
+        // Mở modal đổi lịch với giao diện đẹp
+        function openDoiLichModal(maLT) {
+            // Tính ngày tối thiểu (ngày mai)
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            var minDate = tomorrow.toISOString().split('T')[0];
+            
+            // Tính ngày tối đa (1 năm sau)
+            var maxDate = new Date();
+            maxDate.setFullYear(maxDate.getFullYear() + 1);
+            var maxDateStr = maxDate.toISOString().split('T')[0];
+
             Swal.fire({
-                title: 'Đổi lịch hẹn',
-                html: '<input type="datetime-local" id="newDateInput" class="swal2-input" min="' + new Date().toISOString().slice(0, 16) + '">',
+                title: '<i class="fas fa-calendar-alt text-primary"></i> Đổi lịch hẹn',
+                html: `
+                    <div class="text-start">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Chọn ngày mới:</label>
+                            <input type="date" id="newDateInput" class="form-control" 
+                                   min="${minDate}" max="${maxDateStr}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Chọn khung giờ:</label>
+                            <select id="newTimeInput" class="form-select">
+                                <option value="08:00">08:00 - Sáng sớm</option>
+                                <option value="09:00">09:00 - Sáng</option>
+                                <option value="10:00" selected>10:00 - Sáng</option>
+                                <option value="11:00">11:00 - Trưa</option>
+                                <option value="14:00">14:00 - Chiều</option>
+                                <option value="15:00">15:00 - Chiều</option>
+                                <option value="16:00">16:00 - Chiều</option>
+                            </select>
+                        </div>
+                        <div class="alert alert-info small mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Lưu ý: Bạn chỉ có thể đổi lịch trước ngày hẹn ít nhất 1 ngày.
+                        </div>
+                    </div>
+                `,
                 showCancelButton: true,
-                confirmButtonText: 'Xác nhận',
-                cancelButtonText: 'Hủy',
+                confirmButtonText: '<i class="fas fa-check me-1"></i>Xác nhận đổi lịch',
+                cancelButtonText: '<i class="fas fa-times me-1"></i>Hủy bỏ',
                 confirmButtonColor: '#0077b6',
+                cancelButtonColor: '#6c757d',
+                width: '450px',
                 preConfirm: () => {
                     const newDate = document.getElementById('newDateInput').value;
+                    const newTime = document.getElementById('newTimeInput').value;
+                    
                     if (!newDate) {
-                        Swal.showValidationMessage('Vui lòng chọn ngày giờ mới!');
+                        Swal.showValidationMessage('Vui lòng chọn ngày mới!');
                         return false;
                     }
-                    return newDate;
+                    
+                    // Kiểm tra ngày không phải Chủ nhật
+                    var selectedDate = new Date(newDate);
+                    if (selectedDate.getDay() === 0) {
+                        Swal.showValidationMessage('Trung tâm không làm việc vào Chủ nhật. Vui lòng chọn ngày khác!');
+                        return false;
+                    }
+                    
+                    return newDate + 'T' + newTime;
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Hiển thị loading
+                    Swal.fire({
+                        title: 'Đang xử lý...',
+                        html: 'Vui lòng đợi trong giây lát',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
                     $.ajax({
                         url: '@Url.Action("DoiLichNgay", "LichTiem")',
                         type: 'POST',
-                        data: { MaLT: maLT, NgayHenTiem: result.value },
+                        data: { 
+                            MaLT: maLT, 
+                            NgayHenTiem: result.value,
+                            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                        },
                         success: function (response) {
                             if (response.success) {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'Thành công!',
-                                    text: response.message,
-                                    confirmButtonColor: '#0077b6'
+                                    title: 'Đổi lịch thành công!',
+                                    html: `<p>${response.message}</p>
+                                           <p class="text-muted small">Trang sẽ tự động tải lại...</p>`,
+                                    confirmButtonColor: '#0077b6',
+                                    timer: 2000,
+                                    timerProgressBar: true
                                 }).then(() => location.reload());
                             } else {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Lỗi!',
+                                    title: 'Không thể đổi lịch!',
                                     text: response.message,
                                     confirmButtonColor: '#dc3545'
                                 });
                             }
                         },
-                        error: function () {
+                        error: function (xhr) {
+                            var errorMsg = 'Không thể kết nối đến server.';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMsg = xhr.responseJSON.message;
+                            }
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Lỗi!',
-                                text: 'Không thể kết nối đến server.',
+                                text: errorMsg,
                                 confirmButtonColor: '#dc3545'
                             });
                         }
@@ -1241,42 +1449,84 @@
         // Hủy lịch với SweetAlert2
         function cancelSchedule(maLT) {
             Swal.fire({
-                title: 'Xác nhận hủy lịch?',
-                text: 'Bạn có chắc chắn muốn hủy lịch hẹn này?',
-                icon: 'warning',
+                title: '<i class="fas fa-exclamation-triangle text-warning"></i> Xác nhận hủy lịch',
+                html: `
+                    <div class="text-start">
+                        <p class="mb-3">Bạn có chắc chắn muốn hủy lịch hẹn này?</p>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Lý do hủy (không bắt buộc):</label>
+                            <select id="lyDoHuy" class="form-select">
+                                <option value="">-- Chọn lý do --</option>
+                                <option value="Bận việc đột xuất">Bận việc đột xuất</option>
+                                <option value="Thay đổi kế hoạch">Thay đổi kế hoạch</option>
+                                <option value="Sức khỏe không tốt">Sức khỏe không tốt</option>
+                                <option value="Muốn đổi sang ngày khác">Muốn đổi sang ngày khác</option>
+                                <option value="Lý do khác">Lý do khác</option>
+                            </select>
+                        </div>
+                        <div class="alert alert-warning small mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Lưu ý: Sau khi hủy, bạn có thể đặt lịch mới bất cứ lúc nào.
+                        </div>
+                    </div>
+                `,
                 showCancelButton: true,
-                confirmButtonText: 'Hủy lịch',
-                cancelButtonText: 'Không',
+                confirmButtonText: '<i class="fas fa-times me-1"></i>Xác nhận hủy',
+                cancelButtonText: '<i class="fas fa-arrow-left me-1"></i>Quay lại',
                 confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d'
+                cancelButtonColor: '#6c757d',
+                width: '450px'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    var lyDo = document.getElementById('lyDoHuy').value;
+                    
+                    // Hiển thị loading
+                    Swal.fire({
+                        title: 'Đang xử lý...',
+                        html: 'Vui lòng đợi trong giây lát',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
                     $.ajax({
                         url: '@Url.Action("HuyLich", "LichTiem")',
                         type: 'POST',
-                        data: { id: maLT },
+                        data: { 
+                            id: maLT,
+                            lyDo: lyDo,
+                            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                        },
                         success: function (response) {
                             if (response.success) {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'Đã hủy!',
-                                    text: response.message,
-                                    confirmButtonColor: '#0077b6'
+                                    title: 'Đã hủy lịch!',
+                                    html: `<p>${response.message}</p>
+                                           <p class="text-muted small">Bạn có thể đặt lịch mới bất cứ lúc nào.</p>`,
+                                    confirmButtonColor: '#0077b6',
+                                    timer: 2500,
+                                    timerProgressBar: true
                                 }).then(() => location.reload());
                             } else {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Lỗi!',
+                                    title: 'Không thể hủy!',
                                     text: response.message,
                                     confirmButtonColor: '#dc3545'
                                 });
                             }
                         },
-                        error: function () {
+                        error: function (xhr) {
+                            var errorMsg = 'Không thể kết nối đến server.';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMsg = xhr.responseJSON.message;
+                            }
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Lỗi!',
-                                text: 'Không thể kết nối đến server.',
+                                text: errorMsg,
                                 confirmButtonColor: '#dc3545'
                             });
                         }
@@ -1336,7 +1586,110 @@
                     }
                 });
             }
+
+            // AJAX cho form cập nhật thông tin
+            $('form[action*="CapNhatThongTin"]').on('submit', function(e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: response.message,
+                                confirmButtonColor: '#0077b6'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: response.message,
+                                confirmButtonColor: '#dc3545'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Không thể kết nối đến server.',
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                });
+            });
+
+            // AJAX cho form đổi mật khẩu
+            $('form[action*="DoiMatKhau"]').on('submit', function(e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: response.message,
+                                confirmButtonColor: '#0077b6'
+                            });
+                            form[0].reset();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: response.message,
+                                confirmButtonColor: '#dc3545'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Không thể kết nối đến server.',
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                });
+            });
+
+            // Lọc lịch sử tiêm chủng theo hồ sơ được chọn
+            $('#selectHoSo').on('change', function() {
+                var selectedMaHSTC = $(this).val();
+                $('.timeline-item').each(function() {
+                    var maHSTC = $(this).data('hoso');
+                    if (maHSTC == selectedMaHSTC || !selectedMaHSTC) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+            // Trigger filter on load
+            $('#selectHoSo').trigger('change');
         });
+
+        // Xuất PDF sổ tiêm chủng
+        function xuatPDFSoTiemChung() {
+            var maHSTC = $('#selectHoSo').val();
+            if (!maHSTC) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Chưa chọn hồ sơ',
+                    text: 'Vui lòng chọn hồ sơ tiêm chủng để xuất PDF.',
+                    confirmButtonColor: '#0077b6'
+                });
+                return;
+            }
+            window.location.href = '@Url.Action("XuatPDFSoTiemChung", "HoSo")' + '?maHSTC=' + maHSTC;
+        }
 
                     </script>
                 }

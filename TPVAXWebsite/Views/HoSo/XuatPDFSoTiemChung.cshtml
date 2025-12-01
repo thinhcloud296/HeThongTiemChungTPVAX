@@ -1,0 +1,271 @@
+﻿@{
+    Layout = null;
+    var hoSo = ViewBag.HoSo as TPVAXWebsite.Models.Domain.HoSoTiemChung;
+    var lichTiems = ViewBag.LichTiems as List<TPVAXWebsite.Models.Domain.LichTiem>;
+    var vaiTro = ViewBag.VaiTro as string;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sổ Tiêm Chủng - @hoSo.HoTen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .logo {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .info-section {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        .info-section h3 {
+            color: #0077b6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .info-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .info-item label {
+            font-size: 12px;
+            color: #666;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .info-item span {
+            font-weight: 600;
+            color: #333;
+        }
+        .vaccination-section {
+            padding: 25px;
+        }
+        .vaccination-section h3 {
+            color: #0077b6;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        .vaccination-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .vaccination-table th {
+            background: #0077b6;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+        }
+        .vaccination-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+        .vaccination-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .no-print {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+        }
+        .btn-print {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn-print:hover {
+            opacity: 0.9;
+        }
+        .btn-back {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        @@media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <button class="btn-print" onclick="window.print()">
+            <i class="fas fa-print"></i> In / Tải PDF
+        </button>
+        <a href="@Url.Action("Dashboard", "Account")#vaccination-book" class="btn-back">
+            Quay lại
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">💉</div>
+            <h1>SỔ TIÊM CHỦNG ĐIỆN TỬ</h1>
+            <p>Trung tâm Tiêm chủng TPVAX</p>
+        </div>
+
+        <div class="info-section">
+            <h3>📋 THÔNG TIN CÁ NHÂN</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Họ và tên</label>
+                    <span>@hoSo.HoTen</span>
+                </div>
+                <div class="info-item">
+                    <label>Ngày sinh</label>
+                    <span>@hoSo.NgaySinh.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="info-item">
+                    <label>Giới tính</label>
+                    <span>@hoSo.GioiTinh</span>
+                </div>
+                <div class="info-item">
+                    <label>CCCD/CMND</label>
+                    <span>@(string.IsNullOrEmpty(hoSo.CCCD) || hoSo.CCCD == "N/A" ? "Chưa cập nhật" : hoSo.CCCD)</span>
+                </div>
+                <div class="info-item">
+                    <label>Mã hồ sơ</label>
+                    <span>@hoSo.MaHSTC</span>
+                </div>
+                <div class="info-item">
+                    <label>Quan hệ</label>
+                    <span>@vaiTro</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="vaccination-section">
+            <h3>💉 LỊCH SỬ TIÊM CHỦNG</h3>
+            
+            @if (lichTiems != null && lichTiems.Any())
+            {
+                <table class="vaccination-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Vaccine</th>
+                            <th>Mũi</th>
+                            <th>Ngày tiêm</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int stt = 1;
+                            foreach (var lt in lichTiems)
+                            {
+                                <tr>
+                                    <td>@stt</td>
+                                    <td>@(lt.Vaccine?.TenVC ?? "Không rõ")</td>
+                                    <td>Mũi @(lt.SoMui ?? 0)</td>
+                                    <td>@(lt.NgayTiemThucTe?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                    <td><span class="badge badge-success">Đã tiêm</span></td>
+                                </tr>
+                                stt++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="empty-message">
+                    <p>Chưa có lịch sử tiêm chủng nào được ghi nhận.</p>
+                </div>
+            }
+        </div>
+
+        <div class="footer">
+            <p>Ngày xuất: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</p>
+            <p>Trung tâm Tiêm chủng TPVAX - Địa chỉ: Quận Tân Phú, TP.HCM</p>
+            <p>Hotline: 1900 xxxx | Website: www.tpvax.vn</p>
+        </div>
+    </div>
+
+    <script>
+        // Tự động mở hộp thoại in khi trang load (tùy chọn)
+        // window.onload = function() { window.print(); }
+    </script>
+</body>
+</html>

@@ -910,47 +910,199 @@ namespace TPVAXWebsite.Controllers
         }
 
         // GET: Admin/Reports
-        public ActionResult Reports()
+        public ActionResult Reports(string reportType = "revenue", DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
-                // Báo cáo doanh thu theo vaccine
-                var revenueByVaccine = _unitOfWork.ChiTietHoaDons.Query()
-                    .Include(ct => ct.HoaDon)
-                    .Where(ct => ct.HoaDon.TrangThai == true && ct.LoaiSanPham == "VACCINE")
-                    .GroupBy(ct => ct.MaSanPham)
-                    .Select(g => new
-                    {
-                        MaVC = g.Key,
-                        SoLuotTiem = g.Sum(ct => ct.SoLuong),
-                        TongDoanhThu = g.Sum(ct => ct.SoLuong * ct.DonGia)
-                    })
-                    .ToList();
+                // Mặc định lấy 6 tháng gần nhất
+                var defaultEndDate = DateTime.Now.Date;
+                var defaultStartDate = DateTime.Now.AddMonths(-5).Date;
+                
+                startDate = startDate ?? defaultStartDate;
+                endDate = endDate ?? defaultEndDate;
+                
+                ViewBag.StartDate = startDate.Value.ToString("yyyy-MM-dd");
+                ViewBag.EndDate = endDate.Value.ToString("yyyy-MM-dd");
+                ViewBag.ReportType = reportType;
 
-                // Join với Vaccine để lấy tên
-                var vaccineRevenue = revenueByVaccine.Select(r => new
+                // Khởi tạo mặc định tất cả ViewBag với kiểu cụ thể
+                ViewBag.VaccineRevenue = new List<VaccineRevenueReportItem>();
+                ViewBag.RevenueByMonth = new List<RevenueByMonthItem>();
+                ViewBag.InventoryData = new List<InventoryReportItem>();
+                ViewBag.InventoryByCategory = new List<InventoryByCategoryItem>();
+                ViewBag.VaccinationByVaccine = new List<VaccinationByVaccineItem>();
+                ViewBag.VaccinationByMonth = new List<VaccinationByMonthItem>();
+                ViewBag.AppointmentStatus = new List<AppointmentStatusItem>();
+                ViewBag.AppointmentTrends = new List<VaccinationByMonthItem>();
+                ViewBag.TotalRevenue = 0m;
+                ViewBag.TotalOrders = 0;
+                ViewBag.TotalInventoryValue = 0m;
+                ViewBag.TotalVaccineTypes = 0;
+                ViewBag.LowStockCount = 0;
+                ViewBag.OutOfStockCount = 0;
+                ViewBag.TotalVaccinations = 0;
+
+                // ============ BÁO CÁO DOANH THU ============
+                if (reportType == "revenue")
                 {
-                    MaVC = r.MaVC,
-                    TenVC = _unitOfWork.Vaccines.GetById(r.MaVC)?.TenVC ?? "N/A",
-                    SoLuotTiem = r.SoLuotTiem,
-                    TongDoanhThu = r.TongDoanhThu
-                }).OrderByDescending(r => r.TongDoanhThu).ToList();
+                    // Doanh thu theo vaccine
+                    var revenueByVaccine = _unitOfWork.ChiTietHoaDons.Query()
+                        .Include(ct => ct.HoaDon)
+                        .Where(ct => ct.HoaDon.TrangThai == true && 
+                                     ct.LoaiSanPham == "VACCINE" &&
+                                     ct.HoaDon.NgayLap >= startDate && 
+                                     ct.HoaDon.NgayLap <= endDate)
+                        .GroupBy(ct => ct.MaSanPham)
+                        .Select(g => new
+                        {
+                            MaVC = g.Key,
+                            SoLuotTiem = g.Sum(ct => ct.SoLuong),
+                            TongDoanhThu = g.Sum(ct => ct.SoLuong * ct.DonGia)
+                        })
+                        .ToList();
 
-                ViewBag.VaccineRevenue = vaccineRevenue;
+                    var vaccineRevenue = revenueByVaccine.Select(r => new VaccineRevenueReportItem
+                    {
+                        MaVC = r.MaVC,
+                        TenVC = _unitOfWork.Vaccines.GetById(r.MaVC)?.TenVC ?? "N/A",
+                        SoLuotTiem = r.SoLuotTiem,
+                        TongDoanhThu = r.TongDoanhThu
+                    }).OrderByDescending(r => r.TongDoanhThu).ToList();
 
-                // Thống kê xu hướng tiêm chủng 6 tháng gần nhất
-                var sixMonthsAgo = DateTime.Now.AddMonths(-5).Date;
+                    ViewBag.VaccineRevenue = vaccineRevenue;
+
+                    // Doanh thu theo tháng
+                    var revenueByMonth = _unitOfWork.HoaDons.Query()
+                        .Where(hd => hd.TrangThai == true && 
+                                     hd.NgayLap >= startDate && 
+                                     hd.NgayLap <= endDate)
+                        .ToList()
+                        .GroupBy(hd => new { hd.NgayLap.Year, hd.NgayLap.Month })
+                        .Select(g => new RevenueByMonthItem
+                        {
+                            Year = g.Key.Year,
+                            Month = g.Key.Month,
+                            TongDoanhThu = g.Sum(hd => hd.TongTien),
+                            SoHoaDon = g.Count()
+                        })
+                        .OrderBy(r => r.Year).ThenBy(r => r.Month)
+                        .ToList();
+
+                    ViewBag.RevenueByMonth = revenueByMonth;
+
+                    // Tổng doanh thu
+                    ViewBag.TotalRevenue = vaccineRevenue.Sum(v => v.TongDoanhThu);
+                    ViewBag.TotalOrders = revenueByMonth.Sum(r => r.SoHoaDon);
+                }
+                // ============ BÁO CÁO TỒN KHO ============
+                else if (reportType == "inventory")
+                {
+                    // Vaccine tồn kho
+                    var inventoryData = _unitOfWork.Vaccines.Query()
+                        .Include(v => v.LoaiVaccine)
+                        .ToList()
+                        .Select(v => new InventoryReportItem
+                        {
+                            MaVC = v.MaVC,
+                            TenVC = v.TenVC,
+                            TenLoai = v.LoaiVaccine?.TenLoai ?? "Chưa phân loại",
+                            SoLuongTon = v.SoLuong,
+                            GiaBan = v.GiaBan,
+                            GiaTriTonKho = v.SoLuong * v.GiaBan,
+                            TrangThai = v.SoLuong == 0 ? "Hết hàng" : (v.SoLuong < 50 ? "Sắp hết" : "Còn hàng")
+                        })
+                        .OrderBy(v => v.SoLuongTon)
+                        .ToList();
+
+                    ViewBag.InventoryData = inventoryData;
+                    ViewBag.TotalInventoryValue = inventoryData.Sum(v => v.GiaTriTonKho);
+                    ViewBag.TotalVaccineTypes = inventoryData.Count;
+                    ViewBag.LowStockCount = inventoryData.Count(v => v.TrangThai == "Sắp hết");
+                    ViewBag.OutOfStockCount = inventoryData.Count(v => v.TrangThai == "Hết hàng");
+
+                    // Thống kê theo loại vaccine
+                    var inventoryByCategory = inventoryData
+                        .GroupBy(v => v.TenLoai)
+                        .Select(g => new InventoryByCategoryItem
+                        {
+                            TenLoai = g.Key,
+                            SoLuong = g.Count(),
+                            TongTonKho = g.Sum(v => v.SoLuongTon),
+                            GiaTriTonKho = g.Sum(v => v.GiaTriTonKho)
+                        })
+                        .OrderByDescending(g => g.GiaTriTonKho)
+                        .ToList();
+
+                    ViewBag.InventoryByCategory = inventoryByCategory;
+                }
+                // ============ BÁO CÁO LƯỢT TIÊM ============
+                else if (reportType == "vaccination")
+                {
+                    // Lượt tiêm theo vaccine
+                    var vaccinationByVaccine = _unitOfWork.LichTiems.Query()
+                        .Include(lt => lt.Vaccine)
+                        .Where(lt => lt.TrangThai == "Đã tiêm" && 
+                                     lt.NgayTiemThucTe >= startDate && 
+                                     lt.NgayTiemThucTe <= endDate)
+                        .ToList()
+                        .GroupBy(lt => lt.MaVC)
+                        .Select(g => new VaccinationByVaccineItem
+                        {
+                            MaVC = g.Key,
+                            TenVC = g.First().Vaccine?.TenVC ?? "N/A",
+                            SoLuotTiem = g.Count()
+                        })
+                        .OrderByDescending(v => v.SoLuotTiem)
+                        .ToList();
+
+                    ViewBag.VaccinationByVaccine = vaccinationByVaccine;
+
+                    // Lượt tiêm theo tháng
+                    var vaccinationByMonth = _unitOfWork.LichTiems.Query()
+                        .Where(lt => lt.TrangThai == "Đã tiêm" && 
+                                     lt.NgayTiemThucTe >= startDate && 
+                                     lt.NgayTiemThucTe <= endDate)
+                        .ToList()
+                        .GroupBy(lt => new { lt.NgayTiemThucTe.Value.Year, lt.NgayTiemThucTe.Value.Month })
+                        .Select(g => new VaccinationByMonthItem
+                        {
+                            Year = g.Key.Year,
+                            Month = g.Key.Month,
+                            SoLuotTiem = g.Count()
+                        })
+                        .OrderBy(r => r.Year).ThenBy(r => r.Month)
+                        .ToList();
+
+                    ViewBag.VaccinationByMonth = vaccinationByMonth;
+
+                    // Thống kê trạng thái lịch tiêm
+                    var appointmentStatus = _unitOfWork.LichTiems.Query()
+                        .Where(lt => lt.NgayHenTiem >= startDate && lt.NgayHenTiem <= endDate)
+                        .ToList()
+                        .GroupBy(lt => lt.TrangThai)
+                        .Select(g => new AppointmentStatusItem
+                        {
+                            TrangThai = g.Key,
+                            SoLuong = g.Count()
+                        })
+                        .ToList();
+
+                    ViewBag.AppointmentStatus = appointmentStatus;
+                    ViewBag.TotalVaccinations = vaccinationByVaccine.Sum(v => v.SoLuotTiem);
+                }
+
+                // Xu hướng tiêm chủng 6 tháng gần nhất (dùng chung cho tất cả báo cáo)
                 var appointmentTrends = _unitOfWork.LichTiems.Query()
-                    .Where(lt => lt.NgayTiemThucTe >= sixMonthsAgo && lt.TrangThai == "Đã tiêm")
+                    .Where(lt => lt.NgayTiemThucTe >= startDate && lt.TrangThai == "Đã tiêm")
+                    .ToList()
                     .GroupBy(lt => new { lt.NgayTiemThucTe.Value.Year, lt.NgayTiemThucTe.Value.Month })
-                    .Select(g => new
+                    .Select(g => new VaccinationByMonthItem
                     {
                         Year = g.Key.Year,
                         Month = g.Key.Month,
                         SoLuotTiem = g.Count()
                     })
                     .OrderBy(r => r.Year).ThenBy(r => r.Month)
-                    .Cast<object>()
                     .ToList();
 
                 ViewBag.AppointmentTrends = appointmentTrends;
@@ -959,10 +1111,666 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.VaccineRevenue = new List<object>();
-                ViewBag.AppointmentTrends = new List<object>();
+                ViewBag.ReportType = reportType ?? "revenue";
+                ViewBag.StartDate = DateTime.Now.AddMonths(-5).ToString("yyyy-MM-dd");
+                ViewBag.EndDate = DateTime.Now.ToString("yyyy-MM-dd");
+                ViewBag.VaccineRevenue = new List<VaccineRevenueReportItem>();
+                ViewBag.AppointmentTrends = new List<VaccinationByMonthItem>();
+                ViewBag.InventoryData = new List<InventoryReportItem>();
+                ViewBag.InventoryByCategory = new List<InventoryByCategoryItem>();
+                ViewBag.VaccinationByVaccine = new List<VaccinationByVaccineItem>();
+                ViewBag.VaccinationByMonth = new List<VaccinationByMonthItem>();
+                ViewBag.AppointmentStatus = new List<AppointmentStatusItem>();
+                ViewBag.RevenueByMonth = new List<RevenueByMonthItem>();
+                ViewBag.TotalRevenue = 0m;
+                ViewBag.TotalOrders = 0;
+                ViewBag.TotalInventoryValue = 0m;
+                ViewBag.TotalVaccineTypes = 0;
+                ViewBag.LowStockCount = 0;
+                ViewBag.OutOfStockCount = 0;
+                ViewBag.TotalVaccinations = 0;
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
+            }
+        }
+
+        // API: Lấy dữ liệu báo cáo theo AJAX
+        [HttpGet]
+        public ActionResult GetReportData(string reportType, string startDate, string endDate)
+        {
+            try
+            {
+                DateTime start = DateTime.Parse(startDate);
+                DateTime end = DateTime.Parse(endDate);
+
+                if (reportType == "revenue")
+                {
+                    var revenueByVaccine = _unitOfWork.ChiTietHoaDons.Query()
+                        .Include(ct => ct.HoaDon)
+                        .Where(ct => ct.HoaDon.TrangThai == true && 
+                                     ct.LoaiSanPham == "VACCINE" &&
+                                     ct.HoaDon.NgayLap >= start && 
+                                     ct.HoaDon.NgayLap <= end)
+                        .GroupBy(ct => ct.MaSanPham)
+                        .Select(g => new
+                        {
+                            MaVC = g.Key,
+                            SoLuotTiem = g.Sum(ct => ct.SoLuong),
+                            TongDoanhThu = g.Sum(ct => ct.SoLuong * ct.DonGia)
+                        })
+                        .ToList();
+
+                    var vaccineRevenue = revenueByVaccine.Select(r => new
+                    {
+                        MaVC = r.MaVC,
+                        TenVC = _unitOfWork.Vaccines.GetById(r.MaVC)?.TenVC ?? "N/A",
+                        SoLuotTiem = r.SoLuotTiem,
+                        TongDoanhThu = r.TongDoanhThu
+                    }).OrderByDescending(r => r.TongDoanhThu).ToList();
+
+                    var revenueByMonth = _unitOfWork.HoaDons.Query()
+                        .Where(hd => hd.TrangThai == true && 
+                                     hd.NgayLap >= start && 
+                                     hd.NgayLap <= end)
+                        .ToList()
+                        .GroupBy(hd => new { hd.NgayLap.Year, hd.NgayLap.Month })
+                        .Select(g => new
+                        {
+                            Year = g.Key.Year,
+                            Month = g.Key.Month,
+                            TongDoanhThu = g.Sum(hd => hd.TongTien),
+                            SoHoaDon = g.Count()
+                        })
+                        .OrderBy(r => r.Year).ThenBy(r => r.Month)
+                        .ToList();
+
+                    return Json(new
+                    {
+                        success = true,
+                        vaccineRevenue = vaccineRevenue,
+                        revenueByMonth = revenueByMonth,
+                        totalRevenue = vaccineRevenue.Sum(v => v.TongDoanhThu),
+                        totalOrders = revenueByMonth.Sum(r => r.SoHoaDon)
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else if (reportType == "inventory")
+                {
+                    var inventoryData = _unitOfWork.Vaccines.Query()
+                        .Include(v => v.LoaiVaccine)
+                        .ToList()
+                        .Select(v => new
+                        {
+                            MaVC = v.MaVC,
+                            TenVC = v.TenVC,
+                            TenLoai = v.LoaiVaccine?.TenLoai ?? "Chưa phân loại",
+                            SoLuongTon = v.SoLuong,
+                            GiaBan = v.GiaBan,
+                            GiaTriTonKho = v.SoLuong * v.GiaBan,
+                            TrangThai = v.SoLuong == 0 ? "Hết hàng" : (v.SoLuong < 50 ? "Sắp hết" : "Còn hàng")
+                        })
+                        .OrderBy(v => v.SoLuongTon)
+                        .ToList();
+
+                    var inventoryByCategory = inventoryData
+                        .GroupBy(v => v.TenLoai)
+                        .Select(g => new
+                        {
+                            TenLoai = g.Key,
+                            SoLuong = g.Count(),
+                            TongTonKho = g.Sum(v => v.SoLuongTon),
+                            GiaTriTonKho = g.Sum(v => v.GiaTriTonKho)
+                        })
+                        .OrderByDescending(g => g.GiaTriTonKho)
+                        .ToList();
+
+                    return Json(new
+                    {
+                        success = true,
+                        inventoryData = inventoryData,
+                        inventoryByCategory = inventoryByCategory,
+                        totalInventoryValue = inventoryData.Sum(v => v.GiaTriTonKho),
+                        totalVaccineTypes = inventoryData.Count,
+                        lowStockCount = inventoryData.Count(v => v.TrangThai == "Sắp hết"),
+                        outOfStockCount = inventoryData.Count(v => v.TrangThai == "Hết hàng")
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else if (reportType == "vaccination")
+                {
+                    var vaccinationByVaccine = _unitOfWork.LichTiems.Query()
+                        .Include(lt => lt.Vaccine)
+                        .Where(lt => lt.TrangThai == "Đã tiêm" && 
+                                     lt.NgayTiemThucTe >= start && 
+                                     lt.NgayTiemThucTe <= end)
+                        .ToList()
+                        .GroupBy(lt => lt.MaVC)
+                        .Select(g => new
+                        {
+                            MaVC = g.Key,
+                            TenVC = g.First().Vaccine?.TenVC ?? "N/A",
+                            SoLuotTiem = g.Count()
+                        })
+                        .OrderByDescending(v => v.SoLuotTiem)
+                        .ToList();
+
+                    var vaccinationByMonth = _unitOfWork.LichTiems.Query()
+                        .Where(lt => lt.TrangThai == "Đã tiêm" && 
+                                     lt.NgayTiemThucTe >= start && 
+                                     lt.NgayTiemThucTe <= end)
+                        .ToList()
+                        .GroupBy(lt => new { lt.NgayTiemThucTe.Value.Year, lt.NgayTiemThucTe.Value.Month })
+                        .Select(g => new
+                        {
+                            Year = g.Key.Year,
+                            Month = g.Key.Month,
+                            SoLuotTiem = g.Count()
+                        })
+                        .OrderBy(r => r.Year).ThenBy(r => r.Month)
+                        .ToList();
+
+                    var appointmentStatus = _unitOfWork.LichTiems.Query()
+                        .Where(lt => lt.NgayHenTiem >= start && lt.NgayHenTiem <= end)
+                        .ToList()
+                        .GroupBy(lt => lt.TrangThai)
+                        .Select(g => new
+                        {
+                            TrangThai = g.Key,
+                            SoLuong = g.Count()
+                        })
+                        .ToList();
+
+                    return Json(new
+                    {
+                        success = true,
+                        vaccinationByVaccine = vaccinationByVaccine,
+                        vaccinationByMonth = vaccinationByMonth,
+                        appointmentStatus = appointmentStatus,
+                        totalVaccinations = vaccinationByVaccine.Sum(v => v.SoLuotTiem)
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { success = false, message = "Loại báo cáo không hợp lệ" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // API: Export báo cáo ra Excel
+        [HttpGet]
+        public ActionResult ExportReport(string reportType, string startDate, string endDate)
+        {
+            try
+            {
+                DateTime start = DateTime.Parse(startDate);
+                DateTime end = DateTime.Parse(endDate);
+
+                var csv = new System.Text.StringBuilder();
+                csv.AppendLine("Báo cáo " + (reportType == "revenue" ? "Doanh thu" : reportType == "inventory" ? "Tồn kho" : "Lượt tiêm"));
+                csv.AppendLine("Từ ngày: " + start.ToString("dd/MM/yyyy") + " - Đến ngày: " + end.ToString("dd/MM/yyyy"));
+                csv.AppendLine("");
+
+                if (reportType == "revenue")
+                {
+                    csv.AppendLine("Mã Vắc xin,Tên Vắc xin,Số lượt tiêm,Tổng doanh thu (VNĐ)");
+                    
+                    var revenueByVaccine = _unitOfWork.ChiTietHoaDons.Query()
+                        .Include(ct => ct.HoaDon)
+                        .Where(ct => ct.HoaDon.TrangThai == true && 
+                                     ct.LoaiSanPham == "VACCINE" &&
+                                     ct.HoaDon.NgayLap >= start && 
+                                     ct.HoaDon.NgayLap <= end)
+                        .GroupBy(ct => ct.MaSanPham)
+                        .Select(g => new
+                        {
+                            MaVC = g.Key,
+                            SoLuotTiem = g.Sum(ct => ct.SoLuong),
+                            TongDoanhThu = g.Sum(ct => ct.SoLuong * ct.DonGia)
+                        })
+                        .ToList();
+
+                    foreach (var item in revenueByVaccine)
+                    {
+                        var tenVC = _unitOfWork.Vaccines.GetById(item.MaVC)?.TenVC ?? "N/A";
+                        csv.AppendLine($"{item.MaVC},{tenVC},{item.SoLuotTiem},{item.TongDoanhThu:N0}");
+                    }
+
+                    csv.AppendLine("");
+                    csv.AppendLine($"Tổng cộng,,{revenueByVaccine.Sum(r => r.SoLuotTiem)},{revenueByVaccine.Sum(r => r.TongDoanhThu):N0}");
+                }
+                else if (reportType == "inventory")
+                {
+                    csv.AppendLine("Mã Vắc xin,Tên Vắc xin,Loại,Số lượng tồn,Giá bán,Giá trị tồn kho,Trạng thái");
+                    
+                    var inventoryData = _unitOfWork.Vaccines.Query()
+                        .Include(v => v.LoaiVaccine)
+                        .ToList();
+
+                    foreach (var v in inventoryData)
+                    {
+                        var trangThai = v.SoLuong == 0 ? "Hết hàng" : (v.SoLuong < 50 ? "Sắp hết" : "Còn hàng");
+                        csv.AppendLine($"{v.MaVC},{v.TenVC},{v.LoaiVaccine?.TenLoai ?? "Chưa phân loại"},{v.SoLuong},{v.GiaBan:N0},{v.SoLuong * v.GiaBan:N0},{trangThai}");
+                    }
+
+                    csv.AppendLine("");
+                    csv.AppendLine($"Tổng giá trị tồn kho,,,,,{inventoryData.Sum(v => v.SoLuong * v.GiaBan):N0},");
+                }
+                else if (reportType == "vaccination")
+                {
+                    csv.AppendLine("Mã Vắc xin,Tên Vắc xin,Số lượt tiêm");
+                    
+                    var vaccinationByVaccine = _unitOfWork.LichTiems.Query()
+                        .Include(lt => lt.Vaccine)
+                        .Where(lt => lt.TrangThai == "Đã tiêm" && 
+                                     lt.NgayTiemThucTe >= start && 
+                                     lt.NgayTiemThucTe <= end)
+                        .ToList()
+                        .GroupBy(lt => lt.MaVC)
+                        .Select(g => new
+                        {
+                            MaVC = g.Key,
+                            TenVC = g.First().Vaccine?.TenVC ?? "N/A",
+                            SoLuotTiem = g.Count()
+                        })
+                        .OrderByDescending(v => v.SoLuotTiem)
+                        .ToList();
+
+                    foreach (var item in vaccinationByVaccine)
+                    {
+                        csv.AppendLine($"{item.MaVC},{item.TenVC},{item.SoLuotTiem}");
+                    }
+
+                    csv.AppendLine("");
+                    csv.AppendLine($"Tổng cộng,,{vaccinationByVaccine.Sum(v => v.SoLuotTiem)}");
+                }
+
+                var bytes = System.Text.Encoding.UTF8.GetBytes(csv.ToString());
+                var bom = new byte[] { 0xEF, 0xBB, 0xBF };
+                var result = bom.Concat(bytes).ToArray();
+
+                return File(result, "text/csv", $"BaoCao_{reportType}_{DateTime.Now:yyyyMMdd}.csv");
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // ============================================================================
+        // GÓI VACCINE CRUD
+        // ============================================================================
+
+        /// <summary>
+        /// GET: Admin/GoiVaccine - Trang quản lý gói vaccine
+        /// </summary>
+        public ActionResult GoiVaccine()
+        {
+            return View(new List<AdminGoiVaccineViewModel>());
+        }
+
+        /// <summary>
+        /// GET: Admin/GetGoiVaccineList - Lấy danh sách gói vaccine
+        /// </summary>
+        [HttpGet]
+        public ActionResult GetGoiVaccineList()
+        {
+            try
+            {
+                var goiList = _unitOfWork.GoiVaccines.Query()
+                    .Include(g => g.ChiTietGoiVaccine)
+                    .ToList()
+                    .Select(g => new
+                    {
+                        MaGoi = g.MaGoi,
+                        TenGoi = g.TenGoi,
+                        MoTa = g.MoTa,
+                        DoiTuongApDung = g.DoiTuongApDung,
+                        GiaGoi = g.GiaGoi,
+                        TrangThai = g.TrangThai,
+                        HinhAnh = !string.IsNullOrEmpty(g.HinhAnh) ? (g.HinhAnh.StartsWith("/") ? g.HinhAnh : "/Content/images/goivaccine/" + g.HinhAnh) : "",
+                        SoLuongVaccine = g.ChiTietGoiVaccine?.Count ?? 0
+                    })
+                    .ToList();
+
+                return Json(new { success = true, data = goiList }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// GET: Admin/GetGoiVaccine - Lấy thông tin gói vaccine
+        /// </summary>
+        [HttpGet]
+        public ActionResult GetGoiVaccine(string id)
+        {
+            try
+            {
+                var goi = _unitOfWork.GoiVaccines.Query()
+                    .Include(g => g.ChiTietGoiVaccine.Select(ct => ct.Vaccine))
+                    .FirstOrDefault(g => g.MaGoi == id);
+
+                if (goi == null)
+                {
+                    return Json(new { success = false, message = "Gói vaccine không tồn tại" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var chiTietList = new List<object>();
+                if (goi.ChiTietGoiVaccine != null)
+                {
+                    chiTietList = goi.ChiTietGoiVaccine.Select(ct => new
+                    {
+                        MaCTGoi = ct.MaCTGoi,
+                        MaVC = ct.MaVC,
+                        TenVC = ct.Vaccine?.TenVC ?? "N/A",
+                        GiaVC = ct.Vaccine?.GiaBan ?? 0,
+                        SoMui = ct.SoMui ?? 1,
+                        GhiChu = ct.GhiChu
+                    }).Cast<object>().ToList();
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    data = new
+                    {
+                        MaGoi = goi.MaGoi,
+                        TenGoi = goi.TenGoi,
+                        MoTa = goi.MoTa,
+                        DoiTuongApDung = goi.DoiTuongApDung,
+                        GiaGoi = goi.GiaGoi,
+                        TrangThai = goi.TrangThai,
+                        HinhAnh = !string.IsNullOrEmpty(goi.HinhAnh) ? (goi.HinhAnh.StartsWith("/") ? goi.HinhAnh : "/Content/images/goivaccine/" + goi.HinhAnh) : "",
+                        ChiTietList = chiTietList
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/CreateGoiVaccine - Tạo gói vaccine mới
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateGoiVaccine(string TenGoi, string MoTa, string DoiTuongApDung, decimal GiaGoi, string TrangThai, HttpPostedFileBase HinhAnh)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(TenGoi))
+                {
+                    return Json(new { success = false, message = "Tên gói không được để trống" });
+                }
+
+                // Generate MaGoi
+                var lastGoi = _unitOfWork.GoiVaccines.Query()
+                    .OrderByDescending(g => g.MaGoi)
+                    .FirstOrDefault();
+
+                string newMaGoi = "GOI0000001";
+                if (lastGoi != null && !string.IsNullOrEmpty(lastGoi.MaGoi))
+                {
+                    string numberPart = lastGoi.MaGoi.Substring(3);
+                    if (int.TryParse(numberPart, out int number))
+                    {
+                        newMaGoi = "GOI" + (number + 1).ToString().PadLeft(7, '0');
+                    }
+                }
+
+                // Xử lý upload hình ảnh
+                string imagePath = null;
+                if (HinhAnh != null && HinhAnh.ContentLength > 0)
+                {
+                    var validateResult = ValidateImage(HinhAnh);
+                    if (!validateResult.Item1)
+                    {
+                        return Json(new { success = false, message = validateResult.Item2 });
+                    }
+
+                    string fileName = newMaGoi + Path.GetExtension(HinhAnh.FileName);
+                    string folderPath = Server.MapPath("~/Content/images/goivaccine/");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    HinhAnh.SaveAs(Path.Combine(folderPath, fileName));
+                    imagePath = "/Content/images/goivaccine/" + fileName;
+                }
+
+                var goiVaccine = new GoiVaccine
+                {
+                    MaGoi = newMaGoi,
+                    TenGoi = TenGoi,
+                    MoTa = MoTa,
+                    DoiTuongApDung = DoiTuongApDung,
+                    GiaGoi = GiaGoi,
+                    TrangThai = TrangThai ?? "Đang áp dụng",
+                    HinhAnh = imagePath
+                };
+
+                _unitOfWork.GoiVaccines.Add(goiVaccine);
+                _unitOfWork.SaveChanges();
+
+                return Json(new { success = true, message = "Tạo gói vaccine thành công!", data = new { MaGoi = newMaGoi } });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/EditGoiVaccine - Cập nhật gói vaccine
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditGoiVaccine(string MaGoi, string TenGoi, string MoTa, string DoiTuongApDung, decimal GiaGoi, string TrangThai, HttpPostedFileBase HinhAnh)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(MaGoi))
+                {
+                    return Json(new { success = false, message = "Mã gói không hợp lệ" });
+                }
+
+                var goi = _unitOfWork.GoiVaccines.GetById(MaGoi);
+                if (goi == null)
+                {
+                    return Json(new { success = false, message = "Gói vaccine không tồn tại" });
+                }
+
+                // Xử lý upload hình ảnh mới
+                if (HinhAnh != null && HinhAnh.ContentLength > 0)
+                {
+                    var validateResult = ValidateImage(HinhAnh);
+                    if (!validateResult.Item1)
+                    {
+                        return Json(new { success = false, message = validateResult.Item2 });
+                    }
+
+                    string fileName = MaGoi + Path.GetExtension(HinhAnh.FileName);
+                    string folderPath = Server.MapPath("~/Content/images/goivaccine/");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    HinhAnh.SaveAs(Path.Combine(folderPath, fileName));
+                    goi.HinhAnh = "/Content/images/goivaccine/" + fileName;
+                }
+
+                goi.TenGoi = TenGoi;
+                goi.MoTa = MoTa;
+                goi.DoiTuongApDung = DoiTuongApDung;
+                goi.GiaGoi = GiaGoi;
+                goi.TrangThai = TrangThai;
+
+                _unitOfWork.GoiVaccines.Update(goi);
+                _unitOfWork.SaveChanges();
+
+                return Json(new { success = true, message = "Cập nhật gói vaccine thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/DeleteGoiVaccine - Xóa gói vaccine
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteGoiVaccine(string id)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    return Json(new { success = false, message = "Mã gói không hợp lệ" });
+                }
+
+                var goi = _unitOfWork.GoiVaccines.GetById(id);
+                if (goi == null)
+                {
+                    return Json(new { success = false, message = "Gói vaccine không tồn tại" });
+                }
+
+                // Xóa chi tiết gói trước
+                var chiTietList = _unitOfWork.ChiTietGoiVaccines.Query()
+                    .Where(ct => ct.MaGoi == id)
+                    .ToList();
+
+                foreach (var ct in chiTietList)
+                {
+                    _unitOfWork.ChiTietGoiVaccines.Remove(ct);
+                }
+
+                _unitOfWork.GoiVaccines.Remove(goi);
+                _unitOfWork.SaveChanges();
+
+                return Json(new { success = true, message = "Xóa gói vaccine thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// GET: Admin/GetVaccineListForGoi - Lấy danh sách vaccine để thêm vào gói
+        /// </summary>
+        [HttpGet]
+        public ActionResult GetVaccineListForGoi()
+        {
+            try
+            {
+                var vaccines = _unitOfWork.Vaccines.GetAll()
+                    .Select(v => new { MaVC = v.MaVC, TenVC = v.TenVC, GiaBan = v.GiaBan })
+                    .OrderBy(v => v.TenVC)
+                    .ToList();
+
+                return Json(new { success = true, data = vaccines }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/AddVaccineToGoi - Thêm vaccine vào gói
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddVaccineToGoi(string MaGoi, string MaVC, int SoMui, string GhiChu)
+        {
+            try
+            {
+                // Kiểm tra gói tồn tại
+                var goi = _unitOfWork.GoiVaccines.GetById(MaGoi);
+                if (goi == null)
+                {
+                    return Json(new { success = false, message = "Gói vaccine không tồn tại" });
+                }
+
+                // Kiểm tra vaccine tồn tại
+                var vaccine = _unitOfWork.Vaccines.GetById(MaVC);
+                if (vaccine == null)
+                {
+                    return Json(new { success = false, message = "Vaccine không tồn tại" });
+                }
+
+                // Kiểm tra vaccine đã có trong gói chưa
+                var existing = _unitOfWork.ChiTietGoiVaccines.Query()
+                    .FirstOrDefault(ct => ct.MaGoi == MaGoi && ct.MaVC == MaVC);
+                if (existing != null)
+                {
+                    return Json(new { success = false, message = "Vaccine này đã có trong gói" });
+                }
+
+                // Generate MaCTGoi
+                var lastCT = _unitOfWork.ChiTietGoiVaccines.Query()
+                    .OrderByDescending(ct => ct.MaCTGoi)
+                    .FirstOrDefault();
+
+                string newMaCTGoi = "CTG0000001";
+                if (lastCT != null && !string.IsNullOrEmpty(lastCT.MaCTGoi))
+                {
+                    string numberPart = lastCT.MaCTGoi.Substring(3);
+                    if (int.TryParse(numberPart, out int number))
+                    {
+                        newMaCTGoi = "CTG" + (number + 1).ToString().PadLeft(7, '0');
+                    }
+                }
+
+                var chiTiet = new ChiTietGoiVaccine
+                {
+                    MaCTGoi = newMaCTGoi,
+                    MaGoi = MaGoi,
+                    MaVC = MaVC,
+                    SoMui = SoMui,
+                    GhiChu = GhiChu
+                };
+
+                _unitOfWork.ChiTietGoiVaccines.Add(chiTiet);
+                _unitOfWork.SaveChanges();
+
+                return Json(new { success = true, message = "Thêm vaccine vào gói thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// POST: Admin/RemoveVaccineFromGoi - Xóa vaccine khỏi gói
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveVaccineFromGoi(string id)
+        {
+            try
+            {
+                var chiTiet = _unitOfWork.ChiTietGoiVaccines.GetById(id);
+                if (chiTiet == null)
+                {
+                    return Json(new { success = false, message = "Chi tiết không tồn tại" });
+                }
+
+                _unitOfWork.ChiTietGoiVaccines.Remove(chiTiet);
+                _unitOfWork.SaveChanges();
+
+                return Json(new { success = true, message = "Xóa vaccine khỏi gói thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
 

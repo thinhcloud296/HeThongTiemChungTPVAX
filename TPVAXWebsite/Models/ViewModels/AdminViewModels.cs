@@ -265,5 +265,85 @@ namespace TPVAXWebsite.Models.ViewModels
         /// </summary>
         public HttpPostedFileBase ImageFile { get; set; }
     }
+
+    // ============================================================================
+    // BÁO CÁO VIEWMODELS
+    // ============================================================================
+
+    /// <summary>
+    /// ViewModel cho báo cáo doanh thu theo vaccine
+    /// </summary>
+    public class VaccineRevenueReportItem
+    {
+        public string MaVC { get; set; }
+        public string TenVC { get; set; }
+        public int SoLuotTiem { get; set; }
+        public decimal TongDoanhThu { get; set; }
+    }
+
+    /// <summary>
+    /// ViewModel cho báo cáo doanh thu theo tháng
+    /// </summary>
+    public class RevenueByMonthItem
+    {
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public decimal TongDoanhThu { get; set; }
+        public int SoHoaDon { get; set; }
+    }
+
+    /// <summary>
+    /// ViewModel cho báo cáo tồn kho
+    /// </summary>
+    public class InventoryReportItem
+    {
+        public string MaVC { get; set; }
+        public string TenVC { get; set; }
+        public string TenLoai { get; set; }
+        public int SoLuongTon { get; set; }
+        public decimal GiaBan { get; set; }
+        public decimal GiaTriTonKho { get; set; }
+        public string TrangThai { get; set; }
+    }
+
+    /// <summary>
+    /// ViewModel cho thống kê tồn kho theo loại
+    /// </summary>
+    public class InventoryByCategoryItem
+    {
+        public string TenLoai { get; set; }
+        public int SoLuong { get; set; }
+        public int TongTonKho { get; set; }
+        public decimal GiaTriTonKho { get; set; }
+    }
+
+    /// <summary>
+    /// ViewModel cho báo cáo lượt tiêm theo vaccine
+    /// </summary>
+    public class VaccinationByVaccineItem
+    {
+        public string MaVC { get; set; }
+        public string TenVC { get; set; }
+        public int SoLuotTiem { get; set; }
+    }
+
+    /// <summary>
+    /// ViewModel cho báo cáo lượt tiêm theo tháng
+    /// </summary>
+    public class VaccinationByMonthItem
+    {
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int SoLuotTiem { get; set; }
+    }
+
+    /// <summary>
+    /// ViewModel cho thống kê trạng thái lịch tiêm
+    /// </summary>
+    public class AppointmentStatusItem
+    {
+        public string TrangThai { get; set; }
+        public int SoLuong { get; set; }
+    }
 }
 

@@ -1,228 +1,493 @@
-﻿@{
+﻿@using TPVAXWebsite.Models.ViewModels
+@{
     ViewBag.Title = "Báo cáo & Thống kê";
-    var vaccineRevenue = ViewBag.VaccineRevenue ?? new List<dynamic>();
-    var appointmentTrends = ViewBag.AppointmentTrends ?? new List<dynamic>();
+    var reportType = (string)(ViewBag.ReportType ?? "revenue");
+    var startDate = (string)(ViewBag.StartDate ?? DateTime.Now.AddMonths(-5).ToString("yyyy-MM-dd"));
+    var endDate = (string)(ViewBag.EndDate ?? DateTime.Now.ToString("yyyy-MM-dd"));
+    
+    var vaccineRevenue = ViewBag.VaccineRevenue as IEnumerable<VaccineRevenueReportItem> ?? new List<VaccineRevenueReportItem>();
+    var appointmentTrends = ViewBag.AppointmentTrends as IEnumerable<VaccinationByMonthItem> ?? new List<VaccinationByMonthItem>();
+    var inventoryData = ViewBag.InventoryData as IEnumerable<InventoryReportItem> ?? new List<InventoryReportItem>();
+    var inventoryByCategory = ViewBag.InventoryByCategory as IEnumerable<InventoryByCategoryItem> ?? new List<InventoryByCategoryItem>();
+    var vaccinationByVaccine = ViewBag.VaccinationByVaccine as IEnumerable<VaccinationByVaccineItem> ?? new List<VaccinationByVaccineItem>();
+    var vaccinationByMonth = ViewBag.VaccinationByMonth as IEnumerable<VaccinationByMonthItem> ?? new List<VaccinationByMonthItem>();
+    var appointmentStatus = ViewBag.AppointmentStatus as IEnumerable<AppointmentStatusItem> ?? new List<AppointmentStatusItem>();
+    var revenueByMonth = ViewBag.RevenueByMonth as IEnumerable<RevenueByMonthItem> ?? new List<RevenueByMonthItem>();
 }
 
-
-        <section class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6"><h1>Báo cáo & Thống kê</h1></div>
-              <div class="col-sm-6">
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6"><h1>Báo cáo & Thống kê</h1></div>
+            <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item">
-                    <a href="@Url.Action("Index", "Admin")">Trang chủ</a>
-                  </li>
-                  <li class="breadcrumb-item active">Báo cáo</li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Admin")">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Báo cáo</li>
                 </ol>
-              </div>
             </div>
-          </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-        <section class="content">
-          <div class="container-fluid">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fas fa-filter mr-1"></i> Bộ lọc báo cáo
-                </h3>
-              </div>
-              <div class="card-body">
-                <div class="row align-items-end">
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>Khoảng thời gian:</label>
-                      <div class="input-group">
-                        <button
-                          type="button"
-                          class="btn btn-default float-right"
-                          id="daterange-btn"
-                        >
-                          <i class="far fa-calendar-alt"></i>
-                          <span>Chọn ngày</span>
-                          <i class="fas fa-caret-down"></i>
-                        </button>
-                      </div>
+<section class="content">
+    <div class="container-fluid">
+        <!-- Bộ lọc báo cáo -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-filter mr-1"></i> Bộ lọc báo cáo</h3>
+            </div>
+            <div class="card-body">
+                <form id="reportFilterForm" method="get" action="@Url.Action("Reports", "Admin")">
+                    <div class="row align-items-end">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Từ ngày:</label>
+                                <input type="date" class="form-control" name="startDate" id="startDate" value="@startDate" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Đến ngày:</label>
+                                <input type="date" class="form-control" name="endDate" id="endDate" value="@endDate" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Loại báo cáo:</label>
+                                <select class="form-control" name="reportType" id="reportType">
+                                    <option value="revenue" @(reportType == "revenue" ? "selected" : "")>Báo cáo doanh thu</option>
+                                    <option value="inventory" @(reportType == "inventory" ? "selected" : "")>Báo cáo tồn kho</option>
+                                    <option value="vaccination" @(reportType == "vaccination" ? "selected" : "")>Báo cáo lượt tiêm</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-search"></i> Xem báo cáo
+                            </button>
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>Loại báo cáo:</label>
-                      <select class="form-control">
-                        <option>Báo cáo doanh thu</option>
-                        <option>Báo cáo tồn kho</option>
-                        <option>Báo cáo lượt tiêm</option>
-                      </select>
+                </form>
+            </div>
+        </div>
+
+        <!-- Thống kê tổng quan -->
+        @if (reportType == "revenue")
+        {
+            var tongLuotTiem = vaccineRevenue.Any() ? vaccineRevenue.Sum(v => v.SoLuotTiem) : 0;
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@string.Format("{0:N0}", ViewBag.TotalRevenue ?? 0)<sup style="font-size: 14px">đ</sup></h3>
+                            <p>Tổng doanh thu</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
                     </div>
-                  </div>
-                  <div class="col-md-2">
-                    <button type="button" class="btn btn-primary w-100">
-                      Xem báo cáo
-                    </button>
-                  </div>
                 </div>
-              </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@(ViewBag.TotalOrders ?? 0)</h3>
+                            <p>Số hóa đơn</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-receipt"></i></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>@vaccineRevenue.Count()</h3>
+                            <p>Loại vaccine bán được</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-syringe"></i></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>@tongLuotTiem</h3>
+                            <p>Tổng lượt tiêm</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    </div>
+                </div>
             </div>
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Xu hướng tiêm chủng theo thời gian</h3>
-              </div>
-              <div class="card-body">
-                <canvas
-                  id="trendsChart"
-                  style="
-                    min-height: 250px;
-                    height: 300px;
-                    max-height: 350px;
-                    width: 100%;
-                  "
-                ></canvas>
-              </div>
+        }
+        else if (reportType == "inventory")
+        {
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@string.Format("{0:N0}", ViewBag.TotalInventoryValue ?? 0)<sup style="font-size: 14px">đ</sup></h3>
+                            <p>Giá trị tồn kho</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-warehouse"></i></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@(ViewBag.TotalVaccineTypes ?? 0)</h3>
+                            <p>Loại vaccine</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-boxes"></i></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>@(ViewBag.LowStockCount ?? 0)</h3>
+                            <p>Sắp hết hàng</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>@(ViewBag.OutOfStockCount ?? 0)</h3>
+                            <p>Hết hàng</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-times-circle"></i></div>
+                    </div>
+                </div>
             </div>
+        }
+        else if (reportType == "vaccination")
+        {
+            var tongLichHen = appointmentStatus.Any() ? appointmentStatus.Sum(s => s.SoLuong) : 0;
+            <div class="row">
+                <div class="col-lg-4 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@(ViewBag.TotalVaccinations ?? 0)</h3>
+                            <p>Tổng lượt tiêm</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-syringe"></i></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@vaccinationByVaccine.Count()</h3>
+                            <p>Loại vaccine đã tiêm</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>@tongLichHen</h3>
+                            <p>Tổng lịch hẹn</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                    </div>
+                </div>
+            </div>
+        }
 
-            <div class="card">
-              <div class="card-header">
+        <!-- Biểu đồ -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            @if (reportType == "revenue")
+                            {
+                                <text>Biểu đồ doanh thu theo thời gian</text>
+                            }
+                            else if (reportType == "inventory")
+                            {
+                                <text>Biểu đồ tồn kho theo loại vaccine</text>
+                            }
+                            else
+                            {
+                                <text>Biểu đồ lượt tiêm theo thời gian</text>
+                            }
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="mainChart" style="min-height: 300px; height: 350px; max-height: 400px; width: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            @if (reportType == "revenue")
+                            {
+                                <text>Top vaccine doanh thu cao</text>
+                            }
+                            else if (reportType == "inventory")
+                            {
+                                <text>Phân bố tồn kho</text>
+                            }
+                            else
+                            {
+                                <text>Trạng thái lịch tiêm</text>
+                            }
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="min-height: 250px; height: 300px; max-height: 350px; width: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng dữ liệu chi tiết -->
+        <div class="card">
+            <div class="card-header">
                 <h3 class="card-title">
-                  Báo cáo doanh thu chi tiết theo vắc xin
-                </h3>
-                <div class="card-tools">
-                  <button id="exportExcelBtn" class="btn btn-success btn-sm">
-                    <i class="fas fa-file-excel"></i> Export to Excel
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <table
-                  id="reportsTable"
-                  class="table table-bordered table-striped"
-                >
-                  <thead>
-                    <tr>
-                      <th>Mã Vắc xin</th>
-                      <th>Tên Vắc xin</th>
-                      <th>Số lượt tiêm</th>
-                      <th>Tổng doanh thu (VNĐ)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @if (vaccineRevenue != null && ((IEnumerable<dynamic>)vaccineRevenue).Any())
+                    @if (reportType == "revenue")
                     {
-                        foreach (var item in vaccineRevenue)
-                        {
-                            <tr>
-                                <td>@item.MaVC</td>
-                                <td>@item.TenVC</td>
-                                <td>@item.SoLuotTiem</td>
-                                <td>@string.Format("{0:N0}", item.TongDoanhThu)</td>
-                            </tr>
-                        }
+                        <text>Chi tiết doanh thu theo vắc xin</text>
+                    }
+                    else if (reportType == "inventory")
+                    {
+                        <text>Chi tiết tồn kho vắc xin</text>
                     }
                     else
                     {
-                        <tr class="no-data">
-                            <td></td>
-                            <td class="text-center">Chưa có dữ liệu doanh thu</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <text>Chi tiết lượt tiêm theo vắc xin</text>
                     }
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th></th>
-                      <th></th>
-                      <th class="text-right">Tổng cộng:</th>
-                      <th>@string.Format("{0:N0}", vaccineRevenue != null && ((IEnumerable<dynamic>)vaccineRevenue).Any() ? ((IEnumerable<dynamic>)vaccineRevenue).Sum(x => (decimal)x.TongDoanhThu) : 0)</th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+                </h3>
+                <div class="card-tools">
+                    <a href="@Url.Action("ExportReport", "Admin", new { reportType = reportType, startDate = startDate, endDate = endDate })" 
+                       class="btn btn-success btn-sm">
+                        <i class="fas fa-file-excel"></i> Xuất Excel
+                    </a>
+                </div>
             </div>
-          </div>
-        </section>
-      </div>
+            <div class="card-body">
+                <table id="reportsTable" class="table table-bordered table-striped">
+                    @if (reportType == "revenue")
+                    {
+                        <thead>
+                            <tr>
+                                <th>Mã Vắc xin</th>
+                                <th>Tên Vắc xin</th>
+                                <th>Số lượt tiêm</th>
+                                <th>Tổng doanh thu (VNĐ)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (vaccineRevenue.Any())
+                            {
+                                foreach (var item in vaccineRevenue)
+                                {
+                                    <tr>
+                                        <td>@item.MaVC</td>
+                                        <td>@item.TenVC</td>
+                                        <td>@item.SoLuotTiem</td>
+                                        <td>@string.Format("{0:N0}", item.TongDoanhThu)</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="4" class="text-center">Chưa có dữ liệu doanh thu</td></tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-light font-weight-bold">
+                                <th colspan="2"></th>
+                                <th class="text-right">Tổng cộng:</th>
+                                <th>@string.Format("{0:N0}", ViewBag.TotalRevenue ?? 0)</th>
+                            </tr>
+                        </tfoot>
+                    }
+                    else if (reportType == "inventory")
+                    {
+                        <thead>
+                            <tr>
+                                <th>Mã Vắc xin</th>
+                                <th>Tên Vắc xin</th>
+                                <th>Loại</th>
+                                <th>Số lượng tồn</th>
+                                <th>Giá bán</th>
+                                <th>Giá trị tồn kho</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (inventoryData.Any())
+                            {
+                                foreach (var item in inventoryData)
+                                {
+                                    var badgeClass = item.TrangThai == "Hết hàng" ? "badge-danger" : (item.TrangThai == "Sắp hết" ? "badge-warning" : "badge-success");
+                                    <tr>
+                                        <td>@item.MaVC</td>
+                                        <td>@item.TenVC</td>
+                                        <td>@item.TenLoai</td>
+                                        <td>@item.SoLuongTon</td>
+                                        <td>@string.Format("{0:N0}", item.GiaBan)</td>
+                                        <td>@string.Format("{0:N0}", item.GiaTriTonKho)</td>
+                                        <td><span class="badge @badgeClass">@item.TrangThai</span></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="7" class="text-center">Chưa có dữ liệu tồn kho</td></tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-light font-weight-bold">
+                                <th colspan="5"></th>
+                                <th>@string.Format("{0:N0}", ViewBag.TotalInventoryValue ?? 0)</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    }
+                    else
+                    {
+                        <thead>
+                            <tr>
+                                <th>Mã Vắc xin</th>
+                                <th>Tên Vắc xin</th>
+                                <th>Số lượt tiêm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (vaccinationByVaccine.Any())
+                            {
+                                foreach (var item in vaccinationByVaccine)
+                                {
+                                    <tr>
+                                        <td>@item.MaVC</td>
+                                        <td>@item.TenVC</td>
+                                        <td>@item.SoLuotTiem</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="3" class="text-center">Chưa có dữ liệu lượt tiêm</td></tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-light font-weight-bold">
+                                <th colspan="2" class="text-right">Tổng cộng:</th>
+                                <th>@(ViewBag.TotalVaccinations ?? 0)</th>
+                            </tr>
+                        </tfoot>
+                    }
+                </table>
+            </div>
+        </div>
+    
+    @if (reportType == "inventory")
+        {
+            <!-- Bảng thống kê theo loại vaccine -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Thống kê tồn kho theo loại vaccine</h3>
+                </div>
+                <div class="card-body">
+                    <table id="categoryTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Loại vaccine</th>
+                                <th>Số loại</th>
+                                <th>Tổng tồn kho</th>
+                                <th>Giá trị tồn kho</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (inventoryByCategory.Any())
+                            {
+                                foreach (var item in inventoryByCategory)
+                                {
+                                    <tr>
+                                        <td>@item.TenLoai</td>
+                                        <td>@item.SoLuong</td>
+                                        <td>@item.TongTonKho</td>
+                                        <td>@string.Format("{0:N0}", item.GiaTriTonKho)</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
 
+        @if (reportType == "vaccination")
+        {
+            <!-- Bảng trạng thái lịch tiêm -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Thống kê trạng thái lịch tiêm</h3>
+                </div>
+                <div class="card-body">
+                    <table id="statusTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <th>Số lượng</th>
+                                <th>Tỷ lệ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var totalAppointmentsSum = appointmentStatus.Any() ? appointmentStatus.Sum(s => s.SoLuong) : 0;
+                            }
+                            @if (appointmentStatus.Any())
+                            {
+                                foreach (var item in appointmentStatus)
+                                {
+                                    var percentage = totalAppointmentsSum > 0 ? ((double)item.SoLuong / totalAppointmentsSum * 100) : 0;
+                                    var badgeClass = item.TrangThai == "Đã tiêm" ? "badge-success" : 
+                                                    (item.TrangThai == "Đã hủy" ? "badge-danger" : "badge-warning");
+                                    <tr>
+                                        <td><span class="badge @badgeClass">@item.TrangThai</span></td>
+                                        <td>@item.SoLuong</td>
+                                        <td>@string.Format("{0:F1}%", percentage)</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</section>
 
 @section scripts {
     <script>
-        // Dữ liệu xu hướng tiêm chủng
-        var trendsData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.AppointmentTrends ?? new List<object>()));
-        console.log('Trends Data:', trendsData);
+        // Dữ liệu từ server
+        var reportType = '@reportType';
+        var vaccineRevenue = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(vaccineRevenue.ToList()));
+        var revenueByMonth = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(revenueByMonth.ToList()));
+        var inventoryData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(inventoryData.ToList()));
+        var inventoryByCategory = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(inventoryByCategory.ToList()));
+        var vaccinationByVaccine = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(vaccinationByVaccine.ToList()));
+        var vaccinationByMonth = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(vaccinationByMonth.ToList()));
+        var appointmentStatus = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(appointmentStatus.ToList()));
+        var appointmentTrends = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(appointmentTrends.ToList()));
 
-        // Tạo nhãn và dữ liệu cho biểu đồ xu hướng
-        var labels = [];
-        var data = [];
-        
-        // Tạo mảng 6 tháng gần nhất
-        var currentDate = new Date();
-        var months = [];
-        for (var i = 5; i >= 0; i--) {
-            var d = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
-            months.push({
-                year: d.getFullYear(),
-                month: d.getMonth() + 1,
-                label: 'Tháng ' + (d.getMonth() + 1) + '/' + d.getFullYear()
-            });
-        }
-        
-        // Map dữ liệu từ server với 6 tháng
-        months.forEach(function(m) {
-            labels.push(m.label);
-            var found = trendsData.find(function(r) {
-                return r.Year === m.year && r.Month === m.month;
-            });
-            data.push(found ? found.SoLuotTiem : 0);
-        });
-        
-        // Vẽ biểu đồ xu hướng
-        var ctx = document.getElementById('trendsChart');
-        if (ctx) {
-            var trendsChart = new Chart(ctx.getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Số lượt tiêm',
-                        data: data,
-                        borderColor: 'rgb(54, 162, 235)',
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return 'Số lượt tiêm: ' + context.parsed.y;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
-                            }
-                        }
-                    }
-                }
-            });
-        }
+        // Màu sắc cho biểu đồ
+        var chartColors = [
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(255, 206, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(153, 102, 255, 0.8)',
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(199, 199, 199, 0.8)',
+            'rgba(83, 102, 255, 0.8)',
+            'rgba(255, 99, 255, 0.8)',
+            'rgba(99, 255, 132, 0.8)'
+        ];
 
-        // DataTable
         $(document).ready(function() {
+            // DataTable
             $('#reportsTable').DataTable({
                 "paging": true,
                 "lengthChange": true,
@@ -237,46 +502,197 @@
                     "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ mục",
                     "infoEmpty": "Hiển thị 0 đến 0 trong tổng số 0 mục",
                     "infoFiltered": "(lọc từ _MAX_ mục)",
-                    "infoPostFix": "",
-                    "thousands": ",",
                     "lengthMenu": "Hiển thị _MENU_ mục",
                     "loadingRecords": "Đang tải...",
                     "processing": "Đang xử lý...",
                     "search": "Tìm kiếm:",
                     "zeroRecords": "Không tìm thấy kết quả",
-                    "paginate": {
-                        "first": "Đầu",
-                        "last": "Cuối",
-                        "next": "Sau",
-                        "previous": "Trước"
-                    },
-                    "aria": {
-                        "sortAscending": ": sắp xếp tăng dần",
-                        "sortDescending": ": sắp xếp giảm dần"
-                    }
+                    "paginate": { "first": "Đầu", "last": "Cuối", "next": "Sau", "previous": "Trước" }
                 }
             });
 
-            // Export Excel
-            $('#exportExcelBtn').click(function() {
-                // Simple CSV export
-                var csv = [];
-                var rows = document.querySelectorAll('#reportsTable tr');
-                
-                for (var i = 0; i < rows.length; i++) {
-                    var row = [], cols = rows[i].querySelectorAll('td, th');
-                    for (var j = 0; j < cols.length; j++) {
-                        row.push(cols[j].innerText);
-                    }
-                    csv.push(row.join(','));
-                }
-                
-                var csvString = csv.join('\n');
-                var link = document.createElement('a');
-                link.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csvString);
-                link.download = 'BaoCaoDoanhThu_' + new Date().toISOString().split('T')[0] + '.csv';
-                link.click();
-            });
+            // Vẽ biểu đồ chính
+            drawMainChart();
+            // Vẽ biểu đồ tròn
+            drawPieChart();
         });
+
+        function drawMainChart() {
+            var ctx = document.getElementById('mainChart');
+            if (!ctx) return;
+
+            var labels = [];
+            var data = [];
+            var chartType = 'bar';
+            var chartLabel = '';
+
+            if (reportType === 'revenue') {
+                // Biểu đồ doanh thu theo tháng
+                chartType = 'bar';
+                chartLabel = 'Doanh thu (VNĐ)';
+                
+                // Tạo labels cho 6 tháng gần nhất
+                var currentDate = new Date();
+                for (var i = 5; i >= 0; i--) {
+                    var d = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+                    var monthLabel = 'Tháng ' + (d.getMonth() + 1) + '/' + d.getFullYear();
+                    labels.push(monthLabel);
+                    
+                    var found = revenueByMonth.find(function(r) {
+                        return r.Year === d.getFullYear() && r.Month === (d.getMonth() + 1);
+                    });
+                    data.push(found ? found.TongDoanhThu : 0);
+                }
+            } else if (reportType === 'inventory') {
+                // Biểu đồ tồn kho theo loại
+                chartType = 'bar';
+                chartLabel = 'Số lượng tồn kho';
+                
+                inventoryByCategory.forEach(function(item) {
+                    labels.push(item.TenLoai);
+                    data.push(item.TongTonKho);
+                });
+            } else {
+                // Biểu đồ lượt tiêm theo tháng
+                chartType = 'line';
+                chartLabel = 'Số lượt tiêm';
+                
+                var currentDate = new Date();
+                for (var i = 5; i >= 0; i--) {
+                    var d = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+                    var monthLabel = 'Tháng ' + (d.getMonth() + 1) + '/' + d.getFullYear();
+                    labels.push(monthLabel);
+                    
+                    var found = vaccinationByMonth.find(function(r) {
+                        return r.Year === d.getFullYear() && r.Month === (d.getMonth() + 1);
+                    });
+                    data.push(found ? found.SoLuotTiem : 0);
+                }
+            }
+
+            new Chart(ctx.getContext('2d'), {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: chartLabel,
+                        data: data,
+                        backgroundColor: chartType === 'line' ? 'rgba(54, 162, 235, 0.2)' : chartColors,
+                        borderColor: chartType === 'line' ? 'rgb(54, 162, 235)' : chartColors.map(c => c.replace('0.8', '1')),
+                        borderWidth: chartType === 'line' ? 2 : 1,
+                        tension: 0.4,
+                        fill: chartType === 'line'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (reportType === 'revenue') {
+                                        return chartLabel + ': ' + context.parsed.y.toLocaleString('vi-VN') + ' đ';
+                                    }
+                                    return chartLabel + ': ' + context.parsed.y;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (reportType === 'revenue') {
+                                        return value.toLocaleString('vi-VN') + ' đ';
+                                    }
+                                    return value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function drawPieChart() {
+            var ctx = document.getElementById('pieChart');
+            if (!ctx) return;
+
+            var labels = [];
+            var data = [];
+            var chartLabel = '';
+
+            if (reportType === 'revenue') {
+                // Top 5 vaccine doanh thu cao nhất
+                chartLabel = 'Doanh thu';
+                var topVaccines = vaccineRevenue.slice(0, 5);
+                topVaccines.forEach(function(item) {
+                    labels.push(item.TenVC.length > 20 ? item.TenVC.substring(0, 20) + '...' : item.TenVC);
+                    data.push(item.TongDoanhThu);
+                });
+            } else if (reportType === 'inventory') {
+                // Phân bố tồn kho theo trạng thái
+                chartLabel = 'Số loại vaccine';
+                var statusCount = { 'Còn hàng': 0, 'Sắp hết': 0, 'Hết hàng': 0 };
+                inventoryData.forEach(function(item) {
+                    statusCount[item.TrangThai]++;
+                });
+                labels = Object.keys(statusCount);
+                data = Object.values(statusCount);
+            } else {
+                // Trạng thái lịch tiêm
+                chartLabel = 'Số lượng';
+                appointmentStatus.forEach(function(item) {
+                    labels.push(item.TrangThai);
+                    data.push(item.SoLuong);
+                });
+            }
+
+            // Nếu không có dữ liệu
+            if (data.length === 0 || data.every(d => d === 0)) {
+                labels = ['Chưa có dữ liệu'];
+                data = [1];
+            }
+
+            new Chart(ctx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: chartLabel,
+                        data: data,
+                        backgroundColor: chartColors.slice(0, labels.length),
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: { boxWidth: 12, padding: 10 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    var total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    var percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    if (reportType === 'revenue') {
+                                        return context.label + ': ' + context.parsed.toLocaleString('vi-VN') + ' đ (' + percentage + '%)';
+                                    }
+                                    return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
     </script>
 }

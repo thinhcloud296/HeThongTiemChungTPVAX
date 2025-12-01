@@ -217,6 +217,55 @@ namespace TPVAXWebsite.Controllers
             return RedirectToAction("Dashboard", "Account");
         }
 
+        // GET: HoSo/XuatPDFSoTiemChung - Xuất sổ tiêm chủng dạng PDF
+        [HttpGet]
+        public ActionResult XuatPDFSoTiemChung(string maHSTC)
+        {
+            var kh = Session["KH"] as KhachHang;
+            if (kh == null)
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập để truy cập trang này.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Kiểm tra quyền truy cập hồ sơ
+            var lienKet = _context.LienKetHoSos
+                .FirstOrDefault(lk => lk.MaKH == kh.MaKH && lk.MaHSTC == maHSTC);
+
+            if (lienKet == null)
+            {
+                TempData["ErrorMessage"] = "Bạn không có quyền truy cập hồ sơ này.";
+                return RedirectToAction("Dashboard", "Account");
+            }
+
+            var hoSo = _context.HoSoTiemChungs.Find(maHSTC);
+            if (hoSo == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy hồ sơ tiêm chủng.";
+                return RedirectToAction("Dashboard", "Account");
+            }
+
+            // Lấy lịch sử tiêm chủng
+            var lichTiems = _context.LichTiems
+                .Where(lt => lt.MaHSTC == maHSTC && lt.TrangThai == "Đã tiêm")
+                .OrderByDescending(lt => lt.NgayTiemThucTe)
+                .ToList();
+
+            foreach (var lt in lichTiems)
+            {
+                if (!string.IsNullOrEmpty(lt.MaVC))
+                {
+                    lt.Vaccine = _context.Vaccines.Find(lt.MaVC);
+                }
+            }
+
+            ViewBag.HoSo = hoSo;
+            ViewBag.LichTiems = lichTiems;
+            ViewBag.VaiTro = lienKet.VaiTro;
+
+            return View("XuatPDFSoTiemChung");
+        }
+
         // POST: HoSo/HuyLienKet - Hủy liên kết hồ sơ (không xóa hồ sơ)
         [HttpPost]
         [ValidateAntiForgeryToken]

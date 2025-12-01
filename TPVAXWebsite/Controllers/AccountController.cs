@@ -627,11 +627,63 @@ namespace TPVAXWebsite.Controllers
                 return RedirectToAction("Dashboard");
             }
 
-            hoaDon.ChiTietHoaDon = _context.ChiTietHoaDons
+            var chiTietList = _context.ChiTietHoaDons
                 .Where(ct => ct.MaHD == maHD)
                 .ToList();
 
-            return View(hoaDon);
+            // Lấy thông tin khuyến mãi nếu có
+            string tenKM = null;
+            if (!string.IsNullOrEmpty(hoaDon.MaKM))
+            {
+                var km = _context.KhuyenMais.Find(hoaDon.MaKM);
+                tenKM = km?.TenKM;
+            }
+
+            // Tạo ViewModel
+            var viewModel = new Models.ViewModels.HoaDonViewModel
+            {
+                MaHD = hoaDon.MaHD,
+                NgayLap = hoaDon.NgayLap,
+                TongTien = hoaDon.TongTien,
+                TrangThai = hoaDon.TrangThai == true ? "Đã thanh toán" : "Chưa thanh toán",
+                MaKH = hoaDon.MaKH,
+                TenKH = kh.HoTen,
+                MaKM = hoaDon.MaKM,
+                TenKM = tenKM,
+                ChiTietHoaDon = chiTietList.Select(ct => {
+                    // Lấy thông tin sản phẩm
+                    string tenSP = "";
+                    string hinhAnh = "";
+                    
+                    if (ct.LoaiSanPham == "VACCINE")
+                    {
+                        var vaccine = _context.Vaccines.Find(ct.MaSanPham);
+                        tenSP = vaccine?.TenVC ?? "Không rõ";
+                        hinhAnh = vaccine?.HinhAnh;
+                    }
+                    else
+                    {
+                        var goi = _context.GoiVaccines.Find(ct.MaSanPham);
+                        tenSP = goi?.TenGoi ?? "Không rõ";
+                        hinhAnh = goi?.HinhAnh;
+                    }
+
+                    return new Models.ViewModels.ChiTietHoaDonViewModel
+                    {
+                        MaCTHD = ct.MaCTHD,
+                        MaSanPham = ct.MaSanPham,
+                        TenSanPham = tenSP,
+                        LoaiSanPham = ct.LoaiSanPham,
+                        SoLuong = ct.SoLuong,
+                        DonGia = ct.DonGia,
+                        ThanhTien = ct.DonGia * ct.SoLuong,
+                        MaHD = ct.MaHD,
+                        HinhAnh = hinhAnh
+                    };
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
 
         protected override void Dispose(bool disposing)
