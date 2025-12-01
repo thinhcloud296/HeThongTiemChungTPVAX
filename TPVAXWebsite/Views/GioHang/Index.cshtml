@@ -424,10 +424,13 @@
 </main>
 
 @section scripts {
+@Html.AntiForgeryToken()
 <script>
     // Cart functionality from cart_backup.html
     (function() {
         'use strict';
+        
+        var token = $('input[name="__RequestVerificationToken"]').val();
 
         // Quantity controls - Decrease
         document.querySelectorAll('.qty-minus').forEach(btn => {
@@ -483,6 +486,7 @@
                         $.ajax({
                             url: '@Url.Action("XoaToanBo", "GioHang")',
                             type: 'POST',
+                            data: { __RequestVerificationToken: token },
                             success: function(data) {
                                 if (data.success) {
                                     Swal.fire({
@@ -512,7 +516,7 @@
             $.ajax({
                 url: '@Url.Action("CapNhatSoLuong", "GioHang")',
                 type: 'POST',
-                data: { MaGH: maGH, SoLuong: soLuong },
+                data: { __RequestVerificationToken: token, MaGH: maGH, SoLuong: soLuong },
                 success: function(data) {
                     if (data.success) {
                         // Reload trang để cập nhật tổng tiền
@@ -533,7 +537,7 @@
             $.ajax({
                 url: '@Url.Action("XoaKhoiGio", "GioHang")',
                 type: 'POST',
-                data: { MaGH: maGH },
+                data: { __RequestVerificationToken: token, MaGH: maGH },
                 success: function(data) {
                     if (data.success) {
                         Swal.fire({

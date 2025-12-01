@@ -288,12 +288,15 @@
 </style>
 
 @section scripts {
+    @Html.AntiForgeryToken()
     <script>
         function addToCartPackage(packageId) {
+            var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
                 url: '@Url.Action("ThemVaoGio", "GioHang")',
                 type: 'POST',
                 data: { 
+                    __RequestVerificationToken: token,
                     MaSanPham: packageId, 
                     LoaiSanPham: 'GOIVACCINE', 
                     SoLuong: 1 
