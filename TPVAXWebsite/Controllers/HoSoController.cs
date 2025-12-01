@@ -72,7 +72,7 @@ namespace TPVAXWebsite.Controllers
                     CCCD = "N/A";
                 }
 
-                // Tạo đối tượng HoSoTiemChung
+                // Luôn tạo hồ sơ mới khi thêm người thân (không kiểm tra trùng CCCD)
                 var hoSoMoi = new HoSoTiemChung
                 {
                     MaHSTC = GenerateMaHSTC(),
@@ -87,6 +87,7 @@ namespace TPVAXWebsite.Controllers
                 _context.HoSoTiemChungs.Add(hoSoMoi);
                 _context.SaveChanges();
 
+                // Tạo liên kết
                 var lienKet = new LienKetHoSo
                 {
                     MaLK = GenerateMaLK(),
@@ -216,6 +217,51 @@ namespace TPVAXWebsite.Controllers
             return RedirectToAction("Dashboard", "Account");
         }
 
+        // POST: HoSo/HuyLienKet - Hủy liên kết hồ sơ (không xóa hồ sơ)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult HuyLienKet(string MaHSTC)
+        {
+            try
+            {
+                var kh = Session["KH"] as KhachHang;
+                if (kh == null)
+                {
+                    return Json(new { success = false, message = "Vui lòng đăng nhập." });
+                }
 
+                var lienKet = _context.LienKetHoSos
+                    .FirstOrDefault(lk => lk.MaKH == kh.MaKH && lk.MaHSTC == MaHSTC);
+
+                if (lienKet == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy liên kết này." });
+                }
+
+                // Không cho phép hủy liên kết với vai trò "Bản thân"
+                if (lienKet.VaiTro == "Bản thân")
+                {
+                    return Json(new { success = false, message = "Không thể hủy liên kết với hồ sơ của chính bạn." });
+                }
+
+                _context.LienKetHoSos.Remove(lienKet);
+                _context.SaveChanges();
+
+                return Json(new { success = true, message = "Đã hủy liên kết thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi: " + ex.Message });
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

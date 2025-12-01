@@ -135,6 +135,7 @@ namespace TPVAXWebsite.Controllers
 
         // POST: HoaDon/ApDungKhuyenMai
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult ApDungKhuyenMai(string MaKM)
         {
             try
@@ -231,6 +232,7 @@ namespace TPVAXWebsite.Controllers
         // Hỗ trợ thanh toán cho nhiều người (hồ sơ) và tạo nhiều lịch tiêm theo SoMuiToiDa
         // Mỗi người tiêm có ngày giờ hẹn riêng trong DanhSachNguoiTiem
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult XacNhanThanhToan(string MaKM, string DanhSachNguoiTiem)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -483,22 +485,43 @@ namespace TPVAXWebsite.Controllers
                                 maHSTC = GetOrCreateDefaultHoSo(kh);
                             }
 
+                            // VALIDATION: Kiểm tra MaHSTC tồn tại trong database
+                            var hoSoTonTai = _context.HoSoTiemChungs.Find(maHSTC);
+                            if (hoSoTonTai == null)
+                            {
+                                throw new Exception($"Hồ sơ tiêm chủng {maHSTC} không tồn tại. Vui lòng chọn lại người tiêm.");
+                            }
+
                             // Parse ngày giờ hẹn riêng cho người này
-                            DateTime ngayHenMui1 = DateTime.Now.AddDays(7); // Mặc định
+                            DateTime ngayHenMui1 = DateTime.Now.AddDays(1); // Mặc định: ngày mai
                             if (!string.IsNullOrEmpty(nguoiTiem.NgayHenTiem))
                             {
-                                DateTime.TryParse(nguoiTiem.NgayHenTiem, out ngayHenMui1);
+                                if (DateTime.TryParse(nguoiTiem.NgayHenTiem, out DateTime parsedDate))
+                                {
+                                    ngayHenMui1 = parsedDate;
+                                }
+                                
                                 // Thêm giờ nếu có
                                 if (!string.IsNullOrEmpty(nguoiTiem.GioHenTiem))
                                 {
                                     var gioParts = nguoiTiem.GioHenTiem.Split(':');
-                                    if (gioParts.Length >= 2)
+                                    if (gioParts.Length >= 2 && int.TryParse(gioParts[0], out int gio) && int.TryParse(gioParts[1], out int phut))
                                     {
-                                        int gio = int.Parse(gioParts[0]);
-                                        int phut = int.Parse(gioParts[1]);
                                         ngayHenMui1 = new DateTime(ngayHenMui1.Year, ngayHenMui1.Month, ngayHenMui1.Day, gio, phut, 0);
                                     }
                                 }
+                            }
+
+                            // VALIDATION: Kiểm tra ngày hẹn không được trong quá khứ
+                            if (ngayHenMui1.Date < DateTime.Now.Date)
+                            {
+                                throw new Exception("Ngày hẹn tiêm không được là ngày trong quá khứ.");
+                            }
+
+                            // VALIDATION: Kiểm tra ngày hẹn không quá xa (tối đa 1 năm)
+                            if (ngayHenMui1.Date > DateTime.Now.AddYears(1).Date)
+                            {
+                                throw new Exception("Ngày hẹn tiêm không được quá 1 năm kể từ hôm nay.");
                             }
 
                             // Xử lý theo loại sản phẩm

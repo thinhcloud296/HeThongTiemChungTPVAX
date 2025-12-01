@@ -202,6 +202,7 @@ namespace TPVAXWebsite.Controllers
 
         // Đổi lịch (cập nhật ngày hẹn)
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DoiLichNgay(string MaLT, DateTime NgayHenTiem)
         {
             try
@@ -228,9 +229,15 @@ namespace TPVAXWebsite.Controllers
                 }
 
                 // Kiểm tra ngày hẹn mới phải trong tương lai
-                if (NgayHenTiem < DateTime.Now)
+                if (NgayHenTiem.Date < DateTime.Now.Date)
                 {
-                    return Json(new { success = false, message = "Ngày hẹn mới phải sau thời điểm hiện tại." });
+                    return Json(new { success = false, message = "Ngày hẹn mới không được là ngày trong quá khứ." });
+                }
+
+                // Kiểm tra ngày hẹn không quá xa (tối đa 1 năm)
+                if (NgayHenTiem.Date > DateTime.Now.AddYears(1).Date)
+                {
+                    return Json(new { success = false, message = "Ngày hẹn mới không được quá 1 năm kể từ hôm nay." });
                 }
 
                 // Kiểm tra trạng thái có thể đổi
@@ -252,6 +259,7 @@ namespace TPVAXWebsite.Controllers
 
         // Hủy lịch (chỉ đổi trạng thái, không xóa)
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult HuyLich(string id)
         {
             try

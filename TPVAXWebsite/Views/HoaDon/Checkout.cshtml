@@ -716,6 +716,8 @@
     </div>
 </div>
 
+@Html.AntiForgeryToken()
+
 @section scripts {
 <script>
     let currentStep = 1;
@@ -914,12 +916,15 @@
             });
         });
 
+        var antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
+        
         $.ajax({
             url: '@Url.Action("XacNhanThanhToan", "HoaDon")',
             type: 'POST',
             data: {
                 MaKM: '@(Model?.MaKMApDung ?? "")',
-                DanhSachNguoiTiem: JSON.stringify(danhSachNguoiTiem)
+                DanhSachNguoiTiem: JSON.stringify(danhSachNguoiTiem),
+                __RequestVerificationToken: antiForgeryToken
             },
             success: function (response) {
                 if (response.success) {

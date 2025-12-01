@@ -37,6 +37,7 @@ namespace TPVAXWebsite.Controllers
 
         // POST: GioHang/ThemVaoGio
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult ThemVaoGio(string MaSanPham, string LoaiSanPham, int SoLuong = 1)
         {
             try
@@ -142,6 +143,7 @@ namespace TPVAXWebsite.Controllers
 
         // POST: GioHang/CapNhatSoLuong
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult CapNhatSoLuong(int MaGH, int SoLuong)
         {
             try
@@ -171,6 +173,30 @@ namespace TPVAXWebsite.Controllers
                             success = false,
                             message = $"Chỉ còn {vaccine.SoLuong} liều vaccine."
                         });
+                    }
+                }
+                // Kiểm tra tồn kho nếu là gói vaccine
+                else if (item.LoaiSanPham == "GOIVACCINE")
+                {
+                    var chiTietGoi = _context.ChiTietGoiVaccines
+                        .Where(ct => ct.MaGoi == item.MaSanPham)
+                        .ToList();
+
+                    foreach (var ctGoi in chiTietGoi)
+                    {
+                        var vaccineInGoi = _context.Vaccines.Find(ctGoi.MaVC);
+                        if (vaccineInGoi != null)
+                        {
+                            int soLuongCan = (ctGoi.SoMui ?? 1) * SoLuong;
+                            if (vaccineInGoi.SoLuong < soLuongCan)
+                            {
+                                return Json(new
+                                {
+                                    success = false,
+                                    message = $"Vaccine {vaccineInGoi.TenVC} trong gói không đủ số lượng. Cần {soLuongCan}, còn {vaccineInGoi.SoLuong}."
+                                });
+                            }
+                        }
                     }
                 }
 
@@ -204,6 +230,7 @@ namespace TPVAXWebsite.Controllers
 
         // POST: GioHang/XoaKhoiGio
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult XoaKhoiGio(int MaGH)
         {
             try
@@ -258,6 +285,7 @@ namespace TPVAXWebsite.Controllers
 
         // POST: GioHang/XoaToanBo
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult XoaToanBo()
         {
             try
