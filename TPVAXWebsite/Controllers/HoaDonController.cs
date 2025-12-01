@@ -304,6 +304,31 @@ namespace TPVAXWebsite.Controllers
                             }
                             donGia = goi.GiaGoi;
                             tenSanPham = goi.TenGoi;
+
+                            // FIX: Kiểm tra và trừ tồn kho các vaccine trong gói
+                            var chiTietGoi = _context.ChiTietGoiVaccines
+                                .Where(ct => ct.MaGoi == item.MaSanPham)
+                                .ToList();
+
+                            foreach (var ctGoi in chiTietGoi)
+                            {
+                                var vaccineInGoi = _context.Vaccines.Find(ctGoi.MaVC);
+                                if (vaccineInGoi == null)
+                                {
+                                    throw new Exception($"Vaccine {ctGoi.MaVC} trong gói {goi.TenGoi} không tồn tại.");
+                                }
+
+                                // Tính số lượng cần: số mũi trong gói * số lượng gói đặt
+                                int soLuongCan = (ctGoi.SoMui ?? 1) * item.SoLuong;
+                                
+                                if (vaccineInGoi.SoLuong < soLuongCan)
+                                {
+                                    throw new Exception($"Vaccine {vaccineInGoi.TenVC} trong gói {goi.TenGoi} không đủ số lượng. Cần {soLuongCan}, còn {vaccineInGoi.SoLuong}.");
+                                }
+
+                                // Trừ tồn kho vaccine trong gói
+                                vaccineInGoi.SoLuong -= soLuongCan;
+                            }
                         }
 
                         decimal thanhTien = donGia * item.SoLuong;
@@ -402,40 +427,23 @@ namespace TPVAXWebsite.Controllers
                     _context.HoaDons.Add(hoaDon);
                     _context.SaveChanges();
 
-                    // Thêm chi tiết hóa đơn
-                    // Lấy số thứ tự tiếp theo cho MaCTHD
-                    var lastCTHD = _context.ChiTietHoaDons
-                        .OrderByDescending(ct => ct.MaCTHD)
-                        .FirstOrDefault();
-                    
-                    int nextNumber = 1;
-                    if (lastCTHD != null)
-                    {
-                        string numberPart = lastCTHD.MaCTHD.Substring(4);
-                        nextNumber = int.Parse(numberPart) + 1;
-                    }
-
+                    // Thêm chi tiết hóa đơn với KeyGenerator thread-safe
                     foreach (var chiTiet in chiTietList)
                     {
-                        chiTiet.MaCTHD = "CTHD" + nextNumber.ToString("D6");
+                        string maCTHD = TPVAXWebsite.Common.KeyGenerator.GenMaCTHD();
+                        int cthdAttempt = 0;
+                        while (_context.ChiTietHoaDons.Any(ct => ct.MaCTHD == maCTHD) && cthdAttempt < 10)
+                        {
+                            maCTHD = TPVAXWebsite.Common.KeyGenerator.GenMaCTHD();
+                            cthdAttempt++;
+                        }
+                        
+                        chiTiet.MaCTHD = maCTHD;
                         chiTiet.MaHD = maHD;
                         chiTiet.HoaDon = null; // Không set navigation property
                         _context.ChiTietHoaDons.Add(chiTiet);
-                        nextNumber++;
                     }
                     _context.SaveChanges();
-
-                    // Lấy số thứ tự tiếp theo cho MaLT
-                    var lastLichTiem = _context.LichTiems
-                        .OrderByDescending(lt => lt.MaLT)
-                        .FirstOrDefault();
-
-                    int lichTiemNumber = 1;
-                    if (lastLichTiem != null)
-                    {
-                        string numberPart = lastLichTiem.MaLT.Substring(2);
-                        lichTiemNumber = int.Parse(numberPart) + 1;
-                    }
 
                     // Tạo lịch tiêm cho từng sản phẩm trong giỏ hàng
                     // Hỗ trợ nhiều người tiêm cho cùng 1 sản phẩm (khi số lượng > 1)
@@ -519,9 +527,18 @@ namespace TPVAXWebsite.Controllers
                                             ngayHenMui = ngayHenMui1.AddMonths((mui - 1) * soThangCho);
                                         }
 
+                                        // Tạo mã lịch tiêm thread-safe
+                                        string maLT = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                        int ltAttempt = 0;
+                                        while (_context.LichTiems.Any(lt => lt.MaLT == maLT) && ltAttempt < 10)
+                                        {
+                                            maLT = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                            ltAttempt++;
+                                        }
+
                                         var lichTiem = new LichTiem
                                         {
-                                            MaLT = "LT" + lichTiemNumber.ToString("D8"),
+                                            MaLT = maLT,
                                             NgayHenTiem = ngayHenMui,
                                             NgayTiemThucTe = null,
                                             SoMui = mui,
@@ -535,7 +552,6 @@ namespace TPVAXWebsite.Controllers
                                             NhanVien = null
                                         };
                                         _context.LichTiems.Add(lichTiem);
-                                        lichTiemNumber++;
                                     }
                                 }
                             }
@@ -567,9 +583,18 @@ namespace TPVAXWebsite.Controllers
                                             ngayHenMui = ngayHenMui1.AddMonths(muiIndex * soThangCho);
                                         }
 
+                                        // Tạo mã lịch tiêm thread-safe cho gói vaccine
+                                        string maLTGoi = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                        int ltGoiAttempt = 0;
+                                        while (_context.LichTiems.Any(lt => lt.MaLT == maLTGoi) && ltGoiAttempt < 10)
+                                        {
+                                            maLTGoi = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                            ltGoiAttempt++;
+                                        }
+
                                         var lichTiem = new LichTiem
                                         {
-                                            MaLT = "LT" + lichTiemNumber.ToString("D8"),
+                                            MaLT = maLTGoi,
                                             NgayHenTiem = ngayHenMui,
                                             NgayTiemThucTe = null,
                                             SoMui = ctGoi.SoMui ?? (muiIndex + 1),
@@ -583,7 +608,6 @@ namespace TPVAXWebsite.Controllers
                                             NhanVien = null
                                         };
                                         _context.LichTiems.Add(lichTiem);
-                                        lichTiemNumber++;
                                         muiIndex++;
                                     }
                                 }
@@ -761,7 +785,7 @@ namespace TPVAXWebsite.Controllers
         }
 
         /// <summary>
-        /// Lấy hoặc tạo hồ sơ tiêm chủng mặc định cho khách hàng
+        /// Lấy hoặc tạo hồ sơ tiêm chủng mặc định cho khách hàng (thread-safe)
         /// </summary>
         private string GetOrCreateDefaultHoSo(KhachHang kh)
         {
@@ -774,21 +798,21 @@ namespace TPVAXWebsite.Controllers
                 return lienKet.MaHSTC;
             }
 
-            // Nếu chưa có hồ sơ tiêm chủng, tự động tạo
-            var lastHSTC = _context.HoSoTiemChungs
-                .OrderByDescending(hs => hs.MaHSTC)
-                .FirstOrDefault();
-
-            int hstcNumber = 1;
-            if (lastHSTC != null)
+            // Nếu chưa có hồ sơ tiêm chủng, tự động tạo với KeyGenerator thread-safe
+            string maHSTC = TPVAXWebsite.Common.KeyGenerator.GenMaHSTC();
+            
+            // Kiểm tra trùng và retry nếu cần
+            int maxAttempts = 10;
+            int attempt = 0;
+            while (_context.HoSoTiemChungs.Any(h => h.MaHSTC == maHSTC) && attempt < maxAttempts)
             {
-                string numberPart = lastHSTC.MaHSTC.Substring(4);
-                hstcNumber = int.Parse(numberPart) + 1;
+                maHSTC = TPVAXWebsite.Common.KeyGenerator.GenMaHSTC();
+                attempt++;
             }
 
             var hoSoTiemChung = new HoSoTiemChung
             {
-                MaHSTC = "HSTC" + hstcNumber.ToString("D6"),
+                MaHSTC = maHSTC,
                 HoTen = kh.HoTen,
                 GioiTinh = kh.GioiTinh,
                 NgaySinh = kh.NgaySinh ?? DateTime.Now,
@@ -801,24 +825,18 @@ namespace TPVAXWebsite.Controllers
             _context.HoSoTiemChungs.Add(hoSoTiemChung);
             _context.SaveChanges();
 
-            // Tạo liên kết
-            var lastLienKet = _context.LienKetHoSos
-                .OrderByDescending(lk => lk.MaLK)
-                .FirstOrDefault();
-
-            int lienKetNumber = 1;
-            if (lastLienKet != null)
+            // Tạo liên kết với KeyGenerator thread-safe
+            string maLK = TPVAXWebsite.Common.KeyGenerator.GenMaLK();
+            attempt = 0;
+            while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK) && attempt < maxAttempts)
             {
-                string numberPart = lastLienKet.MaLK.Substring(4);
-                if (int.TryParse(numberPart, out int num))
-                {
-                    lienKetNumber = num + 1;
-                }
+                maLK = TPVAXWebsite.Common.KeyGenerator.GenMaLK();
+                attempt++;
             }
 
             var newLienKet = new LienKetHoSo
             {
-                MaLK = "LKHS" + lienKetNumber.ToString("D6"),
+                MaLK = maLK,
                 VaiTro = "Bản thân",
                 NgayLienKet = DateTime.Now,
                 MaKH = kh.MaKH,
@@ -832,42 +850,48 @@ namespace TPVAXWebsite.Controllers
             return hoSoTiemChung.MaHSTC;
         }
 
-        // Helper: Tạo mã hóa đơn tự động
+        // Helper: Tạo mã hóa đơn tự động (thread-safe)
         private string TaoMaHoaDon()
         {
-            var lastHD = _context.HoaDons
-                .OrderByDescending(hd => hd.MaHD)
-                .FirstOrDefault();
-
-            if (lastHD == null)
+            string maHD;
+            int maxAttempts = 10;
+            int attempt = 0;
+            
+            do
             {
-                return "HD00000001";
+                maHD = TPVAXWebsite.Common.KeyGenerator.GenMaHD();
+                attempt++;
+            } while (_context.HoaDons.Any(hd => hd.MaHD == maHD) && attempt < maxAttempts);
+            
+            if (attempt >= maxAttempts)
+            {
+                // Fallback: dùng GUID nếu vẫn trùng
+                maHD = "HD" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
             }
-
-            string prefix = "HD";
-            string numberPart = lastHD.MaHD.Substring(2);
-            int nextNumber = int.Parse(numberPart) + 1;
-
-            return prefix + nextNumber.ToString("D8");
+            
+            return maHD;
         }
 
-        // Helper: Tạo mã chi tiết hóa đơn tự động
+        // Helper: Tạo mã chi tiết hóa đơn tự động (thread-safe)
         private string TaoMaChiTietHoaDon()
         {
-            var lastCTHD = _context.ChiTietHoaDons
-                .OrderByDescending(ct => ct.MaCTHD)
-                .FirstOrDefault();
-
-            if (lastCTHD == null)
+            string maCTHD;
+            int maxAttempts = 10;
+            int attempt = 0;
+            
+            do
             {
-                return "CTHD000001";
+                maCTHD = TPVAXWebsite.Common.KeyGenerator.GenMaCTHD();
+                attempt++;
+            } while (_context.ChiTietHoaDons.Any(ct => ct.MaCTHD == maCTHD) && attempt < maxAttempts);
+            
+            if (attempt >= maxAttempts)
+            {
+                // Fallback: dùng GUID nếu vẫn trùng
+                maCTHD = "CTHD" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
             }
-
-            string prefix = "CTHD";
-            string numberPart = lastCTHD.MaCTHD.Substring(4);
-            int nextNumber = int.Parse(numberPart) + 1;
-
-            return prefix + nextNumber.ToString("D6");
+            
+            return maCTHD;
         }
 
         protected override void Dispose(bool disposing)

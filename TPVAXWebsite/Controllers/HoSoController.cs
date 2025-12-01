@@ -113,16 +113,46 @@ namespace TPVAXWebsite.Controllers
 
         private string GenerateMaHSTC()
         {
-            // Đếm số lượng record hiện tại + 1 (nhanh hơn OrderByDescending)
-            int count = _context.HoSoTiemChungs.Count();
-            return "HSTC" + (count + 1).ToString("D6");
+            // Sử dụng KeyGenerator thread-safe để tránh race condition
+            string maHSTC;
+            int maxAttempts = 10;
+            int attempt = 0;
+            
+            do
+            {
+                maHSTC = TPVAXWebsite.Common.KeyGenerator.GenMaHSTC();
+                attempt++;
+            } while (_context.HoSoTiemChungs.Any(h => h.MaHSTC == maHSTC) && attempt < maxAttempts);
+            
+            if (attempt >= maxAttempts)
+            {
+                // Fallback: dùng GUID nếu vẫn trùng
+                maHSTC = "HSTC" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+            }
+            
+            return maHSTC;
         }
 
         private string GenerateMaLK()
         {
-            // Đếm số lượng record hiện tại + 1 (nhanh hơn OrderByDescending)
-            int count = _context.LienKetHoSos.Count();
-            return "LKHS" + (count + 1).ToString("D6");
+            // Sử dụng KeyGenerator thread-safe để tránh race condition
+            string maLK;
+            int maxAttempts = 10;
+            int attempt = 0;
+            
+            do
+            {
+                maLK = TPVAXWebsite.Common.KeyGenerator.GenMaLK();
+                attempt++;
+            } while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK) && attempt < maxAttempts);
+            
+            if (attempt >= maxAttempts)
+            {
+                // Fallback: dùng GUID nếu vẫn trùng
+                maLK = "LKHS" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+            }
+            
+            return maLK;
         }
       
         [HttpGet]

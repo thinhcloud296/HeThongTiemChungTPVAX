@@ -67,6 +67,29 @@ namespace TPVAXWebsite.Controllers
                     {
                         return Json(new { success = false, message = "Gói vaccine không tồn tại." });
                     }
+
+                    // FIX: Kiểm tra tồn kho các vaccine trong gói
+                    var chiTietGoi = _context.ChiTietGoiVaccines
+                        .Where(ct => ct.MaGoi == MaSanPham)
+                        .ToList();
+
+                    foreach (var ctGoi in chiTietGoi)
+                    {
+                        var vaccineInGoi = _context.Vaccines.Find(ctGoi.MaVC);
+                        if (vaccineInGoi == null)
+                        {
+                            return Json(new { success = false, message = $"Vaccine trong gói không tồn tại." });
+                        }
+
+                        int soLuongCan = (ctGoi.SoMui ?? 1) * SoLuong;
+                        if (vaccineInGoi.SoLuong < soLuongCan)
+                        {
+                            return Json(new { 
+                                success = false, 
+                                message = $"Vaccine {vaccineInGoi.TenVC} trong gói không đủ số lượng. Cần {soLuongCan}, còn {vaccineInGoi.SoLuong}." 
+                            });
+                        }
+                    }
                 }
                 else
                 {
