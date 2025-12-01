@@ -45,5 +45,8 @@ namespace TPVAXWebsite.Models.ViewModels
         public string MaSanPham { get; set; }   // Mã vaccine/gói
         public string LoaiSanPham { get; set; } // VACCINE hoặc GOIVACCINE
         public string MaHSTC { get; set; }      // Mã hồ sơ tiêm chủng được chọn
+        public int Index { get; set; }          // Thứ tự người tiêm (0, 1, 2...) khi số lượng > 1
+        public string NgayHenTiem { get; set; } // Ngày hẹn tiêm riêng cho người này
+        public string GioHenTiem { get; set; }  // Giờ hẹn tiêm riêng cho người này
     }
 }

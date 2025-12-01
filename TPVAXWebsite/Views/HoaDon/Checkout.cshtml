@@ -340,38 +340,83 @@
                             </div>
                         }
 
-                        <!-- Chọn người tiêm cho từng sản phẩm -->
+                        <!-- Chọn người tiêm và lịch hẹn cho từng sản phẩm -->
                         <div class="info-card">
                             <h6 class="mb-3">
-                                <i class="fas fa-users me-2"></i>Chọn người tiêm cho từng sản phẩm
+                                <i class="fas fa-users me-2"></i>Chọn người tiêm và lịch hẹn
                             </h6>
                             <p class="text-muted small mb-3">
                                 <i class="fas fa-info-circle me-1"></i>
-                                Bạn có thể chọn người tiêm khác nhau cho từng vaccine/gói vaccine (ví dụ: tiêm cho con, người thân...)
+                                Chọn người tiêm và ngày hẹn cho từng liều vaccine. Các mũi tiếp theo sẽ được tự động lên lịch theo phác đồ.
                             </p>
-                            @if (Model != null && Model.GioHang != null && Model.DanhSachHoSo != null && Model.DanhSachHoSo.Any())
+                            @if (Model != null && Model.GioHang != null && Model.GioHang.Any())
                             {
                                 foreach (var item in Model.GioHang)
                                 {
-                                    <div class="border rounded p-3 mb-2 bg-light">
-                                        <div class="row align-items-center">
-                                            <div class="col-md-6">
-                                                <strong>@item.TenSanPham</strong>
-                                                <br />
-                                                <small class="text-muted">@(item.LoaiSanPham == "GOIVACCINE" ? "Gói vaccine" : "Vaccine lẻ")</small>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <select class="form-select nguoi-tiem-select" 
-                                                        data-magh="@item.MaGH" 
-                                                        data-masanpham="@item.MaSanPham" 
-                                                        data-loaisanpham="@item.LoaiSanPham">
-                                                    @foreach (var hoSo in Model.DanhSachHoSo)
-                                                    {
-                                                        <option value="@hoSo.MaHSTC">@hoSo.DisplayText</option>
-                                                    }
-                                                </select>
-                                            </div>
+                                    <div class="border rounded p-3 mb-3 bg-light product-item" data-magh="@item.MaGH">
+                                        <div class="mb-3 pb-2 border-bottom">
+                                            <strong class="text-primary product-name">@item.TenSanPham</strong>
+                                            <span class="badge bg-secondary ms-2">x@(item.SoLuong)</span>
+                                            <br />
+                                            <small class="text-muted">@(item.LoaiSanPham == "GOIVACCINE" ? "Gói vaccine" : "Vaccine lẻ")</small>
                                         </div>
+                                        @for (int i = 0; i < item.SoLuong; i++)
+                                        {
+                                            <div class="border rounded p-2 mb-2 bg-white">
+                                                <div class="fw-bold text-secondary mb-2">
+                                                    <i class="fas fa-user me-1"></i>Liều #@(i + 1)
+                                                </div>
+                                                <div class="row g-2">
+                                                    <div class="col-md-12 mb-2">
+                                                        <label class="form-label small mb-1">Người tiêm:</label>
+                                                        @if (Model.DanhSachHoSo != null && Model.DanhSachHoSo.Any())
+                                                        {
+                                                            <select class="form-select form-select-sm nguoi-tiem-select" 
+                                                                    data-magh="@item.MaGH" 
+                                                                    data-masanpham="@item.MaSanPham" 
+                                                                    data-loaisanpham="@item.LoaiSanPham"
+                                                                    data-index="@i">
+                                                                @foreach (var hoSo in Model.DanhSachHoSo)
+                                                                {
+                                                                    <option value="@hoSo.MaHSTC">@hoSo.DisplayText</option>
+                                                                }
+                                                            </select>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="hidden" class="nguoi-tiem-select" 
+                                                                   data-magh="@item.MaGH" 
+                                                                   data-masanpham="@item.MaSanPham" 
+                                                                   data-loaisanpham="@item.LoaiSanPham"
+                                                                   data-index="@i"
+                                                                   value="" />
+                                                            <span class="text-muted small"><i class="fas fa-info-circle me-1"></i>Hệ thống sẽ tự động tạo hồ sơ</span>
+                                                        }
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label small mb-1">Ngày hẹn: <span class="text-danger">*</span></label>
+                                                        <input type="date" class="form-control form-control-sm ngay-hen-input" 
+                                                               data-magh="@item.MaGH" 
+                                                               data-index="@i" required />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label small mb-1">Giờ hẹn: <span class="text-danger">*</span></label>
+                                                        <select class="form-select form-select-sm gio-hen-select" 
+                                                                data-magh="@item.MaGH" 
+                                                                data-index="@i" required>
+                                                            <option value="">-- Chọn giờ --</option>
+                                                            <option value="08:00">08:00</option>
+                                                            <option value="09:00">09:00</option>
+                                                            <option value="10:00">10:00</option>
+                                                            <option value="13:00">13:00</option>
+                                                            <option value="14:00">14:00</option>
+                                                            <option value="15:00">15:00</option>
+                                                            <option value="16:00">16:00</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
                                 }
                             }
@@ -379,39 +424,9 @@
                             {
                                 <div class="alert alert-warning">
                                     <i class="fas fa-exclamation-triangle me-2"></i>
-                                    Bạn chưa có hồ sơ tiêm chủng nào. Hệ thống sẽ tự động tạo hồ sơ cho bạn.
+                                    Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.
                                 </div>
                             }
-                        </div>
-
-                        <!-- Lịch hẹn tiêm -->
-                        <div class="info-card">
-                            <h6 class="mb-3">
-                                <i class="fas fa-calendar-check me-2"></i>Chọn lịch hẹn tiêm mũi đầu tiên
-                            </h6>
-                            <p class="text-muted small mb-3">
-                                <i class="fas fa-info-circle me-1"></i>
-                                Các mũi tiêm tiếp theo sẽ được tự động lên lịch theo phác đồ của từng vaccine
-                            </p>
-                            <div class="mb-3">
-                                <label class="form-label"><strong>Ngày hẹn tiêm <span class="text-danger">*</span></strong></label>
-                                <input type="date" class="form-control" id="ngayHenTiem" required />
-                                <small class="text-muted">Chọn ngày bạn muốn đến trung tâm tiêm chủng</small>
-                            </div>
-                            <div>
-                                <label class="form-label"><strong>Giờ hẹn tiêm <span class="text-danger">*</span></strong></label>
-                                <select class="form-select" id="gioHenTiem" required>
-                                    <option value="">-- Chọn khung giờ --</option>
-                                    <option value="08:00">08:00 - 09:00</option>
-                                    <option value="09:00">09:00 - 10:00</option>
-                                    <option value="10:00">10:00 - 11:00</option>
-                                    <option value="13:00">13:00 - 14:00</option>
-                                    <option value="14:00">14:00 - 15:00</option>
-                                    <option value="15:00">15:00 - 16:00</option>
-                                    <option value="16:00">16:00 - 17:00</option>
-                                </select>
-                                <small class="text-muted">Vui lòng đến đúng giờ để tránh chờ đợi</small>
-                            </div>
                         </div>
 
                         <button class="btn btn-primary btn-lg w-100" onclick="nextStep()">
@@ -653,28 +668,28 @@
                         foreach (var item in Model.GioHang)
                         {
                             <div class="summary-item">
-                                <span>@item.TenSanPham</span>
-                                <strong>@string.Format("{0:N0}d", item.DonGia)</strong>
+                                <span>@item.TenSanPham <small class="text-muted">x@(item.SoLuong)</small></span>
+                                <strong>@string.Format("{0:N0}đ", item.ThanhTien)</strong>
                             </div>
                         }
 
                         <div class="summary-item">
-                            <span>Tam tinh</span>
-                            <strong>@string.Format("{0:N0}d", Model.TongTienTruocGiam)</strong>
+                            <span>Tạm tính</span>
+                            <strong>@string.Format("{0:N0}đ", Model.TongTienTruocGiam)</strong>
                         </div>
                         if (Model.TienGiam > 0)
                         {
                             <div class="summary-item">
-                                <span class="text-success">Giam gia</span>
-                                <strong class="text-success">-@string.Format("{0:N0}d", Model.TienGiam)</strong>
+                                <span class="text-success">Giảm giá</span>
+                                <strong class="text-success">-@string.Format("{0:N0}đ", Model.TienGiam)</strong>
                             </div>
                         }
 
                         <hr class="my-3" />
 
                         <div class="summary-item summary-total">
-                            <span>Tong cong</span>
-                            <span>@string.Format("{0:N0}d", Model.TongTienSauGiam)</span>
+                            <span>Tổng cộng</span>
+                            <span>@string.Format("{0:N0}đ", Model.TongTienSauGiam)</span>
                         </div>
                     }
 
@@ -741,36 +756,81 @@
     function nextStep() {
         // Validation for each step
         if (currentStep === 1) {
-            const ngayHen = document.getElementById("ngayHenTiem").value;
-            const gioHen = document.getElementById("gioHenTiem").value;
-
-            if (!ngayHen || !gioHen) {
-                alert("Vui long chon ngay va gio hen tiem!");
-                return;
-            }
-
-            // Kiem tra ngay hen phai tu ngay mai tro di
-            const selectedDate = new Date(ngayHen);
+            // Validate tất cả các lịch hẹn
+            var allValid = true;
+            var errorMsg = '';
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
             tomorrow.setHours(0, 0, 0, 0);
 
-            if (selectedDate < tomorrow) {
-                alert("Ngay hen tiem phai tu ngay mai tro di!");
+            document.querySelectorAll('.ngay-hen-input').forEach(function(input) {
+                if (!input.value) {
+                    allValid = false;
+                    errorMsg = 'Vui lòng chọn ngày hẹn tiêm cho tất cả người tiêm!';
+                } else {
+                    const selectedDate = new Date(input.value);
+                    if (selectedDate < tomorrow) {
+                        allValid = false;
+                        errorMsg = 'Ngày hẹn tiêm phải từ ngày mai trở đi!';
+                    }
+                }
+            });
+
+            document.querySelectorAll('.gio-hen-select').forEach(function(select) {
+                if (!select.value) {
+                    allValid = false;
+                    errorMsg = 'Vui lòng chọn giờ hẹn tiêm cho tất cả người tiêm!';
+                }
+            });
+
+            if (!allValid) {
+                alert(errorMsg);
                 return;
             }
 
-            // Luu thong tin de xac nhan sau
-            document.getElementById("confirmNgayHen").textContent = 
-                new Date(ngayHen).toLocaleDateString("vi-VN");
-            document.getElementById("confirmGioHen").textContent = gioHen;
+            // Hiển thị thông tin xác nhận
+            var firstNgayHen = document.querySelector('.ngay-hen-input');
+            var firstGioHen = document.querySelector('.gio-hen-select');
+            if (firstNgayHen && firstNgayHen.value) {
+                document.getElementById("confirmNgayHen").textContent = 
+                    new Date(firstNgayHen.value).toLocaleDateString("vi-VN") + ' (và các ngày khác)';
+            }
+            if (firstGioHen && firstGioHen.value) {
+                document.getElementById("confirmGioHen").textContent = firstGioHen.value + ' (và các giờ khác)';
+            }
 
-            // Hiển thị thông tin người tiêm
+            // Hiển thị thông tin người tiêm (nhóm theo sản phẩm)
             var nguoiTiemHtml = '';
-            document.querySelectorAll('.nguoi-tiem-select').forEach(function(select) {
-                var tenSanPham = select.closest('.border').querySelector('strong').textContent;
-                var tenNguoiTiem = select.options[select.selectedIndex].text;
-                nguoiTiemHtml += '<p class="mb-2"><strong>' + tenSanPham + ':</strong> ' + tenNguoiTiem + '</p>';
+            var currentProduct = '';
+            document.querySelectorAll('.nguoi-tiem-select').forEach(function(el) {
+                var productContainer = el.closest('.product-item');
+                if (!productContainer) return;
+                var tenSanPhamEl = productContainer.querySelector('.product-name');
+                if (!tenSanPhamEl) return;
+                var tenSanPham = tenSanPhamEl.textContent;
+                
+                // Xử lý cả select và hidden input
+                var tenNguoiTiem = '';
+                if (el.tagName === 'SELECT') {
+                    tenNguoiTiem = el.options[el.selectedIndex].text;
+                } else {
+                    tenNguoiTiem = 'Tự động tạo hồ sơ';
+                }
+                
+                var index = parseInt(el.getAttribute('data-index') || '0') + 1;
+                var maGH = el.getAttribute('data-magh');
+                
+                // Lấy ngày giờ hẹn tương ứng
+                var ngayHenInput = document.querySelector('.ngay-hen-input[data-magh="' + maGH + '"][data-index="' + (index-1) + '"]');
+                var gioHenSelect = document.querySelector('.gio-hen-select[data-magh="' + maGH + '"][data-index="' + (index-1) + '"]');
+                var ngayHenStr = ngayHenInput && ngayHenInput.value ? new Date(ngayHenInput.value).toLocaleDateString("vi-VN") : '--';
+                var gioHenStr = gioHenSelect ? gioHenSelect.value : '--';
+                
+                if (currentProduct !== tenSanPham) {
+                    currentProduct = tenSanPham;
+                    nguoiTiemHtml += '<div class="mb-2 mt-2"><strong class="text-primary">' + tenSanPham + ':</strong></div>';
+                }
+                nguoiTiemHtml += '<p class="mb-1 ms-3"><small>Liều #' + index + ':</small> ' + tenNguoiTiem + ' - <em>' + ngayHenStr + ' ' + gioHenStr + '</em></p>';
             });
             if (nguoiTiemHtml) {
                 document.getElementById("confirmNguoiTiem").innerHTML = nguoiTiemHtml;
@@ -833,17 +893,24 @@
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
 
-        const ngayHen = document.getElementById("ngayHenTiem").value;
-        const gioHen = document.getElementById("gioHenTiem").value;
-
-        // Thu thập danh sách người tiêm cho từng sản phẩm
+        // Thu thập danh sách người tiêm và lịch hẹn cho từng sản phẩm
         var danhSachNguoiTiem = [];
         document.querySelectorAll('.nguoi-tiem-select').forEach(function(select) {
+            var maGH = select.getAttribute('data-magh');
+            var index = select.getAttribute('data-index') || '0';
+            
+            // Lấy ngày giờ hẹn tương ứng
+            var ngayHenInput = document.querySelector('.ngay-hen-input[data-magh="' + maGH + '"][data-index="' + index + '"]');
+            var gioHenSelect = document.querySelector('.gio-hen-select[data-magh="' + maGH + '"][data-index="' + index + '"]');
+            
             danhSachNguoiTiem.push({
-                MaGH: parseInt(select.getAttribute('data-magh')),
+                MaGH: parseInt(maGH),
                 MaSanPham: select.getAttribute('data-masanpham'),
                 LoaiSanPham: select.getAttribute('data-loaisanpham'),
-                MaHSTC: select.value
+                MaHSTC: select.value,
+                Index: parseInt(index),
+                NgayHenTiem: ngayHenInput ? ngayHenInput.value : '',
+                GioHenTiem: gioHenSelect ? gioHenSelect.value : ''
             });
         });
 
@@ -852,8 +919,6 @@
             type: 'POST',
             data: {
                 MaKM: '@(Model?.MaKMApDung ?? "")',
-                NgayHenTiem: ngayHen,
-                GioHenTiem: gioHen,
                 DanhSachNguoiTiem: JSON.stringify(danhSachNguoiTiem)
             },
             success: function (response) {
@@ -907,11 +972,13 @@
     // Initialize
     updateProgress();
 
-    // Set ngày hẹn tiêm tối thiểu là ngày mai
+    // Set ngày hẹn tiêm tối thiểu là ngày mai cho tất cả input date
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowStr = tomorrow.toISOString().split('T')[0];
-    document.getElementById("ngayHenTiem").setAttribute("min", tomorrowStr);
+    document.querySelectorAll('.ngay-hen-input').forEach(function(input) {
+        input.setAttribute("min", tomorrowStr);
+    });
 
     console.log("Checkout page loaded successfully");
 </script>

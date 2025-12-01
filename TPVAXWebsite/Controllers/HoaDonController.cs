@@ -229,8 +229,9 @@ namespace TPVAXWebsite.Controllers
 
         // POST: HoaDon/XacNhanThanhToan
         // Hỗ trợ thanh toán cho nhiều người (hồ sơ) và tạo nhiều lịch tiêm theo SoMuiToiDa
+        // Mỗi người tiêm có ngày giờ hẹn riêng trong DanhSachNguoiTiem
         [HttpPost]
-        public JsonResult XacNhanThanhToan(string MaKM, string NgayHenTiem, string GioHenTiem, string DanhSachNguoiTiem)
+        public JsonResult XacNhanThanhToan(string MaKM, string DanhSachNguoiTiem)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -424,24 +425,6 @@ namespace TPVAXWebsite.Controllers
                     }
                     _context.SaveChanges();
 
-                    // Tạo lịch tiêm với ngày giờ đã chọn
-                    DateTime ngayHenMui1 = DateTime.Now.AddDays(7); // Mặc định
-                    if (!string.IsNullOrEmpty(NgayHenTiem))
-                    {
-                        DateTime.TryParse(NgayHenTiem, out ngayHenMui1);
-                        // Thêm giờ nếu có
-                        if (!string.IsNullOrEmpty(GioHenTiem))
-                        {
-                            var gioParts = GioHenTiem.Split(':');
-                            if (gioParts.Length == 2)
-                            {
-                                int gio = int.Parse(gioParts[0]);
-                                int phut = int.Parse(gioParts[1]);
-                                ngayHenMui1 = new DateTime(ngayHenMui1.Year, ngayHenMui1.Month, ngayHenMui1.Day, gio, phut, 0);
-                            }
-                        }
-                    }
-
                     // Lấy số thứ tự tiếp theo cho MaLT
                     var lastLichTiem = _context.LichTiems
                         .OrderByDescending(lt => lt.MaLT)
@@ -455,113 +438,154 @@ namespace TPVAXWebsite.Controllers
                     }
 
                     // Tạo lịch tiêm cho từng sản phẩm trong giỏ hàng
+                    // Hỗ trợ nhiều người tiêm cho cùng 1 sản phẩm (khi số lượng > 1)
                     foreach (var gioHangItem in gioHangItems)
                     {
-                        // Tìm hồ sơ tiêm chủng được chọn cho sản phẩm này
-                        var nguoiTiem = nguoiTiemList.FirstOrDefault(nt => 
-                            nt.MaGH == gioHangItem.MaGH || 
-                            (nt.MaSanPham == gioHangItem.MaSanPham && nt.LoaiSanPham == gioHangItem.LoaiSanPham));
+                        // Lấy danh sách người tiêm cho sản phẩm này (có thể có nhiều người nếu số lượng > 1)
+                        var nguoiTiemChoSanPham = nguoiTiemList
+                            .Where(nt => nt.MaGH == gioHangItem.MaGH || 
+                                   (nt.MaSanPham == gioHangItem.MaSanPham && nt.LoaiSanPham == gioHangItem.LoaiSanPham))
+                            .OrderBy(nt => nt.Index)
+                            .ToList();
 
-                        string maHSTC = nguoiTiem?.MaHSTC;
-
-                        // Nếu không có hồ sơ được chọn, lấy hồ sơ mặc định của khách hàng
-                        if (string.IsNullOrEmpty(maHSTC))
+                        // Nếu không có người tiêm nào được chọn, tạo 1 entry mặc định
+                        if (!nguoiTiemChoSanPham.Any())
                         {
-                            maHSTC = GetOrCreateDefaultHoSo(kh);
-                        }
-
-                        // Xử lý theo loại sản phẩm
-                        if (gioHangItem.LoaiSanPham == "VACCINE")
-                        {
-                            var vaccine = _context.Vaccines.Find(gioHangItem.MaSanPham);
-                            if (vaccine != null)
+                            for (int i = 0; i < gioHangItem.SoLuong; i++)
                             {
-                                // Tạo lịch tiêm cho TẤT CẢ các mũi theo SoMuiToiDa
-                                int soMuiToiDa = vaccine.SoMuiToiDa ?? 1;
-                                int soThangCho = vaccine.SoThangCho ?? 1;
-
-                                // Nếu SoMuiToiDa = 99 (tiêm nhắc hàng năm), chỉ tạo 1 lịch
-                                if (soMuiToiDa >= 99)
+                                nguoiTiemChoSanPham.Add(new NguoiTiemItem
                                 {
-                                    soMuiToiDa = 1;
-                                }
-
-                                for (int mui = 1; mui <= soMuiToiDa; mui++)
-                                {
-                                    // Tính ngày hẹn cho mũi này
-                                    DateTime ngayHenMui = ngayHenMui1;
-                                    if (mui > 1)
-                                    {
-                                        // Mũi 2 trở đi: cộng thêm (mui - 1) * SoThangCho tháng
-                                        ngayHenMui = ngayHenMui1.AddMonths((mui - 1) * soThangCho);
-                                    }
-
-                                    var lichTiem = new LichTiem
-                                    {
-                                        MaLT = "LT" + lichTiemNumber.ToString("D8"),
-                                        NgayHenTiem = ngayHenMui,
-                                        NgayTiemThucTe = null,
-                                        SoMui = mui,
-                                        TrangThai = "Chưa tiêm",
-                                        GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Mũi {mui}/{soMuiToiDa}",
-                                        MaHSTC = maHSTC,
-                                        MaVC = gioHangItem.MaSanPham,
-                                        MaNV = null,
-                                        HoSoTiemChung = null,
-                                        Vaccine = null,
-                                        NhanVien = null
-                                    };
-                                    _context.LichTiems.Add(lichTiem);
-                                    lichTiemNumber++;
-                                }
+                                    MaGH = gioHangItem.MaGH,
+                                    MaSanPham = gioHangItem.MaSanPham,
+                                    LoaiSanPham = gioHangItem.LoaiSanPham,
+                                    MaHSTC = null,
+                                    Index = i
+                                });
                             }
                         }
-                        else if (gioHangItem.LoaiSanPham == "GOIVACCINE")
+
+                        // Tạo lịch tiêm cho từng người tiêm
+                        foreach (var nguoiTiem in nguoiTiemChoSanPham)
                         {
-                            // Lấy chi tiết gói vaccine
-                            var chiTietGoi = _context.ChiTietGoiVaccines
-                                .Include(ct => ct.Vaccine)
-                                .Where(ct => ct.MaGoi == gioHangItem.MaSanPham)
-                                .ToList();
+                            string maHSTC = nguoiTiem.MaHSTC;
 
-                            // Nhóm theo MaVC để tính số mũi
-                            var vaccineGroups = chiTietGoi.GroupBy(ct => ct.MaVC);
-
-                            foreach (var group in vaccineGroups)
+                            // Nếu không có hồ sơ được chọn, lấy hồ sơ mặc định của khách hàng
+                            if (string.IsNullOrEmpty(maHSTC))
                             {
-                                var vaccine = group.First().Vaccine;
-                                if (vaccine == null) continue;
+                                maHSTC = GetOrCreateDefaultHoSo(kh);
+                            }
 
-                                int soThangCho = vaccine.SoThangCho ?? 1;
-                                int muiIndex = 0;
-
-                                // Tạo lịch cho từng mũi trong gói
-                                foreach (var ctGoi in group.OrderBy(ct => ct.SoMui))
+                            // Parse ngày giờ hẹn riêng cho người này
+                            DateTime ngayHenMui1 = DateTime.Now.AddDays(7); // Mặc định
+                            if (!string.IsNullOrEmpty(nguoiTiem.NgayHenTiem))
+                            {
+                                DateTime.TryParse(nguoiTiem.NgayHenTiem, out ngayHenMui1);
+                                // Thêm giờ nếu có
+                                if (!string.IsNullOrEmpty(nguoiTiem.GioHenTiem))
                                 {
-                                    DateTime ngayHenMui = ngayHenMui1;
-                                    if (muiIndex > 0)
+                                    var gioParts = nguoiTiem.GioHenTiem.Split(':');
+                                    if (gioParts.Length >= 2)
                                     {
-                                        ngayHenMui = ngayHenMui1.AddMonths(muiIndex * soThangCho);
+                                        int gio = int.Parse(gioParts[0]);
+                                        int phut = int.Parse(gioParts[1]);
+                                        ngayHenMui1 = new DateTime(ngayHenMui1.Year, ngayHenMui1.Month, ngayHenMui1.Day, gio, phut, 0);
+                                    }
+                                }
+                            }
+
+                            // Xử lý theo loại sản phẩm
+                            if (gioHangItem.LoaiSanPham == "VACCINE")
+                            {
+                                var vaccine = _context.Vaccines.Find(gioHangItem.MaSanPham);
+                                if (vaccine != null)
+                                {
+                                    // Tạo lịch tiêm cho TẤT CẢ các mũi theo SoMuiToiDa
+                                    int soMuiToiDa = vaccine.SoMuiToiDa ?? 1;
+                                    int soThangCho = vaccine.SoThangCho ?? 1;
+
+                                    // Nếu SoMuiToiDa = 99 (tiêm nhắc hàng năm), chỉ tạo 1 lịch
+                                    if (soMuiToiDa >= 99)
+                                    {
+                                        soMuiToiDa = 1;
                                     }
 
-                                    var lichTiem = new LichTiem
+                                    for (int mui = 1; mui <= soMuiToiDa; mui++)
                                     {
-                                        MaLT = "LT" + lichTiemNumber.ToString("D8"),
-                                        NgayHenTiem = ngayHenMui,
-                                        NgayTiemThucTe = null,
-                                        SoMui = ctGoi.SoMui ?? (muiIndex + 1),
-                                        TrangThai = "Chưa tiêm",
-                                        GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Gói: {gioHangItem.MaSanPham}",
-                                        MaHSTC = maHSTC,
-                                        MaVC = ctGoi.MaVC,
-                                        MaNV = null,
-                                        HoSoTiemChung = null,
-                                        Vaccine = null,
-                                        NhanVien = null
-                                    };
-                                    _context.LichTiems.Add(lichTiem);
-                                    lichTiemNumber++;
-                                    muiIndex++;
+                                        // Tính ngày hẹn cho mũi này
+                                        DateTime ngayHenMui = ngayHenMui1;
+                                        if (mui > 1)
+                                        {
+                                            // Mũi 2 trở đi: cộng thêm (mui - 1) * SoThangCho tháng
+                                            ngayHenMui = ngayHenMui1.AddMonths((mui - 1) * soThangCho);
+                                        }
+
+                                        var lichTiem = new LichTiem
+                                        {
+                                            MaLT = "LT" + lichTiemNumber.ToString("D8"),
+                                            NgayHenTiem = ngayHenMui,
+                                            NgayTiemThucTe = null,
+                                            SoMui = mui,
+                                            TrangThai = "Chưa tiêm",
+                                            GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Mũi {mui}/{soMuiToiDa}",
+                                            MaHSTC = maHSTC,
+                                            MaVC = gioHangItem.MaSanPham,
+                                            MaNV = null,
+                                            HoSoTiemChung = null,
+                                            Vaccine = null,
+                                            NhanVien = null
+                                        };
+                                        _context.LichTiems.Add(lichTiem);
+                                        lichTiemNumber++;
+                                    }
+                                }
+                            }
+                            else if (gioHangItem.LoaiSanPham == "GOIVACCINE")
+                            {
+                                // Lấy chi tiết gói vaccine
+                                var chiTietGoi = _context.ChiTietGoiVaccines
+                                    .Include(ct => ct.Vaccine)
+                                    .Where(ct => ct.MaGoi == gioHangItem.MaSanPham)
+                                    .ToList();
+
+                                // Nhóm theo MaVC để tính số mũi
+                                var vaccineGroups = chiTietGoi.GroupBy(ct => ct.MaVC);
+
+                                foreach (var group in vaccineGroups)
+                                {
+                                    var vaccine = group.First().Vaccine;
+                                    if (vaccine == null) continue;
+
+                                    int soThangCho = vaccine.SoThangCho ?? 1;
+                                    int muiIndex = 0;
+
+                                    // Tạo lịch cho từng mũi trong gói
+                                    foreach (var ctGoi in group.OrderBy(ct => ct.SoMui))
+                                    {
+                                        DateTime ngayHenMui = ngayHenMui1;
+                                        if (muiIndex > 0)
+                                        {
+                                            ngayHenMui = ngayHenMui1.AddMonths(muiIndex * soThangCho);
+                                        }
+
+                                        var lichTiem = new LichTiem
+                                        {
+                                            MaLT = "LT" + lichTiemNumber.ToString("D8"),
+                                            NgayHenTiem = ngayHenMui,
+                                            NgayTiemThucTe = null,
+                                            SoMui = ctGoi.SoMui ?? (muiIndex + 1),
+                                            TrangThai = "Chưa tiêm",
+                                            GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Gói: {gioHangItem.MaSanPham}",
+                                            MaHSTC = maHSTC,
+                                            MaVC = ctGoi.MaVC,
+                                            MaNV = null,
+                                            HoSoTiemChung = null,
+                                            Vaccine = null,
+                                            NhanVien = null
+                                        };
+                                        _context.LichTiems.Add(lichTiem);
+                                        lichTiemNumber++;
+                                        muiIndex++;
+                                    }
                                 }
                             }
                         }
