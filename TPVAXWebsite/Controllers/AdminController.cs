@@ -7,13 +7,16 @@ using System.Web.Mvc;
 using TPVAXWebsite.DAL;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
+using TPVAXWebsite.Common;
 using System.Data.Entity;
 
 namespace TPVAXWebsite.Controllers
 {
     /// <summary>
     /// Controller quản lý tất cả chức năng Admin
+    /// Yêu cầu đăng nhập với tài khoản Nhân viên
     /// </summary>
+    [AuthorizeAdmin]
     public class AdminController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

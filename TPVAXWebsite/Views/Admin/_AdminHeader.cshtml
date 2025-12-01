@@ -1,17 +1,54 @@
-﻿<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+﻿@{
+    var nv = Session["NV"] as TPVAXWebsite.Models.Domain.NhanVien;
+    var tenNV = nv?.HoTen ?? "Admin";
+    var chucVu = nv?.ChucVu ?? 0;
+    
+    // Map chức vụ
+    string tenChucVu = "Nhân viên";
+    switch (chucVu)
+    {
+        case 1: tenChucVu = "Quản lý"; break;
+        case 2: tenChucVu = "Tiếp nhận"; break;
+        case 3: tenChucVu = "Kho"; break;
+        case 4: tenChucVu = "Y tế"; break;
+        case 5: tenChucVu = "Thu ngân"; break;
+    }
+}
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button">
                 <i class="fas fa-bars"></i>
             </a>
         </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="@Url.Action("Index", "Admin")" class="nav-link">Trang chủ</a>
+        </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="@Url.Action("Login", "Account")">
-                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+        <!-- Thông tin nhân viên -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle me-1"></i>
+                <span>@tenNV</span>
+                <small class="text-muted ms-1">(@tenChucVu)</small>
             </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                    <span class="dropdown-item-text">
+                        <strong>@tenNV</strong><br />
+                        <small class="text-muted">@tenChucVu</small>
+                    </span>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <a class="dropdown-item" href="@Url.Action("Logout", "Account")">
+                        <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>

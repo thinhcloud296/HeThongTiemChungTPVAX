@@ -230,6 +230,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Common\KeyGenerator.cs" />
+    <Compile Include="Common\AuthorizeAdminAttribute.cs" />
+
     <Compile Include="Controllers\HoSoTiemChungController.cs" />
     <Compile Include="Controllers\HoSoController.cs" />
     <Compile Include="Global.asax.cs">

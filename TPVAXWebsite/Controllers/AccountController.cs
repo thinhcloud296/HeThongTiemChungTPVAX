@@ -21,6 +21,7 @@ namespace TPVAXWebsite.Controllers
         {
             if (Session["User"] != null)
             {
+                // Phân quyền: Khách hàng -> Dashboard, Nhân viên -> Admin
                 if (Session["KH"] != null)
                     return RedirectToAction("Dashboard", "Account");
                 if (Session["NV"] != null)
@@ -69,6 +70,7 @@ namespace TPVAXWebsite.Controllers
                         Session["User"] = tk.MaTK;
                         Session["NV"] = nv;
                         Session["UserRole"] = "Staff";
+                        Session["ChucVu"] = nv.ChucVu; // Lưu chức vụ để phân quyền chi tiết
                         
                         TempData["SuccessMessage"] = $"Chào mừng {nv.HoTen}!";
                         return RedirectToAction("Index", "Admin");
