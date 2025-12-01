@@ -12,7 +12,6 @@ namespace TPVAXWebsite.Controllers
 {
     public class AccountController : Controller
     {
-        private UnitOfWork _uow = new UnitOfWork();
         private readonly TPVAXDbContext _context = new TPVAXDbContext();
 
         // GET: Account/Login
@@ -21,6 +20,7 @@ namespace TPVAXWebsite.Controllers
         {
             if (Session["User"] != null)
             {
+                // Phân quyền: Khách hàng -> Dashboard, Nhân viên -> Admin
                 if (Session["KH"] != null)
                     return RedirectToAction("Dashboard", "Account");
                 if (Session["NV"] != null)
@@ -69,6 +69,7 @@ namespace TPVAXWebsite.Controllers
                         Session["User"] = tk.MaTK;
                         Session["NV"] = nv;
                         Session["UserRole"] = "Staff";
+                        Session["ChucVu"] = nv.ChucVu; // Lưu chức vụ để phân quyền chi tiết
                         
                         TempData["SuccessMessage"] = $"Chào mừng {nv.HoTen}!";
                         return RedirectToAction("Index", "Admin");
@@ -90,6 +91,145 @@ namespace TPVAXWebsite.Controllers
         public ActionResult Register()
         {
             return View();
+        }
+
+        // GET: Account/XacNhanLienKetHoSo - Hiển thị trang xác nhận liên kết hồ sơ có sẵn
+        [HttpGet]
+        public ActionResult XacNhanLienKetHoSo()
+        {
+            // Kiểm tra có thông tin pending không
+            if (TempData["PendingRegister"] == null || TempData["HoSoCuMaHSTC"] == null)
+            {
+                return RedirectToAction("Register");
+            }
+
+            // Giữ lại TempData để dùng trong POST
+            TempData.Keep("PendingRegister");
+            TempData.Keep("HoSoCuMaHSTC");
+            
+            ViewBag.HoTen = TempData["HoSoCuHoTen"];
+            ViewBag.NgaySinh = TempData["HoSoCuNgaySinh"];
+            TempData.Keep("HoSoCuHoTen");
+            TempData.Keep("HoSoCuNgaySinh");
+            
+            return View();
+        }
+
+        // POST: Account/HoanTatDangKyVoiLienKet - Hoàn tất đăng ký và liên kết hồ sơ có sẵn
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HoanTatDangKyVoiLienKet()
+        {
+            try
+            {
+                // Lấy thông tin từ TempData
+                var pendingJson = TempData["PendingRegister"] as string;
+                var maHSTC = TempData["HoSoCuMaHSTC"] as string;
+
+                if (string.IsNullOrEmpty(pendingJson) || string.IsNullOrEmpty(maHSTC))
+                {
+                    TempData["ErrorMessage"] = "Phiên đăng ký đã hết hạn. Vui lòng thử lại.";
+                    return RedirectToAction("Register");
+                }
+
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<RegisterViewModel>(pendingJson);
+
+                // Kiểm tra lại các điều kiện
+                if (_context.KhachHangs.Any(k => k.CCCD == model.CCCD))
+                {
+                    TempData["ErrorMessage"] = "CCCD này đã được đăng ký tài khoản.";
+                    return RedirectToAction("Register");
+                }
+
+                if (_context.KhachHangs.Any(k => k.SoDT == model.SoDT))
+                {
+                    TempData["ErrorMessage"] = "Số điện thoại này đã được đăng ký.";
+                    return RedirectToAction("Register");
+                }
+
+                var hoSoCu = _context.HoSoTiemChungs.Find(maHSTC);
+                if (hoSoCu == null)
+                {
+                    TempData["ErrorMessage"] = "Hồ sơ tiêm chủng không còn tồn tại.";
+                    return RedirectToAction("Register");
+                }
+
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Tạo tài khoản
+                        string maTK;
+                        do
+                        {
+                            maTK = TPVAXWebsite.Common.KeyGenerator.GenMaTK();
+                        } while (_context.TaiKhoans.Any(k => k.MaTK == maTK));
+
+                        var taiKhoan = new TaiKhoan
+                        {
+                            MaTK = maTK,
+                            MatKhau = BCrypt.Net.BCrypt.HashPassword(model.MatKhau)
+                        };
+                        _context.TaiKhoans.Add(taiKhoan);
+                        _context.SaveChanges();
+
+                        // Tạo khách hàng
+                        string maKH;
+                        do
+                        {
+                            maKH = TPVAXWebsite.Common.KeyGenerator.GenMaKH(model.CCCD);
+                        } while (_context.KhachHangs.Any(k => k.MaKH == maKH));
+
+                        var khachHang = new KhachHang
+                        {
+                            MaKH = maKH,
+                            HoTen = model.HoTen,
+                            CCCD = model.CCCD,
+                            NgaySinh = model.NgaySinh,
+                            SoDT = model.SoDT,
+                            Email = model.Email,
+                            GioiTinh = model.GioiTinh,
+                            DiaChi = model.DiaChi,
+                            MaTK = taiKhoan.MaTK
+                        };
+                        _context.KhachHangs.Add(khachHang);
+                        _context.SaveChanges();
+
+                        // Liên kết với hồ sơ có sẵn
+                        string maLK;
+                        do
+                        {
+                            maLK = TPVAXWebsite.Common.KeyGenerator.GenMaLK(model.CCCD);
+                        } while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK));
+
+                        var lienKet = new LienKetHoSo
+                        {
+                            MaLK = maLK,
+                            MaKH = maKH,
+                            MaHSTC = maHSTC,
+                            VaiTro = "Bản thân",
+                            NgayLienKet = DateTime.Now
+                        };
+                        _context.LienKetHoSos.Add(lienKet);
+                        _context.SaveChanges();
+
+                        transaction.Commit();
+
+                        TempData["SuccessMessage"] = $"Đăng ký thành công! Hồ sơ tiêm chủng của bạn (do người thân tạo trước đó) đã được liên kết với tài khoản.";
+                        return RedirectToAction("Login");
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Lỗi đăng ký: " + ex.Message;
+                return RedirectToAction("Register");
+            }
         }
 
         // POST: Account/Register
@@ -124,100 +264,105 @@ namespace TPVAXWebsite.Controllers
                 }
 
                 // B2: Dò CCCD trong bảng HoSoTiemChung - kiểm tra hồ sơ đã có sẵn chưa
-                var hoSoCu = _context.HoSoTiemChungs.FirstOrDefault(h => h.CCCD == model.CCCD);
+                var hoSoCu = _context.HoSoTiemChungs.FirstOrDefault(h => h.CCCD == model.CCCD && h.TrangThai == true);
                 
-                _uow.BeginTransaction();
-
-                string maTK;
-                do
-                {
-                    maTK = TPVAXWebsite.Common.KeyGenerator.GenMaTK();
-                } while (_uow.TaiKhoans.Any(k => k.MaTK == maTK));
-
-                var taiKhoan = new TaiKhoan
-                {
-                    MaTK = maTK,
-                    MatKhau = BCrypt.Net.BCrypt.HashPassword(model.MatKhau)
-                };
-                _uow.TaiKhoans.Add(taiKhoan);
-                _uow.SaveChanges(); // Insert TaiKhoan TRƯỚC để tránh FK constraint
-
-                string maKH;
-                do
-                {
-                    maKH = TPVAXWebsite.Common.KeyGenerator.GenMaKH(model.CCCD);
-                } while (_uow.KhachHangs.Any(k => k.MaKH == maKH));
-
-                var khachHang = new KhachHang
-                {
-                    MaKH = maKH,
-                    HoTen = model.HoTen,
-                    CCCD = model.CCCD,
-                    NgaySinh = model.NgaySinh,
-                    SoDT = model.SoDT,
-                    Email = model.Email,
-                    GioiTinh = model.GioiTinh,
-                    DiaChi = model.DiaChi,
-                    MaTK = taiKhoan.MaTK
-                };
-                _uow.KhachHangs.Add(khachHang);
-                _uow.SaveChanges(); // Save KhachHang
-
-                // Xử lý Hồ sơ tiêm chủng và Liên kết
-                string maHSTC_CanLienKet;
-                string messageDetail;
-
+                // Nếu hồ sơ đã tồn tại (do người thân tạo trước), yêu cầu xác nhận liên kết
                 if (hoSoCu != null)
                 {
-                    // TRƯỜNG HỢP ĐẶC BIỆT: Hồ sơ đã tồn tại, tự động liên kết
-                    maHSTC_CanLienKet = hoSoCu.MaHSTC;
-                    messageDetail = $"Hệ thống đã tìm thấy và tự động liên kết với hồ sơ tiêm chủng có sẵn (Họ tên: {hoSoCu.HoTen}).";
+                    // Lưu thông tin đăng ký vào TempData để xử lý sau khi xác nhận
+                    TempData["PendingRegister"] = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+                    TempData["HoSoCuMaHSTC"] = hoSoCu.MaHSTC;
+                    TempData["HoSoCuHoTen"] = hoSoCu.HoTen;
+                    TempData["HoSoCuNgaySinh"] = hoSoCu.NgaySinh.ToString("dd/MM/yyyy");
+                    
+                    return RedirectToAction("XacNhanLienKetHoSo");
                 }
-                else
+                
+                using (var transaction = _context.Database.BeginTransaction())
                 {
-                    // TRƯỜNG HỢP 1: Tạo hồ sơ tiêm chủng mới
-                    maHSTC_CanLienKet = TPVAXWebsite.Common.KeyGenerator.GenMaHSTC(model.CCCD);
-                    var hoSoMoi = new HoSoTiemChung
+                    try
                     {
-                        MaHSTC = maHSTC_CanLienKet,
-                        HoTen = model.HoTen,
-                        CCCD = model.CCCD,
-                        NgaySinh = model.NgaySinh,
-                        GioiTinh = model.GioiTinh,
-                        TrangThai = true
-                    };
-                    _uow.HoSoTiemChungs.Add(hoSoMoi);
-                    _uow.SaveChanges(); // Save HoSoTiemChung
-                    messageDetail = "Hệ thống đã tạo hồ sơ tiêm chủng mới cho bạn.";
+                        string maTK;
+                        do
+                        {
+                            maTK = TPVAXWebsite.Common.KeyGenerator.GenMaTK();
+                        } while (_context.TaiKhoans.Any(k => k.MaTK == maTK));
+
+                        var taiKhoan = new TaiKhoan
+                        {
+                            MaTK = maTK,
+                            MatKhau = BCrypt.Net.BCrypt.HashPassword(model.MatKhau)
+                        };
+                        _context.TaiKhoans.Add(taiKhoan);
+                        _context.SaveChanges();
+
+                        string maKH;
+                        do
+                        {
+                            maKH = TPVAXWebsite.Common.KeyGenerator.GenMaKH(model.CCCD);
+                        } while (_context.KhachHangs.Any(k => k.MaKH == maKH));
+
+                        var khachHang = new KhachHang
+                        {
+                            MaKH = maKH,
+                            HoTen = model.HoTen,
+                            CCCD = model.CCCD,
+                            NgaySinh = model.NgaySinh,
+                            SoDT = model.SoDT,
+                            Email = model.Email,
+                            GioiTinh = model.GioiTinh,
+                            DiaChi = model.DiaChi,
+                            MaTK = taiKhoan.MaTK
+                        };
+                        _context.KhachHangs.Add(khachHang);
+                        _context.SaveChanges();
+
+                        // Tạo hồ sơ tiêm chủng mới (vì nếu có hồ sơ cũ đã redirect ở trên)
+                        string maHSTC = TPVAXWebsite.Common.KeyGenerator.GenMaHSTC(model.CCCD);
+                        var hoSoMoi = new HoSoTiemChung
+                        {
+                            MaHSTC = maHSTC,
+                            HoTen = model.HoTen,
+                            CCCD = model.CCCD,
+                            NgaySinh = model.NgaySinh,
+                            GioiTinh = model.GioiTinh,
+                            TrangThai = true
+                        };
+                        _context.HoSoTiemChungs.Add(hoSoMoi);
+                        _context.SaveChanges();
+
+                        // Tạo liên kết
+                        string maLK;
+                        do
+                        {
+                            maLK = TPVAXWebsite.Common.KeyGenerator.GenMaLK(model.CCCD);
+                        } while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK));
+
+                        var lienKet = new LienKetHoSo
+                        {
+                            MaLK = maLK,
+                            MaKH = maKH,
+                            MaHSTC = maHSTC,
+                            VaiTro = "Bản thân",
+                            NgayLienKet = DateTime.Now
+                        };
+                        _context.LienKetHoSos.Add(lienKet);
+                        _context.SaveChanges();
+
+                        transaction.Commit();
+
+                        TempData["SuccessMessage"] = "Đăng ký thành công! Hệ thống đã tạo hồ sơ tiêm chủng mới cho bạn.";
+                        return RedirectToAction("Login");
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
-
-                // Tạo liên kết giữa KhachHang và HoSoTiemChung
-                string maLK;
-                do
-                {
-                    maLK = TPVAXWebsite.Common.KeyGenerator.GenMaLK(model.CCCD);
-                } while (_uow.LienKetHoSos.Any(lk => lk.MaLK == maLK));
-
-                var lienKet = new LienKetHoSo
-                {
-                    MaLK = maLK,
-                    MaKH = maKH,
-                    MaHSTC = maHSTC_CanLienKet,
-                    VaiTro = "Bản thân", // Khi đăng ký, mặc định là "Bản thân"
-                    NgayLienKet = DateTime.Now
-                };
-                _uow.LienKetHoSos.Add(lienKet);
-                _uow.SaveChanges(); // Save LienKetHoSo
-
-                _uow.Commit();
-
-                TempData["SuccessMessage"] = $"Đăng ký thành công! {messageDetail}";
-
-                return RedirectToAction("Login");
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {
-                _uow.Rollback();
                 var errorMessages = new System.Text.StringBuilder();
                 foreach (var validationErrors in dbEx.EntityValidationErrors)
                 {
@@ -230,13 +375,11 @@ namespace TPVAXWebsite.Controllers
             }
             catch (System.Data.Entity.Infrastructure.DbUpdateException dbUpdateEx)
             {
-                _uow.Rollback();
                 var innerMessage = dbUpdateEx.InnerException?.InnerException?.Message ?? dbUpdateEx.InnerException?.Message ?? dbUpdateEx.Message;
                 ModelState.AddModelError("", "Lỗi cập nhật database: " + innerMessage);
             }
             catch (Exception ex)
             {
-                _uow.Rollback();
                 var innerMessage = ex.InnerException?.InnerException?.Message ?? ex.InnerException?.Message ?? ex.Message;
                 ModelState.AddModelError("", "Lỗi đăng ký: " + innerMessage);
             }
@@ -484,18 +627,69 @@ namespace TPVAXWebsite.Controllers
                 return RedirectToAction("Dashboard");
             }
 
-            hoaDon.ChiTietHoaDon = _context.ChiTietHoaDons
+            var chiTietList = _context.ChiTietHoaDons
                 .Where(ct => ct.MaHD == maHD)
                 .ToList();
 
-            return View(hoaDon);
+            // Lấy thông tin khuyến mãi nếu có
+            string tenKM = null;
+            if (!string.IsNullOrEmpty(hoaDon.MaKM))
+            {
+                var km = _context.KhuyenMais.Find(hoaDon.MaKM);
+                tenKM = km?.TenKM;
+            }
+
+            // Tạo ViewModel
+            var viewModel = new Models.ViewModels.HoaDonViewModel
+            {
+                MaHD = hoaDon.MaHD,
+                NgayLap = hoaDon.NgayLap,
+                TongTien = hoaDon.TongTien,
+                TrangThai = hoaDon.TrangThai == true ? "Đã thanh toán" : "Chưa thanh toán",
+                MaKH = hoaDon.MaKH,
+                TenKH = kh.HoTen,
+                MaKM = hoaDon.MaKM,
+                TenKM = tenKM,
+                ChiTietHoaDon = chiTietList.Select(ct => {
+                    // Lấy thông tin sản phẩm
+                    string tenSP = "";
+                    string hinhAnh = "";
+                    
+                    if (ct.LoaiSanPham == "VACCINE")
+                    {
+                        var vaccine = _context.Vaccines.Find(ct.MaSanPham);
+                        tenSP = vaccine?.TenVC ?? "Không rõ";
+                        hinhAnh = vaccine?.HinhAnh;
+                    }
+                    else
+                    {
+                        var goi = _context.GoiVaccines.Find(ct.MaSanPham);
+                        tenSP = goi?.TenGoi ?? "Không rõ";
+                        hinhAnh = goi?.HinhAnh;
+                    }
+
+                    return new Models.ViewModels.ChiTietHoaDonViewModel
+                    {
+                        MaCTHD = ct.MaCTHD,
+                        MaSanPham = ct.MaSanPham,
+                        TenSanPham = tenSP,
+                        LoaiSanPham = ct.LoaiSanPham,
+                        SoLuong = ct.SoLuong,
+                        DonGia = ct.DonGia,
+                        ThanhTien = ct.DonGia * ct.SoLuong,
+                        MaHD = ct.MaHD,
+                        HinhAnh = hinhAnh
+                    };
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _uow?.Dispose();
                 _context?.Dispose();
             }
             base.Dispose(disposing);

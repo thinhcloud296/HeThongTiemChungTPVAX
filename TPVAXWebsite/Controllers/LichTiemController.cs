@@ -202,6 +202,7 @@ namespace TPVAXWebsite.Controllers
 
         // Đổi lịch (cập nhật ngày hẹn)
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DoiLichNgay(string MaLT, DateTime NgayHenTiem)
         {
             try
@@ -227,32 +228,65 @@ namespace TPVAXWebsite.Controllers
                     return Json(new { success = false, message = "Bạn không có quyền đổi lịch này." });
                 }
 
-                // Kiểm tra ngày hẹn mới phải trong tương lai
-                if (NgayHenTiem < DateTime.Now)
-                {
-                    return Json(new { success = false, message = "Ngày hẹn mới phải sau thời điểm hiện tại." });
-                }
-
                 // Kiểm tra trạng thái có thể đổi
                 if (lich.TrangThai != "Chưa tiêm")
                 {
                     return Json(new { success = false, message = "Chỉ có thể đổi lịch hẹn đang chờ tiêm." });
                 }
 
+                // Kiểm tra ngày hẹn mới phải ít nhất là ngày mai
+                if (NgayHenTiem.Date <= DateTime.Now.Date)
+                {
+                    return Json(new { success = false, message = "Ngày hẹn mới phải từ ngày mai trở đi." });
+                }
+
+                // Kiểm tra ngày hẹn không quá xa (tối đa 1 năm)
+                if (NgayHenTiem.Date > DateTime.Now.AddYears(1).Date)
+                {
+                    return Json(new { success = false, message = "Ngày hẹn mới không được quá 1 năm kể từ hôm nay." });
+                }
+
+                // Kiểm tra không phải Chủ nhật
+                if (NgayHenTiem.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return Json(new { success = false, message = "Trung tâm không làm việc vào Chủ nhật. Vui lòng chọn ngày khác." });
+                }
+
+                // Kiểm tra giờ làm việc (8h - 17h)
+                if (NgayHenTiem.Hour < 8 || NgayHenTiem.Hour > 17)
+                {
+                    return Json(new { success = false, message = "Vui lòng chọn giờ trong khung 08:00 - 17:00." });
+                }
+
+                // Kiểm tra không đổi lịch quá sát ngày hẹn cũ (ít nhất 24h trước)
+                if (lich.NgayHenTiem <= DateTime.Now.AddHours(24))
+                {
+                    return Json(new { success = false, message = "Không thể đổi lịch khi còn dưới 24 giờ đến giờ hẹn. Vui lòng liên hệ trung tâm." });
+                }
+
+                // Lưu ngày cũ để thông báo
+                var ngayCu = lich.NgayHenTiem;
+                
                 lich.NgayHenTiem = NgayHenTiem;
                 _context.SaveChanges();
 
-                return Json(new { success = true, message = "Đổi lịch thành công!" });
+                return Json(new { 
+                    success = true, 
+                    message = $"Đổi lịch thành công! Lịch hẹn mới: {NgayHenTiem:dd/MM/yyyy} lúc {NgayHenTiem:HH:mm}",
+                    ngayCu = ngayCu.ToString("dd/MM/yyyy HH:mm"),
+                    ngayMoi = NgayHenTiem.ToString("dd/MM/yyyy HH:mm")
+                });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Lỗi: " + ex.Message });
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
 
         // Hủy lịch (chỉ đổi trạng thái, không xóa)
         [HttpPost]
-        public JsonResult HuyLich(string id)
+        [ValidateAntiForgeryToken]
+        public JsonResult HuyLich(string id, string lyDo = "")
         {
             try
             {
@@ -288,14 +322,31 @@ namespace TPVAXWebsite.Controllers
                     return Json(new { success = false, message = "Lịch hẹn này đã được hủy trước đó." });
                 }
 
+                // Kiểm tra không hủy lịch quá sát giờ hẹn (ít nhất 2 giờ trước)
+                if (lich.NgayHenTiem <= DateTime.Now.AddHours(2))
+                {
+                    return Json(new { success = false, message = "Không thể hủy lịch khi còn dưới 2 giờ đến giờ hẹn. Vui lòng liên hệ trung tâm." });
+                }
+
                 lich.TrangThai = "Đã hủy";
+                
+                // Lưu lý do hủy vào GhiChu nếu có
+                if (!string.IsNullOrEmpty(lyDo))
+                {
+                    lich.GhiChu = $"[Hủy bởi KH - {DateTime.Now:dd/MM/yyyy HH:mm}] Lý do: {lyDo}";
+                }
+                else
+                {
+                    lich.GhiChu = $"[Hủy bởi KH - {DateTime.Now:dd/MM/yyyy HH:mm}]";
+                }
+                
                 _context.SaveChanges();
 
                 return Json(new { success = true, message = "Hủy lịch thành công!" });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Lỗi: " + ex.Message });
+                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
             }
         }
 

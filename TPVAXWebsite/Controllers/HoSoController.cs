@@ -72,7 +72,7 @@ namespace TPVAXWebsite.Controllers
                     CCCD = "N/A";
                 }
 
-                // Tạo đối tượng HoSoTiemChung
+                // Luôn tạo hồ sơ mới khi thêm người thân (không kiểm tra trùng CCCD)
                 var hoSoMoi = new HoSoTiemChung
                 {
                     MaHSTC = GenerateMaHSTC(),
@@ -87,6 +87,7 @@ namespace TPVAXWebsite.Controllers
                 _context.HoSoTiemChungs.Add(hoSoMoi);
                 _context.SaveChanges();
 
+                // Tạo liên kết
                 var lienKet = new LienKetHoSo
                 {
                     MaLK = GenerateMaLK(),
@@ -104,9 +105,7 @@ namespace TPVAXWebsite.Controllers
             }
             catch (Exception ex)
             {
-                // Log chi tiết lỗi
                 var innerException = ex.InnerException != null ? ex.InnerException.Message : "";
-                var stackTrace = ex.StackTrace;
                 TempData["ErrorMessage"] = $"Có lỗi xảy ra: {ex.Message} | Inner: {innerException}";
                 return RedirectToAction("Dashboard", "Account");
             }
@@ -115,50 +114,44 @@ namespace TPVAXWebsite.Controllers
 
         private string GenerateMaHSTC()
         {
+            // Sử dụng KeyGenerator thread-safe để tránh race condition
             string maHSTC;
+            int maxAttempts = 10;
+            int attempt = 0;
+            
             do
             {
-                var last = _context.HoSoTiemChungs
-                    .OrderByDescending(h => h.MaHSTC)
-                    .Select(h => h.MaHSTC)
-                    .FirstOrDefault();
-
-                int next = 1;
-                if (!string.IsNullOrEmpty(last) && last.Length > 2)
-                {
-                    string numPart = last.Substring(2);
-                    if (int.TryParse(numPart, out int lastNum))
-                    {
-                        next = lastNum + 1;
-                    }
-                }
-                maHSTC = "HS" + next.ToString("D8");
-            } while (_context.HoSoTiemChungs.Any(h => h.MaHSTC == maHSTC));
+                maHSTC = TPVAXWebsite.Common.KeyGenerator.GenMaHSTC();
+                attempt++;
+            } while (_context.HoSoTiemChungs.Any(h => h.MaHSTC == maHSTC) && attempt < maxAttempts);
+            
+            if (attempt >= maxAttempts)
+            {
+                // Fallback: dùng GUID nếu vẫn trùng
+                maHSTC = "HSTC" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+            }
             
             return maHSTC;
         }
 
         private string GenerateMaLK()
         {
+            // Sử dụng KeyGenerator thread-safe để tránh race condition
             string maLK;
+            int maxAttempts = 10;
+            int attempt = 0;
+            
             do
             {
-                var last = _context.LienKetHoSos
-                    .OrderByDescending(lk => lk.MaLK)
-                    .Select(lk => lk.MaLK)
-                    .FirstOrDefault();
-
-                int next = 1;
-                if (!string.IsNullOrEmpty(last) && last.Length > 2)
-                {
-                    string numPart = last.Substring(2);
-                    if (int.TryParse(numPart, out int lastNum))
-                    {
-                        next = lastNum + 1;
-                    }
-                }
-                maLK = "LK" + next.ToString("D8");
-            } while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK));
+                maLK = TPVAXWebsite.Common.KeyGenerator.GenMaLK();
+                attempt++;
+            } while (_context.LienKetHoSos.Any(lk => lk.MaLK == maLK) && attempt < maxAttempts);
+            
+            if (attempt >= maxAttempts)
+            {
+                // Fallback: dùng GUID nếu vẫn trùng
+                maLK = "LKHS" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+            }
             
             return maLK;
         }
@@ -224,6 +217,100 @@ namespace TPVAXWebsite.Controllers
             return RedirectToAction("Dashboard", "Account");
         }
 
+        // GET: HoSo/XuatPDFSoTiemChung - Xuất sổ tiêm chủng dạng PDF
+        [HttpGet]
+        public ActionResult XuatPDFSoTiemChung(string maHSTC)
+        {
+            var kh = Session["KH"] as KhachHang;
+            if (kh == null)
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập để truy cập trang này.";
+                return RedirectToAction("Login", "Account");
+            }
 
+            // Kiểm tra quyền truy cập hồ sơ
+            var lienKet = _context.LienKetHoSos
+                .FirstOrDefault(lk => lk.MaKH == kh.MaKH && lk.MaHSTC == maHSTC);
+
+            if (lienKet == null)
+            {
+                TempData["ErrorMessage"] = "Bạn không có quyền truy cập hồ sơ này.";
+                return RedirectToAction("Dashboard", "Account");
+            }
+
+            var hoSo = _context.HoSoTiemChungs.Find(maHSTC);
+            if (hoSo == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy hồ sơ tiêm chủng.";
+                return RedirectToAction("Dashboard", "Account");
+            }
+
+            // Lấy lịch sử tiêm chủng
+            var lichTiems = _context.LichTiems
+                .Where(lt => lt.MaHSTC == maHSTC && lt.TrangThai == "Đã tiêm")
+                .OrderByDescending(lt => lt.NgayTiemThucTe)
+                .ToList();
+
+            foreach (var lt in lichTiems)
+            {
+                if (!string.IsNullOrEmpty(lt.MaVC))
+                {
+                    lt.Vaccine = _context.Vaccines.Find(lt.MaVC);
+                }
+            }
+
+            ViewBag.HoSo = hoSo;
+            ViewBag.LichTiems = lichTiems;
+            ViewBag.VaiTro = lienKet.VaiTro;
+
+            return View("XuatPDFSoTiemChung");
+        }
+
+        // POST: HoSo/HuyLienKet - Hủy liên kết hồ sơ (không xóa hồ sơ)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult HuyLienKet(string MaHSTC)
+        {
+            try
+            {
+                var kh = Session["KH"] as KhachHang;
+                if (kh == null)
+                {
+                    return Json(new { success = false, message = "Vui lòng đăng nhập." });
+                }
+
+                var lienKet = _context.LienKetHoSos
+                    .FirstOrDefault(lk => lk.MaKH == kh.MaKH && lk.MaHSTC == MaHSTC);
+
+                if (lienKet == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy liên kết này." });
+                }
+
+                // Không cho phép hủy liên kết với vai trò "Bản thân"
+                if (lienKet.VaiTro == "Bản thân")
+                {
+                    return Json(new { success = false, message = "Không thể hủy liên kết với hồ sơ của chính bạn." });
+                }
+
+                _context.LienKetHoSos.Remove(lienKet);
+                _context.SaveChanges();
+
+                return Json(new { success = true, message = "Đã hủy liên kết thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi: " + ex.Message });
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

@@ -255,6 +255,9 @@
         <div class="cart-content-wrapper" id="cartContent">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
+                    @{
+                        var khachHang = Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang;
+                    }
                     <!-- Person Info Card -->
                     <div class="person-info-card card shadow-sm mb-4">
                         <div class="card-body">
@@ -262,23 +265,23 @@
                                 <div class="person-details">
                                     <div class="person-header mb-2">
                                         <i class="fas fa-user-circle text-primary me-2 fs-5"></i>
-                                        <span class="person-name-age fw-bold fs-5">@(Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang)?.HoTen</span>
-                                        <span class="badge bg-primary ms-2">Người được tiêm</span>
+                                        <span class="person-name-age fw-bold fs-5">@(khachHang != null ? khachHang.HoTen : "Khách hàng")</span>
+                                        <span class="badge bg-primary ms-2">Chủ tài khoản</span>
                                     </div>
                                     <div class="person-info-details">
                                         <span class="text-muted">
-                                            <i class="fas fa-venus-mars me-1"></i>@(Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang)?.GioiTinh
+                                            <i class="fas fa-venus-mars me-1"></i>@(khachHang != null ? khachHang.GioiTinh : "--")
                                         </span>
                                         <span class="text-muted mx-2">|</span>
                                         <span class="text-muted">
-                                            <i class="fas fa-birthday-cake me-1"></i>@((Session["KH"] as TPVAXWebsite.Models.Domain.KhachHang)?.NgaySinh?.ToString("dd/MM/yyyy"))
+                                            <i class="fas fa-birthday-cake me-1"></i>@(khachHang != null && khachHang.NgaySinh.HasValue ? khachHang.NgaySinh.Value.ToString("dd/MM/yyyy") : "--")
                                         </span>
                                     </div>
                                 </div>
-                                <button class="btn btn-outline-primary btn-sm">
+                                <a href="@Url.Action("Dashboard", "Account")" class="btn btn-outline-primary btn-sm">
                                     <i class="fas fa-edit me-1"></i>
                                     Thay đổi
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -421,10 +424,13 @@
 </main>
 
 @section scripts {
+@Html.AntiForgeryToken()
 <script>
     // Cart functionality from cart_backup.html
     (function() {
         'use strict';
+        
+        var token = $('input[name="__RequestVerificationToken"]').val();
 
         // Quantity controls - Decrease
         document.querySelectorAll('.qty-minus').forEach(btn => {
@@ -480,6 +486,7 @@
                         $.ajax({
                             url: '@Url.Action("XoaToanBo", "GioHang")',
                             type: 'POST',
+                            data: { __RequestVerificationToken: token },
                             success: function(data) {
                                 if (data.success) {
                                     Swal.fire({
@@ -509,7 +516,7 @@
             $.ajax({
                 url: '@Url.Action("CapNhatSoLuong", "GioHang")',
                 type: 'POST',
-                data: { MaGH: maGH, SoLuong: soLuong },
+                data: { __RequestVerificationToken: token, MaGH: maGH, SoLuong: soLuong },
                 success: function(data) {
                     if (data.success) {
                         // Reload trang để cập nhật tổng tiền
@@ -530,7 +537,7 @@
             $.ajax({
                 url: '@Url.Action("XoaKhoiGio", "GioHang")',
                 type: 'POST',
-                data: { MaGH: maGH },
+                data: { __RequestVerificationToken: token, MaGH: maGH },
                 success: function(data) {
                     if (data.success) {
                         Swal.fire({

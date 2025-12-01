@@ -1,0 +1,56 @@
+﻿    @{
+    ViewBag.Title = "Xác nhận liên kết hồ sơ tiêm chủng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Phát hiện hồ sơ tiêm chủng có sẵn
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <p class="mb-2">
+                            <strong>Hệ thống đã tìm thấy hồ sơ tiêm chủng với CCCD của bạn:</strong>
+                        </p>
+                        <ul class="mb-0">
+                            <li><strong>Họ tên:</strong> @ViewBag.HoTen</li>
+                            <li><strong>Ngày sinh:</strong> @ViewBag.NgaySinh</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert alert-secondary">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Hồ sơ này có thể đã được người thân của bạn tạo trước đó.</strong>
+                        <p class="mb-0 mt-2 small">
+                            Nếu đây là hồ sơ của bạn, hãy xác nhận để liên kết với tài khoản mới. 
+                            Tài khoản sẽ được tạo với thông tin và mật khẩu bạn đã nhập ở bước trước.
+                        </p>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <form method="post" action="@Url.Action("HoanTatDangKyVoiLienKet", "Account")">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-success btn-lg w-100">
+                                <i class="bi bi-check-circle me-2"></i>Xác nhận - Tạo tài khoản và liên kết hồ sơ này
+                            </button>
+                        </form>
+                        
+                        <a href="@Url.Action("Register", "Account")" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i>Không phải hồ sơ của tôi - Quay lại
+                        </a>
+                    </div>
+
+                    <p class="text-muted small mt-3 text-center">
+                        <i class="bi bi-shield-check me-1"></i>
+                        Sau khi xác nhận, bạn có thể đăng nhập bằng số điện thoại/email và mật khẩu đã đăng ký.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

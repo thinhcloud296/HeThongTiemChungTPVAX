@@ -230,6 +230,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Common\KeyGenerator.cs" />
+    <Compile Include="Common\AuthorizeAdminAttribute.cs" />
+
     <Compile Include="Controllers\HoSoTiemChungController.cs" />
     <Compile Include="Controllers\HoSoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -341,6 +343,7 @@
     <Content Include="Views\Vaccine\Index.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\HoSoTiemChung\Create.cshtml" />
+    <Content Include="Views\HoSo\XuatPDFSoTiemChung.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

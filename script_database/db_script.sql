@@ -19,16 +19,18 @@ DROP TABLE IF EXISTS NhaCungCap;
 DROP TABLE IF EXISTS NhanVien;
 DROP TABLE IF EXISTS KhachHang;
 DROP TABLE IF EXISTS TaiKhoan;
+DROP TABLE IF EXISTS BaiViet;
+
 GO
 
 -- =================================================================================
 -- BẢNG CƠ SỞ 
 -- =================================================================================
-
 -- 10. Bảng TaiKhoan
 CREATE TABLE TaiKhoan (
     MaTK CHAR(10) PRIMARY KEY,
-    MatKhau VARCHAR(255) NOT NULL
+    MatKhau VARCHAR(255) NOT NULL,
+    YeuCauDoiMK BIT DEFAULT 1
 );
 -- 1. Bảng KhachHang
 CREATE TABLE KhachHang (
@@ -89,7 +91,8 @@ CREATE TABLE KhuyenMai (
     
     NgayBatDau DATETIME NOT NULL,
     NgayKetThuc DATETIME NOT NULL,
-    TrangThai BIT DEFAULT (1) -- 1: Đang chạy, 0: Tạm dừng/Hết hạn
+    TrangThai BIT DEFAULT (1), -- 1: Đang chạy, 0: Tạm dừng/Hết hạn
+    HinhAnh NVARCHAR(255)
 );
 
 -- 5. Bảng LoaiVaccine
@@ -114,7 +117,8 @@ CREATE TABLE GoiVaccine (
     MoTa NVARCHAR(MAX),
     DoiTuongApDung NVARCHAR(255),
     GiaGoi DECIMAL(18, 0) NOT NULL,
-    TrangThai NVARCHAR(50)
+    TrangThai NVARCHAR(50),
+    HinhAnh NVARCHAR(255) 
 );
 
 -- =================================================================================
@@ -280,103 +284,39 @@ CREATE TABLE ChiTietKhuyenMai (
 );
 GO
 
--- =================================================================================
--- UPDATE HÌNH ẢNH
--- =================================================================================
-
--- Cập nhật đường dẫn hình ảnh cho các vaccine
-UPDATE Vaccine SET HinhAnh = 'VC000001.jpg' WHERE MaVC = 'VC00000001';
-UPDATE Vaccine SET HinhAnh = 'VC000002.jpg' WHERE MaVC = 'VC00000002';
-UPDATE Vaccine SET HinhAnh = 'VC000003.jpg' WHERE MaVC = 'VC00000003';
-UPDATE Vaccine SET HinhAnh = 'VC000004.jpg' WHERE MaVC = 'VC00000004';
-UPDATE Vaccine SET HinhAnh = 'VC000005.jpg' WHERE MaVC = 'VC00000005';
-UPDATE Vaccine SET HinhAnh = 'VC000006.jpg' WHERE MaVC = 'VC00000006';
-UPDATE Vaccine SET HinhAnh = 'VC000007.jpg' WHERE MaVC = 'VC00000007';
-UPDATE Vaccine SET HinhAnh = 'VC000008.jpg' WHERE MaVC = 'VC00000008';
-UPDATE Vaccine SET HinhAnh = 'VC000009.jpg' WHERE MaVC = 'VC00000009';
-UPDATE Vaccine SET HinhAnh = 'VC000010.jpg' WHERE MaVC = 'VC00000010';
-UPDATE Vaccine SET HinhAnh = 'VC000011.jpg' WHERE MaVC = 'VC00000011';
-UPDATE Vaccine SET HinhAnh = 'VC000012.jpg' WHERE MaVC = 'VC00000012';
-UPDATE Vaccine SET HinhAnh = 'VC000013.jpg' WHERE MaVC = 'VC00000013';
-UPDATE Vaccine SET HinhAnh = 'VC000014.png' WHERE MaVC = 'VC00000014';
-UPDATE Vaccine SET HinhAnh = 'VC000015.jpg' WHERE MaVC = 'VC00000015';
-UPDATE Vaccine SET HinhAnh = 'VC000016.jpg' WHERE MaVC = 'VC00000016';
-UPDATE Vaccine SET HinhAnh = 'VC000017.jpg' WHERE MaVC = 'VC00000017';
-UPDATE Vaccine SET HinhAnh = 'VC000018.jpg' WHERE MaVC = 'VC00000018';
-UPDATE Vaccine SET HinhAnh = 'VC000019.jpg' WHERE MaVC = 'VC00000019';
-UPDATE Vaccine SET HinhAnh = 'VC000020.jpg' WHERE MaVC = 'VC00000020';
-UPDATE Vaccine SET HinhAnh = 'VC000021.jpg' WHERE MaVC = 'VC00000021';
-UPDATE Vaccine SET HinhAnh = 'VC000022.jpg' WHERE MaVC = 'VC00000022';
-UPDATE Vaccine SET HinhAnh = 'VC000023.jpg' WHERE MaVC = 'VC00000023';
-UPDATE Vaccine SET HinhAnh = 'VC000024.jpg' WHERE MaVC = 'VC00000024';
-UPDATE Vaccine SET HinhAnh = 'VC000025.jpg' WHERE MaVC = 'VC00000025';
-UPDATE Vaccine SET HinhAnh = 'VC000026.jpg' WHERE MaVC = 'VC00000026';
-UPDATE Vaccine SET HinhAnh = 'VC000027.jpg' WHERE MaVC = 'VC00000027';
-UPDATE Vaccine SET HinhAnh = 'VC000028.jpg' WHERE MaVC = 'VC00000028';
-UPDATE Vaccine SET HinhAnh = 'VC000029.jpg' WHERE MaVC = 'VC00000029';
-UPDATE Vaccine SET HinhAnh = 'VC000030.jpg' WHERE MaVC = 'VC00000030';
-UPDATE Vaccine SET HinhAnh = 'VC000031.jpg' WHERE MaVC = 'VC00000031';
-UPDATE Vaccine SET HinhAnh = 'VC000032.jpg' WHERE MaVC = 'VC00000032';
-UPDATE Vaccine SET HinhAnh = 'VC000033.jpg' WHERE MaVC = 'VC00000033';
-UPDATE Vaccine SET HinhAnh = 'VC000034.jpg' WHERE MaVC = 'VC00000034';
-UPDATE Vaccine SET HinhAnh = 'VC000035.jpg' WHERE MaVC = 'VC00000035';
-
-PRINT N'Đã cập nhật đường dẫn hình ảnh cho 35 vaccines';
-GO
-
-
+-- 21. Bảng BaiViet (Kiến thức tiêm chủng)
+CREATE TABLE BaiViet (
+    MaBV INT PRIMARY KEY IDENTITY(1,1),
+    TieuDe NVARCHAR(255) NOT NULL,       -- Tiêu đề bài viết
+    TomTat NVARCHAR(500),                -- Tóm tắt ngắn
+    NoiDung NVARCHAR(MAX) NOT NULL,      -- Nội dung chi tiết
+    HinhAnh VARCHAR(255),                -- Ảnh minh họa
+    DanhMuc NVARCHAR(100),               -- Chuyên mục (Mẹ và bé, Bệnh truyền nhiễm…)
+    Tag NVARCHAR(255),                   -- Từ khóa SEO
+    NgayDang DATETIME DEFAULT GETDATE(), -- Ngày đăng
+    TrangThai BIT DEFAULT 1              -- 1: Hiển thị, 0: Ẩn
+);
 /* =============================================================================  Trigger */ 
 
-CREATE OR ALTER TRIGGER dbo.trg_ChiTietPhieuNhap_UpdateVaccineSoLuongTon
+-- Xóa trigger cũ (nếu có)
+DROP TRIGGER IF EXISTS dbo.trg_ChiTietPhieuNhap_UpdateVaccineSoLuongTon;
+GO
+
+CREATE TRIGGER dbo.trg_ChiTietPhieuNhap_ThemSoLuong
 ON dbo.ChiTietPhieuNhap
-AFTER INSERT, UPDATE, DELETE
+AFTER INSERT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- 1. Tạo một bảng tạm @AffectedMaVCs
-    -- để lưu trữ MaVC của các dòng vừa bị thay đổi.
-    DECLARE @AffectedMaVCs TABLE (MaVC CHAR(10) PRIMARY KEY);
-
-    -- Lấy MaVC từ các dòng MỚI được thêm (INSERT) hoặc SỬA (UPDATE)
-    INSERT INTO @AffectedMaVCs (MaVC)
-    SELECT MaVC FROM inserted
-    GROUP BY MaVC; -- Dùng GROUP BY để lấy MaVC duy nhất
-    
-    -- Lấy MaVC từ các dòng CŨ bị XÓA (DELETE) hoặc SỬA (UPDATE)
-    INSERT INTO @AffectedMaVCs (MaVC)
-    SELECT MaVC FROM deleted
-    WHERE MaVC NOT IN (SELECT MaVC FROM @AffectedMaVCs) -- Chỉ thêm nếu chưa có
-    GROUP BY MaVC;
-
-    -- 2. Cập nhật lại bảng TỔNG (Vaccine)
-    UPDATE V
-    SET
-        -- Tính toán lại TỔNG TỒN KHO bằng cách SUM tất cả
-        -- các lô (SoLuongTonKho) của vaccine này
-        V.SoLuong = ISNULL(CTPN.TotalStock, 0)
-    FROM
-        dbo.Vaccine AS V
-    INNER JOIN
-        -- Chỉ cập nhật các MaVC bị ảnh hưởng
-        @AffectedMaVCs AS A ON V.MaVC = A.MaVC
-    LEFT JOIN
-        (
-            -- Tính tổng tồn kho mới của các lô
-            SELECT
-                MaVC,
-                SUM(SoLuongTonKho) AS TotalStock
-            FROM
-                dbo.ChiTietPhieuNhap
-            WHERE
-                MaVC IN (SELECT MaVC FROM @AffectedMaVCs)
-            GROUP BY
-                MaVC
-        ) AS CTPN ON V.MaVC = CTPN.MaVC;
+    -- Cập nhật bảng Vaccine
+    -- Cộng dồn SoLuong từ bảng 'inserted' vào SoLuongTon của Vaccine
+    UPDATE v
+    SET v.SoLuong = v.SoLuong + i.SoLuong
+    FROM dbo.Vaccine v
+    INNER JOIN inserted i ON v.MaVC = i.MaVC;
 END
 GO
-
-
 
 /* ============================================================================= */
 
@@ -1346,18 +1286,5 @@ BEGIN
     ORDER BY km.NgayBatDau DESC; 
 END
 GO
-
--- 21. Bảng BaiViet (Kiến thức tiêm chủng)
-CREATE TABLE BaiViet (
-    MaBV INT PRIMARY KEY IDENTITY(1,1),
-    TieuDe NVARCHAR(255) NOT NULL,       -- Tiêu đề bài viết
-    TomTat NVARCHAR(500),                -- Tóm tắt ngắn
-    NoiDung NVARCHAR(MAX) NOT NULL,      -- Nội dung chi tiết
-    HinhAnh VARCHAR(255),                -- Ảnh minh họa
-    DanhMuc NVARCHAR(100),               -- Chuyên mục (Mẹ và bé, Bệnh truyền nhiễm…)
-    Tag NVARCHAR(255),                   -- Từ khóa SEO
-    NgayDang DATETIME DEFAULT GETDATE(), -- Ngày đăng
-    TrangThai BIT DEFAULT 1              -- 1: Hiển thị, 0: Ẩn
-);
 /* =================================================================  */
 

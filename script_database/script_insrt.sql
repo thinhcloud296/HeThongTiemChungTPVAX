@@ -219,21 +219,21 @@ PRINT N'-> Đã bổ sung chi tiết cho GOI00002 và GOI00004.';
 GO
 
 INSERT INTO TaiKhoan (MaTK, MatKhau) VALUES
-('TK00000001', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
-('TK00000002', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
-('TK00000003', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
-('TK00000004', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
-('TK00000005', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG');
+('TAIK000001', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
+('TAIK000002', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
+('TAIK000003', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
+('TAIK000004', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG'),
+('TAIK000005', '$2a$12$lfc9fIBjwAEbBc0FhNhGXup9XavQgbFVyT646PQ43Un57WSvmAyRG');
 GO
 -- =================================================================================
 -- BỔ SUNG NHÂN VIÊN MỚI THEO YÊU CẦU 
 -- =================================================================================
 INSERT INTO NhanVien (MaNV, HoTen, GioiTinh, NgaySinh, CCCD, NgayVaoLam, SoDT, DiaChi, Email, ChucVu, TrangThai,MaTK) VALUES
-('NV00000001', N'Tên Quản Lý', N'Nam', '2004-10-15', '079204001122', '2024-03-01', '0915111222', N'10 An Dương Vương, Quận 5, TP.HCM', 'thinh.nh@tpvax.com', 1, '1','TK00000001'),
-('NV00000002', N'Tên Tiếp Nhận', N'Nam', '2004-07-22', '079204003344', '2024-03-01', '0915333444', N'20 Ngô Quyền, Quận 10, TP.HCM', 'tai.tt@tpvax.com', 2, '1','TK00000002'),
-('NV00000003', N'Tên Kho', N'Nam', '2004-09-05', '079204005466', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 3, '1','TK00000003'),
-('NV00000004', N'Tên Y Tế', N'Nam', '2004-09-05', '079203005566', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 4, '1','TK00000004'),
-('NV00000005', N'Tên Thu Ngân', N'Nam', '2004-09-05', '079203005566', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 5, '1','TK00000005');
+('NVIE000001', N'Tên Quản Lý', N'Nam', '2004-10-15', '079204001122', '2024-03-01', '0915111222', N'10 An Dương Vương, Quận 5, TP.HCM', 'thinh.nh@tpvax.com', 1, '1','TAIK000001'),
+('NVIE000002', N'Tên Tiếp Nhận', N'Nam', '2004-07-22', '079204003344', '2024-03-01', '0915333444', N'20 Ngô Quyền, Quận 10, TP.HCM', 'tai.tt@tpvax.com', 2, '1','TAIK000002'),
+('NVIE000003', N'Tên Kho', N'Nam', '2004-09-05', '079204005466', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 3, '1','TAIK000003'),
+('NVIE000004', N'Tên Y Tế', N'Nam', '2004-09-05', '079203005566', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 4, '1','TAIK000004'),
+('NVIE000005', N'Tên Thu Ngân', N'Nam', '2004-09-05', '079203005566', '2024-04-15', '0915555666', N'30 Trần Hưng Đạo, Quận 1, TP.HCM', 'phi.pv@tpvax.com', 5, '1','TAIK000005');
 
 GO
 
@@ -409,9 +409,9 @@ GO
 
 
 
--- Tạm thời gán tất cả các mũi ĐÃ TIÊM (TrangThai = 1) cho nhân viên 'NV00000001'
+-- Tạm thời gán tất cả các mũi ĐÃ TIÊM (TrangThai = 1) cho nhân viên 'NVIE000001'
 UPDATE LichTiem
-SET MaNV = 'NV00000001'
+SET MaNV = 'NVIE000001'
 WHERE TrangThai = N'Đã tiêm' AND MaNV IS NULL;
 GO
 
@@ -420,11 +420,11 @@ GO
 -- TẠO THÊM DỮ LIỆU HÓA ĐƠN 
 -- =================================================================================
 INSERT INTO HoaDon (MaHD, NgayLap, TongTien, TrangThai, MaKH, MaNV, MaKM) VALUES
-('HD00000004', '2024-05-10 10:20:00', 2492000, 1, 'KH00000004', 'NV00000001', NULL),
-('HD00000005', '2024-03-01 09:40:00', 1763000, 1, 'KH00000006', 'NV00000002', NULL),
-('HD00000006', '2024-04-01 10:05:00', 1763000, 1, 'KH00000006', 'NV00000001', NULL),
-('HD00000007', '2024-07-20 08:15:00', 538000, 1, 'KH00000008', 'NV00000002', NULL),
-('HD00000008', '2025-06-20 11:00:00', 11584800, 1, 'KH00000005', 'NV00000001',NULL);
+('HD00000004', '2024-05-10 10:20:00', 2492000, 1, 'KH00000004', 'NVIE000001', NULL),
+('HD00000005', '2024-03-01 09:40:00', 1763000, 1, 'KH00000006', 'NVIE000002', NULL),
+('HD00000006', '2024-04-01 10:05:00', 1763000, 1, 'KH00000006', 'NVIE000001', NULL),
+('HD00000007', '2024-07-20 08:15:00', 538000, 1, 'KH00000008', 'NVIE000002', NULL),
+('HD00000008', '2025-06-20 11:00:00', 11584800, 1, 'KH00000005', 'NVIE000001',NULL);
 GO
 
 -- Chi tiết cho các hóa đơn mới 
@@ -442,8 +442,8 @@ GO
 -- TẠO THÊM DỮ LIỆU NHẬP KHO 
 -- =================================================================================
 INSERT INTO PhieuNhapVaccine (MaPN, NgayLap, MaNV, MaNCC,TrangThai) VALUES
-('PN00000003', '2024-05-05 09:00:00', 'NV00000003', 'NCC0000002',1), -- SANOFI
-('PN00000004', '2024-06-10 14:30:00', 'NV00000003', 'NCC0000004',1); -- PFIZER
+('PN00000003', '2024-05-05 09:00:00', 'NVIE000003', 'NCC0000002',1), -- SANOFI
+('PN00000004', '2024-06-10 14:30:00', 'NVIE000003', 'NCC0000004',1); -- PFIZER
 GO
 
 -- Chi tiết phiếu nhập mới 
@@ -456,9 +456,6 @@ GO
 UPDATE Vaccine
 SET HinhAnh = MaVC + '.jpg';
 
-ALTER TABLE GoiVaccine
-ADD HinhAnh NVARCHAR(255) NULL;
-GO
 UPDATE GoiVaccine
 SET HinhAnh = NULL;
 GO
@@ -466,14 +463,8 @@ UPDATE GoiVaccine
 SET HinhAnh = MaGoi + '.jpg';
 GO
 
-ALTER TABLE KhuyenMai
-ADD HinhAnh NVARCHAR(255) NULL;
-GO
 UPDATE KhuyenMai
 SET HinhAnh = MaKM + '.jpg';
-GO
-SELECT MaKM, TenKM, HinhAnh
-FROM KhuyenMai;
 GO
 
 
@@ -500,6 +491,56 @@ VALUES
 (N'Thủy đậu và vaccine phòng ngừa', N'Thông tin về bệnh thủy đậu và cách tiêm vaccine phòng ngừa.', N'Nội dung chi tiết về triệu chứng, lây lan và vaccine phòng bệnh thủy đậu...', 'thuy_dau.jpg', N'Bệnh truyền nhiễm', N'Virus, thủy đậu, vaccine', '2025-11-26 23:40:22.520', 1),
 (N'Viêm màng não do vi khuẩn', N'Tìm hiểu về viêm màng não và vaccine phòng ngừa.', N'Nội dung chi tiết về nguyên nhân, triệu chứng và cách phòng ngừa viêm màng não do vi khuẩn...', 'viem_mang_nao.jpg', N'Bệnh truyền nhiễm', N'Vi khuẩn, viêm màng não, vaccine', '2025-11-26 23:40:22.520', 1),
 (N'Những điều cần biết trước khi tiêm chủng', N'Chuẩn bị trước khi tiêm cho mẹ bầu...', N'<p>Chi tiết các bước chuẩn bị...</p>', 'mevabe_tiemchung.jpg', N'Mẹ và bé', N'Mang thai, tiêm chủng, chuẩn bị', '2025-11-27 00:20:05.430', 1),
-(N'Chăm sóc trẻ sau tiêm chủng', N'Hướng dẫn chăm sóc trẻ sau tiêm vaccine.', N'<p>Cách theo dõi phản ứng sau tiêm...</p>', 'mevabe_sautiem.jpg', N'Mẹ và bé', N'Sau sinh, nuôi con, chăm sóc', '2025-11-27 00:20:05.430', 1),
+(N'Chăm sóc trẻ sau tiêm chủng', N'Hướng dẫn chăm sóc trẻ sau tiêm vaccine.', N'<p>Cách theo dõi phản ứng sau tiêm...</p>', 'mevabe_sautiem.jpg', N'Mẹ và bé', N'Sau sinh, nuôi con, chăm sóc', '2025-11-27 00:20:05.430', 1)
 
 
+
+
+-- Cập nhật đường dẫn hình ảnh cho các vaccine
+UPDATE Vaccine SET HinhAnh = 'VC000001.jpg' WHERE MaVC = 'VC00000001';
+UPDATE Vaccine SET HinhAnh = 'VC000002.jpg' WHERE MaVC = 'VC00000002';
+UPDATE Vaccine SET HinhAnh = 'VC000003.jpg' WHERE MaVC = 'VC00000003';
+UPDATE Vaccine SET HinhAnh = 'VC000004.jpg' WHERE MaVC = 'VC00000004';
+UPDATE Vaccine SET HinhAnh = 'VC000005.jpg' WHERE MaVC = 'VC00000005';
+UPDATE Vaccine SET HinhAnh = 'VC000006.jpg' WHERE MaVC = 'VC00000006';
+UPDATE Vaccine SET HinhAnh = 'VC000007.jpg' WHERE MaVC = 'VC00000007';
+UPDATE Vaccine SET HinhAnh = 'VC000008.jpg' WHERE MaVC = 'VC00000008';
+UPDATE Vaccine SET HinhAnh = 'VC000009.jpg' WHERE MaVC = 'VC00000009';
+UPDATE Vaccine SET HinhAnh = 'VC000010.jpg' WHERE MaVC = 'VC00000010';
+UPDATE Vaccine SET HinhAnh = 'VC000011.jpg' WHERE MaVC = 'VC00000011';
+UPDATE Vaccine SET HinhAnh = 'VC000012.jpg' WHERE MaVC = 'VC00000012';
+UPDATE Vaccine SET HinhAnh = 'VC000013.jpg' WHERE MaVC = 'VC00000013';
+UPDATE Vaccine SET HinhAnh = 'VC000014.png' WHERE MaVC = 'VC00000014';
+UPDATE Vaccine SET HinhAnh = 'VC000015.jpg' WHERE MaVC = 'VC00000015';
+UPDATE Vaccine SET HinhAnh = 'VC000016.jpg' WHERE MaVC = 'VC00000016';
+UPDATE Vaccine SET HinhAnh = 'VC000017.jpg' WHERE MaVC = 'VC00000017';
+UPDATE Vaccine SET HinhAnh = 'VC000018.jpg' WHERE MaVC = 'VC00000018';
+UPDATE Vaccine SET HinhAnh = 'VC000019.jpg' WHERE MaVC = 'VC00000019';
+UPDATE Vaccine SET HinhAnh = 'VC000020.jpg' WHERE MaVC = 'VC00000020';
+UPDATE Vaccine SET HinhAnh = 'VC000021.jpg' WHERE MaVC = 'VC00000021';
+UPDATE Vaccine SET HinhAnh = 'VC000022.jpg' WHERE MaVC = 'VC00000022';
+UPDATE Vaccine SET HinhAnh = 'VC000023.jpg' WHERE MaVC = 'VC00000023';
+UPDATE Vaccine SET HinhAnh = 'VC000024.jpg' WHERE MaVC = 'VC00000024';
+UPDATE Vaccine SET HinhAnh = 'VC000025.jpg' WHERE MaVC = 'VC00000025';
+UPDATE Vaccine SET HinhAnh = 'VC000026.jpg' WHERE MaVC = 'VC00000026';
+UPDATE Vaccine SET HinhAnh = 'VC000027.jpg' WHERE MaVC = 'VC00000027';
+UPDATE Vaccine SET HinhAnh = 'VC000028.jpg' WHERE MaVC = 'VC00000028';
+UPDATE Vaccine SET HinhAnh = 'VC000029.jpg' WHERE MaVC = 'VC00000029';
+UPDATE Vaccine SET HinhAnh = 'VC000030.jpg' WHERE MaVC = 'VC00000030';
+UPDATE Vaccine SET HinhAnh = 'VC000031.jpg' WHERE MaVC = 'VC00000031';
+UPDATE Vaccine SET HinhAnh = 'VC000032.jpg' WHERE MaVC = 'VC00000032';
+UPDATE Vaccine SET HinhAnh = 'VC000033.jpg' WHERE MaVC = 'VC00000033';
+UPDATE Vaccine SET HinhAnh = 'VC000034.jpg' WHERE MaVC = 'VC00000034';
+UPDATE Vaccine SET HinhAnh = 'VC000035.jpg' WHERE MaVC = 'VC00000035';
+
+PRINT N'Đã cập nhật đường dẫn hình ảnh cho 35 vaccines';
+GO
+
+UPDATE TaiKhoan 
+SET MatKhau = '$2a$12$7ymUclW3H9Q79qEra9SnieC3quxs3Lwm5a3w9eRLp2fD1ZXZjykbW'
+WHERE MaTK IN (
+    SELECT MaTK FROM NhanVien WHERE MaTK IS NOT NULL
+);
+
+PRINT N'Đã cập nhật mật khẩu BCrypt cho tất cả tài khoản admin (123456)';
+GO

@@ -16,7 +16,8 @@ namespace TPVAXWebsite.Controllers
         // GET: Form tạo hồ sơ mới
         public ActionResult Create()
         {
-            if (Session["MaKH"] == null) return RedirectToAction("Login", "Account");
+            var kh = Session["KH"] as KhachHang;
+            if (kh == null) return RedirectToAction("Login", "Account");
             return View();
         }
 
@@ -24,8 +25,9 @@ namespace TPVAXWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateHoSoViewModel model)
         {
-            string currentMaKH = Session["MaKH"] as string;
-            if (string.IsNullOrEmpty(currentMaKH)) return RedirectToAction("Login", "Account");
+            var kh = Session["KH"] as KhachHang;
+            if (kh == null) return RedirectToAction("Login", "Account");
+            string currentMaKH = kh.MaKH;
 
             if (ModelState.IsValid)
             {

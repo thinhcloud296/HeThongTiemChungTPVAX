@@ -1,6 +1,25 @@
 ﻿@{
     var controller = ViewContext.RouteData.Values["controller"].ToString();
     var action = ViewContext.RouteData.Values["action"].ToString();
+    
+    // Lấy thông tin nhân viên từ Session
+    var nv = Session["NV"] as TPVAXWebsite.Models.Domain.NhanVien;
+    var tenNV = nv?.HoTen ?? "Admin";
+    var chucVu = nv?.ChucVu ?? 0;
+    
+    // Map chức vụ
+    string tenChucVu = "Nhân viên";
+    switch (chucVu)
+    {
+        case 1: tenChucVu = "Quản lý"; break;
+        case 2: tenChucVu = "Tiếp nhận"; break;
+        case 3: tenChucVu = "Kho"; break;
+        case 4: tenChucVu = "Y tế"; break;
+        case 5: tenChucVu = "Thu ngân"; break;
+    }
+    
+    // Tạo avatar URL từ tên
+    var avatarName = System.Uri.EscapeDataString(tenNV);
 }
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -12,12 +31,13 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://ui-avatars.com/api/?name=Admin+User&background=0077b6&color=fff"
+                <img src="https://ui-avatars.com/api/?name=@avatarName&background=0077b6&color=fff"
                      class="img-circle elevation-2"
-                     alt="User Image" />
+                     alt="@tenNV" />
             </div>
             <div class="info">
-                <a href="@Url.Action("Profile", "Admin")" class="d-block">Quản trị viên</a>
+                <a href="#" class="d-block">@tenNV</a>
+                <small class="text-muted">@tenChucVu</small>
             </div>
         </div>
 
@@ -37,6 +57,12 @@
                     <a href="@Url.Action("Vaccines", "Admin")" class="nav-link @(action == "Vaccines" ? "active" : "")">
                         <i class="nav-icon fas fa-capsules"></i>
                         <p>Quản lý Vắc xin</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("GoiVaccine", "Admin")" class="nav-link @(action == "GoiVaccine" ? "active" : "")">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>Quản lý Gói Vắc xin</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -67,6 +93,13 @@
                     <a href="@Url.Action("Reports", "Admin")" class="nav-link @(action == "Reports" ? "active" : "")">
                         <i class="nav-icon fas fa-chart-bar"></i>
                         <p>Báo cáo & Thống kê</p>
+                    </a>
+                </li>
+                <li class="nav-header">LIÊN KẾT NHANH</li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Vaccine")" class="nav-link" target="_blank">
+                        <i class="nav-icon fas fa-external-link-alt"></i>
+                        <p>Xem trang Vaccine</p>
                     </a>
                 </li>
             </ul>

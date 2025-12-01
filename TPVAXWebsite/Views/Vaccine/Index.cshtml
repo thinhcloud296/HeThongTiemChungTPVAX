@@ -140,6 +140,7 @@
 }
 
 @section scripts {
+    @Html.AntiForgeryToken()
     <script>
         $(document).ready(function () {
             const vaccineId = '@Model.Vaccine.MaVC';
@@ -170,10 +171,12 @@
 
                 button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Đang thêm...');
 
+                var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
                     url: '@Url.Action("ThemVaoGio", "GioHang")',
                     type: 'POST',
                     data: { 
+                        __RequestVerificationToken: token,
                         MaSanPham: vaccineId, 
                         LoaiSanPham: 'VACCINE', 
                         SoLuong: quantity 
