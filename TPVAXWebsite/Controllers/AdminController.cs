@@ -1713,18 +1713,20 @@ namespace TPVAXWebsite.Controllers
                     return Json(new { success = false, message = "Vaccine này đã có trong gói" });
                 }
 
-                // Generate MaCTGoi
+                // Generate MaCTGoi (format: CTGV000001 - 10 ký tự)
                 var lastCT = _unitOfWork.ChiTietGoiVaccines.Query()
+                    .Where(ct => ct.MaCTGoi.StartsWith("CTGV"))
                     .OrderByDescending(ct => ct.MaCTGoi)
                     .FirstOrDefault();
 
-                string newMaCTGoi = "CTG0000001";
+                string newMaCTGoi = "CTGV000001";
                 if (lastCT != null && !string.IsNullOrEmpty(lastCT.MaCTGoi))
                 {
-                    string numberPart = lastCT.MaCTGoi.Substring(3);
+                    // CTGV000018 -> lấy 000018 -> parse -> +1 -> CTGV000019
+                    string numberPart = lastCT.MaCTGoi.Substring(4); // Bỏ "CTGV"
                     if (int.TryParse(numberPart, out int number))
                     {
-                        newMaCTGoi = "CTG" + (number + 1).ToString().PadLeft(7, '0');
+                        newMaCTGoi = "CTGV" + (number + 1).ToString().PadLeft(6, '0');
                     }
                 }
 
@@ -1742,9 +1744,18 @@ namespace TPVAXWebsite.Controllers
 
                 return Json(new { success = true, message = "Thêm vaccine vào gói thành công!" });
             }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                var errorMessages = dbEx.EntityValidationErrors
+                    .SelectMany(x => x.ValidationErrors)
+                    .Select(x => x.PropertyName + ": " + x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return Json(new { success = false, message = "Validation Error: " + fullErrorMessage });
+            }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
+                var innerMsg = ex.InnerException?.InnerException?.Message ?? ex.InnerException?.Message ?? ex.Message;
+                return Json(new { success = false, message = "Lỗi hệ thống: " + innerMsg });
             }
         }
 
