@@ -352,8 +352,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Views\Account\Dashboard.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Admin\Appointments.cshtml" />
     <Content Include="Views\Admin\Customers.cshtml" />
     <Content Include="Views\Admin\GoiVaccine.cshtml" />
@@ -502,6 +500,8 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\HoSoTiemChung\Create.cshtml" />
     <Content Include="Views\HoSo\XuatPDFSoTiemChung.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
