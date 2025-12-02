@@ -1,0 +1,171 @@
+﻿@model IEnumerable<TPVAXWebsite.Models.ViewModels.BaiVietViewModel>
+@{
+    var showForm = ViewBag.ShowForm as bool? ?? false;
+    var danhMucList = ViewBag.DanhMucList as List<string> ?? new List<string>();
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<!-- Breadcrumb + Title -->
+<div class="content-header">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <!-- Tiêu đề bên trái -->
+        <h4 class="mb-0">
+            <i class="fas fa-book-open text-primary mr-2"></i> Quản lý Bài viết
+        </h4>
+
+        <!-- Breadcrumb bên phải -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 bg-transparent">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Admin")">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý Bài viết</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Nút thêm bài viết -->
+    <div class="text-right mt-2">
+        <a href="@Url.Action("BaiViets", "Admin", new { showForm = true })" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm bài viết
+        </a>
+    </div>
+</div>
+
+<!-- Thông báo sau khi lưu -->
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+        @ViewBag.Message
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@if (showForm)
+{
+    <div class="card mb-4" id="formBaiViet">
+        <div class="card-header font-weight-bold">
+            @(ViewBag.EditId != null ? "Chỉnh sửa bài viết" : "Thêm bài viết mới")
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("SaveBaiViet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="MaBV" value="@((int?)ViewBag.EditId ?? 0)" />
+
+                <div class="form-group">
+                    <label>Tiêu đề</label>
+                    <input type="text" name="TieuDe" value="@ViewBag.EditTieuDe" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Tóm tắt</label>
+                    <textarea name="TomTat" class="form-control" rows="2">@ViewBag.EditTomTat</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Nội dung</label>
+                    <textarea name="NoiDung" class="form-control" rows="6">@ViewBag.EditNoiDung</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Danh mục</label>
+                    <select name="DanhMuc" class="form-control" required>
+                        <option value="">-- Chọn danh mục --</option>
+                        @foreach (var dm in danhMucList)
+                        {
+                            <option value="@dm" @(ViewBag.EditDanhMuc == dm ? "selected" : "")>@dm</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tag</label>
+                    <input type="text" name="Tag" value="@ViewBag.EditTag" class="form-control" placeholder="Ví dụ: tiêm chủng, mẹ và bé" />
+                </div>
+
+                <div class="form-group">
+                    <label>Ảnh minh họa</label><br />
+                    @if (!string.IsNullOrEmpty(ViewBag.EditHinhAnh))
+                    {
+                        <img src="~/Content/Images/BaiViet/@ViewBag.EditHinhAnh" style="max-height:100px;" class="mb-2" /><br />
+                    }
+                    <input type="file" name="ImageFile" />
+                </div>
+
+                <div class="form-group">
+                    <label>Trạng thái</label><br />
+                    <!-- Hidden để đảm bảo luôn gửi giá trị -->
+                    <input type="hidden" name="TrangThai" value="false" />
+                    <input type="checkbox" name="TrangThai" value="true" @(ViewBag.EditTrangThai == true ? "checked" : "") /> Hiển thị bài viết
+                </div>
+
+                <button type="submit" class="btn btn-success">Lưu</button>
+                <a href="@Url.Action("BaiViets", "Admin")" class="btn btn-secondary">Hủy</a>
+            }
+        </div>
+    </div>
+}
+
+<div class="card">
+    <div class="card-header font-weight-bold">Danh sách bài viết</div>
+    <div class="card-body p-0">
+        <table class="table table-bordered table-hover mb-0">
+            <thead class="thead-light">
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Danh mục</th>
+                    <th>Ngày đăng</th>
+                    <th>Trạng thái</th>
+                    <th style="width: 180px;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bv in Model)
+                {
+                    <tr>
+                        <td>@bv.TieuDe</td>
+                        <td>@bv.DanhMuc</td>
+                        <td>@bv.NgayDang.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <span class="badge badge-@(bv.TrangThai ? "success" : "secondary")">
+                                @(bv.TrangThai ? "Hiển thị" : "Ẩn")
+                            </span>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("BaiViets", "Admin", new { editId = bv.Id, showForm = true })" class="btn btn-sm btn-warning">Sửa</a>
+                            <button class="btn btn-sm btn-danger" onclick="deleteBaiViet(@bv.Id)">Xóa</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function deleteBaiViet(id) {
+            if (confirm("Bạn có chắc muốn xóa bài viết này?")) {
+                $.post('@Url.Action("DeleteBaiViet", "Admin")', { id: id }, function (res) {
+                    if (res.success) {
+                        window.location.href = res.redirectUrl;
+                    } else {
+                        alert("Xóa thất bại!");
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            if (@(showForm.ToString().ToLower())) {
+                const $form = $('#formBaiViet');
+                if ($form.length) {
+                    $('html, body').animate({
+                        scrollTop: $form.offset().top - 100
+                    }, 500);
+                }
+            }
+        });
+    </script>
+}
