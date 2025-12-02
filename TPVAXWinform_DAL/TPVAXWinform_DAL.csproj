@@ -83,6 +83,7 @@
     <Compile Include="PhieuNhapInDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaiKhoanDAL.cs" />
+    <Compile Include="TaoMaTuDong.cs" />
     <Compile Include="ThongKeDAL.cs" />
     <Compile Include="VaccineDAL.cs" />
     <Compile Include="VaccinePhongBenhDAL.cs" />

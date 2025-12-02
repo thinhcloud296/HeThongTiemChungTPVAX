@@ -53,13 +53,7 @@ namespace TPVAXWinform_GUI
                 if (!File.Exists(reportPath))
                 {
                     MessageBox.Show(
-                    $"Không tìm thấy file báo cáo.\n\n" +
-                    $"Đường dẫn đã tìm: {reportPath}\n\n" +
-                    $"Hướng dẫn khắc phục:\n" +
-                    $"1. Nhấn chuột phải vào file 'rptPhieuNhap.rdlc' trong Solution Explorer\n" +
-                    $"2. Chọn Properties\n" +
-                    $"3. Set 'Copy to Output Directory' = 'Copy always'\n" +
-                    $"4. Build lại project",
+                    $"Không tìm thấy file báo cáo.\n\n",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                     return;

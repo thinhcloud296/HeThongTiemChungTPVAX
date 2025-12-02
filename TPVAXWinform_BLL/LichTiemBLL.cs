@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPVAXWinform_DAL;
 using TPVAXWinform_DTO;
 
 namespace TPVAXWinform_BLL
@@ -11,6 +12,7 @@ namespace TPVAXWinform_BLL
     public class LichTiemBLL
     {
         private readonly TPVAXWinform_DAL.LichTiemDAL lichTiemDAL = new TPVAXWinform_DAL.LichTiemDAL();
+        TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetData()
         {
             return lichTiemDAL.GetData();
@@ -21,7 +23,7 @@ namespace TPVAXWinform_BLL
         }
         public string CreateNewMaLT()
         {
-            return lichTiemDAL.CreateNewMaLT();
+            return autoGen.GenMaLT();
         }
         public void Insert(TPVAXWinform_DTO.LichTiemDTO lichTiem)
         {

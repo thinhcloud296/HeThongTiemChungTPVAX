@@ -497,6 +497,11 @@ namespace TPVAXWinform_GUI
                 MessageBox.Show("Ngày sinh hồ sơ tiêm chủng không được trùng với ngày sinh khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if(dtpNgaySinhHSTC.Value >= DateTime.Now || dtpNgaySinhKH.Value >= DateTime.Now)
+            {
+                MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             // Validation
             bool hopLe = CheckValidationBeforeAddKH(); // Flag
@@ -568,6 +573,11 @@ namespace TPVAXWinform_GUI
             if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
             {
                 MessageBox.Show("Khách hàng đã tồn tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (dtpNgaySinhHSTC.Value >= DateTime.Now || dtpNgaySinhKH.Value >= DateTime.Now)
+            {
+                MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             // Validation

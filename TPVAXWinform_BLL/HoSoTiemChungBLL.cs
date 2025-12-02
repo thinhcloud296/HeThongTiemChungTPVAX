@@ -11,6 +11,7 @@ namespace TPVAXWinform_BLL
     public class HoSoTiemChungBLL
     {
         private readonly HoSoTiemChungDAL _dal = new HoSoTiemChungDAL();
+        TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetData()
         {
             return _dal.GetData();
@@ -25,7 +26,7 @@ namespace TPVAXWinform_BLL
         }   
         public string CreateMaHSTC(string CCCD)
         {
-            return _dal.CreateMaHSTC(CCCD);
+            return autoGen.GenMaHSTC();
         }
         public void Insert(TPVAXWinform_DTO.HoSoTiemChungDTO newHSTC)
         {

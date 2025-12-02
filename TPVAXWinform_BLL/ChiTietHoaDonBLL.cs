@@ -11,13 +11,14 @@ namespace TPVAXWinform_BLL
     public class ChiTietHoaDonBLL
     {
         ChiTietHoaDonDAL dal = new ChiTietHoaDonDAL();
+        TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetDataByMaHD(string MaHD)
         {
             return dal.GetDataByMaHD(MaHD);
         }
         public string CreateNewMaCTHD()
         {
-            return dal.CreateNewMaCTHD();
+            return autoGen.GenMaCTHD();
         }   
 
         public void Insert(ChiTietHoaDonDTO cthd)

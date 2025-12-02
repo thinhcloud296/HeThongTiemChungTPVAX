@@ -12,6 +12,7 @@ namespace TPVAXWinform_BLL
     public class KhachHangBLL
     {
         KhachHangDAL dal = new KhachHangDAL();
+        TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetData()
         {
             return dal.GetData();
@@ -42,7 +43,7 @@ namespace TPVAXWinform_BLL
         }
         public string CreateMaKH(string CCCD)
         {
-            return dal.CreateMaKH(CCCD);
+            return autoGen.GenMaKH();
         }
         public void Edit(KhachHangDTO khachHang)
         {

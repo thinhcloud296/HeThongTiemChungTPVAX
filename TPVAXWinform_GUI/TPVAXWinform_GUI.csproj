@@ -457,8 +457,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="rptHoaDon.rdlc" />
-    <EmbeddedResource Include="rptPhieuNhap.rdlc" />
+    <EmbeddedResource Include="rptHoaDon.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rptPhieuNhap.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\BangDieuKhienControl.resx">
       <DependentUpon>BangDieuKhienControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -526,11 +530,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Images\logo.png" />
-    <None Include="Resources\Doctor Hospital GIF.gif" />
-    <None Include="Resources\Doctor Hospital GIF1.gif" />
-    <Content Include="Resources\logo.png" />
-    <Content Include="vaccine.ico" />
+    <Content Include="Assets\Images\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Doctor Hospital GIF.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Doctor Hospital GIF1.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vaccine.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dashboard\Forms\" />

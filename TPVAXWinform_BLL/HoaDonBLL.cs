@@ -11,13 +11,14 @@ namespace TPVAXWinform_BLL
     public class HoaDonBLL
     {
         HoaDonDAL dal = new HoaDonDAL();
+        TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetData()
         {
             return dal.GetData();
         }
         public string CreateNewMaHD()
         {
-            return dal.CreateNewMaHD();
+            return autoGen.GenMaHD();
         }
         public void Insert(HoaDonDTO hd)
         {
