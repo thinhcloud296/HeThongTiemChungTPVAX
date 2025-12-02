@@ -101,8 +101,7 @@ namespace TPVAXWebsite.Controllers
 
                     TempData["SuccessMessage"] = "Đã thêm người thân thành công!";
 
-                    // Điều hướng thông minh: Nếu đến từ trang Đặt lịch thì quay về Đặt lịch
-                    // Bạn có thể dùng TempData hoặc QueryString để biết nguồn gọi
+ 
                     return RedirectToAction("DatLich", "LichTiem");
                 }
                 catch (Exception ex)

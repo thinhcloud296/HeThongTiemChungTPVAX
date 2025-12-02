@@ -1,5 +1,5 @@
 ﻿@model TPVAXWebsite.Models.ViewModels.DashboardViewModel
-
+@using System.Web
 
 @{
     ViewBag.Title = "Dashboard - Tài Khoản Của Tôi";
@@ -246,7 +246,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Thành công!',
-                text: '@Html.Raw(TempData["SuccessMessage"])',
+                text: '@Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["SuccessMessage"].ToString()))',
                 confirmButtonColor: '#0077b6'
             });
         });
@@ -260,7 +260,7 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Lỗi!',
-                text: '@TempData["ErrorMessage"]',
+                text: '@Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["ErrorMessage"].ToString()))',
                 confirmButtonColor: '#dc3545'
             });
         });
@@ -274,7 +274,7 @@
             Swal.fire({
                 icon: 'info',
                 title: 'Thông báo',
-                text: '@TempData["ThongBao"]',
+                text: '@Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["ThongBao"].ToString()))',
                 confirmButtonColor: '#0077b6'
             });
         });
@@ -1130,7 +1130,6 @@
                                             <label class="form-label">Quan hệ <span class="text-danger">*</span></label>
                                             <select name="VaiTro" class="form-select" required>
                                                 <option value="">Chọn quan hệ</option>
-                                                <option>Bản thân</option>
                                                 <option>Con</option>
                                                 <option>Vợ/Chồng</option>
                                                 <option>Bố/Mẹ</option>
