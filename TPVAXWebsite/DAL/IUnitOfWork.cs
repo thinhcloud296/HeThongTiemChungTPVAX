@@ -29,6 +29,7 @@ namespace TPVAXWebsite.DAL
         IRepository<NhaCungCap> NhaCungCaps { get; }
         IRepository<PhieuNhapVaccine> PhieuNhapVaccines { get; }
         IRepository<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; }
+        IRepository<BaiViet> BaiViets { get; }
 
         // Methods
         int SaveChanges();
