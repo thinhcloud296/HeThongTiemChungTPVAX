@@ -2274,7 +2274,96 @@ namespace TPVAXWebsite.Controllers
                 // Error deleting image
             }
         }
+            /// <summary>
+    /// Quản lý bài viết
+    // ===============================
 
+    public ActionResult BaiViets(int? editId, bool? showForm)
+    {
+        var list = _unitOfWork.BaiViets.Query()
+            .OrderByDescending(b => b.NgayDang)
+            .Select(b => new BaiVietViewModel
+            {
+                Id = b.MaBV,
+                TieuDe = b.TieuDe,
+                TomTat = b.TomTat,
+                NoiDung = b.NoiDung,
+                HinhAnh = b.HinhAnh,
+                NgayDang = b.NgayDang,
+                DanhMuc = b.DanhMuc,
+                Tag = b.Tag,
+                TrangThai = b.TrangThai
+            }).ToList();
+
+        if (editId.HasValue)
+        {
+            var bv = _unitOfWork.BaiViets.GetById(editId.Value);
+            if (bv != null)
+            {
+                ViewBag.EditId = bv.MaBV;
+                ViewBag.EditTieuDe = bv.TieuDe;
+                ViewBag.EditTomTat = bv.TomTat;
+                ViewBag.EditNoiDung = bv.NoiDung;
+                ViewBag.EditTag = bv.Tag;
+                ViewBag.EditHinhAnh = bv.HinhAnh;
+                ViewBag.EditTrangThai = bv.TrangThai;
+                ViewBag.EditDanhMuc = bv.DanhMuc;
+            }
+        }
+
+        ViewBag.DanhMucList = new List<string>
+{
+    "Mẹ và bé",
+    "Theo đối tượng",
+    "Bệnh truyền nhiễm",
+    "Thông tin"
+};
+
+        ViewBag.ShowForm = showForm ?? false;
+        ViewBag.Message = TempData["Message"];
+        return View(list);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult SaveBaiViet(BaiViet model, HttpPostedFileBase ImageFile)
+    {
+        var bv = model.MaBV > 0 ? _unitOfWork.BaiViets.GetById(model.MaBV) : new BaiViet();
+
+        // Upload ảnh nếu có
+        if (ImageFile != null && ImageFile.ContentLength > 0)
+        {
+            string fileName = Guid.NewGuid() + Path.GetExtension(ImageFile.FileName);
+            string folder = Server.MapPath("~/Content/Images/BaiViet/");
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+            ImageFile.SaveAs(Path.Combine(folder, fileName));
+            bv.HinhAnh = fileName;
+        }
+
+        // Gán dữ liệu
+        bv.TieuDe = model.TieuDe;
+        bv.TomTat = model.TomTat;
+        bv.NoiDung = model.NoiDung;
+        bv.DanhMuc = model.DanhMuc;
+        bv.Tag = model.Tag;
+
+        // Xử lý trạng thái checkbox
+        var trangThaiRaw = Request.Form["TrangThai"];
+        bv.TrangThai = trangThaiRaw != null && trangThaiRaw.Contains("true");
+
+        bv.NgayDang = (model.MaBV > 0 && bv.NgayDang != default(DateTime)) ? bv.NgayDang : DateTime.Now;
+
+        if (model.MaBV > 0)
+            _unitOfWork.BaiViets.Update(bv);
+        else
+            _unitOfWork.BaiViets.Add(bv);
+
+        _unitOfWork.SaveChanges();
+
+        TempData["Message"] = "✅ Đã lưu bài viết thành công!";
+        return RedirectToAction("BaiViets");
+    }
+    
         protected override void Dispose(bool disposing)
         {
             if (disposing)
