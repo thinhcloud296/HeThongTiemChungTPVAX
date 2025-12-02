@@ -72,7 +72,7 @@ namespace TPVAXWebsite.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var khuyenMai = _khuyenMaiService.GetDetailViewModel(id);
+                var khuyenMai = _khuyenMaiService.GetFullDetailViewModel(id);
 
                 if (khuyenMai == null)
                 {

@@ -1,0 +1,574 @@
+﻿@model TPVAXWebsite.Models.ViewModels.KhuyenMaiDetailViewModel
+
+@{
+    ViewBag.Title = Model.TenKM + " - Chi tiết khuyến mãi";
+    var relatedPromotions = ViewBag.RelatedPromotions as IEnumerable<TPVAXWebsite.Models.Domain.KhuyenMai>;
+}
+
+<style>
+    .promo-detail-hero {
+        background: linear-gradient(135deg, #0077b6 0%, #00b4d8 50%, #90e0ef 100%);
+        padding: 60px 0 80px;
+        position: relative;
+        overflow: hidden;
+    }
+    .promo-detail-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+        opacity: 0.5;
+    }
+    .promo-detail-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        margin-top: -60px;
+        position: relative;
+        z-index: 10;
+    }
+    .promo-image-wrapper {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .promo-image-wrapper img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .promo-image-wrapper:hover img {
+        transform: scale(1.05);
+    }
+    .badge-discount-large {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 30px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        box-shadow: 0 5px 20px rgba(238,90,36,0.4);
+    }
+    .badge-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    .badge-status.active {
+        background: linear-gradient(135deg, #00b894, #00cec9);
+        color: #fff;
+    }
+    .badge-status.upcoming {
+        background: linear-gradient(135deg, #fdcb6e, #f39c12);
+        color: #fff;
+    }
+    .badge-status.expired {
+        background: linear-gradient(135deg, #b2bec3, #636e72);
+        color: #fff;
+    }
+    .promo-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2d3436;
+        margin-bottom: 15px;
+    }
+    .promo-type-badge {
+        display: inline-flex;
+        align-items: center;
+        background: linear-gradient(135deg, #0077b6, #00b4d8);
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .info-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+    .info-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px dashed #dee2e6;
+    }
+    .info-item:last-child {
+        border-bottom: none;
+    }
+    .info-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #0077b6, #00b4d8);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.1rem;
+        margin-right: 15px;
+    }
+    .info-label {
+        color: #636e72;
+        font-size: 0.85rem;
+        margin-bottom: 2px;
+    }
+    .info-value {
+        color: #2d3436;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    .countdown-box {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        border-radius: 16px;
+        padding: 20px;
+        color: #fff;
+        text-align: center;
+    }
+    .countdown-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    .countdown-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+    .product-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+    .product-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .product-card .card-body {
+        padding: 20px;
+    }
+    .product-card .product-name {
+        font-weight: 600;
+        color: #2d3436;
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+    .price-original {
+        text-decoration: line-through;
+        color: #b2bec3;
+        font-size: 0.9rem;
+    }
+    .price-sale {
+        color: #ee5a24;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+    .save-badge {
+        background: #00b894;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .related-promo-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .related-promo-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+    .btn-apply-promo {
+        background: linear-gradient(135deg, #00b894, #00cec9);
+        border: none;
+        color: #fff;
+        padding: 14px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    .btn-apply-promo:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0,184,148,0.4);
+        color: #fff;
+    }
+    .btn-back {
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        color: #636e72;
+        padding: 14px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-back:hover {
+        background: #e9ecef;
+        color: #2d3436;
+    }
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2d3436;
+        margin-bottom: 25px;
+        position: relative;
+        padding-left: 15px;
+    }
+    .section-title::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(135deg, #0077b6, #00b4d8);
+        border-radius: 2px;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="promo-detail-hero">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0" style="background: transparent;">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")" class="text-white"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "KhuyenMai")" class="text-white">Khuyến mãi</a></li>
+                <li class="breadcrumb-item active text-white-50">@Model.TenKM</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="container mb-5">
+    <div class="promo-detail-card p-4 p-lg-5">
+        <div class="row">
+            <!-- Image Column -->
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="promo-image-wrapper">
+                    @{
+                        var imagePath = Url.Content("~/Content/Assets/Images/km.jpg");
+                        if (!string.IsNullOrEmpty(Model.HinhAnh))
+                        {
+                            if (Model.HinhAnh.StartsWith("/") || Model.HinhAnh.StartsWith("~"))
+                            {
+                                imagePath = Url.Content(Model.HinhAnh);
+                            }
+                            else
+                            {
+                                imagePath = Url.Content("~/Content/Images/KhuyenMai/" + Model.HinhAnh);
+                            }
+                        }
+                    }
+                    <img src="@imagePath" 
+                         alt="@Model.TenKM"
+                         onerror="this.src='@Url.Content("~/Content/Assets/Images/km.jpg")'" />
+                    <span class="badge-discount-large">@Model.GiaTriGiamFormatted</span>
+                </div>
+
+                @if (Model.IsActive && Model.SoNgayConLai <= 30)
+                {
+                    <div class="countdown-box mt-4">
+                        <i class="fas fa-clock fa-2x mb-2"></i>
+                        <div class="countdown-number">@Model.SoNgayConLai</div>
+                        <div class="countdown-label">ngày còn lại</div>
+                    </div>
+                }
+            </div>
+
+            <!-- Info Column -->
+            <div class="col-lg-7">
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <span class="promo-type-badge">
+                        <i class="fas fa-tag me-2"></i>@(Model.LoaiKM ?? "Khuyến mãi")
+                    </span>
+                    <span class="badge-status @(Model.IsActive ? "active" : Model.IsUpcoming ? "upcoming" : "expired")">
+                        <i class="fas @(Model.IsActive ? "fa-check-circle" : Model.IsUpcoming ? "fa-clock" : "fa-times-circle") me-2"></i>
+                        @Model.TrangThaiHienThi
+                    </span>
+                </div>
+
+                <h1 class="promo-title">@Model.TenKM</h1>
+
+                <div class="info-card">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-percent"></i></div>
+                        <div>
+                            <div class="info-label">Giá trị giảm</div>
+                            <div class="info-value text-danger fs-5">@Model.GiaTriGiamFormatted</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div>
+                            <div class="info-label">Thời gian áp dụng</div>
+                            <div class="info-value">@Model.NgayBatDauFormatted - @Model.NgayKetThucFormatted</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                        <div>
+                            <div class="info-label">Kiểu giảm giá</div>
+                            <div class="info-value">@(Model.KieuGiam ?? "Tiền mặt")</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-box"></i></div>
+                        <div>
+                            <div class="info-label">Sản phẩm áp dụng</div>
+                            <div class="info-value">@(Model.SanPhamApDungs.Count > 0 ? Model.SanPhamApDungs.Count + " sản phẩm" : "Tất cả sản phẩm")</div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.MoTa))
+                {
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-3"><i class="fas fa-file-alt me-2 text-primary"></i>Mô tả chi tiết</h5>
+                        <p class="text-secondary" style="line-height: 1.8;">@Html.Raw(Model.MoTa.Replace("\n", "<br/>"))</p>
+                    </div>
+                }
+
+                <div class="d-flex flex-wrap gap-3">
+                    @if (Model.IsActive)
+                    {
+                        <a href="@Url.Action("Index", "Vaccine")" class="btn btn-apply-promo">
+                            <i class="fas fa-shopping-cart me-2"></i>Mua ngay
+                        </a>
+                    }
+                    <a href="@Url.Action("Index", "KhuyenMai")" class="btn btn-back">
+                        <i class="fas fa-arrow-left me-2"></i>Quay lại
+                    </a>
+                    <a href="tel:0975088626" class="btn btn-outline-primary" style="border-radius: 30px; padding: 14px 30px;">
+                        <i class="fas fa-phone me-2"></i>Tư vấn: 0975 088 626
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Sản phẩm áp dụng -->
+@if (Model.SanPhamApDungs != null && Model.SanPhamApDungs.Any())
+{
+    <section class="container mb-5">
+        <h2 class="section-title"><i class="fas fa-box-open me-2"></i>Sản phẩm áp dụng khuyến mãi</h2>
+        <div class="row g-4">
+            @foreach (var sp in Model.SanPhamApDungs)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product-card">
+                        @{
+                            var spImagePath = Url.Content("~/Content/Assets/Images/default.png");
+                            if (!string.IsNullOrEmpty(sp.HinhAnh))
+                            {
+                                if (sp.LoaiSanPham == "VACCINE")
+                                {
+                                    spImagePath = Url.Content("~/Content/Images/Vaccine/" + sp.HinhAnh);
+                                }
+                                else
+                                {
+                                    spImagePath = Url.Content("~/Content/Images/GoiVaccine/" + sp.HinhAnh);
+                                }
+                            }
+                        }
+                        <img src="@spImagePath" 
+                             alt="@sp.TenSanPham"
+                             onerror="this.src='@Url.Content("~/Content/Assets/Images/default.png")'" />
+                        <div class="card-body">
+                            <span class="badge @(sp.LoaiSanPham == "VACCINE" ? "bg-primary" : "bg-success") mb-2">
+                                @(sp.LoaiSanPham == "VACCINE" ? "Vắc xin" : "Gói vắc xin")
+                            </span>
+                            <h6 class="product-name">@sp.TenSanPham</h6>
+                            <div class="mb-2">
+                                <span class="price-original">@sp.GiaGocFormatted</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="price-sale">@sp.GiaSauGiamFormatted</span>
+                                <span class="save-badge">Tiết kiệm @sp.TietKiemFormatted</span>
+                            </div>
+                            <div class="mt-3">
+                                @if (sp.LoaiSanPham == "VACCINE")
+                                {
+                                    <a href="@Url.Action("ChiTiet", "Vaccine", new { id = sp.MaSanPham })" class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-eye me-1"></i>Xem chi tiết
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Detail", "GoiVaccine", new { id = sp.MaSanPham })" class="btn btn-outline-success btn-sm w-100">
+                                        <i class="fas fa-eye me-1"></i>Xem chi tiết
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<!-- Điều kiện áp dụng -->
+<section class="container mb-5">
+    <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+        <div class="card-body p-4">
+            <h5 class="fw-bold mb-4"><i class="fas fa-clipboard-list me-2 text-primary"></i>Điều kiện áp dụng</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                            <span>Áp dụng cho khách hàng đăng ký tài khoản tại TPVAX</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                            <span>Thời gian áp dụng: @Model.NgayBatDauFormatted - @Model.NgayKetThucFormatted</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                            <span>Không áp dụng đồng thời với các chương trình khuyến mãi khác</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                            <span>Giảm giá được áp dụng tự động khi thanh toán</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                            <span>Liên hệ hotline 0975 088 626 để được hỗ trợ</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                            <span>TPVAX có quyền thay đổi điều khoản mà không cần báo trước</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Khuyến mãi liên quan -->
+@if (relatedPromotions != null && relatedPromotions.Any())
+{
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-tags me-2"></i>Khuyến mãi khác</h2>
+            <div class="row g-4">
+                @foreach (var km in relatedPromotions)
+                {
+                    var today = DateTime.Now.Date;
+                    bool isActive = km.TrangThai && km.NgayBatDau <= today && km.NgayKetThuc >= today;
+                    int daysLeft = (km.NgayKetThuc - today).Days;
+                    
+                    <div class="col-lg-4 col-md-6">
+                        <div class="related-promo-card">
+                            @{
+                                var relatedImagePath = Url.Content("~/Content/Assets/Images/km.jpg");
+                                if (!string.IsNullOrEmpty(km.HinhAnh))
+                                {
+                                    if (km.HinhAnh.StartsWith("/") || km.HinhAnh.StartsWith("~"))
+                                    {
+                                        relatedImagePath = Url.Content(km.HinhAnh);
+                                    }
+                                    else
+                                    {
+                                        relatedImagePath = Url.Content("~/Content/Images/KhuyenMai/" + km.HinhAnh);
+                                    }
+                                }
+                            }
+                            <div style="position: relative;">
+                                <img src="@relatedImagePath" 
+                                     alt="@km.TenKM"
+                                     style="width: 100%; height: 180px; object-fit: cover;"
+                                     onerror="this.src='@Url.Content("~/Content/Assets/Images/km.jpg")'" />
+                                @if (km.GiaTriGiam > 0)
+                                {
+                                    <span class="badge bg-danger position-absolute" style="top: 10px; right: 10px; font-size: 0.9rem;">
+                                        @if (km.KieuGiam == "Phần trăm" || km.KieuGiam == "%")
+                                        {
+                                            @:-@km.GiaTriGiam%
+                                        }
+                                        else
+                                        {
+                                            @:@string.Format("{0:N0}₫", km.GiaTriGiam)
+                                        }
+                                    </span>
+                                }
+                            </div>
+                            <div class="p-3">
+                                <span class="badge bg-primary mb-2">@(km.LoaiKM ?? "Khuyến mãi")</span>
+                                <h6 class="fw-bold mb-2">@km.TenKM</h6>
+                                <p class="text-muted small mb-3">
+                                    @if (!string.IsNullOrEmpty(km.MoTa))
+                                    {
+                                        @(km.MoTa.Length > 80 ? km.MoTa.Substring(0, 80) + "..." : km.MoTa)
+                                    }
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="far fa-calendar me-1"></i>
+                                        @if (isActive)
+                                        {
+                                            @:Còn @daysLeft ngày
+                                        }
+                                        else
+                                        {
+                                            @:Đến @km.NgayKetThuc.ToString("dd/MM")
+                                        }
+                                    </small>
+                                    <a href="@Url.Action("Detail", "KhuyenMai", new { id = km.MaKM })" class="btn btn-sm btn-outline-primary">
+                                        Chi tiết <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- CTA Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);">
+    <div class="container text-center text-white">
+        <h3 class="fw-bold mb-3">Bạn cần tư vấn thêm?</h3>
+        <p class="mb-4 opacity-75">Đội ngũ chuyên gia của TPVAX luôn sẵn sàng hỗ trợ bạn 24/7</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="tel:0975088626" class="btn btn-light btn-lg" style="border-radius: 30px; padding: 12px 30px;">
+                <i class="fas fa-phone me-2"></i>0975 088 626
+            </a>
+            <a href="@Url.Action("Index", "Vaccine")" class="btn btn-outline-light btn-lg" style="border-radius: 30px; padding: 12px 30px;">
+                <i class="fas fa-syringe me-2"></i>Xem vắc xin
+            </a>
+        </div>
+    </div>
+</section>

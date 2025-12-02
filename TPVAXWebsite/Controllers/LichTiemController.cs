@@ -268,6 +268,30 @@ namespace TPVAXWebsite.Controllers
                     return Json(new { success = false, message = "Không thể đổi lịch khi còn dưới 24 giờ đến giờ hẹn. Vui lòng liên hệ trung tâm." });
                 }
 
+                // *** KIỂM TRA TRÙNG LỊCH ***
+                // Kiểm tra xem hồ sơ này đã có lịch nào khác trong khoảng 2 giờ không
+                var ngayBatDau = NgayHenTiem.AddHours(-2);
+                var ngayKetThuc = NgayHenTiem.AddHours(2);
+                
+                var lichTrung = _context.LichTiems
+                    .Include(lt => lt.Vaccine)
+                    .Where(lt => lt.MaHSTC == lich.MaHSTC
+                              && lt.MaLT != MaLT  // Loại trừ lịch hiện tại
+                              && lt.TrangThai == "Chưa tiêm"
+                              && lt.NgayHenTiem >= ngayBatDau
+                              && lt.NgayHenTiem <= ngayKetThuc)
+                    .FirstOrDefault();
+
+                if (lichTrung != null)
+                {
+                    return Json(new { 
+                        success = false, 
+                        message = $"Hồ sơ này đã có lịch hẹn tiêm {lichTrung.Vaccine?.TenVC ?? "vaccine"} " +
+                                  $"vào ngày {lichTrung.NgayHenTiem:dd/MM/yyyy} lúc {lichTrung.NgayHenTiem:HH:mm}. " +
+                                  "Vui lòng chọn thời gian khác (cách ít nhất 2 giờ)."
+                    });
+                }
+
                 // Lưu ngày cũ để thông báo
                 var ngayCu = lich.NgayHenTiem;
                 

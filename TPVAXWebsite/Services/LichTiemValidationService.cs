@@ -60,6 +60,16 @@ namespace TPVAXWebsite.Services
         /// </summary>
         public ValidationResult ValidateDatLichTiem(string maHSTC, string maVC, DateTime ngayHenTiem)
         {
+            // 0. Kiểm tra trùng lịch - cùng hồ sơ, cùng ngày giờ
+            var lichTrung = KiemTraTrungLich(maHSTC, ngayHenTiem, null);
+            if (lichTrung != null)
+            {
+                return ValidationResult.Fail(
+                    $"Hồ sơ này đã có lịch hẹn tiêm {lichTrung.Vaccine?.TenVC ?? "vaccine"} " +
+                    $"vào ngày {lichTrung.NgayHenTiem:dd/MM/yyyy} lúc {lichTrung.NgayHenTiem:HH:mm}. " +
+                    "Vui lòng chọn thời gian khác.");
+            }
+
             // 1. Lấy thông tin vaccine
             var vaccine = _context.Vaccines.Find(maVC);
             if (vaccine == null)
@@ -214,6 +224,122 @@ namespace TPVAXWebsite.Services
                 // Mũi 2 trở đi: cộng thêm tháng từ mũi 1
                 return ngayHenMui1.AddMonths((soMui - 1) * soThangCho);
             }
+        }
+
+        /// <summary>
+        /// Kiểm tra trùng lịch tiêm - cùng hồ sơ, cùng ngày (trong khoảng 2 giờ)
+        /// </summary>
+        /// <param name="maHSTC">Mã hồ sơ tiêm chủng</param>
+        /// <param name="ngayHenTiem">Ngày giờ hẹn tiêm</param>
+        /// <param name="maLTHienTai">Mã lịch tiêm hiện tại (để loại trừ khi đổi lịch)</param>
+        /// <returns>Lịch tiêm bị trùng nếu có, null nếu không trùng</returns>
+        public LichTiem KiemTraTrungLich(string maHSTC, DateTime ngayHenTiem, string maLTHienTai = null)
+        {
+            // Kiểm tra trùng trong khoảng 2 giờ (trước và sau)
+            var ngayBatDau = ngayHenTiem.AddHours(-2);
+            var ngayKetThuc = ngayHenTiem.AddHours(2);
+
+            var query = _context.LichTiems
+                .Include(lt => lt.Vaccine)
+                .Where(lt => lt.MaHSTC == maHSTC
+                          && lt.TrangThai == "Chưa tiêm"
+                          && lt.NgayHenTiem >= ngayBatDau
+                          && lt.NgayHenTiem <= ngayKetThuc);
+
+            // Loại trừ lịch hiện tại nếu đang đổi lịch
+            if (!string.IsNullOrEmpty(maLTHienTai))
+            {
+                query = query.Where(lt => lt.MaLT != maLTHienTai);
+            }
+
+            return query.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Kiểm tra có thể đổi lịch sang ngày giờ mới không
+        /// </summary>
+        public ValidationResult ValidateDoiLich(string maLT, DateTime ngayHenMoi)
+        {
+            var lichHienTai = _context.LichTiems
+                .Include(lt => lt.Vaccine)
+                .FirstOrDefault(lt => lt.MaLT == maLT);
+
+            if (lichHienTai == null)
+            {
+                return ValidationResult.Fail("Không tìm thấy lịch hẹn.");
+            }
+
+            if (lichHienTai.TrangThai != "Chưa tiêm")
+            {
+                return ValidationResult.Fail("Chỉ có thể đổi lịch hẹn đang chờ tiêm.");
+            }
+
+            // Kiểm tra ngày hẹn mới phải ít nhất là ngày mai
+            if (ngayHenMoi.Date <= DateTime.Now.Date)
+            {
+                return ValidationResult.Fail("Ngày hẹn mới phải từ ngày mai trở đi.");
+            }
+
+            // Kiểm tra ngày hẹn không quá xa (tối đa 1 năm)
+            if (ngayHenMoi.Date > DateTime.Now.AddYears(1).Date)
+            {
+                return ValidationResult.Fail("Ngày hẹn mới không được quá 1 năm kể từ hôm nay.");
+            }
+
+            // Kiểm tra không phải Chủ nhật
+            if (ngayHenMoi.DayOfWeek == DayOfWeek.Sunday)
+            {
+                return ValidationResult.Fail("Trung tâm không làm việc vào Chủ nhật. Vui lòng chọn ngày khác.");
+            }
+
+            // Kiểm tra giờ làm việc (8h - 17h)
+            if (ngayHenMoi.Hour < 8 || ngayHenMoi.Hour > 17)
+            {
+                return ValidationResult.Fail("Vui lòng chọn giờ trong khung 08:00 - 17:00.");
+            }
+
+            // Kiểm tra không đổi lịch quá sát ngày hẹn cũ (ít nhất 24h trước)
+            if (lichHienTai.NgayHenTiem <= DateTime.Now.AddHours(24))
+            {
+                return ValidationResult.Fail("Không thể đổi lịch khi còn dưới 24 giờ đến giờ hẹn. Vui lòng liên hệ trung tâm.");
+            }
+
+            // Kiểm tra trùng lịch với các lịch khác của cùng hồ sơ
+            var lichTrung = KiemTraTrungLich(lichHienTai.MaHSTC, ngayHenMoi, maLT);
+            if (lichTrung != null)
+            {
+                return ValidationResult.Fail(
+                    $"Hồ sơ này đã có lịch hẹn tiêm {lichTrung.Vaccine?.TenVC ?? "vaccine"} " +
+                    $"vào ngày {lichTrung.NgayHenTiem:dd/MM/yyyy} lúc {lichTrung.NgayHenTiem:HH:mm}. " +
+                    "Vui lòng chọn thời gian khác (cách ít nhất 2 giờ).");
+            }
+
+            // Kiểm tra khoảng cách với mũi trước (nếu có)
+            if (lichHienTai.SoMui > 1 && lichHienTai.Vaccine != null)
+            {
+                int soThangCho = lichHienTai.Vaccine.SoThangCho ?? 1;
+                
+                var muiTruoc = _context.LichTiems
+                    .Where(lt => lt.MaHSTC == lichHienTai.MaHSTC 
+                              && lt.MaVC == lichHienTai.MaVC 
+                              && lt.SoMui == lichHienTai.SoMui - 1
+                              && lt.TrangThai == "Đã tiêm")
+                    .FirstOrDefault();
+
+                if (muiTruoc != null && muiTruoc.NgayTiemThucTe.HasValue)
+                {
+                    DateTime ngayToiThieu = muiTruoc.NgayTiemThucTe.Value.AddMonths(soThangCho);
+                    if (ngayHenMoi < ngayToiThieu)
+                    {
+                        return ValidationResult.Fail(
+                            $"Chưa đủ thời gian giữa các mũi tiêm. " +
+                            $"Mũi {muiTruoc.SoMui} đã tiêm ngày {muiTruoc.NgayTiemThucTe:dd/MM/yyyy}. " +
+                            $"Ngày sớm nhất có thể đặt: {ngayToiThieu:dd/MM/yyyy}.");
+                    }
+                }
+            }
+
+            return ValidationResult.Success(lichHienTai.SoMui ?? 1);
         }
 
         public void Dispose()
