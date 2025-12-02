@@ -7,15 +7,27 @@ using System.Web.Script.Serialization;
 using TPVAXWebsite.DAL;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
+using TPVAXWebsite.Services;
 
 namespace TPVAXWebsite.Controllers
 {
     /// <summary>
     /// Controller quản lý hóa đơn và thanh toán
+    /// FIX: Đã tích hợp các service validation cho lịch tiêm, khuyến mãi
     /// </summary>
     public class HoaDonController : Controller
     {
         private readonly TPVAXDbContext _context = new TPVAXDbContext();
+        
+        // Services cho validation nghiệp vụ
+        private readonly LichTiemValidationService _lichTiemValidation;
+        private readonly KhuyenMaiValidationService _khuyenMaiValidation;
+
+        public HoaDonController()
+        {
+            _lichTiemValidation = new LichTiemValidationService(_context);
+            _khuyenMaiValidation = new KhuyenMaiValidationService(_context);
+        }
 
         // GET: HoaDon/Index - Danh sách hóa đơn của khách hàng
         public ActionResult Index()
@@ -134,6 +146,7 @@ namespace TPVAXWebsite.Controllers
         }
 
         // POST: HoaDon/ApDungKhuyenMai
+        // FIX #5: Sử dụng KhuyenMaiValidationService để kiểm tra số lần sử dụng
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult ApDungKhuyenMai(string MaKM)
@@ -146,79 +159,34 @@ namespace TPVAXWebsite.Controllers
                     return Json(new { success = false, message = "Phiên đăng nhập hết hạn." });
                 }
 
-                // Kiểm tra mã khuyến mãi
-                var khuyenMai = _context.KhuyenMais
-                    .FirstOrDefault(km => km.MaKM == MaKM
-                                       && km.NgayBatDau <= DateTime.Now
-                                       && km.NgayKetThuc >= DateTime.Now
-                                       && km.TrangThai == true);
-
-                if (khuyenMai == null)
-                {
-                    return Json(new { success = false, message = "Mã khuyến mãi không hợp lệ hoặc đã hết hạn." });
-                }
-
-                // Load giỏ hàng
+                // Load giỏ hàng và chuyển sang DTO
                 var gioHangItems = LoadGioHangItems(kh.MaKH);
+                var gioHangDTO = gioHangItems.Select(item => new GioHangItem
+                {
+                    MaSanPham = item.MaSanPham,
+                    LoaiSanPham = item.LoaiSanPham,
+                    SoLuong = item.SoLuong,
+                    DonGia = item.DonGia
+                }).ToList();
+
+                // FIX #5: Validate khuyến mãi với kiểm tra số lần sử dụng
+                var validationResult = _khuyenMaiValidation.ValidateKhuyenMaiChoGioHang(MaKM, kh.MaKH, gioHangDTO);
+                
+                if (!validationResult.IsValid)
+                {
+                    return Json(new { success = false, message = validationResult.ErrorMessage });
+                }
+
                 decimal tongTien = gioHangItems.Sum(item => item.ThanhTien);
-
-                // Tính tiền giảm
-                decimal tienGiam = 0;
-
-                // Lấy danh sách sản phẩm áp dụng khuyến mãi
-                var sanPhamApDung = _context.ChiTietKhuyenMais
-                    .Where(ct => ct.MaKM == MaKM)
-                    .Select(ct => new { ct.MaSanPham, ct.LoaiSanPham })
-                    .ToList();
-
-                if (sanPhamApDung.Any())
-                {
-                    // Khuyến mãi áp dụng cho sản phẩm cụ thể
-                    var tongTienApDung = gioHangItems
-                        .Where(item => sanPhamApDung.Any(sp => sp.MaSanPham == item.MaSanPham
-                                                             && sp.LoaiSanPham == item.LoaiSanPham))
-                        .Sum(item => item.ThanhTien);
-
-                    if (tongTienApDung > 0)
-                    {
-                        if (khuyenMai.KieuGiam == "PhanTram")
-                        {
-                            tienGiam = tongTienApDung * khuyenMai.GiaTriGiam / 100;
-                        }
-                        else // SoTien
-                        {
-                            tienGiam = khuyenMai.GiaTriGiam;
-                        }
-                    }
-                }
-                else
-                {
-                    // Khuyến mãi áp dụng toàn bộ đơn hàng
-                    if (khuyenMai.KieuGiam == "PhanTram")
-                    {
-                        tienGiam = tongTien * khuyenMai.GiaTriGiam / 100;
-                    }
-                    else // SoTien
-                    {
-                        tienGiam = khuyenMai.GiaTriGiam;
-                    }
-                }
-
-                // Không giảm quá tổng tiền
-                if (tienGiam > tongTien)
-                {
-                    tienGiam = tongTien;
-                }
-
-                decimal tongTienSauGiam = tongTien - tienGiam;
+                decimal tongTienSauGiam = tongTien - validationResult.TienGiam;
 
                 return Json(new
                 {
                     success = true,
                     message = "Áp dụng khuyến mãi thành công!",
                     maKM = MaKM,
-                    tenKM = khuyenMai.TenKM,
-                    tienGiam = tienGiam,
+                    tenKM = validationResult.KhuyenMai.TenKM,
+                    tienGiam = validationResult.TienGiam,
                     tongTienSauGiam = tongTienSauGiam
                 });
             }
@@ -275,6 +243,26 @@ namespace TPVAXWebsite.Controllers
                     decimal tongTien = 0;
                     var chiTietList = new List<ChiTietHoaDon>();
 
+                    // FIX #5: Validate khuyến mãi trước khi thanh toán
+                    if (!string.IsNullOrEmpty(MaKM))
+                    {
+                        var gioHangDTO = gioHangItems.Select(item => new GioHangItem
+                        {
+                            MaSanPham = item.MaSanPham,
+                            LoaiSanPham = item.LoaiSanPham,
+                            SoLuong = item.SoLuong,
+                            DonGia = item.LoaiSanPham == "VACCINE" 
+                                ? (_context.Vaccines.Find(item.MaSanPham)?.GiaBan ?? 0)
+                                : (_context.GoiVaccines.Find(item.MaSanPham)?.GiaGoi ?? 0)
+                        }).ToList();
+
+                        var kmValidation = _khuyenMaiValidation.ValidateKhuyenMaiChoGioHang(MaKM, kh.MaKH, gioHangDTO);
+                        if (!kmValidation.IsValid)
+                        {
+                            return Json(new { success = false, message = kmValidation.ErrorMessage });
+                        }
+                    }
+
                     foreach (var item in gioHangItems)
                     {
                         decimal donGia = 0;
@@ -287,14 +275,18 @@ namespace TPVAXWebsite.Controllers
                             {
                                 throw new Exception($"Vaccine {item.MaSanPham} không tồn tại.");
                             }
+                            
+                            // Kiểm tra tồn kho đơn giản
                             if (vaccine.SoLuong < item.SoLuong)
                             {
-                                throw new Exception($"Vaccine {vaccine.TenVC} không đủ số lượng.");
+                                throw new Exception($"Vaccine {vaccine.TenVC} không đủ số lượng. " +
+                                                  $"Cần: {item.SoLuong}, Còn: {vaccine.SoLuong}");
                             }
+                            
                             donGia = vaccine.GiaBan;
                             tenSanPham = vaccine.TenVC;
 
-                            // Trừ tồn kho
+                            // Trừ tồn kho đơn giản
                             vaccine.SoLuong -= item.SoLuong;
                         }
                         else if (item.LoaiSanPham == "GOIVACCINE")
@@ -307,7 +299,7 @@ namespace TPVAXWebsite.Controllers
                             donGia = goi.GiaGoi;
                             tenSanPham = goi.TenGoi;
 
-                            // FIX: Kiểm tra và trừ tồn kho các vaccine trong gói
+                            // Kiểm tra và trừ tồn kho các vaccine trong gói
                             var chiTietGoi = _context.ChiTietGoiVaccines
                                 .Where(ct => ct.MaGoi == item.MaSanPham)
                                 .ToList();
@@ -323,12 +315,14 @@ namespace TPVAXWebsite.Controllers
                                 // Tính số lượng cần: số mũi trong gói * số lượng gói đặt
                                 int soLuongCan = (ctGoi.SoMui ?? 1) * item.SoLuong;
                                 
+                                // Kiểm tra tồn kho đơn giản
                                 if (vaccineInGoi.SoLuong < soLuongCan)
                                 {
-                                    throw new Exception($"Vaccine {vaccineInGoi.TenVC} trong gói {goi.TenGoi} không đủ số lượng. Cần {soLuongCan}, còn {vaccineInGoi.SoLuong}.");
+                                    throw new Exception($"Vaccine {vaccineInGoi.TenVC} trong gói {goi.TenGoi} không đủ số lượng. " +
+                                                      $"Cần: {soLuongCan}, Còn: {vaccineInGoi.SoLuong}");
                                 }
 
-                                // Trừ tồn kho vaccine trong gói
+                                // Trừ tồn kho đơn giản
                                 vaccineInGoi.SoLuong -= soLuongCan;
                             }
                         }
@@ -530,24 +524,37 @@ namespace TPVAXWebsite.Controllers
                                 var vaccine = _context.Vaccines.Find(gioHangItem.MaSanPham);
                                 if (vaccine != null)
                                 {
-                                    // Tạo lịch tiêm cho TẤT CẢ các mũi theo SoMuiToiDa
+                                    // FIX #2 & #3: Validate lịch tiêm trước khi tạo
+                                    var validation = _lichTiemValidation.ValidateDatLichTiem(maHSTC, gioHangItem.MaSanPham, ngayHenMui1);
+                                    if (!validation.IsValid)
+                                    {
+                                        throw new Exception(validation.ErrorMessage);
+                                    }
+
+                                    // FIX #3: Sử dụng số mũi tiếp theo từ validation
+                                    int soMuiBatDau = validation.SoMuiTiepTheo;
                                     int soMuiToiDa = vaccine.SoMuiToiDa ?? 1;
                                     int soThangCho = vaccine.SoThangCho ?? 1;
 
                                     // Nếu SoMuiToiDa = 99 (tiêm nhắc hàng năm), chỉ tạo 1 lịch
-                                    if (soMuiToiDa >= 99)
+                                    bool isVaccineTiemNhac = soMuiToiDa >= 99;
+                                    if (isVaccineTiemNhac)
                                     {
-                                        soMuiToiDa = 1;
+                                        soMuiToiDa = soMuiBatDau; // Chỉ tạo 1 mũi
                                     }
 
-                                    for (int mui = 1; mui <= soMuiToiDa; mui++)
+                                    // FIX #3: Tính ngày hẹn dựa trên lịch sử tiêm thực tế
+                                    DateTime ngayHenDieuChinh = _lichTiemValidation.TinhNgayHenMuiTiepTheo(
+                                        maHSTC, gioHangItem.MaSanPham, soMuiBatDau, ngayHenMui1);
+
+                                    for (int mui = soMuiBatDau; mui <= soMuiToiDa; mui++)
                                     {
                                         // Tính ngày hẹn cho mũi này
-                                        DateTime ngayHenMui = ngayHenMui1;
-                                        if (mui > 1)
+                                        DateTime ngayHenMui = ngayHenDieuChinh;
+                                        if (mui > soMuiBatDau)
                                         {
-                                            // Mũi 2 trở đi: cộng thêm (mui - 1) * SoThangCho tháng
-                                            ngayHenMui = ngayHenMui1.AddMonths((mui - 1) * soThangCho);
+                                            // Mũi tiếp theo: cộng thêm tháng
+                                            ngayHenMui = ngayHenDieuChinh.AddMonths((mui - soMuiBatDau) * soThangCho);
                                         }
 
                                         // Tạo mã lịch tiêm thread-safe
@@ -580,6 +587,13 @@ namespace TPVAXWebsite.Controllers
                             }
                             else if (gioHangItem.LoaiSanPham == "GOIVACCINE")
                             {
+                                // FIX #2: Validate gói vaccine trước khi tạo lịch
+                                var goiValidation = _lichTiemValidation.ValidateDatLichGoiVaccine(maHSTC, gioHangItem.MaSanPham);
+                                if (!goiValidation.IsValid)
+                                {
+                                    throw new Exception(goiValidation.ErrorMessage);
+                                }
+
                                 // Lấy chi tiết gói vaccine
                                 var chiTietGoi = _context.ChiTietGoiVaccines
                                     .Include(ct => ct.Vaccine)
@@ -594,16 +608,40 @@ namespace TPVAXWebsite.Controllers
                                     var vaccine = group.First().Vaccine;
                                     if (vaccine == null) continue;
 
+                                    // FIX #2 & #3: Validate từng vaccine trong gói
+                                    var vcValidation = _lichTiemValidation.ValidateDatLichTiem(maHSTC, vaccine.MaVC, ngayHenMui1);
+                                    // Không throw exception ở đây vì gói có thể chứa vaccine đã tiêm đủ
+                                    // Chỉ bỏ qua vaccine đó
+                                    if (!vcValidation.IsValid)
+                                    {
+                                        continue; // Bỏ qua vaccine này, tiếp tục vaccine khác trong gói
+                                    }
+
                                     int soThangCho = vaccine.SoThangCho ?? 1;
+                                    int soMuiBatDau = vcValidation.SoMuiTiepTheo;
+
+                                    // FIX #3: Tính ngày hẹn dựa trên lịch sử tiêm
+                                    DateTime ngayHenDieuChinh = _lichTiemValidation.TinhNgayHenMuiTiepTheo(
+                                        maHSTC, vaccine.MaVC, soMuiBatDau, ngayHenMui1);
+
                                     int muiIndex = 0;
 
-                                    // Tạo lịch cho từng mũi trong gói
+                                    // Tạo lịch cho từng mũi trong gói (chỉ tạo từ mũi tiếp theo)
                                     foreach (var ctGoi in group.OrderBy(ct => ct.SoMui))
                                     {
-                                        DateTime ngayHenMui = ngayHenMui1;
+                                        int soMuiTrongGoi = ctGoi.SoMui ?? (muiIndex + 1);
+                                        
+                                        // Bỏ qua các mũi đã tiêm
+                                        if (soMuiTrongGoi < soMuiBatDau)
+                                        {
+                                            muiIndex++;
+                                            continue;
+                                        }
+
+                                        DateTime ngayHenMui = ngayHenDieuChinh;
                                         if (muiIndex > 0)
                                         {
-                                            ngayHenMui = ngayHenMui1.AddMonths(muiIndex * soThangCho);
+                                            ngayHenMui = ngayHenDieuChinh.AddMonths(muiIndex * soThangCho);
                                         }
 
                                         // Tạo mã lịch tiêm thread-safe cho gói vaccine
@@ -620,7 +658,7 @@ namespace TPVAXWebsite.Controllers
                                             MaLT = maLTGoi,
                                             NgayHenTiem = ngayHenMui,
                                             NgayTiemThucTe = null,
-                                            SoMui = ctGoi.SoMui ?? (muiIndex + 1),
+                                            SoMui = soMuiTrongGoi,
                                             TrangThai = "Chưa tiêm",
                                             GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Gói: {gioHangItem.MaSanPham}",
                                             MaHSTC = maHSTC,
@@ -921,6 +959,8 @@ namespace TPVAXWebsite.Controllers
         {
             if (disposing)
             {
+                _lichTiemValidation?.Dispose();
+                _khuyenMaiValidation?.Dispose();
                 _context?.Dispose();
             }
             base.Dispose(disposing);
