@@ -33,7 +33,7 @@ namespace TPVAXWebsite.DAL
         private IRepository<NhaCungCap> _nhaCungCaps;
         private IRepository<PhieuNhapVaccine> _phieuNhapVaccines;
         private IRepository<ChiTietPhieuNhap> _chiTietPhieuNhaps;
-
+        private IRepository<BaiViet> _baiViets;
         public UnitOfWork()
         {
             _context = new TPVAXDbContext();
@@ -65,7 +65,7 @@ namespace TPVAXWebsite.DAL
         public IRepository<NhaCungCap> NhaCungCaps => _nhaCungCaps ?? (_nhaCungCaps = new Repository<NhaCungCap>(_context));
         public IRepository<PhieuNhapVaccine> PhieuNhapVaccines => _phieuNhapVaccines ?? (_phieuNhapVaccines = new Repository<PhieuNhapVaccine>(_context));
         public IRepository<ChiTietPhieuNhap> ChiTietPhieuNhaps => _chiTietPhieuNhaps ?? (_chiTietPhieuNhaps = new Repository<ChiTietPhieuNhap>(_context));
-
+        public IRepository<BaiViet> BaiViets => _baiViets ?? (_baiViets = new Repository<BaiViet>(_context));
         // Methods
         public int SaveChanges()
         {
