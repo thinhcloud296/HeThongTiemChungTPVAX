@@ -93,6 +93,137 @@ namespace TPVAXWebsite.Controllers
             return View();
         }
 
+        // GET: Account/RegisterExisting - Trang đăng ký cho khách hàng đã có thông tin trong hệ thống
+        [HttpGet]
+        public ActionResult RegisterExisting()
+        {
+            if (Session["User"] != null)
+            {
+                return RedirectToAction("Dashboard");
+            }
+            return View();
+        }
+
+        // POST: Account/RegisterExisting - Tìm kiếm khách hàng theo CCCD và SĐT
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterExisting(RegisterExistingCustomerViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            try
+            {
+                // Tìm khách hàng theo CCCD và SĐT
+                var khachHang = _context.KhachHangs
+                    .FirstOrDefault(k => k.CCCD == model.CCCD && k.SoDT == model.SoDT);
+
+                if (khachHang == null)
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy thông tin khách hàng với CCCD và Số điện thoại này. Vui lòng kiểm tra lại hoặc đăng ký mới.";
+                    return View(model);
+                }
+
+                // Kiểm tra xem khách hàng đã có tài khoản chưa
+                if (!string.IsNullOrEmpty(khachHang.MaTK))
+                {
+                    TempData["ErrorMessage"] = "Khách hàng này đã có tài khoản. Vui lòng đăng nhập bằng số điện thoại hoặc email.";
+                    return View(model);
+                }
+
+                // Chuyển sang trang xác nhận và tạo mật khẩu
+                var confirmModel = new ConfirmAndCreateAccountViewModel
+                {
+                    MaKH = khachHang.MaKH,
+                    HoTen = khachHang.HoTen,
+                    CCCD = khachHang.CCCD,
+                    SoDT = khachHang.SoDT,
+                    NgaySinh = khachHang.NgaySinh,
+                    GioiTinh = khachHang.GioiTinh,
+                    Email = khachHang.Email,
+                    DiaChi = khachHang.DiaChi
+                };
+
+                return View("ConfirmCreateAccount", confirmModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Lỗi hệ thống: " + ex.Message;
+                return View(model);
+            }
+        }
+
+        // POST: Account/CreateAccountForExisting - Tạo tài khoản cho khách hàng đã tồn tại
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAccountForExisting(ConfirmAndCreateAccountViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("ConfirmCreateAccount", model);
+            }
+
+            try
+            {
+                // Tìm lại khách hàng để đảm bảo dữ liệu chính xác
+                var khachHang = _context.KhachHangs.Find(model.MaKH);
+                
+                if (khachHang == null)
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy thông tin khách hàng. Vui lòng thử lại.";
+                    return RedirectToAction("RegisterExisting");
+                }
+
+                // Kiểm tra lại xem đã có tài khoản chưa (tránh race condition)
+                if (!string.IsNullOrEmpty(khachHang.MaTK))
+                {
+                    TempData["ErrorMessage"] = "Khách hàng này đã có tài khoản. Vui lòng đăng nhập.";
+                    return RedirectToAction("Login");
+                }
+
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Tạo mã tài khoản mới
+                        string maTK;
+                        do
+                        {
+                            maTK = TPVAXWebsite.Common.KeyGenerator.GenMaTK();
+                        } while (_context.TaiKhoans.Any(t => t.MaTK == maTK));
+
+                        // Tạo tài khoản mới
+                        var taiKhoan = new TaiKhoan
+                        {
+                            MaTK = maTK,
+                            MatKhau = BCrypt.Net.BCrypt.HashPassword(model.MatKhau)
+                        };
+                        _context.TaiKhoans.Add(taiKhoan);
+                        _context.SaveChanges();
+
+                        // Cập nhật MaTK vào bảng KhachHang
+                        khachHang.MaTK = maTK;
+                        _context.SaveChanges();
+
+                        transaction.Commit();
+
+                        TempData["SuccessMessage"] = $"Tạo tài khoản thành công! Chào mừng {khachHang.HoTen}. Bạn có thể đăng nhập bằng số điện thoại hoặc email.";
+                        return RedirectToAction("Login");
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Lỗi tạo tài khoản: " + ex.Message;
+                return View("ConfirmCreateAccount", model);
+            }
+        }
+
         // GET: Account/XacNhanLienKetHoSo - Hiển thị trang xác nhận liên kết hồ sơ có sẵn
         [HttpGet]
         public ActionResult XacNhanLienKetHoSo()

@@ -395,6 +395,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\CreateHoSoViewModel.cs" />
+    <Compile Include="Models\ViewModels\HoSoViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterExistingCustomerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <!-- Controllers -->
     <Compile Include="Controllers\HomeController.cs" />
@@ -506,6 +508,11 @@
     <Content Include="Views\HoSo\XuatPDFSoTiemChung.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ChiTietHoaDon.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\XacNhanLienKetHoSo.cshtml" />
+    <Content Include="Views\Account\RegisterExisting.cshtml" />
+    <Content Include="Views\Account\ConfirmCreateAccount.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
