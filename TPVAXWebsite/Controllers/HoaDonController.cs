@@ -495,57 +495,42 @@ namespace TPVAXWebsite.Controllers
                                     }
 
                                     // FIX #3: Sử dụng số mũi tiếp theo từ validation
-                                    int soMuiBatDau = validation.SoMuiTiepTheo;
+                                    int soMuiTiepTheo = validation.SoMuiTiepTheo;
                                     int soMuiToiDa = vaccine.SoMuiToiDa ?? 1;
-                                    int soThangCho = vaccine.SoThangCho ?? 1;
-
-                                    // Nếu SoMuiToiDa = 99 (tiêm nhắc hàng năm), chỉ tạo 1 lịch
-                                    bool isVaccineTiemNhac = soMuiToiDa >= 99;
-                                    if (isVaccineTiemNhac)
-                                    {
-                                        soMuiToiDa = soMuiBatDau; // Chỉ tạo 1 mũi
-                                    }
 
                                     // FIX #3: Tính ngày hẹn dựa trên lịch sử tiêm thực tế
                                     DateTime ngayHenDieuChinh = _lichTiemValidation.TinhNgayHenMuiTiepTheo(
-                                        maHSTC, gioHangItem.MaSanPham, soMuiBatDau, ngayHenMui1);
+                                        maHSTC, gioHangItem.MaSanPham, soMuiTiepTheo, ngayHenMui1);
 
-                                    for (int mui = soMuiBatDau; mui <= soMuiToiDa; mui++)
+                                    // CHỈ TẠO MŨI ĐẦU TIÊN (mũi tiếp theo cần tiêm)
+                                    // Giống logic của gói vaccine - chỉ tạo 1 lịch hẹn
+                                    // Các mũi tiếp theo sẽ được tạo sau khi tiêm xong mũi này
+                                    
+                                    // Tạo mã lịch tiêm thread-safe
+                                    string maLT = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                    int ltAttempt = 0;
+                                    while (_context.LichTiems.Any(lt => lt.MaLT == maLT) && ltAttempt < 10)
                                     {
-                                        // Tính ngày hẹn cho mũi này
-                                        DateTime ngayHenMui = ngayHenDieuChinh;
-                                        if (mui > soMuiBatDau)
-                                        {
-                                            // Mũi tiếp theo: cộng thêm tháng
-                                            ngayHenMui = ngayHenDieuChinh.AddMonths((mui - soMuiBatDau) * soThangCho);
-                                        }
-
-                                        // Tạo mã lịch tiêm thread-safe
-                                        string maLT = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
-                                        int ltAttempt = 0;
-                                        while (_context.LichTiems.Any(lt => lt.MaLT == maLT) && ltAttempt < 10)
-                                        {
-                                            maLT = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
-                                            ltAttempt++;
-                                        }
-
-                                        var lichTiem = new LichTiem
-                                        {
-                                            MaLT = maLT,
-                                            NgayHenTiem = ngayHenMui,
-                                            NgayTiemThucTe = null,
-                                            SoMui = mui,
-                                            TrangThai = "Chưa tiêm",
-                                            GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Mũi {mui}/{soMuiToiDa}",
-                                            MaHSTC = maHSTC,
-                                            MaVC = gioHangItem.MaSanPham,
-                                            MaNV = null,
-                                            HoSoTiemChung = null,
-                                            Vaccine = null,
-                                            NhanVien = null
-                                        };
-                                        _context.LichTiems.Add(lichTiem);
+                                        maLT = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                        ltAttempt++;
                                     }
+
+                                    var lichTiem = new LichTiem
+                                    {
+                                        MaLT = maLT,
+                                        NgayHenTiem = ngayHenDieuChinh,
+                                        NgayTiemThucTe = null,
+                                        SoMui = soMuiTiepTheo,
+                                        TrangThai = "Chưa tiêm",
+                                        GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Mũi {soMuiTiepTheo}/{soMuiToiDa}",
+                                        MaHSTC = maHSTC,
+                                        MaVC = gioHangItem.MaSanPham,
+                                        MaNV = null,
+                                        HoSoTiemChung = null,
+                                        Vaccine = null,
+                                        NhanVien = null
+                                    };
+                                    _context.LichTiems.Add(lichTiem);
                                 }
                             }
                             else if (gioHangItem.LoaiSanPham == "GOIVACCINE")

@@ -64,8 +64,11 @@ namespace TPVAXWebsite.Services
             var lichTrung = KiemTraTrungLich(maHSTC, ngayHenTiem, null);
             if (lichTrung != null)
             {
+                var hoSo = _context.HoSoTiemChungs.Find(maHSTC);
+                string tenHoSo = hoSo?.HoTen ?? "Hồ sơ này";
+                
                 return ValidationResult.Fail(
-                    $"Hồ sơ này đã có lịch hẹn tiêm {lichTrung.Vaccine?.TenVC ?? "vaccine"} " +
+                    $"'{tenHoSo}' đã có lịch hẹn tiêm {lichTrung.Vaccine?.TenVC ?? "vaccine"} " +
                     $"vào ngày {lichTrung.NgayHenTiem:dd/MM/yyyy} lúc {lichTrung.NgayHenTiem:HH:mm}. " +
                     "Vui lòng chọn thời gian khác.");
             }
@@ -96,17 +99,24 @@ namespace TPVAXWebsite.Services
             // 4. Kiểm tra đã tiêm đủ số mũi chưa (trừ vaccine tiêm nhắc)
             if (!isVaccineTiemNhac && soMuiDaTiem >= soMuiToiDa)
             {
+                var hoSo = _context.HoSoTiemChungs.Find(maHSTC);
+                string tenHoSo = hoSo?.HoTen ?? "Hồ sơ này";
+                
                 return ValidationResult.Fail(
-                    $"Hồ sơ này đã tiêm đủ {soMuiToiDa} mũi vaccine {vaccine.TenVC}. " +
+                    $"'{tenHoSo}' đã tiêm đủ {soMuiToiDa} mũi vaccine {vaccine.TenVC}. " +
                     "Không cần tiêm thêm.");
             }
 
-            // 5. Kiểm tra có lịch đang chờ không
+            // 5. Kiểm tra có lịch đang chờ không cho hồ sơ này
             var lichDangCho = lichSuTiem.FirstOrDefault(lt => lt.TrangThai == "Chưa tiêm");
             if (lichDangCho != null)
             {
+                // Lấy tên hồ sơ để hiển thị rõ ràng hơn
+                var hoSo = _context.HoSoTiemChungs.Find(maHSTC);
+                string tenHoSo = hoSo?.HoTen ?? "Hồ sơ này";
+                
                 return ValidationResult.Fail(
-                    $"Hồ sơ này đã có lịch hẹn tiêm {vaccine.TenVC} mũi {lichDangCho.SoMui} " +
+                    $"'{tenHoSo}' đã có lịch hẹn tiêm {vaccine.TenVC} mũi {lichDangCho.SoMui} " +
                     $"vào ngày {lichDangCho.NgayHenTiem:dd/MM/yyyy HH:mm}. " +
                     "Vui lòng hủy lịch cũ trước khi đặt lịch mới.");
             }
