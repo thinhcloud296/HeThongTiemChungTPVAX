@@ -12,5 +12,6 @@ namespace TPVAXWebsite.Models.ViewModels
         public DateTime NgayDang { get; set; }
         public string DanhMuc { get; set; }
         public string Tag { get; set; }
+        public bool TrangThai { get; set; } // ✅ Thêm dòng này
     }
 }
