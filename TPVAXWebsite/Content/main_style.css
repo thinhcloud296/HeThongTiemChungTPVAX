@@ -5537,7 +5537,7 @@ main.vaccine-detail {
 /* CTA Section */
 .cta-section-modern {
   padding: 60px 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
 }
 
 .cta-box-modern {
@@ -5569,7 +5569,7 @@ main.vaccine-detail {
 
 .btn-cta-large-new {
   background: white;
-  color: #764ba2;
+  color: #0077b6;
   padding: 15px 40px;
   border-radius: 50px;
   text-decoration: none;
@@ -5583,7 +5583,7 @@ main.vaccine-detail {
 .btn-cta-large-new:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  color: #667eea;
+  color: #00b4d8;
 }
 
 /* Responsive Design */
