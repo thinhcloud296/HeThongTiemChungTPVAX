@@ -267,63 +267,504 @@
    4. RESPONSIVE ADJUSTMENTS
    ============================================ */
 
+/* Tablet - 992px */
 @media (max-width: 992px) {
   .toolbar-section {
-    padding: 1rem 0;
+    padding: 0.8rem 0;
+  }
+  
+  .toolbar-section .container {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center !important;
   }
   
   .search-bar-wrapper {
     max-width: 100%;
-    margin-bottom: 1rem;
+    min-width: 200px;
+    order: 3;
+    flex: 1 1 100%;
   }
   
   .main-navbar .nav-link {
     padding: 0.75rem 1rem;
+    font-size: 0.9rem;
   }
   
   .brand-section .col-md-7 > div {
     padding: 1.5rem;
   }
+  
+  .brand-section img {
+    max-height: 60px;
+  }
+  
+  /* Navbar collapse */
+  .main-navbar .navbar-collapse {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-top: 0.5rem;
+  }
+  
+  .main-navbar .navbar-nav {
+    gap: 0;
+  }
+  
+  .main-navbar .nav-link::after {
+    display: none;
+  }
+  
+  /* Footer */
+  .site-footer .row {
+    gap: 1.5rem;
+  }
+  
+  .site-footer .col-lg-4,
+  .site-footer .col-lg-2,
+  .site-footer .col-lg-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .company-details {
+    text-align: left;
+  }
 }
 
+/* Tablet nhỏ - 768px */
 @media (max-width: 768px) {
+  /* Toolbar - Căn giữa tất cả */
+  .toolbar-section {
+    padding: 0.8rem 0;
+  }
+  
+  .toolbar-section .container {
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.8rem;
+  }
+  
+  .toolbar-section .d-flex.align-items-center.gap-3 {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .toolbar-section .d-flex.align-items-center.gap-2 {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .toolbar-link {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
   .toolbar-link span {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   
   .toolbar-link:hover span {
-    font-size: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .toolbar-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 0;
   }
   
   .login-btn {
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     padding: 0.5rem 1rem;
   }
   
+  .btn-cart-custom {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .btn-cart-custom span {
+    display: inline;
+  }
+  
+  .search-bar-wrapper {
+    min-width: 100%;
+    max-width: 100%;
+    order: 3;
+  }
+  
+  .search-bar-wrapper .form-control {
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+  }
+  
+  /* Brand Section - Logo to, căn giữa, text nhỏ hơn */
+  .brand-section {
+    padding: 1rem 0;
+  }
+  
+  .brand-section .container-fluid {
+    padding: 0;
+  }
+  
+  .brand-section .row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .brand-section .col-md-5 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  
+  .brand-section .col-md-5 img {
+    max-height: 100px !important;
+    width: auto;
+  }
+  
+  .brand-section .col-md-7 {
+    width: 100%;
+  }
+  
+  .brand-section .col-md-7 > div {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .brand-section .col-md-7 h1 {
+    font-size: 1.4rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+  
+  .brand-section .col-md-7 p {
+    font-size: 1rem !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Navbar */
+  .main-navbar {
+    padding: 0.5rem 0;
+  }
+  
+  .main-navbar .navbar-toggler {
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+  }
+  
+  .main-navbar .nav-link {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .main-navbar .nav-link:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-menu {
+    border: none;
+    box-shadow: none;
+    padding-left: 1rem;
+    background: #f8f9fa;
+  }
+  
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Footer */
   .site-footer {
     min-height: auto;
-    padding: 2rem 0 1rem;
+    padding: 1.5rem 0 1rem;
+  }
+  
+  .site-footer h5 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .site-footer ul li {
+    margin-bottom: 0.3rem;
+  }
+  
+  .site-footer a {
+    font-size: 0.9rem;
+  }
+  
+  .footer-logo-wrapper {
+    padding: 8px;
   }
   
   .footer-logo {
-    height: 70px;
+    height: 60px;
+  }
+  
+  .footer-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+  }
+  
+  .company-details p {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .footer-hr {
+    margin: 1rem 0;
+  }
+  
+  .footer-hours {
+    font-size: 0.85rem;
   }
 }
 
+/* Mobile - 576px */
 @media (max-width: 576px) {
+  /* Toolbar - Căn giữa */
+  .toolbar-section {
+    padding: 0.6rem 0;
+  }
+  
+  .toolbar-section .container {
+    padding: 0 15px;
+    flex-direction: column;
+    align-items: center !important;
+    gap: 0.6rem;
+  }
+  
+  .toolbar-section .d-flex.align-items-center.gap-3 {
+    justify-content: center;
+    gap: 1.5rem !important;
+  }
+  
+  .toolbar-section .d-flex.align-items-center.gap-2 {
+    justify-content: center;
+    gap: 0.5rem !important;
+  }
+  
+  .toolbar-link {
+    flex-direction: column;
+    align-items: center;
+    padding: 0.3rem;
+  }
+  
+  .toolbar-link span {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  
+  .toolbar-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .toolbar-icon-small {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .login-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .btn-cart-custom {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .btn-cart-custom span {
+    display: none;
+  }
+  
+  .search-bar-wrapper {
+    width: 100%;
+    order: 3;
+  }
+  
+  .search-bar-wrapper .form-control {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+  
+  .search-bar-wrapper .btn {
+    padding: 0.4rem 0.8rem;
+  }
+  
+  /* Brand Section - Logo to căn giữa, text nhỏ hơn */
+  .brand-section {
+    padding: 0.8rem 0;
+  }
+  
+  .brand-section .row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .brand-section .col-md-5 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  
+  .brand-section .col-md-5 img {
+    max-height: 90px !important;
+    width: auto;
+  }
+  
+  .brand-section .col-md-7 {
+    width: 100%;
+  }
+  
+  .brand-section .col-md-7 > div {
+    padding: 0.8rem 1rem;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .brand-section .col-md-7 h1 {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.3;
+  }
+  
+  .brand-section .col-md-7 p {
+    font-size: 0.9rem !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Navbar */
+  .main-navbar {
+    border-width: 1px;
+  }
+  
+  .main-navbar .navbar-brand {
+    font-size: 1rem;
+  }
+  
+  .main-navbar .navbar-toggler {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .main-navbar .nav-link {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.6rem;
+  }
+  
+  .dropdown-item {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  /* Footer */
+  .site-footer {
+    padding: 1rem 0 0.8rem;
+  }
+  
+  .site-footer .container {
+    padding: 0 15px;
+  }
+  
+  .site-footer h5 {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  .site-footer a {
+    font-size: 0.8rem;
+  }
+  
+  .footer-logo-wrapper {
+    padding: 6px;
+  }
+  
+  .footer-logo {
+    height: 50px;
+  }
+  
+  .footer-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+  }
+  
+  .company-details p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  
+  .footer-hours {
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .site-footer::before {
+    display: none;
+  }
+}
+
+/* Mobile nhỏ - 375px */
+@media (max-width: 375px) {
+  /* Toolbar */
+  .toolbar-link span {
+    font-size: 0.75rem;
+  }
+  
   .toolbar-icon {
     width: 24px;
     height: 24px;
   }
   
-  .main-navbar .nav-link {
-    font-size: 0.9rem;
-    padding: 0.6rem 0.8rem;
+  .login-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
   }
   
-  .footer-icon {
-    width: 20px;
-    height: 20px;
+  /* Brand Section */
+  .brand-section .col-md-5 img {
+    max-height: 80px !important;
+  }
+  
+  .brand-section .col-md-7 h1 {
+    font-size: 1.1rem !important;
+  }
+  
+  .brand-section .col-md-7 p {
+    font-size: 0.85rem !important;
+  }
+  
+  .main-navbar .nav-link {
+    font-size: 0.8rem;
+  }
+  
+  .footer-logo {
+    height: 40px;
+  }
+  
+  .site-footer h5 {
+    font-size: 0.9rem;
+  }
+  
+  .site-footer a {
+    font-size: 0.75rem;
+  }
+  
+  .company-details p {
+    font-size: 0.75rem;
   }
 }
 

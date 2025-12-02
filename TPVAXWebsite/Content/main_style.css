@@ -8457,3 +8457,771 @@ main.vaccine-detail {
     }
   }
 }
+
+/* ======================================================================================================================= */
+/* RESPONSIVE HOME PAGE - TRANG CHỦ
+/* ======================================================================================================================= */
+
+/* ============================================
+   TABLET - 992px
+   ============================================ */
+@media (max-width: 992px) {
+  /* Carousel Banner */
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .carousel-control-prev {
+    left: 0.5rem;
+  }
+  
+  .carousel-control-next {
+    right: 0.5rem;
+  }
+
+  /* Vaccine Catalog Section */
+  #vaccine-catalog .d-flex.justify-content-between {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start !important;
+  }
+
+  #vaccine-catalog h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Product Cards */
+  .product-card {
+    padding: 1rem;
+  }
+
+  .product-card .card-title {
+    font-size: 1.2rem;
+  }
+
+  .product-card .text-warning.fs-4 {
+    font-size: 1.2rem !important;
+  }
+
+  /* Services Section */
+  .cac-dich-vu .service-card {
+    padding: 1.5rem;
+  }
+
+  .cac-dich-vu .service-icon {
+    width: 60px !important;
+  }
+
+  .cac-dich-vu h3.h5 {
+    font-size: 1rem;
+  }
+
+  /* Seasonal Vaccine Section */
+  .seasonal-vaccine-section .seasonal-season-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .seasonal-filter-sidebar {
+    margin-bottom: 1.5rem;
+  }
+
+  .disease-info-section .col-md-5,
+  .disease-info-section .col-md-7 {
+    width: 100%;
+  }
+
+  .disease-info-section img {
+    height: 250px !important;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Package Section */
+  .vaccine-package-section .package-section-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .commitment-item h4 {
+    font-size: 1rem;
+  }
+
+  .commitment-item p {
+    font-size: 0.85rem;
+  }
+
+  .package-filter-sidebar {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Trust Badges */
+  .trust-badges-section .section-title-trust h2 {
+    font-size: 1.5rem;
+  }
+
+  .trust-badge-card {
+    padding: 1.5rem;
+  }
+
+  .trust-badge-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .trust-badge-card p {
+    font-size: 0.9rem;
+  }
+
+  /* Pagination */
+  .pagination-lg .page-link {
+    padding: 10px 16px;
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   TABLET NHỎ - 768px
+   ============================================ */
+@media (max-width: 768px) {
+  /* Carousel */
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .carousel-indicators button {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Vaccine Catalog */
+  #vaccine-catalog {
+    padding: 0 10px;
+  }
+
+  #vaccine-catalog h2 {
+    font-size: 1.3rem;
+  }
+
+  #vaccine-catalog .btn-outline-primary {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Product Cards - 2 columns */
+  .product-card {
+    padding: 0.8rem;
+  }
+
+  .product-card img {
+    height: 180px !important;
+  }
+
+  .product-card .card-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .product-card .text-warning.fs-4 {
+    font-size: 1.1rem !important;
+  }
+
+  .product-card .d-flex.gap-2 {
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+
+  .product-card .btn {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  /* Services */
+  .cac-dich-vu {
+    padding: 2rem 0 !important;
+  }
+
+  .cac-dich-vu .service-card {
+    padding: 1rem;
+  }
+
+  .cac-dich-vu .service-icon {
+    width: 50px !important;
+  }
+
+  .cac-dich-vu h3.h5 {
+    font-size: 0.9rem;
+  }
+
+  /* Seasonal Vaccine */
+  .seasonal-vaccine-section {
+    padding: 2rem 0;
+  }
+
+  .seasonal-vaccine-section .seasonal-season-title h2 {
+    font-size: 1.3rem;
+  }
+
+  .seasonal-vaccine-section .seasonal-season-title p {
+    font-size: 0.9rem;
+  }
+
+  .seasonal-filter-sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .seasonal-filter-item {
+    flex: 1 1 calc(50% - 0.5rem);
+    padding: 0.5rem;
+  }
+
+  .seasonal-filter-item img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .seasonal-filter-item span {
+    font-size: 0.8rem;
+  }
+
+  .disease-info-section h3 {
+    font-size: 1.3rem;
+  }
+
+  .disease-info-section .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Package Section */
+  .vaccine-package-section {
+    padding: 2rem 0;
+  }
+
+  .vaccine-package-section .package-section-title h2 {
+    font-size: 1.3rem;
+  }
+
+  .package-commitment {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .commitment-item {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .commitment-icon {
+    font-size: 2rem;
+  }
+
+  .commitment-item h4 {
+    font-size: 0.9rem;
+  }
+
+  .commitment-item p {
+    font-size: 0.8rem;
+  }
+
+  .package-filter-sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .package-filter-category {
+    width: 100%;
+  }
+
+  .package-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .package-card {
+    padding: 1rem;
+  }
+
+  .package-card h3 {
+    font-size: 1rem;
+  }
+
+  /* Trust Badges */
+  .trust-badges-section {
+    padding: 2rem 0;
+  }
+
+  .trust-badges-section .section-title-trust h2 {
+    font-size: 1.3rem;
+  }
+
+  .trust-badges-section .section-title-trust p {
+    font-size: 0.9rem;
+  }
+
+  .trust-badge-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .trust-badge-icon svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .trust-badge-card h3 {
+    font-size: 1rem;
+  }
+
+  .trust-badge-card p {
+    font-size: 0.85rem;
+  }
+
+  .partners-logo-wrapper {
+    margin-top: 1.5rem;
+  }
+
+  .partner-logo-placeholder {
+    height: 50px !important;
+    padding: 10px !important;
+  }
+
+  .partner-logo-placeholder span {
+    font-size: 14px !important;
+  }
+
+  /* Pagination */
+  .pagination-lg .page-link {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================
+   MOBILE - 576px
+   ============================================ */
+@media (max-width: 576px) {
+  /* Carousel */
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+
+  .carousel-indicators {
+    margin-bottom: 0.5rem;
+  }
+
+  .carousel-indicators button {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Vaccine Catalog */
+  #vaccine-catalog {
+    margin: 1.5rem 0 !important;
+    padding: 0 8px;
+  }
+
+  #vaccine-catalog .d-flex.justify-content-between {
+    padding-bottom: 0.8rem !important;
+  }
+
+  #vaccine-catalog h2 {
+    font-size: 1.1rem;
+  }
+
+  #vaccine-catalog .btn-outline-primary {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  #vaccine-catalog .btn-outline-primary i {
+    display: none;
+  }
+
+  /* Product Cards - 1 column on very small screens */
+  .product-card {
+    padding: 0.8rem;
+  }
+
+  .product-card img {
+    height: 160px !important;
+  }
+
+  .product-card .position-absolute {
+    padding: 0.3rem 0.5rem !important;
+    margin: 0.3rem !important;
+  }
+
+  .product-card .position-absolute small {
+    font-size: 0.7rem;
+  }
+
+  .product-card .card-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .product-card .card-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .product-card .text-warning.fs-4 {
+    font-size: 1rem !important;
+  }
+
+  .product-card .text-warning small {
+    font-size: 0.7rem !important;
+  }
+
+  .product-card .d-flex.gap-2 {
+    margin-top: 0.5rem !important;
+  }
+
+  .product-card .btn {
+    font-size: 0.75rem;
+    padding: 0.4rem;
+  }
+
+  .product-card .btn i {
+    display: none;
+  }
+
+  /* Services */
+  .cac-dich-vu {
+    padding: 1.5rem 0 !important;
+  }
+
+  .cac-dich-vu .row.g-4 {
+    gap: 0.8rem !important;
+  }
+
+  .cac-dich-vu .col-lg-3.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 5px;
+  }
+
+  .cac-dich-vu .service-card {
+    padding: 0.8rem;
+  }
+
+  .cac-dich-vu .service-icon {
+    width: 40px !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .cac-dich-vu h3.h5 {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  /* Seasonal Vaccine */
+  .seasonal-vaccine-section {
+    padding: 1.5rem 0;
+  }
+
+  .seasonal-vaccine-section .seasonal-season-title {
+    margin-bottom: 1rem;
+  }
+
+  .seasonal-vaccine-section .seasonal-season-title h2 {
+    font-size: 1.1rem;
+  }
+
+  .seasonal-vaccine-section .seasonal-season-title p {
+    font-size: 0.8rem;
+  }
+
+  .seasonal-filter-sidebar {
+    flex-direction: row;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .seasonal-filter-item {
+    flex: 0 0 auto;
+    min-width: 120px;
+    padding: 0.5rem;
+  }
+
+  .disease-info-section img {
+    height: 200px !important;
+  }
+
+  .disease-info-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .disease-info-section p {
+    font-size: 0.85rem;
+  }
+
+  .disease-info-section .bg-light {
+    padding: 0.8rem !important;
+  }
+
+  .disease-info-section .bg-light .col-6 small,
+  .disease-info-section .bg-light .col-12 small {
+    font-size: 0.75rem;
+  }
+
+  .disease-info-section .bg-light span {
+    font-size: 0.9rem;
+  }
+
+  .disease-info-section .d-flex.gap-3 {
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+
+  .disease-info-section .btn {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  /* Package Section */
+  .vaccine-package-section {
+    padding: 1.5rem 0;
+  }
+
+  .vaccine-package-section .package-section-title h2 {
+    font-size: 1.1rem;
+  }
+
+  .vaccine-package-section .package-section-title p {
+    font-size: 0.8rem;
+  }
+
+  .package-commitment .row {
+    gap: 0.5rem;
+  }
+
+  .package-commitment .col-lg-4.col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .commitment-item {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding: 0.8rem;
+    gap: 1rem;
+  }
+
+  .commitment-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .commitment-item h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .commitment-item p {
+    font-size: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  .package-filter-sidebar {
+    padding: 0.8rem;
+  }
+
+  .package-filter-category-title {
+    font-size: 0.9rem;
+  }
+
+  .form-check-label {
+    font-size: 0.85rem;
+  }
+
+  .package-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .package-card {
+    padding: 0.8rem;
+  }
+
+  .package-icon-wrapper {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .package-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .package-discount {
+    font-size: 1rem;
+  }
+
+  .package-card p {
+    font-size: 0.8rem;
+  }
+
+  .package-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* Trust Badges */
+  .trust-badges-section {
+    padding: 1.5rem 0;
+  }
+
+  .trust-badges-section .section-title-trust {
+    margin-bottom: 1rem;
+  }
+
+  .trust-badges-section .section-title-trust h2 {
+    font-size: 1.1rem;
+  }
+
+  .trust-badges-section .section-title-trust p {
+    font-size: 0.8rem;
+  }
+
+  .trust-badge-card {
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .trust-badge-icon {
+    margin-bottom: 0.5rem;
+  }
+
+  .trust-badge-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .trust-badge-card h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .trust-badge-card p {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .trust-badge-verified {
+    font-size: 0.7rem;
+  }
+
+  .partners-logo-wrapper {
+    margin-top: 1rem;
+    padding: 1rem !important;
+  }
+
+  .partner-logo-placeholder {
+    height: 40px !important;
+    padding: 8px !important;
+  }
+
+  .partner-logo-placeholder span {
+    font-size: 11px !important;
+  }
+
+  /* Pagination */
+  .pagination-lg {
+    gap: 4px;
+  }
+
+  .pagination-lg .page-link {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 8px !important;
+  }
+
+  .pagination + .col-12 p {
+    font-size: 0.8rem;
+  }
+}
+
+/* ============================================
+   MOBILE NHỎ - 375px
+   ============================================ */
+@media (max-width: 375px) {
+  /* Vaccine Catalog */
+  #vaccine-catalog h2 {
+    font-size: 1rem;
+  }
+
+  #vaccine-catalog .btn-outline-primary {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  /* Product Cards */
+  .product-card img {
+    height: 140px !important;
+  }
+
+  .product-card .card-title {
+    font-size: 0.85rem;
+  }
+
+  .product-card .text-warning.fs-4 {
+    font-size: 0.9rem !important;
+  }
+
+  .product-card .btn {
+    font-size: 0.7rem;
+    padding: 0.35rem;
+  }
+
+  /* Services */
+  .cac-dich-vu .service-icon {
+    width: 35px !important;
+  }
+
+  .cac-dich-vu h3.h5 {
+    font-size: 0.7rem;
+  }
+
+  /* Seasonal */
+  .seasonal-filter-item {
+    min-width: 100px;
+  }
+
+  .disease-info-section img {
+    height: 160px !important;
+  }
+
+  /* Package */
+  .commitment-item h4 {
+    font-size: 0.8rem;
+  }
+
+  .commitment-item p {
+    font-size: 0.7rem;
+  }
+
+  /* Trust */
+  .trust-badge-card h3 {
+    font-size: 0.85rem;
+  }
+
+  .trust-badge-card p {
+    font-size: 0.7rem;
+  }
+
+  /* Pagination */
+  .pagination-lg .page-link {
+    padding: 5px 8px;
+    font-size: 0.75rem;
+  }
+}

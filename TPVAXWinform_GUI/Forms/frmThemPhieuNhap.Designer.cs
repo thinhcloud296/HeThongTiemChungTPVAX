@@ -20,7 +20,6 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.groupBoxThongTin = new System.Windows.Forms.GroupBox();
             this.dtpNgayLap = new System.Windows.Forms.DateTimePicker();
-            this.cboNhanVien = new System.Windows.Forms.ComboBox();
             this.cboNhaCungCap = new System.Windows.Forms.ComboBox();
             this.lblNgayLap = new System.Windows.Forms.Label();
             this.lblNhanVien = new System.Windows.Forms.Label();
@@ -35,6 +34,7 @@
             this.colHanSuDung = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colXoa = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panelChiTiet = new System.Windows.Forms.Panel();
+            this.btnQuanLyDanhMuc = new System.Windows.Forms.Button();
             this.btnThemVaccine = new System.Windows.Forms.Button();
             this.dtpHanSuDung = new System.Windows.Forms.DateTimePicker();
             this.numGiaNhap = new System.Windows.Forms.NumericUpDown();
@@ -49,7 +49,7 @@
             this.panelButtons = new System.Windows.Forms.Panel();
             this.btnLuu = new System.Windows.Forms.Button();
             this.btnHuy = new System.Windows.Forms.Button();
-            this.btnQuanLyDanhMuc = new System.Windows.Forms.Button();
+            this.txtTenNhanVien = new System.Windows.Forms.TextBox();
             this.groupBoxThongTin.SuspendLayout();
             this.groupBoxChiTiet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).BeginInit();
@@ -74,8 +74,8 @@
             // 
             // groupBoxThongTin
             // 
+            this.groupBoxThongTin.Controls.Add(this.txtTenNhanVien);
             this.groupBoxThongTin.Controls.Add(this.dtpNgayLap);
-            this.groupBoxThongTin.Controls.Add(this.cboNhanVien);
             this.groupBoxThongTin.Controls.Add(this.cboNhaCungCap);
             this.groupBoxThongTin.Controls.Add(this.lblNgayLap);
             this.groupBoxThongTin.Controls.Add(this.lblNhanVien);
@@ -98,16 +98,6 @@
             this.dtpNgayLap.Name = "dtpNgayLap";
             this.dtpNgayLap.Size = new System.Drawing.Size(373, 34);
             this.dtpNgayLap.TabIndex = 1;
-            // 
-            // cboNhanVien
-            // 
-            this.cboNhanVien.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboNhanVien.FormattingEnabled = true;
-            this.cboNhanVien.Location = new System.Drawing.Point(225, 108);
-            this.cboNhanVien.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cboNhanVien.Name = "cboNhanVien";
-            this.cboNhanVien.Size = new System.Drawing.Size(598, 36);
-            this.cboNhanVien.TabIndex = 3;
             // 
             // cboNhaCungCap
             // 
@@ -256,6 +246,22 @@
             this.panelChiTiet.Name = "panelChiTiet";
             this.panelChiTiet.Size = new System.Drawing.Size(1732, 182);
             this.panelChiTiet.TabIndex = 0;
+            // 
+            // btnQuanLyDanhMuc
+            // 
+            this.btnQuanLyDanhMuc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.btnQuanLyDanhMuc.FlatAppearance.BorderSize = 0;
+            this.btnQuanLyDanhMuc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuanLyDanhMuc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnQuanLyDanhMuc.ForeColor = System.Drawing.Color.White;
+            this.btnQuanLyDanhMuc.Location = new System.Drawing.Point(1383, 93);
+            this.btnQuanLyDanhMuc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnQuanLyDanhMuc.Name = "btnQuanLyDanhMuc";
+            this.btnQuanLyDanhMuc.Size = new System.Drawing.Size(280, 50);
+            this.btnQuanLyDanhMuc.TabIndex = 4;
+            this.btnQuanLyDanhMuc.Text = "Quản lý Danh mục Vaccine";
+            this.btnQuanLyDanhMuc.UseVisualStyleBackColor = false;
+            this.btnQuanLyDanhMuc.Click += new System.EventHandler(this.btnQuanLyDanhMuc_Click);
             // 
             // btnThemVaccine
             // 
@@ -426,21 +432,14 @@
             this.btnHuy.UseVisualStyleBackColor = false;
             this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
             // 
-            // btnQuanLyDanhMuc
+            // txtTenNhanVien
             // 
-            this.btnQuanLyDanhMuc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.btnQuanLyDanhMuc.FlatAppearance.BorderSize = 0;
-            this.btnQuanLyDanhMuc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuanLyDanhMuc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnQuanLyDanhMuc.ForeColor = System.Drawing.Color.White;
-            this.btnQuanLyDanhMuc.Location = new System.Drawing.Point(1383, 93);
-            this.btnQuanLyDanhMuc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnQuanLyDanhMuc.Name = "btnQuanLyDanhMuc";
-            this.btnQuanLyDanhMuc.Size = new System.Drawing.Size(280, 50);
-            this.btnQuanLyDanhMuc.TabIndex = 4;
-            this.btnQuanLyDanhMuc.Text = "Quản lý Danh mục Vaccine";
-            this.btnQuanLyDanhMuc.UseVisualStyleBackColor = false;
-            this.btnQuanLyDanhMuc.Click += new System.EventHandler(this.btnQuanLyDanhMuc_Click);
+            this.txtTenNhanVien.Enabled = false;
+            this.txtTenNhanVien.Location = new System.Drawing.Point(225, 112);
+            this.txtTenNhanVien.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtTenNhanVien.Name = "txtTenNhanVien";
+            this.txtTenNhanVien.Size = new System.Drawing.Size(373, 34);
+            this.txtTenNhanVien.TabIndex = 11;
             // 
             // frmThemPhieuNhap
             // 
@@ -476,7 +475,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.GroupBox groupBoxThongTin;
         private System.Windows.Forms.DateTimePicker dtpNgayLap;
- private System.Windows.Forms.ComboBox cboNhanVien;
         private System.Windows.Forms.ComboBox cboNhaCungCap;
         private System.Windows.Forms.Label lblNgayLap;
  private System.Windows.Forms.Label lblNhanVien;
@@ -506,5 +504,6 @@ private System.Windows.Forms.GroupBox groupBoxChiTiet;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHanSuDung;
         private System.Windows.Forms.DataGridViewButtonColumn colXoa;
         private System.Windows.Forms.Button btnQuanLyDanhMuc;
+        private System.Windows.Forms.TextBox txtTenNhanVien;
     }
 }

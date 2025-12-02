@@ -276,18 +276,8 @@ namespace TPVAXWebsite.Controllers
                                 throw new Exception($"Vaccine {item.MaSanPham} không tồn tại.");
                             }
                             
-                            // Kiểm tra tồn kho đơn giản
-                            if (vaccine.SoLuong < item.SoLuong)
-                            {
-                                throw new Exception($"Vaccine {vaccine.TenVC} không đủ số lượng. " +
-                                                  $"Cần: {item.SoLuong}, Còn: {vaccine.SoLuong}");
-                            }
-                            
                             donGia = vaccine.GiaBan;
                             tenSanPham = vaccine.TenVC;
-
-                            // Trừ tồn kho đơn giản
-                            vaccine.SoLuong -= item.SoLuong;
                         }
                         else if (item.LoaiSanPham == "GOIVACCINE")
                         {
@@ -298,33 +288,6 @@ namespace TPVAXWebsite.Controllers
                             }
                             donGia = goi.GiaGoi;
                             tenSanPham = goi.TenGoi;
-
-                            // Kiểm tra và trừ tồn kho các vaccine trong gói
-                            var chiTietGoi = _context.ChiTietGoiVaccines
-                                .Where(ct => ct.MaGoi == item.MaSanPham)
-                                .ToList();
-
-                            foreach (var ctGoi in chiTietGoi)
-                            {
-                                var vaccineInGoi = _context.Vaccines.Find(ctGoi.MaVC);
-                                if (vaccineInGoi == null)
-                                {
-                                    throw new Exception($"Vaccine {ctGoi.MaVC} trong gói {goi.TenGoi} không tồn tại.");
-                                }
-
-                                // Tính số lượng cần: số mũi trong gói * số lượng gói đặt
-                                int soLuongCan = (ctGoi.SoMui ?? 1) * item.SoLuong;
-                                
-                                // Kiểm tra tồn kho đơn giản
-                                if (vaccineInGoi.SoLuong < soLuongCan)
-                                {
-                                    throw new Exception($"Vaccine {vaccineInGoi.TenVC} trong gói {goi.TenGoi} không đủ số lượng. " +
-                                                      $"Cần: {soLuongCan}, Còn: {vaccineInGoi.SoLuong}");
-                                }
-
-                                // Trừ tồn kho đơn giản
-                                vaccineInGoi.SoLuong -= soLuongCan;
-                            }
                         }
 
                         decimal thanhTien = donGia * item.SoLuong;
@@ -587,90 +550,63 @@ namespace TPVAXWebsite.Controllers
                             }
                             else if (gioHangItem.LoaiSanPham == "GOIVACCINE")
                             {
-                                // FIX #2: Validate gói vaccine trước khi tạo lịch
-                                var goiValidation = _lichTiemValidation.ValidateDatLichGoiVaccine(maHSTC, gioHangItem.MaSanPham);
-                                if (!goiValidation.IsValid)
-                                {
-                                    throw new Exception(goiValidation.ErrorMessage);
-                                }
-
-                                // Lấy chi tiết gói vaccine
+                                // Áp dụng logic giống TaoLichHenDauTienChoGoi trong Winform
+                                // Chỉ tạo lịch hẹn cho MŨI 1 của mỗi vaccine trong gói
+                                // Mỗi lịch hẹn cách nhau 2 tháng từ ngày hẹn đầu tiên
+                                
+                                // Lấy danh sách vaccine MŨI 1 trong gói (SoMui = 1 hoặc là mũi đầu tiên của mỗi vaccine)
                                 var chiTietGoi = _context.ChiTietGoiVaccines
                                     .Include(ct => ct.Vaccine)
                                     .Where(ct => ct.MaGoi == gioHangItem.MaSanPham)
                                     .ToList();
 
-                                // Nhóm theo MaVC để tính số mũi
-                                var vaccineGroups = chiTietGoi.GroupBy(ct => ct.MaVC);
+                                // Lấy danh sách vaccine duy nhất (chỉ lấy mũi 1 - mũi đầu tiên của mỗi vaccine)
+                                var vaccinesMui1 = chiTietGoi
+                                    .GroupBy(ct => ct.MaVC)
+                                    .Select(g => g.OrderBy(ct => ct.SoMui ?? 1).First())
+                                    .Where(ct => (ct.SoMui ?? 1) == 1) // Chỉ lấy mũi 1
+                                    .ToList();
 
-                                foreach (var group in vaccineGroups)
+                                // Khoảng cách giữa các lịch hẹn: 2 tháng
+                                int soThangCachNhau = 2;
+                                int vaccineIndex = 0;
+
+                                foreach (var ctGoi in vaccinesMui1)
                                 {
-                                    var vaccine = group.First().Vaccine;
-                                    if (vaccine == null) continue;
+                                    if (ctGoi.Vaccine == null) continue;
 
-                                    // FIX #2 & #3: Validate từng vaccine trong gói
-                                    var vcValidation = _lichTiemValidation.ValidateDatLichTiem(maHSTC, vaccine.MaVC, ngayHenMui1);
-                                    // Không throw exception ở đây vì gói có thể chứa vaccine đã tiêm đủ
-                                    // Chỉ bỏ qua vaccine đó
-                                    if (!vcValidation.IsValid)
+                                    // Tính ngày hẹn cho vaccine này
+                                    // Vaccine đầu tiên: ngayHenMui1
+                                    // Vaccine thứ 2: ngayHenMui1 + 2 tháng
+                                    // Vaccine thứ 3: ngayHenMui1 + 4 tháng
+                                    DateTime ngayHenVaccine = ngayHenMui1.AddMonths(vaccineIndex * soThangCachNhau);
+
+                                    // Tạo mã lịch tiêm thread-safe
+                                    string maLTGoi = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                    int ltGoiAttempt = 0;
+                                    while (_context.LichTiems.Any(lt => lt.MaLT == maLTGoi) && ltGoiAttempt < 10)
                                     {
-                                        continue; // Bỏ qua vaccine này, tiếp tục vaccine khác trong gói
+                                        maLTGoi = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
+                                        ltGoiAttempt++;
                                     }
 
-                                    int soThangCho = vaccine.SoThangCho ?? 1;
-                                    int soMuiBatDau = vcValidation.SoMuiTiepTheo;
-
-                                    // FIX #3: Tính ngày hẹn dựa trên lịch sử tiêm
-                                    DateTime ngayHenDieuChinh = _lichTiemValidation.TinhNgayHenMuiTiepTheo(
-                                        maHSTC, vaccine.MaVC, soMuiBatDau, ngayHenMui1);
-
-                                    int muiIndex = 0;
-
-                                    // Tạo lịch cho từng mũi trong gói (chỉ tạo từ mũi tiếp theo)
-                                    foreach (var ctGoi in group.OrderBy(ct => ct.SoMui))
+                                    var lichTiem = new LichTiem
                                     {
-                                        int soMuiTrongGoi = ctGoi.SoMui ?? (muiIndex + 1);
-                                        
-                                        // Bỏ qua các mũi đã tiêm
-                                        if (soMuiTrongGoi < soMuiBatDau)
-                                        {
-                                            muiIndex++;
-                                            continue;
-                                        }
-
-                                        DateTime ngayHenMui = ngayHenDieuChinh;
-                                        if (muiIndex > 0)
-                                        {
-                                            ngayHenMui = ngayHenDieuChinh.AddMonths(muiIndex * soThangCho);
-                                        }
-
-                                        // Tạo mã lịch tiêm thread-safe cho gói vaccine
-                                        string maLTGoi = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
-                                        int ltGoiAttempt = 0;
-                                        while (_context.LichTiems.Any(lt => lt.MaLT == maLTGoi) && ltGoiAttempt < 10)
-                                        {
-                                            maLTGoi = TPVAXWebsite.Common.KeyGenerator.GenMaLT();
-                                            ltGoiAttempt++;
-                                        }
-
-                                        var lichTiem = new LichTiem
-                                        {
-                                            MaLT = maLTGoi,
-                                            NgayHenTiem = ngayHenMui,
-                                            NgayTiemThucTe = null,
-                                            SoMui = soMuiTrongGoi,
-                                            TrangThai = "Chưa tiêm",
-                                            GhiChu = $"Đặt lịch qua website - Mã HĐ: {maHD} - Gói: {gioHangItem.MaSanPham}",
-                                            MaHSTC = maHSTC,
-                                            MaVC = ctGoi.MaVC,
-                                            MaNV = null,
-                                            HoSoTiemChung = null,
-                                            Vaccine = null,
-                                            NhanVien = null
-                                        };
-                                        _context.LichTiems.Add(lichTiem);
-                                        muiIndex++;
-                                    }
+                                        MaLT = maLTGoi,
+                                        NgayHenTiem = ngayHenVaccine,
+                                        NgayTiemThucTe = null,
+                                        SoMui = 1, // Luôn là mũi 1
+                                        TrangThai = "Chưa tiêm",
+                                        GhiChu = $"Hẹn Mũi 1 (từ Gói {gioHangItem.MaSanPham}) - Mã HĐ: {maHD}",
+                                        MaHSTC = maHSTC,
+                                        MaVC = ctGoi.MaVC,
+                                        MaNV = null,
+                                        HoSoTiemChung = null,
+                                        Vaccine = null,
+                                        NhanVien = null
+                                    };
+                                    _context.LichTiems.Add(lichTiem);
+                                    vaccineIndex++;
                                 }
                             }
                         }

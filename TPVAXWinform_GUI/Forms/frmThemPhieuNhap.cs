@@ -49,7 +49,7 @@ namespace TPVAXWinform_GUI.Forms
         private void frmThemPhieuNhap_Load(object sender, EventArgs e)
         {
             LoadComboBoxes();
-
+            txtTenNhanVien.Text = UserSession.HoTen ?? "Nhân viên";
             if (isEditMode)
             {
                 // SỬA ENCODING
@@ -65,12 +65,6 @@ namespace TPVAXWinform_GUI.Forms
 
         private void LoadComboBoxes()
         {
-            // Load Nhân viên
-            DataTable dtNhanVien = nhanVienBLL.GetDSNVKho();
-            cboNhanVien.DataSource = dtNhanVien;
-            cboNhanVien.DisplayMember = "HoTen";
-            cboNhanVien.ValueMember = "MaNV";
-            cboNhanVien.SelectedIndex = -1;
 
             // Load Nhà cung cấp
             DataTable dtNhaCungCap = nhaCungCapBLL.GetData();
@@ -91,14 +85,12 @@ namespace TPVAXWinform_GUI.Forms
         {
             try
             {
-                // (Giả sử proc đã sửa, trả về tên không dấu)
                 DataTable dtPhieuNhap = phieuNhapBLL.GetDetailByMaPN(maPN);
                 if (dtPhieuNhap.Rows.Count > 0)
                 {
                     DataRow row = dtPhieuNhap.Rows[0];
                     // SỬA ENCODING: Dùng tên cột không dấu
                     dtpNgayLap.Value = Convert.ToDateTime(row["NgayLap"]);
-                    cboNhanVien.SelectedValue = row["MaNV"]; // Gán bằng Value (MaNV)
                     cboNhaCungCap.SelectedValue = row["MaNCC"]; // Gán bằng Value (MaNCC)
                 }
 
@@ -225,7 +217,7 @@ namespace TPVAXWinform_GUI.Forms
                     {
                         MaPN = isEditMode ? maPN : phieuNhapBLL.CreateNewMaPN(),
                         NgayLap = dtpNgayLap.Value,
-                        MaNV = cboNhanVien.SelectedValue?.ToString(),
+                        MaNV = UserSession.MaNV??"NVIE000001",
                         MaNCC = cboNhaCungCap.SelectedValue?.ToString()
                     };
 
@@ -300,13 +292,7 @@ namespace TPVAXWinform_GUI.Forms
 
         private bool ValidateInput()
         {
-            if (cboNhanVien.SelectedIndex == -1)
-            {
-                MessageBox.Show("Vui lòng chọn nhân viên lập phiếu!", "Thông báo",
-                       MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
+           
             if (cboNhaCungCap.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn nhà cung cấp!", "Thông báo",
