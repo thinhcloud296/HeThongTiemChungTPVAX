@@ -1038,7 +1038,7 @@ namespace TPVAXWebsite.Controllers
                 // ============ BÁO CÁO DOANH THU ============
                 if (reportType == "revenue")
                 {
-                    // Doanh thu theo vaccine
+                    // Doanh thu theo vaccine (chỉ vaccine lẻ)
                     var revenueByVaccine = _unitOfWork.ChiTietHoaDons.Query()
                         .Include(ct => ct.HoaDon)
                         .Where(ct => ct.HoaDon.TrangThai == true && 
@@ -1062,9 +1062,40 @@ namespace TPVAXWebsite.Controllers
                         TongDoanhThu = r.TongDoanhThu
                     }).OrderByDescending(r => r.TongDoanhThu).ToList();
 
+                    // Doanh thu theo gói vaccine
+                    var revenueByGoi = _unitOfWork.ChiTietHoaDons.Query()
+                        .Include(ct => ct.HoaDon)
+                        .Where(ct => ct.HoaDon.TrangThai == true && 
+                                     ct.LoaiSanPham == "GOIVACCINE" &&
+                                     ct.HoaDon.NgayLap >= startDate && 
+                                     ct.HoaDon.NgayLap <= endDate)
+                        .GroupBy(ct => ct.MaSanPham)
+                        .Select(g => new
+                        {
+                            MaGoi = g.Key,
+                            SoLuong = g.Sum(ct => ct.SoLuong),
+                            TongDoanhThu = g.Sum(ct => ct.SoLuong * ct.DonGia)
+                        })
+                        .ToList();
+
+                    // Thêm gói vaccine vào danh sách doanh thu
+                    foreach (var goi in revenueByGoi)
+                    {
+                        var tenGoi = _unitOfWork.GoiVaccines.GetById(goi.MaGoi)?.TenGoi ?? "Gói vaccine";
+                        vaccineRevenue.Add(new VaccineRevenueReportItem
+                        {
+                            MaVC = goi.MaGoi,
+                            TenVC = tenGoi,
+                            SoLuotTiem = goi.SoLuong,
+                            TongDoanhThu = goi.TongDoanhThu
+                        });
+                    }
+
+                    // Sắp xếp lại theo doanh thu
+                    vaccineRevenue = vaccineRevenue.OrderByDescending(r => r.TongDoanhThu).ToList();
                     ViewBag.VaccineRevenue = vaccineRevenue;
 
-                    // Doanh thu theo tháng
+                    // Doanh thu theo tháng (tính từ tổng tiền hóa đơn)
                     var revenueByMonth = _unitOfWork.HoaDons.Query()
                         .Where(hd => hd.TrangThai == true && 
                                      hd.NgayLap >= startDate && 
@@ -1083,8 +1114,8 @@ namespace TPVAXWebsite.Controllers
 
                     ViewBag.RevenueByMonth = revenueByMonth;
 
-                    // Tổng doanh thu
-                    ViewBag.TotalRevenue = vaccineRevenue.Sum(v => v.TongDoanhThu);
+                    // Tổng doanh thu (tính từ tất cả hóa đơn đã thanh toán)
+                    ViewBag.TotalRevenue = revenueByMonth.Sum(r => r.TongDoanhThu);
                     ViewBag.TotalOrders = revenueByMonth.Sum(r => r.SoHoaDon);
                 }
                 // ============ BÁO CÁO TỒN KHO ============
