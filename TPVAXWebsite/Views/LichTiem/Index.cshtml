@@ -91,17 +91,9 @@
 
 @section scripts {
     <script>
+        // Chức năng hủy lịch đã tạm dừng - chỉ hiển thị thông báo
         function cancelAppointment(id) {
-            if (confirm('Bạn có chắc muốn hủy lịch tiêm này?')) {
-                $.post('@Url.Action("Cancel", "LichTiem")', { id: id }, function (data) {
-                    if (data.success) {
-                        alert('Hủy lịch thành công!');
-                        location.reload();
-                    } else {
-                        alert('Lỗi: ' + (data.message || 'Không thể hủy lịch'));
-                    }
-                });
-            }
+            alert('Chức năng hủy lịch trực tuyến hiện đang tạm dừng.\n\nVui lòng liên hệ trung tâm TPVAX qua hotline 1900-xxxx để được hỗ trợ hủy lịch.');
         }
     </script>
 }

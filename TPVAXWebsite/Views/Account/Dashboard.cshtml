@@ -1445,92 +1445,23 @@
             });
         }
 
-        // Hủy lịch với SweetAlert2
+        // Hủy lịch với SweetAlert2 - CHỨC NĂNG ĐÃ TẠM DỪNG
         function cancelSchedule(maLT) {
             Swal.fire({
-                title: '<i class="fas fa-exclamation-triangle text-warning"></i> Xác nhận hủy lịch',
+                icon: 'info',
+                title: '<i class="fas fa-info-circle text-info"></i> Thông báo',
                 html: `
                     <div class="text-start">
-                        <p class="mb-3">Bạn có chắc chắn muốn hủy lịch hẹn này?</p>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Lý do hủy (không bắt buộc):</label>
-                            <select id="lyDoHuy" class="form-select">
-                                <option value="">-- Chọn lý do --</option>
-                                <option value="Bận việc đột xuất">Bận việc đột xuất</option>
-                                <option value="Thay đổi kế hoạch">Thay đổi kế hoạch</option>
-                                <option value="Sức khỏe không tốt">Sức khỏe không tốt</option>
-                                <option value="Muốn đổi sang ngày khác">Muốn đổi sang ngày khác</option>
-                                <option value="Lý do khác">Lý do khác</option>
-                            </select>
-                        </div>
-                        <div class="alert alert-warning small mb-0">
-                            <i class="fas fa-info-circle me-1"></i>
-                            Lưu ý: Sau khi hủy, bạn có thể đặt lịch mới bất cứ lúc nào.
+                        <p class="mb-3">Chức năng hủy lịch trực tuyến hiện đang tạm dừng.</p>
+                        <div class="alert alert-info small mb-0">
+                            <i class="fas fa-phone me-1"></i>
+                            Vui lòng liên hệ trung tâm TPVAX qua hotline <strong>1900-xxxx</strong> để được hỗ trợ hủy lịch.
                         </div>
                     </div>
                 `,
-                showCancelButton: true,
-                confirmButtonText: '<i class="fas fa-times me-1"></i>Xác nhận hủy',
-                cancelButtonText: '<i class="fas fa-arrow-left me-1"></i>Quay lại',
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fas fa-check me-1"></i>Đã hiểu',
+                confirmButtonColor: '#0077b6',
                 width: '450px'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var lyDo = document.getElementById('lyDoHuy').value;
-                    
-                    // Hiển thị loading
-                    Swal.fire({
-                        title: 'Đang xử lý...',
-                        html: 'Vui lòng đợi trong giây lát',
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-
-                    $.ajax({
-                        url: '@Url.Action("HuyLich", "LichTiem")',
-                        type: 'POST',
-                        data: { 
-                            id: maLT,
-                            lyDo: lyDo,
-                            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
-                        },
-                        success: function (response) {
-                            if (response.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Đã hủy lịch!',
-                                    html: `<p>${response.message}</p>
-                                           <p class="text-muted small">Bạn có thể đặt lịch mới bất cứ lúc nào.</p>`,
-                                    confirmButtonColor: '#0077b6',
-                                    timer: 2500,
-                                    timerProgressBar: true
-                                }).then(() => location.reload());
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Không thể hủy!',
-                                    text: response.message,
-                                    confirmButtonColor: '#dc3545'
-                                });
-                            }
-                        },
-                        error: function (xhr) {
-                            var errorMsg = 'Không thể kết nối đến server.';
-                            if (xhr.responseJSON && xhr.responseJSON.message) {
-                                errorMsg = xhr.responseJSON.message;
-                            }
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Lỗi!',
-                                text: errorMsg,
-                                confirmButtonColor: '#dc3545'
-                            });
-                        }
-                    });
-                }
             });
         }
         // Copy voucher code

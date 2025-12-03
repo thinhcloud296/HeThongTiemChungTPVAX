@@ -311,88 +311,17 @@ namespace TPVAXWebsite.Controllers
             }
         }
 
-        // Hủy lịch (chỉ đổi trạng thái, không xóa)
-        // FIX #4: Hoàn trả tồn kho khi hủy lịch
+        // Hủy lịch - CHỨC NĂNG ĐÃ TẠM DỪNG
+        // Khách hàng cần liên hệ trung tâm để hủy lịch
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult HuyLich(string id, string lyDo = "")
         {
-            using (var transaction = _context.Database.BeginTransaction())
-            {
-                try
-                {
-                    var kh = Session["KH"] as KhachHang;
-                    if (kh == null)
-                    {
-                        return Json(new { success = false, message = "Vui lòng đăng nhập." });
-                    }
-
-                    var lich = _context.LichTiems.Find(id);
-                    if (lich == null)
-                    {
-                        return Json(new { success = false, message = "Không tìm thấy lịch hẹn." });
-                    }
-
-                    // Kiểm tra quyền
-                    var lienKet = _context.LienKetHoSos
-                        .FirstOrDefault(lk => lk.MaKH == kh.MaKH && lk.MaHSTC == lich.MaHSTC);
-
-                    if (lienKet == null)
-                    {
-                        return Json(new { success = false, message = "Bạn không có quyền hủy lịch này." });
-                    }
-
-                    // Kiểm tra trạng thái có thể hủy
-                    if (lich.TrangThai == "Đã tiêm")
-                    {
-                        return Json(new { success = false, message = "Không thể hủy lịch đã tiêm." });
-                    }
-
-                    if (lich.TrangThai == "Đã hủy")
-                    {
-                        return Json(new { success = false, message = "Lịch hẹn này đã được hủy trước đó." });
-                    }
-
-                    // Kiểm tra không hủy lịch quá sát giờ hẹn (ít nhất 2 giờ trước)
-                    if (lich.NgayHenTiem <= DateTime.Now.AddHours(2))
-                    {
-                        return Json(new { success = false, message = "Không thể hủy lịch khi còn dưới 2 giờ đến giờ hẹn. Vui lòng liên hệ trung tâm." });
-                    }
-
-                    // FIX #4: Hoàn trả tồn kho vaccine (đơn giản)
-                    if (!string.IsNullOrEmpty(lich.MaVC))
-                    {
-                        var vaccine = _context.Vaccines.Find(lich.MaVC);
-                        if (vaccine != null)
-                        {
-                            vaccine.SoLuong += 1; // Hoàn trả 1 liều
-                        }
-                    }
-
-                    lich.TrangThai = "Đã hủy";
-                    
-                    // Lưu lý do hủy vào GhiChu nếu có
-                    string ghiChuCu = lich.GhiChu ?? "";
-                    if (!string.IsNullOrEmpty(lyDo))
-                    {
-                        lich.GhiChu = $"{ghiChuCu} [Hủy bởi KH - {DateTime.Now:dd/MM/yyyy HH:mm}] Lý do: {lyDo} | Đã hoàn kho";
-                    }
-                    else
-                    {
-                        lich.GhiChu = $"{ghiChuCu} [Hủy bởi KH - {DateTime.Now:dd/MM/yyyy HH:mm}] | Đã hoàn kho";
-                    }
-                    
-                    _context.SaveChanges();
-                    transaction.Commit();
-
-                    return Json(new { success = true, message = "Hủy lịch thành công! Vaccine đã được hoàn trả vào kho." });
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
-                }
-            }
+            // Chức năng hủy lịch trực tuyến đã tạm dừng
+            return Json(new { 
+                success = false, 
+                message = "Chức năng hủy lịch trực tuyến hiện đang tạm dừng. Vui lòng liên hệ trung tâm TPVAX qua hotline 1900-xxxx để được hỗ trợ." 
+            });
         }
 
         protected override void Dispose(bool disposing)
