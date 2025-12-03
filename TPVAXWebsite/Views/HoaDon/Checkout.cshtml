@@ -371,6 +371,14 @@
                                                         <label class="form-label small mb-1">Người tiêm:</label>
                                                         @if (Model.DanhSachHoSo != null && Model.DanhSachHoSo.Any())
                                                         {
+                                                            // FIX: Lấy MaHSTC đã chọn từ trang DatLich (nếu có)
+                                                            string selectedKey = $"{item.MaGH}_{i}";
+                                                            string selectedMaHSTC = "";
+                                                            if (Model.SelectedHSTCDict != null && Model.SelectedHSTCDict.ContainsKey(selectedKey))
+                                                            {
+                                                                selectedMaHSTC = Model.SelectedHSTCDict[selectedKey];
+                                                            }
+                                                            
                                                             <select class="form-select form-select-sm nguoi-tiem-select" 
                                                                     data-magh="@item.MaGH" 
                                                                     data-masanpham="@item.MaSanPham" 
@@ -378,7 +386,9 @@
                                                                     data-index="@i">
                                                                 @foreach (var hoSo in Model.DanhSachHoSo)
                                                                 {
-                                                                    <option value="@hoSo.MaHSTC">@hoSo.DisplayText</option>
+                                                                    // FIX: Set selected cho option đúng với MaHSTC đã chọn
+                                                                    bool isSelected = !string.IsNullOrEmpty(selectedMaHSTC) && hoSo.MaHSTC.Trim() == selectedMaHSTC.Trim();
+                                                                    <option value="@hoSo.MaHSTC" @(isSelected ? "selected" : "")>@hoSo.DisplayText</option>
                                                                 }
                                                             </select>
                                                         }
@@ -918,6 +928,48 @@
 
         var antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
         
+        // Kiểm tra phương thức thanh toán được chọn
+        var paymentMethod = selectedPayment.id.replace('payment-', '');
+        
+        // ============================================================
+        // XỬ LÝ THANH TOÁN VNPAY
+        // Nếu chọn VNPAY, submit form để redirect sang cổng thanh toán
+        // ============================================================
+        if (paymentMethod === 'vnpay') {
+            // Tạo form ẩn để POST sang ThanhToanVnPay
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '@Url.Action("ThanhToanVnPay", "HoaDon")';
+            
+            // Thêm anti-forgery token
+            var tokenInput = document.createElement('input');
+            tokenInput.type = 'hidden';
+            tokenInput.name = '__RequestVerificationToken';
+            tokenInput.value = antiForgeryToken;
+            form.appendChild(tokenInput);
+            
+            // Thêm mã khuyến mãi
+            var maKMInput = document.createElement('input');
+            maKMInput.type = 'hidden';
+            maKMInput.name = 'MaKM';
+            maKMInput.value = '@(Model?.MaKMApDung ?? "")';
+            form.appendChild(maKMInput);
+            
+            // Thêm danh sách người tiêm
+            var nguoiTiemInput = document.createElement('input');
+            nguoiTiemInput.type = 'hidden';
+            nguoiTiemInput.name = 'DanhSachNguoiTiem';
+            nguoiTiemInput.value = JSON.stringify(danhSachNguoiTiem);
+            form.appendChild(nguoiTiemInput);
+            
+            document.body.appendChild(form);
+            form.submit();
+            return;
+        }
+        
+        // ============================================================
+        // XỬ LÝ THANH TOÁN THƯỜNG (Chuyển khoản, COD, etc.)
+        // ============================================================
         $.ajax({
             url: '@Url.Action("XacNhanThanhToan", "HoaDon")',
             type: 'POST',

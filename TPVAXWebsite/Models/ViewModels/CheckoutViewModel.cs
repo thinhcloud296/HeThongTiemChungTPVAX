@@ -22,6 +22,10 @@ namespace TPVAXWebsite.Models.ViewModels
 
         // Danh sách hồ sơ tiêm chủng của khách hàng (để chọn người tiêm)
         public List<HoSoTiemChungSelectItem> DanhSachHoSo { get; set; }
+        
+        // FIX: Dictionary lưu MaHSTC đã chọn từ trang DatLich
+        // Key format: "{MaGH}_{Index}" -> Value: MaHSTC
+        public Dictionary<string, string> SelectedHSTCDict { get; set; }
     }
 
     /// <summary>

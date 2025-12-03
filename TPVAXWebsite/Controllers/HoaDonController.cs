@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using TPVAXWebsite.Common;
 using TPVAXWebsite.DAL;
 using TPVAXWebsite.Models.Domain;
 using TPVAXWebsite.Models.ViewModels;
@@ -111,6 +112,9 @@ namespace TPVAXWebsite.Controllers
 
             decimal tongTien = gioHangItems.Sum(item => item.ThanhTien);
 
+            // FIX: Lấy SelectedHSTCDict từ Session để truyền sang View
+            var selectedHSTCDict = Session["SelectedHSTCDict"] as Dictionary<string, string>;
+
             var model = new CheckoutViewModel
             {
                 KhachHang = kh,
@@ -120,7 +124,8 @@ namespace TPVAXWebsite.Controllers
                 TongTienSauGiam = tongTien,
                 KhuyenMais = khuyenMais,
                 DiaChiGiaoHang = kh.DiaChi,
-                DanhSachHoSo = danhSachHoSo
+                DanhSachHoSo = danhSachHoSo,
+                SelectedHSTCDict = selectedHSTCDict ?? new Dictionary<string, string>()
             };
 
             return View(model);
@@ -875,6 +880,490 @@ namespace TPVAXWebsite.Controllers
             
             return maCTHD;
         }
+
+        #region VNPAY Integration
+
+        // ============================================================
+        // VNPAY Configuration - Sandbox Environment
+        // ============================================================
+        private const string vnp_TmnCode = "4Z9J8W1F";
+        private const string vnp_HashSecret = "T9GIA2J4ACXZ76RYHWR6QME84JZEDD1C";
+        private const string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+
+        /// <summary>
+        /// POST: HoaDon/ThanhToanVnPay
+        /// Tạo hóa đơn và redirect đến VNPAY để thanh toán
+        /// 
+        /// ============================================================
+        /// THÔNG TIN THẺ TEST (VNPAY Sandbox)
+        /// ============================================================
+        /// Ngân hàng: NCB
+        /// Số thẻ: 9704198526191432198
+        /// Tên chủ thẻ: NGUYEN VAN A
+        /// Ngày phát hành: 07/15
+        /// Mật khẩu OTP: 123456
+        /// ============================================================
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThanhToanVnPay(string MaKM, string DanhSachNguoiTiem)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var kh = Session["KH"] as KhachHang;
+                    if (kh == null)
+                    {
+                        TempData["ErrorMessage"] = "Phiên đăng nhập hết hạn.";
+                        return RedirectToAction("Login", "Account");
+                    }
+
+                    // Parse danh sách người tiêm từ JSON
+                    var nguoiTiemList = new List<NguoiTiemItem>();
+                    if (!string.IsNullOrEmpty(DanhSachNguoiTiem))
+                    {
+                        try
+                        {
+                            var serializer = new JavaScriptSerializer();
+                            nguoiTiemList = serializer.Deserialize<List<NguoiTiemItem>>(DanhSachNguoiTiem);
+                        }
+                        catch { }
+                    }
+
+                    // Lưu vào Session để sử dụng sau khi VNPAY callback
+                    Session["VnPay_MaKM"] = MaKM;
+                    Session["VnPay_DanhSachNguoiTiem"] = DanhSachNguoiTiem;
+
+                    // Load giỏ hàng
+                    var gioHangItems = _context.GioHangs
+                        .Where(g => g.MaKH == kh.MaKH)
+                        .ToList();
+
+                    if (!gioHangItems.Any())
+                    {
+                        TempData["ErrorMessage"] = "Giỏ hàng trống.";
+                        return RedirectToAction("Index", "GioHang");
+                    }
+
+                    // Tính tổng tiền
+                    decimal tongTien = 0;
+                    foreach (var item in gioHangItems)
+                    {
+                        decimal donGia = 0;
+                        if (item.LoaiSanPham == "VACCINE")
+                        {
+                            var vaccine = _context.Vaccines.Find(item.MaSanPham);
+                            if (vaccine != null) donGia = vaccine.GiaBan;
+                        }
+                        else if (item.LoaiSanPham == "GOIVACCINE")
+                        {
+                            var goi = _context.GoiVaccines.Find(item.MaSanPham);
+                            if (goi != null) donGia = goi.GiaGoi;
+                        }
+                        tongTien += donGia * item.SoLuong;
+                    }
+
+                    // Áp dụng khuyến mãi nếu có
+                    decimal tienGiam = 0;
+                    if (!string.IsNullOrEmpty(MaKM))
+                    {
+                        var khuyenMai = _context.KhuyenMais.Find(MaKM);
+                        if (khuyenMai != null && khuyenMai.TrangThai == true)
+                        {
+                            if (khuyenMai.KieuGiam == "PhanTram")
+                            {
+                                tienGiam = tongTien * khuyenMai.GiaTriGiam / 100;
+                            }
+                            else
+                            {
+                                tienGiam = khuyenMai.GiaTriGiam;
+                            }
+                            if (tienGiam > tongTien) tienGiam = tongTien;
+                        }
+                    }
+
+                    decimal tongTienSauGiam = tongTien - tienGiam;
+
+                    // Tạo mã đơn hàng tạm (sẽ dùng làm vnp_TxnRef)
+                    string orderCode = "TPVAX" + DateTime.Now.Ticks.ToString();
+                    Session["VnPay_OrderCode"] = orderCode;
+                    Session["VnPay_TongTien"] = tongTienSauGiam;
+
+                    transaction.Commit();
+
+                    // ============================================================
+                    // TẠO URL THANH TOÁN VNPAY
+                    // ============================================================
+                    string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    string vnp_ReturnUrl = baseUrl + Url.Action("VnPayCallback", "HoaDon");
+
+                    VnPayLibrary vnpay = new VnPayLibrary();
+
+                    vnpay.AddRequestData("vnp_Version", "2.1.0");
+                    vnpay.AddRequestData("vnp_Command", "pay");
+                    vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
+
+                    // ============================================================
+                    // QUAN TRỌNG: vnp_Amount phải nhân 100
+                    // VNPAY yêu cầu số tiền phải được nhân 100 (không có dấu phẩy)
+                    // Ví dụ: 100,000 VND => gửi 10000000
+                    // Lý do: VNPAY lưu trữ số tiền dưới dạng số nguyên với 2 chữ số thập phân
+                    // ============================================================
+                    long amountInVnpayFormat = (long)(tongTienSauGiam * 100);
+                    vnpay.AddRequestData("vnp_Amount", amountInVnpayFormat.ToString());
+
+                    // FIX: Sử dụng múi giờ Việt Nam (UTC+7) thay vì DateTime.Now (UTC trên Azure)
+                    DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, 
+                        TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
+                    vnpay.AddRequestData("vnp_CreateDate", vietnamTime.ToString("yyyyMMddHHmmss"));
+                    vnpay.AddRequestData("vnp_CurrCode", "VND");
+                    vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(HttpContext));
+                    vnpay.AddRequestData("vnp_Locale", "vn");
+                    vnpay.AddRequestData("vnp_OrderInfo", "Thanh toan vaccine tai TPVAX - " + orderCode);
+                    vnpay.AddRequestData("vnp_OrderType", "billpayment");
+                    vnpay.AddRequestData("vnp_ReturnUrl", vnp_ReturnUrl);
+                    vnpay.AddRequestData("vnp_TxnRef", orderCode);
+                    // FIX: Sử dụng múi giờ Việt Nam (UTC+7)
+                    vnpay.AddRequestData("vnp_ExpireDate", vietnamTime.AddMinutes(15).ToString("yyyyMMddHHmmss"));
+
+                    string paymentUrl = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
+
+                    return Redirect(paymentUrl);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    TempData["ErrorMessage"] = "Lỗi: " + ex.Message;
+                    return RedirectToAction("Checkout");
+                }
+            }
+        }
+
+        /// <summary>
+        /// GET: HoaDon/VnPayCallback
+        /// Nhận kết quả thanh toán từ VNPAY và xử lý tạo hóa đơn
+        /// </summary>
+        public ActionResult VnPayCallback()
+        {
+            VnPayLibrary vnpay = new VnPayLibrary();
+
+            // Lấy tất cả query parameters từ URL callback
+            foreach (string key in Request.QueryString.AllKeys)
+            {
+                if (!string.IsNullOrEmpty(key) && key.StartsWith("vnp_"))
+                {
+                    vnpay.AddResponseData(key, Request.QueryString[key]);
+                }
+            }
+
+            string vnp_TxnRef = vnpay.GetResponseData("vnp_TxnRef");
+            string vnp_TransactionNo = vnpay.GetResponseData("vnp_TransactionNo");
+            string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
+            string vnp_SecureHash = Request.QueryString["vnp_SecureHash"];
+            string vnp_Amount = vnpay.GetResponseData("vnp_Amount");
+
+            // Xác thực chữ ký
+            bool isValidSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
+
+            if (isValidSignature && vnp_ResponseCode == "00")
+            {
+                // THANH TOÁN THÀNH CÔNG - Tạo hóa đơn thực sự
+                return ProcessSuccessfulVnPayPayment(vnp_TxnRef, vnp_TransactionNo);
+            }
+            else
+            {
+                // THANH TOÁN THẤT BẠI
+                TempData["ErrorMessage"] = isValidSignature 
+                    ? "Thanh toán VNPAY thất bại. Mã lỗi: " + vnp_ResponseCode 
+                    : "Chữ ký không hợp lệ!";
+                return RedirectToAction("Checkout");
+            }
+        }
+
+        /// <summary>
+        /// Xử lý tạo hóa đơn sau khi VNPAY thanh toán thành công
+        /// </summary>
+        private ActionResult ProcessSuccessfulVnPayPayment(string orderCode, string vnpayTransactionNo)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var kh = Session["KH"] as KhachHang;
+                    if (kh == null)
+                    {
+                        TempData["ErrorMessage"] = "Phiên đăng nhập hết hạn.";
+                        return RedirectToAction("Login", "Account");
+                    }
+
+                    // Lấy thông tin từ Session
+                    string MaKM = Session["VnPay_MaKM"] as string;
+                    string DanhSachNguoiTiem = Session["VnPay_DanhSachNguoiTiem"] as string;
+
+                    // Parse danh sách người tiêm
+                    var nguoiTiemList = new List<NguoiTiemItem>();
+                    if (!string.IsNullOrEmpty(DanhSachNguoiTiem))
+                    {
+                        try
+                        {
+                            var serializer = new JavaScriptSerializer();
+                            nguoiTiemList = serializer.Deserialize<List<NguoiTiemItem>>(DanhSachNguoiTiem);
+                        }
+                        catch { }
+                    }
+
+                    // Load giỏ hàng
+                    var gioHangItems = _context.GioHangs
+                        .Where(g => g.MaKH == kh.MaKH)
+                        .ToList();
+
+                    if (!gioHangItems.Any())
+                    {
+                        TempData["ErrorMessage"] = "Giỏ hàng trống.";
+                        return RedirectToAction("Index", "GioHang");
+                    }
+
+                    // Tính tổng tiền và tạo chi tiết hóa đơn
+                    decimal tongTien = 0;
+                    var chiTietList = new List<ChiTietHoaDon>();
+
+                    foreach (var item in gioHangItems)
+                    {
+                        decimal donGia = 0;
+                        if (item.LoaiSanPham == "VACCINE")
+                        {
+                            var vaccine = _context.Vaccines.Find(item.MaSanPham);
+                            if (vaccine != null) donGia = vaccine.GiaBan;
+                        }
+                        else if (item.LoaiSanPham == "GOIVACCINE")
+                        {
+                            var goi = _context.GoiVaccines.Find(item.MaSanPham);
+                            if (goi != null) donGia = goi.GiaGoi;
+                        }
+
+                        tongTien += donGia * item.SoLuong;
+
+                        chiTietList.Add(new ChiTietHoaDon
+                        {
+                            SoLuong = item.SoLuong,
+                            DonGia = donGia,
+                            MaSanPham = item.MaSanPham,
+                            LoaiSanPham = item.LoaiSanPham
+                        });
+                    }
+
+                    // Áp dụng khuyến mãi
+                    decimal tienGiam = 0;
+                    string maKMValid = null;
+                    if (!string.IsNullOrEmpty(MaKM))
+                    {
+                        var khuyenMai = _context.KhuyenMais.Find(MaKM);
+                        if (khuyenMai != null && khuyenMai.TrangThai == true)
+                        {
+                            maKMValid = MaKM;
+                            if (khuyenMai.KieuGiam == "PhanTram")
+                            {
+                                tienGiam = tongTien * khuyenMai.GiaTriGiam / 100;
+                            }
+                            else
+                            {
+                                tienGiam = khuyenMai.GiaTriGiam;
+                            }
+                            if (tienGiam > tongTien) tienGiam = tongTien;
+                        }
+                    }
+
+                    decimal tongTienSauGiam = tongTien - tienGiam;
+
+                    // Tạo mã hóa đơn
+                    string maHD = TaoMaHoaDon();
+
+                    // Tạo hóa đơn (đã thanh toán qua VNPAY)
+                    var hoaDon = new HoaDon
+                    {
+                        MaHD = maHD,
+                        NgayLap = DateTime.Now,
+                        TongTien = tongTienSauGiam,
+                        TrangThai = true, // Đã thanh toán
+                        MaKH = kh.MaKH,
+                        MaNV = null,
+                        MaKM = maKMValid
+                    };
+
+                    _context.HoaDons.Add(hoaDon);
+                    _context.SaveChanges();
+
+                    // Thêm chi tiết hóa đơn
+                    foreach (var chiTiet in chiTietList)
+                    {
+                        string maCTHD = KeyGenerator.GenMaCTHD();
+                        int attempt = 0;
+                        while (_context.ChiTietHoaDons.Any(ct => ct.MaCTHD == maCTHD) && attempt < 10)
+                        {
+                            maCTHD = KeyGenerator.GenMaCTHD();
+                            attempt++;
+                        }
+
+                        chiTiet.MaCTHD = maCTHD;
+                        chiTiet.MaHD = maHD;
+                        _context.ChiTietHoaDons.Add(chiTiet);
+                    }
+                    _context.SaveChanges();
+
+                    // Tạo lịch tiêm (logic giống XacNhanThanhToan)
+                    foreach (var gioHangItem in gioHangItems)
+                    {
+                        var nguoiTiemChoSanPham = nguoiTiemList
+                            .Where(nt => nt.MaGH == gioHangItem.MaGH ||
+                                   (nt.MaSanPham == gioHangItem.MaSanPham && nt.LoaiSanPham == gioHangItem.LoaiSanPham))
+                            .OrderBy(nt => nt.Index)
+                            .ToList();
+
+                        if (!nguoiTiemChoSanPham.Any())
+                        {
+                            for (int i = 0; i < gioHangItem.SoLuong; i++)
+                            {
+                                nguoiTiemChoSanPham.Add(new NguoiTiemItem
+                                {
+                                    MaGH = gioHangItem.MaGH,
+                                    MaSanPham = gioHangItem.MaSanPham,
+                                    LoaiSanPham = gioHangItem.LoaiSanPham,
+                                    MaHSTC = null,
+                                    Index = i
+                                });
+                            }
+                        }
+
+                        foreach (var nguoiTiem in nguoiTiemChoSanPham)
+                        {
+                            string maHSTC = nguoiTiem.MaHSTC;
+                            if (string.IsNullOrEmpty(maHSTC))
+                            {
+                                maHSTC = GetOrCreateDefaultHoSo(kh);
+                            }
+
+                            DateTime ngayHenMui1 = DateTime.Now.AddDays(1);
+                            if (!string.IsNullOrEmpty(nguoiTiem.NgayHenTiem))
+                            {
+                                if (DateTime.TryParse(nguoiTiem.NgayHenTiem, out DateTime parsedDate))
+                                {
+                                    ngayHenMui1 = parsedDate;
+                                }
+                                if (!string.IsNullOrEmpty(nguoiTiem.GioHenTiem))
+                                {
+                                    var gioParts = nguoiTiem.GioHenTiem.Split(':');
+                                    if (gioParts.Length >= 2 && int.TryParse(gioParts[0], out int gio) && int.TryParse(gioParts[1], out int phut))
+                                    {
+                                        ngayHenMui1 = new DateTime(ngayHenMui1.Year, ngayHenMui1.Month, ngayHenMui1.Day, gio, phut, 0);
+                                    }
+                                }
+                            }
+
+                            if (gioHangItem.LoaiSanPham == "VACCINE")
+                            {
+                                var vaccine = _context.Vaccines.Find(gioHangItem.MaSanPham);
+                                if (vaccine != null)
+                                {
+                                    string maLT = KeyGenerator.GenMaLT();
+                                    int ltAttempt = 0;
+                                    while (_context.LichTiems.Any(lt => lt.MaLT == maLT) && ltAttempt < 10)
+                                    {
+                                        maLT = KeyGenerator.GenMaLT();
+                                        ltAttempt++;
+                                    }
+
+                                    var lichTiem = new LichTiem
+                                    {
+                                        MaLT = maLT,
+                                        NgayHenTiem = ngayHenMui1,
+                                        NgayTiemThucTe = null,
+                                        SoMui = 1,
+                                        TrangThai = "Chưa tiêm",
+                                        GhiChu = $"Thanh toán VNPAY - Mã HĐ: {maHD} - VNPAY TxnRef: {orderCode}",
+                                        MaHSTC = maHSTC,
+                                        MaVC = gioHangItem.MaSanPham,
+                                        MaNV = null
+                                    };
+                                    _context.LichTiems.Add(lichTiem);
+                                }
+                            }
+                            else if (gioHangItem.LoaiSanPham == "GOIVACCINE")
+                            {
+                                var chiTietGoi = _context.ChiTietGoiVaccines
+                                    .Include(ct => ct.Vaccine)
+                                    .Where(ct => ct.MaGoi == gioHangItem.MaSanPham)
+                                    .ToList();
+
+                                var vaccinesMui1 = chiTietGoi
+                                    .GroupBy(ct => ct.MaVC)
+                                    .Select(g => g.OrderBy(ct => ct.SoMui ?? 1).First())
+                                    .Where(ct => (ct.SoMui ?? 1) == 1)
+                                    .ToList();
+
+                                int vaccineIndex = 0;
+                                foreach (var ctGoi in vaccinesMui1)
+                                {
+                                    if (ctGoi.Vaccine == null) continue;
+
+                                    DateTime ngayHenVaccine = ngayHenMui1.AddMonths(vaccineIndex * 2);
+
+                                    string maLTGoi = KeyGenerator.GenMaLT();
+                                    int ltGoiAttempt = 0;
+                                    while (_context.LichTiems.Any(lt => lt.MaLT == maLTGoi) && ltGoiAttempt < 10)
+                                    {
+                                        maLTGoi = KeyGenerator.GenMaLT();
+                                        ltGoiAttempt++;
+                                    }
+
+                                    var lichTiem = new LichTiem
+                                    {
+                                        MaLT = maLTGoi,
+                                        NgayHenTiem = ngayHenVaccine,
+                                        NgayTiemThucTe = null,
+                                        SoMui = 1,
+                                        TrangThai = "Chưa tiêm",
+                                        GhiChu = $"Hẹn Mũi 1 (từ Gói {gioHangItem.MaSanPham}) - VNPAY - Mã HĐ: {maHD}",
+                                        MaHSTC = maHSTC,
+                                        MaVC = ctGoi.MaVC,
+                                        MaNV = null
+                                    };
+                                    _context.LichTiems.Add(lichTiem);
+                                    vaccineIndex++;
+                                }
+                            }
+                        }
+                    }
+                    _context.SaveChanges();
+
+                    // Xóa giỏ hàng
+                    foreach (var item in gioHangItems)
+                    {
+                        _context.GioHangs.Remove(item);
+                    }
+                    _context.SaveChanges();
+
+                    // Xóa Session VNPAY
+                    Session.Remove("VnPay_MaKM");
+                    Session.Remove("VnPay_DanhSachNguoiTiem");
+                    Session.Remove("VnPay_OrderCode");
+                    Session.Remove("VnPay_TongTien");
+
+                    transaction.Commit();
+
+                    TempData["SuccessMessage"] = $"Thanh toán VNPAY thành công! Mã hóa đơn: {maHD}";
+                    return RedirectToAction("ChiTiet", new { id = maHD });
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    TempData["ErrorMessage"] = "Lỗi xử lý đơn hàng: " + ex.Message;
+                    return RedirectToAction("Checkout");
+                }
+            }
+        }
+
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

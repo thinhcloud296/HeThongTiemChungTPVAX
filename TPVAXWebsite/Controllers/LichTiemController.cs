@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TPVAXWebsite.Models.Domain;
@@ -157,10 +158,12 @@ namespace TPVAXWebsite.Controllers
                                       && g.MaSanPham == model.MaVC
                                       && g.LoaiSanPham == "VACCINE");
 
+                int maGH = 0;
                 if (itemTrongGio != null)
                 {
                     // Tăng số lượng nếu đã có
                     itemTrongGio.SoLuong += 1;
+                    maGH = itemTrongGio.MaGH;
                 }
                 else
                 {
@@ -173,9 +176,32 @@ namespace TPVAXWebsite.Controllers
                         SoLuong = 1
                     };
                     _context.GioHangs.Add(itemMoi);
+                    _context.SaveChanges();
+                    maGH = itemMoi.MaGH;
                 }
 
                 _context.SaveChanges();
+
+                // FIX: Lưu MaHSTC đã chọn vào Session để sử dụng ở trang Checkout
+                // Key format: "SelectedHSTC_{MaGH}_{Index}" để hỗ trợ nhiều người tiêm cho cùng 1 sản phẩm
+                if (!string.IsNullOrEmpty(model.MaHSTC))
+                {
+                    var selectedHSTCDict = Session["SelectedHSTCDict"] as Dictionary<string, string>;
+                    if (selectedHSTCDict == null)
+                    {
+                        selectedHSTCDict = new Dictionary<string, string>();
+                    }
+                    
+                    // Lưu MaHSTC cho item này (index = số lượng - 1)
+                    var gioHangItem = _context.GioHangs.Find(maGH);
+                    if (gioHangItem != null)
+                    {
+                        int index = gioHangItem.SoLuong - 1;
+                        string key = $"{maGH}_{index}";
+                        selectedHSTCDict[key] = model.MaHSTC;
+                        Session["SelectedHSTCDict"] = selectedHSTCDict;
+                    }
+                }
 
                 TempData["SuccessMessage"] = "Đã thêm vaccine vào giỏ hàng! Vui lòng chọn thời gian tiêm và thanh toán.";
                 return RedirectToAction("Index", "GioHang");

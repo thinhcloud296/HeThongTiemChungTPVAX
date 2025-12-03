@@ -261,7 +261,7 @@ namespace TPVAXWebsite.Controllers
 
                 return View(viewModels);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View(new List<AdminVaccineViewModel>());
             }
@@ -300,7 +300,7 @@ namespace TPVAXWebsite.Controllers
                         var jsonStr = Request.Form["SelectedLoaiBenhIds"];
                         selectedBenhs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(jsonStr) ?? new List<string>();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         // Error parsing
                     }
@@ -450,7 +450,7 @@ namespace TPVAXWebsite.Controllers
                         selectedBenhs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(jsonStr) ?? new List<string>();
                         model.SelectedLoaiBenhIds = selectedBenhs;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         // Error parsing
                     }
@@ -734,7 +734,7 @@ namespace TPVAXWebsite.Controllers
 
                 return fileName;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -757,7 +757,7 @@ namespace TPVAXWebsite.Controllers
                     System.IO.File.Delete(filePath);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Không throw để không ảnh hưởng đến logic chính
             }
@@ -826,7 +826,7 @@ namespace TPVAXWebsite.Controllers
 
                 return View(viewModels);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View(new List<AdminCustomerViewModel>());
             }
@@ -898,7 +898,7 @@ namespace TPVAXWebsite.Controllers
 
                 return View(viewModels);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.CurrentPage = 1;
                 ViewBag.TotalPages = 1;
@@ -989,7 +989,7 @@ namespace TPVAXWebsite.Controllers
 
                 return View(viewModels);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return View(new List<AdminNhanVienViewModel>());
             }
@@ -2274,7 +2274,7 @@ namespace TPVAXWebsite.Controllers
                 // Trả về path tuyệt đối để lưu vào DB (để tương thích với data cũ)
                 return "/Content/images/khuyenmai/" + fileName;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -2300,7 +2300,7 @@ namespace TPVAXWebsite.Controllers
                     System.IO.File.Delete(filePath);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Error deleting image
             }

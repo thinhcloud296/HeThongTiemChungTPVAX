@@ -420,8 +420,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Common\KeyGenerator.cs" />
     <Compile Include="Common\AuthorizeAdminAttribute.cs" />
+    <Compile Include="Common\VnPayLibrary.cs" />
     <Compile Include="Controllers\HoSoTiemChungController.cs" />
     <Compile Include="Controllers\HoSoController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -536,6 +538,7 @@
     <Content Include="Views\Admin\XacNhanLienKetHoSo.cshtml" />
     <Content Include="Views\Account\DangKyTuHoSo.cshtml" />
     <Content Include="Views\Account\XacNhanHoSoTiemChung.cshtml" />
+    <Content Include="Views\Payment\PaymentCallback.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
