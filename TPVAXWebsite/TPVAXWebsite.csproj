@@ -525,6 +525,17 @@
     <Content Include="Scripts\bootstrap.min.js.map" />
     <None Include="Properties\PublishProfiles\tpvax - Web Deploy.pubxml" />
     <Content Include="Views\Shared\AccessDenied.cshtml" />
+    <Content Include="Views\Admin\ChiTietHoaDon.cshtml" />
+    <Content Include="Views\Admin\ConfirmCreateAccount.cshtml" />
+    <Content Include="Views\Admin\DangKyTuHoSo.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\Register.cshtml" />
+    <Content Include="Views\Admin\RegisterExisting.cshtml" />
+    <Content Include="Views\Admin\XacNhanHoSoTiemChung.cshtml" />
+    <Content Include="Views\Admin\XacNhanLienKetHoSo.cshtml" />
+    <Content Include="Views\Account\DangKyTuHoSo.cshtml" />
+    <Content Include="Views\Account\XacNhanHoSoTiemChung.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

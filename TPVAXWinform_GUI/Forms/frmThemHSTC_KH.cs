@@ -32,7 +32,7 @@ namespace TPVAXWinform_GUI
         };
         string[] gioiTinhOptions = { "Nam", "Nữ", "Khác" };
 
-        private const string REGEX_HOTEN = @"^[\p{L}\s']+$"; 
+        private const string REGEX_HOTEN = @"^[\p{L}\s']+$";
         private const string REGEX_SODT = @"^0\d{9}$";
         private const string REGEX_CCCD = @"^\d{12}$";
         private const string REGEX_EMAIL = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
@@ -333,10 +333,16 @@ namespace TPVAXWinform_GUI
 
         private void btnThemHoSo_Click(object sender, EventArgs e)
         {
-            if (dtpNgaySinhHSTC.Value >= DateTime.Now ||dtpNgaySinhKH.Value>=DateTime.Now)
-                MessageBox.Show("Ngày sinh hồ sơ tiêm chủng phải nhỏ hơn ngày hiện tại.","Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            if(dtpNgaySinhKH.Value.Date == dtpNgaySinhHSTC.Value.Date)
-                MessageBox.Show("Ngày sinh hồ sơ tiêm chủng không được trùng với ngày sinh khách hàng.","Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (dtpNgaySinhHSTC.Value >= DateTime.Now || dtpNgaySinhKH.Value >= DateTime.Now)
+            {
+                MessageBox.Show("Ngày sinh hồ sơ tiêm chủng phải nhỏ hơn ngày hiện tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (dtpNgaySinhKH.Value.Date == dtpNgaySinhHSTC.Value.Date)
+            {
+                MessageBox.Show("Ngày sinh hồ sơ tiêm chủng không được trùng với ngày sinh khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (hoSoTiemChungBLL.IsHSTCExists(txtCCCDHSTC.Text.Trim()))
             {
                 MessageBox.Show("Hồ sơ tiêm chủng với CCCD này đã tồn tại cho khách hàng đã chọn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -379,7 +385,8 @@ namespace TPVAXWinform_GUI
         private void btnLienKet_Click(object sender, EventArgs e)
         {
             if (khachHangBLL.IsSoDTExists(txtSoDT.Text.Trim()) && !flagTimKiemKH)
-            { MessageBox.Show("Số điện thoại đã tồn tại. Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {
+                MessageBox.Show("Số điện thoại đã tồn tại. Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             btnThemTatCa.Enabled = true;
@@ -391,7 +398,7 @@ namespace TPVAXWinform_GUI
             DataTable dt = khachHangBLL.GetDataByCCCD(cccd);
             DataRow dr = dt.Rows.Count > 0 ? dt.Rows[0] : null;
             if (flagTimKiemKH)
-            {   
+            {
                 if (dr == null && flagTimKiemKH)
                 {
                     MessageBox.Show("Chưa có thông tin khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -433,7 +440,7 @@ namespace TPVAXWinform_GUI
                 btnThemHoSo.Visible = true;
                 return;
             }
-            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim())&&!flagTimKiemKH)
+            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()) && !flagTimKiemKH)
             {
                 DialogResult result = MessageBox.Show("Khách hàng đã tồn tại. Bạn có muốn sử dụng CCCD khách hàng hiện tại để liên kết hồ sơ tiêm chủng không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -472,8 +479,8 @@ namespace TPVAXWinform_GUI
                 }
                 else
                 {
-                   btnReset_Click(sender, e);
-                   return;
+                    btnReset_Click(sender, e);
+                    return;
                 }
             }
             EnableAllInputsHSTC();
@@ -482,22 +489,22 @@ namespace TPVAXWinform_GUI
         }
         private void btnThemTatCa_Click(object sender, EventArgs e)
         {
-            if(khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
+            if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
             {
                 MessageBox.Show("Khách hàng đã tồn tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }   
+            }
             if (txtCCCDHSTC.Text.Trim() == txtCCCDKH.Text.Trim())
             {
                 MessageBox.Show("CCCD hồ sơ tiêm chủng không được trùng với CCCD khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if(dtpNgaySinhHSTC.Value.Date == dtpNgaySinhKH.Value.Date)
+            if (dtpNgaySinhHSTC.Value.Date == dtpNgaySinhKH.Value.Date)
             {
                 MessageBox.Show("Ngày sinh hồ sơ tiêm chủng không được trùng với ngày sinh khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if(dtpNgaySinhHSTC.Value >= DateTime.Now || dtpNgaySinhKH.Value >= DateTime.Now)
+            if (dtpNgaySinhHSTC.Value >= DateTime.Now || dtpNgaySinhKH.Value >= DateTime.Now)
             {
                 MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

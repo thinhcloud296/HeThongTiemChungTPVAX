@@ -1,0 +1,277 @@
+﻿@model TPVAXWebsite.Models.ViewModels.HoaDonViewModel
+
+@{
+    ViewBag.Title = "Chi Tiết Hóa Đơn";
+}
+
+@section styles {
+    <style>
+        .invoice-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .invoice-header {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .invoice-header h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .invoice-info {
+            padding: 30px;
+        }
+
+        .info-row {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .info-value {
+            color: #666;
+        }
+
+        .product-item {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .product-item:hover {
+            border-color: #0077b6;
+            box-shadow: 0 4px 12px rgba(0, 119, 182, 0.15);
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, #e7f3ff 0%, #f8fbff 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .total-row:last-child {
+            border-bottom: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0077b6;
+        }
+
+        .status-badge {
+            font-size: 1rem;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .btn-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+        }
+    </style>
+}
+
+<div class="container my-5">
+    <a href="@Url.Action("Dashboard", "Account")" class="btn btn-outline-primary mb-4">
+        <i class="fas fa-arrow-left me-2"></i>Quay lại
+    </a>
+
+    <div class="invoice-container">
+        <!-- Invoice Header -->
+        <div class="invoice-header">
+            <h2>
+                <i class="fas fa-file-invoice-dollar me-2"></i>
+                HÓA ĐƠN TIÊM CHỦNG
+            </h2>
+            <p class="mb-0 mt-2">Mã hóa đơn: <strong>#@Model.MaHD</strong></p>
+        </div>
+
+        <!-- Invoice Info -->
+        <div class="invoice-info">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="info-row">
+                        <span class="info-label">
+                            <i class="fas fa-user me-2 text-primary"></i>Khách hàng:
+                        </span>
+                        <span class="info-value">@Model.TenKH</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-row">
+                        <span class="info-label">
+                            <i class="fas fa-calendar me-2 text-primary"></i>Ngày lập:
+                        </span>
+                        <span class="info-value">@Model.NgayLap.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.MaKM))
+            {
+                <div class="info-row mb-3">
+                    <span class="info-label">
+                        <i class="fas fa-gift me-2 text-success"></i>Khuyến mãi:
+                    </span>
+                    <span class="info-value text-success">@Model.TenKM</span>
+                </div>
+            }
+
+            <div class="info-row mb-4">
+                <span class="info-label">
+                    <i class="fas fa-info-circle me-2 text-warning"></i>Trạng thái:
+                </span>
+                <span>
+                    @if (Model.TrangThai == "Đã thanh toán")
+                    {
+                        <span class="badge bg-success status-badge">
+                            <i class="fas fa-check-circle me-1"></i>@Model.TrangThai
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark status-badge">
+                            <i class="fas fa-clock me-1"></i>@Model.TrangThai
+                        </span>
+                    }
+                </span>
+            </div>
+
+            <!-- Product List -->
+            <h5 class="mb-3">
+                <i class="fas fa-list me-2 text-primary"></i>
+                Danh sách sản phẩm
+            </h5>
+
+            @if (Model.ChiTietHoaDon != null && Model.ChiTietHoaDon.Any())
+            {
+                foreach (var item in Model.ChiTietHoaDon)
+                {
+                    <div class="product-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center">
+                                @if (!string.IsNullOrEmpty(item.HinhAnh))
+                                {
+                                    <img src="@Url.Content("~/Content/Images/Vaccines/" + item.HinhAnh)" 
+                                         alt="@item.TenSanPham" 
+                                         class="product-image"
+                                         onerror="this.src='@Url.Content("~/Content/Assets/Images/default.png")'" />
+                                }
+                                else
+                                {
+                                    <div class="product-image d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);">
+                                        <i class="fas fa-syringe fs-3 text-white"></i>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-5">
+                                <h6 class="mb-1">@item.TenSanPham</h6>
+                                <small class="text-muted">
+                                    @(item.LoaiSanPham == "VACCINE" ? "Vaccine" : "Gói vaccine")
+                                </small>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <small class="text-muted d-block">Số lượng</small>
+                                <strong>@item.SoLuong</strong>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <small class="text-muted d-block">Đơn giá</small>
+                                <strong class="text-warning">@string.Format("{0:N0}₫", item.DonGia)</strong>
+                                <div class="mt-1">
+                                    <small class="text-primary fw-bold">
+                                        Tổng: @string.Format("{0:N0}₫", item.DonGia * item.SoLuong)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted text-center py-3">Không có sản phẩm nào</p>
+            }
+
+            <!-- Total Section -->
+            <div class="total-section">
+                <div class="total-row">
+                    <span>Tổng số lượng:</span>
+                    <strong>@Model.ChiTietHoaDon.Sum(ct => ct.SoLuong) sản phẩm</strong>
+                </div>
+                <div class="total-row">
+                    <span>TỔNG THANH TOÁN:</span>
+                    <strong class="text-danger">@string.Format("{0:N0}₫", Model.TongTien)</strong>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="text-center mt-4">
+                <button class="btn btn-print" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>
+                    In hóa đơn
+                </button>
+                <a href="@Url.Action("Dashboard", "Account")" class="btn btn-outline-secondary ms-3">
+                    <i class="fas fa-home me-2"></i>
+                    Về trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        // Print styling
+        window.onbeforeprint = function() {
+            document.querySelector('.btn-print').style.display = 'none';
+            document.querySelector('.btn-outline-secondary').style.display = 'none';
+        };
+        window.onafterprint = function() {
+            document.querySelector('.btn-print').style.display = 'inline-block';
+            document.querySelector('.btn-outline-secondary').style.display = 'inline-block';
+        };
+    </script>
+}

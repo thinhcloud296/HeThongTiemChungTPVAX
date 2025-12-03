@@ -1,0 +1,94 @@
+@model TPVAXWebsite.Models.ViewModels.XacNhanHoSoTiemChungViewModel
+
+@{
+    ViewBag.Title = "Xác nhận hồ sơ tiêm chủng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-check-circle me-2"></i>Tìm thấy hồ sơ tiêm chủng
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    <div class="alert alert-info">
+                        <p class="mb-2"><strong>Thông tin hồ sơ tiêm chủng:</strong></p>
+                        <ul class="mb-0">
+                            <li><strong>Họ tên:</strong> @Model.HoTen</li>
+                            <li><strong>Ngày sinh:</strong> @Model.NgaySinh.ToString("dd/MM/yyyy")</li>
+                            <li><strong>Giới tính:</strong> @Model.GioiTinh</li>
+                            <li><strong>CCCD:</strong> @Model.CCCD</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <small>Vui lòng bổ sung thông tin liên hệ và tạo mật khẩu để hoàn tất đăng ký.</small>
+                    </div>
+
+                    @using (Html.BeginForm("TaoTaiKhoanTuHoSo", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.MaHSTC)
+                        @Html.HiddenFor(m => m.HoTen)
+                        @Html.HiddenFor(m => m.CCCD)
+                        @Html.HiddenFor(m => m.NgaySinh)
+                        @Html.HiddenFor(m => m.GioiTinh)
+
+                        <h6 class="text-muted mb-3"><i class="bi bi-telephone me-2"></i>Thông tin liên hệ</h6>
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.SoDT, new { @class = "form-label" })
+                            <span class="text-danger">*</span>
+                            @Html.TextBoxFor(m => m.SoDT, new { @class = "form-control", placeholder = "Nhập số điện thoại (VD: 0912345678)", maxlength = "10" })
+                            @Html.ValidationMessageFor(m => m.SoDT, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email (không bắt buộc)" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <hr class="my-3" />
+                        <h6 class="text-muted mb-3"><i class="bi bi-lock me-2"></i>Tạo mật khẩu</h6>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.MatKhau, new { @class = "form-label" })
+                            <span class="text-danger">*</span>
+                            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Tối thiểu 6 ký tự" })
+                            @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.XacNhanMatKhau, new { @class = "form-label" })
+                            <span class="text-danger">*</span>
+                            @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhập lại mật khẩu" })
+                            @Html.ValidationMessageFor(m => m.XacNhanMatKhau, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle me-2"></i>Hoàn tất đăng ký
+                            </button>
+                            <a href="@Url.Action("DangKyTuHoSo", "Account")" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Quay lại
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

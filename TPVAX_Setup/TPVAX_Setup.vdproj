@@ -436,12 +436,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4D57919B124D0A717AC425AA25E1EAF3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A748562F1A3444AB9CE1142149FC9ECD"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -643,6 +637,12 @@
         "OwnerKey" = "8:_45D2C9EECC7B71897703DE8BC45CB069"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4D57919B124D0A717AC425AA25E1EAF3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -661,6 +661,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -1912,15 +1920,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TPVAX_Setup"
-        "ProductCode" = "8:{FE2015B8-7D10-43A7-83AF-B84CE6452D5D}"
-        "PackageCode" = "8:{876C8C2C-5E3E-4C01-989C-A6DEE020916F}"
+        "ProductCode" = "8:{2659A3D4-1F58-44F7-BBFA-9119657A82CB}"
+        "PackageCode" = "8:{80FC1359-8252-4A26-A278-A57915715E48}"
         "UpgradeCode" = "8:{9EF9AC1F-FC3F-471B-8166-235ADFCF44CB}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.3"
+        "ProductVersion" = "8:1.0.4"
         "Manufacturer" = "8:nguyenhoangthinh2906@gmail.com"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
