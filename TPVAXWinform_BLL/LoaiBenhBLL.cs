@@ -11,13 +11,14 @@ namespace TPVAXWinform_BLL
     public class LoaiBenhBLL
     {
         private readonly LoaiBenhDAL _dal = new LoaiBenhDAL();
+        TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetData()
         {
             return _dal.GetData();
         }
         public string CreateNewMaLoaiBenh()
         {
-            return _dal.CreateNewMaLoaiBenh();
+            return autoGen.GenMaLoaiBenh();
         }
         public void Insert(TPVAXWinform_DTO.LoaiBenhDTO loaiBenh)
         {

@@ -11,6 +11,7 @@ namespace TPVAXWinform_BLL
     public class LoaiVaccineBLL
     {
         private readonly LoaiVaccineDAL _dal = new LoaiVaccineDAL();
+        TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetData()
         {
             return _dal.GetData();
@@ -18,7 +19,7 @@ namespace TPVAXWinform_BLL
 
         public string CreateNewMaLoaiVaccine()
         {
-            return _dal.CreateNewMaLoaiVaccine();
+            return autoGen.GenMaLoaiVC();
         }
 
         public void Insert(LoaiVaccineDTO loaiVaccine)

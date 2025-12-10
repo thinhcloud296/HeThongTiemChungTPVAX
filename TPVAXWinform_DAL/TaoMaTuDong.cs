@@ -99,5 +99,17 @@ namespace TPVAXWinform_DAL
         {
             return GenerateUniqueCode("LT", 10);
         }
+        public string GenMaVC()
+        {
+            return GenerateUniqueCode("VC", 10);
+        }
+        public string GenMaLoaiVC()
+        {
+            return GenerateUniqueCode("LC", 10);
+        }
+        public string GenMaLoaiBenh()
+        {
+            return GenerateUniqueCode("LB", 10);
+        }
     }
 }

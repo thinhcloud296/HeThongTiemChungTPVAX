@@ -545,7 +545,7 @@ namespace TPVAXWinform_GUI
             lkhs.NgayLienKet = DateTime.Now;
             lkhs.MaKH = maKH;
             lkhs.MaHSTC = maHSTC;
-            lkhs.VaiTro = "Bản thân";
+            lkhs.VaiTro = cboQuanHe.Text;
             if (khachHangBLL.IsKHExists(txtCCCDKH.Text.Trim()))
             {
                 try

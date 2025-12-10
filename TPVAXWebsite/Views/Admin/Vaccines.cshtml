@@ -137,22 +137,11 @@
                             placeholder="Nhập mô tả vaccine..."></textarea>
                     </div>
 
-                    <!-- Row: Giá bán và Số lượng -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="vaccinePrice">Giá bán (VNĐ) <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="vaccinePrice" name="GiaBan" required
-                                    placeholder="0" min="0" step="1000" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="vaccineQuantity">Số lượng tồn <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="vaccineQuantity" name="SoLuong" required
-                                    placeholder="0" min="0" />
-                            </div>
-                        </div>
+                    <!-- Giá bán -->
+                    <div class="form-group">
+                        <label for="vaccinePrice">Giá bán (VNĐ) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="vaccinePrice" name="GiaBan" required
+                            placeholder="0" min="0" step="1000" />
                     </div>
 
                     <!-- Row: Số mũi và Số tháng chờ -->
@@ -660,7 +649,6 @@
             $('#vaccineId').val(data.MaVC);
             $('#vaccineName').val(data.TenVC);
             $('#vaccinePrice').val(data.GiaBan);
-            $('#vaccineQuantity').val(data.SoLuong);
             $('#vaccineInjections').val(data.SoMuiToiDa || '');
             $('#vaccineWaitMonths').val(data.SoThangCho || '');
             $('#vaccineType').val(data.MaLoai);

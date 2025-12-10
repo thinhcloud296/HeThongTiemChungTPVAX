@@ -12,7 +12,7 @@ namespace TPVAXWinform_BLL
     public class VaccineBLL
     {
         private readonly VaccineDAL _vaccineDAL = new VaccineDAL();
-
+        private TaoMaTuDong autoGen = new TaoMaTuDong();
         public DataTable GetData()
         {
             return _vaccineDAL.GetData();
@@ -45,7 +45,7 @@ namespace TPVAXWinform_BLL
 
         public string CreateNewMaVC()
         {
-            return _vaccineDAL.CreateNewMaVC();
+            return autoGen.GenMaVC();
         }
 
         public void Insert(VaccineDTO vaccine)

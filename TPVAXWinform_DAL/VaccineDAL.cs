@@ -12,7 +12,7 @@ namespace TPVAXWinform_DAL
     {
         private string selectSql = "SELECT * FROM dbo.Vaccine";
         private string lastMaVC = "";
-
+        private TaoMaTuDong genKey = new TaoMaTuDong();
         public DataTable GetData()
         {
             return DBConnect.ExecuteQuery(selectSql);

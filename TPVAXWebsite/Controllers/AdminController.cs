@@ -244,13 +244,19 @@ namespace TPVAXWebsite.Controllers
                     .Include(vb => vb.LoaiBenh)
                     .ToList();
 
+                // Tính tổng số lượng tồn kho từ ChiTietPhieuNhap cho mỗi vaccine
+                var tonKhoByVaccine = _unitOfWork.ChiTietPhieuNhaps.Query()
+                    .GroupBy(ct => ct.MaVC)
+                    .Select(g => new { MaVC = g.Key, TongTonKho = g.Sum(ct => ct.SoLuongTonKho) })
+                    .ToDictionary(x => x.MaVC, x => x.TongTonKho);
+
                 // Chuyển đổi sang ViewModel
                 var viewModels = vaccines.Select(v => new AdminVaccineViewModel
                 {
                     MaVC = v.MaVC,
                     TenVC = v.TenVC,
                     GiaBan = v.GiaBan,
-                    SoLuongTon = v.SoLuong,
+                    SoLuongTon = tonKhoByVaccine.ContainsKey(v.MaVC) ? tonKhoByVaccine[v.MaVC] : 0,
                     SoMuiToiDa = v.SoMuiToiDa,
                     SoThangCho = v.SoThangCho,
                     MaLoai = v.MaLoai,
@@ -336,13 +342,13 @@ namespace TPVAXWebsite.Controllers
                 
                 string newMaVC = GenerateVaccineMaVC(lastVaccine?.MaVC);
 
-                // Tạo entity Vaccine mới
+                // Tạo entity Vaccine mới (số lượng mặc định = 0)
                 var vaccine = new Vaccine
                 {
                     MaVC = newMaVC,
                     TenVC = model.TenVC,
                     GiaBan = model.GiaBan,
-                    SoLuong = model.SoLuong,
+                    SoLuong = 0,
                     SoMuiToiDa = model.SoMuiToiDa,
                     SoThangCho = model.SoThangCho,
                     MaLoai = model.MaLoai,
@@ -491,10 +497,9 @@ namespace TPVAXWebsite.Controllers
                     vaccine.HinhAnh = SaveVaccineImage(model.ImageFile);
                 }
 
-                // Update các field
+                // Update các field (không cập nhật SoLuong)
                 vaccine.TenVC = model.TenVC;
                 vaccine.GiaBan = model.GiaBan;
-                vaccine.SoLuong = model.SoLuong;
                 vaccine.SoMuiToiDa = model.SoMuiToiDa;
                 vaccine.SoThangCho = model.SoThangCho;
                 vaccine.MaLoai = model.MaLoai;
