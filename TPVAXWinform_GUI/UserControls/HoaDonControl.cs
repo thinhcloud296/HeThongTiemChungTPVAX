@@ -330,9 +330,15 @@ namespace TPVAXWinform_GUI.UserControls
                     hd.NgayLap = Convert.ToDateTime(selectedRow.Cells["colNgayLap"].Value);
                     hd.TongTien = tongTien;
                     hd.TrangThai = true; // Đã thanh toán
-                    hd.MaKH = selectedRow.Cells["colMaKH"].Value?.ToString();
-                    hd.MaNV = selectedRow.Cells["colMaNV"].Value?.ToString();
-                    hd.MaKM = selectedRow.Cells["colMaKM"].Value?.ToString();
+
+                    // Xử lý các giá trị có thể null hoặc rỗng
+                    string maKH = selectedRow.Cells["colMaKH"].Value?.ToString();
+                    string maNV = selectedRow.Cells["colMaNV"].Value?.ToString();
+                    string maKM = selectedRow.Cells["colMaKM"].Value?.ToString();
+
+                    hd.MaKH = string.IsNullOrWhiteSpace(maKH) ? null : maKH;
+                    hd.MaNV = string.IsNullOrWhiteSpace(maNV) ? null : maNV;
+                    hd.MaKM = string.IsNullOrWhiteSpace(maKM) ? null : maKM;
 
                     hoaDonBLL.Edit(hd);
 

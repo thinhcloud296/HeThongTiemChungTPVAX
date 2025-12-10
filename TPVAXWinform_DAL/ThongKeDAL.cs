@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,15 @@ namespace TPVAXWinform_DAL
 {
     public class ThongKeDAL
     {
-        public DataRow GetDashboardKPI()
+        // timeRange: 0 = Hôm nay, 1 = 7 ngày, 2 = Tháng này
+        public DataRow GetDashboardKPI(int timeRange = 2)
         {
             string sql = "dbo.usp_ThongKe_GetDashboardKPI";
-            DataTable dt = DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure);
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@TimeRange", timeRange)
+            };
+            DataTable dt = DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure, parameters);
             if (dt.Rows.Count > 0)
                 return dt.Rows[0];
             return null;
@@ -21,6 +27,18 @@ namespace TPVAXWinform_DAL
         public DataTable GetDoanhThu7Ngay()
         {
             string sql = "dbo.usp_ThongKe_GetDoanhThu7Ngay";
+            return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure);
+        }
+
+        public DataTable GetDoanhThuHomNay()
+        {
+            string sql = "dbo.usp_ThongKe_GetDoanhThuHomNay";
+            return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure);
+        }
+
+        public DataTable GetDoanhThuThangNay()
+        {
+            string sql = "dbo.usp_ThongKe_GetDoanhThuThangNay";
             return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure);
         }
 
@@ -36,16 +54,24 @@ namespace TPVAXWinform_DAL
             return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure);
         }
 
-        public DataTable GetDoanhThuChiTiet()
+        public DataTable GetDoanhThuChiTiet(int timeRange = 2)
         {
             string sql = "dbo.usp_ThongKe_GetDoanhThuChiTiet";
-            return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure);
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@TimeRange", timeRange)
+            };
+            return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure, parameters);
         }
 
-        public DataTable GetXuatNhapTon()
+        public DataTable GetXuatNhapTon(int timeRange = 2)
         {
             string sql = "dbo.usp_ThongKe_GetXuatNhapTon";
-            return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure);
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@TimeRange", timeRange)
+            };
+            return DBConnect.ExecuteQuery(sql, CommandType.StoredProcedure, parameters);
         }
     }
 }

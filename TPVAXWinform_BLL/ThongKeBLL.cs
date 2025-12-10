@@ -11,9 +11,11 @@ namespace TPVAXWinform_BLL
     public class ThongKeBLL
     {
         private ThongKeDAL dal = new ThongKeDAL();
-        public (decimal DoanhThu, int LuotTiem, int KhachMoi, int SapHetHan) GetKPI()
+
+        // timeRange: 0 = Hôm nay, 1 = 7 ngày, 2 = Tháng này
+        public (decimal DoanhThu, int LuotTiem, int KhachMoi, int SapHetHan) GetKPI(int timeRange = 2)
         {
-            DataRow row = dal.GetDashboardKPI();
+            DataRow row = dal.GetDashboardKPI(timeRange);
             if (row != null)
             {
                 decimal dt = row["DoanhThu"] != DBNull.Value ? Convert.ToDecimal(row["DoanhThu"]) : 0;
@@ -30,6 +32,16 @@ namespace TPVAXWinform_BLL
             return dal.GetDoanhThu7Ngay();
         }
 
+        public DataTable GetDoanhThuHomNay()
+        {
+            return dal.GetDoanhThuHomNay();
+        }
+
+        public DataTable GetDoanhThuThangNay()
+        {
+            return dal.GetDoanhThuThangNay();
+        }
+
         public DataTable GetTyLeDoanhThu()
         {
             return dal.GetTyLeDoanhThu();
@@ -39,14 +51,15 @@ namespace TPVAXWinform_BLL
         {
             return dal.GetVaccineSapHetHan();
         }
-        public DataTable GetDoanhThuChiTiet()
+
+        public DataTable GetDoanhThuChiTiet(int timeRange = 2)
         {
-            return dal.GetDoanhThuChiTiet();
+            return dal.GetDoanhThuChiTiet(timeRange);
         }
 
-        public DataTable GetXuatNhapTon()
+        public DataTable GetXuatNhapTon(int timeRange = 2)
         {
-            return dal.GetXuatNhapTon();
+            return dal.GetXuatNhapTon(timeRange);
         }
     }
 }

@@ -898,35 +898,45 @@ IF OBJECT_ID('dbo.usp_ThongKe_GetDashboardKPI', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_ThongKe_GetDashboardKPI;
 GO
 
+-- @TimeRange: 0 = Hôm nay, 1 = 7 ngày gần đây, 2 = Tháng này
 CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetDashboardKPI
+    @TimeRange INT = 2
 AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @StartOfMonth DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
-    DECLARE @EndOfMonth DATE = EOMONTH(GETDATE());
+    DECLARE @StartDate DATE;
+    DECLARE @EndDate DATE = CAST(GETDATE() AS DATE);
 
-    -- 1. Tổng Doanh Thu Tháng Này (Chỉ tính hóa đơn đã thanh toán)
+    -- Xác định khoảng thời gian
+    IF @TimeRange = 0 -- Hôm nay
+        SET @StartDate = CAST(GETDATE() AS DATE);
+    ELSE IF @TimeRange = 1 -- 7 ngày gần đây
+        SET @StartDate = DATEADD(day, -6, CAST(GETDATE() AS DATE));
+    ELSE -- Tháng này
+        SET @StartDate = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+
+    -- 1. Tổng Doanh Thu (Chỉ tính hóa đơn đã thanh toán)
     DECLARE @DoanhThu DECIMAL(18,0);
     SELECT @DoanhThu = ISNULL(SUM(TongTien), 0)
     FROM dbo.HoaDon
-    WHERE TrangThai = 1 -- Đã thanh toán
-      AND CAST(NgayLap AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth;
+    WHERE TrangThai = 1
+      AND CAST(NgayLap AS DATE) BETWEEN @StartDate AND @EndDate;
 
-    -- 2. Tổng Lượt Tiêm Tháng Này
+    -- 2. Tổng Lượt Tiêm
     DECLARE @LuotTiem INT;
     SELECT @LuotTiem = COUNT(*)
     FROM dbo.LichTiem
     WHERE TrangThai = N'Đã tiêm'
-      AND CAST(NgayTiemThucTe AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth;
+      AND CAST(NgayTiemThucTe AS DATE) BETWEEN @StartDate AND @EndDate;
 
     -- 3. Khách Hàng Mới (Dựa trên ngày liên kết hồ sơ)
     DECLARE @KhachMoi INT;
     SELECT @KhachMoi = COUNT(*)
     FROM dbo.LienKetHoSo
-    WHERE CAST(NgayLienKet AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth;
+    WHERE CAST(NgayLienKet AS DATE) BETWEEN @StartDate AND @EndDate;
 
-    -- 4. Số Lô Vaccine Sắp Hết Hạn (Trong 60 ngày tới)
+    -- 4. Số Lô Vaccine Sắp Hết Hạn (Trong 60 ngày tới - không phụ thuộc TimeRange)
     DECLARE @SapHetHan INT;
     SELECT @SapHetHan = COUNT(*)
     FROM dbo.ChiTietPhieuNhap
@@ -961,6 +971,55 @@ BEGIN
     WHERE TrangThai = 1 -- Đã thanh toán
     GROUP BY CAST(NgayLap AS DATE)
     ORDER BY CAST(NgayLap AS DATE) ASC;
+END
+GO
+
+/* ================================================================= */
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetDoanhThuHomNay', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetDoanhThuHomNay;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetDoanhThuHomNay
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy doanh thu theo từng giờ trong ngày hôm nay
+    SELECT 
+        DATEPART(HOUR, NgayLap) AS Gio,
+        SUM(TongTien) AS TongTien
+    FROM dbo.HoaDon
+    WHERE TrangThai = 1 -- Đã thanh toán
+      AND CAST(NgayLap AS DATE) = CAST(GETDATE() AS DATE)
+    GROUP BY DATEPART(HOUR, NgayLap)
+    ORDER BY Gio ASC;
+END
+GO
+
+/* ================================================================= */
+
+IF OBJECT_ID('dbo.usp_ThongKe_GetDoanhThuThangNay', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_ThongKe_GetDoanhThuThangNay;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetDoanhThuThangNay
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @StartOfMonth DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+    DECLARE @EndOfMonth DATE = EOMONTH(GETDATE());
+
+    -- Lấy doanh thu theo từng ngày trong tháng
+    SELECT 
+        CAST(NgayLap AS DATE) AS Ngay,
+        SUM(TongTien) AS TongTien
+    FROM dbo.HoaDon
+    WHERE TrangThai = 1 -- Đã thanh toán
+      AND CAST(NgayLap AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth
+    GROUP BY CAST(NgayLap AS DATE)
+    ORDER BY Ngay ASC;
 END
 GO
 
@@ -1027,14 +1086,23 @@ IF OBJECT_ID('dbo.usp_ThongKe_GetDoanhThuChiTiet', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_ThongKe_GetDoanhThuChiTiet;
 GO
 
+-- @TimeRange: 0 = Hôm nay, 1 = 7 ngày gần đây, 2 = Tháng này
 CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetDoanhThuChiTiet
+    @TimeRange INT = 2
 AS
 BEGIN
     SET NOCOUNT ON;
     
-    -- Lấy dữ liệu từ đầu tháng đến cuối tháng hiện tại
-    DECLARE @StartOfMonth DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
-    DECLARE @EndOfMonth DATE = EOMONTH(GETDATE());
+    DECLARE @StartDate DATE;
+    DECLARE @EndDate DATE = CAST(GETDATE() AS DATE);
+
+    -- Xác định khoảng thời gian
+    IF @TimeRange = 0 -- Hôm nay
+        SET @StartDate = CAST(GETDATE() AS DATE);
+    ELSE IF @TimeRange = 1 -- 7 ngày gần đây
+        SET @StartDate = DATEADD(day, -6, CAST(GETDATE() AS DATE));
+    ELSE -- Tháng này
+        SET @StartDate = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
 
     SELECT 
         hd.MaHD AS [Mã Hóa Đơn],
@@ -1046,7 +1114,7 @@ BEGIN
     LEFT JOIN dbo.KhachHang kh ON hd.MaKH = kh.MaKH
     LEFT JOIN dbo.NhanVien nv ON hd.MaNV = nv.MaNV
     WHERE hd.TrangThai = 1 
-      AND CAST(hd.NgayLap AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth
+      AND CAST(hd.NgayLap AS DATE) BETWEEN @StartDate AND @EndDate
     ORDER BY hd.NgayLap DESC;
 END
 GO
@@ -1058,34 +1126,44 @@ IF OBJECT_ID('dbo.usp_ThongKe_GetXuatNhapTon', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_ThongKe_GetXuatNhapTon;
 GO
 
+-- @TimeRange: 0 = Hôm nay, 1 = 7 ngày gần đây, 2 = Tháng này
 CREATE OR ALTER PROCEDURE dbo.usp_ThongKe_GetXuatNhapTon
+    @TimeRange INT = 2
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @StartOfMonth DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
-    DECLARE @EndOfMonth DATE = EOMONTH(GETDATE());
+    DECLARE @StartDate DATE;
+    DECLARE @EndDate DATE = CAST(GETDATE() AS DATE);
+
+    -- Xác định khoảng thời gian
+    IF @TimeRange = 0 -- Hôm nay
+        SET @StartDate = CAST(GETDATE() AS DATE);
+    ELSE IF @TimeRange = 1 -- 7 ngày gần đây
+        SET @StartDate = DATEADD(day, -6, CAST(GETDATE() AS DATE));
+    ELSE -- Tháng này
+        SET @StartDate = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
 
     SELECT 
         v.MaVC AS [Mã Vaccine],
         v.TenVC AS [Tên Vaccine],
         
-        -- 1. Tổng Nhập trong tháng
+        -- 1. Tổng Nhập trong khoảng thời gian
         ISNULL((
             SELECT SUM(ctpn.SoLuong) 
             FROM dbo.ChiTietPhieuNhap ctpn
             JOIN dbo.PhieuNhapVaccine pn ON ctpn.MaPN = pn.MaPN
             WHERE ctpn.MaVC = v.MaVC 
-              AND CAST(pn.NgayLap AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth
+              AND CAST(pn.NgayLap AS DATE) BETWEEN @StartDate AND @EndDate
         ), 0) AS [SL Nhập],
 
-        -- 2. Tổng Xuất (Đã tiêm) trong tháng
+        -- 2. Tổng Xuất (Đã tiêm) trong khoảng thời gian
         ISNULL((
             SELECT COUNT(*)
             FROM dbo.LichTiem lt
             WHERE lt.MaVC = v.MaVC
               AND lt.TrangThai = N'Đã tiêm'
-              AND CAST(lt.NgayTiemThucTe AS DATE) BETWEEN @StartOfMonth AND @EndOfMonth
+              AND CAST(lt.NgayTiemThucTe AS DATE) BETWEEN @StartDate AND @EndDate
         ), 0) AS [SL Xuất],
 
         -- 3. Tồn Kho Hiện Tại (Tổng)

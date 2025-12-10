@@ -32,6 +32,11 @@ namespace TPVAXWinform_GUI.UserControls
         private WinFormsCharts.CartesianChart chartDoanhThu;
         private WinFormsCharts.PieChart chartTyLe;
 
+        // ComboBox chọn khoảng thời gian thống kê
+        private ComboBox cboThoiGian;
+        private Label lblThoiGian;
+        private Label lblChartTitle;
+
         // DataGridViews
         private DataGridView dgvDoanhThu;
         private DataGridView dgvXuatNhapTon;
@@ -68,102 +73,82 @@ namespace TPVAXWinform_GUI.UserControls
         }
         public void LoadData()
         {
-            try
-            {
-                // 1. Load KPI
-                var kpi = thongKeBLL.GetKPI();
-                UpdateKPI(kpi.DoanhThu, kpi.LuotTiem, kpi.KhachMoi, kpi.SapHetHan);
-
-                // 2. Load Biểu đồ cột (Doanh thu 7 ngày)
-                DataTable dtChart1 = thongKeBLL.GetDoanhThu7Ngay();
-                List<double> values1 = new List<double>();
-                List<string> labels1 = new List<string>();
-
-                foreach (DataRow row in dtChart1.Rows)
-                {
-                    values1.Add(Convert.ToDouble(row["TongTien"]));
-                    DateTime ngay = Convert.ToDateTime(row["Ngay"]);
-                    labels1.Add(ngay.ToString("dd/MM"));
-                }
-                UpdateDoanhThuChart(values1.ToArray(), labels1.ToArray());
-
-                // 3. Load Biểu đồ tròn (Tỷ lệ)
-                DataTable dtChart2 = thongKeBLL.GetTyLeDoanhThu();
-                double goiVal = 0, leVal = 0;
-                foreach (DataRow row in dtChart2.Rows)
-                {
-                    string type = row["LoaiHinh"].ToString();
-                    double val = Convert.ToDouble(row["TongGiaTri"]);
-                    if (type == "Gói Vaccine") goiVal = val;
-                    else if (type == "Vaccine Lẻ") leVal = val;
-                }
-                UpdateTyLeChart(goiVal, leVal);
-
-                // 4. Load Grid Sắp hết hạn
-                DataTable dtSapHetHan = thongKeBLL.GetVaccineSapHetHan();
-                UpdateDataGrid("saphethan", dtSapHetHan);
-                // 4. Load Grid Sắp hết hạn - LƯU DỮ LIỆU
-                dtSapHetHanData = thongKeBLL.GetVaccineSapHetHan();
-                UpdateDataGrid("saphethan", dtSapHetHanData);
-
-                // --- THÊM MỚI: Load Grid Doanh Thu ---
-                DataTable dtDoanhThu = thongKeBLL.GetDoanhThuChiTiet();
-                UpdateDataGrid("doanhthu", dtDoanhThu);
-                // 5. Load Grid Doanh Thu - LƯU DỮ LIỆU
-                dtDoanhThuData = thongKeBLL.GetDoanhThuChiTiet();
-                UpdateDataGrid("doanhthu", dtDoanhThuData);
-                // Định dạng tiền tệ cho cột "Tổng Tiền" (nếu có)
-                if (dgvDoanhThu.Columns["Tổng Tiền"] != null)
-                {
-                    dgvDoanhThu.Columns["Tổng Tiền"].DefaultCellStyle.Format = "N0";
-                    dgvDoanhThu.Columns["Tổng Tiền"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                }
-
-                // --- THÊM MỚI: Load Grid Xuất Nhập Tồn ---
-                DataTable dtXuatNhapTon = thongKeBLL.GetXuatNhapTon();
-                UpdateDataGrid("xuatnhapton", dtXuatNhapTon);
-                // 6. Load Grid Xuất Nhập Tồn - LƯU DỮ LIỆU
-                dtXuatNhapTonData = thongKeBLL.GetXuatNhapTon();
-                UpdateDataGrid("xuatnhapton", dtXuatNhapTonData);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi tải dữ liệu thống kê: " + ex.Message);
-            }
+            LoadDataByTimeRange();
         }
         private void InitializeDashboard()
         {
             this.SuspendLayout();
 
-            // ========== BỐ CỤC CHÍNH (3 DÒNG) ==========
+            // ========== BỐ CỤC CHÍNH (4 DÒNG) ==========
             var mainLayout = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 1,
-                RowCount = 3,
+                RowCount = 4,
                 BackColor = Color.FromArgb(240, 240, 240),
                 Padding = new Padding(10)
             };
 
+            mainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F)); // Filter Bar
             mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 15F)); // KPI Cards
             mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 45F)); // Charts
             mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 40F)); // Details
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
 
+            // ========== DÒNG 0: FILTER BAR ==========
+            var filterPanel = CreateFilterSection();
+            mainLayout.Controls.Add(filterPanel, 0, 0);
+
             // ========== DÒNG 1: KPI CARDS ==========
             var kpiPanel = CreateKPISection();
-            mainLayout.Controls.Add(kpiPanel, 0, 0);
+            mainLayout.Controls.Add(kpiPanel, 0, 1);
 
             // ========== DÒNG 2: BIỂU ĐỒ ==========
             var chartPanel = CreateChartSection();
-            mainLayout.Controls.Add(chartPanel, 0, 1);
+            mainLayout.Controls.Add(chartPanel, 0, 2);
 
             // ========== DÒNG 3: CHI TIẾT (TABCONTROL) ==========
             var detailPanel = CreateDetailSection();
-            mainLayout.Controls.Add(detailPanel, 0, 2);
+            mainLayout.Controls.Add(detailPanel, 0, 3);
 
             this.Controls.Add(mainLayout);
             this.ResumeLayout();
+        }
+
+        // ========== TẠO SECTION FILTER BAR ==========
+        private Panel CreateFilterSection()
+        {
+            var filterPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.White,
+                Padding = new Padding(10, 5, 10, 5)
+            };
+
+            lblThoiGian = new Label
+            {
+                Text = "📊 Khoảng thời gian thống kê:",
+                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(52, 73, 94),
+                AutoSize = true,
+                Location = new Point(15, 12)
+            };
+            filterPanel.Controls.Add(lblThoiGian);
+
+            cboThoiGian = new ComboBox
+            {
+                Font = new Font("Segoe UI", 11F),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Width = 180,
+                Height = 30,
+                Location = new Point(230, 8)
+            };
+            cboThoiGian.Items.AddRange(new object[] { "Hôm nay", "7 ngày gần đây", "Tháng này" });
+            cboThoiGian.SelectedIndex = 1; // Mặc định: 7 ngày gần đây
+            cboThoiGian.SelectedIndexChanged += CboThoiGian_SelectedIndexChanged;
+            filterPanel.Controls.Add(cboThoiGian);
+
+            return filterPanel;
         }
 
         // ========== TẠO SECTION KPI CARDS ==========
@@ -268,36 +253,36 @@ namespace TPVAXWinform_GUI.UserControls
             // Khởi tạo Series cho biểu đồ cột
             chartDoanhThu.Series = new SeriesCollection
             {
-      new ColumnSeries
-     {
-     Title = "Doanh thu",
-   Values = new ChartValues<double> { 0, 0, 0, 0, 0, 0, 0 },
-   Fill = System.Windows.Media.Brushes.SeaGreen,
- DataLabels = true,
-         LabelPoint = point => point.Y.ToString("N0")
- }
-    };
+                new ColumnSeries
+                {
+                    Title = "Doanh thu",
+                    Values = new ChartValues<double> { 0, 0, 0, 0, 0, 0, 0 },
+                    Fill = System.Windows.Media.Brushes.SeaGreen,
+                    DataLabels = true,
+                    LabelPoint = point => point.Y.ToString("N0")
+                }
+            };
 
             // Cấu hình trục X
             chartDoanhThu.AxisX = new AxesCollection
-  {
-        new Axis
-  {
-   Title = "Ngày",
-Labels = new[] { "CN", "T2", "T3", "T4", "T5", "T6", "T7" },
-      Separator = new Separator { Step = 1 }
-         }
+            {
+                new Axis
+                {
+                    Title = "Ngày",
+                    Labels = new[] { "CN", "T2", "T3", "T4", "T5", "T6", "T7" },
+                    Separator = new Separator { Step = 1 }
+                }
             };
 
             // Cấu hình trục Y
             chartDoanhThu.AxisY = new AxesCollection
-       {
-  new Axis
-        {
-    Title = "Doanh thu (VNĐ)",
-      LabelFormatter = value => value.ToString("N0")
-     }
- };
+            {
+                new Axis
+                {
+                    Title = "Doanh thu (VNĐ)",
+                    LabelFormatter = value => value.ToString("N0")
+                }
+            };
 
             var chartPanel1 = new Panel
             {
@@ -308,7 +293,7 @@ Labels = new[] { "CN", "T2", "T3", "T4", "T5", "T6", "T7" },
             };
             chartPanel1.Controls.Add(chartDoanhThu);
 
-            var lblChart1Title = new Label
+            lblChartTitle = new Label
             {
                 Text = "DOANH THU 7 NGÀY GẦN NHẤT",
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold),
@@ -317,7 +302,7 @@ Labels = new[] { "CN", "T2", "T3", "T4", "T5", "T6", "T7" },
                 Height = 30,
                 TextAlign = ContentAlignment.MiddleLeft
             };
-            chartPanel1.Controls.Add(lblChart1Title);
+            chartPanel1.Controls.Add(lblChartTitle);
 
             chartLayout.Controls.Add(chartPanel1, 0, 0);
 
@@ -885,6 +870,123 @@ Labels = new[] { "CN", "T2", "T3", "T4", "T5", "T6", "T7" },
                     xlApp.Quit();
                     ReleaseComObject(xlApp);
                 }
+            }
+        }
+
+        // ========== XỬ LÝ CHUYỂN ĐỔI KHOẢNG THỜI GIAN ==========
+        private void CboThoiGian_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadDataByTimeRange();
+        }
+
+        private void LoadDataByTimeRange()
+        {
+            try
+            {
+                int selectedIndex = cboThoiGian.SelectedIndex;
+                // 0: Hôm nay, 1: 7 ngày gần đây, 2: Tháng này
+
+                // 1. Load KPI theo khoảng thời gian
+                var kpi = thongKeBLL.GetKPI(selectedIndex);
+                UpdateKPI(kpi.DoanhThu, kpi.LuotTiem, kpi.KhachMoi, kpi.SapHetHan);
+
+                // 2. Load Biểu đồ doanh thu
+                LoadDoanhThuChart(selectedIndex);
+
+                // 3. Load Chi tiết doanh thu
+                dtDoanhThuData = thongKeBLL.GetDoanhThuChiTiet(selectedIndex);
+                UpdateDataGrid("doanhthu", dtDoanhThuData);
+                if (dgvDoanhThu.Columns["Tổng Tiền"] != null)
+                {
+                    dgvDoanhThu.Columns["Tổng Tiền"].DefaultCellStyle.Format = "N0";
+                    dgvDoanhThu.Columns["Tổng Tiền"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
+
+                // 4. Load Xuất Nhập Tồn
+                dtXuatNhapTonData = thongKeBLL.GetXuatNhapTon(selectedIndex);
+                UpdateDataGrid("xuatnhapton", dtXuatNhapTonData);
+
+                // 5. Load Biểu đồ tỷ lệ (không thay đổi theo thời gian)
+                DataTable dtChart2 = thongKeBLL.GetTyLeDoanhThu();
+                double goiVal = 0, leVal = 0;
+                foreach (DataRow row in dtChart2.Rows)
+                {
+                    string type = row["LoaiHinh"].ToString();
+                    double val = Convert.ToDouble(row["TongGiaTri"]);
+                    if (type == "Gói Vaccine") goiVal = val;
+                    else if (type == "Vaccine Lẻ") leVal = val;
+                }
+                UpdateTyLeChart(goiVal, leVal);
+
+                // 6. Load Vaccine sắp hết hạn (không thay đổi theo thời gian)
+                dtSapHetHanData = thongKeBLL.GetVaccineSapHetHan();
+                UpdateDataGrid("saphethan", dtSapHetHanData);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải dữ liệu thống kê: " + ex.Message);
+            }
+        }
+
+        private void LoadDoanhThuChart(int timeRange)
+        {
+            try
+            {
+                List<double> values = new List<double>();
+                List<string> labels = new List<string>();
+
+                if (timeRange == 0) // Hôm nay
+                {
+                    lblChartTitle.Text = "DOANH THU HÔM NAY (THEO GIỜ)";
+                    DataTable dtChart = thongKeBLL.GetDoanhThuHomNay();
+
+                    foreach (DataRow row in dtChart.Rows)
+                    {
+                        values.Add(Convert.ToDouble(row["TongTien"]));
+                        string gio = row["Gio"].ToString();
+                        labels.Add(gio + "h");
+                    }
+
+                    // Nếu không có dữ liệu, hiển thị biểu đồ trống với các giờ mặc định
+                    if (values.Count == 0)
+                    {
+                        for (int i = 8; i <= 17; i++)
+                        {
+                            values.Add(0);
+                            labels.Add(i + "h");
+                        }
+                    }
+                }
+                else if (timeRange == 1) // 7 ngày gần đây
+                {
+                    lblChartTitle.Text = "DOANH THU 7 NGÀY GẦN NHẤT";
+                    DataTable dtChart = thongKeBLL.GetDoanhThu7Ngay();
+
+                    foreach (DataRow row in dtChart.Rows)
+                    {
+                        values.Add(Convert.ToDouble(row["TongTien"]));
+                        DateTime ngay = Convert.ToDateTime(row["Ngay"]);
+                        labels.Add(ngay.ToString("dd/MM"));
+                    }
+                }
+                else // Tháng này
+                {
+                    lblChartTitle.Text = "DOANH THU THÁNG NÀY (THEO NGÀY)";
+                    DataTable dtChart = thongKeBLL.GetDoanhThuThangNay();
+
+                    foreach (DataRow row in dtChart.Rows)
+                    {
+                        values.Add(Convert.ToDouble(row["TongTien"]));
+                        DateTime ngay = Convert.ToDateTime(row["Ngay"]);
+                        labels.Add(ngay.ToString("dd"));
+                    }
+                }
+
+                UpdateDoanhThuChart(values.ToArray(), labels.ToArray());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải biểu đồ doanh thu: " + ex.Message);
             }
         }
     }
