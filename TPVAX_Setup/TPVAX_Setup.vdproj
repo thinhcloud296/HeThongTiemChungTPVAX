@@ -668,6 +668,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -1920,15 +1928,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TPVAX_Setup"
-        "ProductCode" = "8:{2659A3D4-1F58-44F7-BBFA-9119657A82CB}"
-        "PackageCode" = "8:{80FC1359-8252-4A26-A278-A57915715E48}"
+        "ProductCode" = "8:{4DB8C3FD-7D64-4E85-B478-88FAECD8BBA2}"
+        "PackageCode" = "8:{C3B65DCF-51C2-4625-AD71-72A69348F769}"
         "UpgradeCode" = "8:{9EF9AC1F-FC3F-471B-8166-235ADFCF44CB}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.4"
+        "ProductVersion" = "8:1.0.6"
         "Manufacturer" = "8:nguyenhoangthinh2906@gmail.com"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
