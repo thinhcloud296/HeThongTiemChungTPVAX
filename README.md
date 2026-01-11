@@ -15,7 +15,6 @@
 |:---:|-----------|---------|
 | 1 | **Nguyễn Hoàng Thịnh** | Developer |
 | 2 | **Trần Tấn Tài** | Developer |
-| 3 | **Phạm Văn Phi** | Developer |
 
 ---
 
